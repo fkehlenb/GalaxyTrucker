@@ -1,5 +1,11 @@
 \documentclass[fontsize=12pt,paper=a4,twoside]{scrartcl}
 
+\usepackage{longtable}
+
+
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+
 \input{swp-preamble.tex}
 
 %
@@ -49,72 +55,290 @@ Version & Datum & Änderungen \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Globale Analyse} \label{sec:globale_analyse}
 
-{\itshape Hier werden Einflussfaktoren aufgezählt und bewertet sowie Strategien
-zum Umgang mit interferierenden Einflussfaktoren entwickelt.}
+%{\itshape Hier werden Einflussfaktoren aufgezählt und bewertet sowie Strategien
+%zum Umgang mit interferierenden Einflussfaktoren entwickelt.}
 
-\subsection{Einflussfaktoren} \label{sec:einflussfaktoren}
-{\itshape Hier sind Einflussfaktoren gefragt, die sich auf die Architektur
-beziehen. Es sind ausschließlich architekturrelevante Einflussfaktoren, und 
-nicht z.\,B.\ solche, die lediglich einen Einfluss auf das Projektmanagement 
-haben. Fragt Euch also bei jedem Faktor: Beeinflusst er wirklich die 
-Architektur? Macht einen einfachen Test: Wie würde die Architektur aussehen, 
-wenn ihr den Einflussfaktor $E$ berücksichtigt? Wie würde sie aussehen, wenn Ihr
-$E$ nicht berücksichtigt? Kommt in beiden Fällen dieselbe Architektur heraus, 
-dann kann der Einflussfaktor nicht architekturrelevant sein.
+%\subsection{Einflussfaktoren} \label{sec:einflussfaktoren}
+%{\itshape Hier sind Einflussfaktoren gefragt, die sich auf die Architektur
+%beziehen. Es sind ausschließlich architekturrelevante Einflussfaktoren, und 
+%nicht z.\,B.\ solche, die lediglich einen Einfluss auf das Projektmanagement 
+%haben. Fragt Euch also bei jedem Faktor: Beeinflusst er wirklich die 
+%Architektur? Macht einen einfachen Test: Wie würde die Architektur aussehen, 
+%wenn ihr den Einflussfaktor $E$ berücksichtigt? Wie würde sie aussehen, wenn Ihr
+%$E$ nicht berücksichtigt? Kommt in beiden Fällen dieselbe Architektur heraus, 
+%dann kann der Einflussfaktor nicht architekturrelevant sein.
 
-Es geht hier um Einflussfaktoren, die
-\begin{enumerate}
-  \item sich über die Zeit ändern,
-  \item viele Komponenten betreffen,
-  \item schwer zu erfüllen sind oder
-  \item mit denen man wenig Erfahrung hat.
-\end{enumerate}
+%Es geht hier um Einflussfaktoren, die
+%\begin{enumerate}
+%  \item sich über die Zeit ändern,
+%  \item viele Komponenten betreffen,
+%  \item schwer zu erfüllen sind oder
+%  \item mit denen man wenig Erfahrung hat.
+%\end{enumerate}
 
-Die Flexibilität und Veränderlichkeit müssen ebenfalls charakterisiert werden. 
-\begin{enumerate}
-  \item Flexibilität: Könnt Ihr den Faktor zum jetzigen Zeitpunkt beeinflussen?
-  \item Veränderlichkeit: ändert der Faktor sich später durch äußere Einflüsse?
-\end{enumerate}
+%Die Flexibilität und Veränderlichkeit müssen ebenfalls charakterisiert werden. 
+%\begin{enumerate}
+%  \item Flexibilität: Könnt Ihr den Faktor zum jetzigen Zeitpunkt beeinflussen?
+%  \item Veränderlichkeit: ändert der Faktor sich später durch äußere Einflüsse?
+%\end{enumerate}
 
-Unter Auswirkungen sollte dann beschrieben werden, \emph{wie} der Faktor 
-\emph{was} beeinflusst. Das können sein:
-\begin{itemize}
-  \item andere Faktoren
-  \item Komponenten
-  \item Operationsmodi
-  \item Designentscheidungen (Strategien)
-\end{itemize}
+Un%ter Auswirkungen sollte dann beschrieben werden, \emph{wie} der Faktor 
+%\emph{was} beeinflusst. Das können sein:
+%\begin{itemize}
+%  \item andere Faktoren
+%  \item Komponenten
+%  \item Operationsmodi
+%  \item Designentscheidungen (Strategien)
+%\end{itemize}
 
-Verwendet eine eindeutige Nummerierung der Faktoren, um sie auf den 
-Problemkarten einfach referenzieren zu können.}
+%Verwendet eine eindeutige Nummerierung der Faktoren, um sie auf den 
+%Problemkarten einfach referenzieren zu können.}
+
+\begin{longtable}[c]{|p{5cm}|p{5cm}|p{5cm}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Einflussfaktor}} & \multicolumn{1}{c|}{\textbf{Veränderlichkeit/Flexibilität}} & \multicolumn{1}{c|}{\textbf{Auswirkungen}}  \\ \hline
+\endhead
+%ORGANISATION
+\multicolumn{3}{|l|}{{\textbf{O1: Organisation}}} 
+\\ \hline
+\multicolumn{3}{|l|}{{O1.1: Teamgröße}} 
+\\ \hline
+Die Gruppe besteht aus 6 Entwicklern. & Keine Flexibilität, aber Veränderlichkeit: Eine oder mehrere Personen könnten die Gruppe verlassen      & 
+\\ \hline 
+\multicolumn{3}{|l|}{{O1.2: Architekturabgabe}} 
+\\ \hline
+Die Architektur soll am 31.05.2020 abgegeben werden. & Keine Flexibilität, oder Veränderlichkeit.  & 
+\\ \hline             
+\multicolumn{3}{|l|}{{O1.3: Endabgabe}} 
+\\ \hline
+Das Endprodukt muss am 02.08.2020 abgegeben werden. & Keine Flexibilität, oder Veränderlichkeit.   & 
+\\ \hline
+\multicolumn{3}{|l|}{{O1.4: Fähigkeiten}} 
+\\ \hline
+Die Gruppenmitglieder haben unterschiedliche Programmiererfahrungen und Kentnisse. & Keine Flexibilität, aber Veränderlichkeit: Neues Wissen kann sich angeeignet werden.  & 
+\\ \hline     
+%TECHNIK
+\multicolumn{3}{|l|}{{\textbf{T1: Technik}}} 
+\\ \hline 
+\multicolumn{3}{|l|}{{T1.1: Sprache}} 
+\\ \hline
+Es soll Java 8 oder höher verwendet werden. & Eine gewisse Flexiblität und Veränderlichkeit in der Java Version, allerdings keine in der Sprache an sich.  & 
+\\ \hline                 
+\multicolumn{3}{|l|}{{T1.2: Plattformen}} 
+\\ \hline
+Das Spiel soll unter Linux, MacOS und Windows lauffähig sein & Keine Veränderlichkeit oder Flexiblität  & 
+\\ \hline
+\multicolumn{3}{|l|}{{T1.3: Datenbank}} 
+\\ \hline
+Es soll eine leichtgewichtige, relationale Datenbank verwendet werden. & Große Flexibilität und Veränderlichkeit: Da es keine festen Vorgaben gibt, ist die Datenbank relativ frei wählbar. Allerdings muss eine Datenbank verwendet werden. & 
+\\ \hline
+\multicolumn{3}{|l|}{{T1.4: libgdx}} 
+\\ \hline
+Es soll libdgx verwendet werden. & Keine Veränderlichkeit oder Flexibilität.   & 
+\\ \hline
+\multicolumn{3}{|l|}{{T1.5: Client}} 
+\\ \hline
+Das Spiel soll ohne weitere Installationen auf Clientseite spielbar sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+%PRODUKT
+\multicolumn{3}{|l|}{{\textbf{Produktfaktoren}}} 
+\\ \hline
+%
+\multicolumn{3}{|l|}{{\textbf{P1: Sektionen}}} 
+\\ \hline
+\multicolumn{3}{|l|}{{P1.1: Sektionen}} 
+\\ \hline
+Das Raumschiff soll in unterschiedliche Sektionen unterteilt sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline 
+\multicolumn{3}{|l|}{{P1.2: Systeme}} 
+\\ \hline
+Jede Sektion soll relevante Systeme haben.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P1.3: Beschädigungen}} 
+\\ \hline
+Sektionen sollen im Kampf beschädigt werden können.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P1.4: Systembeschädigungen}} 
+\\ \hline
+Wenn eine Sektion beschädigt ist, soll dies auch die enthaltenen Systeme beeinflussen. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+%
+\multicolumn{3}{|l|}{{\textbf{P2: Ressourcen}}} 
+\\ \hline
+\multicolumn{3}{|l|}{{P2.1: Ressourcen}} 
+\\ \hline
+Das Raumschiff soll verschieden Ressourcen haben, wie Geld, Energie, Status Außenhülle.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline                                                      
+\multicolumn{3}{|l|}{{P2.2: Ressourcenveränderlichkeit}} 
+\\ \hline
+Ressourcen sollen veränderlich sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P2.3: Ressourcenverfügung}} 
+\\ \hline
+Ressourcen sollen pro Spielrunde zur Verfügung stehen. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+%
+\multicolumn{3}{|l|}{{\textbf{P3: Eigenschaften}}} 
+\\ \hline
+\multicolumn{3}{|l|}{{P3.1: Eigenschaften}} 
+\\ \hline
+Ein Raumschiff soll verschiedene Eigenschaften haben, wie Waffen, Schutzschilde, Hüllenpanzerungen, und Energie. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P3.2: Waffen}} 
+\\ \hline
+Es sollen mehrere Waffen pro Raumschiff möglich sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P3.3: Waffenunterschiede}} 
+\\ \hline
+Unterschiedliche Waffen sollen sich mindestens in Ladezeit, Trefferwahrscheinlichkeit und Schadenshöhe unterscheiden. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P3.4: Verbesserung von Eigenschaften}} 
+\\ \hline
+Eigenschaften sollen durch Geld verbessert werden können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+%
+\multicolumn{3}{|l|}{{\textbf{P4: Besatzung}}} 
+\\ \hline
+\multicolumn{3}{|l|}{{P4.1: Besatzung}} 
+\\ \hline
+Das Raumschiff soll eine Besatzung haben. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline  
+\multicolumn{3}{|l|}{{P4.2: Aufenthaltsorte Besatzung}} 
+\\ \hline
+Die Besatzungsmitglieder sollen sich in Sektionen aufhalten können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline                                                  
+\multicolumn{3}{|l|}{{P4.3: Besatzung und Systeme}} 
+\\ \hline
+Die Systeme einer Sektion sollen durch die Besatzungsmitglieder beeinflusst werden können, zum Beispiel sollen Systeme/Sektionen durch die Besatzung repariert werden können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P4.4: Tod}} 
+\\ \hline
+Besatzungsmitglieder sollen sterben können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P4.5: Neue Besatzungsmitglieder}} 
+\\ \hline
+Neue Besatzungsmitglieder sollen auf das Schiff aufgenommen werden können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P4.6: Besatzungsmitglieder Fähigkeiten}} 
+\\ \hline
+Besatzungsmitglieder sollen Fähigkeiten haben. Diese sollen sich auf Systeme auswirken, falls sich das Mitglied in der entsprechenden Sektion befindet. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P4.7: Verbesserung Fähigkeiten}} 
+\\ \hline
+Die Fähigkeiten der Besatzungsmitglieder sollen verbessert werden können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+%
+\multicolumn{3}{|l|}{{\textbf{P5: Spielfeld}}} 
+\\ \hline         
+\multicolumn{3}{|l|}{{P5.1: Spielfeld}} 
+\\ \hline
+Es soll ein Spielfeld geben, was eine Karte darstellt. Die Karte verzeichent Stationen/Planeten. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline          
+\multicolumn{3}{|l|}{{P5.2: Reise}} 
+\\ \hline
+Pro Spielrunde kann eine Station/ein Planet laut den Verbindungen auf der Karte angeflogen werden.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P5.3: Ereignisse}} 
+\\ \hline
+Auf jeder Station/auf jedem Planet soll ein Ereignis auftreten können, was positive oder negative Auswirkungen haben kann; zum Beispiel der Angriff eines feindlichen Schiffes.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P5.4: Mehrere Ereignisse}} 
+\\ \hline
+Es soll mindestens fünf unterschiedliche Arten von Ereignissen geben. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+%
+\multicolumn{3}{|l|}{{\textbf{P6: Kämpfe}}} 
+\\ \hline
+\multicolumn{3}{|l|}{{P6.1: Kämpfe}} 
+\\ \hline
+Es sollen Kämpfe zwischen dem Spieler und feindlichen Raumschiffen möglich sind. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P6.2: Kampfart}} 
+\\ \hline
+Die Kämpfe sollen in Form von rundenbasierten Entscheidungen gefochten werden. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P6.3: Kampfhandlungen}} 
+\\ \hline
+Es sollen folgende Kampfhandlungen möglich sein: Abfeuern einer Waffe auf das gegnerische Schiff, Verteilung der Besatzung auf die Sektionen, und Zuweisung von Energie an Sektionen. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P6.4: Zeit}} 
+\\ \hline
+Kampfhandlungen brauchen Zeit: Waffen müssen laden und Besatzungsmitglieder sind nicht sofort in der Zielsektion. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+%
+\multicolumn{3}{|l|}{{\textbf{P7: Spielverlauf}}} 
+\\ \hline
+\multicolumn{3}{|l|}{{P7.1: Spielverlauf}} 
+\\ \hline
+Es soll einen klaren Spielverlauf mit einer Endgegner*in un der Möglichkeit, durch Besiegung dieser zu gewinnen, geben.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P7.2: Schwierigkeit}} 
+\\ \hline
+Es sollen unterschiedliche Schwierigkeitsstufen für ein Spiel auswählbar sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+%
+\multicolumn{3}{|l|}{{\textbf{P8: Server}}} 
+\\ \hline
+\multicolumn{3}{|l|}{{P8.1: Server}} 
+\\ \hline
+Es soll eine Spielserver geben, der von mindestens zwei Spieler*innen benutzt werden kann. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P8.2: Direkter Kampf zweier Spieler}} 
+\\ \hline
+Es sollen, wenn möglich, zwei Spieler gegeneinander spielen. Diese beiden sollen auch in direkten Kämpfen gegeneinander antreten können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P8.3: Computergegner}} 
+\\ \hline
+Wenn kein zweiter Spieler online ist, soll der Gegner durch den Computer simuliert werden. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P8.4: Prüfung vom Server}} 
+\\ \hline
+Der Server soll die Einhaltung von Regeln und Plausibilität während dem Spiel prüfen.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P8.5: Speicherung Spielverlauf}} 
+\\ \hline
+Der Server soll den Spielverlauf speichern. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\multicolumn{3}{|l|}{{P8.6: Spielverlauf unterbrechen und fortsetzen}} 
+\\ \hline
+Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Zeitpunkt fortzuführen. & Keine Flexibilität, oder Veränderlichkeit.    & 
+\\ \hline
+\end{longtable}
 
 \subsection{Probleme und Strategien} \label{sec:strategien}
 
-{\itshape Aus einer Menge von Faktoren ergeben sich Probleme, die nun in Form 
-von Problemkarten beschrieben werden. Diese resultieren z.\,B.\ aus
+%{\itshape Aus einer Menge von Faktoren ergeben sich Probleme, die nun in Form 
+%von Problemkarten beschrieben werden. Diese resultieren z.\,B.\ aus
+%\begin{itemize}
+ % \item Grenzen oder Einschränkungen durch Faktoren
+ % \item der Notwendigkeit, die Auswirkung eines Faktors zu begrenzen
+ % \item der Schwierigkeit, einen Produktfaktor zu erfüllen, oder
+ % \item der Notwendigkeit einer allgemeinen Lösung zu globalen Anforderungen.
+%\end{itemize}
+%Dazu entwickelt Ihr Strategien, um mit den identifizierten Problemen umzugehen.
+
+%Achtet auch hier darauf, dass die Probleme und Strategien wirklich die 
+%Architektur betreffen und nicht etwa das Projektmanagement. Die Strategien 
+%stellen im Prinzip die Designentscheidungen dar. Sie sollten also die Erklärung 
+%für den konkreten Aufbau der verschiedenen Sichten liefern.
+
+%Beschreibt möglichst mehrere Alternativen und gebt an, für welche Ihr Euch 
+%letztlich aus welchem Grunde entschieden habt. Natürlich müssen die genannten 
+%Strategien in den folgenden Sichten auch tatsächlich umgesetzt werden!
+
+%Ein sehr häufiger Fehler ist es, dass SWP-Gruppen arbeitsteilig vorgehen: die 
+%eine Gruppe schreibt das Kapitel zur Analyse von Faktoren und zu den Strategien, 
+%die andere Gruppe beschreibt die diversen Sichten, ohne dass diese beiden 
+%Gruppen sich abstimmen. Natürlich besteht aber ein Zusammenhang zwischen den
+%Faktoren, Strategien und Sichten. Dieser muss erkennbar sein, indem sich die 
+%verschiedenen Kapitel eindeutig aufeinander beziehen.}
+
 \begin{itemize}
-  \item Grenzen oder Einschränkungen durch Faktoren
-  \item der Notwendigkeit, die Auswirkung eines Faktors zu begrenzen
-  \item der Schwierigkeit, einen Produktfaktor zu erfüllen, oder
-  \item der Notwendigkeit einer allgemeinen Lösung zu globalen Anforderungen.
+\item Das Spiel muss zwischen zwei Spielern synchronisiert sein, wenn diese miteinander spielen. (Gleiche Karte etc, direkte Interaktion möglich) 
+\item Das konzeptionell gleiche Spiel soll möglichst unkompliziert (vor allem im Backend) in unterschiedliche Schwierigkeitsstufen umgeschaltet werden können
+\item Es muss möglich sein, komplette Spielverläufe zu speichern, und zu einem späteren Zeitpunkt auszuwählen und neu zu laden
+\item Der Server soll von mehreren Spielern gleichzeitig benutzt werden können %also auch mehr als zwei, wo dann unterschiedliche Spiele gleichzeitig laufen?
 \end{itemize}
-Dazu entwickelt Ihr Strategien, um mit den identifizierten Problemen umzugehen.
-
-Achtet auch hier darauf, dass die Probleme und Strategien wirklich die 
-Architektur betreffen und nicht etwa das Projektmanagement. Die Strategien 
-stellen im Prinzip die Designentscheidungen dar. Sie sollten also die Erklärung 
-für den konkreten Aufbau der verschiedenen Sichten liefern.
-
-Beschreibt möglichst mehrere Alternativen und gebt an, für welche Ihr Euch 
-letztlich aus welchem Grunde entschieden habt. Natürlich müssen die genannten 
-Strategien in den folgenden Sichten auch tatsächlich umgesetzt werden!
-
-Ein sehr häufiger Fehler ist es, dass SWP-Gruppen arbeitsteilig vorgehen: die 
-eine Gruppe schreibt das Kapitel zur Analyse von Faktoren und zu den Strategien, 
-die andere Gruppe beschreibt die diversen Sichten, ohne dass diese beiden 
-Gruppen sich abstimmen. Natürlich besteht aber ein Zusammenhang zwischen den
-Faktoren, Strategien und Sichten. Dieser muss erkennbar sein, indem sich die 
-verschiedenen Kapitel eindeutig aufeinander beziehen.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
