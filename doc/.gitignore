@@ -1,0 +1,25 @@
+#==========Gitignore for Documentation==========
+
+#===Ignore LaTeX outputs===
+*.aux
+*.lof
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+#===Ignore PDF files===
+Architekturbeschreibung.pdf
+*.out.ps
+
+# Log file
+*.log
+
+# Package Files 
+*.tar.gz
+*.synctex.gz

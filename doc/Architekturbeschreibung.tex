@@ -140,6 +140,10 @@ Es soll libdgx verwendet werden. & Keine Veränderlichkeit oder Flexibilität.  
 \\ \hline
 Das Spiel soll ohne weitere Installationen auf Clientseite spielbar sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
 \\ \hline
+\multicolumn{3}{|l|}{{T1.6: Server}} 
+\\ \hline
+Es soll eine Spielserver geben, der von mindestens zwei Spieler*innen benutzt werden kann. & Keine Flexibilität, oder Veränderlichkeit.    &
+\\ \hline
 %PRODUKT
 \multicolumn{3}{|l|}{{\textbf{Produktfaktoren}}} 
 \\ \hline
@@ -279,27 +283,23 @@ Es sollen unterschiedliche Schwierigkeitsstufen für ein Spiel auswählbar sein.
 %
 \multicolumn{3}{|l|}{{\textbf{P8: Server}}} 
 \\ \hline
-\multicolumn{3}{|l|}{{P8.1: Server}} 
-\\ \hline
-Es soll eine Spielserver geben, der von mindestens zwei Spieler*innen benutzt werden kann. & Keine Flexibilität, oder Veränderlichkeit.    & 
-\\ \hline
-\multicolumn{3}{|l|}{{P8.2: Direkter Kampf zweier Spieler}} 
+\multicolumn{3}{|l|}{{P8.1: Direkter Kampf zweier Spieler}} 
 \\ \hline
 Es sollen, wenn möglich, zwei Spieler gegeneinander spielen. Diese beiden sollen auch in direkten Kämpfen gegeneinander antreten können. & Keine Flexibilität, oder Veränderlichkeit.    & 
 \\ \hline
-\multicolumn{3}{|l|}{{P8.3: Computergegner}} 
+\multicolumn{3}{|l|}{{P8.2: Computergegner}} 
 \\ \hline
 Wenn kein zweiter Spieler online ist, soll der Gegner durch den Computer simuliert werden. & Keine Flexibilität, oder Veränderlichkeit.    & 
 \\ \hline
-\multicolumn{3}{|l|}{{P8.4: Prüfung vom Server}} 
+\multicolumn{3}{|l|}{{P8.3: Prüfung vom Server}} 
 \\ \hline
 Der Server soll die Einhaltung von Regeln und Plausibilität während dem Spiel prüfen.  & Keine Flexibilität, oder Veränderlichkeit.    & 
 \\ \hline
-\multicolumn{3}{|l|}{{P8.5: Speicherung Spielverlauf}} 
+\multicolumn{3}{|l|}{{P8.4: Speicherung Spielverlauf}} 
 \\ \hline
 Der Server soll den Spielverlauf speichern. & Keine Flexibilität, oder Veränderlichkeit.    & 
 \\ \hline
-\multicolumn{3}{|l|}{{P8.6: Spielverlauf unterbrechen und fortsetzen}} 
+\multicolumn{3}{|l|}{{P8.5: Spielverlauf unterbrechen und fortsetzen}} 
 \\ \hline
 Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Zeitpunkt fortzuführen. & Keine Flexibilität, oder Veränderlichkeit.    & 
 \\ \hline
@@ -335,7 +335,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
 
 \begin{itemize}
 \item Das Spiel muss zwischen zwei Spielern synchronisiert sein, wenn diese miteinander spielen. (Gleiche Karte etc, direkte Interaktion möglich) 
-\item Das konzeptionell gleiche Spiel soll möglichst unkompliziert (vor allem im Backend) in unterschiedliche Schwierigkeitsstufen umgeschaltet werden können
+0\item Das konzeptionell gleiche Spiel soll möglichst unkompliziert (vor allem im Backend) in unterschiedliche Schwierigkeitsstufen umgeschaltet werden können
 \item Es muss möglich sein, komplette Spielverläufe zu speichern, und zu einem späteren Zeitpunkt auszuwählen und neu zu laden
 \item Der Server soll von mehreren Spielern gleichzeitig benutzt werden können %also auch mehr als zwei, wo dann unterschiedliche Spiele gleichzeitig laufen?
 \end{itemize}
