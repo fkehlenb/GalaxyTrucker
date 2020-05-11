@@ -333,13 +333,863 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
 %Faktoren, Strategien und Sichten. Dieser muss erkennbar sein, indem sich die 
 %verschiedenen Kapitel eindeutig aufeinander beziehen.}
 
-\begin{itemize}
-\item Das Spiel muss zwischen zwei Spielern synchronisiert sein, wenn diese miteinander spielen. (Gleiche Karte etc, direkte Interaktion möglich) 
-0\item Das konzeptionell gleiche Spiel soll möglichst unkompliziert (vor allem im Backend) in unterschiedliche Schwierigkeitsstufen umgeschaltet werden können
-\item Es muss möglich sein, komplette Spielverläufe zu speichern, und zu einem späteren Zeitpunkt auszuwählen und neu zu laden
-\item Der Server soll von mehreren Spielern gleichzeitig benutzt werden können %also auch mehr als zwei, wo dann unterschiedliche Spiele gleichzeitig laufen?
-\end{itemize}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 1:} Begrenzte Zeit \\ \hline
+         Die Zeit, die wir für die Implementierung des Projekts haben, ist sehr begrenzt, was dazu führen kann, dass wir Zeitprobleme bekommen und eventuell nicht alle Aspekte implementieren können. \\ \hline
+          \textbf{Einflussfaktoren: } \\
+		O1.2 \\
+		O1.4 \\
+		O2 \\
+		O3 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:1.1}     
+          \textbf{Strategie 1.1: Modularisierung} Die Aufgaben werden modularisiert, sodass kleine Aufgaben für kurze Zeiträume geschaffen werden. \\        
+  {\phantomsection}          
+           \label{strategie:1.2}              
+          \textbf{Strategie 1.2: Inkrementelle Entwicklung} Da eventuell nicht alle Aspekte implementiert werden können, werden zunächst die Mindestanforderungen implementiert, die für das Bestehen zwingend notwendig sind. Danch werden eventuelle zusätzliche Funktionen beachtet. \\
+	 {\phantomsection}          
+           \label{strategie:1.3}     
+          \textbf{Strategie 1.3: Austausch} Es wird sich regelmäßig über Fortschritte und Probleme ausgetauscht. \\ 
+	 \\ \hline
+    \end{tabular}
 
+    \caption{Zeit Problemkarte}
+    \label{tab:ProblemKarte1}
+\end{table}
+Hier werden wir alle drei Strategien anwenden, um eine möglichst erfolgreiche Implementierung zu erreichen. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 2:} LibGDX \\ \hline
+	Die Gruppenmitglieder haben wenig bis keine Erfahrung mit LibGDX, was eine benötigte Anforderung ist. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	T2.1 \\
+	T2.2 \\
+	O1.2 \\
+	O1.3 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:2.1}     
+          \textbf{Strategie 2.1: Anlernen} Die Gruppenmitglieder müssen sich so früh wie möglich mit der Verwendung von LibGDX vertraut machen, damit dies idealerweise auch schon in die Architektur mit einfließen kann.  \\        
+	 \\ \hline
+    \end{tabular}
+
+    \caption{LibGDX Problemkarte}
+    \label{tab:ProblemKarte2}
+\end{table}
+Hier werden wir die erste Strategie verwenden. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 3: Spielstand}  \\ \hline
+	Der Spielstand soll gespeichert werden, und zu späteren Zeitpunkten wieder aufgerufen. Dazu benötigt der Server eine Datenbank. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	O1.2 \\
+	T1.3 \\
+	T1.2 \\
+	T1.1 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:3.1}     
+          \textbf{Strategie 3.1: H2}  Wir verwenden die Datenbank H2. \\        
+  {\phantomsection}          
+           \label{strategie:3.2}              
+          \textbf{Strategie 3.2: SQLite} Wir verwenden die Datenbank SQLite. \\
+	 {\phantomsection}          
+           \label{strategie:3.3}     
+          \textbf{Strategie 3.3: Derby } Wir verwenden die Datenbank Derby. \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Spielstand Problemkarte}
+    \label{tab:ProblemKarte3}
+\end{table}
+Wir setzen Strategie .. um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 4: Raumschiff Größen}  \\ \hline
+	Raumschiffe sollen verschiedene Größen haben. Es soll mindestens drei Raumschiffe mit individuellem Sektionenlayout geben. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P1.1 \\
+	P1.2 \\
+	P3.1 \\
+	P3.4 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:4.1}     
+          \textbf{Strategie 4.1: Feste Raumschiffe} Wir erstellen feste Raumschiffe, aus denen der Spieler eines auswählt. \\        
+  {\phantomsection}          
+           \label{strategie:4.2}              
+          \textbf{Strategie 4.2: Raumschiff Selektor} Wir haben einen Raumschiff Editor, in dem der Spieler sich am Anfang des Spieles ein Raumschiff zusammenbauen kann. \\
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Raumschiffgrößen Problemkarte}
+    \label{tab:ProblemKarte4}
+\end{table}
+Hier setzen wir die erste Strategie um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 5: Multiplayer}  \\ \hline
+	Die Spieler müssen vom Server gegeneinander in Kämpfen antreten gelassen werden. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	T1.6 \\
+	T1.3 \\
+	T1.2 \\
+	P8.1 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:5.1}     
+          \textbf{Strategie 5.1: Bestimmte Anzahl}  Der Server lässt die Spieler nach einer bestimmten Anzahl Runden gegeneinander antreten. \\        
+  {\phantomsection}          
+           \label{strategie:5.2}              
+          \textbf{Strategie 5.2: Zufällige Anzahl} Der Server lässt die Spieler nach einer zufälligen Anzahl Runden gegeneinander antreten.   \\
+	 {\phantomsection}          
+           \label{strategie:5.3}     
+          \textbf{Strategie 5.3: Zwangsläufig} Das Spiel ist so konzipiert, dass die Spieler zwangsläufig gegeneinander antreten müssen (z.B. über Quests: "verteidige den Planeten xy" und "Erobere den Planeten xy", Einzigartige Ressourcen, die für bestimmte Aufgaben/Upgrades oÄ erforderlich sind aber nur einmal im Spiel vorkommen und deshalb irgendwann nur noch von einem Mitspieler erbeutet werden können.  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Multiplayer Problemkarte}
+    \label{tab:ProblemKarte5}
+\end{table}
+Hier setzen wir die .. Strategie um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 6: Neue Gruppenmitglieder}  \\ \hline
+	Da nur vier der Gruppenmitglieder bereits vorher miteinander gearbeitet haben, müssen wir uns als Gruppe neu zusammen einarbeiten, und feststellen, wie unsere Zusammenarbeit am besten funktionieren kann.\\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	O1.1 \\
+	O1.2 \\
+	O1.3 \\
+	O1.4 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:6.1}     
+          \textbf{Strategie 6.1: Vorstellungsrunde} Wir machen eine Vorstellungsrunde, wo wir unsere Stärken und Schwächen besprechen, und unsere bisherigen Erfahrungen mit Gruppenarbeit besprechen. \\        
+  {\phantomsection}          
+           \label{strategie:6.2}              
+          \textbf{Strategie 6.2: Reflektionen} Wir machen regelmäßige Reflektionen, um festzustellen, was funktioniert und was nicht funktioniert. \\
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Gruppenmitglieder Problemkarte}
+    \label{tab:ProblemKarte6}
+\end{table}
+Hier setzen wir beide Strategien um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 7: Zugüberprüfung}  \\ \hline
+	Jeder Zug wird vom Server auf Korrektheit geprüft, bevor er an den anderen Spieler übermittelt wird. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	T1.6 \\
+	T1.5 \\
+	P8.3 \\
+	P8.4 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:7.1}     
+          \textbf{Strategie 7.1: }  \\        
+  {\phantomsection}          
+           \label{strategie:7.2}              
+          \textbf{Strategie 7.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:7.3}     
+          \textbf{Strategie 7.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Zugüberprüfung Problemkarte}
+    \label{tab:ProblemKarte7}
+\end{table}
+Hier setzen wir die .. Strategie um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 8: Java}  \\ \hline
+	Es soll eine Java Applikation sein, es soll mindestens java 8 sein (oder höher). \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	T1.1 \\
+	T1.6 \\
+	T1.3 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:8.1}     
+          \textbf{Strategie 8.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:8.2}              
+          \textbf{Strategie 8.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:8.3}     
+          \textbf{Strategie 8.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Java Problemkarte}
+    \label{tab:ProblemKarte8}
+\end{table}
+Hier setzen wir die .. Strategie um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 9: Reise}  \\ \hline
+	Es sollen Reisen von Stern zu Stern möglich sein. Dafür muss es eine Karte geben, auf der mehrere Planeten/Sternen/Stationen geben kann, über die man sich bewegen kann. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	T1.6 \\
+	P5.1 \\
+	P5.2 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:9.1}     
+          \textbf{Strategie 9.1: Listen} Jede Karte ist eine Liste, in der jeder Eintrag ein/e Planet/Stern/Station ist. Die Verbindungen werden extra gespeichert.  \\        
+  {\phantomsection}          
+           \label{strategie:9.2}              
+          \textbf{Strategie 9.2: TiledMaps} Wir benutzen TiledMaps von libGDX.  \\
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Reise Problemkarte}
+    \label{tab:ProblemKarte9}
+\end{table}
+Hier setzen wir die .. Strategie um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 10: Waffen}  \\ \hline
+	Es muss eine Auswahl von Waffen mit verschiedenen Schadenshöhen, Cooldown, Trefferwahrscheinlichkeit und weiteren Effekten (wie z.B. Einfrieren, Personenschaden in den Sektionen) geben. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P3.2 \\
+	P3.3 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:10.1}     
+          \textbf{Strategie 10.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:10.2}              
+          \textbf{Strategie 10.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:10.3}     
+          \textbf{Strategie 10.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Waffen Problemkarte}
+    \label{tab:ProblemKarte10}
+\end{table}
+e \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 11: Cross Platform Support}  \\ \hline
+	Das Spiel soll auf verschiedenen Plattformen laufen. Für die Implementierung muss die Performance beachtet werden. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	T1.2 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:11.1}     
+          \textbf{Strategie 11.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:11.2}              
+          \textbf{Strategie 11.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:11.3}     
+          \textbf{Strategie 11.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Cross Platform Problemkarte}
+    \label{tab:ProblemKarte11}
+\end{table}
+e \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 12: Keine persönlichen Treffen}  \\ \hline
+	Auf Grund der globalen COVID-19 Pandemie wird es nicht möglich sein, uns persönlich zu treffen. Wir werden die komplette Implementierungsphase auf digitalem Weg kompensieren müssen. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	O1.4 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:12.1}     
+          \textbf{Strategie 12.1: Discord} Teammeetings werden über Discord abgehalten.  \\        
+  {\phantomsection}          
+           \label{strategie:12.2}              
+          \textbf{Strategie 12.2: Aufgabenlisten} Wir erstellen digitale Aufgabenlisten, um einen Überblick über die Aufgaben, die es gibt, zu haben.  \\
+	 {\phantomsection}          
+           \label{strategie:12.3}     
+          \textbf{Strategie 12.3: Merge-partys} Um Fehler beim mergen unserer git Branches zu vermeiden, mergen wir nur, wenn mindestens die Häflte der Teammitglieder anwesend ist, und verifizieren kann, dass z.B. Konflikte korrekt gelöst werden. \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Persönliche Treffen Problemkarte}
+    \label{tab:ProblemKarte12}
+\end{table}
+Hier wenden wir alle drei Strategien an. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 13: Kampfrundeninterne Speicherung}  \\ \hline
+	Es muss möglich sein, innerhalb eines Kampfes das Spiel zu unterbrechen und später unter den selben Bedingungen fortzusetzen. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P8.4 \\
+	P8.5 \\
+	T1.6 \\
+	T1.3 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:13.1}     
+          \textbf{Strategie 13.1: gesamter Spielstand} Der gesamte Spielstand wird bei jeder Änderung gespeichert.  \\        
+  {\phantomsection}          
+           \label{strategie:13.2}              
+          \textbf{Strategie 13.2: Änderungen} Es wir der initiale Spielstand und danach nur alle Änderungen gegenüber der letzen Speicherung gespeichert.  \\
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Kampfrundeninterne Speicherung Problemkarte}
+    \label{tab:ProblemKarte13}
+\end{table}
+Hier werden wir die .. Strategie umsetzen. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 14: Endgegener}  \\ \hline
+	Es muss einen Endgegner geben, der zum Sieg zwingend geschlagen werden muss. Entweder muss sichergestellt werden, dass beim Multiplayer ein Kampf gegen den zweiten Spieler am "Ende" des Spieles steht oder es muss mindestens einen NPC geben. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P7.1 \\
+	P8.1 \\
+	P8.2 \\
+	T1.6 \\
+	T1.5 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:14.1}     
+          \textbf{Strategie 14.1: NPC} Es gibt einen NPC, der besiegt werden muss, um zu gewinnen.  \\        
+  {\phantomsection}          
+           \label{strategie:14.2}              
+          \textbf{Strategie 14.2: zweiter Spieler} Der zweite Spieler ist der Endgegner, und das Spiel endet nach einem Kampf.  \\
+	 {\phantomsection}          
+           \label{strategie:14.3}     
+          \textbf{Strategie 14.3: Zeitpunkt} Es gibt einen Zeitpunkt im Spiel, nach dem der nächste Kampf zwischen den beiden Spielern zum "Endgegner" wird.  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Endgegner Problemkarte}
+    \label{tab:ProblemKarte14}
+\end{table}
+Hier setzen wird die Strategie .. um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 15: Unterschiedliche Besatzungsmitglieder}  \\ \hline
+	Die Besatzungsmitglieder müssen unterschiedliche Eigenschaften (Attribute) haben, die sich auf das Raumschiff auswirken und im Laufe des Spieles verbessert werden können. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P4 \\
+	T1.6 \\
+	T1.5 \\
+	P6.3 \\
+	P6.4 \\
+	P8.2 \\
+	P8.4 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:15.1}     
+          \textbf{Strategie 15.1: }  \\        
+  {\phantomsection}          
+           \label{strategie:15.2}              
+          \textbf{Strategie 15.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:15.3}     
+          \textbf{Strategie 15.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Unterschiedliche Besatzungsmitglieder Problemkarte}
+    \label{tab:ProblemKarte15}
+\end{table}
+Hier setzen wir die .. Strategie um.  \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 16: Prozess Overhead}  \\ \hline
+	Aufgrund der Ermängelung an Möglichkeiten zum räumlichen gemeinschaftlichen Arbeiten und der Beschränkung des persönlichen Kontaktes auf "Telefonate" zur Besprechung besteht das Risiko, dass im Zuge dieser Meetings ausschweifende und irgendwann nicht mehr lösungsorientierte Diskussionen entstehen. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	O1.1 \\
+	O1.4 \\
+	OCorona \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:16.1}     
+          \textbf{Strategie 16.1: Begrenzte Zeitfenster} Für die Meetings setzen wir begrenzte Zeitfenster fest.  \\        
+  {\phantomsection}          
+           \label{strategie:16.2}              
+          \textbf{Strategie 16.2: Themen} Vor den Meetings setzen wir Themen fest, die besprochen werden sollen.  \\
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Prozess Overhead Problemkarte}
+    \label{tab:ProblemKarte16}
+\end{table}
+Hier wenden wir beide Strategien an.  \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 17: Schwierigkeitsstufen}  \\ \hline
+	Das Spiel soll unterschiedliche Schwierigkeitsstufen haben, aus denen der Spieler am Anfang auswählen kann. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P7.2 \\
+	P8.2 \\
+	P7.1 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:17.1}     
+          \textbf{Strategie 17.1: Attribute} Bestimmte Attribute werden am Anfang des Spieles abhängig von der Schwierigkeitsstufe gestellt (z.B. Trefferwahrscheinlichkeit, Schadenshöhe, ...)  \\        
+  {\phantomsection}          
+           \label{strategie:17.2}              
+          \textbf{Strategie 17.2: Unterschiedliche Computergegner} Es gibt unterschiedlich schwierige Computergegner für die unterschiedlichen Schwierigkeitsstufen.   \\
+	 {\phantomsection}          
+           \label{strategie:17.3}     
+          \textbf{Strategie 17.3: Karten } Es gibt Unterschiede in den Karten (z.B. Anzahl der schlechten Ereignisse, mehr/weniger Verbindungen zwischen Karten sodass man mehr reisen muss, ...)  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Schwierigkeitsstufen Problemkarte}
+    \label{tab:ProblemKarte17}
+\end{table}
+Hier werden wir die ... Strategie umsetzen. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 18: Rundenbasiert}  \\ \hline
+	Da das Spiel rundenbasiert ist, kann es sein, dass ein Spieler (vor allem im Zweispieler) sehr lange braucht, um einen Zug zu machen. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P6.2 \\
+	P2.1 \\
+	P2.3 \\
+	T1.3 \\
+	T1.5 \\
+	T1.6 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:18.1}     
+          \textbf{Strategie 18.1: Zeitbegrenzung} Es gitb eine Zeitbegrenzung, sodass der Spielfluss erhalten bleibt.   \\        
+  {\phantomsection}          
+           \label{strategie:18.2}              
+          \textbf{Strategie 18.2: Keine Zeitbegrenzung} Es gibt keine Zeitbegrenzung. \\
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Rundenbasiert Problemkarte}
+    \label{tab:ProblemKarte18}
+\end{table}
+Hier setzen wir die ... Strategie um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 19: Zerstörung von wichtigen Systemen}  \\ \hline
+	Durch gegnerische Angriffe können wichtige Systeme (z.B. Antrieb) zerstört werden. Wenn die Besatzung tot ist, kann das nicht mehr repariert werden, und das Schiff ist nutzlos. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P1.3 \\
+	P1.4 \\
+	P4.3 \\
+	P4.4 \\
+	T1.3 \\
+	T1.5 \\
+	T1.6 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:19.1}     
+          \textbf{Strategie 19.1: Testen} Es muss getestet werden, ob der Spieler noch Züge machen kann.  \\        
+  {\phantomsection}          
+           \label{strategie:19.2}              
+          \textbf{Strategie 19.2: Knopf} Es gibt einen Aufgeben Knopf, den der Spieler jeder Zeit drücken kann, um das Spiel zu beenden.  \\
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Zerstörung von wichtigen Systemen Problemkarte}
+    \label{tab:ProblemKarte19}
+\end{table}
+Hier setzen wir die .. Strategie um. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 20: Schutzschilde und Hüllen }  \\ \hline
+	Schutzschilde und Außenhülle müssen einen Einfluss auf die Treffer haben (es soll also unabhängig von der Sektion auf die geziehlt wird erst der Schutz zerstört werden / von dessem Status abgezogen werden). \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P1.3 \\
+	P1.4 \\
+	P2.1 \\
+	P3.1 \\
+	P2.2 \\
+	P2.3 \\
+	P6.3 \\
+	P3.4 \\
+	T1.3 \\
+	T1.5 \\
+	T1.6 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:20.1}     
+          \textbf{Strategie 20.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:20.2}              
+          \textbf{Strategie 20.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:20.3}     
+          \textbf{Strategie 20.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Schutzschilde und Hüllen Problemkarte}
+    \label{tab:ProblemKarte20}
+\end{table}
+e \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 21: Treffen von Sektionen}  \\ \hline
+	Wenn eine Sektion getroffen wird, müssen alle zugehörigen Dinge (Besatzung, System) mit betroffen werden. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P1.3\\
+	P1.4 \\
+	P2.2 \\
+	P2.3 \\
+	P3.2 \\
+	P3.3 \\
+	P4.4 \\
+	P6.3 \\
+	T1.3 \\
+	T1.5 \\
+	T1.6 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:21.1}     
+          \textbf{Strategie 21.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:21.2}              
+          \textbf{Strategie 21.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:21.3}     
+          \textbf{Strategie 21.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Treffen von Sektionen Problemkarte}
+    \label{tab:ProblemKarte21}
+\end{table}
+e \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 22: Negative Vorerfahrungen}  \\ \hline
+	Da die meisten Gruppenmitglieder einen schlechten SWP-Verlauf hinter sich haben, besteht die Gefahr, dass für die verantwortlichen Probleme überkompensiert wird. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	O1.4 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:22.1}     
+          \textbf{Strategie 22.1: } Wir müssen aus den Fehlern vom letzten Mal lernen, ohne andere Dinge aus den Augen zu verlieren oder uns mit Vorsorgemaßnahmen zu verhindern.  \\     
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Negative Vorerfahrungen Problemkarte}
+    \label{tab:ProblemKarte22}
+\end{table}
+Hier wenden wir die erste Strategie an. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 23: Schiffe vom Computer spielbar}  \\ \hline
+	Wir brauchen einen NPC für den Multiplayer, der das Spiel ausreichend beherrscht. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	T1.6 \\
+	P6.3 \\
+	P7.2 \\
+	P8.1 \\
+	P8.2 \\
+	T1.3 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:23.1}     
+          \textbf{Strategie 23.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:23.2}              
+          \textbf{Strategie 23.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:23.3}     
+          \textbf{Strategie 23.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{NPC Problemkarte}
+    \label{tab:ProblemKarte23}
+\end{table}
+e \\
+
+%TODO: PROBLEMKARTE ENDBOSS DOPPELT?
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 24: Balancing}  \\ \hline
+	Da es Ansprüche an die Schwierigkeit gibt, müssen die Waffen von der Stärke her verleichbar sein. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P1 \\
+	P2 \\
+	P3 \\
+	P4.3 - P4.7 \\
+	P5.3 \\
+	P6.2 \\
+	P6.3 \\
+	P7.2 \\
+	P8.1 \\
+	P8.2 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:24.1}     
+          \textbf{Strategie 24.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:24.2}              
+          \textbf{Strategie 24.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:24.3}     
+          \textbf{Strategie 24.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Balancing Problemkarte}
+    \label{tab:ProblemKarte24}
+\end{table}
+e \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 25: Kompetenz der Entwickler}  \\ \hline
+	Die unterschiedlichen Entwickler haben unterschiedliche (weitreichende) Kentnisse der Technologien. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	O1.1 \\
+	O1.4 \\
+	T1 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:25.1}     
+          \textbf{Strategie 25.1: Modularisierung} Wir teilen das Projekt in Module auf, sodass die unterschiedlichen Module möglichst abgekapselt voneinander implementiert werden können. \\        
+  {\phantomsection}          
+           \label{strategie:25.2}              
+          \textbf{Strategie 25.2: Kleingruppen} Wir teilen uns in kleinere Gruppen auf, die jeweils für einen Aspekt "Experten" werden. Dadurch können wir idealerweise alle an dem arbeiten, was uns am meisten passt, und ebenfalls müssen wir uns somit nicht in alles einarbeiten, was wir nicht können, sondern nur Teile. \\
+	 {\phantomsection}          
+           \label{strategie:25.3}     
+          \textbf{Strategie 25.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Kompetenz der Entwickler Problemkarte}
+    \label{tab:ProblemKarte25}
+\end{table}
+Hier setzen wir beide Strategien durch. \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 26: Sektionen}  \\ \hline
+	Das Schiff / die Schiffe sollen in systemrelevante Sektionen aufgeteilt sein. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P1.1 - P1.3 \\
+	P2.1 \\
+	P3.1 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:26.1}     
+          \textbf{Strategie 26.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:26.2}              
+          \textbf{Strategie 26.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:26.3}     
+          \textbf{Strategie 26.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Sektionen Problemkarte}
+    \label{tab:ProblemKarte26}
+\end{table}
+e \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 27: Sektionenattribute}  \\ \hline
+	Sektionen sollen Attribute haben, die auch geupradet werden können. Sie sollen ebenfalls beschädigt und repariert werden können. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P1 \\
+	P2 \\
+	P3.4 \\
+	P4.3 \\
+	P5.3 \\
+	P6.3 \\
+	P8.4 \\
+	T1.3 \\
+	T1.5 \\
+	T1.6 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:27.1}     
+          \textbf{Strategie 27.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:27.2}              
+          \textbf{Strategie 27.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:27.3}     
+          \textbf{Strategie 27.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Sektionenattribute Problemkarte}
+    \label{tab:ProblemKarte27}
+\end{table}
+e \\
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{15cm}|}
+    \hline
+          \textbf{Problem 28: Kampf- und Flugrunden}  \\ \hline
+	Es muss zwischen Runden, in denen ein Kampf gestartet oder ein Planet angeflogen werden kann und Runden innerhalb des Kampfes unterschieden werden. \\
+         \\ \hline
+          \textbf{Einflussfaktoren: } \\
+	P6.4 \\	
+	P7.1 \\
+	P5.2 \\
+	P6.3 \\
+	T1.6 \\
+	T1.3 \\
+          \hline
+          \textbf{Strategien} \\ \hline
+            {\phantomsection}          
+           \label{strategie:28.1}     
+          \textbf{Strategie 28.1:}  \\        
+  {\phantomsection}          
+           \label{strategie:28.2}              
+          \textbf{Strategie 28.2:}  \\
+	 {\phantomsection}          
+           \label{strategie:28.3}     
+          \textbf{Strategie 28.3: }  \\ 
+	 \\ \hline
+    \end{tabular}
+
+    \caption{Kampf- und Flugrunden Problemkarte}
+    \label{tab:ProblemKarte28}
+\end{table}
+e \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Konzeptionelle Sicht} \label{sec:konzeptionell}
