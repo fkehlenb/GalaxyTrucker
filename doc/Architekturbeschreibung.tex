@@ -103,46 +103,46 @@ Un%ter Auswirkungen sollte dann beschrieben werden, \emph{wie} der Faktor
 \\ \hline
 \multicolumn{3}{|l|}{{O1.1: Teamgröße}} 
 \\ \hline
-Die Gruppe besteht aus 6 Entwicklern. & Keine Flexibilität, aber Veränderlichkeit: Eine oder mehrere Personen könnten die Gruppe verlassen      & 
+Die Gruppe besteht aus 6 Entwicklern. & Keine Flexibilität, aber Veränderlichkeit: Eine oder mehrere Personen könnten die Gruppe verlassen      &  Die Architektur kann wegen Zeitmangel und fehlenden Fähigkeiten Mangel enthalten.
 \\ \hline 
 \multicolumn{3}{|l|}{{O1.2: Architekturabgabe}} 
 \\ \hline
-Die Architektur soll am 31.05.2020 abgegeben werden. & Keine Flexibilität, oder Veränderlichkeit.  & 
+Die Architektur soll am 31.05.2020 abgegeben werden. & Keine Flexibilität, oder Veränderlichkeit.  & Eventuell gibt es Mängel in der Architektur, die uns erst in der Implementierung auffallen. 
 \\ \hline             
 \multicolumn{3}{|l|}{{O1.3: Endabgabe}} 
 \\ \hline
-Das Endprodukt muss am 02.08.2020 abgegeben werden. & Keine Flexibilität, oder Veränderlichkeit.   & 
+Das Endprodukt muss am 02.08.2020 abgegeben werden. & Keine Flexibilität, oder Veränderlichkeit.   &  Eventuell können nicht alle geplanten Funktionen implementiert werden.
 \\ \hline
 \multicolumn{3}{|l|}{{O1.4: Fähigkeiten}} 
 \\ \hline
-Die Gruppenmitglieder haben unterschiedliche Programmiererfahrungen und Kentnisse. & Keine Flexibilität, aber Veränderlichkeit: Neues Wissen kann sich angeeignet werden.  & 
+Die Gruppenmitglieder haben unterschiedliche Programmiererfahrungen und Kentnisse. & Keine Flexibilität, aber Veränderlichkeit: Neues Wissen kann sich angeeignet werden.  & Die Implementierung kann Mangel enthalten. 
 \\ \hline     
 %TECHNIK
 \multicolumn{3}{|l|}{{\textbf{T1: Technik}}} 
 \\ \hline 
 \multicolumn{3}{|l|}{{T1.1: Sprache}} 
 \\ \hline
-Es soll Java 8 oder höher verwendet werden. & Eine gewisse Flexiblität und Veränderlichkeit in der Java Version, allerdings keine in der Sprache an sich.  & 
+Es soll Java 8 oder höher verwendet werden. & Eine gewisse Flexiblität und Veränderlichkeit in der Java Version, allerdings keine in der Sprache an sich.  & Das Projekt muss in Java umgesetzt werden. 
 \\ \hline                 
 \multicolumn{3}{|l|}{{T1.2: Plattformen}} 
 \\ \hline
-Das Spiel soll unter Linux, MacOS und Windows lauffähig sein & Keine Veränderlichkeit oder Flexiblität  & 
+Das Spiel soll unter Linux, MacOS und Windows lauffähig sein & Keine Veränderlichkeit oder Flexiblität  & Bei der Implementierung muss darauf geachtet werden, plattformunabhängig vorzugehen. 
 \\ \hline
 \multicolumn{3}{|l|}{{T1.3: Datenbank}} 
 \\ \hline
-Es soll eine leichtgewichtige, relationale Datenbank verwendet werden. & Große Flexibilität und Veränderlichkeit: Da es keine festen Vorgaben gibt, ist die Datenbank relativ frei wählbar. Allerdings muss eine Datenbank verwendet werden. & 
+Es soll eine leichtgewichtige, relationale Datenbank verwendet werden. & Große Flexibilität und Veränderlichkeit: Da es keine festen Vorgaben gibt, ist die Datenbank relativ frei wählbar. Allerdings muss eine Datenbank verwendet werden. & Wir müssen uns für eine Datenbank entscheiden, und diese bei der Implementierung verwenden. 
 \\ \hline
 \multicolumn{3}{|l|}{{T1.4: libgdx}} 
 \\ \hline
-Es soll libdgx verwendet werden. & Keine Veränderlichkeit oder Flexibilität.   & 
+Es soll libdgx verwendet werden. & Keine Veränderlichkeit oder Flexibilität.   & Bei der Implementierung muss libgdx verwendet werden. 
 \\ \hline
 \multicolumn{3}{|l|}{{T1.5: Client}} 
 \\ \hline
-Das Spiel soll ohne weitere Installationen auf Clientseite spielbar sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Das Spiel soll ohne weitere Installationen auf Clientseite spielbar sein. & Keine Flexibilität, oder Veränderlichkeit.    &  Bei der Implementierung muss darauf geachtet werden, keine Abhängigkeiten von Dingen zu haben, die auf Clientseite weitere Downloads erfordern. 
 \\ \hline
 \multicolumn{3}{|l|}{{T1.6: Server}} 
 \\ \hline
-Es soll eine Spielserver geben, der von mindestens zwei Spieler*innen benutzt werden kann. & Keine Flexibilität, oder Veränderlichkeit.    &
+Es soll eine Spielserver geben, der von mindestens zwei Spieler*innen benutzt werden kann. & Keine Flexibilität, oder Veränderlichkeit.    & Wir müssen einen Spielserver einrichten, der das Spiel kontrolliert. 
 \\ \hline
 %PRODUKT
 \multicolumn{3}{|l|}{{\textbf{Produktfaktoren}}} 
@@ -152,156 +152,156 @@ Es soll eine Spielserver geben, der von mindestens zwei Spieler*innen benutzt we
 \\ \hline
 \multicolumn{3}{|l|}{{P1.1: Sektionen}} 
 \\ \hline
-Das Raumschiff soll in unterschiedliche Sektionen unterteilt sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Das Raumschiff soll in unterschiedliche Sektionen unterteilt sein. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass ein Raumschiff eine Ansammlung an Sektionen ist. 
 \\ \hline 
 \multicolumn{3}{|l|}{{P1.2: Systeme}} 
 \\ \hline
-Jede Sektion soll relevante Systeme haben.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+Jede Sektion soll relevante Systeme haben.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss unterschiedlichen Sektionen die relevanten Systeme zuordnen. 
 \\ \hline
 \multicolumn{3}{|l|}{{P1.3: Beschädigungen}} 
 \\ \hline
-Sektionen sollen im Kampf beschädigt werden können.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+Sektionen sollen im Kampf beschädigt werden können.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass die Sektionen unabhängig voneinander beschädigt werden können. Ebenfalls muss für jede Sektion gespeichert und angezeigt werden, wie heile/kaputt sie ist. 
 \\ \hline
 \multicolumn{3}{|l|}{{P1.4: Systembeschädigungen}} 
 \\ \hline
-Wenn eine Sektion beschädigt ist, soll dies auch die enthaltenen Systeme beeinflussen. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Wenn eine Sektion beschädigt ist, soll dies auch die enthaltenen Systeme beeinflussen. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass für jedes System der Status gespeichert wird. 
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P2: Ressourcen}}} 
 \\ \hline
 \multicolumn{3}{|l|}{{P2.1: Ressourcen}} 
 \\ \hline
-Das Raumschiff soll verschieden Ressourcen haben, wie Geld, Energie, Status Außenhülle.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+Das Raumschiff soll verschieden Ressourcen haben, wie Geld, Energie, Status Außenhülle.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss für das Raumschiff übergeordnete Ressourcen speichern. 
 \\ \hline                                                      
 \multicolumn{3}{|l|}{{P2.2: Ressourcenveränderlichkeit}} 
 \\ \hline
-Ressourcen sollen veränderlich sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Ressourcen sollen veränderlich sein. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass die Eigenschaften nicht konstant sind, und durch Methoden auf die Werte einfluss genommen werden kann. 
 \\ \hline
 \multicolumn{3}{|l|}{{P2.3: Ressourcenverfügung}} 
 \\ \hline
-Ressourcen sollen pro Spielrunde zur Verfügung stehen. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Ressourcen sollen pro Spielrunde zur Verfügung stehen. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass der Spieler in jeder Runde Zugriff auf die Ressourcen hat und diese beeinflussen kann. 
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P3: Eigenschaften}}} 
 \\ \hline
 \multicolumn{3}{|l|}{{P3.1: Eigenschaften}} 
 \\ \hline
-Ein Raumschiff soll verschiedene Eigenschaften haben, wie Waffen, Schutzschilde, Hüllenpanzerungen, und Energie. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Ein Raumschiff soll verschiedene Eigenschaften haben, wie Waffen, Schutzschilde, Hüllenpanzerungen, und Energie. & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss für das Raumschiff übergeordnete Eigenschaften vorsehen, die für alle Sektionen gelten. 
 \\ \hline
 \multicolumn{3}{|l|}{{P3.2: Waffen}} 
 \\ \hline
-Es sollen mehrere Waffen pro Raumschiff möglich sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es sollen mehrere Waffen pro Raumschiff möglich sein. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass für ein Raumschiff mehrere Waffen gespeichert und eingesetzt werden können, die Spieler*in muss also auch die Waffe auswählen, mit der sie schießen möchte. 
 \\ \hline
 \multicolumn{3}{|l|}{{P3.3: Waffenunterschiede}} 
 \\ \hline
-Unterschiedliche Waffen sollen sich mindestens in Ladezeit, Trefferwahrscheinlichkeit und Schadenshöhe unterscheiden. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Unterschiedliche Waffen sollen sich mindestens in Ladezeit, Trefferwahrscheinlichkeit und Schadenshöhe unterscheiden. & Keine Flexibilität, oder Veränderlichkeit.    &  In der Architektur muss vorgesehen sein, dass mindestens diese Werte keine Konstanten sind, und das Spiel muss damit umgehen können, in diesen Attributen unterschiedliche Werte zu haben. 
 \\ \hline
 \multicolumn{3}{|l|}{{P3.4: Verbesserung von Eigenschaften}} 
 \\ \hline
-Eigenschaften sollen durch Geld verbessert werden können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Eigenschaften sollen durch Geld verbessert werden können. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass die Eigenschaften veränderlich sein sollen. Ebenfalls muss es Möglichkeiten geben, bei denen der Spieler Geld durch Verbesserungen austauschen kann.  
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P4: Besatzung}}} 
 \\ \hline
 \multicolumn{3}{|l|}{{P4.1: Besatzung}} 
 \\ \hline
-Das Raumschiff soll eine Besatzung haben. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Das Raumschiff soll eine Besatzung haben. & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss vorsehen, dass für ein Raumschiff gespeichert wird, welche Besatzungsmitglieder an Bord sind. 
 \\ \hline  
 \multicolumn{3}{|l|}{{P4.2: Aufenthaltsorte Besatzung}} 
 \\ \hline
-Die Besatzungsmitglieder sollen sich in Sektionen aufhalten können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Die Besatzungsmitglieder sollen sich in Sektionen aufhalten können. & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss vorsehen, dass gespeichert wird, in welcher Sektion sich welches Mitglied aufhält. 
 \\ \hline                                                  
 \multicolumn{3}{|l|}{{P4.3: Besatzung und Systeme}} 
 \\ \hline
-Die Systeme einer Sektion sollen durch die Besatzungsmitglieder beeinflusst werden können, zum Beispiel sollen Systeme/Sektionen durch die Besatzung repariert werden können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Die Systeme einer Sektion sollen durch die Besatzungsmitglieder beeinflusst werden können, zum Beispiel sollen Systeme/Sektionen durch die Besatzung repariert werden können. & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss vorsehen, dass die Besatzung mit den Sektionen interagieren kann, entweder automatisch durch ihren Aufenthalt, oder durch explizite Kommandos des Spielers. 
 \\ \hline
 \multicolumn{3}{|l|}{{P4.4: Tod}} 
 \\ \hline
-Besatzungsmitglieder sollen sterben können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Besatzungsmitglieder sollen sterben können. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass Besatzungsmitglieder einen Gesundheitsstatus haben, der sinken kann. Ebenfalls sollten Mitgleider entweder gelöscht oder inaktiviert werden, sobald sie sterben. 
 \\ \hline
 \multicolumn{3}{|l|}{{P4.5: Neue Besatzungsmitglieder}} 
 \\ \hline
-Neue Besatzungsmitglieder sollen auf das Schiff aufgenommen werden können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Neue Besatzungsmitglieder sollen auf das Schiff aufgenommen werden können. & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss vorsehen, dass die Besatzung nicht konstant ist. 
 \\ \hline
 \multicolumn{3}{|l|}{{P4.6: Besatzungsmitglieder Fähigkeiten}} 
 \\ \hline
-Besatzungsmitglieder sollen Fähigkeiten haben. Diese sollen sich auf Systeme auswirken, falls sich das Mitglied in der entsprechenden Sektion befindet. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Besatzungsmitglieder sollen Fähigkeiten haben. Diese sollen sich auf Systeme auswirken, falls sich das Mitglied in der entsprechenden Sektion befindet. & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss für die Besatzungsmitglieder ihre Fähigkeiten speichern, und, in welchen Sektionen sich diese auswirken. Ebenfalls muss automatisch geprüft werden, ob ein Besatzunsmitglied in der Sektion, in der es sich aktuell befindet, eine Auswirkung hat. 
 \\ \hline
 \multicolumn{3}{|l|}{{P4.7: Verbesserung Fähigkeiten}} 
 \\ \hline
-Die Fähigkeiten der Besatzungsmitglieder sollen verbessert werden können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Die Fähigkeiten der Besatzungsmitglieder sollen verbessert werden können. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass die gespeicherten Fähigkeiten nicht konstant sind. Es muss eine Möglichkeit geben für den Spieler, Verbesserungen auszuwählen (z.B. zu kaufen). 
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P5: Spielfeld}}} 
 \\ \hline         
 \multicolumn{3}{|l|}{{P5.1: Spielfeld}} 
 \\ \hline
-Es soll ein Spielfeld geben, was eine Karte darstellt. Die Karte verzeichent Stationen/Planeten. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es soll ein Spielfeld geben, was eine Karte darstellt. Die Karte verzeichent Stationen/Planeten. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss die möglichen Orte sowie ihre Verbindungen effizient speichern. Es muss ebenfalls immer der relevante Ausschnitt der Karte angezeigt werden. 
 \\ \hline          
 \multicolumn{3}{|l|}{{P5.2: Reise}} 
 \\ \hline
-Pro Spielrunde kann eine Station/ein Planet laut den Verbindungen auf der Karte angeflogen werden.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+Pro Spielrunde kann eine Station/ein Planet laut den Verbindungen auf der Karte angeflogen werden.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass der Spieler Eingaben machen kann, zu welchem Gebiet geflogen werden soll. Ebenfalls müssen diese Eingaben überprüft werden (geht dieser Zug mit den existierenden Verbindungen). 
 \\ \hline
 \multicolumn{3}{|l|}{{P5.3: Ereignisse}} 
 \\ \hline
-Auf jeder Station/auf jedem Planet soll ein Ereignis auftreten können, was positive oder negative Auswirkungen haben kann; zum Beispiel der Angriff eines feindlichen Schiffes.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+Auf jeder Station/auf jedem Planet soll ein Ereignis auftreten können, was positive oder negative Auswirkungen haben kann; zum Beispiel der Angriff eines feindlichen Schiffes.  & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss vorsehen, dass mögliche Ereignisse für jeden Ort gespeichert und mit einer gewissen Wahrscheinlichkeit ausgelöst werden. 
 \\ \hline
 \multicolumn{3}{|l|}{{P5.4: Mehrere Ereignisse}} 
 \\ \hline
-Es soll mindestens fünf unterschiedliche Arten von Ereignissen geben. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es soll mindestens fünf unterschiedliche Arten von Ereignissen geben. & Keine Flexibilität, oder Veränderlichkeit.    & Das Spiel muss möglichst unkompliziert unterschiedliche Ereignisse auslösen und durchführen können. 
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P6: Kämpfe}}} 
 \\ \hline
 \multicolumn{3}{|l|}{{P6.1: Kämpfe}} 
 \\ \hline
-Es sollen Kämpfe zwischen dem Spieler und feindlichen Raumschiffen möglich sind. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es sollen Kämpfe zwischen dem Spieler und feindlichen Raumschiffen möglich sind. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass es abgesehen von Flugrunden auch Kampfrunden gibt, in denen es andere Aktionen gibt.
 \\ \hline
 \multicolumn{3}{|l|}{{P6.2: Kampfart}} 
 \\ \hline
-Die Kämpfe sollen in Form von rundenbasierten Entscheidungen gefochten werden. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Die Kämpfe sollen in Form von rundenbasierten Entscheidungen gefochten werden. & Keine Flexibilität, oder Veränderlichkeit.    &  Es muss vorgesehen sein, dass der Spieler und der Gegner sich abwechseln, und der Spieler nicht Aktionen durchführen kann, wenn der Gegner dran ist. 
 \\ \hline
 \multicolumn{3}{|l|}{{P6.3: Kampfhandlungen}} 
 \\ \hline
-Es sollen folgende Kampfhandlungen möglich sein: Abfeuern einer Waffe auf das gegnerische Schiff, Verteilung der Besatzung auf die Sektionen, und Zuweisung von Energie an Sektionen. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es sollen folgende Kampfhandlungen möglich sein: Abfeuern einer Waffe auf das gegnerische Schiff, Verteilung der Besatzung auf die Sektionen, und Zuweisung von Energie an Sektionen. & Keine Flexibilität, oder Veränderlichkeit.    &  In den Kampfrunden dürfen nur diese Handlungen zur Verfügung stehen.
 \\ \hline
 \multicolumn{3}{|l|}{{P6.4: Zeit}} 
 \\ \hline
-Kampfhandlungen brauchen Zeit: Waffen müssen laden und Besatzungsmitglieder sind nicht sofort in der Zielsektion. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Kampfhandlungen brauchen Zeit: Waffen müssen laden und Besatzungsmitglieder sind nicht sofort in der Zielsektion. & Keine Flexibilität, oder Veränderlichkeit.    & Während den Kampfrunden muss beachtet werden, dass nicht alle Handlungen immer zur Verfügung stehen. 
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P7: Spielverlauf}}} 
 \\ \hline
 \multicolumn{3}{|l|}{{P7.1: Spielverlauf}} 
 \\ \hline
-Es soll einen klaren Spielverlauf mit einer Endgegner*in un der Möglichkeit, durch Besiegung dieser zu gewinnen, geben.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es soll einen klaren Spielverlauf mit einer Endgegner*in un der Möglichkeit, durch Besiegung dieser zu gewinnen, geben.  & Keine Flexibilität, oder Veränderlichkeit.    & Es muss eine übergeordnete Entität geben, die diesen Spielverlauf über Planeten hinweg kontrolliert. 
 \\ \hline
 \multicolumn{3}{|l|}{{P7.2: Schwierigkeit}} 
 \\ \hline
-Es sollen unterschiedliche Schwierigkeitsstufen für ein Spiel auswählbar sein. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es sollen unterschiedliche Schwierigkeitsstufen für ein Spiel auswählbar sein. & Keine Flexibilität, oder Veränderlichkeit.    & Es muss möglichst unkomplex Veränderungen geben, die das Spiel leichter/schwerer machen. 
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P8: Server}}} 
 \\ \hline
 \multicolumn{3}{|l|}{{P8.1: Direkter Kampf zweier Spieler}} 
 \\ \hline
-Es sollen, wenn möglich, zwei Spieler gegeneinander spielen. Diese beiden sollen auch in direkten Kämpfen gegeneinander antreten können. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es sollen, wenn möglich, zwei Spieler gegeneinander spielen. Diese beiden sollen auch in direkten Kämpfen gegeneinander antreten können. & Keine Flexibilität, oder Veränderlichkeit.  & In der Multiplayer Spielführung müssen die Spieler früher oder später zu Interaktionen gezwungen sein. 
 \\ \hline
 \multicolumn{3}{|l|}{{P8.2: Computergegner}} 
 \\ \hline
-Wenn kein zweiter Spieler online ist, soll der Gegner durch den Computer simuliert werden. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Wenn kein zweiter Spieler online ist, soll der Gegner durch den Computer simuliert werden. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss Computergegner vorsehen, die gegen den Spieler spielen können. 
 \\ \hline
 \multicolumn{3}{|l|}{{P8.3: Prüfung vom Server}} 
 \\ \hline
-Der Server soll die Einhaltung von Regeln und Plausibilität während dem Spiel prüfen.  & Keine Flexibilität, oder Veränderlichkeit.    & 
+Der Server soll die Einhaltung von Regeln und Plausibilität während dem Spiel prüfen.  & Keine Flexibilität, oder Veränderlichkeit.    & Im Server muss es etwas geben, was alle Züge prüft. Es ist wichtig, dass keine Züge ausgeführt werden, ohne dass diese verifiziert wurden. 
 \\ \hline
 \multicolumn{3}{|l|}{{P8.4: Speicherung Spielverlauf}} 
 \\ \hline
-Der Server soll den Spielverlauf speichern. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Der Server soll den Spielverlauf speichern. & Keine Flexibilität, oder Veränderlichkeit.    & Es muss nach jeder Änderung in irgendeiner Form alles so gespeichert werden, dass der Spielverlauf nachvollziehbar ist. 
 \\ \hline
 \multicolumn{3}{|l|}{{P8.5: Spielverlauf unterbrechen und fortsetzen}} 
 \\ \hline
-Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Zeitpunkt fortzuführen. & Keine Flexibilität, oder Veränderlichkeit.    & 
+Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Zeitpunkt fortzuführen. & Keine Flexibilität, oder Veränderlichkeit.    & Es muss eine Möglichkeit geben, speichern auszuwählen, sowie, bei Spielbeginn ein existierendes Spiel auszuwählen und fortzusetzen. 
 \\ \hline
 \end{longtable}
 
@@ -621,7 +621,7 @@ Hier setzen wir die .. Strategie um. \\
     \caption{Waffen Problemkarte}
     \label{tab:ProblemKarte10}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um. \\
 
 \begin{table}[H]
     \centering
@@ -649,7 +649,7 @@ e \\
     \caption{Cross Platform Problemkarte}
     \label{tab:ProblemKarte11}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um. \\
 
 \begin{table}[H]
     \centering
@@ -927,7 +927,7 @@ Hier setzen wir die .. Strategie um. \\
     \caption{Schutzschilde und Hüllen Problemkarte}
     \label{tab:ProblemKarte20}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um. \\
 
 \begin{table}[H]
     \centering
@@ -965,7 +965,7 @@ e \\
     \caption{Treffen von Sektionen Problemkarte}
     \label{tab:ProblemKarte21}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um. \\
 
 \begin{table}[H]
     \centering
@@ -1020,7 +1020,7 @@ Hier wenden wir die erste Strategie an. \\
     \caption{NPC Problemkarte}
     \label{tab:ProblemKarte23}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um. \\
 
 %TODO: PROBLEMKARTE ENDBOSS DOPPELT?
 
@@ -1059,7 +1059,7 @@ e \\
     \caption{Balancing Problemkarte}
     \label{tab:ProblemKarte24}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um. \\
 
 \begin{table}[H]
     \centering
@@ -1119,7 +1119,7 @@ Hier setzen wir beide Strategien durch. \\
     \caption{Sektionen Problemkarte}
     \label{tab:ProblemKarte26}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um. \\
 
 \begin{table}[H]
     \centering
@@ -1156,7 +1156,7 @@ e \\
     \caption{Sektionenattribute Problemkarte}
     \label{tab:ProblemKarte27}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um.\\
 
 \begin{table}[H]
     \centering
@@ -1189,7 +1189,7 @@ e \\
     \caption{Kampf- und Flugrunden Problemkarte}
     \label{tab:ProblemKarte28}
 \end{table}
-e \\
+Hier setzen wir die .. Strategie um. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Konzeptionelle Sicht} \label{sec:konzeptionell}
