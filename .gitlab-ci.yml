@@ -3,7 +3,6 @@ image: java:8-jdk
 stages:
   - build
   - test
-  - deploy
 
 cache:
   paths:
@@ -25,8 +24,3 @@ test:
   stage: test
   script:
     - ./gradlew check
-
-deploy:
-  stage: deploy
-  script:
-    - ./deploy
