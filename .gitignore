@@ -13,6 +13,10 @@
 *.cb2
 .*.lb
 
+# Versteckte Dateien (aber .gitignore behalten)
+.*
+!.gitignore
+
 #===Ignore PDF files===
 Architekturbeschreibung.pdf
 *.out.ps
