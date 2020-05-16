@@ -102,16 +102,16 @@ public class GamePlay implements Screen {
     public GamePlay(Main main) {
     }
 
-    /**
-     * Send data to server
-     */
-    private void sendData(Packet data) {
-    }
-
-    /**
-     * Receive data from server
-     */
-    private Packet receiveData() {
-        return null;
-    }
+//    /**
+//     * Send data to server
+//     */
+//    private void sendData(Packet data) {
+//    }
+//
+//    /**
+//     * Receive data from server
+//     */
+//    private Packet receiveData() {
+//        return null;
+//    }
 }
