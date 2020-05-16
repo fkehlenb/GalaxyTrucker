@@ -1,4 +1,4 @@
-image: java:13-jdk
+image: java:latest
 
 stages:
   - build
