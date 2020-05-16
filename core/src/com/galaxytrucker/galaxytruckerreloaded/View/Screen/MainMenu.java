@@ -32,22 +32,22 @@ public class MainMenu implements Screen {
     /**
      * SinglePlayer button
      */
-    private ImageButton singleplayerButton;
+    private ImageButton singlePlayerButton;
 
     /**
      * SinglePlayer button texture
      */
-    private Texture singleplayerButtonTexture;
+    private Texture singlePlayerButtonTexture;
 
     /**
      * MultiPlayer button
      */
-    private ImageButton multiplayerButton;
+    private ImageButton multiPlayerButton;
 
     /**
      * MultiPlayer button texture
      */
-    private Texture multiplayerButtonTexture;
+    private Texture multiPlayerButtonTexture;
 
     /**
      * Options button
@@ -68,11 +68,6 @@ public class MainMenu implements Screen {
      * Quit button texture
      */
     private ImageButton quitButtonTexture;
-
-    /**
-     * Main class for accessing SpriteBatch
-     */
-    private Main mainClass;
 
     /**
      * Looping music track
@@ -119,6 +114,7 @@ public class MainMenu implements Screen {
 
     }
 
-    /** Constructor */
+    /** Constructor
+     * @param main - main class */
     public MainMenu(Main main){}
 }

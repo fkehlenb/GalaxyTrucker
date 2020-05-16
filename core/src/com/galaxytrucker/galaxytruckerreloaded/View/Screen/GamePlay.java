@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
+import com.sun.tools.jdi.Packet;
 
 /**
  * Main game screen
@@ -29,11 +31,6 @@ public class GamePlay implements Screen {
     private Texture background;
 
     /**
-     * Main class for spriteBatch
-     */
-    private Main mainClass;
-
-    /**
      * Looping music
      */
     private Music music;
@@ -42,6 +39,16 @@ public class GamePlay implements Screen {
      * Click sound effect
      */
     private Sound clickSound;
+
+    /**
+     * MultiPlayer active
+     */
+    private boolean multiPlayer;
+
+    /**
+     * Current map
+     */
+    private MapUI gameMap;
 
     @Override
     public void show() {
@@ -89,7 +96,22 @@ public class GamePlay implements Screen {
 
     /**
      * Constructor
+     *
+     * @param main - main class
      */
     public GamePlay(Main main) {
+    }
+
+    /**
+     * Send data to server
+     */
+    private void sendData(Packet data) {
+    }
+
+    /**
+     * Receive data from server
+     */
+    private Packet receiveData() {
+        return null;
     }
 }
