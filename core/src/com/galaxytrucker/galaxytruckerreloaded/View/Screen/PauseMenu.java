@@ -1,22 +1,18 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
 /**
- * Login Screen
+ * Pause menu screen
  */
-public class LoginScreen implements Screen {
+public class PauseMenu implements Screen {
 
     /**
-     * SpriteBatch
+     * Sptire batch
      */
     private SpriteBatch batch;
 
@@ -26,34 +22,9 @@ public class LoginScreen implements Screen {
     private OrthographicCamera camera;
 
     /**
-     * Background image
+     * Game paused texture
      */
-    private Texture background;
-
-    /**
-     * Username input text field
-     */
-    private TextField username;
-
-    /**
-     * Login button
-     */
-    private ImageButton loginButton;
-
-    /**
-     * Login button texture
-     */
-    private Texture loginButtonTexture;
-
-    /**
-     * Looping music track
-     */
-    private Music music;
-
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
+    private Texture pausedTexture;
 
     @Override
     public void show() {
@@ -90,11 +61,8 @@ public class LoginScreen implements Screen {
 
     }
 
-    /**
-     * Constructor
-     *
-     * @param main - main class
-     */
-    public LoginScreen(Main main) {
+    /** Constructor
+     * @param main - main class */
+    public PauseMenu(Main main) {
     }
 }

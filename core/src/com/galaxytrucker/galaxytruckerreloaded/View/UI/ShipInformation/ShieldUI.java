@@ -6,60 +6,55 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
-/**
- * HullUI
- */
-public class HullUI {
+public class ShieldUI {
 
     /**
-     * SpriteBatch
+     * Sprite batch
      */
     private SpriteBatch batch;
 
-    /**
-     * Orthographic camera
-     */
+    /** Orthographic camera */
     private OrthographicCamera camera;
 
     /**
-     * HullUI background texture
+     * Shield screen background texture
      */
-    private Texture HullBackgroundTexture;
+    private Texture background;
 
     /**
-     * Change amount of hull integrity based on hp
+     * Shield textures
      */
-    private List<Texture> hullTextures;
+    private List<Texture> shieldTextures;
 
     /**
-     * setup called after initialisation
+     * Setup called after initialisation
      */
     private void setup() {
     }
 
     /**
-     * show ui
+     * Show shield ui
      */
-    public void showHullUI() {
+    public void showShieldUI() {
     }
 
     /**
-     * hide ui
+     * hide the shield ui
      */
-    public void hideHullUI() {
+    public void hideShieldUI() {
     }
 
     /**
-     * dispose
+     * Dispose of shield ui
      */
-    public void disposeHullUI() {
+    public void disposeShieldUI() {
     }
 
     /**
      * Constructor
      *
-     * @param main - main class
+     * @param main - the main class
      */
-    public HullUI(Main main) {
+    public ShieldUI(Main main) {
     }
 }

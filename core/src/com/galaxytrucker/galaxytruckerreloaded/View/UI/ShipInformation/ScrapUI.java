@@ -3,33 +3,24 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
-/**
- * HullUI
- */
-public class HullUI {
+public class ScrapUI {
 
     /**
-     * SpriteBatch
+     * Sprite batch
      */
     private SpriteBatch batch;
 
     /**
-     * Orthographic camera
+     * Orthographic Camera
      */
     private OrthographicCamera camera;
 
     /**
-     * HullUI background texture
+     * Scrap UI background
      */
-    private Texture HullBackgroundTexture;
-
-    /**
-     * Change amount of hull integrity based on hp
-     */
-    private List<Texture> hullTextures;
+    private Texture scrapBackground;
 
     /**
      * setup called after initialisation
@@ -38,28 +29,28 @@ public class HullUI {
     }
 
     /**
-     * show ui
+     * show the ui
      */
-    public void showHullUI() {
+    public void showScrapUI() {
     }
 
     /**
-     * hide ui
+     * hide the ui
      */
-    public void hideHullUI() {
+    public void hideScrapUI() {
     }
 
     /**
-     * dispose
+     * Dispose of ui
      */
-    public void disposeHullUI() {
+    public void disposeScrapUI() {
     }
 
     /**
      * Constructor
      *
-     * @param main - main class
+     * @param main - main class used for sprite batch and camera
      */
-    public HullUI(Main main) {
+    public ScrapUI(Main main) {
     }
 }

@@ -22,6 +22,11 @@ public class OptionsUI {
     private OrthographicCamera camera;
 
     /**
+     * Options ui background
+     */
+    private Texture optionsBackgroundTexture;
+
+    /**
      * Continue button
      */
     private ImageButton continueButton;
@@ -52,11 +57,6 @@ public class OptionsUI {
     private Texture quitButtonTexture;
 
     /**
-     * Main class for sprite batch
-     */
-    private Main mainClass;
-
-    /**
      * Setup called after initialisation
      */
     private void setup() {
@@ -65,17 +65,25 @@ public class OptionsUI {
     /**
      * Open the options menu
      */
-    public void openOptions() {
+    public void showOptionsUI() {
     }
 
     /**
      * Close the options menu
      */
-    public void closeOptions() {
+    public void hideOptionsUI() {
+    }
+
+    /**
+     * Dispose of options ui
+     */
+    public void disposeOptionsUI() {
     }
 
     /**
      * Constructor
+     *
+     * @param main - main class
      */
     public OptionsUI(Main main) {
         setup();

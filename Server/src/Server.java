@@ -9,7 +9,6 @@ public class Server {
      * Start the server
      */
     public static void main(String[] args) {
-
     }
 
     /**

@@ -73,6 +73,7 @@ public class ShipSelector implements Screen {
 
     }
 
-    /** Constructor */
+    /** Constructor
+     * @param main - main class */
     public ShipSelector(Main main){}
 }
