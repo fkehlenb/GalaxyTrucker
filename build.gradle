@@ -46,7 +46,8 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
+        // sqlite
+        compile group:'org.xerial', name:'sqlite-jdbc', version:'3.8.11.2'
     }
 }
 
