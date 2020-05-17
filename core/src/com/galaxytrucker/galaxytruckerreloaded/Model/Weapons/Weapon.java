@@ -7,4 +7,16 @@ public abstract class Weapon {
 
     /** Weapon coolDown */
     private int cooldown;
+
+    /** Weapon energy */
+    private int energy;
+
+    private int missileCost;
+    private float dropchance;
+    private int crewdamage;
+    /**
+     * How many projectiles are fired per burst
+     */
+    private int burst;
+    private float precision;
 }
