@@ -1,6 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 
-public abstract class Room {
+public abstract class Section {
     /**
      * Höhe des Raumes. Räume sind immer rechteckig.
      */
