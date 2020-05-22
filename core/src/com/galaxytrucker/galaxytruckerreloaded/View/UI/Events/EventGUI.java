@@ -8,6 +8,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 
 /**
  * Shows an event
+ *
+ * dialogue window for the events that can occur at a planet
  */
 public class EventGUI {
 

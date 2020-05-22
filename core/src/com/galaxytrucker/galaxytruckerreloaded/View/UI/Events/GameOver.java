@@ -4,12 +4,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
+/**
+ * view for the event that the player has lost or won the game
+ */
 public class GameOver {
 
     /**
      * Game over texture
      */
     private Texture gameOverTexture;
+
+    /**
+     * Game won texture
+     */
+    private Texture gameWonTexture;
 
     /**
      * Main menu button
