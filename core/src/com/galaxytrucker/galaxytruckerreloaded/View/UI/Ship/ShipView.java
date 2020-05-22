@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.UI;
+package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,6 +29,11 @@ public class ShipView {
     private Texture enemyShipBackgroundTexture;
 
     /**
+     * Ship shield view
+     */
+    private ShieldView shieldView;
+
+    /**
      * Setup called after initialisation
      */
     private void setup() {
@@ -39,7 +44,7 @@ public class ShipView {
      */
     public void showShipView() {
     }
-    
+
     /**
      * Hide the ship
      */
