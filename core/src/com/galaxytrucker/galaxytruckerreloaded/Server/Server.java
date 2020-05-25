@@ -1,14 +1,21 @@
-import Persistence.Database;
+package com.galaxytrucker.galaxytruckerreloaded.Server;
+
+import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
 
 /**
  * This class creates the game server and handles storing the data
  */
 public class Server {
 
+    /** The database */
+    private Database database;
+
     /**
      * Start the server
      */
     public static void main(String[] args) {
+        Database database = new Database();
+        database.setup();
     }
 
     /**
@@ -30,9 +37,9 @@ public class Server {
     }
 
     /**
-     * Current database
+     * Initialize database
      */
-    private Database currentDatabase() {
-        return null;
+    private void initializeDatabase() {
+
     }
 }
