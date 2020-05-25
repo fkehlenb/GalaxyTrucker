@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @DatabaseTable(tableName = "shield")
 public class Shield extends System implements Serializable {
 

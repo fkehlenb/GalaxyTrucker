@@ -7,7 +7,6 @@ import lombok.*;
 import java.io.Serializable;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
 @DatabaseTable(tableName = "engine")

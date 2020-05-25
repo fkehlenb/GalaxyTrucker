@@ -9,13 +9,14 @@ import com.j256.ormlite.table.TableUtils;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Database {
 
     /**
      * Database connection source
      */
     private ConnectionSource source;
+
 
     /**
      * Load or create h2 database
