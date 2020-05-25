@@ -1,27 +1,32 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 
 /**
  * shows the weapons of the ship
  */
+//TODO warum ist weapon in model nicht system subklasse?
 public class WeaponUI {
 
     /**
-     * Sprite batch
-     */
-    private SpriteBatch batch;
-
-    /** Orthographic camera */
-    private OrthographicCamera camera;
-
-    /**
-     * TODO better if list of weapons instead of one?
+     * the weapon
      */
     private Weapon weapon;
+
+    /**
+     * the texure to display the weapon background
+     */
+    private Texture weaponBackground;
+
+    /**
+     * the textures to display the cooldown until the weapon can be used again
+     */
+    private List<Texture> weaponCooldown;
 
 
     /**
@@ -31,31 +36,17 @@ public class WeaponUI {
     }
 
     /**
-     * show the Weapon ui
+     * animation for when the weapon was shot
      */
-    public void showWeaponUI() {
-
-    }
-
-    /**
-     * hide the Weapon ui
-     */
-    public void hideWeaponUI() {
-
-    }
-
-    /**
-     * dispose of the Weapon UI
-     */
-    public void disposeWeaponUI() {
+    public void weaponShotAnimation() {
 
     }
 
     /**
      * constructor
      * @param main the main class
+     * @param weapon the weapon
      */
-    public WeaponUI(Main main) {
-
+    public WeaponUI(Main main, Weapon weapon) {
     }
 }

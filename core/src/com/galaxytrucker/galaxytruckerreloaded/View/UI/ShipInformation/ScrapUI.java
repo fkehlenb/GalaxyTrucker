@@ -23,6 +23,11 @@ public class ScrapUI {
     private Texture scrapBackground;
 
     /**
+     * the amount of money
+     */
+    private int amount;
+
+    /**
      * setup called after initialisation
      */
     private void setup() {
@@ -47,10 +52,19 @@ public class ScrapUI {
     }
 
     /**
+     * the amount of money is updated
+     * @param amount the new amount
+     */
+    public void changeAmount(int amount) {
+
+    }
+
+    /**
      * Constructor
      *
      * @param main - main class used for sprite batch and camera
+     * @param money the amount of money
      */
-    public ScrapUI(Main main) {
+    public ScrapUI(Main main, int money) {
     }
 }

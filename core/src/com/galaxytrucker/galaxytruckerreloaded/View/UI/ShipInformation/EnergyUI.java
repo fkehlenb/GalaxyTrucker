@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 /**
  * shows the energy the ship has
@@ -18,8 +19,16 @@ public class EnergyUI {
     /** Orthographic camera */
     private OrthographicCamera camera;
 
+    /**
+     * the textures to display the overall amount of
+     * energy that was not yet given to any system
+     */
+    private List<Texture> energyTextures;
 
-    private Texture energyTexture;
+    /**
+     * the amount of energy left not allocated to systems
+     */
+    private int energy;
 
 
     /**
@@ -49,11 +58,14 @@ public class EnergyUI {
 
     }
 
+
+
     /**
      * constructor
      * @param main the main class
+     * @param energy the amount of energy unallocated to systems
      */
-    public EnergyUI(Main main) {
+    public EnergyUI(Main main, int energy) {
 
     }
 }

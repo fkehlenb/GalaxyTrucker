@@ -1,32 +1,39 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.UI;
+package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
 
-public class ShipView {
-
-    /**
-     * SpriteBatch
-     */
-    private SpriteBatch batch;
+public class ShipView extends AbstractShip {
 
     /**
-     * Orthographic camera
+     * the uis of all the crew members
      */
-    private OrthographicCamera camera;
+    private List<CrewUI> crew;
 
     /**
-     * Ship used by this view
+     * the energy ui of this ship
      */
-    private Ship ship;
+    private EnergyUI energy;
 
     /**
-     * Background image if its the enemy ship
+     * the hull ui of this ship
      */
-    private Texture enemyShipBackgroundTexture;
+    private HullUI hull;
+
+    /**
+     * the ui displaying the amount of money the player has
+     */
+    private ScrapUI money;
+
+    /**
+     * the background texture of the ship
+     */
+    private Texture shipBackground;
 
     /**
      * Setup called after initialisation
@@ -69,6 +76,7 @@ public class ShipView {
      *
      * @param main - the main class for SpriteBatch
      */
-    public ShipView(Main main) {
+    public ShipView(Main main, Ship ship) {
+        super(main, ship);
     }
 }

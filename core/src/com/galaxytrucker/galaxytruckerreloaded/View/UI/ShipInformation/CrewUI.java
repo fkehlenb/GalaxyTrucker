@@ -1,9 +1,13 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 
 /**
  * shows the crew on board
@@ -18,10 +22,46 @@ public class CrewUI {
     /** Orthographic camera */
     private OrthographicCamera camera;
 
+    /** image of the crew member for the side bar **/
+    private Texture crewImage;
+
     /**
-     * TODO better if list of crew?
+     * the crew texture that is used to display the crew member in the ship
+     */
+    private Texture crewInShip;
+
+    /**
+     * texture for the status of the crew member
+     */
+    private List<Texture> crewStatus;
+
+    /**
+     * the crew member
      */
     private Crew crew;
+
+    /**
+     * the crew member was moved to a new room
+     *
+     * @param room the new room
+     */
+    public void crewMoved(Room room) {
+
+    }
+
+    /**
+     * the crew member died
+     */
+    public void crewDied() {
+
+    }
+
+    /**
+     * animation showing the crew member is currently repairing something
+     */
+    public void crewRepairAnimation() {
+
+    }
 
     /**
      * Setup called after initialisation
@@ -51,10 +91,18 @@ public class CrewUI {
     }
 
     /**
+     * the crew member was hit and the status needs to be updated
+     */
+    public void statusUpdate() {
+
+    }
+
+    /**
      * constructor
      * @param main the main class
+     * @param crew the crew member
      */
-    public CrewUI(Main main) {
+    public CrewUI(Main main, Crew crew) {
 
     }
 }

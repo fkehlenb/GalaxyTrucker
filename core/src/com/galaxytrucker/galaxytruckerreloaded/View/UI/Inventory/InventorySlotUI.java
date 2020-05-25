@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
-public class InventorySlotUI {
+public abstract class InventorySlotUI {
 
     /**
      * Sprite batch for rendering
@@ -33,28 +33,19 @@ public class InventorySlotUI {
     private Texture inventorySlotTexture;
 
     /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
      * show the ui
      */
-    public void showInventorySlotUI() {
-    }
+    public abstract void showInventorySlotUI();
 
     /**
      * Hide inventory slot ui
      */
-    public void hideInventorySlotUI() {
-    }
+    public abstract void hideInventorySlotUI();
 
     /**
      * Dispose inventory slot ui
      */
-    public void disposeInventorySlotUI() {
-    }
+    public abstract void disposeInventorySlotUI();
 
     /**
      * Constructor

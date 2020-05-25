@@ -86,6 +86,6 @@ public class OptionsUI {
      * @param main - main class
      */
     public OptionsUI(Main main) {
-        setup();
+
     }
 }

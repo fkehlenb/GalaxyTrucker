@@ -38,6 +38,8 @@ public class EventGUI {
      */
     private Texture backgroundTexture;
 
+    //TODO das event was stattfindet als parameter
+
     /**
      * Setup called after initialisation
      */
