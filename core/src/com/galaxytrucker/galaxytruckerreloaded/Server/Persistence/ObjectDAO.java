@@ -8,12 +8,12 @@ public abstract class ObjectDAO<T> {
      *
      * @param o - the object to save
      */
-    public abstract void persist(T o);
+    public abstract void persist(T o) throws Exception;
 
     /**
      * Remove an object from the database
      *
      * @param o - the object to remove
      */
-    public abstract void remove(T o);
+    public abstract void remove(T o) throws Exception;
 }

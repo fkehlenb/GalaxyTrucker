@@ -1,6 +1,9 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateShipException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.ShipNotFoundException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 
@@ -25,13 +28,12 @@ public class ShipDAO extends ObjectDAO<Ship> {
 
     }
 
-
     /**
      * Add a new ship to the database
      *
      * @param s - the ship to add
      */
-    public void persist(Ship s) {
+    public void persist(Ship s) throws DuplicateShipException {
 
     }
 
@@ -40,7 +42,7 @@ public class ShipDAO extends ObjectDAO<Ship> {
      *
      * @param user - the ship's associated user
      */
-    private Ship getShipByUser(String user) {
+    private Ship getShipByUser(String user) throws ShipNotFoundException, UserNotFoundException {
         return null;
     }
 
@@ -49,7 +51,7 @@ public class ShipDAO extends ObjectDAO<Ship> {
      *
      * @param s - the ship to remove
      */
-    public void remove(Ship s) {
+    public void remove(Ship s) throws ShipNotFoundException{
 
     }
 }

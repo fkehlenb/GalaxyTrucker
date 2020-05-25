@@ -1,6 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateUserException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 
@@ -30,7 +32,7 @@ public class UserDAO extends ObjectDAO<User> {
      *
      * @param u - the user to add
      */
-    public void persist(User u) {
+    public void persist(User u) throws DuplicateUserException {
 
     }
 
@@ -39,7 +41,7 @@ public class UserDAO extends ObjectDAO<User> {
      *
      * @param username - the username of the user
      */
-    private User getUserByUsername(String username) {
+    private User getUserByUsername(String username) throws UserNotFoundException {
         return null;
     }
 
@@ -48,7 +50,7 @@ public class UserDAO extends ObjectDAO<User> {
      *
      * @param u - the user to delete
      */
-    public void remove(User u) {
+    public void remove(User u) throws UserNotFoundException {
 
     }
 
@@ -57,7 +59,7 @@ public class UserDAO extends ObjectDAO<User> {
      *
      * @param username - the username of the user to delete
      */
-    private void removeUserByUsername(String username) {
+    private void removeUserByUsername(String username) throws UserNotFoundException {
 
     }
 
