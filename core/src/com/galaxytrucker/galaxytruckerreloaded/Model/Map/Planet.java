@@ -1,8 +1,8 @@
-package com.galaxytrucker.galaxytruckerreloaded.Model.Planet;
+package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
 public abstract class Planet {
 
-    /** Planet name */
+    /** Map name */
     private String name;
     /** Horizontale Position auf der Karte */
     private float posX;

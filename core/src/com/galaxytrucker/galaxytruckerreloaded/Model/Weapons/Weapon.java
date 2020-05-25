@@ -15,6 +15,10 @@ public abstract class Weapon {
     private float dropchance;
     private int crewdamage;
     /**
+     * Amount of shields ignored by attack
+     */
+    private int piercing;
+    /**
      * How many projectiles are fired per burst
      */
     private int burst;

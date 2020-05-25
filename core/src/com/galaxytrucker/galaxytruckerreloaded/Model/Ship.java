@@ -1,16 +1,50 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model;
 
+import jdk.internal.util.xml.impl.Pair;
+
 public class Ship {
 
     /**
      * HP
      */
-    private int hp;
+    private int health;
 
     /**
-     * Shields
+     * Resources are stored in ship
      */
-    private int shields;
+    private int money;
+    private int missiles;
+    private int fuel;
+
+    /**
+     * Energy to be distributed
+     */
+    private int energy;
+
+    /**
+     * Shields that are currently active
+     */
+    private int shieldCharge;
+
+    /**
+     * Total number of Shields that are powered. Possibly redundant through Shield.getEnergy/2
+     */
+    private int maxShieldCharge;
+
+    /**
+     * chance for the ship to dodge incoming attacks
+     */
+    private float evasion;
+
+    /**
+     * X and Y coordinates on the map
+     */
+    private Pair position;
+
+    /**
+     * time needed until position can be changed again
+     */
+    private int FTLcharge;
 
     /**
      * Take damage
