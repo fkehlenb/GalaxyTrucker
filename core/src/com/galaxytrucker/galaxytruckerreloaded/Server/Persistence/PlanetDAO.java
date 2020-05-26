@@ -18,6 +18,16 @@ public class PlanetDAO extends ObjectDAO<Planet> {
     }
 
     /**
+     * Update an existing planet in the database
+     *
+     * @param p - the planet to update
+     * @throws PlanetNotFoundException if the planet cannot be found in the database
+     */
+    public void update(Planet p) throws PlanetNotFoundException {
+
+    }
+
+    /**
      * Remove an existing planet from the database
      *
      * @param p - the planet to remove

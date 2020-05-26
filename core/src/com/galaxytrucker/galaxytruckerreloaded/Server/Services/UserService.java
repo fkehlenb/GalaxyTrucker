@@ -1,6 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateUserException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.UserDAO;
 import com.j256.ormlite.support.ConnectionSource;
 
@@ -14,35 +16,41 @@ public class UserService {
     /**
      * add a new user to the database
      *
-     * @param user - the user to add
+     * @param username - the username of the user to add
+     *
+     * @throws DuplicateUserException if the user already exists
      */
-    public void addUser(User user) {
+    public void addUser(String username) throws DuplicateUserException {
     }
 
     /**
      * Fetch a user from the database
      *
      * @param username - the username of the user to fetch
+     *
+     * @throws UserNotFoundException if the user couldn't be found
      */
-    public User getUser(String username) {
+    public User getUser(String username) throws UserNotFoundException {
         return null;
     }
 
     /**
-     * Remove a user from the database
+     * Update a user in the database
      *
-     * @param u - the user to remove
+     * @param u - the user to update
+     * @throws UserNotFoundException if the user cannot be found in the database
      */
-    public void removeUser(User u) {
-
+    public void updateUser(User u) throws UserNotFoundException {
     }
 
     /**
      * Remove a user using his username
      *
      * @param username - the username of the user to remove
+     *
+     * @throws UserNotFoundException if the user cannot be found
      */
-    public void removeUserByUsername(String username) {
+    public void removeUserByUsername(String username) throws UserNotFoundException {
     }
 
     /**
@@ -59,13 +67,17 @@ public class UserService {
      *
      * @param username - the username of the user
      */
-    public void saveGame(String username) {
+    public void saveGame(String username) throws UserNotFoundException {
     }
 
-    /** Login
+    /**
+     * Login
+     *
      * @param username - the username of the user
-     * @return true - if the login was successful else return false */
-    public boolean login(String username){
+     * @return true - if the login was successful else return false
+     *
+     */
+    public boolean login(String username) {
         return false;
     }
 }
