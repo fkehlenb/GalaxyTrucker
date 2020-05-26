@@ -7,8 +7,6 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public abstract class System extends Room implements Serializable {
 
     /**

@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Crew;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.*;
@@ -47,4 +48,12 @@ public class Crew {
     @DatabaseField(columnName = "stats")
     @NonNull
     private int[] stats;
+
+    /**
+     * The system this crew member is in
+     */
+    @DatabaseField(foreign = true, columnName = "system")
+    @NonNull
+    private System currentSystem;
+
 }
