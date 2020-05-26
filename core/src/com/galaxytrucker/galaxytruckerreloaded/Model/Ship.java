@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model;
 
-import jdk.internal.util.xml.impl.Pair;
+
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 
 public class Ship {
 
@@ -39,7 +40,7 @@ public class Ship {
     /**
      * X and Y coordinates on the map
      */
-    private Pair position;
+    private Planet position;
 
     /**
      * time needed until position can be changed again

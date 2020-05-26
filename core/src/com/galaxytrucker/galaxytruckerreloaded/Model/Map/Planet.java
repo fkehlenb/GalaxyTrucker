@@ -8,6 +8,8 @@ public abstract class Planet {
     private float posX;
     /** Vertikale Position auf der Karte */
     private float posY;
+
+    private float[] position;
     /** Ereignis dass auf diesem Planeten eintrifft */
     private  PlanetEvent event;
 }
