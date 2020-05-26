@@ -37,6 +37,13 @@ public class UserDAO extends ObjectDAO<User> {
 
     }
 
+    /** Update a user in the database
+     * @param u - the user to update
+     * @throws UserNotFoundException if the user cannot be found in the database */
+    public void update(User u) throws UserNotFoundException {
+
+    }
+
     /**
      * Get a user from the database using his username
      *

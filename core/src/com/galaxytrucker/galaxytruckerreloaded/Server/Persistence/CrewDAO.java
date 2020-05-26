@@ -8,11 +8,15 @@ import com.j256.ormlite.support.ConnectionSource;
 
 public class CrewDAO extends ObjectDAO<Crew> {
 
-    /** Database connection */
+    /**
+     * Database connection
+     */
     private ConnectionSource source;
 
-    /** Crew dao */
-    private Dao<Crew,String> crewDao;
+    /**
+     * Crew dao
+     */
+    private Dao<Crew, String> crewDao;
 
     /**
      * Add a new crew member to the database
@@ -22,6 +26,16 @@ public class CrewDAO extends ObjectDAO<Crew> {
      */
     @Override
     public void persist(Crew c) throws DuplicateCrewException {
+
+    }
+
+    /**
+     * Update a crew member in the database
+     *
+     * @param c - the crew member to update in the database
+     * @throws CrewNotFoundException if the crew cannot be found in the database
+     */
+    public void update(Crew c) throws CrewNotFoundException {
 
     }
 
@@ -36,7 +50,11 @@ public class CrewDAO extends ObjectDAO<Crew> {
 
     }
 
-    /** Constructor
-     * @param source - database connection source */
-    public CrewDAO(ConnectionSource source){}
+    /**
+     * Constructor
+     *
+     * @param source - database connection source
+     */
+    public CrewDAO(ConnectionSource source) {
+    }
 }

@@ -38,6 +38,13 @@ public class ShipDAO extends ObjectDAO<Ship> {
 
     }
 
+    /** Update a ship in the database
+     * @param s - the ship to update
+     * @throws ShipNotFoundException if the ship cannot be found in the database */
+    public void update(Ship s) throws ShipNotFoundException{
+
+    }
+
     /**
      * Get a ship from the database using its associated user
      *
