@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionsUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 /**
  * Main game screen
@@ -48,6 +51,12 @@ public class GamePlay implements Screen {
      * Current map
      */
     private MapUI gameMap;
+
+    /**
+     * ship of the player
+     */
+    private ShipView player;
+
 
     @Override
     public void show() {

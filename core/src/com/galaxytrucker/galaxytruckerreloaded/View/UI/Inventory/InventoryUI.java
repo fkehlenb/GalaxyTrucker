@@ -9,6 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 
 public class InventoryUI {
 
@@ -33,14 +34,9 @@ public class InventoryUI {
     private List<InventorySlotUI> slots;
 
     /**
-     * Close inventory button
+     * button to close inventory
      */
-    private ImageButton closeInventoryButton;
-
-    /**
-     * Close inventory button texture
-     */
-    private Texture closeInventoryButtonTexture;
+    private InventoryCloseButton closeButton;
 
     /**
      * the ship
@@ -73,13 +69,6 @@ public class InventoryUI {
     public void disposeInventoryUI() {
     }
 
-    public Ship getShip() {
-        return null;
-    }
-
-    public void setShip(Ship ship) {
-
-    }
 
     /**
      * Constructor

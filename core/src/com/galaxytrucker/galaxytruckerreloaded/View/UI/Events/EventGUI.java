@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EventPageButton;
 
 /**
  * Shows an event
@@ -32,6 +33,11 @@ public class EventGUI {
      * First event page
      */
     private EventPage firstPage;
+
+    /**
+     * button to click on for next page
+     */
+    private EventPageButton nextPage;
 
     /**
      * Event background texture
@@ -67,8 +73,23 @@ public class EventGUI {
     /**
      * Switch event page
      * if there is no next page hide the event gui
+     * possibly open Shop ui, if the event is a shop, or start fight
      */
     private void nextPage() {
+    }
+
+    /**
+     * starts a fight, if the event is a fight
+     */
+    private void startFight() {
+
+    }
+
+    /**
+     * opens a shop, if the event is a shop
+     */
+    private void openShop() {
+
     }
 
     /**

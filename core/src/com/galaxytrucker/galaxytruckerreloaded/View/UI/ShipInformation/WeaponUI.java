@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.WeaponActivateButton;
 
 /**
  * shows the weapons of the ship
@@ -28,6 +29,11 @@ public class WeaponUI {
      */
     private List<Texture> weaponCooldown;
 
+    /**
+     * button used to activate/deactive weapon in the bottom left corner
+     * after weapon is activated, a room in the enemy ship needs to be selected
+     */
+    private WeaponActivateButton activateButton;
 
     /**
      * Setup called after initialisation

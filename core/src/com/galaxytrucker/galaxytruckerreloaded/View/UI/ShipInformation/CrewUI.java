@@ -8,6 +8,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CrewDismissButton;
 
 /**
  * shows the crew on board
@@ -34,6 +35,12 @@ public class CrewUI {
      * texture for the status of the crew member
      */
     private List<Texture> crewStatus;
+
+    /**
+     * button to click to send the crew to another room. After the button is clicked,
+     * the player needs to click on a room in their own ship
+     */
+    private CrewDismissButton crewButton;
 
     /**
      * the crew member

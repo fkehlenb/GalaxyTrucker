@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.SystemButton;
 
 /**
  * shows the subsystems of the ship
@@ -36,6 +37,12 @@ public class SubsystemUI {
      * bottom left corner
      */
     private List<Texture> energyTexture;
+
+    /**
+     * botton representing the system in the bottom left corner.
+     * used to give the system energy
+     */
+    private SystemButton energyButton;
 
     /**
      * x position of the room

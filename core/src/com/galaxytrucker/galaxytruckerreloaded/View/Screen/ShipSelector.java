@@ -6,7 +6,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SinglePlayerButton;
 
 /**
  * Ship selector screen when creating new game
@@ -27,6 +31,26 @@ public class ShipSelector implements Screen {
      * Background
      */
     private Texture background;
+
+    /**
+     * the textures of the ships to choose from
+     */
+    private List<Texture> ships;
+
+    /**
+     * the buttons for the ships
+     */
+    private List<ShipSelectButton> shipButtons;
+
+    /**
+     * difficulty buttons (easy, medium, hard)
+     */
+    private List<DifficultyButton> difficulties;
+
+    /**
+     * button to choose single player. Otherwise, it is multiplayer
+     */
+    private SinglePlayerButton singlePlayerButton;
 
     /**
      * Looping music

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EventPageButton;
 
 /** Includes all content shown on a single event page */
 public class EventPage {
@@ -25,15 +26,7 @@ public class EventPage {
      */
     private List<Texture> drawables;
 
-    /**
-     * Next page button
-     */
-    private ImageButton nextPageButton;
-
-    /**
-     * Next page button texture
-     */
-    private Texture nextPageButtonTexture;
+    //TODO same wie in eventgui, hier muss noch inhalt als attribut
 
     /**
      * Setup called after initialisation

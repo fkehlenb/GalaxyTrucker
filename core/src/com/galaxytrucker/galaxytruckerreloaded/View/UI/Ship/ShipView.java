@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.AutofireButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MoveButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShipButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
 
 public class ShipView extends AbstractShip {
@@ -31,9 +35,30 @@ public class ShipView extends AbstractShip {
     private ScrapUI money;
 
     /**
+     * button to open the inventory (InventoryUI)
+     */
+    private ShipButton inventory;
+
+    /**
+     * button on the upper center
+     * after the button is clicked, the map opens and a target needs to be selected
+     */
+    private MoveButton moveButton;
+
+    /**
      * the background texture of the ship
      */
     private Texture shipBackground;
+
+    /**
+     * the weapon autofire button
+     */
+    private AutofireButton weaponAutofire;
+
+    /**
+     * the general background for the weapon display in the bottom left corner next to the energy status display
+     */
+    private Texture weaponGeneralBackground;
 
     /**
      * Setup called after initialisation

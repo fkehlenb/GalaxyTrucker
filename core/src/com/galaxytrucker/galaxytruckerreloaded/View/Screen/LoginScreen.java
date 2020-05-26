@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
 
 /**
  * Login Screen
@@ -36,14 +37,9 @@ public class LoginScreen implements Screen {
     private TextField username;
 
     /**
-     * Login button
+     * the login button
      */
-    private ImageButton loginButton;
-
-    /**
-     * Login button texture
-     */
-    private Texture loginButtonTexture;
+    private LoginButton loginButton;
 
     /**
      * Looping music track
