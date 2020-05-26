@@ -1,16 +1,17 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EquipmentAndUpgradesMenu;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 
 /**
- * Starts a new Game
+ * Opens the Equipment-Tab in the Menue
  */
-public class StartButton extends Button
+public class EquipmentTabButton extends Button
 {
     /**
      * Sprite batch
@@ -29,34 +30,20 @@ public class StartButton extends Button
      */
     private Sound clickSound;
 
-
     /**
      * Constructor
      *
      * @param main - main class
      */
-    public StartButton(Main main) {
+    public EquipmentTabButton(Main main) {
     }
 
-//    /**
-//     * Send data to server
-//     */
-//    private void sendData(Packet data) {
-//    }
-//
-//    /**
-//     * Receive data from server
-//     */
-//    private Packet receiveData() {
-//        return null;
-//    }
 
     /**
-     * Creates s a new Instance of PLayer an an new Ship
+     * opens the Equipment-Tap Screen
      */
+    @Override
     public void leftClick()
     {
-        // FTLGame.instance().setPlayer(hanger.getShip());
-        // FTLView.instance().setScreen(new SpaceScreen());
     }
 }
