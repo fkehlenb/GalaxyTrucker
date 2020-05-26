@@ -27,7 +27,7 @@ public class Planet implements Serializable {
     private float posY;
 
     /** Ereignis dass auf diesem Planeten eintrifft */
-    @DatabaseField(columnName = "event")
+    @DatabaseField(columnName = "event",foreign = true)
     @NonNull
     private PlanetEvent event;
 }
