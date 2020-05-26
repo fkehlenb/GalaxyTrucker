@@ -1,22 +1,14 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 
+
 import com.j256.ormlite.field.DatabaseField;
 import lombok.*;
 
 import java.io.Serializable;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
 public abstract class Room implements Serializable {
-
-    /**
-     * ID
-     */
-    @DatabaseField(columnName = "ID", id = true)
-    @NonNull
-    private int id;
 
     /**
      * Höhe des Raumes. Räume sind immer rechteckig.

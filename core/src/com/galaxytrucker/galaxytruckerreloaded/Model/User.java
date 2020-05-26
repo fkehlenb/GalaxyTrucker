@@ -13,12 +13,16 @@ import java.io.Serializable;
 @DatabaseTable(tableName = "USER")
 public class User implements Serializable {
 
-    /** Username */
-    @DatabaseField(id = true,columnName = "USERNAME")
+    /**
+     * Username
+     */
+    @DatabaseField(id = true, columnName = "USERNAME")
     @NonNull
     private String username;
 
-    /** The user's ship */
+    /**
+     * The user's ship
+     */
     @DatabaseField(columnName = "userShip", foreign = true)
     private Ship userShip;
 }

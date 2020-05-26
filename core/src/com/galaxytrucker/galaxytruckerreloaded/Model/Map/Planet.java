@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.Model.Planet;
+package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
 import com.j256.ormlite.field.DatabaseField;
 import lombok.*;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
-public abstract class Planet implements Serializable {
+public class Planet implements Serializable {
 
     /** Planet name */
     @DatabaseField(id = true,columnName = "name")
@@ -29,5 +29,5 @@ public abstract class Planet implements Serializable {
     /** Ereignis dass auf diesem Planeten eintrifft */
     @DatabaseField(columnName = "event")
     @NonNull
-    private  PlanetEvent event;
+    private PlanetEvent event;
 }
