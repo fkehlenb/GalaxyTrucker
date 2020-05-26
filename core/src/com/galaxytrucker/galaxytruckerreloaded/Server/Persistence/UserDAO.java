@@ -32,6 +32,7 @@ public class UserDAO extends ObjectDAO<User> {
      *
      * @param u - the user to add
      */
+    @Override
     public void persist(User u) throws DuplicateUserException {
 
     }
@@ -50,6 +51,7 @@ public class UserDAO extends ObjectDAO<User> {
      *
      * @param u - the user to delete
      */
+    @Override
     public void remove(User u) throws UserNotFoundException {
 
     }
