@@ -33,6 +33,7 @@ public class ShipDAO extends ObjectDAO<Ship> {
      *
      * @param s - the ship to add
      */
+    @Override
     public void persist(Ship s) throws DuplicateShipException {
 
     }
@@ -51,6 +52,7 @@ public class ShipDAO extends ObjectDAO<Ship> {
      *
      * @param s - the ship to remove
      */
+    @Override
     public void remove(Ship s) throws ShipNotFoundException{
 
     }
