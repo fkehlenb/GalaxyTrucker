@@ -110,6 +110,11 @@ public class Ship implements Serializable {
     @DatabaseField(foreign = true,columnName = "crew")
     private List<Crew> crew;
 
+    /** Inventory */
+    @NonNull
+    @DatabaseField(foreign = true, columnName = "inventory")
+    private List<Weapon> inventory;
+
     /**
      * Take damage
      */
