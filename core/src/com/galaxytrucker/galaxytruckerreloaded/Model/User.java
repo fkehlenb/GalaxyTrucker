@@ -25,4 +25,9 @@ public class User implements Serializable {
      */
     @DatabaseField(columnName = "userShip", foreign = true)
     private Ship userShip;
+
+    /** Whether or not the user is logged in */
+    @NonNull
+    @DatabaseField(columnName = "loggedIn")
+    private boolean loggedIn = false;
 }

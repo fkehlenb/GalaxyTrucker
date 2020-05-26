@@ -54,4 +54,18 @@ public class UserService {
 
     }
 
+    /**
+     * Save game
+     *
+     * @param username - the username of the user
+     */
+    public void saveGame(String username) {
+    }
+
+    /** Login
+     * @param username - the username of the user
+     * @return true - if the login was successful else return false */
+    public boolean login(String username){
+        return false;
+    }
 }
