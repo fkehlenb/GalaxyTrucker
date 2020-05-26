@@ -115,22 +115,4 @@ public class Ship implements Serializable {
     @DatabaseField(foreign = true, columnName = "inventory")
     private List<Weapon> inventory;
 
-    /**
-     * Take damage
-     */
-    private void takeDamage(int amount) {
-    }
-
-    /**
-     * Add hp
-     */
-    private void heal(int hp) {
-    }
-
-    /**
-     * Add shields
-     */
-    private void applyShields(int shields) {
-    }
-
 }
