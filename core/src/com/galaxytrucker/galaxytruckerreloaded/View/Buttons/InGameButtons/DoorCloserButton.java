@@ -1,12 +1,39 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+//import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Section;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 
+/**
+ * Button for closing Door(s) of a Ship-Section
+ */
 public class DoorCloserButton extends Button
 {
-    private System system;
+    /**
+     * Sprite batch
+     */
+    private SpriteBatch batch;
+    /**
+     * Orthographic camera
+     */
+    private OrthographicCamera camera;
+    /**
+     * Background
+     */
+    private Texture background;
+    /**
+     * Click sound effect
+     */
+    private Sound clickSound;
+
+    //private System system;
+    private Ship ship;
+    //private Section section;
 
     /**
      * Constructor
@@ -29,11 +56,14 @@ public class DoorCloserButton extends Button
 //        return null;
 //    }
 
+    /**
+     * Closes Door
+     */
     public void leftClick()
     {
-//        for(Room room : system.getShip().getRooms().values())
+//        for(Section section : system.getShip().getSection().values())
 //        {
-//            for(Door door : room.getDoors())
+//            for(Door door : section.getDoors())
 //            {
 //                door.forceOpen = false;
 //            }
