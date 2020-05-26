@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 
+
 import com.j256.ormlite.field.DatabaseField;
 import lombok.*;
 

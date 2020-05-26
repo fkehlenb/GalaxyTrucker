@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.Model.Planet;
+package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
 import com.j256.ormlite.field.DatabaseField;
 import lombok.*;
