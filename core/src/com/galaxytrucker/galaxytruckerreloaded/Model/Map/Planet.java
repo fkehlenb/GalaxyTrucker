@@ -1,5 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.j256.ormlite.field.DatabaseField;
 import lombok.*;
 
@@ -37,7 +39,7 @@ public class Planet implements Serializable {
      */
     @DatabaseField(columnName = "event", foreign = true)
     @NonNull
-    private PlanetEvent event;
+    private Enum<PlanetEvent> event;
 
     /**
      * If already discovered set to true
@@ -45,4 +47,9 @@ public class Planet implements Serializable {
     @DatabaseField(columnName = "discovered")
     @NonNull
     private boolean discovered = false;
+
+    /** Ships at this planet */
+    @DatabaseField(foreign = true, columnName = "ships")
+    @NonNull
+    private List<Ship> ships;
 }

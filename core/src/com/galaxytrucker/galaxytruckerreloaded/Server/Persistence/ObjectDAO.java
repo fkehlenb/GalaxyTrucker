@@ -1,7 +1,14 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 
+import com.j256.ormlite.support.ConnectionSource;
+
 /** Template for DAOs */
 public abstract class ObjectDAO<T> {
+
+    /**
+     * Database connection
+     */
+    private ConnectionSource source;
 
     /**
      * Save the object to the database

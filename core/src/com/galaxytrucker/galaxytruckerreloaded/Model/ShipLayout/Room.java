@@ -38,4 +38,14 @@ public abstract class Room implements Serializable {
     @DatabaseField(columnName = "oxygen")
     @NonNull
     private int oxygen;
+
+    /** X position */
+    @NonNull
+    @DatabaseField(columnName = "posX")
+    private int posX;
+
+    /** Y position */
+    @NonNull
+    @DatabaseField(columnName = "posY")
+    private int posY;
 }

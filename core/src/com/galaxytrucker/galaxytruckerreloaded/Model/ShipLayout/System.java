@@ -1,5 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.j256.ormlite.field.DatabaseField;
 import lombok.*;
 
@@ -36,4 +38,9 @@ public abstract class System extends Room implements Serializable {
     @DatabaseField(columnName = "damage")
     @NonNull
     private int damage;
+
+    /** Crew in this system */
+    @DatabaseField(foreign = true, columnName = "crew")
+    @NonNull
+    private List<Crew> crew;
 }
