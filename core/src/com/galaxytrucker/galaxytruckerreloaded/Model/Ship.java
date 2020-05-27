@@ -3,6 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Model;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -103,12 +104,7 @@ public class Ship implements Serializable {
     /** This ship's systems */
     @NonNull
     @DatabaseField(columnName = "systems",foreign = true)
-    private List<System> systems;
-
-    /** List of crew */
-    @NonNull
-    @DatabaseField(foreign = true,columnName = "crew")
-    private List<Crew> crew;
+    private List<Room> systems;
 
     /** Inventory */
     @NonNull

@@ -10,11 +10,6 @@ import com.j256.ormlite.support.ConnectionSource;
 public class ShipDAO extends ObjectDAO<Ship> {
 
     /**
-     * Database connection source
-     */
-    private ConnectionSource source;
-
-    /**
      * ShipDAO
      */
     private Dao<Ship, String> shipDAO;

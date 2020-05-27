@@ -9,11 +9,6 @@ import com.j256.ormlite.support.ConnectionSource;
 public class UserDAO extends ObjectDAO<User> {
 
     /**
-     * Database connection source
-     */
-    private ConnectionSource source;
-
-    /**
      * UserDAO
      */
     private Dao<User, String> userDao;

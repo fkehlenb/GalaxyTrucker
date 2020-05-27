@@ -9,11 +9,6 @@ import com.j256.ormlite.support.ConnectionSource;
 public class CrewDAO extends ObjectDAO<Crew> {
 
     /**
-     * Database connection
-     */
-    private ConnectionSource source;
-
-    /**
      * Crew dao
      */
     private Dao<Crew, String> crewDao;
