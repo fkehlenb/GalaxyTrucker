@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 /**
  * Button to activate Autofire-Function during fights
@@ -33,14 +34,19 @@ public class AutofireButton extends Button
     private Sound clickSound;
 
     boolean down = false;
-    Weapon weapon;
+
+    /**
+     * the ui this button is on
+     */
+    private ShipView ui;
 
     /**
      * Constructor
      *
      * @param main - main class
+     * @param ui the ui this button is on
      */
-    public AutofireButton(Main main, Weapon weapon) {
+    public AutofireButton(Main main, ShipView ui) {
 
 //    /**
 //     * Send data to server

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 /**
  * button used to move the ship. upper middle corner, opens the map
@@ -32,6 +33,11 @@ public class MoveButton extends Button {
     boolean down = false;
 
     /**
+     * the ui this button is on
+     */
+    private ShipView ui;
+
+    /**
      * Left-Click action of the Button.
      */
     @Override
@@ -42,8 +48,9 @@ public class MoveButton extends Button {
     /**
      * constructor
      * @param main the main class
+     * @param ui the ui this button is on
      */
-    public MoveButton(Main main) {
+    public MoveButton(Main main, ShipView ui) {
 
     }
 }

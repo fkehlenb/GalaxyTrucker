@@ -87,6 +87,13 @@ public class LoginScreen implements Screen {
     }
 
     /**
+     * login method, called by the button
+     */
+    public void login() {
+
+    }
+
+    /**
      * Constructor
      *
      * @param main - main class

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
 
 /**
  * button used to buy something in the shop
@@ -31,14 +32,25 @@ public class ShopBuyButton extends Button {
 
     boolean down = false;
 
-    //Attribut um zu speichern zu welchem item dieser knopf gehört
+    /**
+     * the item this button belongs to
+     * index of list in shopui
+     */
+    private int item;
+
+    /**
+     * the ui this button is on
+     */
+    private ShopUI shop;
 
     /**
      * Constructor
      *
      * @param main - main class
+     * @param item the item
+     * @param ui the ui this button is on
      */
-    public ShopBuyButton(Main main) {
+    public ShopBuyButton(Main main, int item, ShopUI ui) {
 
     }
 

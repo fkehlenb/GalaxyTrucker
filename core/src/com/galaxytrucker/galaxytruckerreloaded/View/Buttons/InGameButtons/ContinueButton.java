@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionsUI;
 
 /**
  * continue button for ingame options
@@ -32,6 +33,11 @@ public class ContinueButton extends Button {
     boolean down = false;
 
     /**
+     * the options ui this button is on
+     */
+    private OptionsUI ui;
+
+    /**
      * Left-Click action of the Button.
      */
     @Override
@@ -42,8 +48,9 @@ public class ContinueButton extends Button {
     /**
      * constructor
      * @param main the main class
+     * @param ui the ui this is on
      */
-    public ContinueButton(Main main) {
+    public ContinueButton(Main main, OptionsUI ui) {
 
     }
 }

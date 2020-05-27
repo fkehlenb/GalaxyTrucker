@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 /**
  * Starts a new Game
@@ -29,13 +30,19 @@ public class StartButton extends Button
      */
     private Sound clickSound;
 
+    /**
+     * the screen this button is on
+     */
+    private MainMenu screen;
+
 
     /**
      * Constructor
      *
      * @param main - main class
+     * @param screen the screen this button is on
      */
-    public StartButton(Main main) {
+    public StartButton(Main main, MainMenu screen) {
     }
 
 //    /**

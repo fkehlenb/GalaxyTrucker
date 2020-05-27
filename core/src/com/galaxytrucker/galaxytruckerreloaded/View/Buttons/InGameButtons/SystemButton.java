@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.SubsystemUI;
 
 /**
  * Button for regulation of (Sub)-System energie supplyment
@@ -30,20 +31,23 @@ public class SystemButton extends Button
      */
     private Sound clickSound;
 
-
-    private System system;
-
     private Texture image_off;
     private Texture image_hover_off;
 
     Texture glow;
 
     /**
+     * the ui this button belongs to
+     */
+    private SubsystemUI ui;
+
+    /**
      * Constructor
      *
      * @param main - main class
+     * @param ui the ui this button belongs to
      */
-    public SystemButton(Main main) {
+    public SystemButton(Main main, SubsystemUI ui) {
     }
 
     public void setGlowTexture(Texture glow)

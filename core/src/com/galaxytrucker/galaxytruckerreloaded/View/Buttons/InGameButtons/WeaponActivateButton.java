@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.WeaponUI;
 
 import java.io.BufferedWriter;
 
@@ -33,7 +34,10 @@ public class WeaponActivateButton extends Button {
 
     boolean down = false;
 
-    //TODO attribut welches weapon dieser knopf ist
+    /**
+     * the ui this button belongs to
+     */
+    private WeaponUI ui;
 
     /**
      * Left-Click action of the Button.
@@ -46,8 +50,9 @@ public class WeaponActivateButton extends Button {
     /**
      * constructor
      * @param main the main class
+     * @param ui the ui this button belongs to
      */
-    public WeaponActivateButton(Main main) {
+    public WeaponActivateButton(Main main, WeaponUI ui) {
 
     }
 }

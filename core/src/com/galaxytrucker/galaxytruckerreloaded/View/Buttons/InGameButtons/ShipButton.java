@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 /**
  * Button for opening the Ship-Interface
@@ -30,14 +31,18 @@ public class ShipButton extends Button
      */
     private Sound clickSound;
 
-    private Ship ship;
+    /**
+     * the ui this button is on
+     */
+    private ShipView ui;
+
     /**
      * Constructor
      *
      * @param main - main class
-     * @param ship - the current Ship
+     * @param ui the ui this button is on
      */
-    public ShipButton(Main main, Ship ship) {
+    public ShipButton(Main main, ShipView ui) {
     }
 
 

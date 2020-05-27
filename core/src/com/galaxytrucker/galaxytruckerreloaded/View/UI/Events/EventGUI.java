@@ -82,6 +82,8 @@ public class EventGUI {
      * Switch event page
      * if there is no next page hide the event gui
      * possibly open Shop ui, if the event is a shop, or start fight
+     *
+     * called by button
      */
     private void nextPage() {
     }

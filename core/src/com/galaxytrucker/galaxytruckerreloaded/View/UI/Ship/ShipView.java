@@ -1,15 +1,12 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.AutofireButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MoveButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShipButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
 
 public class ShipView extends AbstractShip {
@@ -46,14 +43,15 @@ public class ShipView extends AbstractShip {
     private MoveButton moveButton;
 
     /**
+     * the weapon autofire button
+     */
+    private AutofireButton weaponAutofire;
+
+    /**
      * the background texture of the ship
      */
     private Texture shipBackground;
 
-    /**
-     * the weapon autofire button
-     */
-    private AutofireButton weaponAutofire;
 
     /**
      * the general background for the weapon display in the bottom left corner next to the energy status display
@@ -106,6 +104,30 @@ public class ShipView extends AbstractShip {
      */
     @Override
     public void shieldStatusUpdate(int shieldvalue) {
+
+    }
+
+    /**
+     * open the inventory of this ship
+     * called by ship button
+     */
+    public void openInventory() {
+
+    }
+
+    /**
+     * open the map
+     * called by move button
+     */
+    public void openMap() {
+
+    }
+
+    /**
+     * autofire
+     * called by autofire button
+     */
+    public void autofire() {
 
     }
 

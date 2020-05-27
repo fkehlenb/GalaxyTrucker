@@ -97,7 +97,31 @@ public class ShipSelector implements Screen {
 
     }
 
-    /** Constructor
+    /**
+     * to set the difficulty. called by button
+     * @param difficulty the difficulty
+     */
+    public void setDifficulty(int difficulty) {
+
+    }
+
+    /**
+     * the ship is selected
+     * @param ship the index of the ship in the list of possible ships
+     */
+    public void setShip(int ship) {
+
+    }
+
+    /**
+     * sets whether or not singleplayer. called by button
+     * @param single singleplayer = true
+     */
+    public void setSinglePlayer(boolean single) {
+
+    }
+
+    /** Constructor TODO wie werden die schiffe dargestellt
      * @param main - main class */
     public ShipSelector(Main main){}
 }

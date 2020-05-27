@@ -37,8 +37,9 @@ public class CrewDismissButton extends Button
      * Constructor
      *
      * @param main - main class
+     * @param crew the crew member
      */
-    public CrewDismissButton(Main main, Crew crew) {
+    public CrewDismissButton(Main main, int crew) {
     }
 
     public void leftClick()

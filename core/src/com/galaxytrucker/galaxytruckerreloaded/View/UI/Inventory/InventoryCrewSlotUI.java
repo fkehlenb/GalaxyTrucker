@@ -5,6 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 
+/**
+ * to represent a crew member in the inventory
+ */
 public class InventoryCrewSlotUI extends InventorySlotUI {
 
     /**

@@ -55,6 +55,15 @@ public class WeaponUI {
     }
 
     /**
+     * the weapon is activated. now, a room needs to be selected
+     * if weapon is active, it is deactivated
+     * called by weaponactivatebutton
+     */
+    public void weaponactivated() {
+
+    }
+
+    /**
      * constructor
      * @param main the main class
      * @param weapon the weapon

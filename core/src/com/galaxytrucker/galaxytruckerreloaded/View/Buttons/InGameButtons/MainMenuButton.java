@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 
 /***
  * button used to return to the main menu
@@ -31,8 +32,9 @@ public class MainMenuButton extends Button {
 
     boolean down = false;
 
+
     /**
-     * Left-Click action of the Button.
+     * Left-Click action of the Button. opens the main menu screen
      */
     @Override
     public void leftClick() {

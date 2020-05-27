@@ -90,6 +90,30 @@ public class MainMenu implements Screen {
 
     }
 
+    /**
+     * starts a new game.
+     * called by button
+     */
+    public void newGame() {
+
+    }
+
+    /**
+     * resumes the existing game.
+     * called by button
+     */
+    public void resumeGame() {
+
+    }
+
+    /**
+     * quits.
+     * called by button
+     */
+    public void quit()  {
+
+    }
+
     /** Constructor
      * @param main - main class */
     public MainMenu(Main main){}

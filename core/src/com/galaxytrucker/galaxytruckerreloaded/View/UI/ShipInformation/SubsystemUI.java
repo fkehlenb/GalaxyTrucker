@@ -106,6 +106,23 @@ public class SubsystemUI {
     }
 
     /**
+     * activates the energy supply for this system
+     * called by systembutton
+     * if energy supply already activated and not at maximum, then more energy to this system
+     */
+    public void activateEnergy() {
+
+    }
+
+    /**
+     * the energy supply for this system is lowered, unless there is no supply
+     * called by systembutton
+     */
+    public void lessEnergy() {
+
+    }
+
+    /**
      * constructor
      * @param main the main class
      * @param system the system

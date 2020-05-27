@@ -68,6 +68,16 @@ public class ShopUI {
     }
 
     /**
+     * an item is bought
+     * called by button
+     * @param item the item (index in the list)
+     */
+    public void buy(int item) {
+
+    }
+
+
+    /**
      * constructor
      * @param main the main class
      *             TODO wie werden hier die objekte die zum verkauf stehen übergeben?

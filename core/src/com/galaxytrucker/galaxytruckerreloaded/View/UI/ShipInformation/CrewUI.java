@@ -67,6 +67,15 @@ public class CrewUI {
     }
 
     /**
+     * the crew was chosen to be moved
+     * called by button crewdismiss
+     * not waiting for the user to choose a room on the ship
+     */
+    public void crewMoving() {
+
+    }
+
+    /**
      * the crew member died
      */
     public void crewDied() {

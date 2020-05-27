@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 /**
  * Ends the Game
@@ -30,11 +31,17 @@ public class QuitButton extends Button
     private Sound clickSound;
 
     /**
+     * the screen this button is on
+     */
+    private MainMenu screen;
+
+    /**
      * Constructor
      *
      * @param main - main class
+     * @param screen the screen this button is on
      */
-    public QuitButton(Main main) {
+    public QuitButton(Main main, MainMenu screen) {
     }
 
 //    /**
