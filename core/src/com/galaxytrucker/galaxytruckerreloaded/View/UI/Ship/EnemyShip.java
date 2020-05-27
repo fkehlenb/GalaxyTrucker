@@ -51,8 +51,10 @@ public class EnemyShip extends AbstractShip {
     /**
      * a status of a system was updated and needs to be properly displayed
      * eg system hit
+     * TODO add parameter which system it is OR each controller gets one ui thing, in which case the whole relations here need to be destroyed
+     * @param damage the damage to the system
      */
-    public void systemStatusUpdate() {
+    public void systemStatusUpdate(int damage) {
 
     }
 
@@ -78,8 +80,29 @@ public class EnemyShip extends AbstractShip {
     }
 
     /**
-     * Constructor
+     * update of the hull status (hp)
      *
+     * @param hpvalue new status
+     */
+    @Override
+    public void hullStatusUpdate(int hpvalue) {
+
+    }
+
+    /**
+     * shield status update
+     *
+     * @param shieldvalue new status
+     */
+    @Override
+    public void shieldStatusUpdate(int shieldvalue) {
+
+    }
+
+
+    /**
+     * Constructor
+     * TODO methods to access all shipinfo stuff
      * @param main - the main class for SpriteBatch
      */
     public EnemyShip(Main main, Ship ship) {

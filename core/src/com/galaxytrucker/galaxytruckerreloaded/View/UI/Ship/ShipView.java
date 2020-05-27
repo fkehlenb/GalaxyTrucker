@@ -61,6 +61,11 @@ public class ShipView extends AbstractShip {
     private Texture weaponGeneralBackground;
 
     /**
+     * for display in the upper left corner
+     */
+    private Texture statusTexture;
+
+    /**
      * Setup called after initialisation
      */
     private void setup() {
@@ -85,6 +90,26 @@ public class ShipView extends AbstractShip {
     }
 
     /**
+     * update of the hull status (hp)
+     *
+     * @param hpvalue new status
+     */
+    @Override
+    public void hullStatusUpdate(int hpvalue) {
+
+    }
+
+    /**
+     * shield status update
+     *
+     * @param shieldvalue new status
+     */
+    @Override
+    public void shieldStatusUpdate(int shieldvalue) {
+
+    }
+
+    /**
      * Ship hop animation
      */
     private void hyperspeedHopAnimation() {
@@ -98,7 +123,7 @@ public class ShipView extends AbstractShip {
 
     /**
      * Constructor
-     *
+     * TODO methods to access all shipinformation stuff
      * @param main - the main class for SpriteBatch
      */
     public ShipView(Main main, Ship ship) {

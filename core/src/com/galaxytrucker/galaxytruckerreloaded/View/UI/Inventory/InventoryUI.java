@@ -39,11 +39,6 @@ public class InventoryUI {
     private InventoryCloseButton closeButton;
 
     /**
-     * the ship
-     */
-    private Ship ship;
-
-    /**
      * setup called after initialisation
      *
      * here the inventory slots are initialised for fuel, missiles, crew, weapons, and money
@@ -74,8 +69,10 @@ public class InventoryUI {
      * Constructor
      *
      * @param main - main class
-     * @param ship - the ship whose inventory is to be displayed
+     * @param crew the crew members
+     * @param weapons the weapons
+     * @param integerValues the integer values to be displayed for a ship
      */
-    public InventoryUI(Main main, Ship ship) {
+    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, List<Integer> integerValues) {
     }
 }

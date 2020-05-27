@@ -26,7 +26,6 @@ public class EventPage {
      */
     private List<Texture> drawables;
 
-    //TODO same wie in eventgui, hier muss noch inhalt als attribut
 
     /**
      * Setup called after initialisation
@@ -57,7 +56,9 @@ public class EventPage {
      * Constructor
      *
      * @param main - the main class object
+     * @param draw the drawables on this page
+     * @param text the text displayed on this page
      */
-    public EventPage(Main main) {
+    public EventPage(Main main, List<Texture> draw, String text) {
     }
 }

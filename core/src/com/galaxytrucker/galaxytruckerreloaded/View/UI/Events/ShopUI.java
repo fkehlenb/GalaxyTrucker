@@ -1,15 +1,20 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopBuyButton;
+import jdk.internal.net.http.common.Pair;
+
 
 /**
  * UI for the case that an event is a shop opportunity
  *
  * called in the method openShop in eventGUI
  *
- * TODO how is what is available at the shop handed over? list of objects?
  */
 public class ShopUI {
 
@@ -22,6 +27,21 @@ public class ShopUI {
      * Orthographic camera
      */
     private OrthographicCamera camera;
+
+    /**
+     * to close the shop
+     */
+    private InventoryCloseButton closeButton;
+
+    /**
+     * list of textures to display stuff. each texture gets one button
+     */
+    private List<Texture> textures;
+
+    /**
+     * buttons to buy stuff, set up in setup
+     */
+    private List<ShopBuyButton> buttons;
 
     /**
      * Setup called after initialisation
@@ -50,6 +70,7 @@ public class ShopUI {
     /**
      * constructor
      * @param main the main class
+     *             TODO wie werden hier die objekte die zum verkauf stehen übergeben?
      */
     public ShopUI(Main main) {
 

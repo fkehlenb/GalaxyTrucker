@@ -30,6 +30,14 @@ public class EnergyUI {
      */
     private int energy;
 
+    /**
+     * the current status of the energy needs to be updated
+     * @param energyStatus the new status
+     */
+    public void energyUpdate(int energyStatus) {
+
+    }
+
 
     /**
      * Setup called after initialisation

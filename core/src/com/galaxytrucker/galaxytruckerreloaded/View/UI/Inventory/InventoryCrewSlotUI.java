@@ -1,15 +1,11 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 
 public class InventoryCrewSlotUI extends InventorySlotUI {
-
-    /**
-     * the crew member
-     */
-    private Crew crew;
 
     /**
      * the texture
@@ -17,9 +13,28 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
     private Texture crewTexture;
 
     /**
+     * the name of the crew member
+     */
+    private String name;
+
+    /**
+     * the health of the crew member
+     */
+    private int health;
+
+    /**
+     * the maximum health of the crew member
+     */
+    private int maxhealth;
+
+    /**
+     * the textures to display the health status
+     */
+    private List<Texture> healthStatus;
+
+    /**
      * show the ui
      */
-    @Override
     public void showInventorySlotUI() {
 
     }
@@ -27,7 +42,6 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
     /**
      * Hide inventory slot ui
      */
-    @Override
     public void hideInventorySlotUI() {
 
     }

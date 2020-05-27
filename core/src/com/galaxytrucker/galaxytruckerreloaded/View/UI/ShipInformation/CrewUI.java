@@ -43,9 +43,19 @@ public class CrewUI {
     private CrewDismissButton crewButton;
 
     /**
-     * the crew member
+     * the name of the crew member
      */
-    private Crew crew;
+    private String name;
+
+    /**
+     * the current health of the crew member
+     */
+    private int health;
+
+    /**
+     * the maximum health of the crew member
+     */
+    private int maxhealth;
 
     /**
      * the crew member was moved to a new room

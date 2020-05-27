@@ -7,12 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 
-import java.io.BufferedWriter;
-
 /**
- * button used to activate/deactivate weapon
+ * button used to buy something in the shop
  */
-public class WeaponActivateButton extends Button {
+public class ShopBuyButton extends Button {
 
     /**
      * Sprite batch
@@ -33,21 +31,19 @@ public class WeaponActivateButton extends Button {
 
     boolean down = false;
 
-    //TODO attribut welches weapon dieser knopf ist
+    //Attribut um zu speichern zu welchem item dieser knopf gehört
 
     /**
-     * Left-Click action of the Button.
+     * Constructor
+     *
+     * @param main - main class
      */
-    @Override
-    public void leftClick() {
+    public ShopBuyButton(Main main) {
 
     }
 
-    /**
-     * constructor
-     * @param main the main class
-     */
-    public WeaponActivateButton(Main main) {
-
+    public void leftClick()
+    {
+        down = !down;
     }
 }

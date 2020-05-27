@@ -11,10 +11,23 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
      */
     private Texture weaponTexture;
 
+    /** Weapon damage */
+    private int damage;
+
+    /** Weapon coolDown */
+    private int cooldown;
+
+    /** Weapon energy */
+    private int energy;
+
+    private int missileCost;
+    private float dropchance;
+    private int crewdamage;
     /**
-     * the weapon
+     * How many projectiles are fired per burst
      */
-    private Weapon weapon;
+    private int burst;
+    private float precision;
 
     /**
      * show the ui
@@ -48,6 +61,11 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
 
     }
 
+    /**
+     * constructor
+     * @param main the main class
+     * @param weapon the weapon to be displayed
+     */
     public InventoryWeaponSlotUI(Main main, Weapon weapon) {
         super(main);
     }

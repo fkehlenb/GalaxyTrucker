@@ -20,11 +20,6 @@ public class RoomUI {
     private OrthographicCamera camera;
 
     /**
-     * the room
-     */
-    private Room room;
-
-    /**
      * the system of this room
      */
     private SubsystemUI system;
@@ -38,6 +33,16 @@ public class RoomUI {
      * the texture for the case that the room is low on oxygen
      */
     private Texture roomLowOxyTexture;
+
+    /**
+     * Höhe des Raumes. Räume sind immer rechteckig.
+     */
+    private int height;
+
+    /**
+     * Weite des Raumes. Räume sind immer rechteckig.
+     */
+    private int width;
 
     /**
      * animation for the case that the room was hit

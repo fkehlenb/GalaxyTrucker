@@ -23,11 +23,6 @@ public class ShieldUI extends SubsystemUI {
     private Texture onShip;
 
     /**
-     * for display in the upper left corner
-     */
-    private Texture statusTexture;
-
-    /**
      * Shield textures
      */
     private List<Texture> shieldTextures;
@@ -65,7 +60,7 @@ public class ShieldUI extends SubsystemUI {
 
     /**
      * the status of the system was updated either by damage or by repair
-     * here, the upper left corner needs to be factored in
+     * here
      *
      * @param damage the current status, with 0 being completely functional
      */

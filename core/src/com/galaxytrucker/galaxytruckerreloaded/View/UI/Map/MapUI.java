@@ -16,7 +16,6 @@ public class MapUI {
      */
     private Texture mapTexture;
 
-    //TODO map als parameter, in den constructor
 
     /**
      * Setup called after initialisation
@@ -44,7 +43,7 @@ public class MapUI {
 
     /**
      * Constructor
-     *
+     * TODO die map hier übergeben in irgendeiner form, evtl attribute hinzufügen
      * @param main - main class
      */
     public MapUI(Main main) {

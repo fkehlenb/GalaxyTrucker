@@ -11,13 +11,19 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Weapon
 /**
  * shows the weapons of the ship
  */
-//TODO warum ist weapon in model nicht system subklasse?
+//TODO als subklasse zu subsystemui sobald gemergt mit master
 public class WeaponUI {
 
+    /** Weapon coolDown */
+    private int cooldown;
+
+    /** Weapon energy */
+    private int energy;
+
     /**
-     * the weapon
+     * How many projectiles are fired per burst
      */
-    private Weapon weapon;
+    private int burst;
 
     /**
      * the texure to display the weapon background

@@ -22,6 +22,8 @@ public class EnemySystemUI {
      */
     private List<Texture> systemStatus;
 
+    //TODO a way to identify which system this is representing
+
     /**
      * the status of the system changed
      * @param damage the current amount of damage to the system

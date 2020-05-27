@@ -22,11 +22,6 @@ public class SubsystemUI {
     private OrthographicCamera camera;
 
     /**
-     * the system
-     */
-    private System system;
-
-    /**
      * the textures to display the system in its current damage level
      * use for both the room on the ship and the bottom left corner
      */
@@ -53,6 +48,19 @@ public class SubsystemUI {
      * y position of the room
      */
     private float y;
+
+    /**
+     * the current energy level
+     */
+    private int energy;
+    /**
+     * the maximum energy level
+     */
+    private int maxEnergy;
+    /**
+     * the amount of damage to this system
+     */
+    private int damage;
 
     /**
      * Setup called after initialisation

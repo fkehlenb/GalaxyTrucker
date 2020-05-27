@@ -20,9 +20,14 @@ public abstract class AbstractShip {
     private OrthographicCamera camera;
 
     /**
-     * ship used by this view
+     * HP
      */
-    private Ship ship;
+    private int hp;
+
+    /**
+     * Shields
+     */
+    private int shields;
 
     /**
      * the rooms of the ship
@@ -43,6 +48,18 @@ public abstract class AbstractShip {
      * dispose of ship
      */
     public abstract void disposeShipView();
+
+    /**
+     * update of the hull status (hp)
+     * @param hpvalue new status
+     */
+    public abstract void hullStatusUpdate(int hpvalue);
+
+    /**
+     * shield status update
+     * @param shieldvalue new status
+     */
+    public abstract void shieldStatusUpdate(int shieldvalue);
 
     /**
      * Constructor

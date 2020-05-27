@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Planet.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EventPageButton;
 
 /**
@@ -35,7 +36,15 @@ public class EventGUI {
     private EventPage firstPage;
 
     /**
+     * what kind of event it is
+     */
+    private PlanetEvent event;
+
+    /**
      * button to click on for next page
+     *
+     * if new page is openend, it is taken out of the list
+     * therefore, the next is always the front of the list
      */
     private EventPageButton nextPage;
 
@@ -44,7 +53,6 @@ public class EventGUI {
      */
     private Texture backgroundTexture;
 
-    //TODO das event was stattfindet als parameter
 
     /**
      * Setup called after initialisation
@@ -96,7 +104,9 @@ public class EventGUI {
      * Constructor
      *
      * @param main - main class object for SpriteBatch
+     * @param event what kind of event it is
+     *
      */
-    public EventGUI(Main main) {
+    public EventGUI(Main main, PlanetEvent event) {
     }
 }
