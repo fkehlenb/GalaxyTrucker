@@ -39,17 +39,74 @@ Version & Datum & Änderungen \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Einführung}
 
+Im Rahmen von Re-Softwareprojekt 2 im Sommersemester 2020 wurde diese Architekturbeschreibung für die Software Galaxytrucker geschrieben.
+
+Es handelt sich bei der Software um ein rundenbasiertes Spiel im Weltraum- und Science-Fiction-Kontext, in welchem der Spieler sein eigenes Schiff bekommt und hiermit ein zufällig generiertes Sternensystem erkundet. Zwischendurch wird der Spieler auf viele verschiedene Ereignisse in der Spielwelt stoßen. 
+Das Spiel ist sowohl im Singleplayer als auch im Multiplayer spielbar.\\
+Im Einzelspielermodus soll ein Spieler mit einem Raumschiff starten, von Planet zu Planet fliegen, gegen computergesteuerte Raumschiffe kämpfen oder zufällige Ereignisse absolvieren, um sich auszurüsten. Das Ziel des Einzelspielermodus ist, dass man den Endboss besiegt und so das Spiel gewinnt. \\
+Des weiteren gibt es noch einen Mehrspielermodus, in welchem beide Spieler mit jeweils einem Schiff auf die Karte kommen. Dort müssen sie sich wie im Einzelspielermodus erstmal ausrüsten. Das Ziel des Spieles ist, wie im Einzelspielermodus, den Endboss zu besiegen. Die beiden Spieler können, wenn sie sich auf dem gleichen Planeten befinden, sich angreifen. Der Gewinner dieses Kampfes bekommt eine Belohnung, der Verlierer bekommt einen Nachteil. 
+Zusammenfassend kann man sagen, dass die Software folgende Eigenschaften mitbringt: 
+
+\begin{itemize}
+\item{Rundenbasiertes Weltraumspiel mit Raumschiffen}
+\item{Einzelspielermodus mit computergesteuerten Gegnern}
+\item{Mehrspielermodus mit computergesteuerten Gegnern und einem zweiten gegnerischen Spieler}
+\item{Zufällige Gegner oder Ereignisse an verschiedenen Orten}
+\item{Zufällig generierte Karten (Spielfelder)}
+\end{itemize}
+
+
+
 \subsection{Zweck}
 
-{ \em Was ist der Zweck dieser Architekturbeschreibung? Wer sind die LeserInnen?}
+Die Architekturbeschreibung zeigt den Architekturentwurf, den wir uns für das Spiel GalaxyTrucker überlegt haben. Sie dient dazu, allen Benutzern und Bearbeitern der Software die Funktionsweise und die Struktur nahezubringen. Entwickler und Tester sollen eine Übersicht über die Funktionsweise der Software erhalten, sodass sie auf Basis dieses Dokuments die Software implementieren können, bzw. testen können. 
+Leser dieser Architekturbeschreibung sind Host der Spiele, interessierte Spieler, die die Software vielleicht um Mods erweitern wollen, Entwickler und alle im Rahmen beteiligten von Re-Softwareprojekt 2. 
 
 \subsection{Status}
+
+Dieser Architekturentwurf beschreibt den ersten Entwurf der Software. Er wurde noch nicht durch das Architekturreview freigegeben. 
   
 \subsection{Definitionen, Akronyme und Abkürzungen}
 
+\textbf{Begriffe in der Software:}
+\begin{table}[]
+\begin{tabular}{|l|l|}
+\hline
+Name & Erklärung \\ \hline
+Planet & Mit Planet ist der Planet inklusive dem umgebenen Raumsektor gemeint. \\ \hline
+Ship & Das Ship ist das Raumschiff, mit welchem Spieler oder Computergesteuerte spielen. \\ \hline
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+\end{tabular}
+\end{table}
+
+\textbf{Technische Begriffe:}
+\begin{table}[]
+\begin{tabular}{|l|l|}
+\hline
+Name & Erklärung \\ \hline
+H2 & Eine SQL Java Datenbank, die auch die JDBC API unterstützt. \\ \hline
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+ & \\ \hline
+\end{tabular}
+\end{table}
+
 \subsection{Referenzen}
 
+\begin{itemize}
+\item{Architekturbeschreibung von RainerRaiders im Rahmen des Softwareprojekts 2 - 2016}
+\item{Architekturbeschreibung von DataColorado im Rahmen des Softwareprojekts 2 - WiSe 2019/2020}
+\item{Kickoff Folien (Stand 21.04.2020)}
+\end{itemize}
+
 \subsection{Übersicht über das Dokument}
+
+Zunächst zeigen wir in Kapitel 2 die verschiedenen Einflussfaktoren auf die Entwicklung und die Probleme und Strategien zum Lösen der Probleme. In den Kapiteln 3, 4 und 6 werden die Sichten von Hofmeister gezeigt. Bei uns wird die Codesicht nicht behandelt. In Kapitel 3 wird die Konzeptionelle Sicht unserer Software dargestellt, in Kapitel 4 die Modulsicht und in Kapitel 6 die Ausführungssicht. Kapitel 5 stellt das Modell der Datensicht dar, eine nähere Beschreibung der Architektursicht. In Kapitel 7 werden einige Anwendungsfälle dargestellt. Abschließend stellen wir in Kapitel 9 Ideen für zukünftige Weiterentwicklungen unserer Software dar. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,6 +150,8 @@ Version & Datum & Änderungen \\
 
 %Verwendet eine eindeutige Nummerierung der Faktoren, um sie auf den 
 %Problemkarten einfach referenzieren zu können.}
+
+\subsection{Einflussfaktoren}
 
 \begin{longtable}[c]{|p{5cm}|p{5cm}|p{5cm}|}
 \hline
@@ -1330,6 +1389,13 @@ Man kann neue Setups testen, auf die man hin arbeiten will, oder man lässt sein
 
 An der Architektur muss soweit nichts großartig verändert werden, da man ein Testspiel genauso auch im richtigen Modus spielen könnte. Einzig die Errungenschaften und Freischaltungen müssten für den Modus gesperrt werden. Um die Kampf Sandbox zu erstellen, könnte in der Architektur eine neue Sicht erstellt werden, welche nicht eine Karte wie normale Spiele beinhaltet, sondern nur das Kampffeld. 
 
+}
+
+\textbf{COOP-Modus}
+{
+Der COOP-Modus soll so wie der Einzelspielermodus sein. Das Ziel ist es, Ausrüstung zu sammeln, indem man computergesteuerte Raumschiffe zerstört oder die Zufallsereignisse absolviert. Mit dieser Ausrüstung kann man dann am Ende den Endboss besiegen. Der Unterschied zum Einzelspielermodus ist der, dass man zu zweit über einen ähnlich zum Mehrspielermodus aufgebauten Server spielen kann und alle Gegner zusammen angreifen und besiegen kann, aber nicht muss. Außerdem könnte man einen Handel zwischen den beiden Spielern erlauben, sodass man die erkämpfte Ausrüstung untereinander tauschen kann.
+
+In der Architektur muss ein neuer Modus für den Server erstellt werden, sodass kein PVP mehr möglich ist. Stattdessen müssen im Model Kämpfe mit drei Schiffen erlaubt werden. Außerdem müsste noch die Mechanik zum handeln/tauschen implementiert werden. Dies könnte ähnlich zum Shop implementiert werden.
 }
 
 
