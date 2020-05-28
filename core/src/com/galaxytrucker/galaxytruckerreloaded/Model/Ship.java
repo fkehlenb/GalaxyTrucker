@@ -96,11 +96,6 @@ public class Ship implements Serializable {
     @DatabaseField(columnName = "FTLCharge")
     private int FTLCharge;
 
-    /** This ship's weapons */
-    @NonNull
-    @DatabaseField(columnName = "weapons", foreign = true)
-    private List<Weapon> weapons;
-
     /** This ship's systems */
     @NonNull
     @DatabaseField(columnName = "systems",foreign = true)

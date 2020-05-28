@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Weapons;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.j256.ormlite.field.DatabaseField;
 import lombok.*;
 
@@ -93,9 +94,8 @@ public abstract class Weapon implements Serializable {
     @DatabaseField(columnName = "weaponBurst")
     private int burst;
 
-    /** Ship this weapon belongs to */
-    @NonNull
-    @DatabaseField(foreign = true, columnName = "associatedShip")
-    private Ship associatedShip;
+    /** Weapon system this weapon belongs to */
+    @DatabaseField(columnName = "weaponSystem",foreign = true)
+    private System weaponSystem;
 
 }
