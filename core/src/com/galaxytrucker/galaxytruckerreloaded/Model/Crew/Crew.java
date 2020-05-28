@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Crew;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -52,10 +53,15 @@ public class Crew implements Serializable {
     private int[] stats;
 
     /**
-     * The system this crew member is in
+     * The room this crew member is in
      */
     @DatabaseField(foreign = true, columnName = "system")
-    @NonNull
-    private System currentSystem;
+    private Room currentRoom;
+
+    /**
+     * The user who owns this crew member
+     */
+    @DatabaseField(columnName = "associatedUser")
+    private String associatedUser;
 
 }
