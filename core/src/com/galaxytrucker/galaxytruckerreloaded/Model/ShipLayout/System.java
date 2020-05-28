@@ -43,4 +43,9 @@ public abstract class System extends Room implements Serializable {
     @DatabaseField(foreign = true, columnName = "crew")
     @NonNull
     private List<Crew> crew;
+
+    /** Whether or not the system is disabled */
+    @DatabaseField(columnName = "disabled")
+    @NonNull
+    private boolean disabled = false;
 }

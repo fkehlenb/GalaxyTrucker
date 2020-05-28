@@ -2,13 +2,35 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.CrewDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.WeaponDAO;
 import lombok.*;
 
+/** This class handles battle logic on the server side */
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class BattleService {
+
+    /** ShipDAO */
+    @NonNull
+    private ShipDAO shipDAO;
+
+    /** WeaponDAO */
+    @NonNull
+    private WeaponDAO weaponDAO;
+
+    /** CrewDAO */
+    @NonNull
+    private CrewDAO crewDAO;
+
+    /** RoomDAO */
+    @NonNull
+    private RoomDAO roomDAO;
 
     /** List of ships participating in the fight */
     @NonNull
@@ -17,41 +39,45 @@ public class BattleService {
     /** The ship which's round it is */
     private Ship currentRound;
 
+    /** Disabled system round counter */
+    private int disabledSystemCounter = 3;
+
     /** Change the ship which's round it is */
     public void nextRound(){}
 
     /** Validate user input by checking if it's his round to play
      * @param s - the ship which wants to play
      * @return true if it is it's round else false */
-    private boolean validMove(Ship s){
+    public boolean validMove(Ship s){
         return false;
     }
 
     /** Make one ship attack another's section
      * @param attacker - the attacking ship
      * @param opponent - the opponent's ship
-     * @param weapon - the weapon attacking */
-    private void attack(Ship attacker, Ship opponent, Weapon weapon){}
+     * @param weapon - the weapon attacking
+     * @param room - the room being attacked */
+    public void attack(Ship attacker, Ship opponent, Weapon weapon, Room room){}
 
     /** Heal a ship
      * @param ship - the ship to heal
      * @param healingWeapon - the healing weapon */
-    private void heal(Ship ship,Weapon healingWeapon){}
+    public void heal(Ship ship,Weapon healingWeapon){}
 
     /** Flee a fight, reward the winner
      * @param coward - the ship that wants to flee
      * @param opponent - the opponent that wins the fight */
-    private void fleeFight(Ship coward, Ship opponent){}
+    public void fleeFight(Ship coward, Ship opponent){}
 
     /** Give winner reward and end the fight (or the game)
      * @param loser - the ship that lost
      * @param victor - the ship that won */
-    private void endFight(Ship loser, Ship victor){}
+    public void endFight(Ship loser, Ship victor){}
 
-    /** Receive data from server and turn into valid battle move
-     * @param s - the string to turn to battle moves
-     * @return the outcome of the battle moves as a string command */
-    public String applyBattleMoves(String s){
-        return null;
+    /** Check if a ship is dead
+     * @param s - the ship
+     * @return true if the ship is dead else false */
+    public boolean isDead(Ship s){
+        return false;
     }
 }

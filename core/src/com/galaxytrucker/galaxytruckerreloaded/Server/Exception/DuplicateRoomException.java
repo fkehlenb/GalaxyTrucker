@@ -1,4 +1,4 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Exception;
 
-public class DuplicateSystemException extends Exception {
+public class DuplicateRoomException extends Exception {
 }
