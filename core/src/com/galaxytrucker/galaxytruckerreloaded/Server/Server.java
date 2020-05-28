@@ -1,10 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
-import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Services.CrewService;
+import com.j256.ormlite.support.ConnectionSource;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -12,52 +9,32 @@ import java.net.Socket;
  */
 public class Server {
 
-    /**
-     * The database
-     */
-    private Database database;
+    /** Server service communicator */
+    private ServerServiceCommunicator serverServiceCommunicator;
 
-    /**
-     * Start the server
-     */
-    public static void main(String[] args) {
-        Database database = new Database();
-        database.setup();
+    /** Main method */
+    public static void main(String[] args){}
+
+    /** Client handler
+     * @param socket - the client's socket */
+    private void clientHandler(Socket socket){
+
     }
 
-    /**
-     * Client handler handles clients connected
-     */
-    public void client_handler(Socket socket) {
+    /** Start serverServiceCommunicator
+     * @param source - the database connection source */
+    private void startServerServiceCommunicator(ConnectionSource source){
+
     }
 
-    /**
-     * Send some data
-     *
-     * @param stream - input stream of data to send
-     */
-    public void sendPackets(InputStream stream) {
+    /** Receive some data from the client and return a response
+     * @param socket - the client socket */
+    private void receiveAndSendData(Socket socket){
     }
 
-    /**
-     * Receive some data
-     *
-     * @return outputstream of received data
-     */
-    public OutputStream receivePackets() {
+    /** Initialize database
+     * @return the database connection source */
+    private ConnectionSource initializeDatabase(){
         return null;
-    }
-
-    /**
-     * Validate packets
-     */
-    public void validatePackets() {
-    }
-
-    /**
-     * Initialize database
-     */
-    private void initializeDatabase() {
-
     }
 }
