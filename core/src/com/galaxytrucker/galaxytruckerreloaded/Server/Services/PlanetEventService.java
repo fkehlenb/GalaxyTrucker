@@ -51,4 +51,6 @@ public class PlanetEventService {
     /** Disable systems when in nebula
      * @param s - the ship which's systems to disable */
     public void disableSystemsInNebula(Ship s, int duration){}
+
+    /** Start battle */
 }
