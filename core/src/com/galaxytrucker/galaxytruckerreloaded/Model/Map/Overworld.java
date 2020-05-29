@@ -25,6 +25,11 @@ public class Overworld implements Serializable {
     @DatabaseField(columnName = "planetMap")
     private HashMap<float[],Planet> planetMap;
 
+    /** The start planet */
+    @NonNull
+    @DatabaseField(columnName = "startPlanet")
+    private Planet startPlanet;
+
     /** Constructor */
     public Overworld(int seed) {
         planetMap = new HashMap<>();

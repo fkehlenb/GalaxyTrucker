@@ -23,7 +23,9 @@ public class RoomService {
     /** Cause a breach in a room
      * @param ship - the ship the breach is happening on
      * @param room - the room the breach is happening in */
-    public void causeBreach(Ship ship,Room room){}
+    public void causeBreach(Ship ship,Room room){
+
+    }
 
     /** Disable a system
      * @param ship - the ship to disable a system on
