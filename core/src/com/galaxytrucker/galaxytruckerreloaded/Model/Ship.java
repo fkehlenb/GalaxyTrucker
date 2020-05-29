@@ -111,4 +111,9 @@ public class Ship implements Serializable {
     @DatabaseField(foreign = true, columnName = "inventory")
     private List<Weapon> inventory;
 
+    /** Whether or not the ship is in combat */
+    @DatabaseField(columnName = "inCombat")
+    @NonNull
+    private boolean inCombat = false;
+
 }
