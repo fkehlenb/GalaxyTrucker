@@ -52,4 +52,8 @@ public class Planet implements Serializable {
     @DatabaseField(foreign = true, columnName = "ships")
     @NonNull
     private List<Ship> ships;
+
+    /** Trader */
+    @DatabaseField(foreign = true)
+    private Trader trader;
 }

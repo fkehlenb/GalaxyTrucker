@@ -42,6 +42,10 @@ public class BattleService {
     /** Disabled system round counter */
     private int disabledSystemCounter = 3;
 
+    /** Reward service */
+    @NonNull
+    private RewardService rewardService;
+
     /** Change the ship which's round it is */
     public void nextRound(){}
 
