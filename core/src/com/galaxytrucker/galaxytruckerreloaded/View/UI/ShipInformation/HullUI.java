@@ -32,6 +32,11 @@ public class HullUI {
     private List<Texture> hullTextures;
 
     /**
+     * the current status
+     */
+    private int status;
+
+    /**
      * setup called after initialisation
      */
     private void setup() {
@@ -56,10 +61,18 @@ public class HullUI {
     }
 
     /**
+     * the status of the hull was updated, meaning a new texture needs to be displayed
+     */
+    public void updateStatus() {
+
+    }
+
+    /**
      * Constructor
      *
      * @param main - main class
+     * @param status the current status of the hull
      */
-    public HullUI(Main main) {
+    public HullUI(Main main, int status) {
     }
 }

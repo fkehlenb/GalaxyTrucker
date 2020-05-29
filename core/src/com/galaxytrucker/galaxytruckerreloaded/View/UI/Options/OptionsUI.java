@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ContinueButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MainMenuButton;
 
 /**
  * Ingame options UI
@@ -27,34 +29,14 @@ public class OptionsUI {
     private Texture optionsBackgroundTexture;
 
     /**
-     * Continue button
+     * continue button
      */
-    private ImageButton continueButton;
+    private ContinueButton continueButton;
 
     /**
-     * Continue button image
+     * main menu button
      */
-    private Texture continueButtonTexture;
-
-    /**
-     * Main Menu button
-     */
-    private ImageButton mainMenuButton;
-
-    /**
-     * Main Menu button texture
-     */
-    private Texture mainMenuButtonTexture;
-
-    /**
-     * Quit button
-     */
-    private ImageButton quitButton;
-
-    /**
-     * Quit button texture
-     */
-    private Texture quitButtonTexture;
+    private MainMenuButton mainMenuButton;
 
     /**
      * Setup called after initialisation
@@ -86,6 +68,6 @@ public class OptionsUI {
      * @param main - main class
      */
     public OptionsUI(Main main) {
-        setup();
+
     }
 }

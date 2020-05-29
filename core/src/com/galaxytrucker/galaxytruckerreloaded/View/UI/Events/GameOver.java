@@ -3,7 +3,11 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MainMenuButton;
 
+/**
+ * view for the event that the player has lost or won the game
+ */
 public class GameOver {
 
     /**
@@ -12,14 +16,14 @@ public class GameOver {
     private Texture gameOverTexture;
 
     /**
-     * Main menu button
+     * Game won texture
      */
-    private ImageButton mainMenuButton;
+    private Texture gameWonTexture;
 
     /**
-     * Main menu button texture
+     * button to main menu
      */
-    private Texture mainMenuButtonTexture;
+    private MainMenuButton menuButton;
 
     /**
      * Setup called after initialisation

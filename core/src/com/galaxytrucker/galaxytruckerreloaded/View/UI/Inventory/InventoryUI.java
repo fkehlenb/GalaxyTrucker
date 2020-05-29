@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 
 public class InventoryUI {
 
@@ -30,17 +34,14 @@ public class InventoryUI {
     private List<InventorySlotUI> slots;
 
     /**
-     * Close inventory button
+     * button to close inventory
      */
-    private ImageButton closeInventoryButton;
-
-    /**
-     * Close inventory button texture
-     */
-    private Texture closeInventoryButtonTexture;
+    private InventoryCloseButton closeButton;
 
     /**
      * setup called after initialisation
+     *
+     * here the inventory slots are initialised for fuel, missiles, crew, weapons, and money
      */
     private void setup() {
     }
@@ -63,11 +64,15 @@ public class InventoryUI {
     public void disposeInventoryUI() {
     }
 
+
     /**
      * Constructor
      *
      * @param main - main class
+     * @param crew the crew members
+     * @param weapons the weapons
+     * @param integerValues the integer values to be displayed for a ship
      */
-    public InventoryUI(Main main) {
+    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, List<Integer> integerValues) {
     }
 }

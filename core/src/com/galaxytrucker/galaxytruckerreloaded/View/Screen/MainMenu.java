@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.*;
 
 /**
  * Main menu screen
@@ -30,44 +31,19 @@ public class MainMenu implements Screen {
     private Texture background;
 
     /**
-     * SinglePlayer button
+     * new game button. leads to shipselector
      */
-    private ImageButton singlePlayerButton;
+    private NewGameButton newGame;
 
     /**
-     * SinglePlayer button texture
+     * start game button. continues old game
      */
-    private Texture singlePlayerButtonTexture;
+    private StartButton startGame;
 
     /**
-     * MultiPlayer button
+     * quit button
      */
-    private ImageButton multiPlayerButton;
-
-    /**
-     * MultiPlayer button texture
-     */
-    private Texture multiPlayerButtonTexture;
-
-    /**
-     * Options button
-     */
-    private ImageButton optionsButton;
-
-    /**
-     * Option button texture
-     */
-    private Texture optionsButtonTexture;
-
-    /**
-     * Quit button
-     */
-    private ImageButton quitButton;
-
-    /**
-     * Quit button texture
-     */
-    private ImageButton quitButtonTexture;
+    private QuitButton quitButton;
 
     /**
      * Looping music track
@@ -111,6 +87,30 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+
+    /**
+     * starts a new game.
+     * called by button
+     */
+    public void newGame() {
+
+    }
+
+    /**
+     * resumes the existing game.
+     * called by button
+     */
+    public void resumeGame() {
+
+    }
+
+    /**
+     * quits.
+     * called by button
+     */
+    public void quit()  {
 
     }
 
