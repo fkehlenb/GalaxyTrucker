@@ -21,8 +21,8 @@ public class Trader extends Planet implements Serializable {
     private int id;
 
     /** Associated user */
-    @DatabaseField
-    private String associatedUser;
+    @DatabaseField(foreign = true)
+    private Planet planet;
 
     /** Weapons for sale */
     @DatabaseField(foreign = true)

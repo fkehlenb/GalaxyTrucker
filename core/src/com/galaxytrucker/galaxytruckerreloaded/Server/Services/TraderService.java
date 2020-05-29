@@ -23,11 +23,15 @@ public class TraderService extends PlanetEventService {
     @NonNull
     private TraderDAO traderDAO;
 
-    /** WeaponDAO */
+    /**
+     * WeaponDAO
+     */
     @NonNull
     private WeaponDAO weaponDAO;
 
-    /** CrewDAO */
+    /**
+     * CrewDAO
+     */
     @NonNull
     private CrewDAO crewDAO;
 
@@ -92,6 +96,28 @@ public class TraderService extends PlanetEventService {
      * @param amount - the amount to buy
      */
     public void purchaseHP(Ship ship, Trader trader, int amount) {
+
+    }
+
+    /**
+     * Sell weapons
+     *
+     * @param ship   - the ship that wants to sell weapons
+     * @param trader - the trader to sell the weapons to
+     * @param weapon - the weapon to sell
+     */
+    public void sellWeapon(Ship ship, Trader trader, Weapon weapon) {
+
+    }
+
+    /**
+     * Sell rockets
+     *
+     * @param ship   - the ship that wants to sell rockets
+     * @param trader - the trader to sell the rockets to
+     * @param amount - the amount of rockets to sell
+     */
+    public void sellRockets(Ship ship, Trader trader, int amount) {
 
     }
 }
