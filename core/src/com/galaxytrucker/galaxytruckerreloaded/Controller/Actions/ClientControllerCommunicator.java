@@ -1,5 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Controller.Actions;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +12,8 @@ public class ClientControllerCommunicator {
 
     /** Client ship */
     private Ship clientShip;
+    private Overworld map;
+    private Planet currentPlanet;
 
     /** Issue a new request and receive a response
      * @param request - the request
