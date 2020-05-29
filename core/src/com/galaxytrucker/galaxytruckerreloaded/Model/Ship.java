@@ -18,11 +18,16 @@ import java.io.Serializable;
 @DatabaseTable(tableName = "ship")
 public class Ship implements Serializable {
 
+    /** ID */
+    @DatabaseField(id = true,columnName = "ID")
+    @NonNull
+    private int id;
+
     /**
      * The user this ship belongs to
      * (uses the user's username)
      */
-    @DatabaseField(columnName = "ID", id = true)
+    @DatabaseField(columnName = "associatedUser")
     @NonNull
     private String associatedUser;
 
