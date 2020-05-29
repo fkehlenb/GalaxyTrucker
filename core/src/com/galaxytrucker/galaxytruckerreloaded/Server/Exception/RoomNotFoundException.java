@@ -1,4 +1,4 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Exception;
 
-public class SystemNotFoundException extends Exception {
+public class RoomNotFoundException extends Exception {
 }

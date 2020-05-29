@@ -1,32 +1,32 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateSystemException;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.SystemNotFoundException;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.SystemDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRoomException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 
 public class SystemService {
 
     /**
      * System dao
      */
-    private SystemDAO systemDAO;
+    private RoomDAO roomDAO;
 
     /**
      * Add a new system
      *
      * @param s - the system to add
-     * @throws DuplicateSystemException if the system already exists
+     * @throws DuplicateRoomException if the system already exists
      */
-    public void addSystem(System s) throws DuplicateSystemException {
+    public void addSystem(System s) throws DuplicateRoomException {
     }
 
     /**
      * Remove a system
      *
      * @param s - the system to remove
-     * @throws SystemNotFoundException if the system cannot be found
+     * @throws RoomNotFoundException if the system cannot be found
      */
-    public void removeSystem(System s) throws SystemNotFoundException {
+    public void removeSystem(System s) throws RoomNotFoundException {
     }
 }

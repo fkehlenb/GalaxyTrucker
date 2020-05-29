@@ -1,41 +1,82 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.CrewNotFoundException;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateCrewException;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.CrewDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
+import lombok.*;
 
+/** This class handles the logic for crew aboard the ship, server side */
+@Getter
+@Setter
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class CrewService {
 
-    /**
-     * DAO
-     */
+    /** ShipDAO */
+    @NonNull
+    private ShipDAO shipDAO;
+
+    /** CrewDAO */
+    @NonNull
     private CrewDAO crewDAO;
 
-    /**
-     * Add a new crew member
-     *
-     * @param c - the crew member to add
-     * @throws DuplicateCrewException if the crew already exists
-     */
-    public void addCrew(Crew c) throws DuplicateCrewException {
+    /** RoomDAO */
+    @NonNull
+    private RoomDAO roomDAO;
+
+    /** Validate the command given
+     * @param s - the given command
+     * @return true if it is valid, else false */
+    public boolean validateCrewMove(String s){
+        return false;
     }
 
-    /**
-     * Edit an existing crew member
-     *
-     * @param c - the crew member to edit
-     * @throws CrewNotFoundException if the crew cannot be found
-     */
-    public void editCrew(Crew c) throws CrewNotFoundException {
+    /** Move a crew member to a different section
+     * @param ship - the ship the crew is on
+     * @param crew - the crew member
+     * @param room - the room to move him to */
+    public void moveCrewToRoom(Ship ship, Crew crew, Room room){
+
     }
 
-    /**
-     * Remove an existing crew member
-     *
-     * @param c - the crew to remove
-     * @throws CrewNotFoundException if the crew cannot be found
-     */
-    public void removeCrew(Crew c) throws CrewNotFoundException {
+    /** Heal crew
+     * @param ship - the ship the crew is on
+     * @param crew - the crew member to heal
+     * @param healAmount - amount to heal */
+    public void healCrewMember(Ship ship,Crew crew,int healAmount){
+
+    }
+
+    /** Heal crew in a room
+     * @param ship - the ship the crew are on
+     * @param room - the room which's crew members to heal
+     * @param amount - amount to heal */
+    public void healCrewInRoom(Ship ship,Room room,int amount){
+
+    }
+
+    /** Damage crew
+     * @param ship - the ship the crew is on
+     * @param room - the room in which to damage the crew
+     * @param amount - the amount of damage to take */
+    public void damageCrew(Ship ship,Room room,int amount){
+
+    }
+
+    /** Fix a system
+     * @param ship - the ship to fix a system on
+     * @param system - the system to fix */
+    public void fixSystem(Ship ship, System system){
+
+    }
+
+    /** Repair a breach in a room
+     * @param ship - the ship to fix the rbeach on
+     * @param room - the room to fix the breach in */
+    public void repairBreach(Ship ship,Room room){
+
     }
 }

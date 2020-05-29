@@ -1,9 +1,11 @@
 package com.galaxytrucker.galaxytruckerreloaded.Controller.Actions;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import lombok.Getter;
 import lombok.Setter;
 
 @Setter
+@Getter
 public class ClientControllerCommunicator {
 
     /** Client ship */

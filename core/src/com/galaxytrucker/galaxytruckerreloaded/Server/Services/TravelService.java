@@ -2,18 +2,23 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.PlanetDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import lombok.*;
 
 /** Used to move user from one star to another */
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class TravelService {
 
-    /** ShipDAO for database access */
+    /** ShipDAO */
     @NonNull
     private ShipDAO shipDAO;
+
+    /** PlanetDAO */
+    @NonNull
+    private PlanetDAO planetDAO;
 
     /** Validate the travel request
      * @param s - the ship that wisches to travel
