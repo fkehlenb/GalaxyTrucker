@@ -16,7 +16,9 @@ tex:
   image: tianon/latex
   stage: tex
   script:
+    - cd doc
     - pdflatex doc/Architekturbeschreibung.tex
+    - cd ..
   artifacts:
     paths:
       - doc/Architekturbeschreibung.pdf
