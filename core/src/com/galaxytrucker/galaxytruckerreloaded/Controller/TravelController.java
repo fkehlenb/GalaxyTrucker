@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.Controller.Actions;
+package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;

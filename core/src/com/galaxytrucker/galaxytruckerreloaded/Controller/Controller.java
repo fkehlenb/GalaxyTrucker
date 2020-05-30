@@ -1,5 +1,6 @@
-package com.galaxytrucker.galaxytruckerreloaded.Controller.Actions;
+package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import lombok.NonNull;
 
 public abstract class Controller {

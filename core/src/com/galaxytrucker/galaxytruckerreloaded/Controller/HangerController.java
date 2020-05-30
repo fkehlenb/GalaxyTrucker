@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.Controller.Actions;
+package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
 import lombok.AccessLevel;
 import lombok.Getter;

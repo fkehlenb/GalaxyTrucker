@@ -1,6 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.Controller.Actions;
-
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+package com.galaxytrucker.galaxytruckerreloaded.Communication;
 
 import java.net.Socket;
 

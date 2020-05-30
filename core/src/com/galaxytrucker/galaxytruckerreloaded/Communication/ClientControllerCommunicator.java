@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.Controller.Actions;
+package com.galaxytrucker.galaxytruckerreloaded.Communication;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
