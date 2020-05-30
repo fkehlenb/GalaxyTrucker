@@ -27,12 +27,12 @@ public class Trader extends Planet implements Serializable {
     /** Weapons for sale */
     @DatabaseField(foreign = true)
     @NonNull
-    private List<Weapon> weaponsForSale;
+    private List<Weapon> weaponStock;
 
     /** Rockets for sale */
     @DatabaseField
     @NonNull
-    private int rocketStock;
+    private int missileStock;
 
     /** Fuel for sale */
     @DatabaseField
