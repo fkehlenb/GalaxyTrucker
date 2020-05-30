@@ -2,6 +2,7 @@ image: java:latest
 
 stages:
   - build
+  - javadoc
   - test
 
 cache:
@@ -19,6 +20,18 @@ build:
     expire_in: 1 week
   only:
     - master
+
+javadoc:
+  stage: javadoc
+  script:
+    - ./gradle javadoc
+  artifacts:
+    paths:
+      - build/doc/*
+    expire_in: 1 week
+  only:
+    - master
+
 
 test:
   stage: test
