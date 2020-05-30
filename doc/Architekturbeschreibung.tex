@@ -213,7 +213,7 @@ Zunächst zeigen wir in Kapitel 2 die verschiedenen Einflussfaktoren auf die Ent
 \\ \hline
 \multicolumn{3}{|l|}{{O1.1: Teamgröße}} 
 \\ \hline
-Die Gruppe besteht aus 6 Entwicklern. & Keine Flexibilität, aber Veränderlichkeit: Eine oder mehrere Personen könnten die Gruppe verlassen      &  Die Architektur kann wegen Zeitmangel und fehlenden Fähigkeiten Mangel enthalten.
+Die Gruppe besteht aus 6 Entwicklern. & Keine Flexibilität, aber Veränderlichkeit: Eine oder mehrere Personen könnten die Gruppe verlassen      &  Die Architektur kann wegen Zeitmangel und fehlenden Fähigkeiten Mängel enthalten.
 \\ \hline 
 \multicolumn{3}{|l|}{{O1.2: Architekturabgabe}} 
 \\ \hline
@@ -225,7 +225,7 @@ Das Endprodukt muss am 02.08.2020 abgegeben werden. & Keine Flexibilität, oder 
 \\ \hline
 \multicolumn{3}{|l|}{{O1.4: Fähigkeiten}} 
 \\ \hline
-Die Gruppenmitglieder haben unterschiedliche Programmiererfahrungen und Kentnisse. & Keine Flexibilität, aber Veränderlichkeit: Neues Wissen kann sich angeeignet werden.  & Die Implementierung kann Mangel enthalten. 
+Die Gruppenmitglieder haben unterschiedliche Programmiererfahrungen und Kentnisse. & Keine Flexibilität, aber Veränderlichkeit: Neues Wissen kann sich angeeignet werden.  & Die Implementierung kann Mängel enthalten. 
 \\ \hline     
 %TECHNIK
 \multicolumn{3}{|l|}{{\textbf{T1: Technik}}} 
@@ -242,9 +242,9 @@ Das Spiel soll unter Linux, MacOS und Windows lauffähig sein & Keine Veränderl
 \\ \hline
 Es soll eine leichtgewichtige, relationale Datenbank verwendet werden. & Große Flexibilität und Veränderlichkeit: Da es keine festen Vorgaben gibt, ist die Datenbank relativ frei wählbar. Allerdings muss eine Datenbank verwendet werden. & Wir müssen uns für eine Datenbank entscheiden, und diese bei der Implementierung verwenden. 
 \\ \hline
-\multicolumn{3}{|l|}{{T1.4: libgdx}} 
+\multicolumn{3}{|l|}{{T1.4: LibGDX}} 
 \\ \hline
-Es soll libdgx verwendet werden. & Keine Veränderlichkeit oder Flexibilität.   & Bei der Implementierung muss libgdx verwendet werden. 
+Es soll LibGDX verwendet werden. & Keine Veränderlichkeit oder Flexibilität.   & Bei der Implementierung muss LibGDX verwendet werden. 
 \\ \hline
 \multicolumn{3}{|l|}{{T1.5: Client}} 
 \\ \hline
@@ -252,7 +252,7 @@ Das Spiel soll ohne weitere Installationen auf Clientseite spielbar sein. & Kein
 \\ \hline
 \multicolumn{3}{|l|}{{T1.6: Server}} 
 \\ \hline
-Es soll eine Spielserver geben, der von mindestens zwei Spieler*innen benutzt werden kann. & Keine Flexibilität, oder Veränderlichkeit.    & Wir müssen einen Spielserver einrichten, der das Spiel kontrolliert. 
+Es soll einen Spielserver geben, der von mindestens zwei Spieler*innen benutzt werden kann. & Keine Flexibilität, oder Veränderlichkeit.    & Wir müssen einen Spielserver einrichten, der das Spiel kontrolliert. 
 \\ \hline
 %PRODUKT
 \multicolumn{3}{|l|}{{\textbf{Produktfaktoren}}} 
@@ -1317,7 +1317,7 @@ In diesem Kapitel wird das zu entwerfende System in der Konzeptionellen Sicht na
 Die Datenbanksoftware wird im Server dazu genutzt, um unsere Spielstände zu persistieren. Unsere Datenbank kommuniziert über die ORM-Lite Schnittstelle mit der im Server liegenden Persistenz. 
 
 \textbf{Persistenz:}
-Die Persistenz stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Tie Persistenz stellt ein Interface für Service zur Verfügung, über welches Kontrollfluss und Datenfluss stattfindet (?).	\textcolor{red}{Diese Schnittstelle muss noch benannt werden!!!} Außerdem nutzt die Persistenz ein Interface von Model, über das Kontrollfluss läuft. 
+Die Persistenz stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Die Persistenz stellt ein Interface für Service zur Verfügung, über welches Kontrollfluss und Datenfluss stattfindet (?).	\textcolor{red}{Diese Schnittstelle muss noch benannt werden!!!} Außerdem nutzt die Persistenz ein Interface von Model, über das Kontrollfluss läuft. 
 
 \textbf{Model (Server):}
 Das Model beschreibt die logische Struktur der Datenbank. Hiermit wird bestimmt, wie auf Daten zugegriffen werden kann. 
