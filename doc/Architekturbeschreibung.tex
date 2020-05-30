@@ -1260,6 +1260,19 @@ in die Details von spezifischen Technologien abzugleiten. Sie wird in den
 nachfolgenden Sichten konkretisiert und verfeinert. Die konzeptionelle Sicht 
 wird mit {UML}-Komponentendiagrammen visualisiert.}
 
+In diesem Kapitel wird das zu entwerfende System in der Konzeptionellen Sicht nach Hofmeister dargestellt. Unser System ist ein Spiel, welches auf LibGDX basiert. Um unser System zu nutzen, stellen wir einen Client und einen Server zur Verfügung. Der Benutzer benutzt das Interface/View, um unsere Software zu steuern. Diese macht sich im Hintergrund bemerkbar, da unser Framework LibGDX über ein Model-View-Controller-System kommuniziert und die Logik im System ausführt. 
+
+\textbf{H2:} 
+Die Datenbanksoftware wird im Server dazu genutzt, um unsere Spielstände zu persistieren. Unsere Datenbank kommuniziert über die ORM-Lite Schnittstelle mit der im Server liegenden Persistenz. 
+
+\textbf{Persistenz:}
+Die Persistenz stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Tie Persistenz stellt ein Interface für Service zur Verfügung, über welches Kontrollfluss und Datenfluss stattfindet (?).	\textcolor{red}{Diese Schnittstelle muss noch benannt werden!!!} Außerdem nutzt die Persistenz ein Interface von Model, über das Kontrollfluss läuft. 
+
+\textbf{Model (Server):}
+Das Model beschreibt die logische Struktur der Datenbank. Hiermit wird bestimmt, wie auf Daten zugegriffen werden kann. 
+In unserem Model sind Daten des Schiffs, der Ausrüstung, der Spielkarte und der Gegner. Model stellt ein Kontrollfluss Interface zur Verfügung, welches von Persistenz benutzt wird und ein Kontrollfluss Interface (Controll), welches von Service benutzt wird. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben. 
+
+
 \newpage
 
 \begin{figure}[H]
