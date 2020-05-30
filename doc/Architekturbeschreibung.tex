@@ -1274,18 +1274,18 @@ auf welchen Rechnern ausgeführt werden.}
 \section{Zusammenhänge zwischen Anwendungsfällen und Architektur}
 \sectionmark{Zusammenhänge AF u. Architektur} \label{sec:anwendungsfaelle}
 
-{\itshape In diesem Abschnitt sollen Sequenzdiagramme mit Beschreibung(!) für 
-\variante{zwei bis drei von Euch ausgewählte Anwendungsfälle}%
-{einen von Euch ausgewählten Anwendungsfall}
-erstellt werden. Ein Sequenzdiagramm beschreibt den Nachrichtenverkehr zwischen 
-allen Modulen, die an der Realisierung des Anwendungsfalles beteiligt sind. 
-\variante{Wählt die Anwendungsfälle so, dass nach Möglichkeit alle Module Eures
-entworfenen Systems in mindestens einem Sequenzdiagramm vorkommen. Falls Euch 
-das nicht gelingt, versucht möglichst viele und die wichtigsten Module 
-abzudecken.}%
-{Dazu könnt ihr Euch einen Anwendungsfall heraussuchen, der möglichst viele 
-Module der  Architektur abdeckt. In SWP-2 werden wir mehrere Anwendungsfälle
-betrachten und eine umfangreichere Abdeckung der Architektur anstreben.} }
+\subsection{Server-Client-Kommunikation}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{UML/Server_client_Sequenzdiagramm.pdf}
+\end{center}
+\end{figure}
+
+Das obige Diagramm beschreibt abstrakt wie der Game-Client eine Aktion ausführen möchte, und wie diese vom Server empfangen und bearbeitet wird.
+Der Client möchte z.B. eine Angriffsaktion ausführen, diese muss allerdings erst vom Server überprüft werden. Der Benutzer clickt in seinem View auf einen Knopf, welcher die 
+korrekte Methode aus dem korrekten Controller ausführt, welche zu dieser Aktion gehört. (Einen konkreten Fall werden wir im nächsten Diagramm vorstellen)
+Der Controller erstellt ein neues Request welches dann an den ClientControllerCommunicator weitergegeben wird, welcher es dann an die Netwerkschnittstelle Client weiterleitet. Diese Netzwerkschnittstelle schickt dann dieses Request an den Server, wo sie dann von der Schnittstelle des Servers akzeptiert wird. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator weiter, welches das Request dann an das korrekte Service weiterleitet. Das Service prüft ob das Request valide ist. Ist dieses der Fall, so wird die Logik des Requests ausgeführt und die Daten in der Datenbank angepasst. Nach der Bearbeitung der Daten wird ein Response an den ServerServiceCommunicator gegeben. War das Request nicht valide, so wird auch dies dem ServerServiceCommunicator mitgeteilt. Dieser leitet dann das Response das er bekommen hat weiter an die Server Schnittstelle, welches die Daten dann zum Client schickt. Der Client empfängt das Response und gibt es seinem ClientControllerCommunicator, welcher es auch wiederrum an den korrekten Controller weiterleitet. Der Controller führt nun seine Logik aus, passt seine lokalen Daten an und gibt dem View bescheidt, so dass dieser sich auch aktualisiert.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
