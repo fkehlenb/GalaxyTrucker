@@ -1184,6 +1184,9 @@ Das Interface/die View stellt all das dar, was der User am ende sieht. Alle Graf
 
 \textbf{Transitionen}
 
+\textbf{ORM-Lite (Datenbank $\leftrightarrow$ Persistence):}
+Hier werden alle Abfragen, Daten zu schicken und die Daten von und zur Datenbank gesendet.
+
 \textbf{Update (Persistence $\leftrightarrow$ Model):}
 Model stellt das Interface Update zu Verfügung, welches von Persistence genutzt wird. Es handelt sich hierbei um Kontrollfluss. Das Model bekommt den Befehl, zu updaten. 
 
@@ -1197,14 +1200,19 @@ Hierbei handelt es sich um beidseitigen Datenfluss. Hier werden die geupdateten 
 Hierüber werden alle Dateien geschickt, die in Communication angenommen werden, um in Service weiterverarbeitet zu werden. 
 
 \textbf{TCP/Request/Response (Communication (Server) $\leftrightarrow$ Communication (Client)):}
+Über diese Schnittstelle werden alle Daten und Befehle zwischen Server und Client übertragen, wie Zum Beispiel den Befehl zu updaten, die Abfrage, ob man sich ein Teil im Shop leisten kann oder ob im Kampf vom gegner eine Sektion des Schiffes beschädigt wurde. Außerdem können geänderte Dateien übertragen werden, die in der Datenbank aktualisiert werden müssen. 
 
-\textbf{ ( $\leftrightarrow$ ):}
+\textbf{Data (Communication (Client) $\leftrightarrow$ Controller):}
+Hierüber werden die Daten geschickt, welche in Communication vom Server ankommen und verarbeitet werden sollen oder die, die geändert wurden und persistiert werden müssen. 
 
-\textbf{ ( $\leftrightarrow$ ):}
+\textbf{Update (Model $\leftrightarrow$ Controller \& Communication):}
+Hier bekommt das Model den Befehl, upzudaten. Dieser kann entweder von Controller oder von Communication kommen. 
 
-\textbf{ ( $\leftrightarrow$ ):}
+\textbf{Control (Model $\leftrightarrow$ Controller):}
+Hier updatet sich das Model, wenn es den Befehl enthalten hat. Die neu erhaltenen Daten aus dem Controller werden ins Model übertragen. Außerdem bekommt der Controller seine Daten, die benötigt werden, aus dem Model. 
 
-\textbf{ ( $\leftrightarrow$ ):}
+\textbf{Instruct (Controller $\leftrightarrow$ Interface/View):}
+Es werden alle Daten und Befehle vom Frontend (Interface/View) ins Backend weitergeleitet. Außerdem werden alle Daten, die im Frontend gebraucht werden, hierüber übertragen.
 
 
 
