@@ -1158,11 +1158,11 @@ In diesem Kapitel wird das zu entwerfende System in der Konzeptionellen Sicht na
 Die Datenbanksoftware wird im Server dazu genutzt, um unsere Spielstände zu persistieren. Unsere Datenbank kommuniziert über die ORM-Lite Schnittstelle mit der im Server liegenden Persistenz. 
 
 \textbf{Persistence:}
-Die Persistence stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Zwischen der Persistenz und Service existiert eine Daten- Kontrollfluss Verbindung update. Außerdem nutzt die Persistenz das Update Interface von Model, über das Kontrollfluss läuft. 
+Die Persistence stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Zwischen der Persistenz und Service existiert eine Daten- und Kontrollfluss Verbindung update. Außerdem nutzt die Persistenz das Update Interface von Model, über das Kontrollfluss läuft. 
 
 \textbf{Model (Server):}
 Das Model beschreibt die logische Struktur der Datenbank. Hiermit wird bestimmt, wie auf Daten zugegriffen werden kann. 
-In unserem Model sind Daten des Schiffs, der Ausrüstung, der Spielkarte und der Gegner. Model stellt ein Kontrollfluss Interface Update zur Verfügung, welches von Persistenz benutzt wird und ein Kontrollfluss Interface (Update), welches von Service benutzt wird. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben. 
+In unserem Model sind Daten des Schiffs, der Ausrüstung, der Spielkarte und der Gegner. Model stellt ein Kontrollfluss Interface Update zur Verfügung, welches von Persistenz benutzt wird und ein Daten- und Kontrollfluss Interface (Update), welches von Service benutzt wird. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben. 
 
 \textbf{Service:}
 Service ist die Komponente, die die Spielzugsdaten übermittelt bekommt und dann überprüft, ob der Spielzug nach den Spielregeln akzeptiert wird oder nicht. Hierzu nutzt Service ein Kontrollfluss Interface von Model und hat Datenfluss und Kontrollfluss mit Persistenz, um Daten abzugleichen, zu geben und zu nehmen. Außerdem gibt es Daten und Kontrollaustausch mit Communication, worüber die Spielzugdaten vom Client übermittelt werden. 
@@ -1180,9 +1180,32 @@ Das Model im Client stellt die Datenstruktur unserer Datenbank dar. Es wird quas
 In Controller passiert die gesamte Logik des Clients. Controller nutzt das Data Interface von Communication, um Daten zum Server zu schicken, Update von Model um das Model zu updaten und Control von Model, um Daten von Model zu empfangen. Controller stellt ein Interface Instruct zur verfügung, über welches die Interface/View die anzuzeigenden Daten bekommt. 
 
 \textbf{Interface/View:}
-Das Interface/die View stellt all das dar, was der User am ende sieht. Alle Grafiken werden hier gerendert, alle Knöpfe und Sachen, mit denen der User etwas machen kann, sind in der View enthalten. Um erforderliche Daten zu erhalten und zu eingaben des Users weiterzuleiten, benutzt Interface/View ein Interface Instruct von Controller. 
+Das Interface/die View stellt all das dar, was der User am ende sieht. Alle Grafiken werden hier gerendert, alle Knöpfe und Sachen, mit denen der User etwas machen kann, sind in der View enthalten. Um erforderliche Daten zu erhalten und zu eingaben des Users weiterzuleiten, benutzt Interface/View ein Interface Instruct von Controller. \\
 
-\textcolor{red}{Muss hier nochmal extra beschrieben werden, was jede Transition bedeutet oder reicht es, dass es da beschrieben ist, wo sie benutzt wird?}
+\textbf{Transitionen}
+
+\textbf{Update (Persistence $\leftrightarrow$ Model):}
+Model stellt das Interface Update zu Verfügung, welches von Persistence genutzt wird. Es handelt sich hierbei um Kontrollfluss. Das Model bekommt den Befehl, zu updaten. 
+
+\textbf{Update (Model $\leftrightarrow$ Service):}
+Model stellt ein Inteface Update zur verfügung, welches von Service genutzt wird. Es fließen Daten zum updaten des Models. Außerdem kann der Befehl zum updaten auch vom Service kommen.
+
+\textbf{Update (Persistence $\leftrightarrow$ Service):}
+Hierbei handelt es sich um beidseitigen Datenfluss. Hier werden die geupdateten Daten an Service gegeben oder die zu updatenden Daten an Persistence gegeben. 
+
+\textbf{Data/Control (Service $\leftrightarrow$ Communication (Service)):}
+Hierüber werden alle Dateien geschickt, die in Communication angenommen werden, um in Service weiterverarbeitet zu werden. 
+
+\textbf{TCP/Request/Response (Communication (Server) $\leftrightarrow$ Communication (Client)):}
+
+\textbf{ ( $\leftrightarrow$ ):}
+
+\textbf{ ( $\leftrightarrow$ ):}
+
+\textbf{ ( $\leftrightarrow$ ):}
+
+\textbf{ ( $\leftrightarrow$ ):}
+
 
 
 \newpage
