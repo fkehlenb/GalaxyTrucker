@@ -1152,10 +1152,10 @@ Hier setzen wir die .. Strategie um. \\
 \section{Konzeptionelle Sicht} \label{sec:konzeptionell}
 
 
-In diesem Kapitel wird das zu entwerfende System in der Konzeptionellen Sicht nach Hofmeister dargestellt. Unser System ist ein Spiel, welches auf LibGDX basiert. Um unser System zu nutzen, stellen wir einen Client und einen Server zur Verfügung. Der Benutzer benutzt das Interface/View, um unsere Software zu steuern. Diese macht sich im Hintergrund bemerkbar, da unser Framework LibGDX über ein Model-View-Controller-System kommuniziert und die Logik im System ausführt. 
+In diesem Kapitel wird das zu entwerfende System in der Konzeptionellen Sicht nach Hofmeister dargestellt. Unser System ist ein Spiel, welches auf LibGDX basiert (Strategie 11.1). Um unser System zu nutzen, stellen wir einen Client und einen Server zur Verfügung. Der Benutzer benutzt das Interface/View, um unsere Software zu steuern. Diese macht sich im Hintergrund bemerkbar, da unser Framework LibGDX über ein Model-View-Controller-System kommuniziert und die Logik im System ausführt. Die gesamte Aufteilung in Module geht aus Strategie 6.1 hervor.
 
 \textbf{H2:} 
-Die Datenbanksoftware wird im Server dazu genutzt, um unsere Spielstände zu persistieren. Unsere Datenbank kommuniziert über die ORM-Lite Schnittstelle mit der im Server liegenden Persistenz. 
+Die Datenbanksoftware wird im Server dazu genutzt, um unsere Spielstände zu persistieren. Unsere Datenbank kommuniziert über die ORM-Lite Schnittstelle mit der im Server liegenden Persistenz. Die Entscheidung zu der Datenbank geht aus Strategie 3.1 heraus.  
 
 \textbf{Persistence:}
 Die Persistence stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Zwischen der Persistenz und Service existiert eine Daten- und Kontrollfluss Verbindung update. Außerdem nutzt die Persistenz das Update Interface von Model, über das Kontrollfluss läuft. 
