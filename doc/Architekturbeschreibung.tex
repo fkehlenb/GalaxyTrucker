@@ -1272,6 +1272,26 @@ Die Persistenz stellt die Verbindung zwischen dem gesamten System und der Datenb
 Das Model beschreibt die logische Struktur der Datenbank. Hiermit wird bestimmt, wie auf Daten zugegriffen werden kann. 
 In unserem Model sind Daten des Schiffs, der Ausrüstung, der Spielkarte und der Gegner. Model stellt ein Kontrollfluss Interface zur Verfügung, welches von Persistenz benutzt wird und ein Kontrollfluss Interface (Controll), welches von Service benutzt wird. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben. 
 
+\textbf{Service:}
+Service ist die Komponente, die die Spielzugsdaten übermittelt bekommt und dann überprüft, ob der Spielzug nach den Spielregeln akzeptiert wird oder nicht. Hierzu nutzt Service ein Kontrollfluss Interface von Model und ein Datenfluss und Kontrollfluss Interface von Persistenz, um Daten abzugleichen. Außerdem gibt es Daten und Kontrollaustausch mit Communication, worüber die Spielzugdaten vom Client übermittelt werden. 
+
+\textbf{Communication (Server):}
+Die Communication Komponente des Servers dient dazu, die vom Client geschickten Spielzugdaten zu entschlüsseln und sie Service zur Verfügung zu stellen. Dies passiert über eine Data/Control Schnittstelle. Außerdem sollen die geänderten Spielzugdaten von der Datenbank aktualisiert werden und dem Client zur Verfügung gestellt werden. Communication (Server) hat eine TCP/Request/Response Schnittstelle zu Communication im Client. 
+
+\textbf{Communication (Client):}
+Die Communication Komponente im Client hat den Auftrag, Das Spiel zu updaten, also wenn jemand einen Zug gespielt hat, wird der dem Client auch angezeigt. Außerdem übermittelt er die Spielzugdaten dem Server. Über die Schnittstelle Update, von Model zur Verfügung gestellt, kann das Model einmal von Communication, als auch von Controller geupdatet werden. Über die Schnittstelle Data, von Communication zur Verfügung gestellt, werden Daten dem Controller zur Verfügung gestellt.
+
+\textbf{Model (Client):}
+Das Model im Client stellt die Datenstruktur unserer Datenbank dar. Es wird quasi alles in ihm gespeichert, sodass es zum spielen genutzt werden kann. Model stellt ein Interface Update zur Verfügung, worüber Controller und Communication das Model updaten können. Model stellt außerdem ein Control Interface zur Verfügung, über welches Controller Controller die geforderten Daten aus Model bekommen kann. 
+
+\textbf{Controller:}
+In Controller passiert die gesamte Logik des Clients. Controller nutzt das Data Interface von Communication, um Daten zum Server zu schicken, Update von Model um das Model zu updaten und Control von Model, um Daten von Model zu empfangen. Controller stellt ein Interface Instruct zur verfügung, über welches die Interface/View die anzuzeigenden Daten bekommt. 
+
+\textbf{Interface/View:}
+Das Interface/die View stellt all das dar, was der User am ende sieht. Alle Grafiken werden hier gerendert, alle Knöpfe und Sachen, mit denen der User etwas machen kann, sind in der View enthalten. Um erforderliche Daten zu erhalten und zu eingaben des Users weiterzuleiten, benutzt Interface/View ein Interface Instruct von Controller. 
+
+\textcolor{red}{Muss hier nochmal extra beschrieben werden, was jede Transition bedeutet oder reicht es, dass es da beschrieben ist, wo sie benutzt wird?}
+
 
 \newpage
 
