@@ -1,6 +1,7 @@
 image: java:latest
 
 stages:
+  - assemble
   - build
   - javadoc
   - test
@@ -10,16 +11,23 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
-build:
-  stage: build
+assemble:
+  stage: assemble
   script:
     - ./gradlew assemble
   artifacts:
     paths:
       - build/libs/*.jar
     expire_in: 1 week
-  only:
-    - master
+    
+build:
+  stage: build
+  script:
+    - ./gradlew build
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
 
 javadoc:
   stage: javadoc
