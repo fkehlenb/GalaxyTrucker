@@ -1287,6 +1287,15 @@ Der Client möchte z.B. eine Angriffsaktion ausführen, diese muss allerdings er
 korrekte Methode aus dem korrekten Controller ausführt, welche zu dieser Aktion gehört. (Einen konkreten Fall werden wir im nächsten Diagramm vorstellen)
 Der Controller erstellt ein neues Request welches dann an den ClientControllerCommunicator weitergegeben wird, welcher es dann an die Netwerkschnittstelle Client weiterleitet. Diese Netzwerkschnittstelle schickt dann dieses Request an den Server, wo sie dann von der Schnittstelle des Servers akzeptiert wird. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator weiter, welches das Request dann an das korrekte Service weiterleitet. Das Service prüft ob das Request valide ist. Ist dieses der Fall, so wird die Logik des Requests ausgeführt und die Daten in der Datenbank angepasst. Nach der Bearbeitung der Daten wird ein Response an den ServerServiceCommunicator gegeben. War das Request nicht valide, so wird auch dies dem ServerServiceCommunicator mitgeteilt. Dieser leitet dann das Response das er bekommen hat weiter an die Server Schnittstelle, welches die Daten dann zum Client schickt. Der Client empfängt das Response und gibt es seinem ClientControllerCommunicator, welcher es auch wiederrum an den korrekten Controller weiterleitet. Der Controller führt nun seine Logik aus, passt seine lokalen Daten an und gibt dem View bescheidt, so dass dieser sich auch aktualisiert.
 
+\subsection{Angriff}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{UML/Sequenz-Attack.pdf}
+\end{center}
+\end{figure}
+
+Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigem abstrakten Diagramm. In diesem Fall wird in der WeaponUI eine Waffe durch Mausclick ausgewählt, und dann der Raum auf dem Gegnerschiff welcher angegriffen werden soll. Dann wird dieses als Attack-Request weitergegeben an den ClientControllerCommunicator, welcher es wiederrum an die Netzwerkschnittstelle des Clients weiterleitet. Das Request wird dann durch diese Schnittstelle an den Server geschickt. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator, welcher dann den AttackService wählt und ihm das Request weiterleitet. Dieser überprüft dann mittels ValidMove ob das Angriffskommando valide ist oder nicht. Wenn es das ist, so wird die Logik ausgeführt, und das Gegnerschiff in der Datenbank aktualisiert. Dann wird der jetzige Spieler weitergesetzt (wer dran ist). Dann wird ein Response als neue Schiffsobjekte an den ServerServiceCommunicator gegeben, welcher es wieder an die Servernetzwerkschnittstelle gibt. Das Response wird dann zum Client übertragen, und dort an den ClientControllerCommunicator gegeben. Dieser teilt das Ergebnis dem Controller mit (gleiche Methode, da diese noch auf den Response wartet). Dann werden dort die lokalen Daten durch die vom Server bekommenen Daten ersetzt. Der View wartete bis jetzt noch auf ein Ergebnis welches er nun bekommt, wodurch auch er sich aktualisiert.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Evolution} \label{sec:evolution}
