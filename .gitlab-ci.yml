@@ -21,7 +21,7 @@ tex:
     - cd ..
   artifacts:
     paths:
-      - Architekturbeschreibung.pdf
+      - doc/Architekturbeschreibung.pdf
       
 assemble:
   stage: assemble
