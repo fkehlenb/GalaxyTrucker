@@ -1,6 +1,7 @@
 image: java:latest
 
 stages:
+  - tex
   - assemble
   - build
   - javadoc
@@ -11,6 +12,17 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
+tex:
+  image: tianon/latex
+  stage: tex
+  script:
+    - cd doc
+    - pdflatex Architekturbeschreibung.tex
+    - cd ..
+  artifacts:
+    paths:
+      - doc/Architekturbeschreibung.pdf
+      
 assemble:
   stage: assemble
   script:
@@ -36,7 +48,6 @@ javadoc:
   artifacts:
     paths:
       - build/doc/*
-    expire_in: 1 week
 
 
 test:
