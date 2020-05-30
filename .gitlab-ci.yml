@@ -24,13 +24,11 @@ build:
 javadoc:
   stage: javadoc
   script:
-    - ./gradle javadoc
+    - ./gradlew javadoc
   artifacts:
     paths:
       - build/doc/*
     expire_in: 1 week
-  only:
-    - master
 
 
 test:
