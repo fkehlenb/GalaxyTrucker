@@ -1151,27 +1151,21 @@ Hier setzen wir die .. Strategie um. \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Konzeptionelle Sicht} \label{sec:konzeptionell}
 
-{\itshape Diese Sicht beschreibt das System auf einer hohen Abstraktionsebene,
-d.\,h. mit sehr starkem Bezug zur Anwendungsdomäne und den geforderten
-Produktfunktionen und "~attributen. Sie legt die Grobstruktur fest, ohne gleich 
-in die Details von spezifischen Technologien abzugleiten. Sie wird in den 
-nachfolgenden Sichten konkretisiert und verfeinert. Die konzeptionelle Sicht 
-wird mit {UML}-Komponentendiagrammen visualisiert.}
 
 In diesem Kapitel wird das zu entwerfende System in der Konzeptionellen Sicht nach Hofmeister dargestellt. Unser System ist ein Spiel, welches auf LibGDX basiert. Um unser System zu nutzen, stellen wir einen Client und einen Server zur Verfügung. Der Benutzer benutzt das Interface/View, um unsere Software zu steuern. Diese macht sich im Hintergrund bemerkbar, da unser Framework LibGDX über ein Model-View-Controller-System kommuniziert und die Logik im System ausführt. 
 
 \textbf{H2:} 
 Die Datenbanksoftware wird im Server dazu genutzt, um unsere Spielstände zu persistieren. Unsere Datenbank kommuniziert über die ORM-Lite Schnittstelle mit der im Server liegenden Persistenz. 
 
-\textbf{Persistenz:}
-Die Persistenz stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Die Persistenz stellt ein Interface für Service zur Verfügung, über welches Kontrollfluss und Datenfluss stattfindet (?).	\textcolor{red}{Diese Schnittstelle muss noch benannt werden!!!} Außerdem nutzt die Persistenz ein Interface von Model, über das Kontrollfluss läuft. 
+\textbf{Persistence:}
+Die Persistence stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Zwischen der Persistenz und Service existiert eine Daten- Kontrollfluss Verbindung update. Außerdem nutzt die Persistenz das Update Interface von Model, über das Kontrollfluss läuft. 
 
 \textbf{Model (Server):}
 Das Model beschreibt die logische Struktur der Datenbank. Hiermit wird bestimmt, wie auf Daten zugegriffen werden kann. 
-In unserem Model sind Daten des Schiffs, der Ausrüstung, der Spielkarte und der Gegner. Model stellt ein Kontrollfluss Interface zur Verfügung, welches von Persistenz benutzt wird und ein Kontrollfluss Interface (Controll), welches von Service benutzt wird. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben. 
+In unserem Model sind Daten des Schiffs, der Ausrüstung, der Spielkarte und der Gegner. Model stellt ein Kontrollfluss Interface Update zur Verfügung, welches von Persistenz benutzt wird und ein Kontrollfluss Interface (Update), welches von Service benutzt wird. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben. 
 
 \textbf{Service:}
-Service ist die Komponente, die die Spielzugsdaten übermittelt bekommt und dann überprüft, ob der Spielzug nach den Spielregeln akzeptiert wird oder nicht. Hierzu nutzt Service ein Kontrollfluss Interface von Model und ein Datenfluss und Kontrollfluss Interface von Persistenz, um Daten abzugleichen. Außerdem gibt es Daten und Kontrollaustausch mit Communication, worüber die Spielzugdaten vom Client übermittelt werden. 
+Service ist die Komponente, die die Spielzugsdaten übermittelt bekommt und dann überprüft, ob der Spielzug nach den Spielregeln akzeptiert wird oder nicht. Hierzu nutzt Service ein Kontrollfluss Interface von Model und hat Datenfluss und Kontrollfluss mit Persistenz, um Daten abzugleichen, zu geben und zu nehmen. Außerdem gibt es Daten und Kontrollaustausch mit Communication, worüber die Spielzugdaten vom Client übermittelt werden. 
 
 \textbf{Communication (Server):}
 Die Communication Komponente des Servers dient dazu, die vom Client geschickten Spielzugdaten zu entschlüsseln und sie Service zur Verfügung zu stellen. Dies passiert über eine Data/Control Schnittstelle. Außerdem sollen die geänderten Spielzugdaten von der Datenbank aktualisiert werden und dem Client zur Verfügung gestellt werden. Communication (Server) hat eine TCP/Request/Response Schnittstelle zu Communication im Client. 
@@ -1180,7 +1174,7 @@ Die Communication Komponente des Servers dient dazu, die vom Client geschickten 
 Die Communication Komponente im Client hat den Auftrag, Das Spiel zu updaten, also wenn jemand einen Zug gespielt hat, wird der dem Client auch angezeigt. Außerdem übermittelt er die Spielzugdaten dem Server. Über die Schnittstelle Update, von Model zur Verfügung gestellt, kann das Model einmal von Communication, als auch von Controller geupdatet werden. Über die Schnittstelle Data, von Communication zur Verfügung gestellt, werden Daten dem Controller zur Verfügung gestellt.
 
 \textbf{Model (Client):}
-Das Model im Client stellt die Datenstruktur unserer Datenbank dar. Es wird quasi alles in ihm gespeichert, sodass es zum spielen genutzt werden kann. Model stellt ein Interface Update zur Verfügung, worüber Controller und Communication das Model updaten können. Model stellt außerdem ein Control Interface zur Verfügung, über welches Controller Controller die geforderten Daten aus Model bekommen kann. 
+Das Model im Client stellt die Datenstruktur unserer Datenbank dar. Es wird quasi alles in ihm gespeichert, sodass es zum spielen genutzt werden kann. Model stellt ein Interface Update zur Verfügung, worüber Controller und Communication das Model updaten können. Model stellt außerdem ein Control Interface zur Verfügung, über welches Controller Controller die geforderten Daten aus Model bekommen kann. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben.
 
 \textbf{Controller:}
 In Controller passiert die gesamte Logik des Clients. Controller nutzt das Data Interface von Communication, um Daten zum Server zu schicken, Update von Model um das Model zu updaten und Control von Model, um Daten von Model zu empfangen. Controller stellt ein Interface Instruct zur verfügung, über welches die Interface/View die anzuzeigenden Daten bekommt. 
@@ -1291,12 +1285,6 @@ betrachten und eine umfangreichere Abdeckung der Architektur anstreben.} }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Evolution} \label{sec:evolution}
 
-{\itshape Beschreibt in diesem Abschnitt, welche Änderungen Ihr vornehmen müsst,
-wenn sich Anforderungen oder Rahmenbedingungen ändern. Insbesondere würden 
-hierbei die in der Anforderungsspezifikation unter \glqq{}Ausblick\grqq{} 
-genannten Punkte behandelt werden.}
-
-\dots
 
 In folgendem Abschnitt behandeln wir mögliche Weiterentwicklungen für unsere Software. Es werden die Ideen und notwendige Veränderungen an der Architektur dargestellt.
 
