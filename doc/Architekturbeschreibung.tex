@@ -1290,6 +1290,10 @@ Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und Strategi
 
 \subsection{Service}
 
+Das folgende Diagramm beschreibt das Server Service Modul. Dieses Modul sitzt beim Server zwischen dem ServerServiceCommunicator und der Persistenz. Wenn ein Request an den Server geschickt wird und dann von der Server Klasse an den ServerServiceCommunicator weitergeleitet wird, dann muss es an den korrekten Service weitergeleitet werden um verarbeitet zu werden. Es wird einer der Services in diesem Modul ausgewählt, der Spielschritt verifiziert, und die Logik ausgeführt. Die Daten in der Datenbank werden durch die Verbindungen zwischen den Services und der Persistenz aktualisiert. Nachdem die Logik durchgeführt ist, wird ein Request erstellt und an den ServerServiceCommunicator gegeben. Dieser leitet es dann weiter an den Server welcher es zum Server verschickt.
+
+Somit ist die Strategie 7.3 (Zugüberprüfung) realisiert, und es besteht kein Vertrauen in den Client.
+
 \begin{figure}[H]
 \begin{center}
   \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Service.pdf}
