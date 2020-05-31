@@ -11,7 +11,7 @@ public class UserDAO extends ObjectDAO<User> {
     /**
      * UserDAO
      */
-    private Dao<User, String> userDao;
+    private Dao<User, String> userDAO;
 
     /**
      * Constructor

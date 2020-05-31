@@ -3,9 +3,13 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRoomException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundException;
+import com.j256.ormlite.dao.Dao;
 
 /** This class manages room objects in the database */
 public class RoomDAO extends ObjectDAO<Room> {
+
+    /** RoomDAO */
+    private Dao<Room,String> roomDAO;
 
     /**
      * Add a new room to the database
@@ -24,7 +28,7 @@ public class RoomDAO extends ObjectDAO<Room> {
      * @param r - the room to edit
      * @throws RoomNotFoundException if the room cannot be found in the database
      */
-    public void edit(Room r) throws RoomNotFoundException {
+    public void update(Room r) throws RoomNotFoundException {
 
     }
 

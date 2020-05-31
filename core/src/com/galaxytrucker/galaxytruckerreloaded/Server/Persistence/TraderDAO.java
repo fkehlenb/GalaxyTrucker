@@ -3,11 +3,15 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateTraderException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.TraderNotFoundException;
+import com.j256.ormlite.dao.Dao;
 
 /**
  * This class handles trader objects in the database
  */
 public class TraderDAO extends ObjectDAO<Trader> {
+
+    /** TraderDAO */
+    private Dao<Trader,String> traderDAO;
 
     /**
      * Add a new trader to the database
@@ -26,7 +30,7 @@ public class TraderDAO extends ObjectDAO<Trader> {
      * @param t - the trader to edit
      * @throws TraderNotFoundException if the trader cannot be found in the database
      */
-    public void edit(Trader t) throws TraderNotFoundException {
+    public void update(Trader t) throws TraderNotFoundException {
 
     }
 
