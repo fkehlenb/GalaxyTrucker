@@ -1268,7 +1268,13 @@ anhand der Strategien erläutert werden.}
 
 \subsection{View}
 
-\textbf{1.Teilsicht der View}
+Im View werden alle User-Interfaces realisiert. Es setzt sich zusammen aus den drei Packages \textit{Screen}, \textit{UI} und \textit{Buttons}. Im Package \textit{Screen} werden alle Klassen realisiert, die bildschirmfüllend sind und die Grundlage für alle darauf aufbauenden Popup-Fenster graphischen Informationsträgern über das Schiff oder die Crew sind. Im Package "Button" befinden sich alle alles Klassen, die auf Anklicken reagieren und somit eine Interaktion mit dem User-Interface \textit{UI} und den verschiedenen Screens ermöglicht. Ohne diese Buttons wäre kein Wechsel zwischen verschiedenen Menüs, keine Navigation auf der Karte oder Interaktion mit anderen Spielern, wie Kämpfe, und deren Schiffen möglich. 
+
+\subsubsection{Konkretisierung Buttons}
+
+
+Das Modul \textit{Buttons} ergibt sich zwangsläufig aus der Notwendigkeit Stuerelemente für den User bereitszustellen. Das Modul "Buttons" gliedert sich in die zwei Submodule \textit{MenuButtons} und \textit{InGameButtons}. 
+
 \begin{figure}[H] 
 \begin{center}
  \includegraphics[width=\textwidth]{../GT_Modulsicht/PDFs/View-Subdiagramm_Buttons.pdf}
@@ -1279,7 +1285,9 @@ anhand der Strategien erläutert werden.}
 
 \newpage
 
-\textbf{2.Teilsicht der View}
+\subsubsection{MenuButtons}
+Das Submodul  Die \textit{MenuButtons} bilden die Schnittstelle zum Modul \textit{Screen} und enthält die Steuerelemente des Menüs und des Loginscreens.
+
 
 \begin{figure}[H] 
 \begin{center}
@@ -1289,7 +1297,10 @@ anhand der Strategien erläutert werden.}
 \end{center}
 \end{figure}
 
-\textbf{3.Teilsicht der View}
+
+\subsubsection{IngameButtons}
+Das Submodul \textit{InGameButtons} bildet die Schnittstelle zum Modul \textit{UI}. Im Submodul \textit{UI} sammeln sich alle Ausprägungen der \textit{Screens}. Diese sind ihrerseits wieder unterteilst in die Submodule \textit{Ship}, welches die graphische Repräsentation der Klasse \textit{Ship}  darstellt, so wie und \textit{Shipinformation}, welches eine graphische Repräsentation aller Informationen des Schiffes, wie Sektionen, Systeme, Waffen, Crewmitgliedern, Hüllenenergie, Schildenergie darstellt und dem User eine Interaktion mit diesen Klassen ermöglicht.  Ebenfalls enthalten ist die graphische Darstellung der Karte und des Menüs, über das das Spiel beendet werden kann. Und zu guter letzte das Submodul \textit{Events} in dem die graphischen Darstellungen zu Events gesteuert werden. 
+
 \begin{figure}[H]
 \begin{center}
  \includegraphics[width=\textwidth]{../GT_Modulsicht/PDFs/View-Subdiagramm_UI.pdf}
