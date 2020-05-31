@@ -587,7 +587,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:6.1}     
-          \textbf{Strategie 25.1: Modularisierung (ausgewählt)} Wir teilen das Projekt in Module auf, sodass die unterschiedlichen Module möglichst abgekapselt voneinander implementiert werden können. \\        
+          \textbf{Strategie 6.1: Modularisierung (ausgewählt)} Wir teilen das Projekt in Module auf, sodass die unterschiedlichen Module möglichst abgekapselt voneinander implementiert werden können. \\        
   {\phantomsection}          
            \label{strategie:6.2}              
           \textbf{Strategie 6.2: Monolitisierung} Die Entwicklung erfolgt monolit. Bei unterschiedlicher Kompetenz der Entwickler müssen bestimmte Funktionen von einem anderen Entwickler implementiert werden \\
@@ -1227,14 +1227,14 @@ Es werden alle Daten und Befehle vom Frontend (Interface/View) ins Backend weite
 %sollte er explizit erklärt werden. Auch für diese Sicht muss die Entstehung 
 %anhand der Strategien erläutert werden.}
 
-In diesem Kapitel werden die Module des Systems detailliert modelliert. Hier haben wir (fast) jede Komponente aus der konzeptionellen Sicht als einzelnes Modul angesehen. Daraus ergeben sich: Controller, View, Persistence, und Communication sowohl für den Server als auch für den Client. Da wir die H2-Datenbank verwenden (Strategie 3.1), ist die Komponente nicht von uns implementiert und im Folgenden nicht aufgeführt. Model ist hier nicht aufgeführt, da dies bereits unter dem Kapitel Datensicht erläutert wird. \\
-Die Modularisierung ergibt sich aus Strategie 25.1.\\
+In diesem Kapitel werden die Module des Systems detailliert modelliert. Hier haben wir (fast) jede Komponente aus der konzeptionellen Sicht als einzelnes Modul angesehen. Daraus ergeben sich: Controller, View, Persistence, und Communication sowohl für den Server als auch für den Client. Da wir die H2-Datenbank verwenden (Strategie 3.1) \ref{strategie:3.1}, ist die Komponente nicht von uns implementiert und im Folgenden nicht aufgeführt. Model ist hier nicht aufgeführt, da dies bereits unter dem Kapitel \ref{sec:datensicht} Datensicht erläutert wird. \\
+Die Modularisierung ergibt sich aus Strategie 6.1 (\ref{strategie:6.1}).\\
 
 \subsection{Controller}
 
-Der Controller ist auf der Clientseite für die Kommunikation zwischen Views und Model sowie Communication (Kommunikation mit Server) zuständig und kontrolliert den Spielfluss. Somit gehen alle Informationen von und für die Views durch diese Controller. Sie nehmen ebenfalls eine erste Überprüfung von Spielzügen vor (hinsichtlich der Frage, ob diese überhaupt möglich sind aktuell), und übermitteln diese über Communication an den Server, der prüft, ob die Änderungen an den Objekten auch den Spielregeln entsprechen (Strategie 7.3); zum Beispiel würde der Client dem Spieler auf der Karte nur erlauben, einen tatsächlichen existierenden Ort auszuwählen, und der Server überprüft, ob Fuel reicht und eine Verbindung zwischen dem aktuellen Ort und dem ausgewählten existiert. \\
+Der Controller ist auf der Clientseite für die Kommunikation zwischen Views und Model sowie Communication (Kommunikation mit Server) zuständig und kontrolliert den Spielfluss. Somit gehen alle Informationen von und für die Views durch diese Controller. Sie nehmen ebenfalls eine erste Überprüfung von Spielzügen vor (hinsichtlich der Frage, ob diese aktuell überhaupt möglich sind), und übermitteln diese über Communication an den Server, der prüft, ob die Änderungen an den Objekten auch den Spielregeln entsprechen (Strategie 7.3 \ref{strategie:7.3}); zum Beispiel würde der Client dem Spieler auf der Karte nur erlauben, einen tatsächlichen existierenden Ort auszuwählen, und der Server überprüft, ob Fuel reicht und eine Verbindung zwischen dem aktuellen Ort und dem ausgewählten existiert. \\
 Zunächst gibt es eine abstrakte Controller Klasse, von der alle anderen Controller erben. Diese hat einen ClientControllerCommunicator, über den die Kommunikation mit dem Server läuft. \\
-Zusätzlich gibt es sechs weitere Klassen. Diese sind für die unterschiedlichen möglichen Situationen, in den ein Spieler sich befinden kann, zuständig: Battle, Travel, Trader, und Hangar. Battle ist für die Ausführung von Kämpfen zuständig, Trader für die Shops, die man eventuell auf Planeten findet, Travel für die Reisen zwischen Planeten, und Hangar für die Auswahl des Schiffmodells am Anfang des Spieles (Strategie 4.1). Des weiteren gibt es einen Controller für die Crew eines Schiffes, und einen für die Systeme eines Schiffes. \\
+Zusätzlich gibt es sechs weitere Klassen. Diese sind für die unterschiedlichen möglichen Situationen, in den ein Spieler sich befinden kann, zuständig: Battle, Travel, Trader, und Hangar. Battle ist für die Ausführung von Kämpfen zuständig, Trader für die Shops, die man eventuell auf Planeten findet, Travel für die Reisen zwischen Planeten, und Hangar für die Auswahl des Schiffmodells am Anfang des Spieles (Strategie 4.1 \ref{strategie:4.1}). Des weiteren gibt es einen Controller für die Crew eines Schiffes, und einen für die Systeme eines Schiffes. \\
 Die Controller werden von den Views aufgerufen, um Eingaben weiterzureichen, sowie von den Communication Klassen, um Informationen vom Server weiterzureichen (was zum Beipsiel die Bestätigung eines Spielzuges sein kann.). \\
 
 \begin{figure}[H]
@@ -1246,12 +1246,12 @@ Die Controller werden von den Views aufgerufen, um Eingaben weiterzureichen, sow
 
 \subsection{View}
 
-Im View werden alle User-Interfaces realisiert. Es setzt sich zusammen aus den drei Packages \textit{Screen}, \textit{UI} und \textit{Buttons}. Im Package \textit{Screen} werden alle Klassen realisiert, die bildschirmfüllend sind und die Grundlage für alle darauf aufbauenden Popup-Fenster graphischen Informationsträgern über das Schiff oder die Crew sind. Im Package "Button" befinden sich alle alles Klassen, die auf Anklicken reagieren und somit eine Interaktion mit dem User-Interface \textit{UI} und den verschiedenen Screens ermöglicht. Ohne diese Buttons wäre kein Wechsel zwischen verschiedenen Menüs, keine Navigation auf der Karte oder Interaktion mit anderen Spielern, wie Kämpfe, und deren Schiffen möglich. 
+Im View werden alle User-Interfaces realisiert. Es setzt sich zusammen aus den drei Packages \textit{Screen}, \textit{UI} und \textit{Buttons}. Im Package \textit{Screen} werden alle Klassen realisiert, die bildschirmfüllend sind und die Grundlage für alle darauf aufbauenden Popup-Fenster, graphischen Informationsträgern über das Schiff oder die Crew sind. Im Package \textit{Button} befinden sich alle alles Klassen, die auf Anklicken reagieren und somit eine Interaktion mit dem User-Interface \textit{UI} und den verschiedenen Screens ermöglicht. Ohne diese Buttons wäre kein Wechsel zwischen verschiedenen Menüs, keine Navigation auf der Karte oder Interaktion mit anderen Spielern, wie Kämpfe, und deren Schiffen möglich. 
 
 \subsubsection{Konkretisierung Buttons}
 
 
-Das Modul \textit{Buttons} ergibt sich zwangsläufig aus der Notwendigkeit Stuerelemente für den User bereitszustellen. Das Modul "Buttons" gliedert sich in die zwei Submodule \textit{MenuButtons} und \textit{InGameButtons}. 
+Das Modul \textit{Buttons} ergibt sich zwangsläufig aus der Notwendigkeit, Stuerelemente für den User bereitszustellen. Das Modul \textit{Buttons} gliedert sich in die zwei Submodule \textit{MenuButtons} und \textit{InGameButtons}. 
 
 \begin{figure}[H] 
 \begin{center}
@@ -1264,7 +1264,7 @@ Das Modul \textit{Buttons} ergibt sich zwangsläufig aus der Notwendigkeit Stuer
 \newpage
 
 \subsubsection{MenuButtons}
-Das Submodul  Die \textit{MenuButtons} bilden die Schnittstelle zum Modul \textit{Screen} und enthält die Steuerelemente des Menüs und des Loginscreens.
+Das Submodul \textit{MenuButtons} bilden die Schnittstelle zum Modul \textit{Screen} und enthalten die Steuerelemente des Menüs und des Loginscreens.
 
 
 \begin{figure}[H] 
@@ -1276,8 +1276,8 @@ Das Submodul  Die \textit{MenuButtons} bilden die Schnittstelle zum Modul \texti
 \end{figure}
 
 
-\subsubsection{IngameButtons}
-Das Submodul \textit{InGameButtons} bildet die Schnittstelle zum Modul \textit{UI}. Im Submodul \textit{UI} sammeln sich alle Ausprägungen der \textit{Screens}. Diese sind ihrerseits wieder unterteilst in die Submodule \textit{Ship}, welches die graphische Repräsentation der Klasse \textit{Ship}  darstellt, so wie und \textit{Shipinformation}, welches eine graphische Repräsentation aller Informationen des Schiffes, wie Sektionen, Systeme, Waffen, Crewmitgliedern, Hüllenenergie, Schildenergie darstellt und dem User eine Interaktion mit diesen Klassen ermöglicht.  Ebenfalls enthalten ist die graphische Darstellung der Karte und des Menüs, über das das Spiel beendet werden kann. Und zu guter letzte das Submodul \textit{Events} in dem die graphischen Darstellungen zu Events gesteuert werden. 
+\subsubsection{InGameButtons}
+Das Submodul \textit{InGameButtons} bildet die Schnittstelle zum Modul \textit{UI}. Im Submodul \textit{UI} sammeln sich alle Ausprägungen der \textit{Screens}. Diese sind ihrerseits wieder unterteilst in die Submodule \textit{Ship}, welches die graphische Repräsentation der Klasse \textit{Ship}  darstellt, so wie und \textit{Shipinformation}, welches eine graphische Repräsentation aller Informationen des Schiffes, wie Sektionen, Systeme, Waffen, Crewmitgliedern, Hüllenenergie, Schildenergie darstellt und dem User eine Interaktion mit diesen Klassen ermöglicht.  Ebenfalls enthalten ist die graphische Darstellung der Karte und des Menüs, über das das Spiel beendet werden kann. Und zu guter Letzt das Submodul \textit{Events} in dem die graphischen Darstellungen von Events gesteuert werden. 
 
 \begin{figure}[H]
 \begin{center}
@@ -1289,8 +1289,8 @@ Das Submodul \textit{InGameButtons} bildet die Schnittstelle zum Modul \textit{U
 
 
 \subsection{Client-Controller-Communication}
-Das folgende Diagramm beschreibt das Modul Client-Controller-Communication. Wenn ein Controller im Client einen Spielschritt ausführen möchte, muss dieser erst an den Server gelangen um bestätigt zu werden. Der Controller erstellt ein neues Request welches dann an den ClientControllerCommunicator gegeben wird (eine Schnittstelle zwischen der Netzwerk Schnittstelle und der Logik). Dieser ClientControllerCommunicator leitet das Request von dem jeweiligem Controller weiter an den Client, welcher es an den Server schickt, und wartet auf ein Response. Sobald er das Response erhält, gibt er dieses weiter an den ClientControllerCommunicator, welcher es dann an den korrekten Controller weiterleitet.
-Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und teilweise Strategie 7.3 (Zugüberprüfung).
+Das folgende Diagramm beschreibt das Modul Client-Controller-Communication. Wenn ein Controller im Client einen Spielschritt ausführen möchte, muss dieser erst an den Server gelangen, um bestätigt zu werden. Der Controller erstellt ein neues Request, welches dann an den ClientControllerCommunicator gegeben wird (eine Schnittstelle zwischen der Netzwerk Schnittstelle und der Logik). Dieser ClientControllerCommunicator leitet das Request von dem jeweiligem Controller weiter an den Client, welcher es an den Server schickt, und auf ein Response wartet. Sobald er das Response erhält, gibt er dieses weiter an den ClientControllerCommunicator, welcher es dann an den korrekten Controller weiterleitet.
+Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer \ref{strategie:5.1}) und teilweise Strategie 7.3 (Zugüberprüfung \ref{strategie:7.3}).
 \begin{figure}[H]
 \begin{center}
   \includegraphics[width=\linewidth]{../GT_Modulsicht/src/CommClient.png}
@@ -1300,8 +1300,8 @@ Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und teilweis
 
 \subsection{Server-Service-Communication}
 
-Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Server muss nachdem er Daten erhalten hat diese irgendwie weiter reichen an seine Services. Dazu benutzt er die Klasse ServerServiceCommunicator, welche als Schnittstelle zwischen dem Server und seinen Services liegt. Wenn der Server ein Request bekommt, reicht er dieses weiter an den ServerServiceCommunicator, welcher es wiederrum an die Services leitet. Dieser wartet dann auf ein Response von den Services welches er dem Server mit teilt, und der Server schickt dieses dann zum Client.
-Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und Strategie 7.3 (Zugüberprüfung).
+Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Server muss, nachdem er Daten erhalten hat, diese irgendwie an seine Services weiterreichen. Dazu benutzt er die Klasse ServerServiceCommunicator, welche als Schnittstelle zwischen dem Server und seinen Services liegt. Wenn der Server ein Request bekommt, reicht er dieses weiter an den ServerServiceCommunicator, welcher es wiederrum an die Services leitet. Dieser wartet dann auf ein Response von den Services welches er dem Server mit teilt, und der Server schickt dieses dann zum Client.
+Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer \ref{strategie:5.1}) und Strategie 7.3 (Zugüberprüfung \ref{strategie:7.3}).
 
 \begin{figure}[H]
 \begin{center}
@@ -1312,9 +1312,9 @@ Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und Strategi
 
 \subsection{Service}
 
-Das folgende Diagramm beschreibt das Server Service Modul. Dieses Modul sitzt beim Server zwischen dem ServerServiceCommunicator und der Persistenz. Wenn ein Request an den Server geschickt wird und dann von der Server Klasse an den ServerServiceCommunicator weitergeleitet wird, dann muss es an den korrekten Service weitergeleitet werden um verarbeitet zu werden. Es wird einer der Services in diesem Modul ausgewählt, der Spielschritt verifiziert, und die Logik ausgeführt. Die Daten in der Datenbank werden durch die Verbindungen zwischen den Services und der Persistenz aktualisiert. Nachdem die Logik durchgeführt ist, wird ein Request erstellt und an den ServerServiceCommunicator gegeben. Dieser leitet es dann weiter an den Server welcher es zum Server verschickt.
+Das folgende Diagramm beschreibt das Server Service Modul. Dieses Modul sitzt beim Server zwischen dem ServerServiceCommunicator und der Persistenz. Wenn ein Request an den Server geschickt wird und dann von der Server Klasse an den ServerServiceCommunicator weitergeleitet wird, dann muss es an den korrekten Service weitergeleitet werden, um verarbeitet zu werden. Es wird einer der Services in diesem Modul ausgewählt, der Spielschritt verifiziert, und die Logik ausgeführt. Die Daten in der Datenbank werden durch die Verbindungen zwischen den Services und der Persistenz aktualisiert. Nachdem die Logik durchgeführt ist, wird ein Request erstellt und an den ServerServiceCommunicator gegeben. Dieser leitet es dann weiter an den Server, welcher es zum Server verschickt.
 
-Somit ist die Strategie 7.3 (Zugüberprüfung) realisiert, und es besteht kein Vertrauen in den Client.
+Somit ist die Strategie 7.3 (Zugüberprüfung \ref{strategie:7.3}) realisiert, und es besteht kein Vertrauen in den Client.
 
 \begin{figure}[H]
 \begin{center}
