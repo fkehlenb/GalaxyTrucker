@@ -1213,20 +1213,6 @@ Es werden alle Daten und Befehle vom Frontend (Interface/View) ins Backend weite
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Pakete} \label{sec:pakete}
-
-\subsection{Persistenz}
-
-Das folgende Diagramm beschreibt unsere Persistenz. Persistenz Klassen werden dazu genutzt daten in der Datenbank zu speichern, verändern und löschen. Zu jedem im Spiel vorkommenden Objekt, bzw zu der Klasse aus dem das Objekt stammt, muss es ein so gennantes Data Access Object geben (kurz DAO), um diese in der Datenbank verwalten zu können.
-Da viele von den DAOs die gleichen Funktionen haben, werden sie alle von einer Oberklasse ObjectDAO erben. ObjectDAO hat in sich drin auch eine Variable, welche die Verbundung zur Datenbank herstellt. Hiermit können so auch alle anderen DAOs auf die Datenbank zugreifen. Da wir ORMLite benutzen, wird auch jede unterklasse eine Variable des Typs Dao haben, welche zur abspeicherung der Daten verwendet wird. Um Daten abzuspeichern, wird die Methode persist(T) benutzt. Um daten zu löschen remove(T). Da manche Objekte in der Datenbank nicht verändert werden müssen (z.B. die Weltkarte), wird es keine Methode in der Oberklasse zum Updaten der Daten geben, sondern in jeder Unterklasse welche diese benötigt.
-
-\begin{figure}[h!]
-\begin{center}
-  \includegraphics[width=\linewidth]{UML/PersistencePackage.pdf}
-    \caption{Persistenz}
-\end{center}
-\end{figure}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
