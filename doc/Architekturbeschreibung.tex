@@ -1298,6 +1298,7 @@ anhand der Strategien erläutert werden.}
 
 \subsection{Client-Controller-Communication}
 Das folgende Diagramm beschreibt das Modul Client-Controller-Communication. Wenn ein Controller im Client einen Spielschritt ausführen möchte, muss dieser erst an den Server gelangen um bestätigt zu werden. Der Controller erstellt ein neues Request welches dann an den ClientControllerCommunicator gegeben wird (eine Schnittstelle zwischen der Netzwerk Schnittstelle und der Logik). Dieser ClientControllerCommunicator leitet das Request von dem jeweiligem Controller weiter an den Client, welcher es an den Server schickt, und wartet auf ein Response. Sobald er das Response erhält, gibt er dieses weiter an den ClientControllerCommunicator, welcher es dann an den korrekten Controller weiterleitet.
+Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und teilweise Strategie 7.3 (Zugüberprüfung).
 \begin{figure}[H]
 \begin{center}
   \includegraphics[width=\linewidth]{../GT_Modulsicht/src/CommClient.png}
@@ -1308,6 +1309,7 @@ Das folgende Diagramm beschreibt das Modul Client-Controller-Communication. Wenn
 \subsection{Server-Service-Communication}
 
 Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Server muss nachdem er Daten erhalten hat diese irgendwie weiter reichen an seine Services. Dazu benutzt er die Klasse ServerServiceCommunicator, welche als Schnittstelle zwischen dem Server und seinen Services liegt. Wenn der Server ein Request bekommt, reicht er dieses weiter an den ServerServiceCommunicator, welcher es wiederrum an die Services leitet. Dieser wartet dann auf ein Response von den Services welches er dem Server mit teilt, und der Server schickt dieses dann zum Client.
+Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und Strategie 7.3 (Zugüberprüfung).
 
 \begin{figure}[H]
 \begin{center}
@@ -1330,14 +1332,14 @@ Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Ser
 Das folgende Diagramm beschreibt unsere Persistenz. Persistenz Klassen werden dazu genutzt Daten in der Datenbank zu speichern, verändern und löschen. Zu jedem im Spiel vorkommenden Objekt, bzw zu der Klasse aus dem das Objekt stammt, muss es ein so genanntes Data Access Object geben (kurz DAO), um diese in der Datenbank verwalten zu können.
 Da viele von den DAOs die gleichen Funktionen haben, werden sie alle von einer Oberklasse ObjectDAO erben. ObjectDAO hat in sich drin auch eine Variable, welche die Verbindung zur Datenbank herstellt. Hiermit können so auch alle anderen DAOs auf die Datenbank zugreifen. Da wir ORMLite benutzen, wird auch jede Unterklasse eine Variable des Typs Dao haben, welche zur Abspeicherung der Daten verwendet wird. Um Daten abzuspeichern, wird die Methode persist(T) benutzt. Um Daten zu löschen remove(T). Da manche Objekte in der Datenbank nicht verändert werden müssen (z.B. die Weltkarte), wird es keine Methode in der Oberklasse zum Updaten der Daten geben, sondern in jeder Unterklasse welche diese benötigt.
 
+Dieses Modul realisiert somit die Strategie 3.1 (Abspeicherung des Spielstands).
+
 \begin{figure}[h!]
 \begin{center}
   \includegraphics[width=\linewidth]{UML/PersistencePackage.pdf}
     \caption{Persistenz}
 \end{center}
 \end{figure}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Datensicht} \label{sec:datensicht}
