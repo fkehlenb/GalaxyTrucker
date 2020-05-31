@@ -1316,13 +1316,17 @@ Dieses Modul realisiert somit die Strategie 3.1 (Abspeicherung des Spielstands).
 
 
 
-Alle Spiel-relevanten Attribute sind in unserem Datenmodell in \textit{Ship} enthalten. Ein Schiff besteht aus mehreren Räumen , welche zum Teil leer sein können, aber auch wichtige Systeme beinhalten können. Damit realisieren wir die Strategie \textit{12.1} sowie die Strategien \textit{4.1} und \textit{4.2}.
+Alle Spieler-relevanten Attribute sind in unserem Datenmodell in \textit{Ship} enthalten. Ein Schiff besteht aus mehreren Räumen , welche zum Teil leer sein können, aber auch wichtige Systeme beinhalten können. Damit realisieren wir die Strategie \textit{12.2} sowie die Strategien \textit{4.1}.
 
-Ein Raum kann wiederum unterschiedliche Systeme beherbergen, wie z.B. Schilde, Hüllen oder Antriebskomponenten, womit wir Strategie \textit{20.1-3} umsetzen können. Zusätzlich zu den oben genannten Systemen, gibt es noch eine Komponente \textit{WeaponSystem}, welche wiederum die \textit{abstract class Weapon} erweitert. Diese wiederum beinhaltet alle frei-schaltbaren Waffensysteme, womit wir die Strategien \textit{10.1-3} abdecken.
+Ein Raum kann wiederum unterschiedliche Systeme beherbergen, wie z.B. Schilde, Hüllen oder Antriebskomponenten, womit wir Strategie \textit{20.2} umsetzen können. Zusätzlich zu den oben genannten Systemen, gibt es noch eine Komponente \textit{WeaponSystem}, welche wiederum die \textit{abstract class Weapon} erweitert. Diese wiederum beinhaltet alle frei-schaltbaren Waffensysteme, womit wir die Strategien \textit{10.1-2} abdecken. Jede Waffe hat eine ID, ein Waffenlevel, welches im Laufe des Spiels erhöht werden kann und Werte für Schaden, Cooldown, Energie, Raketen-Kosten, eine Trefferchance, die \textit{drop-chance} einer bestimmten Waffe nach besonderen Ereignissen, Schild-Penetration, die Chance einen Hüllenbruch zu verursachen, den Schaden an Crewmitgliedern und die Anzahl der Projektile pro Salve.
 
-Des weiteren kann jeder \textit{Room}, bis zu 4 Crew Mitglieder gleichzeitig beherbergen. Womit wir die Strategie \textit{15.3} umsetzen. Zudem kann es vorkommen dass im Falle eines Angriffes/Zerstörung eines Raumes, Crewmitglieder mit einer gewissen Prozent-Chance schaden nehmen, oder sterben, womit wir die Strategien \textit{21.1 u. 21.2} erfüllen.
+Des Weiteren kann jeder \textit{Room}, bis zu 4 Crewmitglieder gleichzeitig beherbergen. Womit wir die Strategie \textit{15.3} umsetzen. Zudem kann es vorkommen, dass im Falle eines Angriffes/Zerstörung eines Raumes Crewmitglieder mit einer gewissen Prozent-Chance Schaden nehmen, oder sterben, womit wir die Strategien \textit{21.1 u. 21.2} erfüllen.
 
-\textcolor{red}{TEXT NICHT FERTIG}
+Es gibt eine \textit{User class}, welche den Namen des Spielers, seine ID, sein Schiff, sowie seinen Login-Status beinhaltet. Dies ist zudem essentiell für die Multiplayer-Funktion, womit wir die Strategie \textit{5.1} umsetzen.
+
+Bei jeder neuen Runde wird eine \textit{Overworld} generiert, welche die komplette Sternenkarte als Liste von Planeten beinhaltet(Map). Diese werden anhand der verknüpften Koordinaten in der View des Spielers gerendert. Ein solcher Planet besteht aus einem Namen, einer X und Y Position, sowie einem zugeordneten Ereignis aus der \textit{Enum PlanetEvent}. Ein besuchter Planet bekommt zudem den Status \textit{discovered}. Der Spieler kann zwischen diesen Planeten hin- und her reisen, das Schiff befindet sich dabei immer an genau einem Planeten. Damit erfüllen wir die Strategie \textit{9.2} (Reisen).
+
+Auf bestimmten Planeten, besteht die Chance auf einen \textit{Händler} zu treffen, dieser wird durch die Klasse \textit{Trader} repräsentiert. Dieser bietet dem Spieler eine Auswahl von Waffen, Raketen, Crewmitgliedern, sowie Treibstoff zum Verkauf an.
 
 \begin{figure}[H]
 \begin{center}
