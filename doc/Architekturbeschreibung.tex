@@ -1300,7 +1300,7 @@ Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und teilweis
 
 \subsection{Server-Service-Communication}
 
-Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Server muss nachdem er Daten erhalten hat diese irgendwie weiter reichen an seine Services. Dazu benutzt er die Klasse ServerServiceCommunicator, welche als Schnittstelle zwischen dem Server und seinen Services liegt. Wenn der Server ein Request bekommt, reicht er dieses weiter an den ServerServiceCommunicator, welcher es wiederrum an die Services leitet. Dieser wartet dann auf ein Response von den Services welches er dem Server mit teilt, und der Server schickt dieses dann zum Client.
+Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Server muss, nachdem er Daten erhalten hat, diese weiter reichen an seine Services. Dazu benutzt er die Klasse ServerServiceCommunicator, welche als Schnittstelle zwischen dem Server und seinen Services liegt. Wenn der Server ein Request bekommt, reicht er dieses weiter an den ServerServiceCommunicator, welcher es wiederrum an die Services leitet. Dieser wartet dann auf ein Response von den Services welches er dem Server mit teilt, und der Server schickt dieses dann zum Client.
 Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und Strategie 7.3 (Zugüberprüfung).
 
 \begin{figure}[H]
@@ -1312,7 +1312,7 @@ Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und Strategi
 
 \subsection{Service}
 
-Das folgende Diagramm beschreibt das Server Service Modul. Dieses Modul sitzt beim Server zwischen dem ServerServiceCommunicator und der Persistenz. Wenn ein Request an den Server geschickt wird und dann von der Server Klasse an den ServerServiceCommunicator weitergeleitet wird, dann muss es an den korrekten Service weitergeleitet werden um verarbeitet zu werden. Es wird einer der Services in diesem Modul ausgewählt, der Spielschritt verifiziert, und die Logik ausgeführt. Die Daten in der Datenbank werden durch die Verbindungen zwischen den Services und der Persistenz aktualisiert. Nachdem die Logik durchgeführt ist, wird ein Request erstellt und an den ServerServiceCommunicator gegeben. Dieser leitet es dann weiter an den Server welcher es zum Server verschickt.
+Das folgende Diagramm beschreibt das Server Service Modul. Dieses Modul sitzt beim Server zwischen dem ServerServiceCommunicator und der Persistenz. Wenn ein Request an den Server geschickt wird und dann von der Server Klasse an den ServerServiceCommunicator weitergeleitet wird, dann muss es an den korrekten Service weitergeleitet werden, um verarbeitet zu werden. Es wird einer der Services in diesem Modul ausgewählt, der Spielschritt verifiziert, und die Logik ausgeführt. Die Daten in der Datenbank werden durch die Verbindungen zwischen den Services und der Persistenz aktualisiert. Nachdem die Logik durchgeführt ist, wird ein Request erstellt und an den ServerServiceCommunicator gegeben. Dieser leitet es dann weiter an den Server, welcher es zum Client verschickt.
 
 Somit ist die Strategie 7.3 (Zugüberprüfung) realisiert, und es besteht kein Vertrauen in den Client.
 
@@ -1325,8 +1325,8 @@ Somit ist die Strategie 7.3 (Zugüberprüfung) realisiert, und es besteht kein V
 
 \subsection{Persistenz}
 
-Das folgende Diagramm beschreibt unsere Persistenz. Persistenz Klassen werden dazu genutzt Daten in der Datenbank zu speichern, verändern und löschen. Zu jedem im Spiel vorkommenden Objekt, bzw zu der Klasse aus dem das Objekt stammt, muss es ein so genanntes Data Access Object geben (kurz DAO), um diese in der Datenbank verwalten zu können.
-Da viele von den DAOs die gleichen Funktionen haben, werden sie alle von einer Oberklasse ObjectDAO erben. ObjectDAO hat in sich drin auch eine Variable, welche die Verbindung zur Datenbank herstellt. Hiermit können so auch alle anderen DAOs auf die Datenbank zugreifen. Da wir ORMLite benutzen, wird auch jede Unterklasse eine Variable des Typs Dao haben, welche zur Abspeicherung der Daten verwendet wird. Um Daten abzuspeichern, wird die Methode persist(T) benutzt. Um Daten zu löschen remove(T). Da manche Objekte in der Datenbank nicht verändert werden müssen (z.B. die Weltkarte), wird es keine Methode in der Oberklasse zum Updaten der Daten geben, sondern in jeder Unterklasse welche diese benötigt.
+Das folgende Diagramm beschreibt unsere Persistenz. Persistenz Klassen werden dazu genutzt, Daten in der Datenbank zu speichern, verändern und löschen. Zu jedem im Spiel vorkommenden Objekt, bzw zu der Klasse aus dem das Objekt stammt, muss es ein so genanntes Data Access Object geben (kurz DAO), um diese in der Datenbank verwalten zu können.
+Da viele von den DAOs die gleichen Funktionen haben, erben sie alle von einer Oberklasse ObjectDAO. ObjectDAO hat eine Variable, welche die Verbindung zur Datenbank herstellt. Hiermit können so auch alle anderen DAOs auf die Datenbank zugreifen. Da wir ORMLite benutzen, wird auch jede Unterklasse eine Variable des Typs Dao haben, welche zur Abspeicherung der Daten verwendet wird. Um Daten abzuspeichern wird die Methode persist(T) benutzt, um Daten zu löschen remove(T). Da manche Objekte in der Datenbank nicht verändert werden müssen (z.B. die Weltkarte), wird es keine Methode in der Oberklasse zum Updaten der Daten geben, sondern in jeder Unterklasse, welche diese benötigt.
 
 Dieses Modul realisiert somit die Strategie 3.1 (Abspeicherung des Spielstands).
 
@@ -1340,19 +1340,19 @@ Dieses Modul realisiert somit die Strategie 3.1 (Abspeicherung des Spielstands).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Datensicht} \label{sec:datensicht}
 
+In diesem Abschnitt beschreiben wir die Datenstrukturen, die in unserem Spiel benutzt werden, und wie diese zueinenader in Beziehung stehen. \\
 
+Alle Spieler-relevanten Attribute sind in unserem Datenmodell in \textit{Ship} enthalten. Ein Schiff besteht aus mehreren Räumen, welche zum Teil leer sein können, aber auch wichtige Systeme beinhalten können. Damit realisieren wir die Strategie \textit{12.2} sowie die Strategien \textit{4.1}.
 
-Alle Spieler-relevanten Attribute sind in unserem Datenmodell in \textit{Ship} enthalten. Ein Schiff besteht aus mehreren Räumen , welche zum Teil leer sein können, aber auch wichtige Systeme beinhalten können. Damit realisieren wir die Strategie \textit{12.2} sowie die Strategien \textit{4.1}.
+Ein Raum kann wiederum unterschiedliche Systeme beherbergen, wie z.B. Schilde, Hüllen oder Antriebskomponenten, womit wir Strategie \textit{20.2} umsetzen können. Zusätzlich zu den oben genannten Systemen gibt es noch eine Komponente \textit{WeaponSystem}, welche wiederum die \textit{abstract class Weapon} erweitert. Diese wiederum beinhaltet alle freischaltbaren Waffensysteme, womit wir die Strategien \textit{10.1-2} abdecken. Jede Waffe hat eine ID, ein Waffenlevel, welches im Laufe des Spiels erhöht werden kann, und Werte für Schaden, Cooldown, Energie, Raketen-Kosten, eine Trefferchance, die \textit{drop-chance} einer bestimmten Waffe nach besonderen Ereignissen, Schild-Penetration, die Chance einen Hüllenbruch zu verursachen, den Schaden an Crewmitgliedern, und die Anzahl der Projektile pro Salve.
 
-Ein Raum kann wiederum unterschiedliche Systeme beherbergen, wie z.B. Schilde, Hüllen oder Antriebskomponenten, womit wir Strategie \textit{20.2} umsetzen können. Zusätzlich zu den oben genannten Systemen, gibt es noch eine Komponente \textit{WeaponSystem}, welche wiederum die \textit{abstract class Weapon} erweitert. Diese wiederum beinhaltet alle frei-schaltbaren Waffensysteme, womit wir die Strategien \textit{10.1-2} abdecken. Jede Waffe hat eine ID, ein Waffenlevel, welches im Laufe des Spiels erhöht werden kann und Werte für Schaden, Cooldown, Energie, Raketen-Kosten, eine Trefferchance, die \textit{drop-chance} einer bestimmten Waffe nach besonderen Ereignissen, Schild-Penetration, die Chance einen Hüllenbruch zu verursachen, den Schaden an Crewmitgliedern und die Anzahl der Projektile pro Salve.
-
-Des Weiteren kann jeder \textit{Room}, bis zu 4 Crewmitglieder gleichzeitig beherbergen. Womit wir die Strategie \textit{15.3} umsetzen. Zudem kann es vorkommen, dass im Falle eines Angriffes/Zerstörung eines Raumes Crewmitglieder mit einer gewissen Prozent-Chance Schaden nehmen, oder sterben, womit wir die Strategien \textit{21.1 u. 21.2} erfüllen.
+Des Weiteren kann jeder \textit{Room}, bis zu 4 Crewmitglieder gleichzeitig beherbergen, womit wir die Strategie \textit{15.3} umsetzen. Zudem kann es vorkommen, dass im Falle eines Angriffes/Zerstörung eines Raumes Crewmitglieder mit einer gewissen Prozent-Chance Schaden nehmen, oder sterben, womit wir die Strategien \textit{21.1 u. 21.2} erfüllen.
 
 Es gibt eine \textit{User class}, welche den Namen des Spielers, seine ID, sein Schiff, sowie seinen Login-Status beinhaltet. Dies ist zudem essentiell für die Multiplayer-Funktion, womit wir die Strategie \textit{5.1} umsetzen.
 
 Bei jeder neuen Runde wird eine \textit{Overworld} generiert, welche die komplette Sternenkarte als Liste von Planeten beinhaltet(Map). Diese werden anhand der verknüpften Koordinaten in der View des Spielers gerendert. Ein solcher Planet besteht aus einem Namen, einer X und Y Position, sowie einem zugeordneten Ereignis aus der \textit{Enum PlanetEvent}. Ein besuchter Planet bekommt zudem den Status \textit{discovered}. Der Spieler kann zwischen diesen Planeten hin- und her reisen, das Schiff befindet sich dabei immer an genau einem Planeten. Damit erfüllen wir die Strategie \textit{9.2} (Reisen).
 
-Auf bestimmten Planeten, besteht die Chance auf einen \textit{Händler} zu treffen, dieser wird durch die Klasse \textit{Trader} repräsentiert. Dieser bietet dem Spieler eine Auswahl von Waffen, Raketen, Crewmitgliedern, sowie Treibstoff zum Verkauf an.
+Auf bestimmten Planeten besteht die Chance, auf einen \textit{Händler} zu treffen, dieser wird durch die Klasse \textit{Trader} repräsentiert. Dieser bietet dem Spieler eine Auswahl von Waffen, Raketen, Crewmitgliedern, sowie Treibstoff zum Verkauf an.
 
 \begin{figure}[H]
 \begin{center}
