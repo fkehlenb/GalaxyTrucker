@@ -8,6 +8,9 @@ public class Client {
 
     private ClientControllerCommunicator clientControllerCommunicator;
 
+    /**
+     * - Request and Response from and to the server.
+     * */
     public String sendAndReceive(){
         // View clicks something
         // Controller issues a request
@@ -19,7 +22,9 @@ public class Client {
         return null;
     }
 
-    /** Constructor */
+    /** Constructor
+     *  Loop for receiving Data
+     * */
     public Client(){
         clientControllerCommunicator = new ClientControllerCommunicator();
         // Connect to server

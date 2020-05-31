@@ -1257,6 +1257,21 @@ jenes der Anforderungsspezifikation enthalten, allerdings mit
 implementierungsspezifischen Änderungen und Erweiterungen. Siehe die gesonderten
 Hinweise.}
 
+\textcolor{red}{TEXT}
+
+Alle Spiel-relevanten Attribute sind in unserem Datenmodell in \textit{Ship} enthalten. Ein Schiff besteht aus mehreren Räumen , welche zum Teil leer sein können, aber auch wichtige Systeme beinhalten können. Damit realisieren wir die Strategie \textit{12.1} sowie die Strategien \textit{4.1} und \textit{4.2}.
+
+Ein Raum kann wiederum unterschiedliche Systeme beherbergen, wie z.B. Schilde, Hüllen oder Antriebskomponenten, womit wir Strategie \textit{20.1-3} umsetzen können. Zusätzlich zu den oben genannten Systemen, gibt es noch eine Komponente \textit{WeaponSystem}, welche wiederum die \textit{abstract class Weapon} erweitert. Diese wiederum beinhaltet alle frei-schaltbaren Waffensysteme, womit wir die Strategien \textit{10.1-3} abdecken.
+
+Des weiteren kann jeder \textit{Room}, bis zu 4 Crew Mitglieder gleichzeitig beherbergen. Womit wir die Strategie \textit{15.3} umsetzen. Zudem kann es vorkommen dass im Falle eines Angriffes/Zerstörung eines Raumes, Crewmitglieder mit einer gewissen Prozent-Chance schaden nehmen, oder sterben, womit wir die Strategien \textit{21.1 u. 21.2} erfüllen.
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{UML/Datenmodell.pdf}
+    \caption{Das Datenmodell}
+\end{center}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Ausführungssicht} \label{sec:ausfuehrung}
@@ -1296,6 +1311,18 @@ Der Controller erstellt ein neues Request welches dann an den ClientControllerCo
 \end{figure}
 
 Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigem abstrakten Diagramm. In diesem Fall wird in der WeaponUI eine Waffe durch Mausclick ausgewählt, und dann der Raum auf dem Gegnerschiff welcher angegriffen werden soll. Dann wird dieses als Attack-Request weitergegeben an den ClientControllerCommunicator, welcher es wiederrum an die Netzwerkschnittstelle des Clients weiterleitet. Das Request wird dann durch diese Schnittstelle an den Server geschickt. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator, welcher dann den AttackService wählt und ihm das Request weiterleitet. Dieser überprüft dann mittels ValidMove ob das Angriffskommando valide ist oder nicht. Wenn es das ist, so wird die Logik ausgeführt, und das Gegnerschiff in der Datenbank aktualisiert. Dann wird der jetzige Spieler weitergesetzt (wer dran ist). Dann wird ein Response als neue Schiffsobjekte an den ServerServiceCommunicator gegeben, welcher es wieder an die Servernetzwerkschnittstelle gibt. Das Response wird dann zum Client übertragen, und dort an den ClientControllerCommunicator gegeben. Dieser teilt das Ergebnis dem Controller mit (gleiche Methode, da diese noch auf den Response wartet). Dann werden dort die lokalen Daten durch die vom Server bekommenen Daten ersetzt. Der View wartete bis jetzt noch auf ein Ergebnis welches er nun bekommt, wodurch auch er sich aktualisiert.
+
+
+\subsection{Login}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{UML/Sequenz-Client-login.pdf}
+\end{center}
+\end{figure}
+
+Das hier gezeigte Diagramm zeigt den Login eines Spielers, dabei wird im View erstmals der \textit{LoginButton()} durch einen Mausklick ausgewählt und durch den Controller wird eine Request an den \textit{ClientControllerCommunicator} gesendet, dieser wiederum führt die Methode \textit{login()} aus, welche dann einen LoginRequest über die Methode \textit{receiveAndSendData} an den Server sendet. Auf der Server Seite wird nun die Methode \textit{getResponse()} aufgerufen, welche im \textit{UserService} die Logik und die Verifizierung des Logins mithilfe des \textit{usernames} ausführt. Wenn nun der Login genehmigt wurde durch den Service, so wird der Request verifiziert und die \textit{UserDao} wird geupdated. Nun geht die \textit{Response} über die gleichnamigen Methoden zurück zum Client welcher die Response weitergibt an den Controller. Der Controller updated die Lokalen Daten und übergibt die aktualisierten Daten an den View. Nun ist der User eingeloggt und kann der Session beitreten.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Evolution} \label{sec:evolution}
