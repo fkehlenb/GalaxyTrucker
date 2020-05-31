@@ -30,7 +30,7 @@
 \section*{Version und Änderungsgeschichte}
 
 {\em Die aktuelle Versionsnummer des Dokumentes sollte eindeutig und gut zu
-identifizieren sein, hier und optimalerweise auf dem Titelblatt.}
+identifizieren sein, hier und optimaler Weise auf dem Titelblatt.}
 
 \begin{tabular}{ccl}
 Version & Datum & Änderungen \\
@@ -50,6 +50,7 @@ Version & Datum & Änderungen \\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \section{Einführung}
 
 Im Rahmen von Re-Softwareprojekt 2 im Sommersemester 2020 wurde diese Architekturbeschreibung für die Software GalaxyTrucker geschrieben.
@@ -99,9 +100,9 @@ Schutzschild & Energieschild, welches mithilfe eines Systems ausgerüstet werden
 
 \end{tabular}
 \end{center}
+\newpage
 
-
-\textbf{Technische Begriffe:}
+\textbf{Technische Begriffe:} 
 \begin{center}
 \begin{tabular}{|p{3cm}|p{12cm}|}
 \hline
@@ -109,7 +110,7 @@ Begriff & Erklärung \\ \hline
 H2 & Eine SQL Java Datenbank, die auch die JDBC API unterstützt. \\ \hline
 Einflussfaktoren & Faktoren, die das Endprodukt beeinflussen können. \\ \hline
 Java & Objektorientierte, klassenbasierte Programmiersprache. Läuft auf so gut wie allen gängigen Plattformen, die eine Java Virtual Maschine haben.\\ \hline  
-LibGDX & Kostenloses, Open-source Spielentwickluungsframework, welches in Java geschrieben ist\\ \hline
+LibGDX & Kostenloses, Open-source Framework zur Enwicklung von Spielen, welches in Java geschrieben ist\\ \hline
 Server & Kann von einem der Spieler gehostet werden, bietet die Grundlage für das Spiel. Ohne Server $\rightarrow$ kein Spiel \\ \hline
 Client & Der Teil des Programms, den der Spieler bei sich auf dem Gerät installiert. Beinhaltet Grafiken, Spielmechanik etc. \\ \hline
 JUnit & Unit Testing Framework für Java. Zum Testen auf Fehler in der Software.\\ \hline  
@@ -126,7 +127,7 @@ TiledMaps & Ein Framework von LibGDX, um Karten ins Spiel zu implementieren. \\ 
  
 \end{tabular}
 \end{center}
-
+\newpage
 
 \subsection{Referenzen}
 
@@ -142,6 +143,7 @@ Zunächst zeigen wir in Kapitel 2 die verschiedenen Einflussfaktoren auf die Ent
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \section{Globale Analyse} \label{sec:globale_analyse}
 
 %{\itshape Hier werden Einflussfaktoren aufgezählt und bewertet sowie Strategien
@@ -1419,7 +1421,7 @@ Der Controller erstellt ein neues Request, welches dann an den ClientControllerC
 \end{center}
 \end{figure}
 
-Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigen abstrakten Diagramm. In diesem Fall wird in dem WeaponUI eine Waffe durch Mausklick ausgewählt, und dann der Raum auf dem Gegnerschiff, der angegriffen werden soll. Dann wird dieses als Attack-Request weitergegeben an den ClientControllerCommunicator, welcher es wiederrum an die Netzwerkschnittstelle des Clients weiterleitet. Das Request wird dann durch diese Schnittstelle an den Server geschickt. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator, welcher dann den AttackService wählt und ihm das Request weiterleitet. Dieser überprüft dann mittels ValidMove, ob das Angriffskommando valide ist oder nicht. Wenn es das ist, so wird die Logik ausgeführt, und das Gegnerschiff in der Datenbank aktualisiert. Dann wird der jetzige Spieler weitergesetzt (wer dran ist). Dann wird ein Response als neue Schiffsobjekte an den ServerServiceCommunicator gegeben, welcher es wieder an die Servernetzwerkschnittstelle gibt. Das Response wird dann zum Client übertragen, und dort an den ClientControllerCommunicator gegeben. Dieser teilt das Ergebnis dem Controller mit (gleiche Methode, da diese noch auf den Response wartet). Dann werden dort die lokalen Daten durch die vom Server bekommenen Daten ersetzt. Der View wartete bis jetzt noch auf ein Ergebnis welches er nun bekommt, wodurch auch er sich aktualisiert.
+Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigen abstrakten Diagramm. In diesem Fall wird in dem \textit{WeaponUI} eine Waffe durch Mausklick und dann der Raum auf dem Gegnerschiff, der angegriffen werden soll ausgewählt. Dann wird dieses als Attack-Request weitergegeben an den \textit{ClientControllerCommunicator}, welcher es wiederum an die Netzwerkschnittstelle des \textit{Clients} weiterleitet. Der Request wird dann durch diese Schnittstelle an den \textit{Server} geschickt. Der \textit{Server} empfängt den Request und gibt es an seinen \textit{ServerServiceCommunicator}, welcher dann den \textit{AttackService} auswählt und ihm denRequest weiterleitet. Dieser überprüft dann mittels \textit{validMove()}, ob das Angriffskommando valide ist oder nicht. Wenn es valide ist, wird die Logik ausgeführt, und das gegnerische Schiff in der Datenbank aktualisiert. Dann wird der aktualisiert welcher Spieler am Zug ist. Danach wird ein Response als neue \textit{Ship-Objekte} an den \textit{ServerServiceCommunicator} gegeben, welcher das \textit{Ship} wieder an die Servernetzwerkschnittstelle gibt. Der Response wird dann zum \textit{Client} übertragen und dort an den \textit{ClientControllerCommunicator} gegeben. Dieser teilt das Ergebnis dem Controller mit (gleiche Methode, da diese noch auf den Response wartet). Dann werden dort die lokalen Daten durch die vom Server bekommenen Daten ersetzt. Der \textit{View} wartete bis jetzt noch auf ein Ergebnis welches er nun bekommt, wodurch auch er sich aktualisiert.
 
 
 \subsection{Login}
@@ -1430,7 +1432,7 @@ Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigen 
 \end{center}
 \end{figure}
 
-Das hier gezeigte Diagramm zeigt den Login eines Spielers, dabei wird im View erstmals der \textit{LoginButton()} durch einen Mausklick ausgewählt und durch den Controller wird ein Request an den \textit{ClientControllerCommunicator} gesendet, dieser wiederum führt die Methode \textit{login()} aus, welche dann einen LoginRequest über die Methode \textit{receiveAndSendData} an den Server sendet. Auf der Server Seite wird nun die Methode \textit{getResponse()} aufgerufen, welche im \textit{UserService} die Logik und die Verifizierung des Logins mithilfe des \textit{usernames} ausführt. Wenn nun der Login genehmigt wurde durch den Service, so wird der Request verifiziert und die \textit{UserDao} wird geupdated. Nun geht die \textit{Response} über die gleichnamigen Methoden zurück zum Client, welcher die Response weitergibt an den Controller. Der Controller updated die Lokalen Daten und übergibt die aktualisierten Daten an die View. Nun ist der User eingeloggt und kann der Session beitreten.
+Das hier gezeigte Diagramm zeigt den Login eines Spielers, dabei wird im View erstmals der \textit{LoginButton()} durch einen Mausklick ausgewählt und durch den Controller wird ein Request an den \textit{ClientControllerCommunicator} gesendet, dieser wiederum führt die Methode \textit{login()} aus, welche dann einen LoginRequest über die Methode \textit{receiveAndSendData} an den Server sendet. Auf der Server Seite wird nun die Methode \textit{getResponse()} aufgerufen, welche im \textit{UserService} die Logik und die Verifizierung des Logins mithilfe des \textit{usernames} ausführt. Wenn nun der Login genehmigt wurde durch den Service, so wird der Request verifiziert und die \textit{UserDao} wird geupdated. Nun geht die \textit{Response} über die gleichnamigen Methoden zurück zum Client, welcher die Response weitergibt an den Controller. Der Controller updated die Lokalen Daten und übergibt die aktualisierten Daten an die \textit{View}. Nun ist der User eingeloggt und kann der Session beitreten.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1442,7 +1444,7 @@ In folgendem Abschnitt behandeln wir mögliche Weiterentwicklungen für unsere S
 
 \subsection{Fraktionskampf}
 Drei Fraktionen treten auf einer sehr großen Map im Mehrspielermodus gegeneinander an. Jede Fraktion hat ein Hauptquartier von dem aus alle Spieler starten. Die Karte besteht aus vielen großen und kleinen Kontrollstationen, welche durch kleinere Systeme dargestellt werden, welche zu Beginn der Runde neutral sind und einfach eingenommen werden können. 
-Im weiteren Verlauf müssen die Fraktionen im Kampf um mehr Ressourcen und Gebiete aufeinandertreffen und in mehreren Runden um die Kontrollpunkte kämpfen, dabei sollen Große Kontrollpunkte/Stationen mehrere Runden benötigen, um diese einnehmen zu können. Größere Stationen ermöglichen mehr Boni und Ressourcen, sowie eine größere Gebietskontrolle. Kleinere Stationen decken kleine Gebiete ab und sind schneller einzunehmen. Dabei ist es das Ziel der Angreifenden Fraktion, die Station direkt anzugreifen, zu beschädigen und letzendlich, wenn die Waffen der Station/Schilde ausgeschaltet sind, sie zu übernehmen. Das jeweilige Gebiet wird der jeweiligen Fraktion gutschrieben und die Boni werden angewandt. 
+Im weiteren Verlauf müssen die Fraktionen im Kampf um mehr Ressourcen und Gebiete aufeinandertreffen und in mehreren Runden um die Kontrollpunkte kämpfen, dabei sollen Große Kontrollpunkte/Stationen mehrere Runden benötigen, um diese einnehmen zu können. Größere Stationen ermöglichen mehr Boni und Ressourcen, sowie eine größere Gebietskontrolle. Kleinere Stationen decken kleine Gebiete ab und sind schneller einzunehmen. Dabei ist es das Ziel der Angreifenden Fraktion, die Station direkt anzugreifen, zu beschädigen und letztendlich, wenn die Waffen der Station/Schilde ausgeschaltet sind, sie zu übernehmen. Das jeweilige Gebiet wird der jeweiligen Fraktion gutschrieben und die Boni werden angewandt. 
 Dies soll verhindert werden können, indem Angreifende Schiffe einen Timer auslösen, welcher für die Verteidiger einsehbar ist. Dieser Timer dient für die Verteidiger dazu, zur Station zurückzukehren und das angreifende Schiff in 1vs1 Kämpfen abzufangen und aufzuhalten, bevor dieses der Station schaden kann.
  Falls also ein angreifendes Schiff nicht abgefangen werden kann, weil zu wenige oder keine Verteidiger mehr vorhanden sind, oder sich nicht in der Nähe des Systems befinden, so soll der Angreifer der Station schaden können. Dies soll je nach Stärke und Ausbau der Verteidungsanlagen länger dauern und mehr Teamwork benötigen, als Stationen die kaum Ausgebaut wurden.
  Das Balancing soll dabei folgendermaßen funktionieren: Die Fraktionen müssen Schlüsselrouten und deren Stationen gut verteidigen und ausbauen, zudem die Spieler auf die Karte und auf einzelne \glqq Missionen\grqq{} aufteilen, um effektiv weitere Gebiete für sich zu gewinnen. Einzelne Schiffe sollen zudem keine großen Stationen alleine einnehmen können, damit keine Alleingänge und \glqq Schwarm-Taktiken\grqq{} möglich sind, weil es nicht möglich sein soll mit einzelnen Schiffen ganze Systeme erobern zu können und die eigene Flotte so aufzuteilen dass der Gegner diese einzelnen Schiffe nicht aufhalten kann. 
