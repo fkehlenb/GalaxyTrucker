@@ -1118,7 +1118,7 @@ In diesem Kapitel wird das zu entwerfende System in der Konzeptionellen Sicht na
 Die Datenbanksoftware wird im Server dazu genutzt, um unsere Spielstände zu persistieren. Unsere Datenbank kommuniziert über die ORM-Lite Schnittstelle mit der im Server liegenden Persistenz. Die Entscheidung zu der Datenbank geht aus Strategie 3.1 heraus.  
 
 \textbf{Persistence:}
-Die Persistence stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle Benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Zwischen der Persistenz und Service existiert eine Daten- und Kontrollfluss Verbindung update. Außerdem nutzt die Persistenz das Update Interface von Model, über das Kontrollfluss läuft. 
+Die Persistence stellt die Verbindung zwischen dem gesamten System und der Datenbank dar. Ihre Aufgabe liegt darin, dass sie die Datenbank auf dem aktuellsten Stand hält und den aktuellen Stand von der Datenbank lädt. Falls das Spiel terminiert, müssen alle Spielstände und alle benutzerbezogenen Fortschritte gespeichert sein und beim nächsten Starten abrufbar sein. Zwischen der Persistenz und Service existiert eine Daten- und Kontrollfluss Verbindung update. Außerdem nutzt die Persistenz das Update Interface von Model, über das Kontrollfluss läuft. 
 
 \textbf{Model (Server):}
 Das Model beschreibt die logische Struktur der Datenbank. Hiermit wird bestimmt, wie auf Daten zugegriffen werden kann. 
@@ -1131,21 +1131,21 @@ Service ist die Komponente, die die Spielzugsdaten übermittelt bekommt und dann
 Die Communication Komponente des Servers dient dazu, die vom Client geschickten Spielzugdaten zu entschlüsseln und sie Service zur Verfügung zu stellen. Dies passiert über eine Data/Control Schnittstelle. Außerdem sollen die geänderten Spielzugdaten von der Datenbank aktualisiert werden und dem Client zur Verfügung gestellt werden. Communication (Server) hat eine TCP/Request/Response Schnittstelle zu Communication im Client. 
 
 \textbf{Communication (Client):}
-Die Communication Komponente im Client hat den Auftrag, Das Spiel zu updaten, also wenn jemand einen Zug gespielt hat, wird der dem Client auch angezeigt. Außerdem übermittelt er die Spielzugdaten dem Server. Über die Schnittstelle Update, von Model zur Verfügung gestellt, kann das Model einmal von Communication, als auch von Controller geupdatet werden. Über die Schnittstelle Data, von Communication zur Verfügung gestellt, werden Daten dem Controller zur Verfügung gestellt.
+Die Communication Komponente im Client hat den Auftrag, das Spiel zu updaten, also wenn jemand einen Zug gespielt hat, wird der dem Client auch angezeigt. Außerdem übermittelt er die Spielzugdaten dem Server. Über die Schnittstelle Update, von Model zur Verfügung gestellt, kann das Model einmal von Communication, als auch von Controller geupdatet werden. Über die Schnittstelle Data, von Communication zur Verfügung gestellt, werden Daten dem Controller zur Verfügung gestellt.
 
 \textbf{Model (Client):}
-Das Model im Client stellt die Datenstruktur unserer Datenbank dar. Es wird quasi alles in ihm gespeichert, sodass es zum spielen genutzt werden kann. Model stellt ein Interface Update zur Verfügung, worüber Controller und Communication das Model updaten können. Model stellt außerdem ein Control Interface zur Verfügung, über welches Controller Controller die geforderten Daten aus Model bekommen kann. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben.
+Das Model im Client stellt die Datenstruktur unserer Datenbank dar. Es wird allgemein alles in ihm gespeichert, sodass es zum spielen genutzt werden kann. Model stellt ein Interface Update zur Verfügung, worüber Controller und Communication das Model updaten können. Model stellt außerdem ein Control Interface zur Verfügung, über welches Controller Controller die geforderten Daten aus Model bekommen kann. In Abschnitt \ref{sec:datensicht} unserer Architekturbeschreibung wird unser Datenmodell genauer beschrieben.
 
 \textbf{Controller:}
 In Controller passiert die gesamte Logik des Clients. Controller nutzt das Data Interface von Communication, um Daten zum Server zu schicken, Update von Model um das Model zu updaten und Control von Model, um Daten von Model zu empfangen. Controller stellt ein Interface Instruct zur verfügung, über welches die Interface/View die anzuzeigenden Daten bekommt. 
 
 \textbf{Interface/View:}
-Das Interface/die View stellt all das dar, was der User am ende sieht. Alle Grafiken werden hier gerendert, alle Knöpfe und Sachen, mit denen der User etwas machen kann, sind in der View enthalten. Um erforderliche Daten zu erhalten und zu eingaben des Users weiterzuleiten, benutzt Interface/View ein Interface Instruct von Controller. \\
+Das Interface/die View stellt all das dar, was der User am Ende sieht. Alle Grafiken werden hier gerendert, alle Knöpfe und Sachen, mit denen der User etwas machen kann, sind in der View enthalten. Um erforderliche Daten zu erhalten und zu Eingaben des Users weiterzuleiten, benutzt Interface/View ein Interface Instruct von Controller. \\
 
 \textbf{Transitionen}
 
 \textbf{ORM-Lite (Datenbank $\leftrightarrow$ Persistence):}
-Hier werden alle Abfragen, Daten zu schicken und die Daten von und zur Datenbank gesendet.
+Hier werden alle Abfragen, Daten zu schicken, und die Daten von und zur Datenbank gesendet.
 
 \textbf{Update (Persistence $\leftrightarrow$ Model):}
 Model stellt das Interface Update zu Verfügung, welches von Persistence genutzt wird. Es handelt sich hierbei um Kontrollfluss. Das Model bekommt den Befehl, zu updaten. 
@@ -1160,7 +1160,7 @@ Hierbei handelt es sich um beidseitigen Datenfluss. Hier werden die geupdateten 
 Hierüber werden alle Dateien geschickt, die in Communication angenommen werden, um in Service weiterverarbeitet zu werden. 
 
 \textbf{TCP/Request/Response (Communication (Server) $\leftrightarrow$ Communication (Client)):}
-Über diese Schnittstelle werden alle Daten und Befehle zwischen Server und Client übertragen, wie Zum Beispiel den Befehl zu updaten, die Abfrage, ob man sich ein Teil im Shop leisten kann oder ob im Kampf vom gegner eine Sektion des Schiffes beschädigt wurde. Außerdem können geänderte Dateien übertragen werden, die in der Datenbank aktualisiert werden müssen. 
+Über diese Schnittstelle werden alle Daten und Befehle zwischen Server und Client übertragen, wie zum Beispiel den Befehl zu updaten, die Abfrage, ob man sich ein Teil im Shop leisten kann oder ob im Kampf vom Gegner eine Sektion des Schiffes beschädigt wurde. Außerdem können geänderte Dateien übertragen werden, die in der Datenbank aktualisiert werden müssen. 
 
 \textbf{Data (Communication (Client) $\leftrightarrow$ Controller):}
 Hierüber werden die Daten geschickt, welche in Communication vom Server ankommen und verarbeitet werden sollen oder die, die geändert wurden und persistiert werden müssen. 
