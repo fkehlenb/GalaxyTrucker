@@ -52,12 +52,12 @@ Version & Datum & Änderungen \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Einführung}
 
-Im Rahmen von Re-Softwareprojekt 2 im Sommersemester 2020 wurde diese Architekturbeschreibung für die Software Galaxytrucker geschrieben.
+Im Rahmen von Re-Softwareprojekt 2 im Sommersemester 2020 wurde diese Architekturbeschreibung für die Software GalaxyTrucker geschrieben.
 
-Es handelt sich bei der Software um ein rundenbasiertes Spiel im Weltraum- und Science-Fiction-Kontext, in welchem der Spieler sein eigenes Schiff bekommt und hiermit ein zufällig generiertes Sternensystem erkundet. Zwischendurch wird der Spieler auf viele verschiedene Ereignisse in der Spielwelt stoßen. 
+Es handelt sich bei der Software um ein rundenbasiertes Onlinespiel in einem Weltraum- und Science-Fiction-Kontext, in welchem der Spieler sein eigenes Schiff bekommt und hiermit ein zufällig generiertes Sternensystem erkundet. Zwischendurch wird der Spieler auf viele verschiedene Ereignisse in der Spielwelt stoßen. 
 Das Spiel ist sowohl im Singleplayer als auch im Multiplayer spielbar.\\
-Im Einzelspielermodus soll ein Spieler mit einem Raumschiff starten, von Planet zu Planet fliegen, gegen computergesteuerte Raumschiffe kämpfen oder zufällige Ereignisse absolvieren, um sich auszurüsten. Das Ziel des Einzelspielermodus ist, dass man den Endboss besiegt und so das Spiel gewinnt. \\
-Des weiteren gibt es noch einen Mehrspielermodus, in welchem beide Spieler mit jeweils einem Schiff auf die Karte kommen. Dort müssen sie sich wie im Einzelspielermodus erstmal ausrüsten. Das Ziel des Spieles ist, wie im Einzelspielermodus, den Endboss zu besiegen. Die beiden Spieler können, wenn sie sich auf dem gleichen Planeten befinden, sich angreifen. Der Gewinner dieses Kampfes bekommt eine Belohnung, der Verlierer bekommt einen Nachteil. 
+Im Einzelspielermodus soll ein Spieler mit einem Raumschiff starten, von Planet zu Planet fliegen, gegen computergesteuerte Raumschiffe kämpfen oder zufällige Ereignisse absolvieren, um sich aufzurüsten. Das Ziel des Einzelspielermodus ist, dass man den Endboss besiegt und so das Spiel gewinnt. \\
+Des Weiteren gibt es noch einen Mehrspielermodus, in welchem zwei Spieler mit jeweils einem Schiff auf die Karte kommen. Dort müssen sie sich wie im Einzelspielermodus erstmal ausrüsten. Das Ziel des Spieles ist wie im Einzelspielermodus, den Endboss zu besiegen. Die beiden Spieler können sich angreifen, wenn sie sich auf dem gleichen Planeten befinden. Der Gewinner dieses Kampfes bekommt eine Belohnung, der Verlierer bekommt einen Nachteil. 
 Zusammenfassend kann man sagen, dass die Software folgende Eigenschaften mitbringt: 
 
 \begin{itemize}
@@ -72,8 +72,8 @@ Zusammenfassend kann man sagen, dass die Software folgende Eigenschaften mitbrin
 
 \subsection{Zweck}
 
-Die Architekturbeschreibung zeigt den Architekturentwurf, den wir uns für das Spiel GalaxyTrucker überlegt haben. Sie dient dazu, allen Benutzern und Bearbeitern der Software die Funktionsweise und die Struktur nahezubringen. Entwickler und Tester sollen eine Übersicht über die Funktionsweise der Software erhalten, sodass sie auf Basis dieses Dokuments die Software implementieren können, bzw. testen können. 
-Leser dieser Architekturbeschreibung sind Host der Spiele, interessierte Spieler, die die Software vielleicht um Mods erweitern wollen, Entwickler und alle im Rahmen beteiligten von Re-Softwareprojekt 2. 
+Die Architekturbeschreibung zeigt den Architekturentwurf, den wir uns für das Spiel GalaxyTrucker überlegt haben. Sie dient dazu, allen Benutzern und Entwicklern der Software die Funktionsweise und die Struktur nahezubringen. Entwickler und Tester sollen eine Übersicht über die Funktionsweise der Software erhalten, sodass sie auf Basis dieses Dokuments die Software implementieren können, bzw. testen können. 
+Leser dieser Architekturbeschreibung sind Host der Spiele, interessierte Spieler, die die Software vielleicht mit Mods erweitern wollen, Entwickler und alle Beteiligten im Rahmen von Re-Softwareprojekt 2. 
 
 \subsection{Status}
 
@@ -86,16 +86,16 @@ Dieser Architekturentwurf beschreibt den ersten Entwurf der Software. Er wurde n
 \begin{tabular}{|p{3cm}|p{12cm}|}
 \hline
 Begriff & Erklärung \\ \hline
-Planet & Mit Planet ist der Planet inklusive dem umgebenen Raumsektor gemeint. \\ \hline
-Raumschiff, Schiff, Ship & Raumschiff, mit welchem Spieler oder Computergesteuerte spielen. \\ \hline
+Planet & Mit Planet sind die Schaupl"atze auf der Karte der Spielwelt gemeint, auf denen sich das Spiel abspielt. \\ \hline
+Raumschiff, Schiff, Ship & Raumschiff, mit welchem Spieler oder Computergesteuerte Gegner spielen. \\ \hline
 Sektionen des Raumschiffes & Verschiedene Räume in einem Raumschiff. Kann Systeme enthalten, kann Crew enthalten\\ \hline
-System & Relevante Systeme, die ein Raumschiff braucht, um zu spielen, z.B. Waffensystem, Sauerstoff, Antrieb \\ \hline
-Crew, Besatzung & Lebewesen, die das Schiff steuern, kämpfen oder sterben können. Auf einem Raumschiff können begrenzt viele Crewmitglieder Platz finden. Können verschiedene Spezialfähigkeiten haben, Verschiedene Fähigkeiten können verbessert werden. \\ \hline
-Ressourcen & Energie, Geld, Antriebsenergie, Raketen \\ \hline
-Endgegner, Endboss & Sehr starker Gegner am ende des Spiels. Kampf gegen diesen entscheidet über Gewinnen oder Verlieren des Spiels \\ \hline  
+System & Relevante Systeme, die ein Raumschiff braucht, um zu spielen, z.B. Waffensystem, Schilde, Antrieb \\ \hline
+Crew, Besatzung & Lebewesen, die das Schiff steuern, reparieren, kämpfen oder sterben können. Auf einem Raumschiff können begrenzt viele Crewmitglieder Platz finden. Die Fähigkeiten können verbessert werden. \\ \hline
+Ressourcen & Energie, Geld, Antriebsenergie, Raketen. Werden bei bestimmten Aktionen erhalten oder verbraucht. \\ \hline
+Endgegner, Endboss & Sehr starker Gegner am Ende des Spiels. Kampf gegen diesen entscheidet über Gewinnen oder Verlieren des Spiels \\ \hline  
 NPC & Computergesteuerter Gegner.\\ \hline
 Antrieb & System, mit welchem Spieler*innen sich bewegen können. Wenn zerstört, ist kein Reisen mehr möglich\\ \hline
-Schutzschild & Energieschild, welches mithilfe eines Systems ausgerüstet werden kann. Wehrt \\ \hline
+Schutzschild & Energieschild, welches mithilfe eines Systems ausgerüstet werden kann. Wehrt bestimmte Angriffe ab. \\ \hline
 
 \end{tabular}
 \end{center}
@@ -111,17 +111,17 @@ Einflussfaktoren & Faktoren, die das Endprodukt beeinflussen können. \\ \hline
 Java & Objektorientierte, klassenbasierte Programmiersprache. Läuft auf so gut wie allen gängigen Plattformen, die eine Java Virtual Maschine haben.\\ \hline  
 LibGDX & Kostenloses, Open-source Spielentwickluungsframework, welches in Java geschrieben ist\\ \hline
 Server & Kann von einem der Spieler gehostet werden, bietet die Grundlage für das Spiel. Ohne Server $\rightarrow$ kein Spiel \\ \hline
-Client & Der Part, den der Spieler bei sich auf dem Gerät installiert. Beinhaltet Grafiken, Spielmechanik etc. \\ \hline
+Client & Der Teil des Programms, den der Spieler bei sich auf dem Gerät installiert. Beinhaltet Grafiken, Spielmechanik etc. \\ \hline
 JUnit & Unit Testing Framework für Java. Zum Testen auf Fehler in der Software.\\ \hline  
 DAO & Objekte, die Daten aus der Datenbank verwalten.(Data Access Object)\\ \hline
 SQLite & Eine SQL Datenbank. \\ \hline
 Derby & Eine Datenbank.\\ \hline
 Modularisierung & Das Projekt wird in Module aufgeteilt, die unabhängig voneinander implementiert werden können. \\ \hline  
-Monolitisierung & Das Gesamte Projekt wird nicht aufgeteilt, sodass alles funktionieren muss, bis man etwas testen kann. (Keine unterschiedlichen Klassen usw.)\\ \hline
-Persistence & Stellt die Verbindung zwischen System und der Datenbank her. Alle Daten aus oder zur Datenbank fließen durch die Persistence.\\ \hline
+Monolithisierung & Das Gesamte Projekt wird nicht aufgeteilt, sodass alles funktionieren muss, bis man etwas testen kann. (Keine unterschiedlichen Klassen usw.)\\ \hline
+Persistence, Persistenz & Stellt die Verbindung zwischen System und der Datenbank her. Alle Daten aus oder zur Datenbank fließen durch die Persistence.\\ \hline
 Controller & In Controller befindet sich die Spiellogik. Außerdem bekommt die View alle Daten über den Controller, die angezeigt werden müssen.\\ \hline
 UML & Sprache zum Beschreiben eines Programms in verschiedenen Diagrammen. (Unified Modeling Language)\\ \hline  
-TiledMaps & ist ein Framework von LibGDX, um Karten ins Spiel zu implementieren. \\ \hline
+TiledMaps & Ein Framework von LibGDX, um Karten ins Spiel zu implementieren. \\ \hline
 
  
 \end{tabular}
@@ -138,7 +138,7 @@ TiledMaps & ist ein Framework von LibGDX, um Karten ins Spiel zu implementieren.
 
 \subsection{Übersicht über das Dokument}
 
-Zunächst zeigen wir in Kapitel 2 die verschiedenen Einflussfaktoren auf die Entwicklung und die Probleme und Strategien zum Lösen der Probleme. In den Kapiteln 3, 4 und 6 werden die Sichten von Hofmeister gezeigt. Bei uns wird die Codesicht nicht behandelt. In Kapitel 3 wird die Konzeptionelle Sicht unserer Software dargestellt, in Kapitel 4 die Modulsicht und in Kapitel 6 die Ausführungssicht. Kapitel 5 stellt das Modell der Datensicht dar, eine nähere Beschreibung der Architektursicht. In Kapitel 7 werden einige Anwendungsfälle dargestellt. Abschließend stellen wir in Kapitel 8 Ideen für zukünftige Weiterentwicklungen unserer Software dar. 
+Zunächst zeigen wir in Kapitel 2 die verschiedenen Einflussfaktoren auf die Entwicklung, Probleme und zuletzt Strategien zum Lösen der Probleme. In den Kapiteln 3, 4 und 6 werden die Sichten von Hofmeister gezeigt. die Codesicht wird bei uns nicht behandelt. In Kapitel 3 wird die Konzeptionelle Sicht unserer Software dargestellt, in Kapitel 4 die Modulsicht und in Kapitel 6 die Ausführungssicht. Kapitel 5 stellt das Modell der Datensicht dar, eine nähere Beschreibung der Architektursicht. In Kapitel 7 werden einige Anwendungsfälle dargestellt. Abschließend stellen wir in Kapitel 8 Ideen für zukünftige Weiterentwicklungen unserer Software dar. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,7 +194,7 @@ Zunächst zeigen wir in Kapitel 2 die verschiedenen Einflussfaktoren auf die Ent
 \\ \hline
 \multicolumn{3}{|l|}{{O1.1: Teamgröße}} 
 \\ \hline
-Die Gruppe besteht aus 6 Entwicklern. & Keine Flexibilität, aber Veränderlichkeit: Eine oder mehrere Personen könnten die Gruppe verlassen      &  Die Architektur kann wegen Zeitmangel und fehlenden Fähigkeiten Mängel enthalten.
+Die Gruppe besteht aus 6 Entwicklern. & Keine Flexibilität, aber Veränderlichkeit: Eine oder mehrere Personen könnten die Gruppe verlassen      &  Die Architektur kann wegen Zeitmangel und fehlenden Ressourcen Mängel enthalten.
 \\ \hline 
 \multicolumn{3}{|l|}{{O1.2: Architekturabgabe}} 
 \\ \hline
@@ -206,7 +206,7 @@ Das Endprodukt muss am 02.08.2020 abgegeben werden. & Keine Flexibilität, oder 
 \\ \hline
 \multicolumn{3}{|l|}{{O1.4: Fähigkeiten}} 
 \\ \hline
-Die Gruppenmitglieder haben unterschiedliche Programmiererfahrungen und Kentnisse. & Keine Flexibilität, aber Veränderlichkeit: Neues Wissen kann sich angeeignet werden.  & Die Implementierung kann Mängel enthalten. 
+Die Gruppenmitglieder haben unterschiedliche Programmiererfahrungen und Kentnisse. & Keine Flexibilität, aber Veränderlichkeit: Neues Wissen kann angeeignet werden.  & Die Implementierung kann Mängel enthalten. 
 \\ \hline     
 %TECHNIK
 \multicolumn{3}{|l|}{{\textbf{T1: Technik}}} 
@@ -229,7 +229,7 @@ Es soll LibGDX verwendet werden. & Keine Veränderlichkeit oder Flexibilität.  
 \\ \hline
 \multicolumn{3}{|l|}{{T1.5: Client}} 
 \\ \hline
-Das Spiel soll ohne weitere Installationen auf Clientseite spielbar sein. & Keine Flexibilität, oder Veränderlichkeit.    &  Bei der Implementierung muss darauf geachtet werden, keine Abhängigkeiten von Dingen zu haben, die auf Clientseite weitere Downloads erfordern. 
+Das Spiel soll ohne Installation auf Clientseite spielbar sein. & Keine Flexibilität, oder Veränderlichkeit.    &  Bei der Implementierung muss darauf geachtet werden, keine Abhängigkeiten von Dingen zu haben, die auf Clientseite weitere Downloads erfordern. 
 \\ \hline
 \multicolumn{3}{|l|}{{T1.6: Server}} 
 \\ \hline
@@ -247,15 +247,15 @@ Das Raumschiff soll in unterschiedliche Sektionen unterteilt sein. & Keine Flexi
 \\ \hline 
 \multicolumn{3}{|l|}{{P1.2: Systeme}} 
 \\ \hline
-Jede Sektion soll relevante Systeme haben.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss unterschiedlichen Sektionen die relevanten Systeme zuordnen. 
+Sektionen sollen relevante Systeme enthalten können.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss unterschiedlichen Sektionen relevante Systeme zuordnen. 
 \\ \hline
 \multicolumn{3}{|l|}{{P1.3: Beschädigungen}} 
 \\ \hline
-Sektionen sollen im Kampf beschädigt werden können.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass die Sektionen unabhängig voneinander beschädigt werden können. Ebenfalls muss für jede Sektion gespeichert und angezeigt werden, wie heile/kaputt sie ist. 
+Sektionen sollen im Kampf beschädigt werden können.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass die Sektionen unabhängig voneinander beschädigt werden können. Ebenfalls muss für jede Sektion ein Schadenswert gespeichert und angezeigt werden. 
 \\ \hline
 \multicolumn{3}{|l|}{{P1.4: Systembeschädigungen}} 
 \\ \hline
-Wenn eine Sektion beschädigt ist, soll dies auch die enthaltenen Systeme beeinflussen. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass für jedes System der Status gespeichert wird. 
+Wenn eine Sektion beschädigt ist soll dies auch die enthaltenen Systeme beeinflussen. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass für jedes System der Raumschaden übernommen wird. 
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P2: Ressourcen}}} 
@@ -266,7 +266,7 @@ Das Raumschiff soll verschieden Ressourcen haben, wie Geld, Energie, Status Auß
 \\ \hline                                                      
 \multicolumn{3}{|l|}{{P2.2: Ressourcenveränderlichkeit}} 
 \\ \hline
-Ressourcen sollen veränderlich sein. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass die Eigenschaften nicht konstant sind, und durch Methoden auf die Werte einfluss genommen werden kann. 
+Ressourcen sollen veränderlich sein. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass die Eigenschaften nicht konstant sind, und durch Methoden auf die Werte Einfluss genommen werden kann. 
 \\ \hline
 \multicolumn{3}{|l|}{{P2.3: Ressourcenverfügung}} 
 \\ \hline
@@ -308,7 +308,7 @@ Die Systeme einer Sektion sollen durch die Besatzungsmitglieder beeinflusst werd
 \\ \hline
 \multicolumn{3}{|l|}{{P4.4: Tod}} 
 \\ \hline
-Besatzungsmitglieder sollen sterben können. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass Besatzungsmitglieder einen Gesundheitsstatus haben, der sinken kann. Ebenfalls sollten Mitgleider entweder gelöscht oder inaktiviert werden, sobald sie sterben. 
+Besatzungsmitglieder sollen sterben können. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass Besatzungsmitglieder einen Gesundheitsstatus haben, der sinken kann. Ebenfalls sollten Mitgleider entweder gelöscht oder deaktiviert werden, sobald sie sterben. 
 \\ \hline
 \multicolumn{3}{|l|}{{P4.5: Neue Besatzungsmitglieder}} 
 \\ \hline
@@ -316,7 +316,7 @@ Neue Besatzungsmitglieder sollen auf das Schiff aufgenommen werden können. & Ke
 \\ \hline
 \multicolumn{3}{|l|}{{P4.6: Besatzungsmitglieder Fähigkeiten}} 
 \\ \hline
-Besatzungsmitglieder sollen Fähigkeiten haben. Diese sollen sich auf Systeme auswirken, falls sich das Mitglied in der entsprechenden Sektion befindet. & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss für die Besatzungsmitglieder ihre Fähigkeiten speichern, und, in welchen Sektionen sich diese auswirken. Ebenfalls muss automatisch geprüft werden, ob ein Besatzunsmitglied in der Sektion, in der es sich aktuell befindet, eine Auswirkung hat. 
+Besatzungsmitglieder sollen Fähigkeiten haben. Diese sollen sich auf Systeme auswirken, falls sich das Mitglied in der entsprechenden Sektion befindet. & Keine Flexibilität, oder Veränderlichkeit.    &  Die Architektur muss für die Besatzungsmitglieder Fähigkeiten speichern und mit den Sektionen verbinden, in denen sich diese auswirken.
 \\ \hline
 \multicolumn{3}{|l|}{{P4.7: Verbesserung Fähigkeiten}} 
 \\ \hline
@@ -327,11 +327,11 @@ Die Fähigkeiten der Besatzungsmitglieder sollen verbessert werden können. & Ke
 \\ \hline         
 \multicolumn{3}{|l|}{{P5.1: Spielfeld}} 
 \\ \hline
-Es soll ein Spielfeld geben, was eine Karte darstellt. Die Karte verzeichent Stationen/Planeten. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss die möglichen Orte sowie ihre Verbindungen effizient speichern. Es muss ebenfalls immer der relevante Ausschnitt der Karte angezeigt werden. 
+Es soll ein Spielfeld geben, welches von einer Karte dargestellt wird. Die Karte verzeichnet Stationen/Planeten. & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss die möglichen Orte sowie ihre Verbindungen effizient speichern. Es muss ebenfalls immer der relevante Ausschnitt der Karte angezeigt werden. 
 \\ \hline          
 \multicolumn{3}{|l|}{{P5.2: Reise}} 
 \\ \hline
-Pro Spielrunde kann eine Station/ein Planet laut den Verbindungen auf der Karte angeflogen werden.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass der Spieler Eingaben machen kann, zu welchem Gebiet geflogen werden soll. Ebenfalls müssen diese Eingaben überprüft werden (geht dieser Zug mit den existierenden Verbindungen). 
+Pro Spielrunde kann eine Station/ein Planet laut den Verbindungen auf der Karte angeflogen werden.  & Keine Flexibilität, oder Veränderlichkeit.    & Die Architektur muss vorsehen, dass der Spieler Eingaben machen kann, zu welchem Gebiet geflogen werden soll. Ebenfalls müssen diese Eingaben überprüft werden (ob dieser Zug mit den existierenden Verbindungen geht). 
 \\ \hline
 \multicolumn{3}{|l|}{{P5.3: Ereignisse}} 
 \\ \hline
@@ -350,7 +350,7 @@ Es sollen Kämpfe zwischen dem Spieler und feindlichen Raumschiffen möglich sin
 \\ \hline
 \multicolumn{3}{|l|}{{P6.2: Kampfart}} 
 \\ \hline
-Die Kämpfe sollen in Form von rundenbasierten Entscheidungen gefochten werden. & Keine Flexibilität, oder Veränderlichkeit.    &  Es muss vorgesehen sein, dass der Spieler und der Gegner sich abwechseln, und der Spieler nicht Aktionen durchführen kann, wenn der Gegner dran ist. 
+Die Kämpfe sollen in Form von rundenbasierten Entscheidungen ausgefochten werden. & Keine Flexibilität, oder Veränderlichkeit.    &  Es muss vorgesehen sein, dass der Spieler und der Gegner sich abwechseln, und der Spieler nicht Aktionen durchführen kann, wenn der Gegner dran ist. 
 \\ \hline
 \multicolumn{3}{|l|}{{P6.3: Kampfhandlungen}} 
 \\ \hline
@@ -365,11 +365,11 @@ Kampfhandlungen brauchen Zeit: Waffen müssen laden und Besatzungsmitglieder sin
 \\ \hline
 \multicolumn{3}{|l|}{{P7.1: Spielverlauf}} 
 \\ \hline
-Es soll einen klaren Spielverlauf mit einer Endgegner*in un der Möglichkeit, durch Besiegung dieser zu gewinnen, geben.  & Keine Flexibilität, oder Veränderlichkeit.    & Es muss eine übergeordnete Entität geben, die diesen Spielverlauf über Planeten hinweg kontrolliert. 
+Es soll einen klaren Spielverlauf mit einer Endgegner*in un der Möglichkeit, durch Besiegung dieser zu gewinnen, geben.  & Keine Flexibilität, oder Veränderlichkeit.    & Es muss eine übergeordnete Entität geben, die den Spielverlauf über Planeten hinweg kontrolliert. 
 \\ \hline
 \multicolumn{3}{|l|}{{P7.2: Schwierigkeit}} 
 \\ \hline
-Es sollen unterschiedliche Schwierigkeitsstufen für ein Spiel auswählbar sein. & Keine Flexibilität, oder Veränderlichkeit.    & Es muss möglichst unkomplex Veränderungen geben, die das Spiel leichter/schwerer machen. 
+Es sollen unterschiedliche Schwierigkeitsstufen für ein Spiel auswählbar sein. & Keine Flexibilität, oder Veränderlichkeit.    & Es muss möglichst unkomplizierte Veränderungen geben, die das Spiel leichter/schwerer machen. 
 \\ \hline
 %
 \multicolumn{3}{|l|}{{\textbf{P8: Server}}} 
@@ -446,7 +446,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:1.1}     
-          \textbf{Strategie 1.1: Basiswaffen} Es gibt eine Reihe an Basiswaffen, die sukzessive verbessert werden können. Durch die Verbesserungen können verschiedene Arten Bonusschaden gegen Sektionen des Schiffes oder gegen die Crew des Gegners hinzugefügt werden. Das Balencing erfolgt da durch, dass sich der Spieler für eine Art Bonusschaden pro Waffensystem entscheiden muss und die Option auf alle anderen Arten Bonusschaden durch das Upgrade in einer bestimmten Schadensklasse entfällt. \\        
+          \textbf{Strategie 1.1: Basiswaffen} Es gibt eine Reihe an Basiswaffen, die sukzessiv verbessert werden können. Durch die Verbesserungen können verschiedene Arten Angriffsboni gegen Sektionen des Schiffes, Crew des Gegners etc. hinzugefügt werden. Das Balancing erfolgt dadurch, dass sich der Spieler für eine Art Bonus pro Waffensystem entscheiden muss und die Option auf alle anderen Arten Bonusschaden durch das Upgrade in einer bestimmten Schadensklasse entfällt. \\        
   {\phantomsection}          
            \label{strategie:1.2}              
           \textbf{Strategie 1.2: Manuelles Balancing (ausgewählt)} Das Balancing wird aktiv durch die Entwickler in der Testphase durchgeführt. ist ein bestimmtes Waffensystem o.Ä. im Spielbetrieb zu stark, wird es abgeschwächt, ist es zu schwach, wird es verbessert.  \\
@@ -490,7 +490,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
     \begin{tabular}{|p{15cm}|}
     \hline
           \textbf{Problem 3: Spielstand}  \\ \hline
-	Der Spielstand soll gespeichert werden, und zu späteren Zeitpunkten wieder aufgerufen. Dazu benötigt der Server eine Datenbank. \\
+	Der Spielstand soll gespeichert und zu späteren Zeitpunkten wieder aufgerufen werden. Dazu benötigt der Server eine Datenbank. \\
          \\ \hline
           \textbf{Einflussfaktoren: } \\
 	O1.2 \\
