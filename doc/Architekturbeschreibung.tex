@@ -52,12 +52,12 @@ Version & Datum & Änderungen \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Einführung}
 
-Im Rahmen von Re-Softwareprojekt 2 im Sommersemester 2020 wurde diese Architekturbeschreibung für die Software Galaxytrucker geschrieben.
+Im Rahmen von Re-Softwareprojekt 2 im Sommersemester 2020 wurde diese Architekturbeschreibung für die Software GalaxyTrucker geschrieben.
 
-Es handelt sich bei der Software um ein rundenbasiertes Spiel im Weltraum- und Science-Fiction-Kontext, in welchem der Spieler sein eigenes Schiff bekommt und hiermit ein zufällig generiertes Sternensystem erkundet. Zwischendurch wird der Spieler auf viele verschiedene Ereignisse in der Spielwelt stoßen. 
+Es handelt sich bei der Software um ein rundenbasiertes Onlinespiel in einem Weltraum- und Science-Fiction-Kontext, in welchem der Spieler sein eigenes Schiff bekommt und hiermit ein zufällig generiertes Sternensystem erkundet. Zwischendurch wird der Spieler auf viele verschiedene Ereignisse in der Spielwelt stoßen. 
 Das Spiel ist sowohl im Singleplayer als auch im Multiplayer spielbar.\\
-Im Einzelspielermodus soll ein Spieler mit einem Raumschiff starten, von Planet zu Planet fliegen, gegen computergesteuerte Raumschiffe kämpfen oder zufällige Ereignisse absolvieren, um sich auszurüsten. Das Ziel des Einzelspielermodus ist, dass man den Endboss besiegt und so das Spiel gewinnt. \\
-Des weiteren gibt es noch einen Mehrspielermodus, in welchem beide Spieler mit jeweils einem Schiff auf die Karte kommen. Dort müssen sie sich wie im Einzelspielermodus erstmal ausrüsten. Das Ziel des Spieles ist, wie im Einzelspielermodus, den Endboss zu besiegen. Die beiden Spieler können, wenn sie sich auf dem gleichen Planeten befinden, sich angreifen. Der Gewinner dieses Kampfes bekommt eine Belohnung, der Verlierer bekommt einen Nachteil. 
+Im Einzelspielermodus soll ein Spieler mit einem Raumschiff starten, von Planet zu Planet fliegen, gegen computergesteuerte Raumschiffe kämpfen oder zufällige Ereignisse absolvieren, um sich aufzurüsten. Das Ziel des Einzelspielermodus ist, dass man den Endboss besiegt und so das Spiel gewinnt. \\
+Des Weiteren gibt es noch einen Mehrspielermodus, in welchem zwei Spieler mit jeweils einem Schiff auf die Karte kommen. Dort müssen sie sich wie im Einzelspielermodus erstmal ausrüsten. Das Ziel des Spieles ist wie im Einzelspielermodus, den Endboss zu besiegen. Die beiden Spieler können sich angreifen, wenn sie sich auf dem gleichen Planeten befinden. Der Gewinner dieses Kampfes bekommt eine Belohnung, der Verlierer bekommt einen Nachteil. 
 Zusammenfassend kann man sagen, dass die Software folgende Eigenschaften mitbringt: 
 
 \begin{itemize}
@@ -72,8 +72,8 @@ Zusammenfassend kann man sagen, dass die Software folgende Eigenschaften mitbrin
 
 \subsection{Zweck}
 
-Die Architekturbeschreibung zeigt den Architekturentwurf, den wir uns für das Spiel GalaxyTrucker überlegt haben. Sie dient dazu, allen Benutzern und Bearbeitern der Software die Funktionsweise und die Struktur nahezubringen. Entwickler und Tester sollen eine Übersicht über die Funktionsweise der Software erhalten, sodass sie auf Basis dieses Dokuments die Software implementieren können, bzw. testen können. 
-Leser dieser Architekturbeschreibung sind Host der Spiele, interessierte Spieler, die die Software vielleicht um Mods erweitern wollen, Entwickler und alle im Rahmen beteiligten von Re-Softwareprojekt 2. 
+Die Architekturbeschreibung zeigt den Architekturentwurf, den wir uns für das Spiel GalaxyTrucker überlegt haben. Sie dient dazu, allen Benutzern und Entwicklern der Software die Funktionsweise und die Struktur nahezubringen. Entwickler und Tester sollen eine Übersicht über die Funktionsweise der Software erhalten, sodass sie auf Basis dieses Dokuments die Software implementieren können, bzw. testen können. 
+Leser dieser Architekturbeschreibung sind Host der Spiele, interessierte Spieler, die die Software vielleicht mit Mods erweitern wollen, Entwickler und alle Beteiligten im Rahmen von Re-Softwareprojekt 2. 
 
 \subsection{Status}
 
@@ -86,16 +86,16 @@ Dieser Architekturentwurf beschreibt den ersten Entwurf der Software. Er wurde n
 \begin{tabular}{|p{3cm}|p{12cm}|}
 \hline
 Begriff & Erklärung \\ \hline
-Planet & Mit Planet ist der Planet inklusive dem umgebenen Raumsektor gemeint. \\ \hline
-Raumschiff, Schiff, Ship & Raumschiff, mit welchem Spieler oder Computergesteuerte spielen. \\ \hline
+Planet & Mit Planet sind die Schaupl"atze auf der Karte der Spielwelt gemeint, auf denen sich das Spiel abspielt. \\ \hline
+Raumschiff, Schiff, Ship & Raumschiff, mit welchem Spieler oder Computergesteuerte Gegner spielen. \\ \hline
 Sektionen des Raumschiffes & Verschiedene Räume in einem Raumschiff. Kann Systeme enthalten, kann Crew enthalten\\ \hline
-System & Relevante Systeme, die ein Raumschiff braucht, um zu spielen, z.B. Waffensystem, Sauerstoff, Antrieb \\ \hline
-Crew, Besatzung & Lebewesen, die das Schiff steuern, kämpfen oder sterben können. Auf einem Raumschiff können begrenzt viele Crewmitglieder Platz finden. Können verschiedene Spezialfähigkeiten haben, Verschiedene Fähigkeiten können verbessert werden. \\ \hline
-Ressourcen & Energie, Geld, Antriebsenergie, Raketen \\ \hline
-Endgegner, Endboss & Sehr starker Gegner am ende des Spiels. Kampf gegen diesen entscheidet über Gewinnen oder Verlieren des Spiels \\ \hline  
+System & Relevante Systeme, die ein Raumschiff braucht, um zu spielen, z.B. Waffensystem, Schilde, Antrieb \\ \hline
+Crew, Besatzung & Lebewesen, die das Schiff steuern, reparieren, kämpfen oder sterben können. Auf einem Raumschiff können begrenzt viele Crewmitglieder Platz finden. Die Fähigkeiten können verbessert werden. \\ \hline
+Ressourcen & Energie, Geld, Antriebsenergie, Raketen. Werden bei bestimmten Aktionen erhalten oder verbraucht. \\ \hline
+Endgegner, Endboss & Sehr starker Gegner am Ende des Spiels. Kampf gegen diesen entscheidet über Gewinnen oder Verlieren des Spiels \\ \hline  
 NPC & Computergesteuerter Gegner.\\ \hline
 Antrieb & System, mit welchem Spieler*innen sich bewegen können. Wenn zerstört, ist kein Reisen mehr möglich\\ \hline
-Schutzschild & Energieschild, welches mithilfe eines Systems ausgerüstet werden kann. Wehrt \\ \hline
+Schutzschild & Energieschild, welches mithilfe eines Systems ausgerüstet werden kann. Wehrt bestimmte Angriffe ab. \\ \hline
 
 \end{tabular}
 \end{center}
@@ -111,17 +111,17 @@ Einflussfaktoren & Faktoren, die das Endprodukt beeinflussen können. \\ \hline
 Java & Objektorientierte, klassenbasierte Programmiersprache. Läuft auf so gut wie allen gängigen Plattformen, die eine Java Virtual Maschine haben.\\ \hline  
 LibGDX & Kostenloses, Open-source Spielentwickluungsframework, welches in Java geschrieben ist\\ \hline
 Server & Kann von einem der Spieler gehostet werden, bietet die Grundlage für das Spiel. Ohne Server $\rightarrow$ kein Spiel \\ \hline
-Client & Der Part, den der Spieler bei sich auf dem Gerät installiert. Beinhaltet Grafiken, Spielmechanik etc. \\ \hline
+Client & Der Teil des Programms, den der Spieler bei sich auf dem Gerät installiert. Beinhaltet Grafiken, Spielmechanik etc. \\ \hline
 JUnit & Unit Testing Framework für Java. Zum Testen auf Fehler in der Software.\\ \hline  
 DAO & Objekte, die Daten aus der Datenbank verwalten.(Data Access Object)\\ \hline
 SQLite & Eine SQL Datenbank. \\ \hline
 Derby & Eine Datenbank.\\ \hline
 Modularisierung & Das Projekt wird in Module aufgeteilt, die unabhängig voneinander implementiert werden können. \\ \hline  
-Monolitisierung & Das Gesamte Projekt wird nicht aufgeteilt, sodass alles funktionieren muss, bis man etwas testen kann. (Keine unterschiedlichen Klassen usw.)\\ \hline
-Persistence & Stellt die Verbindung zwischen System und der Datenbank her. Alle Daten aus oder zur Datenbank fließen durch die Persistence.\\ \hline
+Monolithisierung & Das Gesamte Projekt wird nicht aufgeteilt, sodass alles funktionieren muss, bis man etwas testen kann. (Keine unterschiedlichen Klassen usw.)\\ \hline
+Persistence, Persistenz & Stellt die Verbindung zwischen System und der Datenbank her. Alle Daten aus oder zur Datenbank fließen durch die Persistence.\\ \hline
 Controller & In Controller befindet sich die Spiellogik. Außerdem bekommt die View alle Daten über den Controller, die angezeigt werden müssen.\\ \hline
 UML & Sprache zum Beschreiben eines Programms in verschiedenen Diagrammen. (Unified Modeling Language)\\ \hline  
-TiledMaps & ist ein Framework von LibGDX, um Karten ins Spiel zu implementieren. \\ \hline
+TiledMaps & Ein Framework von LibGDX, um Karten ins Spiel zu implementieren. \\ \hline
 
  
 \end{tabular}
@@ -138,7 +138,7 @@ TiledMaps & ist ein Framework von LibGDX, um Karten ins Spiel zu implementieren.
 
 \subsection{Übersicht über das Dokument}
 
-Zunächst zeigen wir in Kapitel 2 die verschiedenen Einflussfaktoren auf die Entwicklung und die Probleme und Strategien zum Lösen der Probleme. In den Kapiteln 3, 4 und 6 werden die Sichten von Hofmeister gezeigt. Bei uns wird die Codesicht nicht behandelt. In Kapitel 3 wird die Konzeptionelle Sicht unserer Software dargestellt, in Kapitel 4 die Modulsicht und in Kapitel 6 die Ausführungssicht. Kapitel 5 stellt das Modell der Datensicht dar, eine nähere Beschreibung der Architektursicht. In Kapitel 7 werden einige Anwendungsfälle dargestellt. Abschließend stellen wir in Kapitel 8 Ideen für zukünftige Weiterentwicklungen unserer Software dar. 
+Zunächst zeigen wir in Kapitel 2 die verschiedenen Einflussfaktoren auf die Entwicklung, Probleme und zuletzt Strategien zum Lösen der Probleme. In den Kapiteln 3, 4 und 6 werden die Sichten von Hofmeister gezeigt. die Codesicht wird bei uns nicht behandelt. In Kapitel 3 wird die Konzeptionelle Sicht unserer Software dargestellt, in Kapitel 4 die Modulsicht und in Kapitel 6 die Ausführungssicht. Kapitel 5 stellt das Modell der Datensicht dar, eine nähere Beschreibung der Architektursicht. In Kapitel 7 werden einige Anwendungsfälle dargestellt. Abschließend stellen wir in Kapitel 8 Ideen für zukünftige Weiterentwicklungen unserer Software dar. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
