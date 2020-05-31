@@ -1184,48 +1184,57 @@ Es werden alle Daten und Befehle vom Frontend (Interface/View) ins Backend weite
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modulsicht} \label{sec:modulsicht}
-{\itshape Diese Sicht beschreibt den statischen Aufbau des Systems mit Hilfe von
-Modulen, Subsystemen, Schichten und Schnittstellen. Diese Sicht ist 
-hierarchisch, d.\,h. Module werden in Teilmodule zerlegt. Die Zerlegung endet 
-bei Modulen, die ein klar umrissenes Arbeitspaket für eine Person darstellen und
-in einer Kalenderwoche implementiert werden können. Die Modulbeschreibung der 
-Blätter dieser Hierarchie muss genau genug und ausreichend sein, um das Modul 
-implementieren zu können.
+%{\itshape Diese Sicht beschreibt den statischen Aufbau des Systems mit Hilfe von
+%Modulen, Subsystemen, Schichten und Schnittstellen. Diese Sicht ist 
+%hierarchisch, d.\,h. Module werden in Teilmodule zerlegt. Die Zerlegung endet 
+%bei Modulen, die ein klar umrissenes Arbeitspaket für eine Person darstellen und
+%in einer Kalenderwoche implementiert werden können. Die Modulbeschreibung der 
+%Blätter dieser Hierarchie muss genau genug und ausreichend sein, um das Modul 
+%implementieren zu können.
 
-Die Modulsicht wird durch {UML}-Paket- und Klassendiagramme visualisiert.
+%Die Modulsicht wird durch {UML}-Paket- und Klassendiagramme visualisiert.
 
-Die Module werden durch ihre Schnittstellen beschrieben.
-Die Schnittstelle eines Moduls $M$ ist die Menge aller Annahmen, die andere 
-Module über $M$ machen dürfen, bzw.\ jene Annahmen, die $M$ über seine 
-verwendeten Module macht (bzw. seine Umgebung, wozu auch Speicher, Laufzeit 
-etc.\ gehören).
-Konkrete Implementierungen dieser Schnittstellen sind das Geheimnis des Moduls
-und können vom Programmierer festgelegt werden. Sie sollen hier dementsprechend 
-nicht beschrieben werden. 
+%Die Module werden durch ihre Schnittstellen beschrieben.
+%Die Schnittstelle eines Moduls $M$ ist die Menge aller Annahmen, die andere 
+%Module über $M$ machen dürfen, bzw.\ jene Annahmen, die $M$ über seine 
+%verwendeten Module macht (bzw. seine Umgebung, wozu auch Speicher, Laufzeit 
+%etc.\ gehören).
+%Konkrete Implementierungen dieser Schnittstellen sind das Geheimnis des Moduls
+%und können vom Programmierer festgelegt werden. Sie sollen hier dementsprechend 
+%nicht beschrieben werden. 
 
-Die Diagramme der Modulsicht sollten die zur Schnittstelle gehörenden Methoden
-enthalten. Die Beschreibung der einzelnen Methoden (im Sinne der 
-Schnittstellenbeschreibung) geschieht allerdings per Javadoc im zugehörigen 
-Quelltext. Das bedeutet, dass Ihr für alle Eure Module Klassen, Interfaces und 
-Pakete erstellt und sie mit den Methoden der Schnittstellen verseht. Natürlich 
-noch ohne Methodenrümpfe bzw.\ mit minimalen Rümpfen. Dieses Vorgehen 
-vereinfacht den Schnittstellenentwurf und stellt Konsistenz sicher.
+%Die Diagramme der Modulsicht sollten die zur Schnittstelle gehörenden Methoden
+%enthalten. Die Beschreibung der einzelnen Methoden (im Sinne der 
+%Schnittstellenbeschreibung) geschieht allerdings per Javadoc im zugehörigen 
+%%Quelltext. Das bedeutet, dass Ihr für alle Eure Module Klassen, Interfaces und 
+%Pakete erstellt und sie mit den Methoden der Schnittstellen verseht. Natürlich 
+%noch ohne Methodenrümpfe bzw.\ mit minimalen Rümpfen. Dieses Vorgehen 
+%vereinfacht den Schnittstellenentwurf und stellt Konsistenz sicher.
 
-Jeder Schnittstelle liegt ein Protokoll zugrunde. Das Protokoll beschreibt die 
-Vor- und Nachbedingungen der Schnittstellenelemente. Dazu gehören die erlaubten
-Reihenfolgen, in denen Methoden der Schnittstelle aufgerufen werden dürfen, 
-sowie Annahmen über Eingabeparameter und Zusicherungen über Ausgabeparameter. 
-Das Protokoll von Modulen wird in der Modulsicht beschrieben.
-Dort, wo es sinnvoll ist, sollte es mit Hilfe von Zustands- oder 
-Sequenzdiagrammen spezifiziert werden. Diese sind dann einzusetzen, wenn der
-Text allein kein ausreichendes Verständnis vermittelt (insbesondere bei 
-komplexen oder nicht offensichtlichen Zusammenhängen).
+%Jeder Schnittstelle liegt ein Protokoll zugrunde. Das Protokoll beschreibt die 
+%Vor- und Nachbedingungen der Schnittstellenelemente. Dazu gehören die erlaubten
+%Reihenfolgen, in denen Methoden der Schnittstelle aufgerufen werden dürfen, 
+%sowie Annahmen über Eingabeparameter und Zusicherungen über Ausgabeparameter. 
+%Das Protokoll von Modulen wird in der Modulsicht beschrieben.
+%Dort, wo es sinnvoll ist, sollte es mit Hilfe von Zustands- oder 
+%Sequenzdiagrammen spezifiziert werden. Diese sind dann einzusetzen, wenn der
+%Text allein kein ausreichendes Verständnis vermittelt (insbesondere bei 
+%komplexen oder nicht offensichtlichen Zusammenhängen).
 
-Der Bezug zur konzeptionellen Sicht muss klar ersichtlich sein. Im Zweifel 
-sollte er explizit erklärt werden. Auch für diese Sicht muss die Entstehung 
-anhand der Strategien erläutert werden.}
+%Der Bezug zur konzeptionellen Sicht muss klar ersichtlich sein. Im Zweifel 
+%sollte er explizit erklärt werden. Auch für diese Sicht muss die Entstehung 
+%anhand der Strategien erläutert werden.}
+
+In diesem Kapitel werden die Module des Systems detailliert modelliert. Hier haben wir (fast) jede Komponente aus der konzeptionellen Sicht als einzelnes Modul angesehen. Daraus ergeben sich: Controller, View, Persistence, und Communication sowohl für den Server als auch für den Client. Da wir die H2-Datenbank verwenden (Strategie 3.1), ist die Komponente nicht von uns implementiert und im Folgenden nicht aufgeführt. Model ist hier nicht aufgeführt, da dies bereits unter dem Kapitel Datensicht erläutert wird. \\
+Die Modularisierung ergibt sich aus Strategie 25.1.\\
 
 \subsection{Controller}
+
+Der Controller ist auf der Clientseite für die Kommunikation zwischen Views und Model sowie Communication (Kommunikation mit Server) zuständig und kontrolliert den Spielfluss. Somit gehen alle Informationen von und für die Views durch diese Controller. Sie nehmen ebenfalls eine erste Überprüfung von Spielzügen vor (hinsichtlich der Frage, ob diese überhaupt möglich sind aktuell), und übermitteln diese über Communication an den Server, der prüft, ob die Änderungen an den Objekten auch den Spielregeln entsprechen (Strategie 7.3); zum Beispiel würde der Client dem Spieler auf der Karte nur erlauben, einen tatsächlichen existierenden Ort auszuwählen, und der Server überprüft, ob Fuel reicht und eine Verbindung zwischen dem aktuellen Ort und dem ausgewählten existiert. \\
+Zunächst gibt es eine abstrakte Controller Klasse, von der alle anderen Controller erben. Diese hat einen ClientControllerCommunicator, über den die Kommunikation mit dem Server läuft. \\
+Zusätzlich gibt es sechs weitere Klassen. Diese sind für die unterschiedlichen möglichen Situationen, in den ein Spieler sich befinden kann, zuständig: Battle, Travel, Trader, und Hangar. Battle ist für die Ausführung von Kämpfen zuständig, Trader für die Shops, die man eventuell auf Planeten findet, Travel für die Reisen zwischen Planeten, und Hangar für die Auswahl des Schiffmodells am Anfang des Spieles (Strategie 4.1). Des weiteren gibt es einen Controller für die Crew eines Schiffes, und einen für die Systeme eines Schiffes. \\
+Die Controller werden von den Views aufgerufen, um Eingaben weiterzureichen, sowie von den Communication Klassen, um Informationen vom Server weiterzureichen (was zum Beipsiel die Bestätigung eines Spielzuges sein kann.). \\
+
 \begin{figure}[H]
 \begin{center}
   \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Controllersicht.png}
