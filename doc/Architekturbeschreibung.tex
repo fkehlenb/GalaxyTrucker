@@ -1213,9 +1213,6 @@ Es werden alle Daten und Befehle vom Frontend (Interface/View) ins Backend weite
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modulsicht} \label{sec:modulsicht}
 {\itshape Diese Sicht beschreibt den statischen Aufbau des Systems mit Hilfe von
 Modulen, Subsystemen, Schichten und Schnittstellen. Diese Sicht ist 
@@ -1299,7 +1296,8 @@ anhand der Strategien erläutert werden.}
 \end{figure}
 
 
-\subsection{Communication Client}
+\subsection{Client-Controller-Communication}
+Das folgende Diagramm beschreibt das Modul Client-Controller-Communication. Wenn ein Controller im Client einen Spielschritt ausführen möchte, muss dieser erst an den Server gelangen um bestätigt zu werden. Der Controller erstellt ein neues Request welches dann an den ClientControllerCommunicator gegeben wird (eine Schnittstelle zwischen der Netzwerk Schnittstelle und der Logik). Dieser ClientControllerCommunicator leitet das Request von dem jeweiligem Controller weiter an den Client, welcher es an den Server schickt, und wartet auf ein Response. Sobald er das Response erhält, gibt er dieses weiter an den ClientControllerCommunicator, welcher es dann an den korrekten Controller weiterleitet.
 \begin{figure}[H]
 \begin{center}
   \includegraphics[width=\linewidth]{../GT_Modulsicht/src/CommClient.png}
@@ -1307,7 +1305,9 @@ anhand der Strategien erläutert werden.}
 \end{center}
 \end{figure}
 
-\subsection{Communication Server}
+\subsection{Server-Service-Communication}
+
+Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Server muss nachdem er Daten erhalten hat diese irgendwie weiter reichen an seine Services. Dazu benutzt er die Klasse ServerServiceCommunicator, welche als Schnittstelle zwischen dem Server und seinen Services liegt. Wenn der Server ein Request bekommt, reicht er dieses weiter an den ServerServiceCommunicator, welcher es wiederrum an die Services leitet. Dieser wartet dann auf ein Response von den Services welches er dem Server mit teilt, und der Server schickt dieses dann zum Client.
 
 \begin{figure}[H]
 \begin{center}
