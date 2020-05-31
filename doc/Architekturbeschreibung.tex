@@ -1269,13 +1269,36 @@ anhand der Strategien erläutert werden.}
 \end{figure}
 
 \subsection{View}
-\begin{sidewaysfigure} 
+
+\textbf{1.Teilsicht der View}
+\begin{figure}[H] 
 \begin{center}
- \includegraphics[width=\textwidth]{../GT_Modulsicht/src/View (2).pdf}
+ \includegraphics[width=\textwidth]{../GT_Modulsicht/PDFs/View-Subdiagramm_Buttons.pdf}
   \caption{Controller Sicht}
   \label{fig:boat1}
 \end{center}
-\end{sidewaysfigure}
+\end{figure}
+
+\newpage
+
+\textbf{2.Teilsicht der View}
+
+\begin{figure}[H] 
+\begin{center}
+ \includegraphics[width=\textwidth]{../GT_Modulsicht/PDFs/View-SubDiagramm_Menue+MenueButtons.pdf}
+  \caption{Controller Sicht}
+  \label{fig:boat1}
+\end{center}
+\end{figure}
+
+\textbf{3.Teilsicht der View}
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[width=\textwidth]{../GT_Modulsicht/PDFs/View-Subdiagramm_UI.pdf}
+  \caption{Controller Sicht}
+  \label{fig:boat1}
+\end{center}
+\end{figure}
 
 
 \subsection{Communication Client}
@@ -1304,15 +1327,6 @@ anhand der Strategien erläutert werden.}
 \end{center}
 \end{figure}
 
-\subsection{Model}
-
-\begin{figure}[H]
-\begin{center}
-  \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Modelsicht.pdf}
-    \caption{Das Datenmodell}
-\end{center}
-\end{figure}
-
 \subsection{Persistenz}
 
 \begin{figure}[H]
@@ -1326,20 +1340,15 @@ anhand der Strategien erläutert werden.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Datensicht} \label{sec:datensicht}
 
-{\itshape Hier wird das der Anwendung zugrundeliegende Datenmodell beschrieben. 
-Hierzu werden neben einem erläuternden Text auch ein oder mehrere 
-{UML}-Klassendiagramme verwendet. Das hier beschriebene Datenmodell wird u.\,a.\ 
-jenes der Anforderungsspezifikation enthalten, allerdings mit 
-implementierungsspezifischen Änderungen und Erweiterungen. Siehe die gesonderten
-Hinweise.}
 
-\textcolor{red}{TEXT}
 
 Alle Spiel-relevanten Attribute sind in unserem Datenmodell in \textit{Ship} enthalten. Ein Schiff besteht aus mehreren Räumen , welche zum Teil leer sein können, aber auch wichtige Systeme beinhalten können. Damit realisieren wir die Strategie \textit{12.1} sowie die Strategien \textit{4.1} und \textit{4.2}.
 
 Ein Raum kann wiederum unterschiedliche Systeme beherbergen, wie z.B. Schilde, Hüllen oder Antriebskomponenten, womit wir Strategie \textit{20.1-3} umsetzen können. Zusätzlich zu den oben genannten Systemen, gibt es noch eine Komponente \textit{WeaponSystem}, welche wiederum die \textit{abstract class Weapon} erweitert. Diese wiederum beinhaltet alle frei-schaltbaren Waffensysteme, womit wir die Strategien \textit{10.1-3} abdecken.
 
 Des weiteren kann jeder \textit{Room}, bis zu 4 Crew Mitglieder gleichzeitig beherbergen. Womit wir die Strategie \textit{15.3} umsetzen. Zudem kann es vorkommen dass im Falle eines Angriffes/Zerstörung eines Raumes, Crewmitglieder mit einer gewissen Prozent-Chance schaden nehmen, oder sterben, womit wir die Strategien \textit{21.1 u. 21.2} erfüllen.
+
+\textcolor{red}{TEXT NICHT FERTIG}
 
 \begin{figure}[H]
 \begin{center}
