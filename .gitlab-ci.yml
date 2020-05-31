@@ -18,6 +18,7 @@ tex:
   script:
     - cd doc
     - pdflatex Architekturbeschreibung.tex
+    - pdflatex Architekturbeschreibung.tex
     - cd ..
   artifacts:
     paths:
