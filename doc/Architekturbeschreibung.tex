@@ -1257,6 +1257,21 @@ jenes der Anforderungsspezifikation enthalten, allerdings mit
 implementierungsspezifischen Änderungen und Erweiterungen. Siehe die gesonderten
 Hinweise.}
 
+\textcolor{red}{TEXT}
+
+Alle Spiel-relevanten Attribute sind in unserem Datenmodell in \textit{Ship} enthalten. Ein Schiff besteht aus mehreren Räumen , welche zum Teil leer sein können, aber auch wichtige Systeme beinhalten können. Damit realisieren wir die Strategie \textit{12.1} sowie die Strategien \textit{4.1} und \textit{4.2}.
+
+Ein Raum kann wiederum unterschiedliche Systeme beherbergen, wie z.B. Schilde, Hüllen oder Antriebskomponenten, womit wir Strategie \textit{20.1-3} umsetzen können. Zusätzlich zu den oben genannten Systemen, gibt es noch eine Komponente \textit{WeaponSystem}, welche wiederum die \textit{abstract class Weapon} erweitert. Diese wiederum beinhaltet alle frei-schaltbaren Waffensysteme, womit wir die Strategien \textit{10.1-3} abdecken.
+
+Des weiteren kann jeder \textit{Room}, bis zu 4 Crew Mitglieder gleichzeitig beherbergen. Womit wir die Strategie \textit{15.3} umsetzen. Zudem kann es vorkommen dass im Falle eines Angriffes/Zerstörung eines Raumes, Crewmitglieder mit einer gewissen Prozent-Chance schaden nehmen, oder sterben, womit wir die Strategien \textit{21.1 u. 21.2} erfüllen.
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{UML/Datenmodell.pdf}
+    \caption{Das Datenmodell}
+\end{center}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Ausführungssicht} \label{sec:ausfuehrung}
