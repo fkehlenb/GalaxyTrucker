@@ -1291,13 +1291,31 @@ Des weiteren kann jeder \textit{Room}, bis zu 4 Crew Mitglieder gleichzeitig beh
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Ausführungssicht} \label{sec:ausfuehrung}
 
-{\itshape Die Ausführungssicht beschreibt das Laufzeitverhalten. Hier werden die
-Laufzeitelemente aufgeführt und beschrieben, welche Module sie zur Ausführung 
-bringen. Ein Modul kann von mehreren Laufzeitelementen zur Laufzeit verwendet 
-werden. Die Ausführungssicht beschreibt darüber hinaus, welche Laufzeitelemente 
-spezifisch miteinander kommunizieren. Zudem wird bei verteilten Systemen 
-(z.\,B.\ Client-Server-Systeme) dargestellt, welche Module von welchen Prozessen
-auf welchen Rechnern ausgeführt werden.}
+%{\itshape Die Ausführungssicht beschreibt das Laufzeitverhalten. Hier werden die
+%Laufzeitelemente aufgeführt und beschrieben, welche Module sie zur Ausführung 
+%bringen. Ein Modul kann von mehreren Laufzeitelementen zur Laufzeit verwendet 
+%werden. Die Ausführungssicht beschreibt darüber hinaus, welche Laufzeitelemente 
+%spezifisch miteinander kommunizieren. Zudem wird bei verteilten Systemen 
+%(z.\,B.\ Client-Server-Systeme) dargestellt, welche Module von welchen Prozessen
+%auf welchen Rechnern ausgeführt werden.}
+
+Im folgenden Schritt werden wir die Ausführungssicht erläutern. Es wird aufgezeigt, welche verschiedenen Geräte benötigt werden, welche Prozesse auf den Geräten jeweils laufen und welche Module dort enthalten sind. \\
+
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{UML/Ausfuehrungssicht.pdf}
+ \caption{Ausführungssicht}
+\end{figure}
+
+Die Ausführungssicht von unserem Spiel ist in der obigen Abbildung modelliert. Es gibt genau einen Anwendungsserver, auf dem unser System mit allen zugehörigen Modulen ausgeführt wird (Einflussfaktor T1.6). \\
+
+Beliebig viele Benutzer können via TCP/IP auf den Spielserver zugreifen (?)/mindestens zwei, maximal? Dies geschieht über die gestartete Spielanwendung auf dem Client-Rechner (hier wird Faktor P8.1 umgesetzt: Da die Spieler gegeneinander spielen sollen, müssen sie sich auf dem gleichen Server befinden). In diesem Prozess läuft die Kommunikation über Communication Module auf Client und Server Seite. \\
+
+Auf dem Anwendunsserver laufen sowohl das System, als auch eine Instanz der H2-Datenbank (wodurch Strategie 3.1 umgesetzt wird).
+Das Modul Persistence kommuniziert mit der Datenbank über ORM-Lite.  \\ 
+
+%%STRATEGIEN
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
