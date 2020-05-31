@@ -2,7 +2,9 @@
 
 \usepackage{longtable}
 
-
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage{pdflscape}
 \usepackage[normalem]{ulem}
 \useunder{\uline}{\ul}{}
 
@@ -1205,9 +1207,6 @@ Hier updatet sich das Model, wenn es den Befehl enthalten hat. Die neu erhaltene
 Es werden alle Daten und Befehle vom Frontend (Interface/View) ins Backend weitergeleitet. Außerdem werden alle Daten, die im Frontend gebraucht werden, hierüber übertragen.
 
 
-
-\newpage
-
 \begin{figure}[H]
 \begin{center}
   \includegraphics[width=340px]{UML/KonzeptionelleSicht.pdf}
@@ -1219,7 +1218,6 @@ Es werden alle Daten und Befehle vom Frontend (Interface/View) ins Backend weite
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modulsicht} \label{sec:modulsicht}
-
 {\itshape Diese Sicht beschreibt den statischen Aufbau des Systems mit Hilfe von
 Modulen, Subsystemen, Schichten und Schnittstellen. Diese Sicht ist 
 hierarchisch, d.\,h. Module werden in Teilmodule zerlegt. Die Zerlegung endet 
@@ -1260,6 +1258,68 @@ komplexen oder nicht offensichtlichen Zusammenhängen).
 Der Bezug zur konzeptionellen Sicht muss klar ersichtlich sein. Im Zweifel 
 sollte er explizit erklärt werden. Auch für diese Sicht muss die Entstehung 
 anhand der Strategien erläutert werden.}
+
+\subsection{Controller}
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Controllersicht.png}
+    \caption{Controller}
+\end{center}
+\end{figure}
+
+\subsection{View}
+\begin{sidewaysfigure} 
+\begin{center}
+ \includegraphics[width=\textwidth]{../GT_Modulsicht/src/View (2).pdf}
+  \caption{Controller Sicht}
+  \label{fig:boat1}
+\end{center}
+\end{sidewaysfigure}
+
+
+\subsection{Communication Client FEHLT}
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Communication.pdf}
+    \caption{Das Datenmodell}
+\end{center}
+\end{figure}
+
+\subsection{Communication Server}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Communication.pdf}
+    \caption{Das Datenmodell}
+\end{center}
+\end{figure}
+
+\subsection{Service}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Service.pdf}
+    \caption{Das Datenmodell}
+\end{center}
+\end{figure}
+
+\subsection{Model}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Modelsicht.pdf}
+    \caption{Das Datenmodell}
+\end{center}
+\end{figure}
+
+\subsection{Persistenz}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{../GT_Modulsicht/src/Persistenz.pdf}
+    \caption{Das Datenmodell}
+\end{center}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1308,7 +1368,7 @@ Im folgenden Schritt werden wir die Ausführungssicht erläutern. Es wird aufgez
 
 Die Ausführungssicht von unserem Spiel ist in der obigen Abbildung modelliert. Es gibt genau einen Anwendungsserver, auf dem unser System mit allen zugehörigen Modulen ausgeführt wird (Einflussfaktor T1.6). \\
 
-Beliebig viele Benutzer können via TCP/IP auf den Spielserver zugreifen (?)/mindestens zwei, maximal? Dies geschieht über die gestartete Spielanwendung auf dem Client-Rechner (hier wird Faktor P8.1 umgesetzt: Da die Spieler gegeneinander spielen sollen, müssen sie sich auf dem gleichen Server befinden). In diesem Prozess läuft die Kommunikation über Communication Module auf Client und Server Seite. \\
+Beliebig viele Benutzer können via TCP/IP auf den Spielserver zugreifen (mindestens zwei für eine Multiplayer-Session). Dies geschieht über die gestartete Spielanwendung auf dem Client-Rechner (hier wird Faktor P8.1 umgesetzt: Da die Spieler gegeneinander spielen sollen, müssen sie sich auf dem gleichen Server befinden). In diesem Prozess läuft die Kommunikation über Communication Module auf Client und Server Seite. \\
 
 Auf dem Anwendunsserver laufen sowohl das System, als auch eine Instanz der H2-Datenbank (wodurch Strategie 3.1 umgesetzt wird).
 Das Modul Persistence kommuniziert mit der Datenbank über ORM-Lite.  \\ 
