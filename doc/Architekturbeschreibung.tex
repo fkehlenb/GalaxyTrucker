@@ -1297,6 +1297,18 @@ Der Controller erstellt ein neues Request welches dann an den ClientControllerCo
 
 Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigem abstrakten Diagramm. In diesem Fall wird in der WeaponUI eine Waffe durch Mausclick ausgewählt, und dann der Raum auf dem Gegnerschiff welcher angegriffen werden soll. Dann wird dieses als Attack-Request weitergegeben an den ClientControllerCommunicator, welcher es wiederrum an die Netzwerkschnittstelle des Clients weiterleitet. Das Request wird dann durch diese Schnittstelle an den Server geschickt. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator, welcher dann den AttackService wählt und ihm das Request weiterleitet. Dieser überprüft dann mittels ValidMove ob das Angriffskommando valide ist oder nicht. Wenn es das ist, so wird die Logik ausgeführt, und das Gegnerschiff in der Datenbank aktualisiert. Dann wird der jetzige Spieler weitergesetzt (wer dran ist). Dann wird ein Response als neue Schiffsobjekte an den ServerServiceCommunicator gegeben, welcher es wieder an die Servernetzwerkschnittstelle gibt. Das Response wird dann zum Client übertragen, und dort an den ClientControllerCommunicator gegeben. Dieser teilt das Ergebnis dem Controller mit (gleiche Methode, da diese noch auf den Response wartet). Dann werden dort die lokalen Daten durch die vom Server bekommenen Daten ersetzt. Der View wartete bis jetzt noch auf ein Ergebnis welches er nun bekommt, wodurch auch er sich aktualisiert.
 
+
+\subsection{Login}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=\linewidth]{UML/Sequenz-Client-login.pdf}
+\end{center}
+\end{figure}
+
+Das hier gezeigte Diagramm zeigt den Login eines Spielers, dabei wird im View erstmals der \textit{LoginButton()} durch einen Mausklick ausgewählt und durch den Controller wird eine Request an den \textit{ClientControllerCommunicator} gesendet, dieser wiederum führt die Methode \textit{login()} aus, welche dann einen LoginRequest über die Methode \textit{receiveAndSendData} an den Server sendet. Auf der Server Seite wird nun die Methode \textit{getResponse()} aufgerufen, welche im \textit{UserService} die Logik und die Verifizierung des Logins mithilfe des \textit{usernames} ausführt. Wenn nun der Login genehmigt wurde durch den Service, so wird der Request verifiziert und die \textit{UserDao} wird geupdated. Nun geht die \textit{Response} über die gleichnamigen Methoden zurück zum Client welcher die Response weitergibt an den Controller. Der Controller updated die Lokalen Daten und übergibt die aktualisierten Daten an den View. Nun ist der User eingeloggt und kann der Session beitreten.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Evolution} \label{sec:evolution}
 
