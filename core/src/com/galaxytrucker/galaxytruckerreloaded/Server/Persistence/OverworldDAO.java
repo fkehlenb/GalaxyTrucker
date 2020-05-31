@@ -32,4 +32,12 @@ public class OverworldDAO extends ObjectDAO<Overworld> {
     public void remove(Overworld o) throws OverworldNotFoundException {
 
     }
+
+    /** Get the overworld of a designated user
+     * @param username - the user whose world map to get
+     * @return the user's world map
+     * @throws OverworldNotFoundException if the overworld couldn't be found */
+    public Overworld getOverworldByUser(String username) throws OverworldNotFoundException{
+        return null;
+    }
 }

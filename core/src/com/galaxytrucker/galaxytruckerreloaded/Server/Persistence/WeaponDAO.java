@@ -3,11 +3,15 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateWeaponException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.WeaponNotFoundException;
+import com.j256.ormlite.dao.Dao;
 
 /**
  * This class manages weapons in the database
  */
 public class WeaponDAO extends ObjectDAO<Weapon> {
+
+    /** WeaponDAO */
+    private Dao<Weapon,String> weaponDAO;
 
     /**
      * Add a new weapon to the database
@@ -26,7 +30,7 @@ public class WeaponDAO extends ObjectDAO<Weapon> {
      * @param w - the weapon to edit
      * @throws WeaponNotFoundException if the weapon doesn't exist in the database
      */
-    public void edit(Weapon w) throws WeaponNotFoundException {
+    public void update(Weapon w) throws WeaponNotFoundException {
 
     }
 
