@@ -1300,8 +1300,8 @@ Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer \ref{strategi
 
 \subsection{Server-Service-Communication}
 
-Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Server muss nachdem er Daten erhalten hat diese irgendwie weiter reichen an seine Services. Dazu benutzt er die Klasse ServerServiceCommunicator, welche als Schnittstelle zwischen dem Server und seinen Services liegt. Wenn der Server ein Request bekommt, reicht er dieses weiter an den ServerServiceCommunicator, welcher es wiederrum an die Services leitet. Dieser wartet dann auf ein Response von den Services welches er dem Server mit teilt, und der Server schickt dieses dann zum Client.
-Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und Strategie 7.3 (Zugüberprüfung).
+Das folgende Diagramm beschreibt das Modul Server-Service-Communication. Der Server muss, nachdem er Daten erhalten hat, diese irgendwie an seine Services weiterreichen. Dazu benutzt er die Klasse ServerServiceCommunicator, welche als Schnittstelle zwischen dem Server und seinen Services liegt. Wenn der Server ein Request bekommt, reicht er dieses weiter an den ServerServiceCommunicator, welcher es wiederrum an die Services leitet. Dieser wartet dann auf ein Response von den Services welches er dem Server mit teilt, und der Server schickt dieses dann zum Client.
+Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer \ref{strategie:5.1}) und Strategie 7.3 (Zugüberprüfung \ref{strategie:7.3}).
 
 \begin{figure}[H]
 \begin{center}
@@ -1312,9 +1312,9 @@ Dieses Modul dient als Realisierung der Strategie 5.1 (Multiplayer) und Strategi
 
 \subsection{Service}
 
-Das folgende Diagramm beschreibt das Server Service Modul. Dieses Modul sitzt beim Server zwischen dem ServerServiceCommunicator und der Persistenz. Wenn ein Request an den Server geschickt wird und dann von der Server Klasse an den ServerServiceCommunicator weitergeleitet wird, dann muss es an den korrekten Service weitergeleitet werden um verarbeitet zu werden. Es wird einer der Services in diesem Modul ausgewählt, der Spielschritt verifiziert, und die Logik ausgeführt. Die Daten in der Datenbank werden durch die Verbindungen zwischen den Services und der Persistenz aktualisiert. Nachdem die Logik durchgeführt ist, wird ein Request erstellt und an den ServerServiceCommunicator gegeben. Dieser leitet es dann weiter an den Server welcher es zum Server verschickt.
+Das folgende Diagramm beschreibt das Server Service Modul. Dieses Modul sitzt beim Server zwischen dem ServerServiceCommunicator und der Persistenz. Wenn ein Request an den Server geschickt wird und dann von der Server Klasse an den ServerServiceCommunicator weitergeleitet wird, dann muss es an den korrekten Service weitergeleitet werden, um verarbeitet zu werden. Es wird einer der Services in diesem Modul ausgewählt, der Spielschritt verifiziert, und die Logik ausgeführt. Die Daten in der Datenbank werden durch die Verbindungen zwischen den Services und der Persistenz aktualisiert. Nachdem die Logik durchgeführt ist, wird ein Request erstellt und an den ServerServiceCommunicator gegeben. Dieser leitet es dann weiter an den Server, welcher es zum Server verschickt.
 
-Somit ist die Strategie 7.3 (Zugüberprüfung) realisiert, und es besteht kein Vertrauen in den Client.
+Somit ist die Strategie 7.3 (Zugüberprüfung \ref{strategie:7.3}) realisiert, und es besteht kein Vertrauen in den Client.
 
 \begin{figure}[H]
 \begin{center}
