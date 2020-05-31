@@ -119,6 +119,7 @@ Monolitisierung & Das Gesamte Projekt wird nicht aufgeteilt, sodass alles funkti
 Persistence & Stellt die Verbindung zwischen System und der Datenbank her. Alle Daten aus oder zur Datenbank fließen durch die Persistence.\\ \hline
 Controller & In Controller befindet sich die Spiellogik. Außerdem bekommt die View alle Daten über den Controller, die angezeigt werden müssen.\\ \hline
 UML & Sprache zum Beschreiben eines Programms in verschiedenen Diagrammen. (Unified Modeling Language)\\ \hline  
+TiledMaps & ist ein Framework von LibGDX, um Karten ins Spiel zu implementieren. \\ \hline
 
  
 \end{tabular}
@@ -426,7 +427,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
     \begin{tabular}{|p{15cm}|}
     \hline
           \textbf{Problem 1: Balancing}  \\ \hline
-	Da es Ansprüche an die Schwierigkeit gibt, müssen die Waffen von der Stärke her verleichbar sein. \\
+	Da es Ansprüche an die Schwierigkeit gibt, müssen die Waffen von der Stärke her vergleichbar sein. \\
          \\ \hline
           \textbf{Einflussfaktoren: } \\
 	P1 \\
@@ -446,7 +447,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategie 1.1: Basiswaffen} Es gibt eine Reihe an Basiswaffen, die sukzessive verbessert werden können. Durch die Verbesserungen können verschiedene Arten Bonusschaden gegen Sektionen des Schiffes oder gegen die Crew des Gegners hinzugefügt werden. Das Balencing erfolgt da durch, dass sich der Spieler für eine Art Bonusschaden pro Waffensystem entscheiden muss und die Option auf alle anderen Arten Bonusschaden durch das Upgrade in einer bestimmten Schadensklasse entfällt. \\        
   {\phantomsection}          
            \label{strategie:1.2}              
-          \textbf{Strategie 1.2: Manuelles Balancing (ausgewählt)} Das Balancing wird aktiv durch die Entwickler in der Testphase durchgeführt. ist ein bestimmtes Waffensystem oÄ im Spielbetrieb zu stark, wird es abgeschwächt, ist es zu schwach, wird es verbessert.  \\
+          \textbf{Strategie 1.2: Manuelles Balancing (ausgewählt)} Das Balancing wird aktiv durch die Entwickler in der Testphase durchgeführt. ist ein bestimmtes Waffensystem o.Ä. im Spielbetrieb zu stark, wird es abgeschwächt, ist es zu schwach, wird es verbessert.  \\
 	 \\ \hline
     \end{tabular}
 
@@ -561,7 +562,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategie 5.2: Zufällige Anzahl} Der Server lässt die Spieler nach einer zufälligen Anzahl Runden gegeneinander antreten.   \\
 	 {\phantomsection}          
            \label{strategie:5.3}     
-          \textbf{Strategie 5.3: Zwangsläufig} Das Spiel ist so konzipiert, dass die Spieler zwangsläufig gegeneinander antreten müssen (z.B. über Quests: "verteidige den Planeten xy" und "Erobere den Planeten xy", Einzigartige Ressourcen, die für bestimmte Aufgaben/Upgrades oÄ erforderlich sind aber nur einmal im Spiel vorkommen und deshalb irgendwann nur noch von einem Mitspieler erbeutet werden können.  \\ 
+          \textbf{Strategie 5.3: Zwangsläufig} Das Spiel ist so konzipiert, dass die Spieler zwangsläufig gegeneinander antreten müssen (z.B. über Quests: \textit{verteidige den Planeten xy} und \textit{Erobere den Planeten xy}, Einzigartige Ressourcen, die für bestimmte Aufgaben/Upgrades o.Ä. erforderlich sind aber nur einmal im Spiel vorkommen und deshalb irgendwann nur noch von einem Mitspieler erbeutet werden können.  \\ 
 	 \\ \hline
     \end{tabular}
 
@@ -588,6 +589,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
   {\phantomsection}          
            \label{strategie:6.2}              
           \textbf{Strategie 6.2: Monolitisierung} Die Entwicklung erfolgt monolit. Bei unterschiedlicher Kompetenz der Entwickler müssen bestimmte Funktionen von einem anderen Entwickler implementiert werden \\
+          \hline
     \end{tabular}
 
     \caption{Kompetenz der Entwickler Problemkarte}
@@ -610,13 +612,13 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:7.1}     
-          \textbf{Strategie 7.1: Client erstellt Spielzüge}Spielzüge werden als Datenobjekte gespeichert. In jedem Spiezugsobjekt wird die Veränderung zum vorherigen Spielzug gespeichert und die Veränderung dieses Objektes wird vom Server auf Korrektheit geprüft.  \\        
+          \textbf{Strategie 7.1: Client erstellt Spielzüge} Spielzüge werden als Datenobjekte gespeichert. In jedem Spiezugsobjekt wird die Veränderung zum vorherigen Spielzug gespeichert und die Veränderung dieses Objektes wird vom Server auf Korrektheit geprüft.  \\        
   {\phantomsection}          
            \label{strategie:7.2}              
-          \textbf{Strategie 7.2: Server erstellt Spielzüge}Die Spielzüge werden vom Client an den Server übermittelt und dort auf Korrektheit geprüft, ist der aktuelle Spielzug legitim, werden vom Server alle veränderten Objekte erzeugt und an den Spieler übermittelt.  \\
+          \textbf{Strategie 7.2: Server erstellt Spielzüge} Die Spielzüge werden vom Client an den Server übermittelt und dort auf Korrektheit geprüft, ist der aktuelle Spielzug legitim, werden vom Server alle veränderten Objekte erzeugt und an den Spieler übermittelt.  \\
 	 {\phantomsection}          
            \label{strategie:7.3}     
-          \textbf{Strategie 7.3: Client prüft Züge, Server erstellt Spielzüge  (ausgewählt)}Der Client lässt nur zulässige Spielzüge zu, und übermittelt dieses an den Server. Der Server überprüft seinerseits, ob die Veränderungen an den betreffenden Objekten zulässig sind und generiert, sofern das der Fall ist, selbige neu um sie an den Client zu übermitteln.  \\ 
+          \textbf{Strategie 7.3: Client prüft Züge, Server erstellt Spielzüge  (ausgewählt)} Der Client lässt nur zulässige Spielzüge zu, und übermittelt dieses an den Server. Der Server überprüft seinerseits, ob die Veränderungen an den betreffenden Objekten zulässig sind und generiert, sofern das der Fall ist, selbige neu um sie an den Client zu übermitteln.  \\ 
 	 \\ \hline
     \end{tabular}
 
@@ -629,7 +631,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
     \begin{tabular}{|p{15cm}|}
     \hline
           \textbf{Problem 8: Java}  \\ \hline
-	Es soll eine Java Applikation sein, es soll mindestens java 8 sein (oder höher). \\
+	Es soll eine Java Applikation sein, es soll mindestens Java 8 sein (oder höher). \\
          \\ \hline
           \textbf{Einflussfaktoren: } \\
 	T1.1 \\
@@ -655,7 +657,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
     \begin{tabular}{|p{15cm}|}
     \hline
           \textbf{Problem 9: Reise}  \\ \hline
-	Es sollen Reisen von Stern zu Stern möglich sein. Dafür muss es eine Karte geben, auf der mehrere Planeten/Sternen/Stationen geben kann, über die man sich bewegen kann. \\
+	Es sollen Reisen von Stern zu Stern möglich sein. Dafür muss es eine Karte geben, auf der es mehrere Planeten/Sterne/Stationen geben kann, über die man sich bewegen kann. \\
          \\ \hline
           \textbf{Einflussfaktoren: } \\
 	T1.6 \\
@@ -668,7 +670,7 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategie 9.1: Listen} Jede Karte ist eine Liste, in der jeder Eintrag ein/e Planet/Stern/Station ist. Die Verbindungen werden extra gespeichert.  \\        
   {\phantomsection}          
            \label{strategie:9.2}              
-          \textbf{Strategie 9.2: TiledMaps  (ausgewählt)} Wir benutzen TiledMaps von libGDX.  \\
+          \textbf{Strategie 9.2: TiledMaps  (ausgewählt)} Wir benutzen TiledMaps von LibGDX.  \\
 	 \\ \hline
     \end{tabular}
 
@@ -690,10 +692,10 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:10.1}     
-          \textbf{Strategie 10.1: Attribute  (ausgewählt)} Waffen haben neben dem Attribut "Schaden" weitere Attribute die sie von anderen Waffen unterscheiden.  \\        
+          \textbf{Strategie 10.1: Attribute  (ausgewählt)} Waffen haben neben dem Attribut \textit{Schaden} weitere Attribute die sie von anderen Waffen unterscheiden.  \\        
   {\phantomsection}          
            \label{strategie:10.2}              
-          \textbf{Strategie 10.2: Verbesserungen  (ausgewählt)} Waffen können mit bestimmte Verbesserungen ausgestattet werden, die ihnen neue Eigenschaften verleihen.  \\
+          \textbf{Strategie 10.2: Verbesserungen  (ausgewählt)} Waffen können mit bestimmten Verbesserungen ausgestattet werden, die ihnen neue Eigenschaften verleihen.  \\
 	 {\phantomsection}          
            \label{strategie:10.3}     
           \textbf{Strategie 10.3: Raum-Attribute} Die genannten Eigenschaften werden nicht über die Waffenklassen implementiert sondern sind Raum-inherrent. Eine Waffe bekommt also Boni, wenn sie in einem bestimmten Raum installiert ist.  \\ 
@@ -717,10 +719,10 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:11.1}     
-          \textbf{Strategie 11.1:libGDX (ausgewählt)} Die Implementierung erfolgt über libGDX, ein Framework, dass plattformübergreifende Entwicklung über automatische Kapeslung von Klassen ermöglicht \\        
+          \textbf{Strategie 11.1: LibGDX (ausgewählt)} Die Implementierung erfolgt über libGDX, ein Framework, dass plattformübergreifende Entwicklung über automatische Kapeslung von Klassen ermöglicht \\        
   {\phantomsection}          
            \label{strategie:11.2}              
-          \textbf{Strategie 11.2:Manuelle Entwicklung} Das Projekt wird parallel für verschiedene Plattformen programmiert.  \\
+          \textbf{Strategie 11.2: Manuelle Entwicklung} Das Projekt wird parallel für verschiedene Plattformen programmiert.  \\
 	 \\ \hline
     \end{tabular}
 
@@ -743,10 +745,10 @@ Es soll möglich sein, den Spielverlauf zu unterbrechen und zu einem späteren Z
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:12.1}     
-          \textbf{Strategie 12.1:Freie Anzahl Systeme pro Schiff} jedes Schiff kann aus einer beliebigen Anzahl an Räumen, die ihrerseits wiederum Systeme enthalten können, bestehen.  \\        
+          \textbf{Strategie 12.1: Freie Anzahl Systeme pro Schiff} jedes Schiff kann aus einer beliebigen Anzahl an Räumen, die ihrerseits wiederum Systeme enthalten können, bestehen.  \\        
   {\phantomsection}          
            \label{strategie:12.2}              
-          \textbf{Strategie 12.2:Feste Anzahl Systeme pro Schiff (ausgewählt)} Jedes Schiff hat eine festgelegte Anzahl an Systemen, die sich auf eine bestimmte Anzahl an Räumen aufteilt  \\ 
+          \textbf{Strategie 12.2: Feste Anzahl Systeme pro Schiff (ausgewählt)} Jedes Schiff hat eine festgelegte Anzahl an Systemen, die sich auf eine bestimmte Anzahl an Räumen aufteilt  \\ 
 	 \\ \hline
     \end{tabular}
 
@@ -787,7 +789,7 @@ Hier setzen wir die .. Strategie um. \\
     \begin{tabular}{|p{15cm}|}
     \hline
           \textbf{Problem 14: Endgegner}  \\ \hline
-	Es muss einen Endgegner geben, der zum Sieg zwingend geschlagen werden muss. Entweder muss sichergestellt werden, dass beim Multiplayer ein Kampf gegen den zweiten Spieler am "Ende" des Spieles steht oder es muss mindestens einen NPC geben. \\
+	Es muss einen Endgegner geben, der zum Sieg zwingend geschlagen werden muss. Entweder muss sichergestellt werden, dass beim Multiplayer ein Kampf gegen den zweiten Spieler am \textit{Ende} des Spieles steht oder es muss mindestens einen NPC geben. \\
          \\ \hline
           \textbf{Einflussfaktoren: } \\
 	P7.1 \\
@@ -802,7 +804,7 @@ Hier setzen wir die .. Strategie um. \\
           \textbf{Strategie 14.1: NPC (ausgewählt)} Es gibt einen NPC, der besiegt werden muss, um zu gewinnen.  \\        
   {\phantomsection}          
            \label{strategie:14.2}              
-          \textbf{Strategie 14.2: zweiter Spieler} Der zweite Spieler ist der Endgegner, und das Spiel endet nach einem Kampf.  \\
+          \textbf{Strategie 14.2: Zweiter Spieler} Der zweite Spieler ist der Endgegner, und das Spiel endet nach einem Kampf.  \\
 	 {\phantomsection}          
            \label{strategie:14.3}     
           \textbf{Strategie 14.3: Zeitpunkt} Es gibt einen Zeitpunkt im Spiel, nach dem der nächste Kampf zwischen den beiden Spielern zum "Endgegner" wird.  \\ 
@@ -835,7 +837,7 @@ Hier setzen wir die .. Strategie um. \\
           \textbf{Strategie 15.1: Feste Crew} Es gibt eine Reihe verschiedener Crew Mitglieder, die für jedes Schiff konstant ist. Diese können nach Belieben auf die Räume und Systeme im Schiff aufgeteilt werden. \\        
   {\phantomsection}          
            \label{strategie:15.2}              
-          \textbf{Strategie 15.2:Zufällig generierte Crew} Crewmitglieder werden randomisiert generiert und können dementsprechend komplett zufällige Ausprägungen ihrer Attribute haben  \\
+          \textbf{Strategie 15.2: Zufällig generierte Crew} Crewmitglieder werden randomisiert generiert und können dementsprechend komplett zufällige Ausprägungen ihrer Attribute haben  \\
 	 {\phantomsection}          
            \label{strategie:15.3}     
           \textbf{Strategie 15.3: Freie Crew (ausgewählt)} Es gibt eine Reihe von Crewmitgliedern, diese können jedoch im Laufe des Spieles freigeschaltet und ausgetauscht werden. Es muss mehr verschiedene Crewmitglieder als Systeme auf dem Schiff geben. \\ 
@@ -868,10 +870,10 @@ Hier setzen wir die .. Strategie um. \\
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:16.1}     
-          \textbf{Strategie 16.1:Besetzungsmaximum} Das variable Attribut der Systeme ist die Anzahl der Crewmitglieder, die dieses besetzten können. Bei Beschädigung ist das System nur noch von weniger oder gar keinen Besatzungsmitglied zu besetzten.  \\        
+          \textbf{Strategie 16.1: Besetzungsmaximum} Das variable Attribut der Systeme ist die Anzahl der Crewmitglieder, die dieses besetzten können. Bei Beschädigung ist das System nur noch von weniger oder gar keinen Besatzungsmitglied zu besetzten.  \\        
   {\phantomsection}          
            \label{strategie:16.2}              
-          \textbf{Strategie 16.2:Systeminherrente Attribute (ausgewählt)} Durch Upgraden oder durch Beschädigen eines Systems wird der Effekt des Systems verstärkt: Waffen machen zB mehr (bzw. durch Schaden) weniger Damage.  \\
+          \textbf{Strategie 16.2: Systeminherrente Attribute (ausgewählt)} Durch Upgraden oder durch Beschädigen eines Systems wird der Effekt des Systems verstärkt: Waffen machen z.B. mehr (bzw. durch Schaden) weniger Damage.  \\
 	 \\ \hline
     \end{tabular}
 
@@ -925,7 +927,7 @@ Hier setzen wir die .. Strategie um. \\
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:18.1}     
-          \textbf{Strategie 18.1: Zeitbegrenzung} Es gibt eine Zeitbegrenzung, sodass der Spielfluss erhalten bleibt.   \\        
+          \textbf{Strategie 18.1: Zeitbegrenzung (ausgewählt)} Es gibt eine Zeitbegrenzung, sodass der Spielfluss erhalten bleibt.   \\        
   {\phantomsection}          
            \label{strategie:18.2}              
           \textbf{Strategie 18.2: Keine Zeitbegrenzung} Es gibt keine Zeitbegrenzung. \\
@@ -1029,11 +1031,12 @@ Hier setzen wir die .. Strategie um. \\
           \textbf{Strategie 21.1: Schaden wird weitergegeben} Wird eine Sektion Getroffen, geht der Schade eins-zu-eins auf alle Crewmitglieder und alle Systeme innerhalb der Sektion über.  \\        
   {\phantomsection}          
            \label{strategie:21.2}              
-          \textbf{Strategie 21.2:Chance of Death} Wird eine Sektion getroffen, gibt es eine gewisse Chance, dass ein Crewmitglied oder ein System, das sich in der Sektion aufhält beschädigt / verletzt wird oder sogar sterben kann.  \\
-	 \\ \hline
+          \textbf{Strategie 21.2: Chance of Death} Wird eine Sektion getroffen, gibt es eine gewisse Chance, dass ein Crewmitglied oder ein System, das sich in der Sektion aufhält beschädigt / verletzt wird oder sogar sterben kann.  \\
+	 
 	 {\phantomsection}
-	 \label{strategie:22.3}
-	 \textbf{Auf Crew und Systeme zielen (ausgewählt)} Man hat die Möglichkeit gezielt Systeme oder Crew in einer Sektion anzugreifen.
+	 \label{strategie:21.3}
+	 \textbf{Strategie 21.3: Auf Crew und Systeme zielen (ausgewählt)} Man hat die Möglichkeit, gezielt Systeme oder Crew in einer Sektion anzugreifen.
+	 \\ \hline
     \end{tabular}
 
     \caption{Treffen von Sektionen Problemkarte}
@@ -1058,10 +1061,10 @@ Hier setzen wir die .. Strategie um. \\
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:22.1}     
-          \textbf{Strategie 22.1:Zeitliche Begrenzung (ausgewählt)} Es gibt sowohl innerhalb der Zug-Runden, als auch innerhalb der Kampf-Runden eine zeitliche Begrenzung. Schafft es ein Spieler nicht, innerhalb diese Zeit seinen Zug zu ziehen, "verliert" er eine Runde und kann erst in der nächsten wieder ziehen. Das gewährleistet, dass es am Ende jeder Runde einen Moment gibt, in dem beide Spieler nicht in einem Kampf sind und gegeneinander antreten können.   \\        
+          \textbf{Strategie 22.1: Zeitliche Begrenzung (ausgewählt)} Es gibt sowohl innerhalb der Zug-Runden, als auch innerhalb der Kampf-Runden eine zeitliche Begrenzung. Schafft es ein Spieler nicht, innerhalb diese Zeit seinen Zug zu ziehen, "verliert" er eine Runde und kann erst in der nächsten wieder ziehen. Das gewährleistet, dass es am Ende jeder Runde einen Moment gibt, in dem beide Spieler nicht in einem Kampf sind und gegeneinander antreten können.   \\        
   {\phantomsection}          
            \label{strategie:22.2}              
-          \textbf{Strategie 22.2:Systematische Unterscheidung} Ein Zug in einem Kampf und ein Zug beim Ziehen auf der Karte sind zwei völlig unterschiedliche Dinge und werden komplett losgelöst von einander implementiert.  \\
+          \textbf{Strategie 22.2: Systematische Unterscheidung} Ein Zug in einem Kampf und ein Zug beim Ziehen auf der Karte sind zwei völlig unterschiedliche Dinge und werden komplett losgelöst von einander implementiert.  \\
 		 \\ \hline
     \end{tabular}
 
@@ -1087,10 +1090,10 @@ Hier setzen wir die .. Strategie um. \\
           \textbf{Strategien} \\ \hline
             {\phantomsection}          
            \label{strategie:23.1}     
-          \textbf{Strategie 23.1:NPC kann nur kämpfen (ausgewählt)} Der NPC ist ein Schiff, dass nur für den Kampf gegen den Spieler geniert wird und nach einer bestimmten Regelmäßigkeit Angriffs- und Verteidigungsmaßnahmen ergreift.  \\        
+          \textbf{Strategie 23.1: NPC kann nur kämpfen (ausgewählt)} Der NPC ist ein Schiff, dass nur für den Kampf gegen den Spieler geniert wird und nach einer bestimmten Regelmäßigkeit Angriffs- und Verteidigungsmaßnahmen ergreift.  \\        
   {\phantomsection}          
            \label{strategie:23.2}              
-          \textbf{Strategie 23.2:Adaptiver Kampf} Der NPC ist ein Schiff, das nur für den Kampf gegen den Spieler generiert wird, sein Kampfverhalten jedoch an die aktuelle Situation anpasst.   \\
+          \textbf{Strategie 23.2: Adaptiver Kampf} Der NPC ist ein Schiff, das nur für den Kampf gegen den Spieler generiert wird, sein Kampfverhalten jedoch an die aktuelle Situation anpasst.   \\
 	 {\phantomsection}          
            \label{strategie:23.3}     
           \textbf{Strategie 23.3: NPC eigenständiger Spieler} Der NPC ist ein eigenständiger Spieler, der sich frei auf der Map bewegt und sein Schiff sowie seine Crew und die Crew mit zunehmender Zeit immer weiter verbessert. \\ 
@@ -1373,10 +1376,10 @@ Das Modul Persistence kommuniziert mit der Datenbank über ORM-Lite.  \\
 \end{center}
 \end{figure}
 
-Das obige Diagramm beschreibt abstrakt wie der Game-Client eine Aktion ausführen möchte, und wie diese vom Server empfangen und bearbeitet wird.
-Der Client möchte z.B. eine Angriffsaktion ausführen, diese muss allerdings erst vom Server überprüft werden. Der Benutzer clickt in seinem View auf einen Knopf, welcher die 
-korrekte Methode aus dem korrekten Controller ausführt, welche zu dieser Aktion gehört. (Einen konkreten Fall werden wir im nächsten Diagramm vorstellen)
-Der Controller erstellt ein neues Request welches dann an den ClientControllerCommunicator weitergegeben wird, welcher es dann an die Netwerkschnittstelle Client weiterleitet. Diese Netzwerkschnittstelle schickt dann dieses Request an den Server, wo sie dann von der Schnittstelle des Servers akzeptiert wird. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator weiter, welches das Request dann an das korrekte Service weiterleitet. Das Service prüft ob das Request valide ist. Ist dieses der Fall, so wird die Logik des Requests ausgeführt und die Daten in der Datenbank angepasst. Nach der Bearbeitung der Daten wird ein Response an den ServerServiceCommunicator gegeben. War das Request nicht valide, so wird auch dies dem ServerServiceCommunicator mitgeteilt. Dieser leitet dann das Response das er bekommen hat weiter an die Server Schnittstelle, welches die Daten dann zum Client schickt. Der Client empfängt das Response und gibt es seinem ClientControllerCommunicator, welcher es auch wiederrum an den korrekten Controller weiterleitet. Der Controller führt nun seine Logik aus, passt seine lokalen Daten an und gibt dem View bescheidt, so dass dieser sich auch aktualisiert.
+Das obige Diagramm beschreibt abstrakt, wie der Game-Client eine Aktion ausführen möchte, und wie diese vom Server empfangen und bearbeitet wird.
+Der Client möchte z.B. eine Angriffsaktion ausführen, diese muss allerdings erst vom Server überprüft werden. Der Benutzer klickt in seiner View auf einen Knopf, welcher die 
+korrekte Methode aus dem korrekten Controller ausführt, welcher zu dieser Aktion gehört. (Einen konkreten Fall werden wir im nächsten Diagramm vorstellen.)
+Der Controller erstellt ein neues Request, welches dann an den ClientControllerCommunicator weitergegeben wird, welcher es dann an die Netwerkschnittstelle Client weiterleitet. Diese Netzwerkschnittstelle schickt dann dieses Request an den Server, wo sie dann von der Schnittstelle des Servers akzeptiert wird. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator weiter, welches das Request dann an das korrekte Service weiterleitet. Der Service prüft, ob das Request valide ist. Ist dieses der Fall, so wird die Logik des Requests ausgeführt und die Daten in der Datenbank angepasst. Nach der Bearbeitung der Daten wird ein Response an den ServerServiceCommunicator gegeben. War das Request nicht valide, so wird auch dies dem ServerServiceCommunicator mitgeteilt. Dieser leitet dann das Response, das er bekommen hat, weiter an die Server Schnittstelle, welches die Daten dann zum Client schickt. Der Client empfängt das Response und gibt es seinem ClientControllerCommunicator, welcher es auch wiederrum an den korrekten Controller weiterleitet. Der Controller führt nun seine Logik aus, passt seine lokalen Daten an und gibt dem View bescheid, sodass dieser sich auch aktualisiert.
 
 \subsection{Angriff}
 
@@ -1386,7 +1389,7 @@ Der Controller erstellt ein neues Request welches dann an den ClientControllerCo
 \end{center}
 \end{figure}
 
-Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigem abstrakten Diagramm. In diesem Fall wird in der WeaponUI eine Waffe durch Mausclick ausgewählt, und dann der Raum auf dem Gegnerschiff welcher angegriffen werden soll. Dann wird dieses als Attack-Request weitergegeben an den ClientControllerCommunicator, welcher es wiederrum an die Netzwerkschnittstelle des Clients weiterleitet. Das Request wird dann durch diese Schnittstelle an den Server geschickt. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator, welcher dann den AttackService wählt und ihm das Request weiterleitet. Dieser überprüft dann mittels ValidMove ob das Angriffskommando valide ist oder nicht. Wenn es das ist, so wird die Logik ausgeführt, und das Gegnerschiff in der Datenbank aktualisiert. Dann wird der jetzige Spieler weitergesetzt (wer dran ist). Dann wird ein Response als neue Schiffsobjekte an den ServerServiceCommunicator gegeben, welcher es wieder an die Servernetzwerkschnittstelle gibt. Das Response wird dann zum Client übertragen, und dort an den ClientControllerCommunicator gegeben. Dieser teilt das Ergebnis dem Controller mit (gleiche Methode, da diese noch auf den Response wartet). Dann werden dort die lokalen Daten durch die vom Server bekommenen Daten ersetzt. Der View wartete bis jetzt noch auf ein Ergebnis welches er nun bekommt, wodurch auch er sich aktualisiert.
+Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigen abstrakten Diagramm. In diesem Fall wird in dem WeaponUI eine Waffe durch Mausklick ausgewählt, und dann der Raum auf dem Gegnerschiff, der angegriffen werden soll. Dann wird dieses als Attack-Request weitergegeben an den ClientControllerCommunicator, welcher es wiederrum an die Netzwerkschnittstelle des Clients weiterleitet. Das Request wird dann durch diese Schnittstelle an den Server geschickt. Der Server empfängt das Request und gibt es an seinen ServerServiceCommunicator, welcher dann den AttackService wählt und ihm das Request weiterleitet. Dieser überprüft dann mittels ValidMove, ob das Angriffskommando valide ist oder nicht. Wenn es das ist, so wird die Logik ausgeführt, und das Gegnerschiff in der Datenbank aktualisiert. Dann wird der jetzige Spieler weitergesetzt (wer dran ist). Dann wird ein Response als neue Schiffsobjekte an den ServerServiceCommunicator gegeben, welcher es wieder an die Servernetzwerkschnittstelle gibt. Das Response wird dann zum Client übertragen, und dort an den ClientControllerCommunicator gegeben. Dieser teilt das Ergebnis dem Controller mit (gleiche Methode, da diese noch auf den Response wartet). Dann werden dort die lokalen Daten durch die vom Server bekommenen Daten ersetzt. Der View wartete bis jetzt noch auf ein Ergebnis welches er nun bekommt, wodurch auch er sich aktualisiert.
 
 
 \subsection{Login}
@@ -1397,7 +1400,7 @@ Dieses Diagramm beschreibt nun eine Attack-Sequenz basierend auf dem vorherigem 
 \end{center}
 \end{figure}
 
-Das hier gezeigte Diagramm zeigt den Login eines Spielers, dabei wird im View erstmals der \textit{LoginButton()} durch einen Mausklick ausgewählt und durch den Controller wird eine Request an den \textit{ClientControllerCommunicator} gesendet, dieser wiederum führt die Methode \textit{login()} aus, welche dann einen LoginRequest über die Methode \textit{receiveAndSendData} an den Server sendet. Auf der Server Seite wird nun die Methode \textit{getResponse()} aufgerufen, welche im \textit{UserService} die Logik und die Verifizierung des Logins mithilfe des \textit{usernames} ausführt. Wenn nun der Login genehmigt wurde durch den Service, so wird der Request verifiziert und die \textit{UserDao} wird geupdated. Nun geht die \textit{Response} über die gleichnamigen Methoden zurück zum Client welcher die Response weitergibt an den Controller. Der Controller updated die Lokalen Daten und übergibt die aktualisierten Daten an den View. Nun ist der User eingeloggt und kann der Session beitreten.
+Das hier gezeigte Diagramm zeigt den Login eines Spielers, dabei wird im View erstmals der \textit{LoginButton()} durch einen Mausklick ausgewählt und durch den Controller wird ein Request an den \textit{ClientControllerCommunicator} gesendet, dieser wiederum führt die Methode \textit{login()} aus, welche dann einen LoginRequest über die Methode \textit{receiveAndSendData} an den Server sendet. Auf der Server Seite wird nun die Methode \textit{getResponse()} aufgerufen, welche im \textit{UserService} die Logik und die Verifizierung des Logins mithilfe des \textit{usernames} ausführt. Wenn nun der Login genehmigt wurde durch den Service, so wird der Request verifiziert und die \textit{UserDao} wird geupdated. Nun geht die \textit{Response} über die gleichnamigen Methoden zurück zum Client, welcher die Response weitergibt an den Controller. Der Controller updated die Lokalen Daten und übergibt die aktualisierten Daten an die View. Nun ist der User eingeloggt und kann der Session beitreten.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
