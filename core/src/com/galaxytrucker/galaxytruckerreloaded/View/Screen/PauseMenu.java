@@ -1,6 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,19 +14,22 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 public class PauseMenu implements Screen {
 
     /**
-     * Sptire batch
-     */
-    private SpriteBatch batch;
-
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
-
-    /**
      * Game paused texture
      */
     private Texture pausedTexture;
+
+    private Main main;
+
+    /**
+     * Constructor
+     *
+     * @param main - main class
+     *
+     * */
+    public PauseMenu(Main main) {
+        this.main = main;
+        pausedTexture = new Texture("pause.png");
+    }
 
     @Override
     public void show() {
@@ -33,7 +38,11 @@ public class PauseMenu implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        main.batch.begin();
+        main.batch.draw(pausedTexture, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.end();
     }
 
     @Override
@@ -58,11 +67,6 @@ public class PauseMenu implements Screen {
 
     @Override
     public void dispose() {
-
-    }
-
-    /** Constructor
-     * @param main - main class */
-    public PauseMenu(Main main) {
+        pausedTexture.dispose();
     }
 }

@@ -1,8 +1,10 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,16 +18,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
  * Main game screen
  */
 public class GamePlay implements Screen {
-
-    /**
-     * SpriteBatch
-     */
-    private SpriteBatch batch;
-
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
 
     /**
      * Background texture
@@ -43,9 +35,9 @@ public class GamePlay implements Screen {
     private Sound clickSound;
 
     /**
-     * MultiPlayer active
+     * single Player active
      */
-    private boolean multiPlayer;
+    private boolean singlePlayer;
 
     /**
      * Current map
@@ -57,6 +49,20 @@ public class GamePlay implements Screen {
      */
     private ShipView player;
 
+    private Main main;
+
+    /**
+     * Constructor
+     *
+     * @param main - main class
+     */
+    public GamePlay(Main main) {
+        this.main = main;
+        background = new Texture("1080p.png");
+
+        player = new ShipView(main, null); //TODO wie schiff aus controller?
+    }
+
 
     @Override
     public void show() {
@@ -65,7 +71,11 @@ public class GamePlay implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        main.batch.begin();
+        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.end();
     }
 
     @Override
@@ -90,7 +100,7 @@ public class GamePlay implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
     }
 
     /**
@@ -102,24 +112,4 @@ public class GamePlay implements Screen {
         this.background = background;
     }
 
-    /**
-     * Constructor
-     *
-     * @param main - main class
-     */
-    public GamePlay(Main main) {
-    }
-
-//    /**
-//     * Send data to server
-//     */
-//    private void sendData(Packet data) {
-//    }
-//
-//    /**
-//     * Receive data from server
-//     */
-//    private Packet receiveData() {
-//        return null;
-//    }
 }

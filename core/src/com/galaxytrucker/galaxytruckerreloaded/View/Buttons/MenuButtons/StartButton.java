@@ -1,30 +1,22 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 /**
  * Starts a new Game
  */
-public class StartButton extends Button
+public class StartButton extends ImButton
 {
-    /**
-     * Sprite batch
-     */
-    private SpriteBatch batch;
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
-    /**
-     * Background
-     */
-    private Texture background;
     /**
      * Click sound effect
      */
@@ -35,35 +27,26 @@ public class StartButton extends Button
      */
     private MainMenu screen;
 
-
     /**
      * Constructor
      *
-     * @param main - main class
      * @param screen the screen this button is on
      */
-    public StartButton(Main main, MainMenu screen) {
+    public StartButton(float x, float y, float width, float height, MainMenu screen) {
+        super(new Texture("continue.png"), x, y, width, height);
+        this.screen = screen;
+        this.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                leftClick();
+            }
+        });
     }
-
-//    /**
-//     * Send data to server
-//     */
-//    private void sendData(Packet data) {
-//    }
-//
-//    /**
-//     * Receive data from server
-//     */
-//    private Packet receiveData() {
-//        return null;
-//    }
 
     /**
      * Creates s a new Instance of PLayer an an new Ship
      */
     public void leftClick()
     {
-        // FTLGame.instance().setPlayer(hanger.getShip());
-        // FTLView.instance().setScreen(new SpaceScreen());
+        screen.resumeGame();
     }
 }

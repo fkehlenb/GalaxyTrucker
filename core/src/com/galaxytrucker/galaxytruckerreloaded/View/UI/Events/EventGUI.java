@@ -85,7 +85,7 @@ public class EventGUI {
      *
      * called by button
      */
-    private void nextPage() {
+    public void nextPage() {
     }
 
     /**
