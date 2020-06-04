@@ -1,94 +1,80 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.*;
 
 /**
  * Main menu screen
  */
-public class MainMenu implements Screen {
+public class MainMenu extends State {
 
-    /**
+    private Texture background;
+    private Texture newGame;
+    /** Constructor  */
+    public MainMenu(GameStateManager gsm){
+        super(gsm);
+        background = new Texture("1080p.png");
+        newGame = new Texture("start_select2.png");
+    }
+
+    @Override
+    public void handleInput() {
+
+    }
+
+    @Override
+    public void update(float dt) {
+
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+        sb.begin();
+        sb.draw(background, 0,0);
+        sb.draw(newGame, Main.WIDTH/2 - newGame.getWidth()/2,Main.HEIGHT/2, 248,50);
+        sb.end();
+    }
+
+    /*   *//**
      * The sprite batch
-     */
+     *//*
     private SpriteBatch batch;
 
-    /**
+    *//**
      * Orthographic camera
-     */
+     *//*
     private OrthographicCamera camera;
 
-    /**
+    *//**
      * The screen texture
-     */
+     *//*
     private Texture background;
 
-    /**
+    *//**
      * new game button. leads to shipselector
-     */
+     *//*
     private NewGameButton newGame;
 
-    /**
+    *//**
      * start game button. continues old game
-     */
+     *//*
     private StartButton startGame;
 
-    /**
+    *//**
      * quit button
-     */
+     *//*
     private QuitButton quitButton;
 
-    /**
+    *//**
      * Looping music track
-     */
+     *//*
     private Music music;
 
-    /**
+    *//**
      * Click sound effect
-     */
-    private Sound clickSound;
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta) {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
+     *//*
+    private Sound clickSound;*/
 
     /**
      * starts a new game.
@@ -114,7 +100,5 @@ public class MainMenu implements Screen {
 
     }
 
-    /** Constructor
-     * @param main - main class */
-    public MainMenu(Main main){}
+
 }
