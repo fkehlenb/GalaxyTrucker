@@ -76,12 +76,32 @@ project(":core") {
 
         // h2 database
         runtimeOnly 'com.h2database:h2'
+        compile group: 'com.h2database', name: 'h2', version: '1.4.199'
+
+        // https://mvnrepository.com/artifact/com.h2database/h2
+        testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
+
+        // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+        compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.17.Final'
+
+        // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+        compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.17.Final'
+
+        // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+        compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+
+        // https://mvnrepository.com/artifact/org.mockito/mockito-core
+        testCompile group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
+
+        // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
+        testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.3.3'
+
+        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+        testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0-M1'
 
         // ormlite
         compile group: 'com.j256.ormlite', name: 'ormlite-jdbc', version: '4.48'
         compile 'com.j256.ormlite:ormlite-android:4.48'
         compile 'com.j256.ormlite:ormlite-core:4.48'
-
-        compile group: 'com.h2database', name: 'h2', version: '1.4.199'
     }
 }
