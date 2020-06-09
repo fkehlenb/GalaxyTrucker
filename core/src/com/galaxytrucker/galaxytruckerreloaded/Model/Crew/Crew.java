@@ -6,40 +6,39 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-@DatabaseTable(tableName = "crew")
+@Entity
 public class Crew implements Serializable {
 
     /**
      * ID
      */
-    @DatabaseField(id = true, columnName = "ID")
+    @Id
     @NonNull
     private int id;
 
     /**
      * Name
      */
-    @DatabaseField(columnName = "name")
     @NonNull
     private String name;
 
     /**
      * Health
      */
-    @DatabaseField(columnName = "health")
     @NonNull
     private int health;
 
     /**
      * Max health
      */
-    @DatabaseField(columnName = "maxhealth")
     @NonNull
     private int maxhealth;
 
@@ -48,20 +47,17 @@ public class Crew implements Serializable {
      * Das Array besteht aus
      * [Weapon, Shield, Engine, Repair, Combat]
      */
-    @DatabaseField(columnName = "stats")
-    @NonNull
-    private int[] stats;
+    @ElementCollection
+    private List<Integer> stats;
 
     /**
      * The room this crew member is in
      */
-    @DatabaseField(foreign = true, columnName = "system")
     private Room currentRoom;
 
     /**
      * The user who owns this crew member
      */
-    @DatabaseField(columnName = "associatedUser")
     private String associatedUser;
 
 }

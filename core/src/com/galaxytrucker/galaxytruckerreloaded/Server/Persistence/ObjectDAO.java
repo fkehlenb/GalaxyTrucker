@@ -1,14 +1,14 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 
-import com.j256.ormlite.support.ConnectionSource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /** Template for DAOs */
 public abstract class ObjectDAO<T> {
 
-    /**
-     * Database connection
-     */
-    private ConnectionSource source;
+    /** EntityManager */
+    @PersistenceContext(name = "database")
+    public EntityManager entityManager;
 
     /**
      * Save the object to the database

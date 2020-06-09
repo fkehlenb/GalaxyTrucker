@@ -3,15 +3,10 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.CrewNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateCrewException;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.support.ConnectionSource;
+
+import javax.persistence.EntityManager;
 
 public class CrewDAO extends ObjectDAO<Crew> {
-
-    /**
-     * Crew dao
-     */
-    private Dao<Crew, String> crewDao;
 
     /**
      * Add a new crew member to the database
@@ -21,7 +16,14 @@ public class CrewDAO extends ObjectDAO<Crew> {
      */
     @Override
     public void persist(Crew c) throws DuplicateCrewException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(c);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DuplicateCrewException();
+        }
     }
 
     /**
@@ -31,7 +33,14 @@ public class CrewDAO extends ObjectDAO<Crew> {
      * @throws CrewNotFoundException if the crew cannot be found in the database
      */
     public void update(Crew c) throws CrewNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(c);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CrewNotFoundException();
+        }
     }
 
     /**
@@ -42,14 +51,22 @@ public class CrewDAO extends ObjectDAO<Crew> {
      */
     @Override
     public void remove(Crew c) throws CrewNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(c);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CrewNotFoundException();
+        }
     }
 
     /**
      * Constructor
      *
-     * @param source - database connection source
+     * @param entityManager - the EntityManager
      */
-    public CrewDAO(ConnectionSource source) {
+    public CrewDAO(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 }
