@@ -1,5 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 
+import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -8,7 +10,7 @@ public abstract class ObjectDAO<T> {
 
     /** EntityManager */
     @PersistenceContext(name = "database")
-    public EntityManager entityManager;
+    public EntityManager entityManager = Database.getEntityManager();
 
     /**
      * Save the object to the database

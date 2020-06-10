@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
+import javax.xml.crypto.Data;
 import java.util.UUID;
 
 public class CrewDAOTest {
@@ -22,7 +23,7 @@ public class CrewDAOTest {
     /**
      * CrewDAO
      */
-    private CrewDAO crewDAO = new CrewDAO(entityManager);
+    private CrewDAO crewDAO = new CrewDAO();
 
 
     /**

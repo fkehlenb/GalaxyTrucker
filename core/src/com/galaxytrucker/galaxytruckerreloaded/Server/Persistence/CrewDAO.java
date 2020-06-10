@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.CrewNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateCrewException;
 
@@ -59,14 +60,5 @@ public class CrewDAO extends ObjectDAO<Crew> {
             e.printStackTrace();
             throw new CrewNotFoundException();
         }
-    }
-
-    /**
-     * Constructor
-     *
-     * @param entityManager - the EntityManager
-     */
-    public CrewDAO(EntityManager entityManager) {
-        this.entityManager = entityManager;
     }
 }

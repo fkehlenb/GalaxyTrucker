@@ -1,7 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.j256.ormlite.support.ConnectionSource;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +8,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class ServerServiceCommunicator {
 
-    /** Database connection source */
-    @NonNull
-    private ConnectionSource databaseConnectionSource;
 
     /** Take a request from the client side, pass it through the services
      * and return a response

@@ -4,7 +4,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateUserException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.UserDAO;
-import com.j256.ormlite.support.ConnectionSource;
 
 public class UserService {
 
@@ -51,15 +50,6 @@ public class UserService {
      * @throws UserNotFoundException if the user cannot be found
      */
     public void removeUserByUsername(String username) throws UserNotFoundException {
-    }
-
-    /**
-     * Constructor
-     *
-     * @param source - the database connections source
-     */
-    public UserService(ConnectionSource source) {
-
     }
 
     /**

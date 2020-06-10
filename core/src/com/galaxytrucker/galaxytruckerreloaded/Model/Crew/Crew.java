@@ -1,9 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Crew;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -53,6 +50,7 @@ public class Crew implements Serializable {
     /**
      * The room this crew member is in
      */
+    @OneToOne
     private Room currentRoom;
 
     /**

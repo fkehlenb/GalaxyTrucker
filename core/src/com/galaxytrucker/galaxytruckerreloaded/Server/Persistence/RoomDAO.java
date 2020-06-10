@@ -3,13 +3,10 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRoomException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundException;
-import com.j256.ormlite.dao.Dao;
+
 
 /** This class manages room objects in the database */
 public class RoomDAO extends ObjectDAO<Room> {
-
-    /** RoomDAO */
-    private Dao<Room,String> roomDAO;
 
     /**
      * Add a new room to the database
@@ -19,7 +16,15 @@ public class RoomDAO extends ObjectDAO<Room> {
      */
     @Override
     public void persist(Room r) throws DuplicateRoomException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(r);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new DuplicateRoomException();
+        }
     }
 
     /**
@@ -29,7 +34,15 @@ public class RoomDAO extends ObjectDAO<Room> {
      * @throws RoomNotFoundException if the room cannot be found in the database
      */
     public void update(Room r) throws RoomNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(r);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new RoomNotFoundException();
+        }
     }
 
     /**
@@ -40,6 +53,14 @@ public class RoomDAO extends ObjectDAO<Room> {
      */
     @Override
     public void remove(Room r) throws RoomNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(r);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new RoomNotFoundException();
+        }
     }
 }
