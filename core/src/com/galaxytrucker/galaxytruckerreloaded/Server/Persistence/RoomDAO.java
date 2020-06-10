@@ -3,7 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRoomException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundException;
-import com.j256.ormlite.dao.Dao;
+
 
 /** This class manages room objects in the database */
 public class RoomDAO extends ObjectDAO<Room> {

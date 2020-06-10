@@ -1,46 +1,44 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
-import com.badlogic.gdx.scenes.scene2d.ui.List;
+import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 
 @Getter
 @Setter
-@DatabaseTable(tableName = "trader")
+@Entity
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Trader extends Planet implements Serializable {
 
     /** ID */
-    @DatabaseField(id = true)
+    @Id
     private int id;
 
     /** Associated user */
-    @DatabaseField(foreign = true)
     private Planet planet;
 
     /** Weapons for sale */
-    @DatabaseField(foreign = true)
     @NonNull
+    @OneToMany
     private List<Weapon> weaponStock;
 
     /** Rockets for sale */
-    @DatabaseField
     @NonNull
     private int missileStock;
 
     /** Fuel for sale */
-    @DatabaseField
     @NonNull
     private int fuelStock;
 
     /** Crew for sale */
-    @DatabaseField(foreign = true)
+    @OneToMany
     @NonNull
     private List<Crew> crewStock;
 

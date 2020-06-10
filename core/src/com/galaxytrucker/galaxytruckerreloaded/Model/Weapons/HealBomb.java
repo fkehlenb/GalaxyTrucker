@@ -1,20 +1,20 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Weapons;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import lombok.*;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
-@DatabaseTable(tableName = "healBombWeapon")
+@Entity
 public class HealBomb extends Weapon implements Serializable {
 
-    /** Weapon name */
-    @DatabaseField(columnName = "healBombWeaponName")
+    /**
+     * Weapon name
+     */
     @NonNull
     private String name;
 }

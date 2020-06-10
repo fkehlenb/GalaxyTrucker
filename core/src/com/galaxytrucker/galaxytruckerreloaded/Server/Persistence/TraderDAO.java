@@ -3,7 +3,6 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateTraderException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.TraderNotFoundException;
-import com.j256.ormlite.dao.Dao;
 
 /**
  * This class handles trader objects in the database

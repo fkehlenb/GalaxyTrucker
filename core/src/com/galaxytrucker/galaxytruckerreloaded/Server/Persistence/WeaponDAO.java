@@ -3,7 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateWeaponException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.WeaponNotFoundException;
-import com.j256.ormlite.dao.Dao;
+
 
 /**
  * This class manages weapons in the database

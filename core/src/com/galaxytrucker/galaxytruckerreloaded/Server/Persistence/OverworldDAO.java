@@ -3,12 +3,8 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateOverworldException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.OverworldNotFoundException;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ObjectDAO;
-import com.j256.ormlite.dao.Dao;
 import lombok.NonNull;
 
-import javax.persistence.NamedQuery;
-import javax.persistence.Query;
 
 public class OverworldDAO extends ObjectDAO<Overworld> {
 

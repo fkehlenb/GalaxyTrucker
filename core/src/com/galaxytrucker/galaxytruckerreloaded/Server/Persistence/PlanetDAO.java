@@ -3,12 +3,8 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicatePlanetException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
-import com.j256.ormlite.dao.Dao;
 
 public class PlanetDAO extends ObjectDAO<Planet> {
-
-    /** Planet DAO */
-    private Dao<Planet,String> planetDAO;
 
     /**
      * Add a new planet to the database

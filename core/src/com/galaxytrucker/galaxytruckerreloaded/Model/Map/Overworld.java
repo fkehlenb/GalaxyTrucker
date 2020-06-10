@@ -29,11 +29,12 @@ public class Overworld implements Serializable {
     private String associatedUser;
 
     /** Stores planet and their location on the map */
-    @ElementCollection
+    @OneToMany
     private Map<String,Planet> planetMap;
 
     /** The start planet */
     @NonNull
+    @OneToOne
     private Planet startPlanet;
 
     /** Constructor */

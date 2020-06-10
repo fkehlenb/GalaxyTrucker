@@ -3,8 +3,6 @@ package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateUserException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.support.ConnectionSource;
 import lombok.NonNull;
 
 public class UserDAO extends ObjectDAO<User> {

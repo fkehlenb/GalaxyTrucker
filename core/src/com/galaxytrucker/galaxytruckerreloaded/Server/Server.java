@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
-import com.j256.ormlite.support.ConnectionSource;
 
 import java.net.Socket;
 
@@ -21,20 +20,9 @@ public class Server {
 
     }
 
-    /** Start serverServiceCommunicator
-     * @param source - the database connection source */
-    private void startServerServiceCommunicator(ConnectionSource source){
-
-    }
-
     /** Receive some data from the client and return a response
      * @param socket - the client socket */
     private void receiveAndSendData(Socket socket){
     }
 
-    /** Initialize database
-     * @return the database connection source */
-    private ConnectionSource initializeDatabase(){
-        return null;
-    }
 }

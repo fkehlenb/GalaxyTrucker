@@ -1,12 +1,9 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Persistence;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateShipException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.ShipNotFoundException;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.support.ConnectionSource;
+
 import lombok.NonNull;
 
 public class ShipDAO extends ObjectDAO<Ship> {
