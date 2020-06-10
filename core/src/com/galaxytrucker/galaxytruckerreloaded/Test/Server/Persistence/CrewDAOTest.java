@@ -5,8 +5,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.CrewDAO;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import java.util.UUID;
@@ -39,7 +39,7 @@ public class CrewDAOTest {
         entityManager.getTransaction().begin();
         Crew c2 = entityManager.find(Crew.class, c.getId());
         entityManager.getTransaction().commit();
-        Assertions.assertEquals(c2.getName(), c.getName());
+        Assert.assertEquals(c2.getName(), c.getName());
     }
 
     /**
@@ -62,7 +62,7 @@ public class CrewDAOTest {
         entityManager.getTransaction().begin();
         Crew c2 = entityManager.find(Crew.class, c.getId());
         entityManager.getTransaction().commit();
-        Assertions.assertEquals(c2.getName(), c.getName());
+        Assert.assertEquals(c2.getName(), c.getName());
     }
 
     /**

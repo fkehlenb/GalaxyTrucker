@@ -1,5 +1,4 @@
 buildscript {
-    
 
     repositories {
         mavenLocal()
@@ -10,10 +9,10 @@ buildscript {
         google()
     }
     dependencies {
-        
 
     }
 }
+
 
 allprojects {
     apply plugin: "eclipse"
@@ -69,11 +68,13 @@ project(":desktop") {
 
 project(":core") {
     apply plugin: "java-library"
-	
+
 	java {
 		sourceCompatibility = JavaVersion.VERSION_1_8
 		targetCompatibility = JavaVersion.VERSION_1_8
 	}
+
+    repositories { jcenter() }
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -104,12 +105,13 @@ project(":core") {
         // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
         testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.3.3'
 
-        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
-        testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0-M1'
-
         // ormlite
         compile group: 'com.j256.ormlite', name: 'ormlite-jdbc', version: '4.48'
         compile 'com.j256.ormlite:ormlite-android:4.48'
         compile 'com.j256.ormlite:ormlite-core:4.48'
+
+        testCompile 'junit:junit:4.12'
+        compile 'junit:junit:4.12'
     }
 }
+
