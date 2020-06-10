@@ -5,11 +5,12 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateOverwor
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.OverworldNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ObjectDAO;
 import com.j256.ormlite.dao.Dao;
+import lombok.NonNull;
+
+import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 
 public class OverworldDAO extends ObjectDAO<Overworld> {
-
-    /** OverworldDAO */
-    private Dao<Overworld,String> overworldDAO;
 
     /**
      * Add a new OverWorld to the database
@@ -19,7 +20,15 @@ public class OverworldDAO extends ObjectDAO<Overworld> {
      */
     @Override
     public void persist(Overworld o) throws DuplicateOverworldException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(o);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new DuplicateOverworldException();
+        }
     }
 
     /**
@@ -30,7 +39,15 @@ public class OverworldDAO extends ObjectDAO<Overworld> {
      */
     @Override
     public void remove(Overworld o) throws OverworldNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(o);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new OverworldNotFoundException();
+        }
     }
 
     /** Get the overworld of a designated user
@@ -38,6 +55,15 @@ public class OverworldDAO extends ObjectDAO<Overworld> {
      * @return the user's world map
      * @throws OverworldNotFoundException if the overworld couldn't be found */
     public Overworld getOverworldByUser(String username) throws OverworldNotFoundException{
-        return null;
+        try {
+            entityManager.getTransaction().begin();
+            @NonNull Overworld o = entityManager.createNamedQuery("Overworld.getByUsername",Overworld.class).setParameter("name",username).getSingleResult();
+            entityManager.getTransaction().commit();
+            return o;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new OverworldNotFoundException();
+        }
     }
 }

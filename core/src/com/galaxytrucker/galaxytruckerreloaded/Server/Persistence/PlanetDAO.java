@@ -18,7 +18,15 @@ public class PlanetDAO extends ObjectDAO<Planet> {
      */
     @Override
     public void persist(Planet p) throws DuplicatePlanetException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(p);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new DuplicatePlanetException();
+        }
     }
 
     /**
@@ -28,7 +36,15 @@ public class PlanetDAO extends ObjectDAO<Planet> {
      * @throws PlanetNotFoundException if the planet cannot be found in the database
      */
     public void update(Planet p) throws PlanetNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(p);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new PlanetNotFoundException();
+        }
     }
 
     /**
@@ -39,6 +55,14 @@ public class PlanetDAO extends ObjectDAO<Planet> {
      */
     @Override
     public void remove(Planet p) throws PlanetNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(p);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new PlanetNotFoundException();
+        }
     }
 }

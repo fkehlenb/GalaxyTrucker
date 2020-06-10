@@ -5,22 +5,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateUserExc
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
+import lombok.NonNull;
 
 public class UserDAO extends ObjectDAO<User> {
-
-    /**
-     * UserDAO
-     */
-    private Dao<User, String> userDAO;
-
-    /**
-     * Constructor
-     *
-     * @param source - database connection source
-     */
-    public UserDAO(ConnectionSource source) {
-
-    }
 
     /**
      * Add a new user to the database
@@ -29,14 +16,31 @@ public class UserDAO extends ObjectDAO<User> {
      */
     @Override
     public void persist(User u) throws DuplicateUserException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(u);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DuplicateUserException();
+        }
     }
 
-    /** Update a user in the database
+    /**
+     * Update a user in the database
+     *
      * @param u - the user to update
-     * @throws UserNotFoundException if the user cannot be found in the database */
+     * @throws UserNotFoundException if the user cannot be found in the database
+     */
     public void update(User u) throws UserNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(u);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new UserNotFoundException();
+        }
     }
 
     /**
@@ -45,7 +49,15 @@ public class UserDAO extends ObjectDAO<User> {
      * @param username - the username of the user
      */
     private User getUserByUsername(String username) throws UserNotFoundException {
-        return null;
+        try {
+            entityManager.getTransaction().begin();
+            @NonNull User u = entityManager.createNamedQuery("User.getByUsername",User.class).setParameter("username",username).getSingleResult();
+            entityManager.getTransaction().commit();
+            return u;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new UserNotFoundException();
+        }
     }
 
     /**
@@ -55,7 +67,14 @@ public class UserDAO extends ObjectDAO<User> {
      */
     @Override
     public void remove(User u) throws UserNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(u);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new UserNotFoundException();
+        }
     }
 
     /**
@@ -64,7 +83,8 @@ public class UserDAO extends ObjectDAO<User> {
      * @param username - the username of the user to delete
      */
     private void removeUserByUsername(String username) throws UserNotFoundException {
-
+        User u = getUserByUsername(username);
+        remove(u);
     }
 
 }

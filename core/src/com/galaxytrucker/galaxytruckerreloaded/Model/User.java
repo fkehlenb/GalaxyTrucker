@@ -2,8 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
@@ -11,6 +10,9 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "User.getByUsername",query = "select u from User u where u.username =: username")
+})
 public class User implements Serializable {
 
     /**
@@ -23,6 +25,7 @@ public class User implements Serializable {
     /**
      * The user's ship
      */
+    @OneToOne
     private Ship userShip;
 
     /** Whether or not the user is logged in */

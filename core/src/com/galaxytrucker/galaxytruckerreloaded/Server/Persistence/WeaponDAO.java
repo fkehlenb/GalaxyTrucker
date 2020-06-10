@@ -10,9 +10,6 @@ import com.j256.ormlite.dao.Dao;
  */
 public class WeaponDAO extends ObjectDAO<Weapon> {
 
-    /** WeaponDAO */
-    private Dao<Weapon,String> weaponDAO;
-
     /**
      * Add a new weapon to the database
      *
@@ -21,7 +18,15 @@ public class WeaponDAO extends ObjectDAO<Weapon> {
      */
     @Override
     public void persist(Weapon w) throws DuplicateWeaponException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(w);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new DuplicateWeaponException();
+        }
     }
 
     /**
@@ -31,7 +36,15 @@ public class WeaponDAO extends ObjectDAO<Weapon> {
      * @throws WeaponNotFoundException if the weapon doesn't exist in the database
      */
     public void update(Weapon w) throws WeaponNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(w);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new WeaponNotFoundException();
+        }
     }
 
     /**
@@ -42,7 +55,15 @@ public class WeaponDAO extends ObjectDAO<Weapon> {
      */
     @Override
     public void remove(Weapon w) throws WeaponNotFoundException {
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(w);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new WeaponNotFoundException();
+        }
     }
 
 }

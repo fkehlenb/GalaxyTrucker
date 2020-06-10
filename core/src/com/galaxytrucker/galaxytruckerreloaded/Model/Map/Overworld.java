@@ -1,33 +1,39 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
 
-import com.j256.ormlite.field.DatabaseField;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
+@Entity
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@NamedQueries({
+        @NamedQuery(name = "Overworld.getByUsername", query = "select o from Overworld o where o.associatedUser =: name")
+})
 public class Overworld implements Serializable {
 
     /** ID */
     @NonNull
-    @DatabaseField(id = true,columnName = "ID")
+    @Id
     private int id;
 
     /** Username used as ID */
     @NonNull
-    @DatabaseField(columnName = "user")
     private String associatedUser;
 
     /** Stores planet and their location on the map */
-    @NonNull
-    @DatabaseField(columnName = "planetMap")
-    private HashMap<float[],Planet> planetMap;
+    @ElementCollection
+    private Map<String,Planet> planetMap;
 
     /** The start planet */
     @NonNull
-    @DatabaseField(columnName = "startPlanet")
     private Planet startPlanet;
 
     /** Constructor */
