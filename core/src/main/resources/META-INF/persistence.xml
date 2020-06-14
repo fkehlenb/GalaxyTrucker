@@ -4,8 +4,15 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
     <persistence-unit name="database" transaction-type="RESOURCE_LOCAL">
-        <class>com.galaxytrucker.galaxytruckerreloaded.Model.User</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.Ship</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.User</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:./database;DB_CLOSE_ON_EXIT=FALSE;" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

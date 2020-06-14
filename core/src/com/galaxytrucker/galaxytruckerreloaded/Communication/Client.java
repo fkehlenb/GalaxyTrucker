@@ -1,12 +1,15 @@
 package com.galaxytrucker.galaxytruckerreloaded.Communication;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
+import lombok.Getter;
 import lombok.NonNull;
 
 import java.io.*;
 import java.net.Socket;
 
+/** This class handles the client-side networking */
 public class Client {
 
     /**
@@ -35,15 +38,24 @@ public class Client {
     private ObjectInputStream receiveObject;
 
     /**
+     * The client's ship
+     */
+    @Getter
+    private Ship myShip;
+
+    /**
      * Send a request to the server
+     *
+     * @param requestObject - the request object
      * @return the server's response
+     *
+     * @throws IllegalArgumentException on exception
      */
     public ResponseObject sendAndReceive(RequestObject requestObject) throws IllegalArgumentException {
         try {
             sendObject.writeObject(requestObject);
             return (ResponseObject) receiveObject.readObject();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -51,11 +63,23 @@ public class Client {
 
     /**
      * Login
+     *
+     * @param username - the username of the user to login
+     *
+     * @return whether the client is allowed to login or not
+     *
+     * @throws IllegalArgumentException on error
      */
     public boolean login(String username) throws IllegalArgumentException {
         try {
             send.println("[LOGIN]:" + username);
-            return receive.readLine().equals("[ACCEPTED]");
+            boolean successfulLogin = receive.readLine().equals("true");
+            if (successfulLogin) {
+                send.println("[GIVE-ME-SHIP]");
+                myShip = (Ship) receiveObject.readObject();
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException(e.getMessage());
@@ -64,6 +88,11 @@ public class Client {
 
     /**
      * Constructor
+     *
+     * @param ipAddress - the ipAddress of the server
+     * @param port      - the server port
+     *
+     * @throws IllegalArgumentException on error
      */
     public Client(@NonNull String ipAddress, @NonNull int port) throws IllegalArgumentException {
         try {
