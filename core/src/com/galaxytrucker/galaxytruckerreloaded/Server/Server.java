@@ -54,7 +54,7 @@ public class Server implements Runnable{
     }
 
     /** Is the server running? */
-    public synchronized boolean isRunning(){
+    private synchronized boolean isRunning(){
         return this.running;
     }
 
