@@ -1,11 +1,15 @@
 package com.galaxytrucker.galaxytruckerreloaded.Communication;
 
+import lombok.NonNull;
+
 import java.net.Socket;
 
 public class Client {
 
+    /** Client socket for network communication */
     private Socket socket;
 
+    /** ClientControllerCommunicator for logic handling */
     private ClientControllerCommunicator clientControllerCommunicator;
 
     /**
@@ -25,20 +29,14 @@ public class Client {
     /** Constructor
      *  Loop for receiving Data
      * */
-    public Client(){
+    public Client(@NonNull String ipAddress, @NonNull int port) throws IllegalArgumentException{
         clientControllerCommunicator = new ClientControllerCommunicator();
-        // Connect to server
         try {
-            // Send login request
-            // receive true/false
-            // send ship request
-            //clientControllerCommunicator.setClientShip();
+            this.socket = new Socket(ipAddress,port);
         }
         catch (Exception e){
-
-        }
-        while (true){
-            sendAndReceive();
+            e.printStackTrace();
+            throw new IllegalArgumentException("Couldn't initialize connection to server");
         }
     }
 }
