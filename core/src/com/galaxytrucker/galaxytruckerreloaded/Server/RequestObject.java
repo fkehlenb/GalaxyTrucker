@@ -1,8 +1,13 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +21,18 @@ public class RequestObject {
 
     /** Ship */
     private Ship ship;
+
+    /** Trader */
+    private Trader trader;
+
+    /** Planet */
+    private Planet planet;
+
+    /** Crew */
+    private Crew crew;
+
+    /** List of crew */
+    private List<Crew> moreCrew;
+
+
 }

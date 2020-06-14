@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
@@ -9,6 +8,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.WeaponDAO;
 import lombok.*;
+
+import java.util.List;
 
 /** This class handles battle logic on the server side */
 @Getter
@@ -47,13 +48,19 @@ public class BattleService {
     private RewardService rewardService;
 
     /** Change the ship which's round it is */
-    public void nextRound(){}
+    public void nextRound(){
+        for (Ship s : participants){
+            if (!s.getAssociatedUser().equals(currentRound.getAssociatedUser())){
+                currentRound = s;
+            }
+        }
+    }
 
     /** Validate user input by checking if it's his round to play
      * @param s - the ship which wants to play
      * @return true if it is it's round else false */
     public boolean validMove(Ship s){
-        return false;
+        return currentRound.getAssociatedUser().equals(s.getAssociatedUser());
     }
 
     /** Make one ship attack another's section
@@ -61,7 +68,10 @@ public class BattleService {
      * @param opponent - the opponent's ship
      * @param weapon - the weapon attacking
      * @param room - the room being attacked */
-    public void attack(Ship attacker, Ship opponent, Weapon weapon, Room room){}
+    public void attack(Ship attacker, Ship opponent, Weapon weapon, Room room){
+        if (validMove(attacker)){
+        }
+    }
 
     /** Heal a ship
      * @param ship - the ship to heal
