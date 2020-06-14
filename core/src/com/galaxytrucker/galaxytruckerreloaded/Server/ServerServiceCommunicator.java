@@ -2,7 +2,6 @@ package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
