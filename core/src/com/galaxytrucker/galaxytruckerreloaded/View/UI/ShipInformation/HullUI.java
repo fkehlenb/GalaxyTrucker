@@ -63,12 +63,12 @@ public class HullUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(hullBackgroundTexture, 0, 0, 0, 0); //TODO xywh
-        float x = 0;
+        float x = 25;
         for(int i=0; i<=currentTexture; i++) {
-            main.batch.draw(hullTexture, x, 0, 10, 10);
-            x+=5;
+            main.batch.draw(hullTexture, x, main.HEIGHT - 83, 25, 25);
+            x+=12;
         }
+        main.batch.draw(hullBackgroundTexture, 25, main.HEIGHT - 112, 577, 97);
         main.batch.end();
     }
 

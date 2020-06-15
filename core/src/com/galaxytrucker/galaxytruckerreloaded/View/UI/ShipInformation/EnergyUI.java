@@ -53,10 +53,10 @@ public class EnergyUI {
 
     public void render() {
         main.batch.begin();
-        float x = 0; //TODO
+        float y = 100;
         for(int i =0; i<=currentTexture; i++) {
-            main.batch.draw(energyTexture, x, 0, 0, 0); //TODO xywh
-            x+=10;
+            main.batch.draw(energyTexture, 25, y, 44, 13);
+            y+=20;
         }
         main.batch.end();
     }

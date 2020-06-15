@@ -40,7 +40,7 @@ public class ScrapUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(scrapBackground, 0, 0, 0, 0); //TODO xy, w, h
+        main.batch.draw(scrapBackground, 600, main.HEIGHT - 90, 147, 60);
         main.batch.end();
     }
 

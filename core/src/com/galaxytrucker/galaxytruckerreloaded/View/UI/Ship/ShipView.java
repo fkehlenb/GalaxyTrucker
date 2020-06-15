@@ -101,16 +101,17 @@ public class ShipView extends AbstractShip {
         super(main, ship, stage, game);
         //java.util.List crew = ship.get ??
 
+        this.map = map;
+
         rooms = new HashMap<>();
         List<Room> existingRooms = ship.getSystems();
         for(Room r : existingRooms) {
             //TODO wie system das zu raum gehört? dann sys id als key, roomui als value
         }
 
-
-        weaponAutofire = new AutofireButton(main.WIDTH/2, main.HEIGHT - 200, 248, 50, this); //TODO xywh
-        moveButton = new MoveButton(main.WIDTH/2, main.HEIGHT - 100, 248, 50, this);
-        inventory = new ShipButton(main.WIDTH/2 + 250,main.HEIGHT - 100, 248, 50, this);
+        weaponAutofire = new AutofireButton(1020, 130, 248, 50, this);
+        moveButton = new MoveButton(850, main.HEIGHT - 90, 300, 500, this); //TODO same here
+        inventory = new ShipButton(750,main.HEIGHT - 80, 450, 500, this); //TODO warum ändert sich die größe nicht
 
         money = new ScrapUI(main, ship.getCoins());
         hull = new HullUI(main, ship.getHp());
@@ -132,16 +133,15 @@ public class ShipView extends AbstractShip {
     @Override
     public void render() {
 
-        stage.draw();
-
         main.batch.begin();
-        main.batch.draw(shipBackground, 0, 0, 0, 0); //TODO xywh
-        main.batch.draw(shipRoomBackground, 0, 0, 10, 10);
-        main.batch.draw(weaponGeneralBackground, 0, 0, 0, 0);
+        main.batch.draw(shipBackground, main.WIDTH -1730, main.HEIGHT/2 - shipBackground.getHeight()/2 - 200, 1000, 1000); //TODO xywh
+        main.batch.draw(shipRoomBackground, main.WIDTH -1500, main.HEIGHT/2 - shipRoomBackground.getHeight()/2 - 100, 550, 550);
+        main.batch.draw(weaponGeneralBackground, 700, 100, 328, 90);
         main.batch.end();
 
         money.render();
         hull.render();
+        energy.render();
 
         if(inventoryUI != null) {
             inventoryUI.render();

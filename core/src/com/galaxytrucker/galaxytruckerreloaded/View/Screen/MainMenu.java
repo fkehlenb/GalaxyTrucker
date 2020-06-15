@@ -27,8 +27,8 @@ public class MainMenu implements Screen {
     public MainMenu(Main main){
         this.main = main;
         background = new Texture("1080p.png");
-        newGame = new NewGameButton(main.WIDTH/2, main.HEIGHT/2, 248, 50, this);
-        quit = new QuitButton(main.WIDTH/2, main.HEIGHT/2 - 100, 248, 50, this);
+        newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
+        quit = new QuitButton(main.WIDTH/2 - 75 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
 
         stage = new Stage();
         stage.addActor(quit);
