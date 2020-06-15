@@ -1,11 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import org.graalvm.compiler.phases.common.NodeCounterPhase;
 
 public class ScrapUI {
 
