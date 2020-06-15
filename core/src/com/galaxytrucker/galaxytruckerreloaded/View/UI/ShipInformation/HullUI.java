@@ -1,9 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
+
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
 /**
@@ -12,29 +11,66 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 public class HullUI {
 
     /**
-     * SpriteBatch
-     */
-    private SpriteBatch batch;
-
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
-
-    /**
      * HullUI background texture
      */
-    private Texture HullBackgroundTexture;
+    private Texture hullBackgroundTexture;
 
     /**
      * Change amount of hull integrity based on hp
      */
-    private List<Texture> hullTextures;
+    private Texture hullTexture;
 
     /**
      * the current status
      */
     private int status;
+
+    private Main main;
+
+    /**
+     * how many bars in hullTexture?
+     */
+    private int currentTexture;
+
+    /**
+     * Constructor
+     *
+     * @param main - main class
+     * @param status the current status of the hull
+     */
+    public HullUI(Main main, int status) {
+        this.main = main;
+        this.status = status;
+
+        currentTexture = 8;
+
+        hullBackgroundTexture = new Texture("gameuis/top_hull.png");
+        hullTexture = new Texture("gameuis/hull.png");
+
+    }
+
+    /**
+     * the status of the hull was updated, meaning a new texture needs to be displayed
+     */
+    public void updateStatus(int status) {
+        this.status = status;
+        //TODO richtige texture berechnen
+    }
+
+    /**
+     * render
+     * no stage stuff
+     */
+    public void render() {
+        main.batch.begin();
+        main.batch.draw(hullBackgroundTexture, 0, 0, 0, 0); //TODO xywh
+        float x = 0;
+        for(int i=0; i<=currentTexture; i++) {
+            main.batch.draw(hullTexture, x, 0, 10, 10);
+            x+=5;
+        }
+        main.batch.end();
+    }
 
     /**
      * setup called after initialisation
@@ -58,21 +94,7 @@ public class HullUI {
      * dispose
      */
     public void disposeHullUI() {
-    }
-
-    /**
-     * the status of the hull was updated, meaning a new texture needs to be displayed
-     */
-    public void updateStatus() {
-
-    }
-
-    /**
-     * Constructor
-     *
-     * @param main - main class
-     * @param status the current status of the hull
-     */
-    public HullUI(Main main, int status) {
+        hullBackgroundTexture.dispose();
+        hullTexture.dispose();
     }
 }

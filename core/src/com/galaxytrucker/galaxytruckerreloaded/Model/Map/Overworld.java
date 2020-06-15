@@ -4,10 +4,13 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 import com.j256.ormlite.field.DatabaseField;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
+@Getter
+@Setter
 public class Overworld implements Serializable {
 
     /** ID */

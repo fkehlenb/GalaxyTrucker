@@ -31,6 +31,7 @@ public class ContinueButton extends ImButton {
      * Left-Click action of the Button.
      */
     public void leftClick() {
+        ui.disposeOptionsUI();
     }
 
     /**

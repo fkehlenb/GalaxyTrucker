@@ -43,7 +43,7 @@ public class InventoryCloseButton extends ImButton {
 
         }
         else if(inventory != null) {
-
+            inventory.disposeInventoryUI();
         }
     }
 

@@ -48,6 +48,6 @@ public class ShipButton extends ImButton
      */
     public void leftClick()
     {
-
+        ui.openInventory();
     }
 }

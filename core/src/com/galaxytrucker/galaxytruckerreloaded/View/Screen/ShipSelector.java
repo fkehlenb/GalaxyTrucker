@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.HangerController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CreateGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SinglePlayerButton;
@@ -48,9 +49,14 @@ public class ShipSelector implements Screen {
      */
     private SinglePlayerButton singlePlayerButton;
 
+    /**
+     * button to create game
+     */
+    private CreateGameButton createGameButton;
+
     private HangerController controller;
 
-    /** Constructor TODO wie werden die schiffe dargestellt
+    /** Constructor
      * @param main - main class */
     public ShipSelector(Main main){
         this.main = main;
@@ -69,6 +75,9 @@ public class ShipSelector implements Screen {
             difficulties.add(difficulty1);
             stage.addActor(difficulty1);
         }
+
+        createGameButton = new CreateGameButton(main.WIDTH/2, main.HEIGHT/2, 248, 50, this);
+        stage.addActor(createGameButton);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -136,5 +145,13 @@ public class ShipSelector implements Screen {
      */
     public void setSinglePlayer(boolean single) {
 
+    }
+
+    /**
+     * start the game
+     */
+    public void startGame() {
+        main.setScreen(new GamePlay(main)); //TODO nur für tests!!!
+        dispose();
     }
 }

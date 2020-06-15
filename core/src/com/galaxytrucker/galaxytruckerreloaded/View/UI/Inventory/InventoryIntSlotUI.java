@@ -21,6 +21,38 @@ public class InventoryIntSlotUI extends InventorySlotUI {
     private String text;
 
     /**
+     * Constructor
+     *
+     * @param main - main class
+     */
+    public InventoryIntSlotUI(Main main, int value, float x, float y, String text) {
+        super(main, x, y);
+        this.value = value;
+        this.text = text;
+        //texture = new Texture();
+    }
+
+    /**
+     * Dispose inventory slot ui
+     */
+    @Override
+    public void disposeInventorySlotUI() {
+        super.disposeInventorySlotUI();
+        //texture.dispose();
+    }
+
+    /**
+     * render
+     * without stage stuff
+     */
+    public void render() {
+        super.render();
+        /*main.batch.begin();
+        main.batch.draw(texture, 0, 0, 0, 0);//TODO whxy
+        main.batch.end();*/
+    }
+
+    /**
      * show the ui
      */
     @Override
@@ -34,22 +66,5 @@ public class InventoryIntSlotUI extends InventorySlotUI {
     @Override
     public void hideInventorySlotUI() {
 
-    }
-
-    /**
-     * Dispose inventory slot ui
-     */
-    @Override
-    public void disposeInventorySlotUI() {
-
-    }
-
-    /**
-     * Constructor
-     *
-     * @param main - main class
-     */
-    public InventoryIntSlotUI(Main main, int value) {
-        super(main);
     }
 }

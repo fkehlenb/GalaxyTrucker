@@ -10,6 +10,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.CrewUI;
 
 /**
  * Button for dismissing a Crew Member
@@ -28,13 +29,19 @@ public class CrewDismissButton extends ImButton
     private int crewID;
 
     /**
+     * the ui with this button
+     */
+    private CrewUI ui;
+
+    /**
      * Constructor
      *
      * @param crew the crew member
      */
-    public CrewDismissButton(Texture texture, float x, float y, float width, float height, int crew) {
+    public CrewDismissButton(Texture texture, float x, float y, float width, float height, int crew, CrewUI ui) {
         super(texture, x, y, width, height);
         this.crewID = crew;
+        this.ui = ui;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
@@ -44,7 +51,7 @@ public class CrewDismissButton extends ImButton
 
     public void leftClick()
     {
-        // dismiss crew
+        ui.crewMoving();
     }
 }
 

@@ -54,13 +54,13 @@ public class SystemButton extends ImButton
      */
     public void rightClick()
     {
-
+        ui.lessEnergy(); //TODO how much?
     }
 
     /**
      * increases the Energie provided for a System
      */
     public void leftClick() {
-
+        ui.activateEnergy();
     }
 }

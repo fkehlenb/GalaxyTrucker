@@ -31,7 +31,7 @@ public class MoveButton extends ImButton {
      */
     @Override
     public void leftClick() {
-
+        ui.openMap();
     }
 
     /**

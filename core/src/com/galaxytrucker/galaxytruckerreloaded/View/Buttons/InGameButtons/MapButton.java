@@ -1,0 +1,65 @@
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
+
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
+
+/**
+ * button representing one planet on the map
+ */
+public class MapButton extends ImButton {
+
+    /**
+     * location planet
+     */
+    private float x, y;
+
+    /**
+     * planet
+     */
+    private Planet planet;
+
+    /**
+     * the ui this is on
+     */
+    private MapUI ui;
+
+    /**
+     * the sound when clicked
+     */
+    private Sound clickSound;
+
+    /**
+     * constructor
+     * @param texture texture of button
+     * @param x x pos of button
+     * @param y y pos of button
+     * @param width width of button
+     * @param height height of button
+     */
+    public MapButton(Texture texture, float x, float y, float width, float height, MapUI ui, float px, float py, Planet planet) {
+        super(texture, x, y, width, height);
+        this.ui = ui;
+        this.planet = planet;
+        this.x = px;
+        this.y = py;
+
+        this.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                leftClick();
+            }
+        });
+    }
+
+    /**
+     * what happens on left click (method in UI)
+     */
+    @Override
+    public void leftClick() {
+        ui.moveToPlanet(planet);
+    }
+}
