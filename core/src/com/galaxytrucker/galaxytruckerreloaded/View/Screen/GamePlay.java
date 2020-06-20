@@ -117,7 +117,7 @@ public class GamePlay implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-    //TODO only for bullshitting
+    //TODO only for testing
     public Ship fakeShip(){
         Trader trader = new Trader();
         //Planet planet = new Planet("planet", 125f, 125f, PlanetEvent.SHOP, false, new LinkedList<>(), trader);
