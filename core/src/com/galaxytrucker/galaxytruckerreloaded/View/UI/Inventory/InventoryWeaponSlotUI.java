@@ -60,7 +60,7 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     public void render() {
         super.render();
         main.batch.begin();
-        main.batch.draw(weaponTexture, 0, 0, 0, 0); //TODO whxy
+        main.batch.draw(weaponTexture, posX, posY, 22, 67);
         main.batch.end();
     }
 

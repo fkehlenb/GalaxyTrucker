@@ -1,12 +1,16 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
@@ -26,6 +30,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionsUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -99,7 +104,7 @@ public class GamePlay implements Screen {
      */
     public Stage stage;
 
-    private AutofireButton autofire;
+    private Viewport viewport;
 
     /**
      * Constructor
@@ -110,9 +115,10 @@ public class GamePlay implements Screen {
         this.main = main;
         background = new Texture("1080p.png");
 
-        stage = new Stage();
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
 
-        player = new ShipView(main, fakeShip(), stage, map, this); //TODO wie schiff aus controller?
+        player = new ShipView(main, fakeShip(), stage, fakeMap(), this); //TODO wie schiff aus controller?
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -132,6 +138,28 @@ public class GamePlay implements Screen {
         return new Ship(1, "aaron", 100, 49, 5, 5, 7, 9, 23, 6f, planet, 6, 6, rooms, weapons, false);
     }
 
+    /**
+     * später durch laden aus controller ersetzen
+     */
+    public Overworld fakeMap() {
+        HashMap<float[], Planet> hmap = new HashMap<>();
+        Planet sp = new Planet("planet1", (float) 78, (float) 199, PlanetEvent.SHOP, new LinkedList<Ship>());
+        float[] f = new float[2];
+        f[0] = 78;
+        f[1] = 199;
+        hmap.put(f, sp);
+        Planet sp1 = new Planet("planet2", (float) 200, (float) 154, PlanetEvent.COMBAT, new LinkedList<Ship>());
+        float[] f1 = new float[2];
+        f1[0] = 200;
+        f1[1] = 154;
+        hmap.put(f1, sp1);
+        Overworld res = new Overworld(2);
+        res.setPlanetMap(hmap);
+        res.setStartPlanet(sp);
+
+        return res;
+    }
+
 
     @Override
     public void show() {
@@ -139,7 +167,14 @@ public class GamePlay implements Screen {
     }
 
     @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
+    }
+
+    @Override
     public void render(float delta) {
+        updateInput();
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -166,6 +201,20 @@ public class GamePlay implements Screen {
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
         if(optionsUI != null) { optionsUI.disposeOptionsUI(); }
         stage.dispose();
+    }
+
+    /**
+     * handles input to pause game, open options
+     */
+    public void updateInput() {
+        System.out.println("touched");
+        if(Gdx.input.isKeyPressed(Input.Keys.O)) {
+            System.out.println("Where");
+            createOptions();
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.P)) {
+            //paused
+        }
     }
 
     /**
@@ -208,6 +257,7 @@ public class GamePlay implements Screen {
      */
     public void createOptions() {
         optionsUI = new OptionsUI(main, stage, this);
+        //TODO controller sagen dass spiel "pausiert"?
     }
 
     public void deleteOptions() {
@@ -267,15 +317,27 @@ public class GamePlay implements Screen {
      */
     public void weaponShot(int id, Room room) {} //call controller
 
-    public List<Crew> loadCrew(int shipId) { return null;}
-    public List<Weapon> loadWeapons(int shipId) { return null;}
+    public List<Crew> loadCrew(int shipId) {  //TODO call controller
+        List<Crew> result = new LinkedList<>();
+        int[] arr = new int[4];
+        arr[0] = 3;
+        arr[1] = 7;
+        arr[2] = 8;
+        arr[3] = 6;
+        Crew c1 = new Crew(1, "ana", 7, 10, arr);
+        result.add(c1);
+        Crew c2 = new Crew(2, "battle", 8, 10, arr);
+        result.add(c2);
+        return result;
+    }
+    public List<Weapon> loadWeapons(int shipId) {
+        List<Weapon> weapons = new LinkedList<>();
+        weapons.add(new LaserBlaster("karl"));
+        weapons.add(new LaserBlaster("test"));
+        return weapons;
+    }
     public int loadMissiles(int shipId) { return 0; }
     public int loadFuel(int shipId) { return 0; }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
 
     @Override
     public void pause() {

@@ -10,7 +10,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 public class InventoryUI {
@@ -36,6 +35,8 @@ public class InventoryUI {
 
     private ShipView shipView;
 
+    private float x, y;
+
     /**
      * Constructor
      *
@@ -48,20 +49,29 @@ public class InventoryUI {
         this.stage = stage;
         this.shipView = shipView;
 
-        closeButton = new InventoryCloseButton(0, 0, 0, 0, null, this); //TODO xywh
-        stage.addActor(closeButton);
-
         inventoryBackground = new Texture("inventory/inventory.png");
 
+        x = main.WIDTH/2 - inventoryBackground.getWidth()/2;
+        y = main.HEIGHT/2 - inventoryBackground.getHeight()/2;
+
+        closeButton = new InventoryCloseButton(x+750, y+5, 248, 50, null, this);
+        stage.addActor(closeButton);
+
         slots = new LinkedList<>();
+        float cx = x + 25;
+        float cy = y + 560;
         for(Crew c : crew) {
-            slots.add(new InventoryCrewSlotUI(main, c, 0, 0)); //TODO xy
+            slots.add(new InventoryCrewSlotUI(main, c, cx, cy));
+            cy -= 80;
         }
+        float wy = y + 550;
+        float wx = cx + 200;
         for(Weapon w : weapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, 0, 0)); //TODO xy
+            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy));
+            wy -=90;
         }
-        slots.add(new InventoryIntSlotUI(main, fuel, 0, 0, "fuel")); //TODO xy
-        slots.add(new InventoryIntSlotUI(main, missiles, 0, 0, "missiles")); //TODO xy
+        slots.add(new InventoryIntSlotUI(main, fuel, wx+200, y+550, "fuel")); //TODO xy
+        slots.add(new InventoryIntSlotUI(main, missiles, wx+200, y+750, "missiles")); //TODO xy
     }
 
     /**
@@ -70,7 +80,7 @@ public class InventoryUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(inventoryBackground, 0, 0, 0, 0); //TODO xywh
+        main.batch.draw(inventoryBackground, x, y, 900, 706);
         main.batch.end();
 
         for(InventorySlotUI u : slots) {

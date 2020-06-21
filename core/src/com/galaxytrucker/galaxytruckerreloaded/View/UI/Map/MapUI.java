@@ -27,6 +27,9 @@ public class MapUI {
 
     private ShipView shipView;
 
+    private float x;
+    private float y;
+
     /**
      * Constructor
      * @param main - main class
@@ -38,9 +41,12 @@ public class MapUI {
 
         mapTexture = new Texture("map/map_overlay.png");
 
+        x = main.WIDTH/2 - mapTexture.getWidth()/2;
+        y = main.HEIGHT/2 - mapTexture.getHeight()/2;
+
         locations = new LinkedList<>();
         for(float[] f : map.getPlanetMap().keySet()) {
-            MapButton mb = new MapButton(new Texture("map/map_button.png"), 0, 0, 0, 0, this, f[0], f[1], map.getPlanetMap().get(f));
+            MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+f[0]), (y+f[1]), 10, 10, this, map.getPlanetMap().get(f));
             locations.add(mb);
             stage.addActor(mb);
         }
@@ -52,7 +58,7 @@ public class MapUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(mapTexture, 0, 0, 0, 0); //TODO whxy
+        main.batch.draw(mapTexture, x, y, 1160, 626);
         main.batch.end();
     }
 

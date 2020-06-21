@@ -110,8 +110,8 @@ public class ShipView extends AbstractShip {
         }
 
         weaponAutofire = new AutofireButton(1020, 130, 248, 50, this);
-        moveButton = new MoveButton(850, main.HEIGHT - 90, 300, 500, this); //TODO same here
-        inventory = new ShipButton(750,main.HEIGHT - 80, 450, 500, this); //TODO warum ändert sich die größe nicht
+        moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this); //TODO same here
+        inventory = new ShipButton(750,main.HEIGHT - 80, 50, 92, this); //TODO warum ändert sich die größe nicht
 
         money = new ScrapUI(main, ship.getCoins());
         hull = new HullUI(main, ship.getHp());
@@ -122,8 +122,8 @@ public class ShipView extends AbstractShip {
         weaponGeneralBackground = new Texture("shipsys/weapon/generalbox.png");
 
         stage.addActor(weaponAutofire);
-        stage.addActor(moveButton);
         stage.addActor(inventory);
+        stage.addActor(moveButton);
     }
 
     /**
@@ -201,8 +201,7 @@ public class ShipView extends AbstractShip {
      * called by ship button
      */
     public void openInventory() {
-        inventoryUI = new InventoryUI(main, game.loadCrew(id), game.loadWeapons(id), game.loadFuel(id), game.loadMissiles(id), stage, this); //TODO aus controller? aus ship?
-        //evtl zur sicherheit aus controller um aktuelle daten zu haben
+        inventoryUI = new InventoryUI(main, game.loadCrew(id), game.loadWeapons(id), game.loadFuel(id), game.loadMissiles(id), stage, this);
     }
 
     public void deleteInventory() {

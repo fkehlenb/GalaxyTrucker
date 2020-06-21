@@ -1,11 +1,11 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.j256.ormlite.field.DatabaseField;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)

@@ -55,8 +55,7 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
         name = crew.getName();
         health = crew.getHealth();
         maxhealth = crew.getMaxhealth();
-
-        currTexture = (health/maxhealth) * 10;
+        currTexture = (int) (((float) health/maxhealth) * 10);
 
         healthStatus = new Texture("gameuis/energybar.png");
         healthBox = new Texture("crew/health_box.png");
@@ -79,12 +78,12 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
     public void render() {
         super.render();
         main.batch.begin();
-        main.batch.draw(crewTexture, 0, 0, 0, 0); //TODO xywh
-        main.batch.draw(healthBox, 0, 0, 10, 10);
-        float x = 0;
+        main.batch.draw(crewTexture, posX, posY, 72, 72); //48
+        main.batch.draw(healthBox, posX+5, posY-15, 50, 15);
+        float x = posX+11;
         for(int i=0;i<currTexture;i++) {
-            main.batch.draw(healthStatus, x, 0, 0, 0); //TODO whxy
-            x+=5;
+            main.batch.draw(healthStatus, x, posY-10, 4, 5);
+            x+=4;
         }
         main.batch.end();
     }

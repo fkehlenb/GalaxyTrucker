@@ -14,11 +14,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
 public class MapButton extends ImButton {
 
     /**
-     * location planet
-     */
-    private float x, y;
-
-    /**
      * planet
      */
     private Planet planet;
@@ -41,12 +36,10 @@ public class MapButton extends ImButton {
      * @param width width of button
      * @param height height of button
      */
-    public MapButton(Texture texture, float x, float y, float width, float height, MapUI ui, float px, float py, Planet planet) {
+    public MapButton(Texture texture, float x, float y, float width, float height, MapUI ui, Planet planet) {
         super(texture, x, y, width, height);
         this.ui = ui;
         this.planet = planet;
-        this.x = px;
-        this.y = py;
 
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

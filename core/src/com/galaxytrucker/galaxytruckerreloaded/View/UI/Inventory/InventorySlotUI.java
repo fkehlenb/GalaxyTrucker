@@ -10,12 +10,12 @@ public abstract class InventorySlotUI {
     /**
      * Inventory slot position x
      */
-    private float posX;
+    protected float posX;
 
     /**
      * Inventory slot position y
      */
-    private float posY;
+    protected float posY;
 
     /**
      * Inventory slot background

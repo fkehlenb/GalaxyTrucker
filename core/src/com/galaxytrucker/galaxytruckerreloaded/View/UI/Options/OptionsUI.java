@@ -32,9 +32,9 @@ public class OptionsUI {
 
     private Main main;
 
-    private Stage stage;
-
     private GamePlay game;
+
+    private float x, y;
 
     /**
      * Constructor
@@ -43,16 +43,18 @@ public class OptionsUI {
      */
     public OptionsUI(Main main, Stage stage, GamePlay game) {
         this.main = main;
-        this.stage = stage;
         this.game = game;
 
-        continueButton = new ContinueButton(0, 0, 10, 10, this);
-        mainMenuButton = new MainMenuButton(0, 0, 10, 10, main); //TODO whxy
+        optionsBackgroundTexture = new Texture("options/options.png");
+
+        x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
+        y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
+
+        continueButton = new ContinueButton(x+10, y+20, 10, 10, this);
+        mainMenuButton = new MainMenuButton(x+10, y+50, 10, 10, main); //TODO whxy
 
         stage.addActor(continueButton);
         stage.addActor(mainMenuButton);
-
-        optionsBackgroundTexture = new Texture("options/options.png");
     }
 
     /**
@@ -61,7 +63,7 @@ public class OptionsUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(optionsBackgroundTexture, 0, 0, 10, 10); //TODO whxy
+        main.batch.draw(optionsBackgroundTexture, x, y, 601, 471);
         main.batch.end();
     }
 
