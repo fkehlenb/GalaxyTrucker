@@ -50,8 +50,8 @@ public class OptionsUI {
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
 
-        continueButton = new ContinueButton(x+10, y+20, 10, 10, this);
-        mainMenuButton = new MainMenuButton(x+10, y+50, 10, 10, main); //TODO whxy
+        continueButton = new ContinueButton(x+220, y+220, 128, 24, this);
+        mainMenuButton = new MainMenuButton(x+220, y+270, 128, 24, main); 
 
         stage.addActor(continueButton);
         stage.addActor(mainMenuButton);
@@ -72,9 +72,9 @@ public class OptionsUI {
      */
     public void disposeOptionsUI() {
         optionsBackgroundTexture.dispose();
-        game.deleteOptions();
         continueButton.remove();
         mainMenuButton.remove();
+        game.deleteOptions();
     }
 
     /**
