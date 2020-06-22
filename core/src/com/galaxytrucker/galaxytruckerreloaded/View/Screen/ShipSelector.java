@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.HangerController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CreateGameButton;
@@ -56,6 +58,8 @@ public class ShipSelector implements Screen {
 
     private HangerController controller;
 
+    private Viewport viewport;
+
     /** Constructor
      * @param main - main class */
     public ShipSelector(Main main){
@@ -65,7 +69,8 @@ public class ShipSelector implements Screen {
 
         background = new Texture("1080p.png");
 
-        stage = new Stage();
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
 
         singlePlayerButton = new SinglePlayerButton(main.WIDTH-100, main.HEIGHT-100, 248, 50, this);
         stage.addActor(singlePlayerButton);
@@ -99,7 +104,7 @@ public class ShipSelector implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override

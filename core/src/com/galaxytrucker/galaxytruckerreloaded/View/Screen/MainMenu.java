@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.NewGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.QuitButton;
@@ -20,6 +22,8 @@ public class MainMenu implements Screen {
 
     private Stage stage;
 
+    private Viewport viewport;
+
     private NewGameButton newGame;
     private QuitButton quit;
 
@@ -30,7 +34,8 @@ public class MainMenu implements Screen {
         newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
         quit = new QuitButton(main.WIDTH/2 - 75 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
 
-        stage = new Stage();
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
         stage.addActor(quit);
         stage.addActor(newGame);
 
@@ -67,7 +72,7 @@ public class MainMenu implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     /**
