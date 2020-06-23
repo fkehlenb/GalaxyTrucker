@@ -5,10 +5,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -58,4 +55,8 @@ public class Planet implements Serializable {
     /** Trader */
     @OneToOne
     private Trader trader;
+
+    /** The overWorld this planet belongs to */
+    @ManyToOne
+    private Overworld overworld;
 }

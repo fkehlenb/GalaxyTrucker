@@ -5,12 +5,17 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateUserExc
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.UserDAO;
 
+import javax.persistence.EntityManager;
+
 public class UserService {
 
     /**
      * The userDAO used to store and fetch data
      */
-    private UserDAO userDAO;
+    private UserDAO userDAO = new UserDAO();
+
+    /** Entity Manager */
+    private EntityManager entityManager = userDAO.entityManager;
 
     /**
      * add a new user to the database
@@ -20,6 +25,7 @@ public class UserService {
      * @throws DuplicateUserException if the user already exists
      */
     public void addUser(String username) throws DuplicateUserException {
+        userDAO.persist(new User(username));
     }
 
     /**
@@ -30,7 +36,10 @@ public class UserService {
      * @throws UserNotFoundException if the user couldn't be found
      */
     public User getUser(String username) throws UserNotFoundException {
-        return null;
+        entityManager.getTransaction().begin();
+        User u = entityManager.find(User.class,username);
+        entityManager.getTransaction().commit();
+        return u;
     }
 
     /**
@@ -40,6 +49,7 @@ public class UserService {
      * @throws UserNotFoundException if the user cannot be found in the database
      */
     public void updateUser(User u) throws UserNotFoundException {
+        userDAO.update(u);
     }
 
     /**
@@ -50,6 +60,9 @@ public class UserService {
      * @throws UserNotFoundException if the user cannot be found
      */
     public void removeUserByUsername(String username) throws UserNotFoundException {
+        entityManager.getTransaction().begin();
+        entityManager.remove(getUser(username));
+        entityManager.getTransaction().commit();
     }
 
     /**
@@ -58,16 +71,5 @@ public class UserService {
      * @param username - the username of the user
      */
     public void saveGame(String username) throws UserNotFoundException {
-    }
-
-    /**
-     * Login
-     *
-     * @param username - the username of the user
-     * @return true - if the login was successful else return false
-     *
-     */
-    public boolean login(String username) {
-        return false;
     }
 }

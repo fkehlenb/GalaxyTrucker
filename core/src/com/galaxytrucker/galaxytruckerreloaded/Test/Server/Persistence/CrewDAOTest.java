@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.xml.crypto.Data;
 import java.util.UUID;
 
+/** Test the crew database access object */
 public class CrewDAOTest {
 
 

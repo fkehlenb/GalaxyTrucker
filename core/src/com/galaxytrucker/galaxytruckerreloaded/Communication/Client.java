@@ -1,12 +1,15 @@
 package com.galaxytrucker.galaxytruckerreloaded.Communication;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
+import lombok.Getter;
 import lombok.NonNull;
 
 import java.io.*;
 import java.net.Socket;
 
+/** This class handles the client-side networking */
 public class Client {
 
     /**
@@ -35,27 +38,23 @@ public class Client {
     private ObjectInputStream receiveObject;
 
     /**
+     * The client's ship
+     */
+    @Getter
+    private Ship myShip;
+
+    /**
      * Send a request to the server
+     *
+     * @param requestObject - the request object
      * @return the server's response
+     *
+     * @throws IllegalArgumentException on exception
      */
     public ResponseObject sendAndReceive(RequestObject requestObject) throws IllegalArgumentException {
         try {
             sendObject.writeObject(requestObject);
             return (ResponseObject) receiveObject.readObject();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    /**
-     * Login
-     */
-    public boolean login(String username) throws IllegalArgumentException {
-        try {
-            send.println("[LOGIN]:" + username);
-            return receive.readLine().equals("[ACCEPTED]");
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException(e.getMessage());
@@ -63,7 +62,68 @@ public class Client {
     }
 
     /**
+     * Login
+     *
+     * @param username - the username of the user to login
+     *
+     * @return whether the client is allowed to login or not
+     *
+     * @throws IllegalArgumentException on error
+     */
+    public boolean login(String username) throws IllegalArgumentException {
+        try {
+            // ==================== LOG-IN ====================
+            send.println("[LOGIN]:" + username);
+            String received = receive.readLine();
+            // ==================== EXCEPTION ====================
+            if (received.contains("[EXCEPTION]:[LOGIN]")){
+                System.out.println("<CLIENT>:[EXCEPTION DURING LOGIN! TERMINATING...]");
+                throw new IllegalArgumentException();
+            }
+            // ==================== SUCCESSFUL LOGIN ====================
+            else if (received.equals("true")){
+                System.out.println("<CLIENT>:[LOGIN SUCCESSFUL]:[USERNAME]:" + username);
+                received = receive.readLine();
+                // ==================== NEW GAME ====================
+                if (received.equals("[NEW-GAME]")){
+                    System.out.println("<CLIENT>:[NEW-GAME]:[USERNAME]:"+username);
+                    // TODO NEW GAME CREATION
+
+                    // =======================
+                    received = receive.readLine();
+                }
+                // ==================== FETCH SHIP ====================
+                if (received.equals("[FETCH-SHIP]")){
+                    System.out.println("<CLIENT>:[FETCH-SHIP]:[USERNAME]:"+username);
+                    try {
+                        this.myShip = (Ship) receiveObject.readObject();
+                    }
+                    catch (Exception f){
+                        f.printStackTrace();
+                        System.out.println("<CLIENT>:[EXCEPTION]:[FETCH-SHIP]:[USERNAME]:"+username);
+                        throw new IllegalArgumentException();
+                    }
+                }
+                return true;
+            }
+            // ==================== FAILED LOGIN ====================
+            else {
+                return false;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
      * Constructor
+     *
+     * @param ipAddress - the ipAddress of the server
+     * @param port      - the server port
+     *
+     * @throws IllegalArgumentException on error
      */
     public Client(@NonNull String ipAddress, @NonNull int port) throws IllegalArgumentException {
         try {
@@ -74,7 +134,7 @@ public class Client {
             receiveObject = new ObjectInputStream(socket.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Couldn't initialize connection to server");
+            throw new IllegalArgumentException("<CLIENT>:[Couldn't initialize connection to server]");
         }
     }
 }

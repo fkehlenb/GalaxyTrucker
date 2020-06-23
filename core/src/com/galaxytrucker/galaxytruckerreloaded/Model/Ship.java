@@ -78,6 +78,7 @@ public class Ship implements Serializable {
      * The planet the ship is currently at
      */
     @NonNull
+    @ManyToOne
     private Planet planet;
 
     /** Shields */
@@ -92,12 +93,12 @@ public class Ship implements Serializable {
 
     /** This ship's systems */
     @NonNull
-    @ElementCollection
+    @OneToMany
     private List<Room> systems;
 
     /** Inventory */
     @NonNull
-    @ElementCollection
+    @OneToMany
     private List<Weapon> inventory;
 
     /** Whether or not the ship is in combat */

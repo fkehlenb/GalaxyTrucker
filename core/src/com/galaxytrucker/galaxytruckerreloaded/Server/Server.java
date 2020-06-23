@@ -39,6 +39,7 @@ public class Server implements Runnable{
             System.out.println(f);
         }
         Client client = new Client("localhost",5050);
+        boolean a = client.login("ahmad");
     }
 
     /** Start server on specified port

@@ -5,9 +5,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
@@ -15,18 +13,20 @@ import java.io.Serializable;
 @Entity
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Trader extends Planet implements Serializable {
+public class Trader implements Serializable {
 
     /** ID */
-    @Id
+    @NonNull @Id
     private int id;
 
-    /** Associated user */
+    /** Planet the trader is located at */
+    @OneToOne (cascade = CascadeType.ALL)
+    @NonNull
     private Planet planet;
 
     /** Weapons for sale */
     @NonNull
-    @OneToMany
+    @OneToMany (cascade = CascadeType.ALL)
     private List<Weapon> weaponStock;
 
     /** Rockets for sale */
@@ -38,7 +38,7 @@ public class Trader extends Planet implements Serializable {
     private int fuelStock;
 
     /** Crew for sale */
-    @OneToMany
+    @OneToMany (cascade = CascadeType.ALL)
     @NonNull
     private List<Crew> crewStock;
 
