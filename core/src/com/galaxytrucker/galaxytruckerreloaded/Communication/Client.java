@@ -72,17 +72,48 @@ public class Client {
      */
     public boolean login(String username) throws IllegalArgumentException {
         try {
+            // ==================== LOG-IN ====================
             send.println("[LOGIN]:" + username);
-            boolean successfulLogin = receive.readLine().equals("true");
-            if (successfulLogin) {
-                send.println("[GIVE-ME-SHIP]");
-                myShip = (Ship) receiveObject.readObject();
+            String received = receive.readLine();
+            // ==================== EXCEPTION ====================
+            if (received.contains("[EXCEPTION]:[LOGIN]")){
+                System.out.println("<CLIENT>:[EXCEPTION DURING LOGIN! TERMINATING...]");
+                throw new IllegalArgumentException();
+            }
+            // ==================== SUCCESSFUL LOGIN ====================
+            else if (received.equals("true")){
+                System.out.println("<CLIENT>:[LOGIN SUCCESSFUL]:[USERNAME]:" + username);
+                received = receive.readLine();
+                // ==================== NEW GAME ====================
+                if (received.equals("[NEW-GAME]")){
+                    System.out.println("<CLIENT>:[NEW-GAME]:[USERNAME]:"+username);
+                    // TODO NEW GAME CREATION
+
+                    // =======================
+                    received = receive.readLine();
+                }
+                // ==================== FETCH SHIP ====================
+                if (received.equals("[FETCH-SHIP]")){
+                    System.out.println("<CLIENT>:[FETCH-SHIP]:[USERNAME]:"+username);
+                    try {
+                        this.myShip = (Ship) receiveObject.readObject();
+                    }
+                    catch (Exception f){
+                        f.printStackTrace();
+                        System.out.println("<CLIENT>:[EXCEPTION]:[FETCH-SHIP]:[USERNAME]:"+username);
+                        throw new IllegalArgumentException();
+                    }
+                }
                 return true;
             }
-            return false;
-        } catch (Exception e) {
+            // ==================== FAILED LOGIN ====================
+            else {
+                return false;
+            }
+        }
+        catch (Exception e){
             e.printStackTrace();
-            throw new IllegalArgumentException(e.getMessage());
+            throw new IllegalArgumentException();
         }
     }
 
@@ -103,7 +134,7 @@ public class Client {
             receiveObject = new ObjectInputStream(socket.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Couldn't initialize connection to server");
+            throw new IllegalArgumentException("<CLIENT>:[Couldn't initialize connection to server]");
         }
     }
 }

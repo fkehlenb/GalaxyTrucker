@@ -29,6 +29,8 @@ public class User implements Serializable {
     private Ship userShip;
 
     /** Whether or not the user is logged in */
-    @NonNull
     private boolean loggedIn = false;
+
+    /** First game */
+    private boolean firstGame = true;
 }
