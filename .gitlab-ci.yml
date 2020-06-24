@@ -1,7 +1,6 @@
 image: java:latest
 
 stages:
-  - tex
   - assemble
   - build
   - javadoc
@@ -11,18 +10,6 @@ cache:
   paths:
     - .gradle/wrapper
     - .gradle/caches
-
-tex:
-  image: tianon/latex
-  stage: tex
-  script:
-    - cd doc
-    - pdflatex Architekturbeschreibung.tex
-    - pdflatex Architekturbeschreibung.tex
-    - cd ..
-  artifacts:
-    paths:
-      - doc/Architekturbeschreibung.pdf
       
 assemble:
   stage: assemble

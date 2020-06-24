@@ -1,6 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.Communication;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.Getter;
@@ -43,6 +45,10 @@ public class Client {
     @Getter
     private Ship myShip;
 
+    /** Client map */
+    @Getter
+    private Overworld overworld;
+
     /**
      * Send a request to the server
      *
@@ -66,11 +72,12 @@ public class Client {
      *
      * @param username - the username of the user to login
      *
+     * @param shipType
      * @return whether the client is allowed to login or not
      *
      * @throws IllegalArgumentException on error
      */
-    public boolean login(String username) throws IllegalArgumentException {
+    public boolean login(String username, ShipType shipType) throws IllegalArgumentException {
         try {
             // ==================== LOG-IN ====================
             send.println("[LOGIN]:" + username);
@@ -86,10 +93,8 @@ public class Client {
                 received = receive.readLine();
                 // ==================== NEW GAME ====================
                 if (received.equals("[NEW-GAME]")){
-                    System.out.println("<CLIENT>:[NEW-GAME]:[USERNAME]:"+username);
-                    // TODO NEW GAME CREATION
-
-                    // =======================
+                    System.out.println("<CLIENT>:[NEW-GAME]:[USERNAME]:"+username+":[SHIP-TYPE]:"+shipType);
+                    sendObject.writeObject(shipType);
                     received = receive.readLine();
                 }
                 // ==================== FETCH SHIP ====================
@@ -97,10 +102,24 @@ public class Client {
                     System.out.println("<CLIENT>:[FETCH-SHIP]:[USERNAME]:"+username);
                     try {
                         this.myShip = (Ship) receiveObject.readObject();
+                        System.out.println("<CLIENT>:[RECEIVED-SHIP]:[USERNAME]:"+username+":[SHIP-ID]:"+myShip.getId());
                     }
                     catch (Exception f){
                         f.printStackTrace();
                         System.out.println("<CLIENT>:[EXCEPTION]:[FETCH-SHIP]:[USERNAME]:"+username);
+                        throw new IllegalArgumentException();
+                    }
+                    received = receive.readLine();
+                }
+                // ==================== FETCH MAP ====================
+                if (received.equals("[FETCH-MAP]")){
+                    try {
+                        this.overworld = (Overworld) receiveObject.readObject();
+                        System.out.println("<CLIENT>:[RECEIVED-MAP]:[USERNAME]:"+username+":[MAP-ID]:"+overworld.getId());
+                    }
+                    catch (Exception f){
+                        f.printStackTrace();
+                        System.out.println("<CLIENT>:[EXCEPTION]:[FETCH-MAP]:[USERNAME]:"+username);
                         throw new IllegalArgumentException();
                     }
                 }

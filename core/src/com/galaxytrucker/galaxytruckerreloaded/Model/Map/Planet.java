@@ -16,10 +16,14 @@ import java.util.List;
 @Entity
 public class Planet implements Serializable {
 
+    /** ID */
+    @Id
+    @NonNull
+    private int id;
+
     /**
      * Planet name
      */
-    @Id
     @NonNull
     private String name;
 

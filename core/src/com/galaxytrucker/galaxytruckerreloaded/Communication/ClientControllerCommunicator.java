@@ -3,6 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Communication;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
@@ -42,9 +43,10 @@ public class ClientControllerCommunicator {
      * @return true if the user already exists else create a enw spaceship
      */
     public boolean login(String username) {
-        boolean permittedLogin = client.login(username);
+        boolean permittedLogin = client.login(username, ShipType.DEFAULT);
         if (permittedLogin) {
-            clientShip = client.getMyShip();
+            this.clientShip = client.getMyShip();
+            this.map = client.getOverworld();
         }
         return permittedLogin;
     }

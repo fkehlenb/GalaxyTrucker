@@ -14,7 +14,7 @@
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.Ship</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.User</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:./database;DB_CLOSE_ON_EXIT=FALSE;" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:./database" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.user" value="root" />
             <property name="javax.persistence.jdbc.password" value="root" />

@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 
 import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -39,7 +40,7 @@ public class Server implements Runnable{
             System.out.println(f);
         }
         Client client = new Client("localhost",5050);
-        boolean a = client.login("ahmad");
+        boolean a = client.login("ahmad", ShipType.DEFAULT);
     }
 
     /** Start server on specified port
