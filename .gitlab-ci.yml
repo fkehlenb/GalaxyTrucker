@@ -1,7 +1,6 @@
 image: java:latest
 
 stages:
-  - tex
   - assemble
   - build
   - javadoc
