@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,6 +28,10 @@ public class User implements Serializable {
      */
     @OneToOne
     private Ship userShip;
+
+    /** The user's overWorld map */
+    @OneToOne
+    private Overworld overworld;
 
     /** Whether or not the user is logged in */
     private boolean loggedIn = false;

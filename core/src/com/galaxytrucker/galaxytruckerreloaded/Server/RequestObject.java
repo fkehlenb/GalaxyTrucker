@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.List;
 
+/** Request sent to the server */
 @Getter
 @Setter
 public class RequestObject {

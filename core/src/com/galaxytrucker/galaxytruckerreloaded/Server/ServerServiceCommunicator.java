@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
@@ -22,15 +23,23 @@ public class ServerServiceCommunicator {
     /** Take a request from the client side, pass it through the services
      * and return a response
      * @return the server's response to the client's request */
-    public String getResponse(String request){
+    public String getResponse(RequestObject request){
         return null;
     }
 
     /** Send the client his ship
      * @param username - the client's username
      * @return the client's ship */
-    public Ship getClientShip(String username){
-        return null;
+    public Ship getClientShip(String username) throws UserNotFoundException {
+        return userService.getUser(username).getUserShip();
+    }
+
+    /** Send the client his overWorld map
+     * @param username - the client's username
+     * @return the client's overWorld map
+     * @throws UserNotFoundException if the user cannot be found */
+    public Overworld getClientMap(String username) throws UserNotFoundException {
+        return userService.getUser(username).getOverworld();
     }
 
     /** Login
