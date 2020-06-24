@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 
 /**
@@ -18,7 +19,9 @@ public class OptionButton extends ImButton{
      */
     private Sound clickSound;
 
-    private PauseMenuUI ui;
+    private PauseMenuUI pauseMenuUI;
+
+    private OptionUI optionUI;
 
     /** Menu object */
     private MainMenu mainMenu;
@@ -34,7 +37,7 @@ public class OptionButton extends ImButton{
                 leftClick();
             }
         });
-        this.ui = ui;
+        this.pauseMenuUI = ui;
     }
 
     /**

@@ -7,6 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Contin
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MainMenuButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.PauseMenu;
 
 /**
  * Ingame Option screen
@@ -41,7 +42,7 @@ public class OptionUI {
      *
      * @param main - main class
      */
-    public OptionUI(Main main, Stage stage, GamePlay game) {
+    public OptionUI(Main main, Stage stage, GamePlay game, PauseMenuUI pauseMenuUI) {
         this.main = main;
         this.game = game;
 
@@ -50,7 +51,9 @@ public class OptionUI {
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
 
+        continueButton = new ContinueButton(x+220, y+220, 128, 24, pauseMenuUI);
 
+        stage.addActor(continueButton);
     }
 
     /**
@@ -71,7 +74,7 @@ public class OptionUI {
         continueButton.remove();
         mainMenuButton.remove();
         optionButton.remove();
-        game.deleteOptions();
+        game.deletePauseMenu();
     }
 
     /**

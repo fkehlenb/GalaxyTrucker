@@ -24,6 +24,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
@@ -90,7 +91,7 @@ public class GamePlay implements Screen {
     /**
      * the ingame options ui, if existing
      */
-    private PauseMenuUI optionsUI;
+    private OptionUI optionUI;
 
     /**
      * the main game class
@@ -107,7 +108,9 @@ public class GamePlay implements Screen {
     /**
      * Pausemenu Object.
      */
-    PauseMenu pauseMenu;
+    private PauseMenu pauseMenu;
+
+    private PauseMenuUI pauseMenuUI;
 
     /**
      * Constructor
@@ -192,7 +195,8 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.render(); }
         else if(eventGUI != null) { eventGUI.render(); }
         else if(gameOverUI != null) { gameOverUI.render(); }
-        else if(optionsUI != null) { optionsUI.render(); }
+        else if(pauseMenuUI != null) { pauseMenuUI.render(); }
+        else if(optionUI != null) { optionUI.render(); }
 
         stage.draw();
     }
@@ -204,7 +208,8 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
-        if(optionsUI != null) { optionsUI.disposePauseMenuUI(); }
+        if(pauseMenuUI != null) { pauseMenuUI.disposePauseMenuUI(); }
+        if(optionUI != null) { optionUI.disposeOptionsUI(); }
         stage.dispose();
     }
 
@@ -215,6 +220,7 @@ public class GamePlay implements Screen {
         System.out.println("touched");
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             System.out.println("Where");
+            createPauseMenu();
             createOptions();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.P)) {
@@ -260,13 +266,21 @@ public class GamePlay implements Screen {
      * opens in game options
      * called by controller
      */
-    public void createOptions() {
-        optionsUI = new PauseMenuUI(main, stage, this);
+    public void createPauseMenu() {
+        pauseMenuUI = new PauseMenuUI(main, stage, this);
         //TODO controller sagen dass spiel "pausiert"?
     }
 
-    public void deleteOptions() {
-        optionsUI = null;
+    public void deletePauseMenu() {
+        pauseMenuUI = null;
+    }
+
+    public void createOptions() {
+        optionUI = new OptionUI(main, stage, this, pauseMenuUI);
+    }
+
+    public void removeOptions() {
+        optionUI = null;
     }
 
     public void createShip() {

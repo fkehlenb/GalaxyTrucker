@@ -1,16 +1,12 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Options;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ContinueButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MainMenuButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
-import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 
 /**
  * Ingame options UI
@@ -36,6 +32,11 @@ public class PauseMenuUI {
 
     private GamePlay game;
 
+    private OptionUI optionUI;
+
+    /**
+     * Options button
+     */
     private OptionButton optionButton;
 
     private float x, y;
@@ -56,7 +57,7 @@ public class PauseMenuUI {
 
         continueButton = new ContinueButton(x+220, y+220, 128, 24, this);
         mainMenuButton = new MainMenuButton(x+220, y+270, 128, 24, main);
-        optionButton = new OptionButton(x+220,y+320,128,24, this);
+        optionButton = new OptionButton(x+220,y+320,128,24, optionUI);
 
         stage.addActor(continueButton);
         stage.addActor(mainMenuButton);
@@ -81,7 +82,8 @@ public class PauseMenuUI {
         continueButton.remove();
         mainMenuButton.remove();
         optionButton.remove();
-        game.deleteOptions();
+        optionsBackgroundTexture.dispose();
+        game.deletePauseMenu();
     }
 
     /**
