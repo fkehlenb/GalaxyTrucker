@@ -195,8 +195,8 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.render(); }
         else if(eventGUI != null) { eventGUI.render(); }
         else if(gameOverUI != null) { gameOverUI.render(); }
-        else if(pauseMenuUI != null) { pauseMenuUI.render(); }
         else if(optionUI != null) { optionUI.render(); }
+        else if(pauseMenuUI != null) { pauseMenuUI.render(); }
 
         stage.draw();
     }
@@ -208,8 +208,8 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
-        if(pauseMenuUI != null) { pauseMenuUI.disposePauseMenuUI(); }
         if(optionUI != null) { optionUI.disposeOptionsUI(); }
+        if(pauseMenuUI != null) { pauseMenuUI.disposePauseMenuUI(); }
         stage.dispose();
     }
 
@@ -221,7 +221,6 @@ public class GamePlay implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             System.out.println("Where");
             createPauseMenu();
-            createOptions();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.P)) {
             //paused
@@ -276,10 +275,10 @@ public class GamePlay implements Screen {
     }
 
     public void createOptions() {
-        optionUI = new OptionUI(main, stage, this, pauseMenuUI);
+        optionUI = new OptionUI(main, stage, this);
     }
 
-    public void removeOptions() {
+    public void deleteOptions() {
         optionUI = null;
     }
 

@@ -50,14 +50,14 @@ public class PauseMenuUI {
         this.main = main;
         this.game = game;
 
-        optionsBackgroundTexture = new Texture("options/options.png");
+        optionsBackgroundTexture = new Texture("options/pause.JPG");
 
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
 
         continueButton = new ContinueButton(x+220, y+220, 128, 24, this);
         mainMenuButton = new MainMenuButton(x+220, y+270, 128, 24, main);
-        optionButton = new OptionButton(x+220,y+320,128,24, optionUI);
+        optionButton = new OptionButton(x+220,y+320,128,24, this);
 
         stage.addActor(continueButton);
         stage.addActor(mainMenuButton);
@@ -102,5 +102,12 @@ public class PauseMenuUI {
      * Close the options menu
      */
     public void hideOptionsUI() {
+    }
+
+    public void openOptions () {
+        continueButton.setVisible(false);
+        mainMenuButton.setVisible(false);
+        optionButton.setVisible(false);
+        game.createOptions();
     }
 }

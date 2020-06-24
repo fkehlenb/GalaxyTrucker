@@ -20,11 +20,6 @@ public class OptionUI {
     private Texture optionsBackgroundTexture;
 
     /**
-     * continue button
-     */
-    private ContinueButton continueButton;
-
-    /**
      * main menu button
      */
     private MainMenuButton mainMenuButton;
@@ -33,8 +28,6 @@ public class OptionUI {
 
     private GamePlay game;
 
-    private OptionButton optionButton;
-
     private float x, y;
 
     /**
@@ -42,7 +35,7 @@ public class OptionUI {
      *
      * @param main - main class
      */
-    public OptionUI(Main main, Stage stage, GamePlay game, PauseMenuUI pauseMenuUI) {
+    public OptionUI(Main main, Stage stage, GamePlay game) {
         this.main = main;
         this.game = game;
 
@@ -51,9 +44,9 @@ public class OptionUI {
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
 
-        continueButton = new ContinueButton(x+220, y+220, 128, 24, pauseMenuUI);
+        mainMenuButton = new MainMenuButton(x+220, y+270, 128, 24, main);
 
-        stage.addActor(continueButton);
+        stage.addActor(mainMenuButton);
     }
 
     /**
@@ -71,10 +64,8 @@ public class OptionUI {
      */
     public void disposeOptionsUI() {
         optionsBackgroundTexture.dispose();
-        continueButton.remove();
         mainMenuButton.remove();
-        optionButton.remove();
-        game.deletePauseMenu();
+        game.deleteOptions();
     }
 
     /**
