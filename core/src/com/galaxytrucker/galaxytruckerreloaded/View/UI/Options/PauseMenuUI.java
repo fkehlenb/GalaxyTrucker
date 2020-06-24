@@ -77,10 +77,10 @@ public class PauseMenuUI {
      * Dispose of options ui
      */
     public void disposePauseMenuUI() {
+        optionsBackgroundTexture.dispose();
         continueButton.remove();
         mainMenuButton.remove();
         optionButton.remove();
-        optionsBackgroundTexture.dispose();
         game.deleteOptions();
     }
 
