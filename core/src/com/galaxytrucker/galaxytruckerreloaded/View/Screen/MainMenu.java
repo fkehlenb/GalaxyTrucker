@@ -34,7 +34,6 @@ public class MainMenu implements Screen {
 
     /** Constructor  */
     public MainMenu(Main main){
-        ui =  new OptionsUI(main, stage, game);
         this.main = main;
         background = new Texture("1080p.png");
         newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
