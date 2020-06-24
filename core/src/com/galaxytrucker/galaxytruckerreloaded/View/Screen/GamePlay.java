@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
@@ -22,11 +21,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.BlankRoom;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.LaserBlaster;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.AutofireButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionsUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -92,7 +90,7 @@ public class GamePlay implements Screen {
     /**
      * the ingame options ui, if existing
      */
-    private OptionsUI optionsUI;
+    private PauseMenuUI optionsUI;
 
     /**
      * the main game class
@@ -107,6 +105,11 @@ public class GamePlay implements Screen {
     private Viewport viewport;
 
     /**
+     * Pausemenu Object.
+     */
+    PauseMenu pauseMenu;
+
+    /**
      * Constructor
      *
      * @param main - main class
@@ -114,6 +117,8 @@ public class GamePlay implements Screen {
     public GamePlay(Main main) {
         this.main = main;
         background = new Texture("1080p.png");
+
+        pauseMenu = new PauseMenu(main);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -199,7 +204,7 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
-        if(optionsUI != null) { optionsUI.disposeOptionsUI(); }
+        if(optionsUI != null) { optionsUI.disposePauseMenuUI(); }
         stage.dispose();
     }
 
@@ -208,7 +213,7 @@ public class GamePlay implements Screen {
      */
     public void updateInput() {
         System.out.println("touched");
-        if(Gdx.input.isKeyPressed(Input.Keys.O)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             System.out.println("Where");
             createOptions();
         }
@@ -256,7 +261,7 @@ public class GamePlay implements Screen {
      * called by controller
      */
     public void createOptions() {
-        optionsUI = new OptionsUI(main, stage, this);
+        optionsUI = new PauseMenuUI(main, stage, this);
         //TODO controller sagen dass spiel "pausiert"?
     }
 
@@ -341,7 +346,7 @@ public class GamePlay implements Screen {
 
     @Override
     public void pause() {
-
+        pauseMenu.render(1);
     }
 
     @Override

@@ -11,7 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.NewGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.OptionButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.QuitButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionsUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 
 /**
  * Main menu screen
@@ -26,7 +26,7 @@ public class MainMenu implements Screen {
 
     private Viewport viewport;
 
-    private OptionsUI ui;
+    private PauseMenuUI ui;
 
     private NewGameButton newGame;
     private OptionButton optionButton;

@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,7 +28,7 @@ public class OptionButton extends ImButton{
      *
      */
     public OptionButton(float x, float y, float width, float height, PauseMenuUI ui) {
-        super(new Texture("options_select2.png"), x, y, width, height);
+        super(new Texture("escape_options_on.png"), x, y, width, height);
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
@@ -42,8 +42,7 @@ public class OptionButton extends ImButton{
      */
     public void leftClick()
     {
-        //ui.render();
-        System.out.println("Dieser Button wurde gedrueckt, jedoch noch nicht implementiert.");
+        ui.render();
     }
 
 }
