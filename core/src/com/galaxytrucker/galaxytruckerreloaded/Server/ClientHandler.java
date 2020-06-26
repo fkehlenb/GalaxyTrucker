@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
+/** Handle each client in a separate thread */
 public class ClientHandler implements Runnable {
 
     /**
@@ -166,7 +167,6 @@ public class ClientHandler implements Runnable {
                     e.printStackTrace();
                     send.println("[EXCEPTION]:[NEW-GAME]:[USERNAME]:" + username);
                 }
-
                 // ==================== RUNNING ====================
                 while (gameActive) {
                     sendObject.writeObject(this.serverServiceCommunicator.getResponse((RequestObject) receiveObject.readObject()));
