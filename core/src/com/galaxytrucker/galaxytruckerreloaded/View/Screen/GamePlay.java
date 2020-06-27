@@ -110,6 +110,11 @@ public class GamePlay implements Screen {
      */
     private PauseMenu pauseMenu;
 
+
+    public PauseMenuUI getPauseMenuUI() {
+        return pauseMenuUI;
+    }
+
     private PauseMenuUI pauseMenuUI;
 
     /**

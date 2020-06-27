@@ -95,19 +95,23 @@ public class PauseMenuUI {
     /**
      * Open the options menu
      */
-    public void showOptionsUI() {
+    public void showPauseMenuUI() {
+        continueButton.setVisible(true);
+        mainMenuButton.setVisible(true);
+        optionButton.setVisible(true);
     }
 
     /**
      * Close the options menu
      */
-    public void hideOptionsUI() {
-    }
-
-    public void openOptions () {
+    public void hidePauseMenuUI() {
         continueButton.setVisible(false);
         mainMenuButton.setVisible(false);
         optionButton.setVisible(false);
+    }
+
+    public void openOptions () {
+        this.hidePauseMenuUI();
         game.createOptions();
     }
 }
