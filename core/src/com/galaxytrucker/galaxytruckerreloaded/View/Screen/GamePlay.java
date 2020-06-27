@@ -266,7 +266,9 @@ public class GamePlay implements Screen {
      * called by controller
      */
     public void createPauseMenu() {
-        pauseMenuUI = new PauseMenuUI(main, stage, this);
+        if(pauseMenuUI == null) {
+            pauseMenuUI = new PauseMenuUI(main, stage, this);
+        }
         //TODO controller sagen dass spiel "pausiert"?
     }
 
