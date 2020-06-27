@@ -5,12 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ContinueButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MainMenuButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionenBackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.OptionenBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.PauseMenu;
 
 /**
  * Ingame Option screen

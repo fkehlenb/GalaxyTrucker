@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
