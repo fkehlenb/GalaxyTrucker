@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.BackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.WindowedButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.FullscreenEnableButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
 public class VideoUI {
@@ -40,6 +42,10 @@ public class VideoUI {
      */
     private BackButton backButton;
 
+    private FullscreenEnableButton fullscreenEnableButton;
+
+    private WindowedButton windowedButton;
+
     /**
      * Constructor
      * @param main current Main instance
@@ -55,9 +61,13 @@ public class VideoUI {
         x = main.WIDTH / 2 - backgroundTexture.getWidth() / 2;
         y = main.HEIGHT / 2 - backgroundTexture.getHeight() / 2;
 
+        fullscreenEnableButton = new FullscreenEnableButton(x + 220-64, y + 320, 128, 24, main);
+        windowedButton = new WindowedButton(x + 220+64, y + 370, 128, 24, main);
         backButton = new BackButton(x + 220, y + 270, 128, 24, optionUI, this);
 
         stage.addActor(backButton);
+        stage.addActor(windowedButton);
+        stage.addActor(fullscreenEnableButton);
     }
 
     /**
@@ -77,6 +87,8 @@ public class VideoUI {
     public void disposeVideoUI() {
         backgroundTexture.dispose();
         backButton.remove();
+        fullscreenEnableButton.remove();
+        windowedButton.remove();
         gamePlay.deleteVideoUI();
     }
 
@@ -91,6 +103,8 @@ public class VideoUI {
      */
     public void showVideoUI() {
         backButton.setVisible(true);
+        windowedButton.setVisible(true);
+        fullscreenEnableButton.setVisible(true);
     }
 
     /**
@@ -98,6 +112,8 @@ public class VideoUI {
      */
     public void hideVideoUI() {
         backButton.setVisible(false);
+        windowedButton.setVisible(false);
+        fullscreenEnableButton.setVisible(false);
     }
 
     /**

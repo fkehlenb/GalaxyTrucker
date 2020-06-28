@@ -68,4 +68,12 @@ public class Main extends Game {
     public OrthographicCamera getCamera() {
         return this.camera;
     }
+
+    public void setFullscreen() {
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+    }
+
+    public void setWindowed() {
+        Gdx.graphics.setWindowedMode(WIDTH,HEIGHT);
+    }
 }
