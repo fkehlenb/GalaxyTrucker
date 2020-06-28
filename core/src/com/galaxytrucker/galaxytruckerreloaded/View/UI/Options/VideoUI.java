@@ -61,9 +61,10 @@ public class VideoUI {
         x = main.WIDTH / 2 - backgroundTexture.getWidth() / 2;
         y = main.HEIGHT / 2 - backgroundTexture.getHeight() / 2;
 
-        fullscreenEnableButton = new FullscreenEnableButton(x + 220-64, y + 320, 128, 24, main);
-        windowedButton = new WindowedButton(x + 220+64, y + 370, 128, 24, main);
-        backButton = new BackButton(x + 220, y + 270, 128, 24, optionUI, this);
+
+        backButton = new BackButton(x + 220, y + 100, 128, 24, optionUI, this);
+        windowedButton = new WindowedButton(x + 220, y + 220, 128, 24, main);
+        fullscreenEnableButton = new FullscreenEnableButton(x + 220, y + 320, 128, 24, main);
 
         stage.addActor(backButton);
         stage.addActor(windowedButton);

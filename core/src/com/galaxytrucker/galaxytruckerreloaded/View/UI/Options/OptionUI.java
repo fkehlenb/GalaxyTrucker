@@ -49,8 +49,8 @@ public class OptionUI {
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
 
-        videoButton = new VideoButton(x+220, y+270, 128, 24, this);
-        optionenBackButton = new OptionenBackButton(x+220, y+220, 128, 24, this, pauseMenuUI);
+        optionenBackButton = new OptionenBackButton(x+220, y+100, 128, 24, this, pauseMenuUI);
+        videoButton = new VideoButton(x+220, y+220, 128, 24, this);
         generalButton = new GeneralButton(x+220, y+320, 128, 24, this);
 
         stage.addActor(optionenBackButton);
