@@ -27,6 +27,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.GeneralUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.VideoUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -90,9 +91,14 @@ public class GamePlay implements Screen {
     private GameOver gameOverUI;
 
     /**
-     * in Options the GeneralUI
+     * ingame general settings
      */
     private GeneralUI generalUI;
+
+    /**
+     * ingame Video settings
+     */
+    private VideoUI videoUI;
 
     /**
      * Gets the current open OptionUI
@@ -218,6 +224,7 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.render(); }
         else if(eventGUI != null) { eventGUI.render(); }
         else if(gameOverUI != null) { gameOverUI.render(); }
+        else if(videoUI != null) { videoUI.render(); }
         else if(generalUI != null) { generalUI.render(); }
         else if(optionUI != null) { optionUI.render(); }
         else if(pauseMenuUI != null) { pauseMenuUI.render(); }
@@ -232,6 +239,7 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
+        if(videoUI != null) { videoUI.disposeVideoUI(); }
         if(generalUI != null) { generalUI.disposeGeneralUI(); }
         if(optionUI != null) { optionUI.disposeOptionsUI(); }
         if(pauseMenuUI != null) { pauseMenuUI.disposePauseMenuUI(); }
@@ -331,6 +339,22 @@ public class GamePlay implements Screen {
     public void deleteGeneralUI() {
         generalUI = null;
     }
+
+    /**
+     * opens in game video options
+     */
+    public void createVideoUI() {
+        videoUI = new VideoUI(main, stage, this);
+    }
+
+    /**
+     * closes ingame video settings
+     */
+    public void deleteVideoUI() {
+        videoUI = null;
+    }
+
+
 
     public void createShip() {
 

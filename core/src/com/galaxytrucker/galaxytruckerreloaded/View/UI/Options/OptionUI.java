@@ -8,6 +8,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MainMenuButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General.GeneralButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.OptionenBackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.VideoButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
 /**
@@ -20,10 +21,7 @@ public class OptionUI {
      */
     private Texture optionsBackgroundTexture;
 
-    /**
-     * main menu button
-     */
-    private MainMenuButton mainMenuButton;
+    private VideoButton videoButton;
 
     private OptionenBackButton optionenBackButton;
 
@@ -51,11 +49,13 @@ public class OptionUI {
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
 
+        videoButton = new VideoButton(x+220, y+270, 128, 24, this);
         optionenBackButton = new OptionenBackButton(x+220, y+220, 128, 24, this, pauseMenuUI);
-        generalButton = new GeneralButton(x+220, y+270, 128, 24, this);
+        generalButton = new GeneralButton(x+220, y+320, 128, 24, this);
 
         stage.addActor(optionenBackButton);
         stage.addActor(generalButton);
+        stage.addActor(videoButton);
     }
 
     /**
@@ -76,6 +76,7 @@ public class OptionUI {
         optionsBackgroundTexture.dispose();
         optionenBackButton.remove();
         generalButton.remove();
+        videoButton.remove();
         game.deleteOptions();
     }
 
@@ -91,6 +92,7 @@ public class OptionUI {
     public void showOptionsUI() {
         generalButton.setVisible(true);
         optionenBackButton.setVisible(true);
+        videoButton.setVisible(true);
     }
 
     /**
@@ -99,6 +101,7 @@ public class OptionUI {
     public void hideOptionsUI() {
         generalButton.setVisible(false);
         optionenBackButton.setVisible(false);
+        videoButton.setVisible(false);
     }
 
     /**
@@ -114,5 +117,10 @@ public class OptionUI {
     public void openGeneral() {
         this.hideOptionsUI();
         game.createGeneralUI();
+    }
+
+    public void openVideo() {
+        this.hideOptionsUI();
+        game.createVideoUI();
     }
 }
