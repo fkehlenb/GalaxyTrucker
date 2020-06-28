@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MainMenuButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.GeneralButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.OptionenBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.sun.tools.javac.jvm.Gen;
 
 /**
  * Ingame Option screen
@@ -25,6 +27,8 @@ public class OptionUI {
     private MainMenuButton mainMenuButton;
 
     private OptionenBackButton optionenBackButton;
+
+    private GeneralButton generalButton;
 
     private Main main;
 
@@ -48,9 +52,11 @@ public class OptionUI {
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
 
-        optionenBackButton = new OptionenBackButton(x+220, y+270, 128, 24, this, pauseMenuUI);
+        optionenBackButton = new OptionenBackButton(x+220, y+220, 128, 24, this, pauseMenuUI);
+        generalButton = new GeneralButton(x+220, y+270, 128, 24, this);
 
         stage.addActor(optionenBackButton);
+        stage.addActor(generalButton);
     }
 
     /**
@@ -70,6 +76,7 @@ public class OptionUI {
     public void disposeOptionsUI() {
         optionsBackgroundTexture.dispose();
         optionenBackButton.remove();
+        generalButton.remove();
         game.deleteOptions();
     }
 
@@ -83,12 +90,16 @@ public class OptionUI {
      * Open the options menu
      */
     public void showOptionsUI() {
+        generalButton.setVisible(true);
+        optionenBackButton.setVisible(true);
     }
 
     /**
      * Close the options menu
      */
     public void hideOptionsUI() {
+        generalButton.setVisible(false);
+        optionenBackButton.setVisible(false);
     }
 
     /**
@@ -99,5 +110,10 @@ public class OptionUI {
             disposeOptionsUI();
             pauseMenuUI.showPauseMenuUI();
         }
+    }
+
+    public void openGeneral() {
+        this.hideOptionsUI();
+        game.createGeneralUI();
     }
 }

@@ -1,25 +1,25 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.GeneralUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 
-public class OptionenBackButton extends ImButton {
+public class BackButton extends ImButton {
 
     private Sound clickSound;
 
     private OptionUI optionUI;
 
-    private PauseMenuUI pauseMenuUI;
+    private GeneralUI generalUI;
 
-    public OptionenBackButton(float x, float y, float width, float height, OptionUI optionUI, PauseMenuUI pauseMenuUI) {
+    public BackButton(float x, float y, float width, float height, OptionUI optionUI, GeneralUI generalUI) {
         super(new Texture("options/escape_back_on.png"), x, y, width, height);
         this.optionUI = optionUI;
-        this.pauseMenuUI = pauseMenuUI;
+        this.generalUI = generalUI;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
@@ -29,7 +29,7 @@ public class OptionenBackButton extends ImButton {
 
     @Override
     public void leftClick() {
-        optionUI.disposeOptionsUI();
-        pauseMenuUI.showPauseMenuUI();
+        generalUI.disposeGeneralUI();
+        optionUI.showOptionsUI();
     }
 }

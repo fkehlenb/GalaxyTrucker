@@ -24,6 +24,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.GeneralUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
@@ -89,6 +90,19 @@ public class GamePlay implements Screen {
     private GameOver gameOverUI;
 
     /**
+     * in Options the GeneralUI
+     */
+    private GeneralUI generalUI;
+
+    /**
+     * Gets the current open OptionUI
+     * @return current OptionUI
+     */
+    public OptionUI getOptionUI() {
+        return optionUI;
+    }
+
+    /**
      * the ingame options ui, if existing
      */
     private OptionUI optionUI;
@@ -111,6 +125,10 @@ public class GamePlay implements Screen {
     private PauseMenu pauseMenu;
 
 
+    /**
+     * Gets the current PauseMenu.
+     * @return current PauseMenuUI
+     */
     public PauseMenuUI getPauseMenuUI() {
         return pauseMenuUI;
     }
@@ -200,6 +218,7 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.render(); }
         else if(eventGUI != null) { eventGUI.render(); }
         else if(gameOverUI != null) { gameOverUI.render(); }
+        else if(generalUI != null) { generalUI.render(); }
         else if(optionUI != null) { optionUI.render(); }
         else if(pauseMenuUI != null) { pauseMenuUI.render(); }
 
@@ -213,6 +232,7 @@ public class GamePlay implements Screen {
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
+        if(generalUI != null) { generalUI.disposeGeneralUI(); }
         if(optionUI != null) { optionUI.disposeOptionsUI(); }
         if(pauseMenuUI != null) { pauseMenuUI.disposePauseMenuUI(); }
         stage.dispose();
@@ -267,7 +287,7 @@ public class GamePlay implements Screen {
     }
 
     /**
-     * opens in game options
+     * opens in game pause menu
      * called by controller
      */
     public void createPauseMenu() {
@@ -277,16 +297,39 @@ public class GamePlay implements Screen {
         //TODO controller sagen dass spiel "pausiert"?
     }
 
+    /**
+     * closes in game pause menu
+     */
     public void deletePauseMenu() {
         pauseMenuUI = null;
     }
 
+    /**
+     * opens in game options
+     */
     public void createOptions() {
         optionUI = new OptionUI(main, stage, this);
     }
 
+    /**
+     * closes in game options
+     */
     public void deleteOptions() {
         optionUI = null;
+    }
+
+    /**
+     * opens in game general options
+     */
+    public void createGeneralUI() {
+        generalUI = new GeneralUI(main, stage, this);
+    }
+
+    /**
+     * closes in game general options
+     */
+    public void deleteGeneralUI() {
+        generalUI = null;
     }
 
     public void createShip() {
@@ -387,5 +430,7 @@ public class GamePlay implements Screen {
     public void setBackground(Texture background) {
         this.background = background;
     }
+
+
 
 }

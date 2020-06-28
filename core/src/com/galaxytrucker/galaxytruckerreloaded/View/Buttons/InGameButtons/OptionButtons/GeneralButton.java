@@ -8,7 +8,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 
-public class OptionenBackButton extends ImButton {
+public class GeneralButton extends ImButton {
 
     private Sound clickSound;
 
@@ -16,10 +16,9 @@ public class OptionenBackButton extends ImButton {
 
     private PauseMenuUI pauseMenuUI;
 
-    public OptionenBackButton(float x, float y, float width, float height, OptionUI optionUI, PauseMenuUI pauseMenuUI) {
-        super(new Texture("options/escape_back_on.png"), x, y, width, height);
+    public GeneralButton(float x, float y, float width, float height, OptionUI optionUI) {
+        super(new Texture("options/escape_general_on.png"), x, y, width, height);
         this.optionUI = optionUI;
-        this.pauseMenuUI = pauseMenuUI;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
@@ -29,7 +28,6 @@ public class OptionenBackButton extends ImButton {
 
     @Override
     public void leftClick() {
-        optionUI.disposeOptionsUI();
-        pauseMenuUI.showPauseMenuUI();
+        optionUI.openGeneral();
     }
 }
