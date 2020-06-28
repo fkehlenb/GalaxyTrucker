@@ -12,7 +12,7 @@ public abstract class ImButton extends ImageButton {
     public ImButton(Texture texture, float x, float y, float width, float height) {
         super(new TextureRegionDrawable(new TextureRegion(texture)));
         setPosition(x, y);
-        setScale(width, height);
+        setSize(width, height);
     }
 
     public abstract void leftClick();
