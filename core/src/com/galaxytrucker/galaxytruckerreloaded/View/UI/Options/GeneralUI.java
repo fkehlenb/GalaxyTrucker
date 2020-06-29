@@ -44,6 +44,8 @@ public class GeneralUI {
      */
     private BackButton backButton;
 
+    private Stage stage;
+
     /**
      * Constructor
      * @param main current Main instance
@@ -53,6 +55,7 @@ public class GeneralUI {
     public GeneralUI (Main main, Stage stage, GamePlay gamePlay) {
         this.main = main;
         this.gamePlay = gamePlay;
+        this.stage = stage;
         this.optionUI = gamePlay.getOptionUI();
         generalBackgroundTexture = new Texture("options/general.png");
 
@@ -73,6 +76,8 @@ public class GeneralUI {
         main.batch.begin();
         main.batch.draw(generalBackgroundTexture, x, y, 601, 471);
         main.batch.end();
+
+        stage.draw();
     }
 
     /**

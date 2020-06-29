@@ -36,6 +36,8 @@ public class PauseMenuUI {
 
     private OptionUI optionUI;
 
+    private Stage pauseStage;
+
     /**
      * Options button
      */
@@ -48,9 +50,10 @@ public class PauseMenuUI {
      *
      * @param main - main class
      */
-    public PauseMenuUI(Main main, Stage stage, GamePlay game) {
+    public PauseMenuUI(Main main, Stage pauseStage, GamePlay game) {
         this.main = main;
         this.game = game;
+        this.pauseStage = pauseStage;
 
         optionsBackgroundTexture = new Texture("options/pause.PNG");
 
@@ -61,9 +64,9 @@ public class PauseMenuUI {
         mainMenuButton = new MainMenuButton(x+220, y+270, 128, 24, main);
         optionButton = new OptionButton(x+220,y+320,128,24, this);
 
-        stage.addActor(continueButton);
-        stage.addActor(mainMenuButton);
-        stage.addActor(optionButton);
+        pauseStage.addActor(continueButton);
+        pauseStage.addActor(mainMenuButton);
+        pauseStage.addActor(optionButton);
     }
 
     /**
@@ -74,18 +77,22 @@ public class PauseMenuUI {
         main.batch.begin();
         main.batch.draw(optionsBackgroundTexture, x, y, 601, 471);
         main.batch.end();
+
+        pauseStage.draw();
     }
 
     /**
      * Dispose of options ui
      */
     public void disposePauseMenuUI() {
+        //optionsBackgroundTexture.dispose();
+        //continueButton.remove();
+        //mainMenuButton.remove();
+        //optionButton.remove();
         optionsBackgroundTexture.dispose();
-        continueButton.remove();
-        mainMenuButton.remove();
-        optionButton.remove();
-        optionsBackgroundTexture.dispose();
+        pauseStage.dispose();
         game.deletePauseMenu();
+
     }
 
     /**

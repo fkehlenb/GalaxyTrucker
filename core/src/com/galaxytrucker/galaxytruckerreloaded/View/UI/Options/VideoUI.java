@@ -46,6 +46,8 @@ public class VideoUI {
 
     private WindowedButton windowedButton;
 
+    private Stage stage;
+
     /**
      * Constructor
      * @param main current Main instance
@@ -56,6 +58,7 @@ public class VideoUI {
         this.main = main;
         this.gamePlay = gamePlay;
         this.optionUI = gamePlay.getOptionUI();
+        this.stage = stage;
         backgroundTexture = new Texture("options/video.png");
 
         x = main.WIDTH / 2 - backgroundTexture.getWidth() / 2;
@@ -80,6 +83,8 @@ public class VideoUI {
         main.batch.begin();
         main.batch.draw(backgroundTexture, x, y, 601, 471);
         main.batch.end();
+
+        stage.draw();
     }
 
     /**

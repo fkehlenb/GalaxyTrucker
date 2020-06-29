@@ -27,6 +27,7 @@ public class ContinueButton extends ImButton {
      */
     public void leftClick() {
         ui.disposePauseMenuUI();
+
     }
 
     /**

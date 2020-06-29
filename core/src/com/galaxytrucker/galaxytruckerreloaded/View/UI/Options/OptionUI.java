@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MainMenuButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General.GeneralButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.OptionenBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.VideoButton;
@@ -33,6 +32,8 @@ public class OptionUI {
 
     private PauseMenuUI pauseMenuUI;
 
+    private Stage stage;
+
     private float x, y;
 
     /**
@@ -43,6 +44,7 @@ public class OptionUI {
     public OptionUI(Main main, Stage stage, GamePlay game) {
         this.main = main;
         this.game = game;
+        this.stage = stage;
         this.pauseMenuUI = game.getPauseMenuUI();
         optionsBackgroundTexture = new Texture("options/options.png");
 
@@ -67,6 +69,8 @@ public class OptionUI {
         main.batch.begin();
         main.batch.draw(optionsBackgroundTexture, x, y, 601, 471);
         main.batch.end();
+        stage.draw();
+
     }
 
     /**

@@ -123,6 +123,8 @@ public class GamePlay implements Screen {
      */
     public Stage stage;
 
+    public Stage pauseStage;
+
     private Viewport viewport;
 
     /**
@@ -154,6 +156,7 @@ public class GamePlay implements Screen {
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
+        pauseStage = new Stage(viewport);
 
         player = new ShipView(main, fakeShip(), stage, fakeMap(), this); //TODO wie schiff aus controller?
 
@@ -253,7 +256,11 @@ public class GamePlay implements Screen {
         System.out.println("touched");
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Where");
+            // Pause-menu
+            Gdx.input.setInputProcessor(pauseStage);
             createPauseMenu();
+
+
         }
         if(Gdx.input.isKeyPressed(Input.Keys.P)) {
             //paused
@@ -300,7 +307,9 @@ public class GamePlay implements Screen {
      */
     public void createPauseMenu() {
         if(pauseMenuUI == null) {
-            pauseMenuUI = new PauseMenuUI(main, stage, this);
+            pauseStage = new Stage(viewport);
+            Gdx.input.setInputProcessor(pauseStage);
+            pauseMenuUI = new PauseMenuUI(main, pauseStage, this);
         }
         //TODO controller sagen dass spiel "pausiert"?
     }
@@ -310,13 +319,14 @@ public class GamePlay implements Screen {
      */
     public void deletePauseMenu() {
         pauseMenuUI = null;
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
      * opens in game options
      */
     public void createOptions() {
-        optionUI = new OptionUI(main, stage, this);
+        optionUI = new OptionUI(main, pauseStage, this);
     }
 
     /**
@@ -330,7 +340,7 @@ public class GamePlay implements Screen {
      * opens in game general options
      */
     public void createGeneralUI() {
-        generalUI = new GeneralUI(main, stage, this);
+        generalUI = new GeneralUI(main, pauseStage, this);
     }
 
     /**
@@ -344,7 +354,7 @@ public class GamePlay implements Screen {
      * opens in game video options
      */
     public void createVideoUI() {
-        videoUI = new VideoUI(main, stage, this);
+        videoUI = new VideoUI(main, pauseStage, this);
     }
 
     /**
