@@ -30,7 +30,7 @@ public class OptionButton extends ImButton{
      * Constructor
      *
      */
-    public OptionButton(float x, float y, float width, float height, PauseMenuUI ui) {
+    public OptionButton(float x, float y, float width, float height, PauseMenuUI ui, MainMenu mainMenu) {
         super(new Texture("options_select2.png"), x, y, width, height);
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
@@ -38,6 +38,7 @@ public class OptionButton extends ImButton{
             }
         });
         this.pauseMenuUI = ui;
+        this.mainMenu = mainMenu;
     }
 
     /**
@@ -46,7 +47,12 @@ public class OptionButton extends ImButton{
     public void leftClick()
     {
         //ui.render();
-        System.out.println("Dieser Button wurde gedrueckt, jedoch noch nicht implementiert.");
+        if(mainMenu != null){
+            mainMenu.createOptions();
+        }
+        else {
+            System.out.println("Fehler");
+        }
     }
 
 }

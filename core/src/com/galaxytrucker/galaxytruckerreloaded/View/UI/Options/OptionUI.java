@@ -9,6 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Option
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.OptionenBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.VideoButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 /**
  * Ingame Option screen
@@ -36,16 +37,19 @@ public class OptionUI {
 
     private float x, y;
 
+    private MainMenu mainMenu;
+
     /**
      * Constructor
      *
      * @param main - main class
      */
-    public OptionUI(Main main, Stage stage, GamePlay game) {
+    public OptionUI(Main main, Stage stage, GamePlay game, MainMenu mainMenu) {
         this.main = main;
         this.game = game;
         this.stage = stage;
-        this.pauseMenuUI = game.getPauseMenuUI();
+        this.mainMenu = mainMenu;
+        if(game != null){this.pauseMenuUI = game.getPauseMenuUI(); }
         optionsBackgroundTexture = new Texture("options/options.png");
 
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
@@ -81,7 +85,12 @@ public class OptionUI {
         optionenBackButton.remove();
         generalButton.remove();
         videoButton.remove();
-        game.deleteOptions();
+        if(mainMenu ==null){
+            game.deleteOptions();
+        }
+        else{
+            mainMenu.();
+        }
     }
 
     /**

@@ -11,6 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.NewGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.OptionButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.QuitButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 
 /**
@@ -27,17 +28,19 @@ public class MainMenu implements Screen {
     private Viewport viewport;
 
     private PauseMenuUI ui;
+    private OptionUI optionUI;
 
     private NewGameButton newGame;
     private OptionButton optionButton;
     private QuitButton quit;
+
 
     /** Constructor  */
     public MainMenu(Main main){
         this.main = main;
         background = new Texture("1080p.png");
         newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
-        optionButton = new OptionButton(main.WIDTH/2 - 97, main.HEIGHT/2 -50 - 25, 194, 50, ui);
+        optionButton = new OptionButton(main.WIDTH/2 - 97, main.HEIGHT/2 -50 - 25, 194, 50, ui,this);
         quit = new QuitButton(main.WIDTH/2 - 124 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
@@ -122,6 +125,16 @@ public class MainMenu implements Screen {
         main.setScreen(new ShipSelector(main));
         dispose();
     }
+
+    public void createOptions(){
+        optionUI = new OptionUI(main,stage,null, this);
+
+    }
+
+    public void deleteOptions(){
+        optionUI = null;
+    }
+
 
     /**
      * resumes the existing game.

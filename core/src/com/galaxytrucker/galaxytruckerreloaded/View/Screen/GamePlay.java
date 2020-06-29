@@ -326,7 +326,7 @@ public class GamePlay implements Screen {
      * opens in game options
      */
     public void createOptions() {
-        optionUI = new OptionUI(main, pauseStage, this);
+        optionUI = new OptionUI(main, pauseStage, this, null);
     }
 
     /**
