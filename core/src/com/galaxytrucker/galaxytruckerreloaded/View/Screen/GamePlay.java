@@ -251,7 +251,7 @@ public class GamePlay implements Screen {
      */
     public void updateInput() {
         System.out.println("touched");
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Where");
             createPauseMenu();
         }

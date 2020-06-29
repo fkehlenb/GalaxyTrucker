@@ -38,7 +38,7 @@ public class MainMenu implements Screen {
         background = new Texture("1080p.png");
         newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
         optionButton = new OptionButton(main.WIDTH/2 - 97, main.HEIGHT/2 -50 - 25, 194, 50, ui);
-        quit = new QuitButton(main.WIDTH/2 - 62 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
+        quit = new QuitButton(main.WIDTH/2 - 124 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);

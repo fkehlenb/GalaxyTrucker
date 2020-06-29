@@ -121,7 +121,7 @@ public class VideoUI {
      * handles input to pause game, open options
      */
     public void updateInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             disposeVideoUI();
             optionUI.showOptionsUI();
         }
