@@ -8,6 +8,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
@@ -30,7 +32,16 @@ public class TravelController extends Controller{
             ResponseObject object = clientControllerCommunicator.sendRequest(requestObject);
             if (object.isValidRequest()){
                 Ship s = clientControllerCommunicator.getClientShip();
+                // Remove ship from planet
+                List<Ship> currentShips = s.getPlanet().getShips();
+                currentShips.remove(s);
+                s.getPlanet().setShips(currentShips);
+                // Set ship to target planet
                 s.setPlanet(destination);
+                // Set planet ship list
+                currentShips = destination.getShips();
+                currentShips.add(s);
+                destination.setShips(currentShips);
                 clientControllerCommunicator.setClientShip(s);
                 return true;
             }
