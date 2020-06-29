@@ -174,7 +174,14 @@ public class ClientHandler implements Runnable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
+            // Socket will be closed thanks to exception, therefor cannot send more data
+            // Thread will terminate with socket exception
+            try {
+                send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
+            }
+            catch (Exception f){
+                f.printStackTrace();
+            }
         }
     }
 
