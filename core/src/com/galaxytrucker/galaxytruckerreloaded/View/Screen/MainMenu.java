@@ -11,8 +11,12 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.NewGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.OptionButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.QuitButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.GeneralUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.VideoUI;
+
+import javax.swing.text.html.Option;
 
 /**
  * Main menu screen
@@ -27,8 +31,11 @@ public class MainMenu implements Screen {
 
     private Viewport viewport;
 
-    private PauseMenuUI ui;
     private OptionUI optionUI;
+
+    private GeneralUI generalUI;
+
+    private VideoUI videoUI;
 
     private NewGameButton newGame;
     private OptionButton optionButton;
@@ -40,7 +47,7 @@ public class MainMenu implements Screen {
         this.main = main;
         background = new Texture("1080p.png");
         newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
-        optionButton = new OptionButton(main.WIDTH/2 - 97, main.HEIGHT/2 -50 - 25, 194, 50, ui,this);
+        optionButton = new OptionButton(main.WIDTH/2 - 97, main.HEIGHT/2 -50 - 25, 194, 50,this);
         quit = new QuitButton(main.WIDTH/2 - 124 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
@@ -58,7 +65,9 @@ public class MainMenu implements Screen {
      */
     @Override
     public void show() {
-
+        newGame.setVisible(true);
+        optionButton.setVisible(true);
+        quit.setVisible(true);
     }
 
     /**
@@ -73,6 +82,9 @@ public class MainMenu implements Screen {
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
         main.batch.end();
+        if(optionUI!=null) {
+            optionUI.render();
+        }
         stage.draw();
     }
 
@@ -105,7 +117,9 @@ public class MainMenu implements Screen {
      */
     @Override
     public void hide() {
-
+        newGame.setVisible(false);
+        optionButton.setVisible(false);
+        quit.setVisible(false);
     }
 
     /**
@@ -115,6 +129,9 @@ public class MainMenu implements Screen {
     public void dispose() {
         background.dispose();
         stage.dispose();
+        if(optionUI!=null) {
+            optionUI.disposeOptionsUI();
+        }
     }
 
     /**
@@ -127,14 +144,40 @@ public class MainMenu implements Screen {
     }
 
     public void createOptions(){
-        optionUI = new OptionUI(main,stage,null, this);
-
+        if(optionUI==null) {
+            hide();
+            optionUI = new OptionUI(main, stage, null, this);
+        }
     }
 
     public void deleteOptions(){
+        show();
         optionUI = null;
     }
 
+    public OptionUI getOptionUI() {
+        return optionUI;
+    }
+
+    public void createGeneralUI() {
+        if(generalUI == null) {
+            generalUI = new GeneralUI(main, stage, null, this);
+        }
+    }
+
+    public void deleteGeneralUI() {
+        generalUI = null;
+    }
+
+    public void createVideoUI() {
+        if(videoUI == null) {
+            videoUI = new VideoUI(main, stage, null, this);
+        }
+    }
+
+    public void deleteVideoUI() {
+        videoUI = null;
+    }
 
     /**
      * resumes the existing game.

@@ -30,6 +30,8 @@ public class OptionenBackButton extends ImButton {
     @Override
     public void leftClick() {
         optionUI.disposeOptionsUI();
-        pauseMenuUI.showPauseMenuUI();
+        if(pauseMenuUI!=null) {
+            pauseMenuUI.showPauseMenuUI();
+        }
     }
 }

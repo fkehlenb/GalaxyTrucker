@@ -19,10 +19,6 @@ public class OptionButton extends ImButton{
      */
     private Sound clickSound;
 
-    private PauseMenuUI pauseMenuUI;
-
-    private OptionUI optionUI;
-
     /** Menu object */
     private MainMenu mainMenu;
 
@@ -30,14 +26,13 @@ public class OptionButton extends ImButton{
      * Constructor
      *
      */
-    public OptionButton(float x, float y, float width, float height, PauseMenuUI ui, MainMenu mainMenu) {
+    public OptionButton(float x, float y, float width, float height, MainMenu mainMenu) {
         super(new Texture("options_select2.png"), x, y, width, height);
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
             }
         });
-        this.pauseMenuUI = ui;
         this.mainMenu = mainMenu;
     }
 

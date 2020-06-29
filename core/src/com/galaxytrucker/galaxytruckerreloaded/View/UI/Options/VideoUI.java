@@ -9,6 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Option
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.WindowedButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.FullscreenEnableButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 public class VideoUI {
 
@@ -26,6 +27,8 @@ public class VideoUI {
      * Gameplay instance of the running game;
      */
     private GamePlay gamePlay;
+
+    private MainMenu mainMenu;
 
     /**
      * OptionUI of the running Optionmenu.
@@ -54,10 +57,16 @@ public class VideoUI {
      * @param stage current stage instance
      * @param gamePlay current gameplay instance
      */
-    public VideoUI (Main main, Stage stage, GamePlay gamePlay) {
+    public VideoUI (Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
         this.gamePlay = gamePlay;
-        this.optionUI = gamePlay.getOptionUI();
+        this.mainMenu = mainMenu;
+        if(gamePlay!=null) {
+            this.optionUI = gamePlay.getOptionUI();
+        }
+        else if(mainMenu != null) {
+            this.optionUI = mainMenu.getOptionUI();
+        }
         this.stage = stage;
         backgroundTexture = new Texture("options/video.png");
 
@@ -95,7 +104,12 @@ public class VideoUI {
         backButton.remove();
         fullscreenEnableButton.remove();
         windowedButton.remove();
-        gamePlay.deleteVideoUI();
+        if(gamePlay != null) {
+            gamePlay.deleteVideoUI();
+        }
+        else if(mainMenu != null) {
+            mainMenu.deleteVideoUI();
+        }
     }
 
     /**

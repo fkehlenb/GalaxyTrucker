@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 
 /**
@@ -28,6 +29,8 @@ public class GeneralUI {
      * Gameplay instance of the running game;
      */
     private GamePlay gamePlay;
+
+    private MainMenu mainMenu;
 
     /**
      * OptionUI of the running Optionmenu.
@@ -52,11 +55,17 @@ public class GeneralUI {
      * @param stage current stage instance
      * @param gamePlay current gameplay instance
      */
-    public GeneralUI (Main main, Stage stage, GamePlay gamePlay) {
+    public GeneralUI (Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
         this.gamePlay = gamePlay;
+        this.mainMenu = mainMenu;
         this.stage = stage;
-        this.optionUI = gamePlay.getOptionUI();
+        if(gamePlay != null) {
+            this.optionUI = gamePlay.getOptionUI();
+        }
+        else if(mainMenu != null) {
+            this.optionUI = mainMenu.getOptionUI();
+        }
         generalBackgroundTexture = new Texture("options/general.png");
 
         x = main.WIDTH / 2 - generalBackgroundTexture.getWidth() / 2;
@@ -86,7 +95,12 @@ public class GeneralUI {
     public void disposeGeneralUI() {
         generalBackgroundTexture.dispose();
         backButton.remove();
-        gamePlay.deleteGeneralUI();
+        if(gamePlay != null) {
+            gamePlay.deleteGeneralUI();
+        }
+        else if(mainMenu != null) {
+            mainMenu.deleteGeneralUI();
+        }
     }
 
     /**

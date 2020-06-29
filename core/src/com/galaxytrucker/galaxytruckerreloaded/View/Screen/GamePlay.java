@@ -253,9 +253,7 @@ public class GamePlay implements Screen {
      * handles input to pause game, open options
      */
     public void updateInput() {
-        System.out.println("touched");
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("Where");
             // Pause-menu
             Gdx.input.setInputProcessor(pauseStage);
             createPauseMenu();
@@ -340,7 +338,7 @@ public class GamePlay implements Screen {
      * opens in game general options
      */
     public void createGeneralUI() {
-        generalUI = new GeneralUI(main, pauseStage, this);
+        generalUI = new GeneralUI(main, pauseStage, this, null);
     }
 
     /**
@@ -354,7 +352,7 @@ public class GamePlay implements Screen {
      * opens in game video options
      */
     public void createVideoUI() {
-        videoUI = new VideoUI(main, pauseStage, this);
+        videoUI = new VideoUI(main, pauseStage, this, null);
     }
 
     /**

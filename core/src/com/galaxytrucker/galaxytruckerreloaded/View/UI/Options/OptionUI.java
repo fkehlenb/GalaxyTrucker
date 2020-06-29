@@ -74,7 +74,6 @@ public class OptionUI {
         main.batch.draw(optionsBackgroundTexture, x, y, 601, 471);
         main.batch.end();
         stage.draw();
-
     }
 
     /**
@@ -89,7 +88,7 @@ public class OptionUI {
             game.deleteOptions();
         }
         else{
-            mainMenu.();
+            mainMenu.deleteOptions();
         }
     }
 
@@ -123,17 +122,29 @@ public class OptionUI {
     public void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             disposeOptionsUI();
-            pauseMenuUI.showPauseMenuUI();
+            if(pauseMenuUI!=null) {
+                pauseMenuUI.showPauseMenuUI();
+            }
         }
     }
 
     public void openGeneral() {
         this.hideOptionsUI();
-        game.createGeneralUI();
+        if(game!=null) {
+            game.createGeneralUI();
+        }
+        else if(mainMenu!=null) {
+            mainMenu.createGeneralUI();
+        }
     }
 
     public void openVideo() {
         this.hideOptionsUI();
-        game.createVideoUI();
+        if(game!=null) {
+            game.createVideoUI();
+        }
+        else if(mainMenu!=null) {
+            mainMenu.createVideoUI();
+        }
     }
 }
