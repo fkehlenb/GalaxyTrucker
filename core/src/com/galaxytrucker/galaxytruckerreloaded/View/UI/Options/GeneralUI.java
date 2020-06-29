@@ -59,7 +59,7 @@ public class GeneralUI {
         x = main.WIDTH / 2 - generalBackgroundTexture.getWidth() / 2;
         y = main.HEIGHT / 2 - generalBackgroundTexture.getHeight() / 2;
 
-        backButton = new BackButton(x + 220, y + 270, 128, 24, optionUI, this);
+        backButton = new BackButton(x + 220, y + 100, 128, 24, optionUI, this);
 
         stage.addActor(backButton);
     }
