@@ -44,8 +44,10 @@ public class MapUI {
         y = main.HEIGHT/2 - mapTexture.getHeight()/2;
 
         locations = new LinkedList<>();
-        for(float[] f : map.getPlanetMap().keySet()) {
-            MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+f[0]), (y+f[1]), 10, 10, this, map.getPlanetMap().get(f));
+        for(String f : map.getPlanetMap().keySet()) {
+            float fx = Float.parseFloat(f.split(",")[0]);
+            float fy = Float.parseFloat(f.split(",")[1]);
+            MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+fx), (y+fy), 10, 10, this, map.getPlanetMap().get(f));
             locations.add(mb);
             stage.addActor(mb);
         }
