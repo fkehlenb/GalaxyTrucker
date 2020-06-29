@@ -8,8 +8,9 @@ import lombok.Setter;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.UUID;
+import java.util.*;
 
+/** Handle each client in a separate thread */
 public class ClientHandler implements Runnable {
 
     /**
@@ -59,13 +60,32 @@ public class ClientHandler implements Runnable {
     @Setter
     private boolean gameActive = true;
 
-    /** Map seed */
+    /**
+     * Map seed
+     */
     private int seed;
 
     /**
      * User
      */
     private User user;
+
+    /**
+     * Planet name array
+     */
+    private String[] names = {"MERCURY", "VENUS", "EARTH", "MARS", "JUPITER", "SATURN", "URANUS", "NEPTUN", "PLUTO", "AUGUSTUS",
+            "SIRIUS", "HOMESTREAD", "ALPHA CENTAURI", "GLIESE", "404 NOT FOUND", "KEPLER", "TOI", "USCO1621b","OGLE","WASP","WENDELSTEIN"
+            ,"EPIC","ARION","DIMIDIUM","GALILEO","DAGON","SMETRIOS","THESTIAS","SAMH","SAFFAR","ARBER","MADRIU","AWASIS","DITSO"};
+
+    /**
+     * Planet name list
+     */
+    private List<String> planetNames;
+
+    /**
+     * Used planet names list
+     */
+    private List<String> usedPlanetNames = new ArrayList<>();
 
     /**
      * Constructor
@@ -94,6 +114,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         System.out.println("\n========== HANDLER RUNNING ==========\n");
+        planetNames.addAll(Arrays.asList(names));
         // ==================== LOGIN ====================
         try {
             this.username = receive.readLine().replace("[LOGIN]:", "");
@@ -106,6 +127,7 @@ public class ClientHandler implements Runnable {
                     this.user = serverServiceCommunicator.getUserService().getUser(username);
                     if (user.isFirstGame()) {
                         send.println("[NEW-GAME]");
+                        // ==================== Overworld Creation ====================
                         Overworld overworld = new Overworld(UUID.randomUUID().hashCode(), UUID.randomUUID().hashCode(), username);
                         this.seed = overworld.getSeed();
                         //TODO PLANET CREATION, ADD TO OVERWORLD
@@ -145,7 +167,6 @@ public class ClientHandler implements Runnable {
                     e.printStackTrace();
                     send.println("[EXCEPTION]:[NEW-GAME]:[USERNAME]:" + username);
                 }
-
                 // ==================== RUNNING ====================
                 while (gameActive) {
                     sendObject.writeObject(this.serverServiceCommunicator.getResponse((RequestObject) receiveObject.readObject()));
@@ -153,7 +174,31 @@ public class ClientHandler implements Runnable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
+            // Socket will be closed thanks to exception, therefor cannot send more data
+            // Thread will terminate with socket exception
+            try {
+                send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
+            }
+            catch (Exception f){
+                f.printStackTrace();
+            }
         }
+    }
+
+    /**
+     * Get a new planet name
+     *
+     * @param names     - planet names
+     * @param usedNames - the already used planet names
+     * @param seed      - the world seed
+     * @return an unused planet name
+     */
+    private String getPlanetName(List<String> names, List<String> usedNames, int seed) {
+        Random random = new Random(seed);
+        String newName = names.get(random.nextInt(names.size()));
+        if (usedNames.contains(newName)) {
+            getPlanetName(names, usedNames, seed);
+        }
+        return newName;
     }
 }

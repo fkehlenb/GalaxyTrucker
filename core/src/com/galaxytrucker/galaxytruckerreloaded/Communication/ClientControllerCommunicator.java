@@ -10,15 +10,21 @@ import lombok.*;
 
 @Setter
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClientControllerCommunicator {
+
+    /** Singleton */
+    private static ClientControllerCommunicator singleton = null;
 
     /**
      * Client ship
      */
     private Ship clientShip;
+
+    /**
+     * OverWorld
+     */
     private Overworld map;
-    private Planet currentPlanet;
 
     /**
      * Client class
@@ -49,5 +55,15 @@ public class ClientControllerCommunicator {
             this.map = client.getOverworld();
         }
         return permittedLogin;
+    }
+
+    /** Constructor
+     * @param client - the client object, used to connect to server */
+    public static ClientControllerCommunicator getInstance(Client client){
+        if (singleton == null){
+            singleton = new ClientControllerCommunicator(client);
+        }
+        // TODO CREATE ALL CONTROLLERS HERE
+        return singleton;
     }
 }

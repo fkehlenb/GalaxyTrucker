@@ -1,9 +1,11 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.TravelService;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.UserService;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,12 +22,24 @@ public class ServerServiceCommunicator {
     /** User service */
     private UserService userService = new UserService();
 
+    /** TravelService */
+    private TravelService travelService = new TravelService();
+
     /** Take a request from the client side, pass it through the services
      * and return a response
      * @return the server's response to the client's request */
-    public String getResponse(RequestObject request){
+    public ResponseObject getResponse(RequestObject request){
+        switch (request.getRequestType()){
+            case LOGOUT:
+                return logout(request.getShip().getAssociatedUser());
+            case HYPERJUMP:
+                return jump(request.getShip(),request.getPlanet());
+                //TODO OTHERS
+        }
         return null;
     }
+
+    // ==================================== USER SERVICE ====================================
 
     /** Send the client his ship
      * @param username - the client's username
@@ -52,6 +66,9 @@ public class ServerServiceCommunicator {
         catch (Exception e){
             System.out.println("[NEW-USER]:[USERNAME]:"+username);
             try {
+                if (username.isEmpty() || username.equals("[ENEMY]")){
+                    return true;
+                }
                 userService.addUser(username);
                 return false;
             }
@@ -61,6 +78,52 @@ public class ServerServiceCommunicator {
             }
         }
     }
+
+    /** Logout
+     * @param username - the client's username
+     * @return ResponseObject with either an accepted or aborted logout */
+    private ResponseObject logout(String username){
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            User u = userService.getUser(username);
+            if (u.isLoggedIn()) {
+                if (!u.getUserShip().isInCombat()) {
+                    u.setLoggedIn(false);
+                    userService.updateUser(u);
+                    responseObject.setValidRequest(true);
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            responseObject.setValidRequest(false);
+        }
+        return responseObject;
+    }
+
+    // ==================================== TRAVEL SERVICE ====================================
+
+    /** Make a jump to a target planet
+     * @param s - the client ship
+     * @param p - the target planet
+     * @return a ResponseObject */
+    private ResponseObject jump(Ship s, Planet p){
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            if (travelService.validateJump(s, p,userService.getUser(s.getAssociatedUser()))) {
+                boolean successfulJump = travelService.jump(s, p);
+                if (successfulJump) {
+                    responseObject.setValidRequest(true);
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    // ========================================================================================
 
     /** Get instance */
     public static ServerServiceCommunicator getInstance(){
