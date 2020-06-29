@@ -15,7 +15,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ShipView extends AbstractShip {
@@ -201,7 +200,20 @@ public class ShipView extends AbstractShip {
      * called by ship button
      */
     public void openInventory() {
-        inventoryUI = new InventoryUI(main, game.loadCrew(id), game.loadWeapons(id), game.loadFuel(id), game.loadMissiles(id), stage, this);
+        if(inventoryUI == null){
+            inventoryUI = new InventoryUI(main, game.loadCrew(id), game.loadWeapons(id), game.loadFuel(id), game.loadMissiles(id), stage, this);
+        }
+    }
+
+    /**
+     * open the map
+     * called by move button
+     */
+    public void openMap() {
+        if(mapUI == null){
+            mapUI = new MapUI(main, stage, map, this);
+        }
+
     }
 
     public void deleteInventory() {
@@ -212,13 +224,7 @@ public class ShipView extends AbstractShip {
         mapUI = null;
     }
 
-    /**
-     * open the map
-     * called by move button
-     */
-    public void openMap() {
-        mapUI = new MapUI(main, stage, map, this);
-    }
+
 
     /**
      * a crew member is moved to a new room

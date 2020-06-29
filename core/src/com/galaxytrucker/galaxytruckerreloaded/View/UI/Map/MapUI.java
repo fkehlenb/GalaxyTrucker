@@ -1,7 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Map;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
@@ -67,10 +66,12 @@ public class MapUI {
      */
     public void disposeMapUI() {
         mapTexture.dispose();
-        shipView.deleteMap();
         for(MapButton m : locations) {
             m.remove();
         }
+        shipView.deleteMap();
+
+
     }
 
     /**
