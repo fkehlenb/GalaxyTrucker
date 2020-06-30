@@ -4,6 +4,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -35,6 +36,12 @@ public class RequestObject {
 
     /** List of crew */
     private List<Crew> moreCrew;
+
+    /** Weapon */
+    private Weapon weapon;
+
+    /** int - eg fuel, rockets, hp for trader */
+    private int intAmount;
 
 
 }
