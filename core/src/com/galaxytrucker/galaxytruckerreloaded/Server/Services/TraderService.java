@@ -1,7 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
@@ -16,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class TraderService extends PlanetEventService {
 
     /**
