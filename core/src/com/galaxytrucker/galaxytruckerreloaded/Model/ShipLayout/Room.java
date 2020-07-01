@@ -1,11 +1,14 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -51,4 +54,9 @@ public abstract class Room implements Serializable {
     /** Y position */
     @NonNull
     private int posY;
+
+    /** Crew in this system */
+    @NonNull
+    @OneToMany
+    private List<Crew> crew;
 }

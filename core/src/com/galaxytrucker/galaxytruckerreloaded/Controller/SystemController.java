@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class SystemController extends Controller {
+
     /** My own ship*/
     private Ship myself;
 

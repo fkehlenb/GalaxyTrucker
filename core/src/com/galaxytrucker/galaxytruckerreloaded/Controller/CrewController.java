@@ -1,55 +1,144 @@
 package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
+import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
 
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-public class CrewController extends Controller{
+public class CrewController extends Controller {
+
+    /**
+     * ClientControllerCommunicator
+     */
     @NonNull
-    private Ship myself;
+    private ClientControllerCommunicator clientControllerCommunicator;
 
-    /** Move a crew member to a different section
+    /**
+     * Move a crew member to a different section
+     *
      * @param crew - the crew member
-     * @param room - the room to move him to */
-    public void moveCrewToRoom(Crew crew, Room room){
+     * @param room - the room to move him to
+     */
+    public boolean moveCrewToRoom(Crew crew, Room room) {
+        try {
+            RequestObject requestObject = new RequestObject();
+            requestObject.setRequestType(RequestType.MoveCrew);
+            requestObject.setShip(clientControllerCommunicator.getClientShip());
+            requestObject.setCrew(crew);
+            requestObject.setRoom(room);
+            ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+            if (responseObject.isValidRequest()) {
+                crew.setCurrentRoom(room);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Heal crew
+     *
+     * @param crew       - the crew member to heal
+     * @param healAmount - amount to heal
+     */
+    public boolean healCrewMember(Crew crew, int healAmount) {
+        try {
+            RequestObject requestObject = new RequestObject();
+            requestObject.setRequestType(RequestType.HealCrew);
+            requestObject.setCrew(crew);
+            requestObject.setHealAmount(healAmount);
+            ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+            if (responseObject.isValidRequest()) {
+                crew.setHealth(crew.getHealth() + healAmount);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Heal crew in a room
+     *
+     * @param room   - the room which's crew members to heal
+     * @param amount - amount to heal
+     */
+    public boolean healCrewInRoom(Room room, int amount) {
+        try {
+            RequestObject requestObject = new RequestObject();
+            requestObject.setRequestType(RequestType.HealCrewInRoom);
+            requestObject.setRoom(room);
+            requestObject.setHealAmount(amount);
+            ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+            if (responseObject.isValidRequest()) {
+                for (Crew c : room.getCrew()) {
+                    c.setHealth(c.getHealth() + amount);
+                }
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Damage crew
+     *
+     * @param room   - the room in which to damage the crew
+     * @param amount - the amount of damage to take
+     */
+    public boolean damageCrew(Room room, int amount) {
+        try {
+            RequestObject requestObject = new RequestObject();
+            requestObject.setRequestType(RequestType.DamageCrew);
+            requestObject.setDamageAmount(amount);
+            requestObject.setRoom(room);
+            ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+            if (responseObject.isValidRequest()){
+                for (Crew c : room.getCrew()){
+                    c.setHealth(c.getHealth()-amount);
+                    //TODO DIE IF HP EMPTY
+                }
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Fix a system
+     *
+     * @param system - the system to fix
+     */
+    public void fixSystem(System system) {
 
     }
 
-    /** Heal crew
-     * @param crew - the crew member to heal
-     * @param healAmount - amount to heal */
-    public void healCrewMember(Crew crew,int healAmount){
-
-    }
-
-    /** Heal crew in a room
-     * @param room - the room which's crew members to heal
-     * @param amount - amount to heal */
-    public void healCrewInRoom(Room room,int amount){
-
-    }
-
-    /** Damage crew
-     * @param room - the room in which to damage the crew
-     * @param amount - the amount of damage to take */
-    public void damageCrew(Room room,int amount){
-
-    }
-
-    /** Fix a system
-     * @param system - the system to fix */
-    public void fixSystem(System system){
-
-    }
-
-    /** Repair a breach in a room
-     * @param room - the room to fix the breach in */
-    public void repairBreach(Room room){
+    /**
+     * Repair a breach in a room
+     *
+     * @param room - the room to fix the breach in
+     */
+    public void repairBreach(Room room) {
 
     }
 }
