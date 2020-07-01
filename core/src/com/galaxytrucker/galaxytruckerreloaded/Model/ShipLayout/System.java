@@ -32,11 +32,6 @@ public abstract class System extends Room implements Serializable {
     @NonNull
     private int damage;
 
-    /** Crew in this system */
-    @NonNull
-    @OneToMany
-    private List<Crew> crew;
-
     /** Whether or not the system is disabled */
     @NonNull
     private boolean disabled = false;

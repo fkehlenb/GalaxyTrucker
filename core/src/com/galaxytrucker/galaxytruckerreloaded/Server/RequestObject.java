@@ -4,8 +4,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
@@ -36,5 +36,12 @@ public class RequestObject {
     /** List of crew */
     private List<Crew> moreCrew;
 
+    /** Room */
+    private Room room;
 
+    /** Heal amount */
+    private int healAmount;
+
+    /** Damage amount */
+    private int damageAmount;
 }

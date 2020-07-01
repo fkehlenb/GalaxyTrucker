@@ -10,7 +10,6 @@ import lombok.Setter;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class HangerController extends Controller {
 
-
     /**
      * Picks a Shipmodel
      * @param username - the specified username
