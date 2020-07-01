@@ -19,6 +19,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.BlankRoom;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.LaserBlaster;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
@@ -169,31 +170,27 @@ public class GamePlay implements Screen {
         //Planet planet = new Planet("planet", 125f, 125f, PlanetEvent.SHOP, false, new LinkedList<>(), trader);
         Planet planet = new Planet();
         List<Room> rooms = new LinkedList<>();
-        rooms.add(new BlankRoom(12));
-        rooms.add(new BlankRoom(13));
-        rooms.add(new BlankRoom(14));
+        rooms.add(new BlankRoom());
+        rooms.add(new BlankRoom());
+        rooms.add(new BlankRoom());
         List<Weapon> weapons = new LinkedList<>();
         weapons.add(new LaserBlaster("karl"));
         weapons.add(new LaserBlaster("test"));
-        return new Ship(1, "aaron", 100, 49, 5, 5, 7, 9, 23, 6f, planet, 6, 6, rooms, weapons, false);
+        return new Ship(1, "aaron", ShipType.DEFAULT, 100, 49, 5, 5, 7, 9, 23, 6f, planet, 6, 6, rooms, weapons, false);
     }
 
     /**
      * später durch laden aus controller ersetzen
      */
     public Overworld fakeMap() {
-        HashMap<float[], Planet> hmap = new HashMap<>();
-        Planet sp = new Planet("planet1", (float) 78, (float) 199, PlanetEvent.SHOP, new LinkedList<Ship>());
-        float[] f = new float[2];
-        f[0] = 78;
-        f[1] = 199;
+        Overworld res = new Overworld(2, 1, "aaron");
+        HashMap<String, Planet> hmap = new HashMap<>();
+        Planet sp = new Planet(0, "planet1", (float) 78, (float) 199, PlanetEvent.SHOP, new LinkedList<Ship>());
+        String f = "78, 199";
         hmap.put(f, sp);
-        Planet sp1 = new Planet("planet2", (float) 200, (float) 154, PlanetEvent.COMBAT, new LinkedList<Ship>());
-        float[] f1 = new float[2];
-        f1[0] = 200;
-        f1[1] = 154;
+        Planet sp1 = new Planet(1, "planet2", (float) 200, (float) 154, PlanetEvent.COMBAT, new LinkedList<Ship>());
+        String f1 = "200, 154";
         hmap.put(f1, sp1);
-        Overworld res = new Overworld(2);
         res.setPlanetMap(hmap);
         res.setStartPlanet(sp);
 
@@ -419,14 +416,9 @@ public class GamePlay implements Screen {
 
     public List<Crew> loadCrew(int shipId) {  //TODO call controller
         List<Crew> result = new LinkedList<>();
-        int[] arr = new int[4];
-        arr[0] = 3;
-        arr[1] = 7;
-        arr[2] = 8;
-        arr[3] = 6;
-        Crew c1 = new Crew(1, "ana", 7, 10, arr);
+        Crew c1 = new Crew(1, "ana", 7, 10);
         result.add(c1);
-        Crew c2 = new Crew(2, "battle", 8, 10, arr);
+        Crew c2 = new Crew(2, "battle", 8, 10);
         result.add(c2);
         return result;
     }
