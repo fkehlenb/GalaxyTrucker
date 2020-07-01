@@ -60,38 +60,42 @@ public class TraderService extends PlanetEventService {
      * @param weapon - the weapon to buy
      */
     public boolean purchaseWeapon(Ship ship, Trader trader, Weapon weapon) {
-        List<Weapon> traderWeapons = trader.getWeaponStock();
-        List<Weapon> shipWeapons = ship.getInventory();
-        int shipCoins = ship.getCoins();
         try {
-            //remove weapon from trader
-            traderWeapons.remove(weapon);
-            trader.setWeaponStock(traderWeapons);
-            traderDAO.update(trader);
-            //add weapon to ship
-            shipWeapons.add(weapon);
-            ship.setInventory(shipWeapons);
-            //ship.setCoins(shipCoins - weapon.); TODO
-            shipDAO.update(ship);
-            //muss was an weapon geändert werden??
-            return true;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            //revert changes
+            List<Weapon> traderWeapons = trader.getWeaponStock();
+            List<Weapon> shipWeapons = ship.getInventory();
+            int shipCoins = ship.getCoins();
             try {
-                //revert trader changes
+                //remove weapon from trader
+                traderWeapons.remove(weapon);
                 trader.setWeaponStock(traderWeapons);
                 traderDAO.update(trader);
-                //revert ship inventory changes
+                //add weapon to ship
+                shipWeapons.add(weapon);
                 ship.setInventory(shipWeapons);
-                ship.setCoins(shipCoins);
+                //ship.setCoins(shipCoins - weapon.); TODO
                 shipDAO.update(ship);
-                //was an weapon?
+                //muss was an weapon geändert werden??
+                return true;
+            } catch (Exception e) { //exception in daos
+                e.printStackTrace();
+                //revert changes
+                try {
+                    //revert trader changes
+                    trader.setWeaponStock(traderWeapons);
+                    traderDAO.update(trader);
+                    //revert ship inventory changes
+                    ship.setInventory(shipWeapons);
+                    ship.setCoins(shipCoins);
+                    shipDAO.update(ship);
+                    //was an weapon?
+                } catch (Exception f) { //exception in daos
+                    f.printStackTrace();
+                }
+                return false;
             }
-            catch(Exception f) {
-                f.printStackTrace();
-            }
+        }
+        catch(Exception g) { //nullpointer
+            g.printStackTrace();
             return false;
         }
     }
@@ -104,38 +108,42 @@ public class TraderService extends PlanetEventService {
      * @param crew   - the crew to buy
      */
     public boolean purchaseCrew(Ship ship, Trader trader, Crew crew) {
-        List<Crew> traderCrew = trader.getCrewStock();
-        int shipCoins = ship.getCoins();
         try {
-            //remove from trader
-            traderCrew.remove(crew);
-            trader.setCrewStock(traderCrew);
-            traderDAO.update(trader);
-            //add to ship
-            //ship.setCoins(shipCoins - crew.); TODO
-            //List<Crew> shipCrew = ship. TODO wie crew von schiff??
-            //set current Room
-            crew.setCurrentRoom(ship.getSystems().get(0)); //TODO in welchen raum setzen?
-            crewDAO.update(crew);
-            return true;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            //revert changes
+            List<Crew> traderCrew = trader.getCrewStock();
+            int shipCoins = ship.getCoins();
             try {
-                //add to trader
+                //remove from trader
+                traderCrew.remove(crew);
                 trader.setCrewStock(traderCrew);
                 traderDAO.update(trader);
+                //add to ship
+                //ship.setCoins(shipCoins - crew.); TODO
+                //List<Crew> shipCrew = ship. TODO wie crew von schiff??
                 //set current Room
-                crew.setCurrentRoom(null); //TODO ?
+                crew.setCurrentRoom(ship.getSystems().get(0)); //TODO in welchen raum setzen?
                 crewDAO.update(crew);
-                //remove from ship?
-                ship.setCoins(shipCoins);
-                shipDAO.update(ship);
+                return true;
+            } catch (Exception e) { //exception in daos
+                e.printStackTrace();
+                //revert changes
+                try {
+                    //add to trader
+                    trader.setCrewStock(traderCrew);
+                    traderDAO.update(trader);
+                    //set current Room
+                    crew.setCurrentRoom(null); //TODO ?
+                    crewDAO.update(crew);
+                    //remove from ship?
+                    ship.setCoins(shipCoins);
+                    shipDAO.update(ship);
+                } catch (Exception f) { //exception in daos
+                    f.printStackTrace();
+                }
+                return false;
             }
-            catch(Exception f) {
-                f.printStackTrace();
-            }
+        }
+        catch(Exception g) { //nullpointer
+            g.printStackTrace();
             return false;
         }
     }
@@ -148,38 +156,42 @@ public class TraderService extends PlanetEventService {
      * @param amount - the amount of rockets to buy
      */
     public boolean purchaseRockets(Ship ship, Trader trader, int amount) {
-        int traderAmount = trader.getMissileStock();
-        int shipAmount = ship.getMissiles();
-        int shipCoins = ship.getCoins();
         try {
-            //remove from trader
-            if(traderAmount < amount) {
-                return false;
-            }
-            traderAmount -= amount;
-            trader.setMissileStock(traderAmount);
-            traderDAO.update(trader);
-            //add to ship
-            shipAmount += amount;
-            ship.setMissiles(shipAmount);
-            //ship.setCoins(shipCoins - ); TODO
-            shipDAO.update(ship);
-            return true;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
+            int traderAmount = trader.getMissileStock();
+            int shipAmount = ship.getMissiles();
+            int shipCoins = ship.getCoins();
             try {
-                //undo
-                //add to trader
+                //remove from trader
+                if (traderAmount < amount) {
+                    return false;
+                }
+                traderAmount -= amount;
                 trader.setMissileStock(traderAmount);
                 traderDAO.update(trader);
-                //remove from ship
+                //add to ship
+                shipAmount += amount;
                 ship.setMissiles(shipAmount);
+                //ship.setCoins(shipCoins - ); TODO
                 shipDAO.update(ship);
+                return true;
+            } catch (Exception e) { //exception in daos
+                e.printStackTrace();
+                try {
+                    //undo
+                    //add to trader
+                    trader.setMissileStock(traderAmount);
+                    traderDAO.update(trader);
+                    //remove from ship
+                    ship.setMissiles(shipAmount);
+                    shipDAO.update(ship);
+                } catch (Exception f) { //exception in daos
+                    f.printStackTrace();
+                }
+                return false;
             }
-            catch(Exception f) {
-                f.printStackTrace();
-            }
+        }
+        catch(Exception g) { //nullpointer
+            g.printStackTrace();
             return false;
         }
     }
@@ -192,39 +204,43 @@ public class TraderService extends PlanetEventService {
      * @param amount - the amount of fuel to buy
      */
     public boolean purchaseFuel(Ship ship, Trader trader, int amount) {
-        int traderAmount = trader.getFuelStock();
-        int shipAmount = ship.getFuel();
-        int shipCoins = ship.getCoins();
         try {
-            //remove from trader
-            if(traderAmount < amount) {
-                return false;
-            }
-            traderAmount -= amount;
-            trader.setFuelStock(traderAmount);
-            traderDAO.update(trader);
-            //add to ship
-            shipAmount += amount;
-            ship.setFuel(shipAmount);
-            //ship.setCoins(shipCoins - ); TODO
-            shipDAO.update(ship);
-            return true;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
+            int traderAmount = trader.getFuelStock();
+            int shipAmount = ship.getFuel();
+            int shipCoins = ship.getCoins();
             try {
-                //undo
-                //add to trader
+                //remove from trader
+                if (traderAmount < amount) {
+                    return false;
+                }
+                traderAmount -= amount;
                 trader.setFuelStock(traderAmount);
                 traderDAO.update(trader);
-                //remove from ship
+                //add to ship
+                shipAmount += amount;
                 ship.setFuel(shipAmount);
-                ship.setCoins(shipCoins);
+                //ship.setCoins(shipCoins - ); TODO
                 shipDAO.update(ship);
+                return true;
+            } catch (Exception e) { //exception in daos
+                e.printStackTrace();
+                try {
+                    //undo
+                    //add to trader
+                    trader.setFuelStock(traderAmount);
+                    traderDAO.update(trader);
+                    //remove from ship
+                    ship.setFuel(shipAmount);
+                    ship.setCoins(shipCoins);
+                    shipDAO.update(ship);
+                } catch (Exception f) { //exception in daos
+                    f.printStackTrace();
+                }
+                return false;
             }
-            catch(Exception f) {
-                f.printStackTrace();
-            }
+        }
+        catch(Exception g) { //nullpointer
+            g.printStackTrace();
             return false;
         }
     }
@@ -237,7 +253,43 @@ public class TraderService extends PlanetEventService {
      * @param amount - the amount to buy
      */
     public boolean purchaseHP(Ship ship, Trader trader, int amount) {
-        return false; //TODO
+        try {
+            int traderAmount = trader.getHpStock();
+            int shipAmount = ship.getHp();
+            int coins = ship.getCoins();
+            try {
+                //remove from trader
+                if (traderAmount < amount) {
+                    return false;
+                }
+                traderAmount -= amount;
+                trader.setHpStock(traderAmount);
+                traderDAO.update(trader);
+                //add to ship
+                shipAmount += amount;
+                ship.setHp(shipAmount);
+                //TODO remove money
+                shipDAO.update(ship);
+                return true;
+            } catch (Exception e) { //exception in daos
+                e.printStackTrace();
+                try {
+                    ship.setHp(shipAmount);
+                    ship.setCoins(coins);
+                    shipDAO.update(ship);
+                    trader.setHpStock(traderAmount);
+                    traderDAO.update(trader);
+
+                } catch (Exception f) { //exception in daos
+                    f.printStackTrace();
+                }
+                return false;
+            }
+        }
+        catch(Exception g) { // Nullpointer
+            g.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -248,34 +300,38 @@ public class TraderService extends PlanetEventService {
      * @param weapon - the weapon to sell
      */
     public boolean sellWeapon(Ship ship, Trader trader, Weapon weapon) {
-        List<Weapon> traderWeapon = trader.getWeaponStock();
-        List<Weapon> shipWeapon = ship.getInventory();
-        int shipCoins = ship.getCoins();
         try {
-            //add to trader
-            traderWeapon.add(weapon);
-            trader.setWeaponStock(traderWeapon);
-            traderDAO.update(trader);
-            //remove from ship
-            shipWeapon.remove(weapon);
-            ship.setInventory(shipWeapon);
-            //ship.setCoins(shipCoins + weapon.); TODO wie viel?
-            shipDAO.update(ship);
-            return true;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            try{
-                //undo
+            List<Weapon> traderWeapon = trader.getWeaponStock();
+            List<Weapon> shipWeapon = ship.getInventory();
+            int shipCoins = ship.getCoins();
+            try {
+                //add to trader
+                traderWeapon.add(weapon);
                 trader.setWeaponStock(traderWeapon);
                 traderDAO.update(trader);
+                //remove from ship
+                shipWeapon.remove(weapon);
                 ship.setInventory(shipWeapon);
-                ship.setCoins(shipCoins);
+                //ship.setCoins(shipCoins + weapon.); TODO wie viel?
                 shipDAO.update(ship);
+                return true;
+            } catch (Exception e) { // exception in daos
+                e.printStackTrace();
+                try {
+                    //undo
+                    trader.setWeaponStock(traderWeapon);
+                    traderDAO.update(trader);
+                    ship.setInventory(shipWeapon);
+                    ship.setCoins(shipCoins);
+                    shipDAO.update(ship);
+                } catch (Exception f) { //exception in daos
+                    f.printStackTrace();
+                }
+                return false;
             }
-            catch(Exception f) {
-                f.printStackTrace();
-            }
+        }
+        catch(Exception g) { //nullpointer
+            g.printStackTrace();
             return false;
         }
     }
@@ -288,37 +344,41 @@ public class TraderService extends PlanetEventService {
      * @param amount - the amount of rockets to sell
      */
     public boolean sellRockets(Ship ship, Trader trader, int amount) {
-        int traderAmount = trader.getMissileStock();
-        int shipAmount = ship.getMissiles();
-        int shipCoins = ship.getCoins();
         try {
-            //add to trader
-            traderAmount += amount;
-            trader.setMissileStock(traderAmount);
-            traderDAO.update(trader);
-            //remove from ship
-            if(shipAmount < amount) {
-                return false;
-            }
-            shipAmount -= amount;
-            ship.setMissiles(shipAmount);
-            //ship.setCoins(ship.getCoins() + ); TODO price of one?
-            shipDAO.update(ship);
-            return true;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
+            int traderAmount = trader.getMissileStock();
+            int shipAmount = ship.getMissiles();
+            int shipCoins = ship.getCoins();
             try {
-                //undo
+                //add to trader
+                traderAmount += amount;
                 trader.setMissileStock(traderAmount);
                 traderDAO.update(trader);
+                //remove from ship
+                if (shipAmount < amount) {
+                    return false;
+                }
+                shipAmount -= amount;
                 ship.setMissiles(shipAmount);
-                ship.setCoins(shipCoins);
+                //ship.setCoins(ship.getCoins() + ); TODO price of one?
                 shipDAO.update(ship);
+                return true;
+            } catch (Exception e) { //exception in daos
+                e.printStackTrace();
+                try {
+                    //undo
+                    trader.setMissileStock(traderAmount);
+                    traderDAO.update(trader);
+                    ship.setMissiles(shipAmount);
+                    ship.setCoins(shipCoins);
+                    shipDAO.update(ship);
+                } catch (Exception f) { //exception in daos
+                    f.printStackTrace();
+                }
+                return false;
             }
-            catch(Exception f) {
-                f.printStackTrace();
-            }
+        }
+        catch(Exception g) { //nullpointer
+            g.printStackTrace();
             return false;
         }
     }
