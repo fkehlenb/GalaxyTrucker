@@ -4,63 +4,52 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 /**
  * Starts a new Game
  */
-public class NewGameButton extends Button
+public class NewGameButton extends ImButton
 {
-    /**
-     * Sprite batch
-     */
-    private SpriteBatch batch;
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
-    /**
-     * Background
-     */
-    private Texture background;
     /**
      * Click sound effect
      */
     private Sound clickSound;
 
-    /**
-     * the screen this button is on
-     */
-    private MainMenu screen;
+
+    private MainMenu mainMenu;
+
 
     /**
      * Constructor
      *
-     * @param main - main class
-     * @param screen the screen this button is on
      */
-    public NewGameButton(Main main, MainMenu screen) {
-    }
+    public NewGameButton(float x, float y, float width, float height, MainMenu menu) {
+        super(new Texture("start_select2.png"), x, y, width, height);
+        this.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                leftClick();
+            }
+        });
 
-//    /**
-//     * Send data to server
-//     */
-//    private void sendData(Packet data) {
-//    }
-//
-//    /**
-//     * Receive data from server
-//     */
-//    private Packet receiveData() {
-//        return null;
-//    }
+        mainMenu = menu;
+    }
 
     /**
      * Creats new Game
      */
     public void leftClick()
     {
+        mainMenu.newGame();
     }
+
 }

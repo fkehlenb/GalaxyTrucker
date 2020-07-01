@@ -1,87 +1,182 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.NewGameButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.OptionButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.QuitButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.GeneralUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.VideoUI;
+
+import javax.swing.text.html.Option;
 
 /**
  * Main menu screen
  */
-public class MainMenu extends State {
+public class MainMenu implements Screen {
 
     private Texture background;
-    private Texture newGame;
-    /** Constructor  */
-    public MainMenu(GameStateManager gsm){
-        super(gsm);
-        background = new Texture("1080p.png");
-        newGame = new Texture("start_select2.png");
-    }
 
-    @Override
-    public void handleInput() {
+    private Main main;
 
-    }
+    private Stage stage;
 
-    @Override
-    public void update(float dt) {
+    private Viewport viewport;
 
-    }
+    private OptionUI optionUI;
 
-    @Override
-    public void render(SpriteBatch sb) {
-        sb.begin();
-        sb.draw(background, 0,0);
-        sb.draw(newGame, Main.WIDTH/2 - newGame.getWidth()/2,Main.HEIGHT/2, 248,50);
-        sb.end();
-    }
+    private GeneralUI generalUI;
 
-    /*   *//**
-     * The sprite batch
-     *//*
-    private SpriteBatch batch;
+    private VideoUI videoUI;
 
-    *//**
-     * Orthographic camera
-     *//*
-    private OrthographicCamera camera;
-
-    *//**
-     * The screen texture
-     *//*
-    private Texture background;
-
-    *//**
-     * new game button. leads to shipselector
-     *//*
     private NewGameButton newGame;
+    private OptionButton optionButton;
+    private QuitButton quit;
 
-    *//**
-     * start game button. continues old game
-     *//*
-    private StartButton startGame;
 
-    *//**
-     * quit button
-     *//*
-    private QuitButton quitButton;
+    /** Constructor  */
+    public MainMenu(Main main){
+        this.main = main;
+        background = new Texture("1080p.png");
+        newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
+        optionButton = new OptionButton(main.WIDTH/2 - 97, main.HEIGHT/2 -50 - 25, 194, 50,this);
+        quit = new QuitButton(main.WIDTH/2 - 124 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
 
-    *//**
-     * Looping music track
-     *//*
-    private Music music;
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
+        stage.addActor(quit);
+        stage.addActor(optionButton);
+        stage.addActor(newGame);
 
-    *//**
-     * Click sound effect
-     *//*
-    private Sound clickSound;*/
+
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    /**
+     * Called when this screen becomes the current screen for a game
+     */
+    @Override
+    public void show() {
+        newGame.setVisible(true);
+        optionButton.setVisible(true);
+        quit.setVisible(true);
+    }
+
+    /**
+     * Called when the screen should render itself.
+     *
+     * @param delta The time in seconds since the last render.
+     */
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        main.batch.begin();
+        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.end();
+        if(optionUI!=null) {
+            optionUI.render();
+        }
+        stage.draw();
+    }
+
+    /**
+     * @param width the new width
+     * @param height the new height
+     */
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
+    }
+
+    /**
+     * pauses
+     */
+    @Override
+    public void pause() {
+
+    }
+
+    /**
+     */
+    @Override
+    public void resume() {
+
+    }
+
+    /**
+     * Called when this screen is no longer the current screen for a game
+     */
+    @Override
+    public void hide() {
+        newGame.setVisible(false);
+        optionButton.setVisible(false);
+        quit.setVisible(false);
+    }
+
+    /**
+     * Called when this screen should release all resources.
+     */
+    @Override
+    public void dispose() {
+        background.dispose();
+        stage.dispose();
+        if(optionUI!=null) {
+            optionUI.disposeOptionsUI();
+        }
+    }
 
     /**
      * starts a new game.
      * called by button
      */
     public void newGame() {
+        main.setScreen(new ShipSelector(main));
+        dispose();
+    }
 
+    public void createOptions(){
+        if(optionUI==null) {
+            hide();
+            optionUI = new OptionUI(main, stage, null, this);
+        }
+    }
+
+    public void deleteOptions(){
+        show();
+        optionUI = null;
+    }
+
+    public OptionUI getOptionUI() {
+        return optionUI;
+    }
+
+    public void createGeneralUI() {
+        if(generalUI == null) {
+            generalUI = new GeneralUI(main, stage, null, this);
+        }
+    }
+
+    public void deleteGeneralUI() {
+        generalUI = null;
+    }
+
+    public void createVideoUI() {
+        if(videoUI == null) {
+            videoUI = new VideoUI(main, stage, null, this);
+        }
+    }
+
+    public void deleteVideoUI() {
+        videoUI = null;
     }
 
     /**
@@ -96,8 +191,8 @@ public class MainMenu extends State {
      * quits.
      * called by button
      */
-    public void quit()  {
-
+    public void quit() {
+        Gdx.app.exit();
     }
 
 

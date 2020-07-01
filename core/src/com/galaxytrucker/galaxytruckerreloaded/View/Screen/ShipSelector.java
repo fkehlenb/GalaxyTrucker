@@ -1,31 +1,30 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.HangerController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CreateGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SinglePlayerButton;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Ship selector screen when creating new game
  */
 public class ShipSelector implements Screen {
 
-    /**
-     * Sprite batch
-     */
-    private SpriteBatch batch;
+    private Main main;
 
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
+    private Stage stage;
 
     /**
      * Background
@@ -53,14 +52,40 @@ public class ShipSelector implements Screen {
     private SinglePlayerButton singlePlayerButton;
 
     /**
-     * Looping music
+     * button to create game
      */
-    private Music music;
+    private CreateGameButton createGameButton;
 
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
+    private HangerController controller;
+
+    private Viewport viewport;
+
+    /** Constructor
+     * @param main - main class */
+    public ShipSelector(Main main){
+        this.main = main;
+        controller = new HangerController();
+        //TODO methode um mögliche schiffe zu bekommen, dann für jeden eine Textur in liste + einen button
+
+        background = new Texture("1080p.png");
+
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
+
+        singlePlayerButton = new SinglePlayerButton(main.WIDTH-100, main.HEIGHT-100, 248, 50, this);
+        stage.addActor(singlePlayerButton);
+        difficulties = new LinkedList<>();
+        for(int i=0; i<=3; i++) {
+            DifficultyButton difficulty1 = new DifficultyButton(main.WIDTH-100, main.HEIGHT/2 - 100 - 75*i, 248, 50, this, i);
+            difficulties.add(difficulty1);
+            stage.addActor(difficulty1);
+        }
+
+        createGameButton = new CreateGameButton(main.WIDTH/2, main.HEIGHT/2, 248, 50, this);
+        stage.addActor(createGameButton);
+
+        Gdx.input.setInputProcessor(stage);
+    }
 
     @Override
     public void show() {
@@ -69,12 +94,17 @@ public class ShipSelector implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        main.batch.begin();
+        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.end();
+        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
@@ -94,7 +124,8 @@ public class ShipSelector implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
+        stage.dispose();
     }
 
     /**
@@ -110,7 +141,7 @@ public class ShipSelector implements Screen {
      * @param ship the index of the ship in the list of possible ships
      */
     public void setShip(int ship) {
-
+        //TODO was für 1 username??
     }
 
     /**
@@ -121,7 +152,11 @@ public class ShipSelector implements Screen {
 
     }
 
-    /** Constructor TODO wie werden die schiffe dargestellt
-     * @param main - main class */
-    public ShipSelector(Main main){}
+    /**
+     * start the game
+     */
+    public void startGame() {
+        main.setScreen(new GamePlay(main)); //TODO nur für tests!!!
+        dispose();
+    }
 }
