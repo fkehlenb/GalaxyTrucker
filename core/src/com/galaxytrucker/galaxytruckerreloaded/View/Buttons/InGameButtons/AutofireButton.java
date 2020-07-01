@@ -46,7 +46,7 @@ public class AutofireButton extends ImButton
 
     public void leftClick()
     {
-        ui.autofire();
+        //ui.autofire();
     }
 
 
