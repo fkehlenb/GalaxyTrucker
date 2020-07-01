@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.TraderController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
@@ -57,16 +58,6 @@ public class GamePlay implements Screen {
     private Sound clickSound;
 
     /**
-     * single Player active
-     */
-    private boolean singlePlayer;
-
-    /**
-     * the map for this game
-     */
-    private Overworld map;
-
-    /**
      * ship of the player
      */
     private ShipView player;
@@ -102,14 +93,6 @@ public class GamePlay implements Screen {
     private VideoUI videoUI;
 
     /**
-     * Gets the current open OptionUI
-     * @return current OptionUI
-     */
-    public OptionUI getOptionUI() {
-        return optionUI;
-    }
-
-    /**
      * the ingame options ui, if existing
      */
     private OptionUI optionUI;
@@ -124,24 +107,19 @@ public class GamePlay implements Screen {
      */
     public Stage stage;
 
-    public Stage pauseStage;
+    /**
+     * the stage for the buttons of the pause menu
+     */
+    private Stage pauseStage;
 
+    /**
+     * the viewport
+     */
     private Viewport viewport;
 
     /**
-     * Pausemenu Object.
+     * the pause menu ui, if existing
      */
-    private PauseMenu pauseMenu;
-
-
-    /**
-     * Gets the current PauseMenu.
-     * @return current PauseMenuUI
-     */
-    public PauseMenuUI getPauseMenuUI() {
-        return pauseMenuUI;
-    }
-
     private PauseMenuUI pauseMenuUI;
 
     /**
@@ -152,8 +130,6 @@ public class GamePlay implements Screen {
     public GamePlay(Main main) {
         this.main = main;
         background = new Texture("1080p.png");
-
-        pauseMenu = new PauseMenu(main);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -221,8 +197,8 @@ public class GamePlay implements Screen {
 
         player.render();
 
-        if(shopUI != null) { shopUI.render(); }
-        else if(eventGUI != null) { eventGUI.render(); }
+        if(eventGUI != null) { eventGUI.render(); }
+        else if(shopUI != null) { shopUI.render(); }
         else if(gameOverUI != null) { gameOverUI.render(); }
         else if(videoUI != null) { videoUI.render(); }
         else if(generalUI != null) { generalUI.render(); }
@@ -269,23 +245,102 @@ public class GamePlay implements Screen {
         eventGUI = new EventGUI(main, event, stage, this);
     }
 
+    /**
+     * remove the event ui from the screen
+     */
     public void deleteEvent() {
         eventGUI = null;
     }
 
     /**
+     * travel to a planet
+     * call to travelController
+     *
+     * if valid request, travel to new planet with execution of event etc
+     * if not, error message?
+     *
+     * @param planet the target planet
+     * @return whether or not it is a valid request
+     */
+    public boolean travel(Planet planet) {
+        boolean success = true; //TODO call to controller
+        if(success) {
+            createEvent(planet.getEvent());
+            if(planet.getEvent() == PlanetEvent.SHOP) {
+                createShop(planet.getTrader());
+            }
+        }
+        return success;
+    }
+
+    /**
      * shop ui pops up
      */
-    public void createShop() {
-        shopUI = new ShopUI(main, stage, this);
-    }
+    public void createShop(Trader trader) {
+        shopUI = new ShopUI(main, stage, this, trader, null, 0);
+    } //TODO
 
     public void deleteShop() {
         shopUI = null;
     }
 
-    public void buy(int item) { //TODO still not sure how that is gonna work
-        //call controller
+    /**
+     * buy a weapon from the trader
+     * call to controller
+     * @param weapon the weapon
+     */
+    public boolean buyWeapon(Weapon weapon) {
+        return false;
+    }
+
+    /**
+     * buy a crew member from the trader
+     * call to controller
+     * @param crew the crew member
+     */
+    public boolean buyCrew(Crew crew) {
+        return false;
+    }
+
+    /**
+     * buy fuel from the trader
+     * call to controller
+     * @param amount the amount of fuel
+     */
+    public boolean buyFuel(int amount) {
+        return false;
+    }
+
+    /**
+     * buy missiles from the trader
+     * call to controller
+     * @param amount the amount of missiles
+     */
+    public boolean buyMissiles(int amount) {
+        return false;
+    }
+
+    /**
+     * sell missiles to the trader
+     * @param amount the amount of missiles
+     * @return successfull? call to controller
+     */
+    public boolean sellMissiles(int amount) { return false; }
+
+    /**
+     * sell weapon to trader
+     * @param weapon the weapon
+     * @return successfull? call to controller
+     */
+    public boolean sellWeapon(Weapon weapon) { return false; }
+
+    /**
+     * buy hp from the trader
+     * call to controller
+     * @param amount the amount of hp
+     */
+    public boolean buyHp(int amount) {
+        return false;
     }
 
     public void createGameOver(boolean won) {
@@ -433,7 +488,7 @@ public class GamePlay implements Screen {
 
     @Override
     public void pause() {
-        pauseMenu.render(1);
+
     }
 
     @Override
@@ -455,6 +510,19 @@ public class GamePlay implements Screen {
         this.background = background;
     }
 
+    /**
+     * Gets the current open OptionUI
+     * @return current OptionUI
+     */
+    public OptionUI getOptionUI() {
+        return optionUI;
+    }
 
-
+    /**
+     * Gets the current PauseMenu.
+     * @return current PauseMenuUI
+     */
+    public PauseMenuUI getPauseMenuUI() {
+        return pauseMenuUI;
+    }
 }

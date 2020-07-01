@@ -73,7 +73,6 @@ public class MapUI {
         }
         shipView.deleteMap();
 
-
     }
 
     /**
@@ -82,8 +81,10 @@ public class MapUI {
      * @param planet the new planet
      */
     public void moveToPlanet(Planet planet) {
-        //call the controller
-        disposeMapUI();
+        boolean success = shipView.travel(planet);
+        if(success) {
+            disposeMapUI();
+        }
     }
 
     /**

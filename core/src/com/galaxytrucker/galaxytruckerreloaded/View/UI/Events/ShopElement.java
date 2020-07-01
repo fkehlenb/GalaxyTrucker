@@ -3,42 +3,72 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopBuyButton;
 
 public class ShopElement {
 
+    /**
+     * the main class extending game
+     */
     private Main main;
 
-    private Stage stage;
-
-    private int id;
-
+    /**
+     * the button with which to buy something
+     */
     private ShopBuyButton button;
 
+    /**
+     * the texture of this element
+     */
     private Texture texture;
 
+    /**
+     * the position on the screen
+     */
     private float x, y;
 
     /**
-     * the shop ui this button is on
+     * the weapon, if this is a weapon
+     */
+    private Weapon weapon;
+
+    /**
+     * the crew member, if this is a crew member
+     */
+    private Crew crew;
+
+    /**
+     * the amount, if this is fuel, hp or missiles
+     */
+    private int amount;
+
+    /**
+     * the name (fuel, hp, or missiles) if this is one of those
+     */
+    private String type;
+
+    /**
+     * the shop ui this element is on
      */
     private ShopUI shop;
 
     /**
      * constructor
      * @param main the main game class
-     * @param stage the stage for buttons
-     * @param id the id of this element
      * @param texture the texture for this element
      */
-    public ShopElement(Main main, Stage stage, int id, Texture texture, float x, float y, ShopUI shop) {
+    public ShopElement(Main main, Stage stage, Texture texture, float x, float y, ShopUI shop, Weapon weapon, Crew crew, int amount, String type) {
         this.main = main;
-        this.stage = stage;
-        this.id = id;
         this.texture = texture;
         this.x = x;
         this.y = y;
         this.shop = shop;
+        this.weapon = weapon;
+        this.crew = crew;
+        this.amount = amount;
+        this.type = type;
 
         button = new ShopBuyButton(0, 0, 10, 10, this); //TODO whxy
         stage.addActor(button);
@@ -59,12 +89,35 @@ public class ShopElement {
     public void disposeShopElement() {
         texture.dispose();
         button.remove();
+        shop.removeBuyElement(this);
     }
 
     /**
      * button was clicked, this item is to be bought
      */
     public void buy() {
-        shop.buy(id);
+        boolean success = false;
+        if(weapon != null) {
+            success = shop.buyWeapon(weapon);
+        }
+        else if(crew != null) {
+            success = shop.buyCrew(crew);
+        }
+        else if(type != null) {
+            switch (type) {
+                case "missiles":
+                    success = shop.buyMissiles(amount);
+                    break;
+                case "fuel":
+                    success = shop.buyFuel(amount);
+                    break;
+                case "hp":
+                    success = shop.buyHp(amount);
+                    break;
+            }
+        }
+        if(success) {
+            disposeShopElement();
+        }
     }
 }

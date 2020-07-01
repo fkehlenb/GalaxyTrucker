@@ -41,9 +41,10 @@ public class EventGUI {
      */
     private Texture backgroundTexture;
 
+    /**
+     * the main class extending game
+     */
     private Main main;
-
-    private Stage stage;
 
     /**
      * the current page
@@ -64,7 +65,6 @@ public class EventGUI {
      */
     public EventGUI(Main main, PlanetEvent event, Stage stage, GamePlay game) {
         this.main = main;
-        this.stage = stage;
         this.event = event;
         this.game = game;
 
@@ -100,7 +100,8 @@ public class EventGUI {
             eventPages.add(currentPage);
         }
         else { //VOID
-            disposeEventGUI(); //TODO was hier?
+            currentPage = new EventPage(main, null, "this planet is empty", 0, 0);
+            eventPages.add(currentPage);
         }
     }
 
@@ -110,6 +111,9 @@ public class EventGUI {
     public void disposeEventGUI() {
         backgroundTexture.dispose();
         nextPage.remove();
+        for(EventPage p : eventPages) {
+            p.disposePage();
+        }
         game.deleteEvent();
     }
 
@@ -119,7 +123,7 @@ public class EventGUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(backgroundTexture, 0, 0, 15, 15); //TODO whxy
+        main.batch.draw(backgroundTexture, 0, 0, 15, 15);
         main.batch.end();
         currentPage.render();
     }
@@ -137,16 +141,8 @@ public class EventGUI {
             currentPage = eventPages.remove(0);
         }
         else {
-            done();
+            disposeEventGUI();
         }
-    }
-
-    /**
-     * call controller to tell that player is done going through the pages
-     * meaning possible planet event (shop, fight, ...) can start now
-     */
-    private void done() {
-
     }
 
 

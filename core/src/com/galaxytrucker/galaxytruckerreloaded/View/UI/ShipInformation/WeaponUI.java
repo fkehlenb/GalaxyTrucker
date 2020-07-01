@@ -13,7 +13,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Weapon
 /**
  * shows the weapons of the ship
  */
-//TODO als subklasse zu subsystemui sobald gemergt mit master
 public class WeaponUI extends SubsystemUI {
 
     /** Weapon coolDown */

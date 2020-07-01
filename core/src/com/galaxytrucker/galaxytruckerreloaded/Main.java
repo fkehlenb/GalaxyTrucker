@@ -18,24 +18,14 @@ public class Main extends Game {
     public static final int HEIGHT = 1080;
 
     public static final String TITLE = "Galaxy Trucker";
-
-    private GameStateManager gsm;
     /**
      * Sprite batch
      */
     public SpriteBatch batch;
 
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
-
     @Override
     public void create() {
         batch = new SpriteBatch();
-        //gsm = new GameStateManager();
-        //this.camera = new OrthographicCamera();
-        //gsm.push(new MainMenu(gsm));
 
         setScreen(new MainMenu(this));
     }
@@ -58,15 +48,6 @@ public class Main extends Game {
      */
     public SpriteBatch getBatch() {
         return this.batch;
-    }
-
-    /**
-     * Get the orthographic camera
-     *
-     * @return the orthographic camera
-     */
-    public OrthographicCamera getCamera() {
-        return this.camera;
     }
 
     public void setFullscreen() {

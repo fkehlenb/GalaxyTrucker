@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.AutofireButton;
@@ -56,11 +57,6 @@ public class ShipView extends AbstractShip {
     private MoveButton moveButton;
 
     /**
-     * the weapon autofire button
-     */
-    private AutofireButton weaponAutofire;
-
-    /**
      * the background texture of the ship
      */
     private Texture shipBackground;
@@ -93,7 +89,6 @@ public class ShipView extends AbstractShip {
 
     /**
      * Constructor
-     * TODO methods to access all shipinformation stuff
      * @param main - the main class for SpriteBatch
      */
     public ShipView(Main main, Ship ship, Stage stage, Overworld map, GamePlay game) {
@@ -108,9 +103,8 @@ public class ShipView extends AbstractShip {
             //TODO wie system das zu raum gehört? dann sys id als key, roomui als value
         }
 
-        weaponAutofire = new AutofireButton(1020, 130, 248, 50, this);
-        moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this); //TODO same here
-        inventory = new ShipButton(750,main.HEIGHT - 80, 50, 92, this); //TODO warum ändert sich die größe nicht
+        moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this);
+        inventory = new ShipButton(750,main.HEIGHT - 80, 50, 92, this);
 
         money = new ScrapUI(main, ship.getCoins());
         hull = new HullUI(main, ship.getHp());
@@ -120,7 +114,6 @@ public class ShipView extends AbstractShip {
         shipRoomBackground = new Texture("ship/anaerobic/an2floor.png");
         weaponGeneralBackground = new Texture("shipsys/weapon/generalbox.png");
 
-        stage.addActor(weaponAutofire);
         stage.addActor(inventory);
         stage.addActor(moveButton);
     }
@@ -133,7 +126,7 @@ public class ShipView extends AbstractShip {
     public void render() {
 
         main.batch.begin();
-        main.batch.draw(shipBackground, main.WIDTH -1730, main.HEIGHT/2 - shipBackground.getHeight()/2 - 200, 1000, 1000); //TODO xywh
+        main.batch.draw(shipBackground, main.WIDTH -1730, main.HEIGHT/2 - shipBackground.getHeight()/2 - 200, 1000, 1000);
         main.batch.draw(shipRoomBackground, main.WIDTH -1500, main.HEIGHT/2 - shipRoomBackground.getHeight()/2 - 100, 550, 550);
         main.batch.draw(weaponGeneralBackground, 700, 100, 328, 90);
         main.batch.end();
@@ -169,7 +162,6 @@ public class ShipView extends AbstractShip {
         game.deleteShip();
         inventory.remove();
         moveButton.remove();
-        weaponAutofire.remove();
         for(RoomUI r : rooms.values()) {
             r.disposeRoomUI();
         }
@@ -214,6 +206,21 @@ public class ShipView extends AbstractShip {
             mapUI = new MapUI(main, stage, map, this);
         }
 
+    }
+
+    /**
+     * travel to a planet
+     *
+     * send to gameplay, through that to travelcontroller, which declares whether this jump is possible
+     *
+     * if possible, travel to new planet (with execution of event etc)
+     * if not, error message??
+     *
+     * @param planet the target planet
+     * @return whether travel valid
+     */
+    public boolean travel(Planet planet) {
+        return game.travel(planet);
     }
 
     public void deleteInventory() {
@@ -282,14 +289,6 @@ public class ShipView extends AbstractShip {
     public void changeAmountScrap(int amount) { money.changeAmount(amount);}
 
     public void weaponShot(int weaponid, Room room) { game.weaponShot(weaponid, room);}
-
-    /**
-     * autofire
-     * called by autofire button
-     */
-    public void autofire() {
-        //controller call
-    }
 
     /**
      * Ship hop animation
