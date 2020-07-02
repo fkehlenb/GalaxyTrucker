@@ -6,12 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.awt.*;
 
-public class TIListener extends TextField {
+public abstract class TIListener extends TextField {
 
-    public TIListener(Texture texture, float x, float y, float width, float height) {
-        super(new TextureRegionDrawable(new TextureRegion(texture)));
-        setPosition(x, y);
-        setSize(width, height);
+    public TIListener(String text, float x, float y, float width, float height) {
+        super();
     }
 
     public abstract void leftClick();

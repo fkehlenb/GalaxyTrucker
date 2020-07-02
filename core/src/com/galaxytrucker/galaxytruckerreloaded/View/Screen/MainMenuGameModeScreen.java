@@ -9,26 +9,45 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.*;
-import com.sun.org.apache.xpath.internal.operations.Mult;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 
 /**
  * Selection screen for Singleplayer or Multiplayer
  */
 public class MainMenuGameModeScreen implements Screen {
 
+    /**
+     * the main class extending game
+     */
     private Main main;
 
+    /**
+     * the background texture
+     */
     private Texture background;
 
+    /**
+     * the stage for the buttons
+     */
     private Stage stage;
 
+    /**
+     * the button for single player mode
+     */
     private SinglePlayerButton singlePlayerButton;
 
+    /**
+     * the button for multi player mode
+     */
     private MultiPlayerButton multiPlayerButton;
 
+    /**
+     * the button to go back to the main menu
+     */
     private MainMenuGameModeScreenBackButton mainMenuGameModeScreenBackButton;
 
+    /**
+     * the viewport
+     */
     private Viewport viewport;
 
 
@@ -103,11 +122,17 @@ public class MainMenuGameModeScreen implements Screen {
         stage.dispose();
     }
 
+    /**
+     * set the game mode to singleplayer and load new screen
+     */
     public void setSingleplayer() {
         main.setScreen(new SPNewOrResume(main));
         dispose();
     }
 
+    /**
+     * set the game mode to multiplayer and load new screen
+     */
     public void setMultiplayer() {
 
     }

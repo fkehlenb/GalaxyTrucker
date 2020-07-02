@@ -22,14 +22,20 @@ import java.util.List;
  */
 public class ShipSelector implements Screen {
 
+    /**
+     * the main class extending game
+     */
     private Main main;
 
-    private Stage stage;
-
     /**
-     * Background
+     * the background texture
      */
     private Texture background;
+
+    /**
+     * the stage for the buttons
+     */
+    private Stage stage;
 
     /**
      * the textures of the ships to choose from
@@ -47,17 +53,15 @@ public class ShipSelector implements Screen {
     private List<DifficultyButton> difficulties;
 
     /**
-     * button to choose single player. Otherwise, it is multiplayer
-     */
-    private SinglePlayerButton singlePlayerButton;
-
-    /**
      * button to create game
      */
     private CreateGameButton createGameButton;
 
     private HangerController controller;
 
+    /**
+     * the viewport
+     */
     private Viewport viewport;
 
 
@@ -72,8 +76,6 @@ public class ShipSelector implements Screen {
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
-
-
 
         difficulties = new LinkedList<>();
         for(int i=0; i<=3; i++) {
@@ -142,14 +144,6 @@ public class ShipSelector implements Screen {
      * @param ship the index of the ship in the list of possible ships
      */
     public void setShip(int ship) {
-        //TODO was für 1 username??
-    }
-
-    /**
-     * sets whether or not singleplayer. called by button
-     * @param single singleplayer = true
-     */
-    public void setSinglePlayer(boolean single) {
 
     }
 

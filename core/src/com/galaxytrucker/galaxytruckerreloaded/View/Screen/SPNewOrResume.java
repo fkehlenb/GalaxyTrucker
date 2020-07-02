@@ -11,22 +11,43 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.*;
 
 /**
- * Selection screen for Singleplayer or Multiplayer
+ * Selection screen new game or resuming of old one
  */
 public class SPNewOrResume implements Screen {
 
+    /**
+     * the main class extending game
+     */
     private Main main;
 
+    /**
+     * the background texture
+     */
     private Texture background;
 
+    /**
+     * the stage for the buttons
+     */
     private Stage stage;
 
+    /**
+     * the button to resume an old game
+     */
     private ResumeButton resumeButton;
 
+    /**
+     * the button to start a new game
+     */
     private StartNewGameButton startNewGameButton;
 
+    /**
+     * the button to return to the multi/single player selector
+     */
     private SPNewOrResumeBackButton backButton;
 
+    /**
+     * the viewport
+     */
     private Viewport viewport;
 
 
@@ -102,10 +123,16 @@ public class SPNewOrResume implements Screen {
         stage.dispose();
     }
 
+    /**
+     * resume an old game
+     */
     public void resumeGame() {
 
     }
 
+    /**
+     * start a new game
+     */
     public void newGame() {
         main.setScreen(new ShipSelector(main));
         dispose();
