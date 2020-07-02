@@ -1,10 +1,14 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.TraderService;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.TravelService;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.UserService;
 import lombok.AccessLevel;
@@ -25,6 +29,9 @@ public class ServerServiceCommunicator {
     /** TravelService */
     private TravelService travelService = new TravelService();
 
+    /** TraderService */
+    private TraderService traderService = new TraderService();
+
     /** Take a request from the client side, pass it through the services
      * and return a response
      * @return the server's response to the client's request */
@@ -35,6 +42,20 @@ public class ServerServiceCommunicator {
             case HYPERJUMP:
                 return jump(request.getShip(),request.getPlanet());
                 //TODO OTHERS
+            case TRADERBUYCREW:
+                return purchaseCrew(request.getShip(), request.getTrader(), request.getCrew());
+            case TRADERBUYFUEL:
+                return purchaseFuel(request.getShip(), request.getTrader(), request.getIntAmount());
+            case TRADERBUYWEAPON:
+                return purchaseWeapon(request.getShip(), request.getTrader(), request.getWeapon());
+            case TRADERBUYHP:
+                return purchaseHP(request.getShip(), request.getTrader(), request.getIntAmount());
+            case TRADERBUYROCKETS:
+                return purchaseRockets(request.getShip(), request.getTrader(), request.getIntAmount());
+            case TRADERSELLROCKETS:
+                return sellRockets(request.getShip(), request.getTrader(), request.getIntAmount());
+            case TRADERSELLWEAPON:
+                return sellWeapons(request.getShip(), request.getTrader(), request.getWeapon());
         }
         return null;
     }
@@ -118,6 +139,162 @@ public class ServerServiceCommunicator {
             }
         }
         catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    // ==================================== TRADER SERVICE ====================================
+
+    /**
+     * purchase a weapon from a trader
+     * @param ship the ship that buys
+     * @param trader the trader that sells
+     * @param weapon the weapon that is bought
+     * @return a ResponseObject
+     */
+    private ResponseObject purchaseWeapon(Ship ship, Trader trader, Weapon weapon) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            //if(traderService.validatePurchase(ship, )) { TODO was für preise?
+                boolean successfulPurchase = traderService.purchaseWeapon(ship, trader, weapon);
+                if(successfulPurchase) {
+                    responseObject.setValidRequest(true);
+                }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /**
+     * purchase a crew member from a trader
+     * @param ship the ship that buys
+     * @param trader the trader that sells
+     * @param crew the crew member that is bought
+     * @return a ResponseObject
+     */
+    private ResponseObject purchaseCrew(Ship ship, Trader trader, Crew crew) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            //if(traderService.validatePurchase(ship, )) { TODO
+                boolean successfulPurchase = traderService.purchaseCrew(ship, trader, crew);
+                if(successfulPurchase) {
+                    responseObject.setValidRequest(true);
+                }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /**
+     * purchase rockets from a trader
+     * @param ship the ship that buys
+     * @param trader the trader that sells
+     * @param amount the amount of rockets that are bought
+     * @return a ResponseObject
+     */
+    private ResponseObject purchaseRockets(Ship ship, Trader trader, int amount) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            //if(traderService.validatePurchase(ship, )) { TODO
+                boolean successfulPurchase = traderService.purchaseRockets(ship, trader, amount);
+                if(successfulPurchase) {
+                    responseObject.setValidRequest(true);
+                }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /**
+     * purchase fuel from a trader
+     * @param ship the ship that buys
+     * @param trader the trader that sells
+     * @param amount the amount of fuel that is bought
+     * @return a ResponseObject
+     */
+    private ResponseObject purchaseFuel(Ship ship, Trader trader, int amount) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            //if(traderService.validatePurchase(ship, )) { TODO
+                boolean successfulPurchase = traderService.purchaseFuel(ship, trader, amount);
+                if(successfulPurchase) {
+                    responseObject.setValidRequest(true);
+                }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /**
+     * purchase HP from a trader
+     * @param ship the ship that buys
+     * @param trader the trader that sells
+     * @param amount the amount of hp that is bought
+     * @return a ResponseObject
+     */
+    private ResponseObject purchaseHP(Ship ship, Trader trader, int amount) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            //if(traderService.validatePurchase(ship, )) { TODO
+            boolean successfulPurchase = traderService.purchaseHP(ship, trader, amount);
+            if(successfulPurchase) {
+                responseObject.setValidRequest(true);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /**
+     * sell weapons to a trader
+     * @param ship the ship that sells
+     * @param trader the trader that buys
+     * @param weapon the weapon that is sold
+     * @return a ResponseObject
+     */
+    private ResponseObject sellWeapons(Ship ship, Trader trader, Weapon weapon) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            //if(traderService.validatePurchase(ship, )) { TODO
+            boolean successfulPurchase = traderService.sellWeapon(ship, trader, weapon);
+            if(successfulPurchase) {
+                responseObject.setValidRequest(true);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /**
+     * sell rockets to a trader
+     * @param ship the ship that sells
+     * @param trader the trader that buys
+     * @param amount the amount of rockets that is sold
+     * @return a ResponseObject
+     */
+    private ResponseObject sellRockets(Ship ship, Trader trader, int amount) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            //if(traderService.validatePurchase(ship, )) { TODO
+            boolean successfulPurchase = traderService.sellRockets(ship, trader, amount);
+            if(successfulPurchase) {
+                responseObject.setValidRequest(true);
+            }
+        }
+        catch(Exception e) {
             e.printStackTrace();
         }
         return responseObject;

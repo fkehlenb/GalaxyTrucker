@@ -5,6 +5,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,10 +39,16 @@ public class RequestObject {
 
     /** Room */
     private Room room;
+    /** Weapon */
+    private Weapon weapon;
 
     /** Heal amount */
     private int healAmount;
 
     /** Damage amount */
     private int damageAmount;
+    /** int - eg fuel, rockets, hp for trader */
+    private int intAmount;
+
+
 }

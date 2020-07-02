@@ -37,6 +37,10 @@ public class Trader implements Serializable {
     @NonNull
     private int fuelStock;
 
+    /** HP for sale */
+    @NonNull
+    private int hpStock;
+
     /** Crew for sale */
     @OneToMany (cascade = CascadeType.ALL)
     @NonNull
