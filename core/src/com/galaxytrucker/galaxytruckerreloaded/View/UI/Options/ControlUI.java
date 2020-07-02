@@ -72,7 +72,7 @@ public class ControlUI {
             gamePlay.deleteControlUI();
         }
         else if(mainMenu != null){
-            mainMenu.deleteConterolUI();
+            mainMenu.deleteControlUI();
         }
     }
 

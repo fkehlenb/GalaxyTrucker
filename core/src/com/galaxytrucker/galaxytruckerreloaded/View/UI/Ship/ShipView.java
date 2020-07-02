@@ -286,6 +286,10 @@ public class ShipView extends AbstractShip {
         game.roomSystemEnergyChosen(id, amount);
     }
 
+    /**
+     * change the amount of scrap/money displayed
+     * @param amount by how much the amount is changed
+     */
     public void changeAmountScrap(int amount) { money.changeAmount(amount);}
 
     public void weaponShot(int weaponid, Room room) { game.weaponShot(weaponid, room);}

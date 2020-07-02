@@ -72,7 +72,7 @@ public class TraderService extends PlanetEventService {
                 //add weapon to ship
                 shipWeapons.add(weapon);
                 ship.setInventory(shipWeapons);
-                //ship.setCoins(shipCoins - weapon.); TODO
+                ship.setCoins(shipCoins - weapon.getPrice().get(weapon.getWeaponLevel()));
                 shipDAO.update(ship);
                 //muss was an weapon geändert werden??
                 return true;
@@ -117,8 +117,8 @@ public class TraderService extends PlanetEventService {
                 trader.setCrewStock(traderCrew);
                 traderDAO.update(trader);
                 //add to ship
-                //ship.setCoins(shipCoins - crew.); TODO
-                //List<Crew> shipCrew = ship. TODO wie crew von schiff??
+                ship.setCoins(shipCoins - crew.getPrice());
+                //List<Crew> shipCrew = ship. TODO wie crew von schiff?
                 //set current Room
                 crew.setCurrentRoom(ship.getSystems().get(0)); //TODO in welchen raum setzen?
                 crewDAO.update(crew);
@@ -171,7 +171,7 @@ public class TraderService extends PlanetEventService {
                 //add to ship
                 shipAmount += amount;
                 ship.setMissiles(shipAmount);
-                //ship.setCoins(shipCoins - ); TODO
+                ship.setCoins(shipCoins - 5*amount); //TODO was für einen festpreis?
                 shipDAO.update(ship);
                 return true;
             } catch (Exception e) { //exception in daos
@@ -183,6 +183,7 @@ public class TraderService extends PlanetEventService {
                     traderDAO.update(trader);
                     //remove from ship
                     ship.setMissiles(shipAmount);
+                    ship.setCoins(shipCoins);
                     shipDAO.update(ship);
                 } catch (Exception f) { //exception in daos
                     f.printStackTrace();
@@ -219,7 +220,7 @@ public class TraderService extends PlanetEventService {
                 //add to ship
                 shipAmount += amount;
                 ship.setFuel(shipAmount);
-                //ship.setCoins(shipCoins - ); TODO
+                ship.setCoins(shipCoins - 5*amount); //TODO was für ein festpreis?
                 shipDAO.update(ship);
                 return true;
             } catch (Exception e) { //exception in daos
@@ -268,7 +269,7 @@ public class TraderService extends PlanetEventService {
                 //add to ship
                 shipAmount += amount;
                 ship.setHp(shipAmount);
-                //TODO remove money
+                ship.setCoins(coins - 5*amount); //TODO festpreis?
                 shipDAO.update(ship);
                 return true;
             } catch (Exception e) { //exception in daos
@@ -312,7 +313,7 @@ public class TraderService extends PlanetEventService {
                 //remove from ship
                 shipWeapon.remove(weapon);
                 ship.setInventory(shipWeapon);
-                //ship.setCoins(shipCoins + weapon.); TODO wie viel?
+                ship.setCoins(shipCoins + weapon.getPrice().get(weapon.getWeaponLevel()));
                 shipDAO.update(ship);
                 return true;
             } catch (Exception e) { // exception in daos
@@ -359,7 +360,7 @@ public class TraderService extends PlanetEventService {
                 }
                 shipAmount -= amount;
                 ship.setMissiles(shipAmount);
-                //ship.setCoins(ship.getCoins() + ); TODO price of one?
+                ship.setCoins(ship.getCoins() + 5*amount); //TODO festpreis?
                 shipDAO.update(ship);
                 return true;
             } catch (Exception e) { //exception in daos

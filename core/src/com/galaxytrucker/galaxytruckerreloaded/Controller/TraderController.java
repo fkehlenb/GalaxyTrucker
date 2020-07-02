@@ -49,7 +49,7 @@ public class TraderController extends Controller{
                 List<Weapon> shipWeapons = ship.getInventory();
                 shipWeapons.add(weapon);
                 ship.setInventory(shipWeapons);
-                //TODO take money from ship
+                ship.setCoins(ship.getCoins() - weapon.getPrice().get(weapon.getWeaponLevel()));
                 clientControllerCommunicator.setClientShip(ship);
                 return true;
             }
@@ -81,7 +81,7 @@ public class TraderController extends Controller{
                 //put in room
                 Ship ship = clientControllerCommunicator.getClientShip();
                 crew.setCurrentRoom(ship.getSystems().get(0));
-                //take money from ship TODO
+                ship.setCoins(ship.getCoins() - crew.getPrice());
                 clientControllerCommunicator.setClientShip(ship);
                 return true;
             }
@@ -113,7 +113,7 @@ public class TraderController extends Controller{
                 //add to ship
                 Ship ship = clientControllerCommunicator.getClientShip();
                 ship.setMissiles(ship.getMissiles() + amount);
-                //TODO take money
+                ship.setCoins(ship.getCoins() - 5*amount); //TODO festpreis
                 clientControllerCommunicator.setClientShip(ship);
                 return true;
             }
@@ -145,7 +145,7 @@ public class TraderController extends Controller{
                 //add to ship
                 Ship ship = clientControllerCommunicator.getClientShip();
                 ship.setFuel(ship.getFuel() + amount);
-                //TODO take money
+                ship.setCoins(ship.getCoins() - 5*amount); //TODO festpreis
                 clientControllerCommunicator.setClientShip(ship);
                 return true;
             }
@@ -171,11 +171,13 @@ public class TraderController extends Controller{
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if(responseObject.isValidRequest()) {
                 //remove from trader
-                //int tAmount = trader. TODO
+                int tAmount = trader.getHpStock();
+                tAmount -= amount;
+                trader.setHpStock(tAmount);
                 //add to ship
                 Ship ship = clientControllerCommunicator.getClientShip();
                 ship.setHp(ship.getHp() + amount);
-                //TODO take money
+                ship.setCoins(ship.getCoins() - 5*amount); //TODO festpreis
                 clientControllerCommunicator.setClientShip(ship);
                 return true;
             }
@@ -209,7 +211,7 @@ public class TraderController extends Controller{
                 List<Weapon> shipWeapon = ship.getInventory();
                 shipWeapon.remove(weapon);
                 ship.setInventory(shipWeapon);
-                //TODO add money
+                ship.setCoins(ship.getCoins() + weapon.getPrice().get(weapon.getWeaponLevel()));
                 clientControllerCommunicator.setClientShip(ship);
                 return true;
             }
@@ -239,7 +241,7 @@ public class TraderController extends Controller{
                 //remove from ship
                 Ship ship = clientControllerCommunicator.getClientShip();
                 ship.setMissiles(ship.getMissiles() - amount);
-                //TODO add money
+                ship.setCoins(ship.getCoins() + 5*amount);
                 clientControllerCommunicator.setClientShip(ship);
                 return true;
             }

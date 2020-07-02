@@ -71,9 +71,9 @@ public class ScrapUI {
 
     /**
      * the amount of money is updated
-     * @param amount the new amount
+     * @param amount by how much the amount is changed
      */
     public void changeAmount(int amount) {
-        this.amount = amount;
+        this.amount += amount;
     }
 }

@@ -88,10 +88,19 @@ public class GamePlay implements Screen {
      */
     private VideoUI videoUI;
 
+    /**
+     * audio settings ui
+     */
     private AudioUI audioUI;
 
+    /**
+     * credits ui
+     */
     private CreditsUI creditsUI;
 
+    /**
+     * control settings ui
+     */
     private ControlUI controlUI;
 
     /**
@@ -232,11 +241,6 @@ public class GamePlay implements Screen {
             // Pause-menu
             Gdx.input.setInputProcessor(pauseStage);
             createPauseMenu();
-
-
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.P)) {
-            //paused
         }
     }
 
@@ -279,9 +283,14 @@ public class GamePlay implements Screen {
      * shop ui pops up
      */
     public void createShop(Trader trader) {
-        shopUI = new ShopUI(main, stage, this, trader, null, 0);
+        if(shopUI == null) {
+            shopUI = new ShopUI(main, stage, this, trader, null, 0);
+        }
     } //TODO
 
+    /**
+     * remove the shop
+     */
     public void deleteShop() {
         shopUI = null;
     }
@@ -292,7 +301,11 @@ public class GamePlay implements Screen {
      * @param weapon the weapon
      */
     public boolean buyWeapon(Weapon weapon) {
-        return false;
+        boolean success = false; //TODO controller
+        if(success) {
+            player.changeAmountScrap(-(weapon.getPrice().get(weapon.getWeaponLevel())));
+        }
+        return success;
     }
 
     /**
@@ -301,7 +314,11 @@ public class GamePlay implements Screen {
      * @param crew the crew member
      */
     public boolean buyCrew(Crew crew) {
-        return false;
+        boolean success = false; //TODO controller
+        if(success) {
+            player.changeAmountScrap(-(crew.getPrice()));
+        }
+        return success;
     }
 
     /**
@@ -310,7 +327,11 @@ public class GamePlay implements Screen {
      * @param amount the amount of fuel
      */
     public boolean buyFuel(int amount) {
-        return false;
+        boolean success = false; //TODO controller
+        if(success) {
+            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+        }
+        return success;
     }
 
     /**
@@ -319,22 +340,12 @@ public class GamePlay implements Screen {
      * @param amount the amount of missiles
      */
     public boolean buyMissiles(int amount) {
-        return false;
+        boolean success = false; //TODO controller
+        if(success) {
+            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+        }
+        return success;
     }
-
-    /**
-     * sell missiles to the trader
-     * @param amount the amount of missiles
-     * @return successfull? call to controller
-     */
-    public boolean sellMissiles(int amount) { return false; }
-
-    /**
-     * sell weapon to trader
-     * @param weapon the weapon
-     * @return successfull? call to controller
-     */
-    public boolean sellWeapon(Weapon weapon) { return false; }
 
     /**
      * buy hp from the trader
@@ -342,13 +353,52 @@ public class GamePlay implements Screen {
      * @param amount the amount of hp
      */
     public boolean buyHp(int amount) {
-        return false;
+        boolean success = false; //TODO controller
+        if(success) {
+            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+        }
+        return success;
     }
 
+    /**
+     * sell missiles to the trader
+     * @param amount the amount of missiles
+     * @return successfull? call to controller
+     */
+    public boolean sellMissiles(int amount) {
+        boolean success = false; //TODO controller
+        if(success) {
+            player.changeAmountScrap(5*amount); //TODO festpreis
+        }
+        return success;
+    }
+
+    /**
+     * sell weapon to trader
+     * @param weapon the weapon
+     * @return successfull? call to controller
+     */
+    public boolean sellWeapon(Weapon weapon) {
+        boolean success = false; //TODO controller
+        if(success) {
+            player.changeAmountScrap(weapon.getPrice().get(weapon.getWeaponLevel()));
+        }
+        return success;
+    }
+
+    /**
+     * create a game over ui if it does not yet exist
+     * @param won whether the game was won
+     */
     public void createGameOver(boolean won) {
-        gameOverUI = new GameOver(main, stage, won, this);
+        if(gameOverUI == null) {
+            gameOverUI = new GameOver(main, stage, won, this);
+        }
     }
 
+    /**
+     * delete the game over ui
+     */
     public void deleteGameOver() {
         gameOverUI = null;
     }
@@ -378,7 +428,9 @@ public class GamePlay implements Screen {
      * opens in game options
      */
     public void createOptions() {
-        optionUI = new OptionUI(main, pauseStage, this, null);
+        if(optionUI == null) {
+            optionUI = new OptionUI(main, pauseStage, this, null);
+        }
     }
 
     /**
@@ -392,7 +444,9 @@ public class GamePlay implements Screen {
      * opens in game general options
      */
     public void createGeneralUI() {
-        generalUI = new GeneralUI(main, pauseStage, this, null);
+        if(generalUI == null) {
+            generalUI = new GeneralUI(main, pauseStage, this, null);
+        }
     }
 
     /**
@@ -406,7 +460,9 @@ public class GamePlay implements Screen {
      * opens in game video options
      */
     public void createVideoUI() {
-        videoUI = new VideoUI(main, pauseStage, this, null);
+        if(videoUI == null) {
+            videoUI = new VideoUI(main, pauseStage, this, null);
+        }
     }
 
     /**
@@ -416,31 +472,57 @@ public class GamePlay implements Screen {
         videoUI = null;
     }
 
+    /**
+     * create audio option ui, if it does not yet exist
+     */
     public void createAudioUI(){
-        audioUI = new AudioUI(main, pauseStage, this, null);
+        if(audioUI == null) {
+            audioUI = new AudioUI(main, pauseStage, this, null);
+        }
     }
 
+    /**
+     * delete the audio option ui
+     */
     public void deleteAudioUI(){
         audioUI = null;
     }
 
+    /**
+     * create the credit ui, if it does not yet exist
+     */
     public void createCreditUI(){
-        creditsUI = new CreditsUI(main, pauseStage, this, null);
+        if(creditsUI == null) {
+            creditsUI = new CreditsUI(main, pauseStage, this, null);
+        }
     }
 
+    /**
+     * delete the credit ui
+     */
     public void deleteCreditUI(){
         creditsUI = null;
     }
 
-    public void createControlUI(){controlUI = new ControlUI(main, pauseStage, this, null);
+    /**
+     * create the control option ui, if it does not yet exist
+     */
+    public void createControlUI(){
+        if(controlUI == null) {
+            controlUI = new ControlUI(main, pauseStage, this, null);
+        }
     }
+
+    /**
+     * delete the control ui
+     */
     public void deleteControlUI(){
         controlUI = null;
     }
-    public void createShip() {
 
-    }
-
+    /**
+     * delete the ship
+     */
     public void deleteShip() {
         player = null;
     }
@@ -451,10 +533,24 @@ public class GamePlay implements Screen {
      * @param room the new room
      */
     public void crewMoved(int crew, Room room) {} //call controller, ask for permission
+
+    /**
+     * update the health of a crew member
+     * @param crew the crew member
+     * @param health the new health
+     */
     public void crewHealth(int crew, int health) { player.crewHealth(crew, health); }
 
+    /**
+     * update the energy status of the overall energy not yet assigned to a system
+     * @param energy the new energy
+     */
     public void energyStatusUpdate(int energy) { player.energyStatusUpdate(energy); }
 
+    /**
+     * update the status of the hull
+     * @param status the new status
+     */
     public void hullStatusUpdate(int status) { player.hullStatusUpdate(status); }
 
     /**
@@ -473,10 +569,19 @@ public class GamePlay implements Screen {
         player.roomSystemEnergyUpdate(id, amount);
     }
 
+    /**
+     * update the status of a system
+     * @param id the id of the system
+     * @param amount the new status
+     */
     public void roomSystemStatusUpdate(int id, int amount) {
         player.roomSystemStatusUpdate(id, amount);
     }
 
+    /**
+     * change the amount of scrap
+     * @param amount the new amount
+     */
     public void changeAmountScrap(int amount) {
         player.changeAmountScrap(amount);
     }
@@ -490,6 +595,11 @@ public class GamePlay implements Screen {
      */
     public void weaponShot(int id, Room room) {} //call controller
 
+    /**
+     * load the crew of a ship
+     * @param shipId the ship id
+     * @return the crew members
+     */
     public List<Crew> loadCrew(int shipId) {  //TODO call controller
         List<Crew> result = new LinkedList<>();
         Crew c1 = new Crew(1, "ana", 7, 10);
@@ -498,13 +608,31 @@ public class GamePlay implements Screen {
         result.add(c2);
         return result;
     }
+
+    /**
+     * load the weapons of a ship
+     * @param shipId the ship id
+     * @return the weapons of the ship in a list
+     */
     public List<Weapon> loadWeapons(int shipId) {
         List<Weapon> weapons = new LinkedList<>();
         weapons.add(new LaserBlaster("karl"));
         weapons.add(new LaserBlaster("test"));
         return weapons;
     }
+
+    /**
+     * load the missiles of a ship
+     * @param shipId the id of the ship
+     * @return the amount of missiles
+     */
     public int loadMissiles(int shipId) { return 0; }
+
+    /**
+     * load the fuel of a ship
+     * @param shipId the id of the ship
+     * @return the amount of fuel
+     */
     public int loadFuel(int shipId) { return 0; }
 
     @Override

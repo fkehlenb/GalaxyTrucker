@@ -2,8 +2,10 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -18,30 +20,70 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
  */
 public class MainMenu implements Screen {
 
+    /**
+     * the background texture
+     */
     private Texture background;
 
+    /**
+     * the main class extending game
+     */
     private Main main;
 
+    /**
+     * the stage for the buttons
+     */
     private Stage stage;
 
+    /**
+     * the viewport for the stage
+     */
     private Viewport viewport;
 
+    /**
+     * the option ui, if it exists
+     */
     private OptionUI optionUI;
 
+    /**
+     * the general option ui, if it exists
+     */
     private GeneralUI generalUI;
 
+    /**
+     * the video option ui, if it exists
+     */
     private VideoUI videoUI;
 
+    /**
+     * the audio option ui, if it exists
+     */
     private AudioUI audioUI;
 
+    /**
+     * the control option ui, if it exists
+     */
     private ControlUI controlUI;
 
+    /**
+     * the credits ui, if it exists
+     */
     private CreditsUI creditsUI;
 
+    /**
+     * the button to start a new game
+     */
     private NewGameButton newGame;
-    private OptionButton optionButton;
-    private QuitButton quit;
 
+    /**
+     * the button to open the options
+     */
+    private OptionButton optionButton;
+
+    /**
+     * the button to quit
+     */
+    private QuitButton quit;
 
     /** Constructor  */
     public MainMenu(Main main){
@@ -56,7 +98,6 @@ public class MainMenu implements Screen {
         stage.addActor(quit);
         stage.addActor(optionButton);
         stage.addActor(newGame);
-
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -144,6 +185,9 @@ public class MainMenu implements Screen {
         dispose();
     }
 
+    /**
+     * create the option ui, if it does not yet exist
+     */
     public void createOptions(){
         if(optionUI==null) {
             hide();
@@ -151,54 +195,99 @@ public class MainMenu implements Screen {
         }
     }
 
+    /**
+     * remove the option ui
+     */
     public void deleteOptions(){
         show();
         optionUI = null;
     }
 
+    /**
+     * return the option ui
+     * @return the option ui
+     */
     public OptionUI getOptionUI() {
         return optionUI;
     }
 
+    /**
+     * create a general option ui, if it does not yet exist
+     */
     public void createGeneralUI() {
         if(generalUI == null) {
             generalUI = new GeneralUI(main, stage, null, this);
         }
     }
 
+    /**
+     * remove the general option ui
+     */
     public void deleteGeneralUI() {
         generalUI = null;
     }
 
+    /**
+     * create a video option ui, if it does not yet exist
+     */
     public void createVideoUI() {
         if(videoUI == null) {
             videoUI = new VideoUI(main, stage, null, this);
         }
     }
 
+    /**
+     * delete the video option ui
+     */
     public void deleteVideoUI() {
         videoUI = null;
     }
 
+    /**
+     * create an audio option ui, if it does not yet exist
+     */
     public void createAudioUI(){
-        audioUI = new AudioUI(main, stage, null, this);
+        if(audioUI == null) {
+            audioUI = new AudioUI(main, stage, null, this);
+        }
     }
 
+    /**
+     * delete the audio option ui
+     */
     public void deleteAudioUI(){
         audioUI = null;
     }
 
+    /**
+     * create a credit ui, if it does not yet exist
+     */
     public void createCreditUI(){
-        creditsUI = new CreditsUI(main, stage, null, this);
+        if(creditsUI == null) {
+            creditsUI = new CreditsUI(main, stage, null, this);
+        }
     }
 
+    /**
+     * delete the credit ui
+     */
     public void deleteCreditUI(){
         creditsUI = null;
     }
 
-    public void createControlUI(){controlUI = new ControlUI(main, stage, null, this);
+    /**
+     * create the control option ui, if it does not yet exist
+     */
+    public void createControlUI(){
+        if(controlUI == null) {
+            controlUI = new ControlUI(main, stage, null, this);
+        }
     }
-    public void deleteConterolUI(){
+
+    /**
+     * delete the control option ui
+     */
+    public void deleteControlUI(){
         controlUI = null;
     }
 
