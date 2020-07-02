@@ -108,6 +108,7 @@ public class SPNewOrResume implements Screen {
 
     public void newGame() {
         main.setScreen(new ShipSelector(main));
+        dispose();
     }
 
 }

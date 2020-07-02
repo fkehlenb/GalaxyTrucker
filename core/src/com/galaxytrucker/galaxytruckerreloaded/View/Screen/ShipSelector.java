@@ -60,6 +60,7 @@ public class ShipSelector implements Screen {
 
     private Viewport viewport;
 
+
     /** Constructor
      * @param main - main class */
     public ShipSelector(Main main){
@@ -73,7 +74,7 @@ public class ShipSelector implements Screen {
         stage = new Stage(viewport);
 
 
-        stage.addActor(singlePlayerButton);
+
         difficulties = new LinkedList<>();
         for(int i=0; i<=3; i++) {
             DifficultyButton difficulty1 = new DifficultyButton(main.WIDTH-100, main.HEIGHT/2 - 100 - 75*i, 248, 50, this, i);
