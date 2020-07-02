@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.TraderController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
@@ -26,10 +25,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.GeneralUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.VideoUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -91,6 +87,12 @@ public class GamePlay implements Screen {
      * ingame Video settings
      */
     private VideoUI videoUI;
+
+    private AudioUI audioUI;
+
+    private CreditsUI creditsUI;
+
+    private ControlUI controlUI;
 
     /**
      * the ingame options ui, if existing
@@ -414,8 +416,27 @@ public class GamePlay implements Screen {
         videoUI = null;
     }
 
+    public void createAudioUI(){
+        audioUI = new AudioUI(main, pauseStage, this, null);
+    }
 
+    public void deleteAudioUI(){
+        audioUI = null;
+    }
 
+    public void createCreditUI(){
+        creditsUI = new CreditsUI(main, pauseStage, this, null);
+    }
+
+    public void deleteCreditUI(){
+        creditsUI = null;
+    }
+
+    public void createControlUI(){controlUI = new ControlUI(main, pauseStage, this, null);
+    }
+    public void deleteControlUI(){
+        controlUI = null;
+    }
     public void createShip() {
 
     }

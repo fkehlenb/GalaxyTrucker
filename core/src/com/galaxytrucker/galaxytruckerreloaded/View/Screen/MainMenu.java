@@ -11,12 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.NewGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.OptionButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.QuitButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.GeneralUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.VideoUI;
-
-import javax.swing.text.html.Option;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 
 /**
  * Main menu screen
@@ -36,6 +31,12 @@ public class MainMenu implements Screen {
     private GeneralUI generalUI;
 
     private VideoUI videoUI;
+
+    private AudioUI audioUI;
+
+    private ControlUI controlUI;
+
+    private CreditsUI creditsUI;
 
     private NewGameButton newGame;
     private OptionButton optionButton;
@@ -177,6 +178,28 @@ public class MainMenu implements Screen {
 
     public void deleteVideoUI() {
         videoUI = null;
+    }
+
+    public void createAudioUI(){
+        audioUI = new AudioUI(main, stage, null, this);
+    }
+
+    public void deleteAudioUI(){
+        audioUI = null;
+    }
+
+    public void createCreditUI(){
+        creditsUI = new CreditsUI(main, stage, null, this);
+    }
+
+    public void deleteCreditUI(){
+        creditsUI = null;
+    }
+
+    public void createControlUI(){controlUI = new ControlUI(main, stage, null, this);
+    }
+    public void deleteConterolUI(){
+        controlUI = null;
     }
 
     /**
