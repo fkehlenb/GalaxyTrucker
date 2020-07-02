@@ -181,7 +181,7 @@ public class MainMenu implements Screen {
      * called by button
      */
     public void newGame() {
-        main.setScreen(new ShipSelector(main));
+        main.setScreen(new MainMenuGameModeScreen(main));
         dispose();
     }
 

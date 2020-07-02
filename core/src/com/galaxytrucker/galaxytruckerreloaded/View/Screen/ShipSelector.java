@@ -72,7 +72,7 @@ public class ShipSelector implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        singlePlayerButton = new SinglePlayerButton(main.WIDTH-100, main.HEIGHT-100, 248, 50, this);
+
         stage.addActor(singlePlayerButton);
         difficulties = new LinkedList<>();
         for(int i=0; i<=3; i++) {

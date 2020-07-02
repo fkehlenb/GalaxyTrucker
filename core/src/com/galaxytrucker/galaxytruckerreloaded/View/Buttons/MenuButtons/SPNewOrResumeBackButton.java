@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,28 +11,30 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenuGameModeScreen;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.SPNewOrResume;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.ShipSelector;
 
-/**
- * button to choose single player in the ship selector
- */
-public class SinglePlayerButton extends ImButton {
+
+public class SPNewOrResumeBackButton extends ImButton {
     /**
      * Click sound effect
      */
     private Sound clickSound;
 
+    private Main main;
+
     /**
      * the screen this button is on
      */
-    private MainMenuGameModeScreen screen;
+    private SPNewOrResume screen;
 
     /**
      * Left-Click action of the Button.
      */
     @Override
     public void leftClick() {
-        screen.setSingleplayer();
+        screen.dispose();
+        main.setScreen(new MainMenuGameModeScreen(main));
     }
 
     /**
@@ -39,9 +42,10 @@ public class SinglePlayerButton extends ImButton {
      *
      * @param screen  the screen this button is on
      */
-    public SinglePlayerButton(float x, float y, float width, float height, MainMenuGameModeScreen screen) {
-        super(new Texture("buttons/singleplayer_button.png"), x, y, width, height);
+    public SPNewOrResumeBackButton(float x, float y, float width, float height, SPNewOrResume screen, Main main) {
+        super(new Texture("buttons/back_button.png"), x, y, width, height);
         this.screen = screen;
+        this.main = main;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
@@ -49,3 +53,4 @@ public class SinglePlayerButton extends ImButton {
         });
     }
 }
+
