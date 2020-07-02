@@ -75,24 +75,26 @@ public class EventGUI {
 
         eventPages = new LinkedList<>();
 
+        List<Texture> drawables = new LinkedList<>();
+
         if(event == PlanetEvent.SHOP) {
-            currentPage = new EventPage(main, null, "this is a shop", 0, 0); //TODO drawables, xy
+            currentPage = new EventPage(main, drawables, "this is a shop", 0, 0); //TODO drawables, xy
             eventPages.add(currentPage);
         }
         else if(event == PlanetEvent.COMBAT) {
-            currentPage = new EventPage(main, null, "this is a fight", 0, 0); //TODO drawables, xy
+            currentPage = new EventPage(main, drawables, "this is a fight", 0, 0); //TODO drawables, xy
             eventPages.add(currentPage);
         }
         else if(event == PlanetEvent.BOSS) {
-            currentPage = new EventPage(main, null, "this is the boss", 0, 0);
+            currentPage = new EventPage(main, drawables, "this is the boss", 0, 0);
             eventPages.add(currentPage);
         }
         else if(event == PlanetEvent.METEORSHOWER) {
-            currentPage = new EventPage(main, null, "this is a meteor shower", 0, 0);
+            currentPage = new EventPage(main, drawables, "this is a meteor shower", 0, 0);
             eventPages.add(currentPage);
         }
         else if(event == PlanetEvent.NEBULA) {
-            currentPage = new EventPage(main, null, "this is a nebula", 0, 0);
+            currentPage = new EventPage(main, drawables, "this is a nebula", 0, 0);
             eventPages.add(currentPage);
         }
         else if(event == PlanetEvent.PVP) {

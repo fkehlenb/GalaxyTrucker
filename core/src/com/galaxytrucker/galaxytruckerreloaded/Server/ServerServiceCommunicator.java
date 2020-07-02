@@ -156,11 +156,12 @@ public class ServerServiceCommunicator {
     private ResponseObject purchaseWeapon(Ship ship, Trader trader, Weapon weapon) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            //if(traderService.validatePurchase(ship, )) { TODO was für preise?
+            if(traderService.validatePurchase(ship, weapon.getPrice().get(weapon.getWeaponLevel()))) {
                 boolean successfulPurchase = traderService.purchaseWeapon(ship, trader, weapon);
-                if(successfulPurchase) {
+                if (successfulPurchase) {
                     responseObject.setValidRequest(true);
                 }
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -178,11 +179,12 @@ public class ServerServiceCommunicator {
     private ResponseObject purchaseCrew(Ship ship, Trader trader, Crew crew) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            //if(traderService.validatePurchase(ship, )) { TODO
+            if(traderService.validatePurchase(ship, crew.getPrice())) {
                 boolean successfulPurchase = traderService.purchaseCrew(ship, trader, crew);
-                if(successfulPurchase) {
+                if (successfulPurchase) {
                     responseObject.setValidRequest(true);
                 }
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -200,11 +202,12 @@ public class ServerServiceCommunicator {
     private ResponseObject purchaseRockets(Ship ship, Trader trader, int amount) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            //if(traderService.validatePurchase(ship, )) { TODO
+            if(traderService.validatePurchase(ship, 5*amount)) {  //TODO festpreis
                 boolean successfulPurchase = traderService.purchaseRockets(ship, trader, amount);
-                if(successfulPurchase) {
+                if (successfulPurchase) {
                     responseObject.setValidRequest(true);
                 }
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -222,11 +225,12 @@ public class ServerServiceCommunicator {
     private ResponseObject purchaseFuel(Ship ship, Trader trader, int amount) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            //if(traderService.validatePurchase(ship, )) { TODO
+            if(traderService.validatePurchase(ship, 5*amount)) { //TODO festpreis
                 boolean successfulPurchase = traderService.purchaseFuel(ship, trader, amount);
-                if(successfulPurchase) {
+                if (successfulPurchase) {
                     responseObject.setValidRequest(true);
                 }
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -244,10 +248,11 @@ public class ServerServiceCommunicator {
     private ResponseObject purchaseHP(Ship ship, Trader trader, int amount) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            //if(traderService.validatePurchase(ship, )) { TODO
-            boolean successfulPurchase = traderService.purchaseHP(ship, trader, amount);
-            if(successfulPurchase) {
-                responseObject.setValidRequest(true);
+            if(traderService.validatePurchase(ship, 5*amount)) { //TODO festpreis
+                boolean successfulPurchase = traderService.purchaseHP(ship, trader, amount);
+                if (successfulPurchase) {
+                    responseObject.setValidRequest(true);
+                }
             }
         }
         catch(Exception e) {
@@ -266,9 +271,8 @@ public class ServerServiceCommunicator {
     private ResponseObject sellWeapons(Ship ship, Trader trader, Weapon weapon) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            //if(traderService.validatePurchase(ship, )) { TODO
             boolean successfulPurchase = traderService.sellWeapon(ship, trader, weapon);
-            if(successfulPurchase) {
+            if (successfulPurchase) {
                 responseObject.setValidRequest(true);
             }
         }
@@ -288,11 +292,11 @@ public class ServerServiceCommunicator {
     private ResponseObject sellRockets(Ship ship, Trader trader, int amount) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            //if(traderService.validatePurchase(ship, )) { TODO
             boolean successfulPurchase = traderService.sellRockets(ship, trader, amount);
-            if(successfulPurchase) {
+            if (successfulPurchase) {
                 responseObject.setValidRequest(true);
             }
+
         }
         catch(Exception e) {
             e.printStackTrace();

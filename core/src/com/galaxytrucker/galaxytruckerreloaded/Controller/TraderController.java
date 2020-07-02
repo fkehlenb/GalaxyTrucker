@@ -81,6 +81,7 @@ public class TraderController extends Controller{
                 //put in room
                 Ship ship = clientControllerCommunicator.getClientShip();
                 crew.setCurrentRoom(ship.getSystems().get(0));
+                crew.setAssociatedUser(clientControllerCommunicator.getClientShip().getAssociatedUser());
                 ship.setCoins(ship.getCoins() - crew.getPrice());
                 clientControllerCommunicator.setClientShip(ship);
                 return true;

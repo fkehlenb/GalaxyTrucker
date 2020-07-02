@@ -111,6 +111,7 @@ public class TraderService extends PlanetEventService {
         try {
             List<Crew> traderCrew = trader.getCrewStock();
             int shipCoins = ship.getCoins();
+            String user = crew.getAssociatedUser();
             try {
                 //remove from trader
                 traderCrew.remove(crew);
@@ -121,6 +122,7 @@ public class TraderService extends PlanetEventService {
                 //List<Crew> shipCrew = ship. TODO wie crew von schiff?
                 //set current Room
                 crew.setCurrentRoom(ship.getSystems().get(0)); //TODO in welchen raum setzen?
+                crew.setAssociatedUser(ship.getAssociatedUser());
                 crewDAO.update(crew);
                 return true;
             } catch (Exception e) { //exception in daos
@@ -132,6 +134,7 @@ public class TraderService extends PlanetEventService {
                     traderDAO.update(trader);
                     //set current Room
                     crew.setCurrentRoom(null); //TODO ?
+                    crew.setAssociatedUser(user);
                     crewDAO.update(crew);
                     //remove from ship?
                     ship.setCoins(shipCoins);
