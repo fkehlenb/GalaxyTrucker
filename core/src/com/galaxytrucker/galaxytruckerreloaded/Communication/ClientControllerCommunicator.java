@@ -63,7 +63,7 @@ public class ClientControllerCommunicator {
         if (singleton == null){
             singleton = new ClientControllerCommunicator(client);
         }
-        // TODO CREATE ALL CONTROLLERS HERE
+        // TODO CREATE ALL CONTROLLERS HERE, all controllers should be singletons
         return singleton;
     }
 }

@@ -3,10 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.*;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
@@ -20,7 +17,7 @@ public class WeaponSystem extends System {
     private boolean manned = false;
 
     /** List of weapons this ship has */
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Weapon> shipWeapons;
 
 }
