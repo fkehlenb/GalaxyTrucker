@@ -1,5 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 
 public enum ShipType {
-    DEFAULT
+    DEFAULT,TANK,KILLER,BARRAGE,STEALTH,BOARDER
 }

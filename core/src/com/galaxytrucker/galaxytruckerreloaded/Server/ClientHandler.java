@@ -1,8 +1,14 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
+import com.badlogic.gdx.math.Interpolation;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +16,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
-/** Handle each client in a separate thread */
+/**
+ * Handle each client in a separate thread
+ */
 public class ClientHandler implements Runnable {
 
     /**
@@ -74,8 +82,8 @@ public class ClientHandler implements Runnable {
      * Planet name array
      */
     private String[] names = {"MERCURY", "VENUS", "EARTH", "MARS", "JUPITER", "SATURN", "URANUS", "NEPTUN", "PLUTO", "AUGUSTUS",
-            "SIRIUS", "HOMESTREAD", "ALPHA CENTAURI", "GLIESE", "404 NOT FOUND", "KEPLER", "TOI", "USCO1621b","OGLE","WASP","WENDELSTEIN"
-            ,"EPIC","ARION","DIMIDIUM","GALILEO","DAGON","SMETRIOS","THESTIAS","SAMH","SAFFAR","ARBER","MADRIU","AWASIS","DITSO"};
+            "SIRIUS", "HOMESTREAD", "ALPHA CENTAURI", "GLIESE", "404 NOT FOUND", "KEPLER", "TOI", "USCO1621b", "OGLE", "WASP", "WENDELSTEIN"
+            , "EPIC", "ARION", "DIMIDIUM", "GALILEO", "DAGON", "SMETRIOS", "THESTIAS", "SAMH", "SAFFAR", "ARBER", "MADRIU", "AWASIS", "DITSO"};
 
     /**
      * Planet name list
@@ -113,7 +121,6 @@ public class ClientHandler implements Runnable {
      */
     @Override
     public void run() {
-        System.out.println("\n========== HANDLER RUNNING ==========\n");
         planetNames.addAll(Arrays.asList(names));
         // ==================== LOGIN ====================
         try {
@@ -128,18 +135,13 @@ public class ClientHandler implements Runnable {
                     if (user.isFirstGame()) {
                         send.println("[NEW-GAME]");
                         // ==================== Overworld Creation ====================
-                        Overworld overworld = new Overworld(UUID.randomUUID().hashCode(), UUID.randomUUID().hashCode(), username);
-                        this.seed = overworld.getSeed();
-                        //TODO PLANET CREATION, ADD TO OVERWORLD
-
-                        //========================================
+                        this.seed = UUID.randomUUID().hashCode();
+                        Overworld overworld = generateOverworld(this.seed,username);
+                        user.setOverworld(overworld);
+                        //====================== Ship Creation ==================
                         ShipType shipType = (ShipType) receiveObject.readObject();
-                        //TODO SHIP STATS
-                        switch (shipType) {
-                            case DEFAULT:
-                                break;
-                        }
-                        //=========================
+                        user.setUserShip(generateShip(shipType, username, overworld));
+                        //=======================================================
                         user.setFirstGame(false);
                     }
                     // ==================== UPDATE LOGIN ====================
@@ -177,9 +179,9 @@ public class ClientHandler implements Runnable {
             // Socket will be closed thanks to exception, therefor cannot send more data
             // Thread will terminate with socket exception
             try {
+                serverServiceCommunicator.logoutAfterException(username);
                 send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
-            }
-            catch (Exception f){
+            } catch (Exception f) {
                 f.printStackTrace();
             }
         }
@@ -195,10 +197,139 @@ public class ClientHandler implements Runnable {
      */
     private String getPlanetName(List<String> names, List<String> usedNames, int seed) {
         Random random = new Random(seed);
-        String newName = names.get(random.nextInt(names.size()));
+        String newName = names.get(random.nextInt(names.size()-1));
         if (usedNames.contains(newName)) {
             getPlanetName(names, usedNames, seed);
         }
         return newName;
+    }
+
+    /**
+     * Generate a new overworld
+     *
+     * @param seed - the world seed
+     * @return the generated overworld
+     */
+    private Overworld generateOverworld(int seed,String username) {
+        Random random = new Random(seed);
+        List<PlanetEvent> planetEvents = new ArrayList<>();
+        planetEvents.add(PlanetEvent.SHOP);
+        planetEvents.add(PlanetEvent.VOID);
+        planetEvents.add(PlanetEvent.COMBAT);
+        planetEvents.add(PlanetEvent.METEORSHOWER);
+        planetEvents.add(PlanetEvent.NEBULA);
+        List<Planet> planets = new ArrayList<>();
+        // Create start planet
+        planets.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,seed),
+                0,0,PlanetEvent.VOID,new ArrayList<>()));
+        for (int i=0;i<5;i++){
+            for (int a = 0;a<5;a++){
+                String nextPlanet = getPlanetName(planetNames,usedPlanetNames,seed);
+                planets.add(new Planet(UUID.randomUUID().hashCode(),nextPlanet,i,a,
+                        planetEvents.get(random.nextInt(planetEvents.size()-1)),new ArrayList<>()));
+            }
+        }
+        // Boss planet
+        planets.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,seed),
+                30,30,PlanetEvent.BOSS,new ArrayList<>()));
+        Overworld overworld = new Overworld(UUID.randomUUID().hashCode(),seed,username);
+        overworld.setStartPlanet(planets.get(0));
+        overworld.setPlanetMap(planets);
+        return overworld;
+    }
+
+    /**
+     * Create a new ship
+     *
+     * @param shipType - the ship type
+     * @return the created ship
+     */
+    private Ship generateShip(ShipType shipType, String username, Overworld overworld) {
+        List<Weapon> inventory = new ArrayList<>();
+        List<Room> rooms = new ArrayList<>();
+        List<Tile> tiles = new ArrayList<>();
+        switch (shipType) {
+            case DEFAULT:
+                for (int i = 0; i < 17; i++) {
+                    // ========== Tile generator ==========
+                    // 2 Above each other
+                    if (i == 0 || i == 16) {
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+                    }
+                    // 2 beside each other
+                    else if (i == 1 || i == 3 || i == 4 || i == 6 || i == 7 || i == 10 || i == 13 || i == 14) {
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+                    } else {
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 1));
+                    }
+                    // ========== Room Generator ==========
+                    // O2
+                    if (i == 1) {
+                        Room o2 = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(),
+                                new ArrayList<>(), 1, 5, 0, SystemType.O2, new ArrayList<>());
+                        o2.setTiles(tiles);
+                        rooms.add(o2);
+                    }
+                    // Engine
+                    else if (i == 2) {
+                        Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(),
+                                new ArrayList<>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<>());
+                        //TODO add crew member
+                        engine.setTiles(tiles);
+                        rooms.add(engine);
+                    }
+                    // Weapons
+                    else if (i == 5) {
+                        Room weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(),
+                                new ArrayList<>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<>());
+                        //TODO add weapons and crew member
+                        weapons.setTiles(tiles);
+                        rooms.add(weapons);
+                    }
+                    // Medbay
+                    else if (i == 11) {
+                        Room medbay = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(),
+                                new ArrayList<>(), 1, 5, 0, SystemType.MEDBAY, new ArrayList<>());
+                        medbay.setTiles(tiles);
+                        rooms.add(medbay);
+                    }
+                    // Shields
+                    else if (i == 12) {
+                        Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(),
+                                new ArrayList<>(), 2, 5, 0, SystemType.SHIELDS, new ArrayList<>());
+                        shields.setTiles(tiles);
+                        rooms.add(shields);
+                    }
+                    // Cameras
+                    else if (i == 14) {
+                        Room cameras = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(),
+                                new ArrayList<>(), 1, 5, 0, SystemType.CAMERAS, new ArrayList<>());
+                        cameras.setTiles(tiles);
+                        rooms.add(cameras);
+                    }
+                    // Cockpit
+                    else if (i == 16) {
+                        Room cockpit = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(),
+                                new ArrayList<>(), 1, 5, 0, SystemType.COCKPIT, new ArrayList<>());
+                        //TODO add crew member
+                        cockpit.setTiles(tiles);
+                        rooms.add(cockpit);
+                    } else {
+                        Room room = new Room(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(), new ArrayList<>());
+                        room.setTiles(tiles);
+                        rooms.add(room);
+                    }
+                    tiles.clear();
+                }
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 0,
+                        0, 0, 0, overworld.getStartPlanet(), 1, 100, rooms, new ArrayList<>(), false);
+            default:
+                return null;
+        }
     }
 }

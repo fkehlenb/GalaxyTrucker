@@ -36,9 +36,10 @@ public class TravelService {
      */
     public boolean validateJump(Ship s, Planet p, User u) {
         try {
-            if (u.getOverworld().getPlanetMap().containsValue(p)) {
-                return !s.getPlanet().equals(p) && s.getFTLCharge() == 100;
-            }
+            //TODO
+//            if (u.getOverworld().getPlanetMap().containsValue(p)) {
+//                return !s.getPlanet().equals(p) && s.getFTLCharge() == 100;
+//            }
             return false;
         } catch (Exception e) {
             e.printStackTrace();

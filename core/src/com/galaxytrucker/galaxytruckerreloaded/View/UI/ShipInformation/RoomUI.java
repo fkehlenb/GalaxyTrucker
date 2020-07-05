@@ -49,8 +49,9 @@ public class RoomUI {
      */
     public RoomUI(Main main, Room room, Stage stage, ShipView ship) {
         this.main = main;
-        height = room.getHeight();
-        width = room.getWidth();
+        // TODO
+//        height = room.getHeight();
+//        width = room.getWidth();
 
         //System sys = TODO wie system?
         //dann neue systemui mit stage

@@ -178,7 +178,8 @@ public class GamePlay implements Screen {
         Planet sp1 = new Planet(1, "planet2", (float) 200, (float) 154, PlanetEvent.COMBAT, new LinkedList<Ship>());
         String f1 = "200, 154";
         hmap.put(f1, sp1);
-        res.setPlanetMap(hmap);
+        //TODO
+        //res.setPlanetMap(hmap);
         res.setStartPlanet(sp);
 
         return res;

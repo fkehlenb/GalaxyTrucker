@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -33,7 +34,7 @@ public class Overworld implements Serializable {
 
     /** Stores planet and their location on the map */
     @OneToMany(cascade = CascadeType.ALL)
-    private Map<String,Planet> planetMap;
+    private List<Planet> planetMap;
 
     /** The start planet */
     @OneToOne(cascade = CascadeType.ALL)

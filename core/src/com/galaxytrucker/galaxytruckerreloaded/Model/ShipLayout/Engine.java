@@ -5,10 +5,11 @@ import lombok.*;
 import javax.persistence.Entity;
 import java.io.Serializable;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
 @Entity
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@ToString(callSuper = true)
 public class Engine extends System implements Serializable {
 
     /**

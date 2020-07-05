@@ -122,6 +122,12 @@ public class ServerServiceCommunicator {
         return responseObject;
     }
 
+    /** Log user out after exception in client handler
+     * @param username - the username */
+    public void logoutAfterException(String username){
+        logout(username);
+    }
+
     // ==================================== TRAVEL SERVICE ====================================
 
     /** Make a jump to a target planet
