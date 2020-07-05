@@ -10,9 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.NewGameButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.OptionButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.QuitButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 
 /**
@@ -71,14 +69,19 @@ public class MainMenu implements Screen {
     private CreditsUI creditsUI;
 
     /**
-     * the button to start a new game
-     */
-    private NewGameButton newGame;
-
-    /**
      * the button to open the options
      */
     private OptionButton optionButton;
+
+    /**
+     * the button to choose single player with
+     */
+    private SinglePlayerButton singlePlayerButton;
+
+    /**
+     * the button to choose multiplayer with
+     */
+    private MultiPlayerButton multiPlayerButton;
 
     /**
      * the button to quit
@@ -89,7 +92,9 @@ public class MainMenu implements Screen {
     public MainMenu(Main main){
         this.main = main;
         background = new Texture("1080p.png");
-        newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
+        //newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this) ;
+        singlePlayerButton = new SinglePlayerButton(main.WIDTH/2 - 124, main.HEIGHT/2 + 25, 248, 50, this);
+        multiPlayerButton = new MultiPlayerButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
         optionButton = new OptionButton(main.WIDTH/2 - 97, main.HEIGHT/2 -50 - 25, 194, 50,this);
         quit = new QuitButton(main.WIDTH/2 - 124 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
 
@@ -97,7 +102,8 @@ public class MainMenu implements Screen {
         stage = new Stage(viewport);
         stage.addActor(quit);
         stage.addActor(optionButton);
-        stage.addActor(newGame);
+        stage.addActor(singlePlayerButton);
+        stage.addActor(multiPlayerButton);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -107,7 +113,8 @@ public class MainMenu implements Screen {
      */
     @Override
     public void show() {
-        newGame.setVisible(true);
+        singlePlayerButton.setVisible(true);
+        multiPlayerButton.setVisible(true);
         optionButton.setVisible(true);
         quit.setVisible(true);
     }
@@ -159,7 +166,8 @@ public class MainMenu implements Screen {
      */
     @Override
     public void hide() {
-        newGame.setVisible(false);
+        singlePlayerButton.setVisible(false);
+        multiPlayerButton.setVisible(false);
         optionButton.setVisible(false);
         quit.setVisible(false);
     }
@@ -174,15 +182,6 @@ public class MainMenu implements Screen {
         if(optionUI!=null) {
             optionUI.disposeOptionsUI();
         }
-    }
-
-    /**
-     * starts a new game.
-     * called by button
-     */
-    public void newGame() {
-        main.setScreen(new MainMenuGameModeScreen(main));
-        dispose();
     }
 
     /**
@@ -297,6 +296,24 @@ public class MainMenu implements Screen {
      */
     public void resumeGame() {
 
+    }
+
+    /**
+     * start/continue a multi player game
+     */
+    public void setMultiplayer() {
+        //controller call
+        main.setScreen(new SPNewOrResume(main, false));
+        dispose();
+    }
+
+    /**
+     * start/continue a single player game
+     */
+    public void setSingleplayer() {
+        //controller call
+        main.setScreen(new SPNewOrResume(main, true));
+        dispose();
     }
 
     /**

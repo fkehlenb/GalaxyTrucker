@@ -1,12 +1,9 @@
 package com.galaxytrucker.galaxytruckerreloaded;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GameStateManager;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.LoginScreen;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 public class Main extends Game {
@@ -27,7 +24,7 @@ public class Main extends Game {
     public void create() {
         batch = new SpriteBatch();
 
-        setScreen(new MainMenu(this));
+        setScreen(new LoginScreen(this));
     }
 
     @Override

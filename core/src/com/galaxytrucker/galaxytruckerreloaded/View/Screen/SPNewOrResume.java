@@ -50,10 +50,16 @@ public class SPNewOrResume implements Screen {
      */
     private Viewport viewport;
 
+    /**
+     * whether it is singleplayer or not
+     */
+    private boolean singleplayer;
+
 
     /** Constructor  */
-    public SPNewOrResume(Main main){
+    public SPNewOrResume(Main main, boolean singleplayer){
         this.main = main;
+        this.singleplayer = singleplayer;
         background = new Texture("1080p.png");
 
 
@@ -127,14 +133,22 @@ public class SPNewOrResume implements Screen {
      * resume an old game
      */
     public void resumeGame() {
-
+        if(singleplayer) {
+            main.setScreen(new ContinueSelectSave(main));
+        }
+        else {
+            main.setScreen(new SelectLobbyScreen(main));
+        }
+        dispose();
     }
 
     /**
      * start a new game
      */
     public void newGame() {
-        main.setScreen(new ShipSelector(main));
+        if(singleplayer) {
+            main.setScreen(new ChooseDifficultyScreen(main));
+        }
         dispose();
     }
 

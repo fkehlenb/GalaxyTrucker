@@ -2,17 +2,14 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
 
@@ -37,11 +34,6 @@ public class LoginScreen implements Screen {
     private LoginButton loginButton;
 
     /**
-     * Looping music track
-     */
-    private Music music;
-
-    /**
      * Click sound effect
      */
     private Sound clickSound;
@@ -57,6 +49,11 @@ public class LoginScreen implements Screen {
     private Stage stage;
 
     /**
+     * the viewpart
+     */
+    private Viewport viewport;
+
+    /**
      * Constructor
      *
      * @param main - main class
@@ -64,11 +61,16 @@ public class LoginScreen implements Screen {
     public LoginScreen(Main main) {
         this.main = main;
         background = new Texture("1080p.png");
-        loginButton = new LoginButton(main.WIDTH/2, main.HEIGHT/2, 248, 50, this);
-        username = new TextField("", new Skin());
+        loginButton = new LoginButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 200, 248, 50, this);
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        username = new TextField("", skin);
+        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2);
 
-        stage = new Stage();
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
+
         stage.addActor(loginButton);
+        stage.addActor(username);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -90,7 +92,7 @@ public class LoginScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
@@ -118,7 +120,13 @@ public class LoginScreen implements Screen {
      * login method, called by the button
      */
     public void login() {
+        System.out.println("here");
         String name = username.getText();
-        //TODO welcher controller??
+        //call to controller
+        boolean success = true;
+        if(success) {
+            main.setScreen(new MainMenu(main));
+            dispose();
+        }
     }
 }

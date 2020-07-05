@@ -48,16 +48,9 @@ public class ShipSelector implements Screen {
     private List<ShipSelectButton> shipButtons;
 
     /**
-     * difficulty buttons (easy, medium, hard)
-     */
-    private List<DifficultyButton> difficulties;
-
-    /**
      * button to create game
      */
     private CreateGameButton createGameButton;
-
-    private HangerController controller;
 
     /**
      * the viewport
@@ -69,23 +62,16 @@ public class ShipSelector implements Screen {
      * @param main - main class */
     public ShipSelector(Main main){
         this.main = main;
-        controller = new HangerController();
-        //TODO methode um mögliche schiffe zu bekommen, dann für jeden eine Textur in liste + einen button
 
         background = new Texture("1080p.png");
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        difficulties = new LinkedList<>();
-        for(int i=0; i<=3; i++) {
-            DifficultyButton difficulty1 = new DifficultyButton(main.WIDTH-100, main.HEIGHT/2 - 100 - 75*i, 248, 50, this, i);
-            difficulties.add(difficulty1);
-            stage.addActor(difficulty1);
-        }
-
-        createGameButton = new CreateGameButton(main.WIDTH/2, main.HEIGHT/2, 248, 50, this);
+        createGameButton = new CreateGameButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this);
         stage.addActor(createGameButton);
+
+        //get ships from server, for each one texture and one button
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -132,14 +118,6 @@ public class ShipSelector implements Screen {
     }
 
     /**
-     * to set the difficulty. called by button
-     * @param difficulty the difficulty
-     */
-    public void setDifficulty(int difficulty) {
-
-    }
-
-    /**
      * the ship is selected
      * @param ship the index of the ship in the list of possible ships
      */
@@ -151,7 +129,7 @@ public class ShipSelector implements Screen {
      * start the game
      */
     public void startGame() {
-        main.setScreen(new GamePlay(main)); //TODO nur für tests!!!
+        main.setScreen(new GamePlay(main));
         dispose();
     }
 }
