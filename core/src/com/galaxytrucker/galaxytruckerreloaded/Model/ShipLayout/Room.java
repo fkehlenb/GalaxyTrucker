@@ -4,12 +4,11 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+/** Rooms make up the spaceship */
 @Getter
 @Setter
 @Entity
@@ -57,6 +56,11 @@ public abstract class Room implements Serializable {
 
     /** Crew in this system */
     @NonNull
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Crew> crew;
+
+    /** Tiles the room is made out of */
+    @NonNull
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Tile> tiles;
 }

@@ -83,7 +83,7 @@ public class Ship implements Serializable {
      * The planet the ship is currently at
      */
     @NonNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Planet planet;
 
     /** Shields */
@@ -98,12 +98,12 @@ public class Ship implements Serializable {
 
     /** This ship's systems */
     @NonNull
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Room> systems;
 
     /** Inventory */
     @NonNull
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Weapon> inventory;
 
     /** Whether or not the ship is in combat */

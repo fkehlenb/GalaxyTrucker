@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Crew;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,6 +53,10 @@ public class Crew implements Serializable {
      */
     @OneToOne
     private Room currentRoom;
+
+    /** Tile the crew member is standing on */
+    @OneToOne
+    private Tile tile;
 
     /**
      * The price of the different crew-members
