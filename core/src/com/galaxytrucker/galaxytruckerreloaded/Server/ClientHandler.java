@@ -179,6 +179,7 @@ public class ClientHandler implements Runnable {
             // Socket will be closed thanks to exception, therefor cannot send more data
             // Thread will terminate with socket exception
             try {
+                serverServiceCommunicator.logoutAfterException(username);
                 send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
             } catch (Exception f) {
                 f.printStackTrace();
@@ -319,7 +320,7 @@ public class ClientHandler implements Runnable {
                         cockpit.setTiles(tiles);
                         rooms.add(cockpit);
                     } else {
-                        Room room = new Room(UUID.randomUUID().hashCode(), 0, 0, i, new ArrayList<>(), new ArrayList<>());
+                        Room room = new Room(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<>(), new ArrayList<>());
                         room.setTiles(tiles);
                         rooms.add(room);
                     }
