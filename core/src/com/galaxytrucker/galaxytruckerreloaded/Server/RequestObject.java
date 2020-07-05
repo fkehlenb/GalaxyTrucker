@@ -6,15 +6,26 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import java.io.Serializable;
 import java.util.List;
 
 /** Request sent to the server */
 @Getter
 @Setter
-public class RequestObject {
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@Entity
+public class RequestObject implements Serializable {
+
+    /** ID */
+    @Id
+    private int id;
 
     /** Type of Request */
     private RequestType requestType;
@@ -23,23 +34,31 @@ public class RequestObject {
     private String username;
 
     /** Ship */
+    @OneToOne
     private Ship ship;
 
     /** Trader */
+    @OneToOne
     private Trader trader;
 
     /** Planet */
+    @OneToOne
     private Planet planet;
 
     /** Crew */
+    @OneToOne
     private Crew crew;
 
     /** List of crew */
+    @OneToMany
     private List<Crew> moreCrew;
 
     /** Room */
+    @OneToOne
     private Room room;
+
     /** Weapon */
+    @OneToOne
     private Weapon weapon;
 
     /** Heal amount */
@@ -47,8 +66,7 @@ public class RequestObject {
 
     /** Damage amount */
     private int damageAmount;
+
     /** int - eg fuel, rockets, hp for trader */
     private int intAmount;
-
-
 }
