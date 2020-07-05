@@ -175,12 +175,13 @@ public class CrewUI {
                 int tx = Gdx.input.getX();
                 int ty = Gdx.input.getY();
                 for(Room r : rooms) {
-                    if (r.getPosX() <= tx && r.getPosX() + r.getWidth() >= tx //TODO ist die berechnung richtig
-                        && r.getPosY() <= ty && r.getPosY()+r.getHeight() >= ty) { //TODO wo sind die x und y koordinaten des schiffes?
-                        chosen = true;
-                        crewMoved(r);
-                        break;
-                    }
+                    //TODO
+//                    if (r.getPosX() <= tx && r.getPosX() + r.getWidth() >= tx //TODO ist die berechnung richtig
+//                        && r.getPosY() <= ty && r.getPosY()+r.getHeight() >= ty) { //TODO wo sind die x und y koordinaten des schiffes?
+//                        chosen = true;
+//                        crewMoved(r);
+//                        break;
+//                    }
                 }
             }
         }

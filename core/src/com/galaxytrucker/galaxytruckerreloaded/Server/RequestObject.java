@@ -19,7 +19,6 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 public class RequestObject implements Serializable {
 

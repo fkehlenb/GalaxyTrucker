@@ -12,7 +12,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public abstract class Room implements Serializable {
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+public class Room implements Serializable {
 
     /**
      * ID
@@ -20,18 +22,6 @@ public abstract class Room implements Serializable {
     @Id
     @NonNull
     private int id;
-
-    /**
-     * Höhe des Raumes. Räume sind immer rechteckig.
-     */
-    @NonNull
-    private int height;
-
-    /**
-     * Weite des Raumes. Räume sind immer rechteckig.
-     */
-    @NonNull
-    private int width;
 
     /**
      * Wenn ein Raum Schaden kriegt kann ein Loch entstehen.
@@ -46,13 +36,9 @@ public abstract class Room implements Serializable {
     @NonNull
     private int oxygen;
 
-    /** X position */
+    /** Room id in ship */
     @NonNull
-    private int posX;
-
-    /** Y position */
-    @NonNull
-    private int posY;
+    private int interiorID;
 
     /** Crew in this system */
     @NonNull

@@ -83,8 +83,8 @@ public class SubsystemUI {
         this.stage = stage;
         this.roomUI = roomUI;
 
-        x = system.getPosX();
-        y = system.getPosY();
+//        x = system.getPosX();
+//        y = system.getPosY();
         energy = system.getEnergy();
         maxEnergy = system.getMaxEnergy();
         damage = system.getDamage();

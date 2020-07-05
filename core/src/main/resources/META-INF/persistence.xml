@@ -7,6 +7,7 @@
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System</class>
+        <class>com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet</class>
