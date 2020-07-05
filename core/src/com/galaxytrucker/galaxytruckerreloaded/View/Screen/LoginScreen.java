@@ -1,12 +1,17 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
@@ -15,16 +20,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginBut
  * Login Screen
  */
 public class LoginScreen implements Screen {
-
-    /**
-     * SpriteBatch
-     */
-    private SpriteBatch batch;
-
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
 
     /**
      * Background image
@@ -51,6 +46,33 @@ public class LoginScreen implements Screen {
      */
     private Sound clickSound;
 
+    /**
+     * the main game class
+     */
+    private Main main;
+
+    /**
+     * the stage
+     */
+    private Stage stage;
+
+    /**
+     * Constructor
+     *
+     * @param main - main class
+     */
+    public LoginScreen(Main main) {
+        this.main = main;
+        background = new Texture("1080p.png");
+        loginButton = new LoginButton(main.WIDTH/2, main.HEIGHT/2, 248, 50, this);
+        username = new TextField("", new Skin());
+
+        stage = new Stage();
+        stage.addActor(loginButton);
+
+        Gdx.input.setInputProcessor(stage);
+    }
+
     @Override
     public void show() {
 
@@ -58,7 +80,12 @@ public class LoginScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        main.batch.begin();
+        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.end();
+        stage.draw();
     }
 
     @Override
@@ -83,21 +110,15 @@ public class LoginScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
+        stage.dispose();
     }
 
     /**
      * login method, called by the button
      */
     public void login() {
-
-    }
-
-    /**
-     * Constructor
-     *
-     * @param main - main class
-     */
-    public LoginScreen(Main main) {
+        String name = username.getText();
+        //TODO welcher controller??
     }
 }

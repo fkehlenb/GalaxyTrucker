@@ -54,6 +54,11 @@ public class Crew implements Serializable {
     private Room currentRoom;
 
     /**
+     * The price of the different crew-members
+     */
+    private int price;
+
+    /**
      * The user who owns this crew member
      */
     private String associatedUser;

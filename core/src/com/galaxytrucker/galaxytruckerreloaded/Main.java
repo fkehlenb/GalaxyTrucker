@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GameStateManager;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
-public class Main extends ApplicationAdapter {
+public class Main extends Game {
 
     /**
      * Settings
@@ -17,39 +18,27 @@ public class Main extends ApplicationAdapter {
     public static final int HEIGHT = 1080;
 
     public static final String TITLE = "Galaxy Trucker";
-    private GameStateManager gsm;
     /**
      * Sprite batch
      */
-    private SpriteBatch batch;
-
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
+    public SpriteBatch batch;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        gsm = new GameStateManager();
-        //this.camera = new OrthographicCamera();
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        gsm.push(new MainMenu(gsm));
+
+        setScreen(new MainMenu(this));
     }
 
     @Override
     public void render() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        /*Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gsm.update(Gdx.graphics.getDeltaTime());
         //batch.begin();
         //batch.draw("1080p.png",0,0,WIDTH, HEIGHT);
         gsm.render(batch);
-        //batch.end();
-    }
-
-    @Override
-    public void dispose() {
-
+        //batch.end();*/
+        super.render();
     }
 
     /**
@@ -61,12 +50,11 @@ public class Main extends ApplicationAdapter {
         return this.batch;
     }
 
-    /**
-     * Get the orthographic camera
-     *
-     * @return the orthographic camera
-     */
-    public OrthographicCamera getCamera() {
-        return this.camera;
+    public void setFullscreen() {
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+    }
+
+    public void setWindowed() {
+        Gdx.graphics.setWindowedMode(WIDTH,HEIGHT);
     }
 }

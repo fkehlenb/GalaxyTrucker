@@ -43,7 +43,7 @@ public class Planet implements Serializable {
      * Ereignis dass auf diesem Planeten eintrifft
      */
     @NonNull
-    private Enum<PlanetEvent> event;
+    private PlanetEvent event;
 
     /**
      * If already discovered set to true

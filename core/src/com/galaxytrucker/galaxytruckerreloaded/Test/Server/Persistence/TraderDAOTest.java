@@ -39,7 +39,7 @@ public class TraderDAOTest {
     @Test
     public void testPersist() {
         Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>()), new ArrayList<Weapon>(), 0, 0, new ArrayList<Crew>());
+                PlanetEvent.SHOP, new ArrayList<Ship>()), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
         try {
             traderDAO.persist(trader);
             entityManager.getTransaction().begin();
@@ -58,7 +58,7 @@ public class TraderDAOTest {
     @Test
     public void testEdit() {
         Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>()), new ArrayList<Weapon>(), 0, 0, new ArrayList<Crew>());
+                PlanetEvent.SHOP, new ArrayList<Ship>()), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
         try {
             traderDAO.persist(trader);
             entityManager.getTransaction().begin();
@@ -79,7 +79,7 @@ public class TraderDAOTest {
     @Test
     public void testRemove() {
         Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>()), new ArrayList<Weapon>(), 0, 0, new ArrayList<Crew>());
+                PlanetEvent.SHOP, new ArrayList<Ship>()), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
         try {
             traderDAO.persist(trader);
             traderDAO.remove(trader);

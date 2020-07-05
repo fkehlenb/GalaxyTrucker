@@ -4,27 +4,18 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.LoginScreen;
 
 /**
  * the login button for the login screen
  */
-public class LoginButton extends Button {
+public class LoginButton extends ImButton {
 
-    /**
-     * Sprite batch
-     */
-    private SpriteBatch batch;
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
-    /**
-     * Background
-     */
-    private Texture background;
     /**
      * Click sound effect
      */
@@ -41,15 +32,20 @@ public class LoginButton extends Button {
      */
     @Override
     public void leftClick() {
-
+        screen.login();
     }
 
     /**
      * the constructor
-     * @param main the main class
      * @param screen the login screen this button belongs to
      */
-    public LoginButton(Main main, LoginScreen screen) {
-
+    public LoginButton(float x, float y, float width, float height, LoginScreen screen) {
+        super(new Texture("yes.png"), x, y, width, height);
+        this.screen = screen;
+        this.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                leftClick();
+            }
+        });
     }
 }

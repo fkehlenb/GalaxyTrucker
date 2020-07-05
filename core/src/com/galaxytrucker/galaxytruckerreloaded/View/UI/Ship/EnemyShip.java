@@ -1,9 +1,11 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemyHullUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemySystemUI;
 
@@ -23,6 +25,14 @@ public class EnemyShip extends AbstractShip {
      * the hull status ui of the enemy ship
      */
     private EnemyHullUI hull;
+
+    /**
+     * to render the ui
+     */
+    @Override
+    public void render() {
+
+    }
 
     /**
      * show the ship
@@ -105,7 +115,7 @@ public class EnemyShip extends AbstractShip {
      * TODO methods to access all shipinfo stuff
      * @param main - the main class for SpriteBatch
      */
-    public EnemyShip(Main main, Ship ship) {
-        super(main, ship);
+    public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game) {
+        super(main, ship, stage, game);
     }
 }

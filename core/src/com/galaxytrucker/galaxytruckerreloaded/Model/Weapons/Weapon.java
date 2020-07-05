@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Getter
@@ -82,6 +83,12 @@ public abstract class Weapon implements Serializable {
      */
     @NonNull
     private int burst;
+
+    /**
+     * Weapon price, sorted by Weapon-level 1-6
+     */
+    @ElementCollection
+    private List<Integer> price;
 
     /** Weapon system this weapon belongs to */
     @OneToOne

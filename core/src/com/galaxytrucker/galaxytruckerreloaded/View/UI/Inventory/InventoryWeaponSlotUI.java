@@ -30,6 +30,41 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     private float precision;
 
     /**
+     * constructor
+     * @param main the main class
+     * @param weapon the weapon to be displayed
+     */
+    public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y) {
+        super(main, x, y);
+        damage = weapon.getDamage();
+        cooldown = weapon.getCooldown();
+        energy = weapon.getEnergy();
+        missileCost = weapon.getMissileCost();
+        dropchance = weapon.getDropChance();
+        crewdamage = weapon.getCrewDamage();
+        burst = weapon.getBurst();
+        precision = weapon.getPrecision();
+
+        weaponTexture = new Texture("shipsys/weapon/laser.png");
+    }
+
+    /**
+     * Dispose inventory slot ui
+     */
+    @Override
+    public void disposeInventorySlotUI() {
+        super.disposeInventorySlotUI();
+        weaponTexture.dispose();
+    }
+
+    public void render() {
+        super.render();
+        main.batch.begin();
+        main.batch.draw(weaponTexture, posX, posY, 22, 67);
+        main.batch.end();
+    }
+
+    /**
      * show the ui
      */
     @Override
@@ -46,27 +81,10 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     }
 
     /**
-     * Dispose inventory slot ui
-     */
-    @Override
-    public void disposeInventorySlotUI() {
-
-    }
-
-    /**
      * Setup called after initialisation
      */
     private void setup()
     {
 
-    }
-
-    /**
-     * constructor
-     * @param main the main class
-     * @param weapon the weapon to be displayed
-     */
-    public InventoryWeaponSlotUI(Main main, Weapon weapon) {
-        super(main);
     }
 }

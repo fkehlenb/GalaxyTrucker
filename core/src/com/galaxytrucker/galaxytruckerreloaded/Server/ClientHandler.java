@@ -80,7 +80,7 @@ public class ClientHandler implements Runnable {
     /**
      * Planet name list
      */
-    private List<String> planetNames;
+    private List<String> planetNames = new ArrayList<>();
 
     /**
      * Used planet names list
