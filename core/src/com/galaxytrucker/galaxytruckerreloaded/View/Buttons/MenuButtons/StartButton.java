@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.LobbyScreenHost;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
 /**
@@ -25,14 +26,14 @@ public class StartButton extends ImButton
     /**
      * the screen this button is on
      */
-    private MainMenu screen;
+    private LobbyScreenHost screen;
 
     /**
      * Constructor
      *
      * @param screen the screen this button is on
      */
-    public StartButton(float x, float y, float width, float height, MainMenu screen) {
+    public StartButton(float x, float y, float width, float height, LobbyScreenHost screen) {
         super(new Texture("continue.png"), x, y, width, height);
         this.screen = screen;
         this.addListener(new ClickListener() {
