@@ -3,8 +3,11 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -53,6 +56,8 @@ public class LoginScreen implements Screen {
      */
     private Viewport viewport;
 
+    private BitmapFont font;
+
     /**
      * Constructor
      *
@@ -64,10 +69,25 @@ public class LoginScreen implements Screen {
         loginButton = new LoginButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 200, 248, 50, this);
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
-        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2);
+        username.setSize(248, 50);
+        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 - 100);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
+
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 40;
+
+        font = generator.generateFont(params);
 
         stage.addActor(loginButton);
         stage.addActor(username);
@@ -86,6 +106,7 @@ public class LoginScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        font.draw(main.batch, "Please enter your username!", main.WIDTH/2 - 300, main.HEIGHT/2 + 50);
         main.batch.end();
         stage.draw();
     }
