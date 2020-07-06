@@ -2,8 +2,12 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -29,6 +33,11 @@ public class ChooseDifficultyScreen implements Screen {
 
     private Texture background;
 
+
+    private BitmapFont font;
+
+    private GlyphLayout glyph = new GlyphLayout();
+
     public  ChooseDifficultyScreen(Main main) {
         this.main = main;
 
@@ -42,6 +51,21 @@ public class ChooseDifficultyScreen implements Screen {
         hard = new DifficultyButton(new Texture("shipselector/button_hard.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*2, 512, 48, this, 2);
 
         back = new DifficultyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*3, 512, 48, this, main);
+
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 40;
+
+        font = generator.generateFont(params);
+        glyph.setText(font, "Choose A Difficulty");
 
         stage.addActor(easy);
         stage.addActor(middle);
@@ -78,6 +102,7 @@ public class ChooseDifficultyScreen implements Screen {
 
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT - 400);
         main.batch.end();
 
         stage.draw();

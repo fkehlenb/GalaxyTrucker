@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -56,7 +57,15 @@ public class LoginScreen implements Screen {
      */
     private Viewport viewport;
 
+    /**
+     * the font to draw text with
+     */
     private BitmapFont font;
+
+    /**
+     * the glyph layout for easy centering of text
+     */
+    private GlyphLayout glyph = new GlyphLayout();
 
     /**
      * Constructor
@@ -88,6 +97,7 @@ public class LoginScreen implements Screen {
         params.size = 40;
 
         font = generator.generateFont(params);
+        glyph.setText(font, "Please enter your username");
 
         stage.addActor(loginButton);
         stage.addActor(username);
@@ -106,7 +116,7 @@ public class LoginScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, "Please enter your username!", main.WIDTH/2 - 300, main.HEIGHT/2 + 50);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + 50);
         main.batch.end();
         stage.draw();
     }
