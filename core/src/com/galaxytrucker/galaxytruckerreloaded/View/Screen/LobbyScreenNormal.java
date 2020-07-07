@@ -6,87 +6,54 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyBackButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LobbyScreenNormalBackButton;
 
-public class ChooseDifficultyScreen implements Screen {
+import java.util.ArrayList;
+import java.util.List;
 
-    /**
-     * the main class extending game
-     */
+public class LobbyScreenNormal implements Screen {
+
     private Main main;
 
-    /**
-     * the stage for buttons
-     */
     private Stage stage;
 
-    /**
-     * the viewport
-     */
     private Viewport viewport;
 
-    /**
-     * the difficulty button for easy
-     */
-    private DifficultyButton easy;
-
-    /**
-     * the difficulty button for medium
-     */
-    private DifficultyButton middle;
-
-    /**
-     * the difficulty button for hard
-     */
-    private DifficultyButton hard;
-
-    /**
-     * the button to get back to the last screen
-     */
-    private DifficultyBackButton back;
-
-    /**
-     * the background texture
-     */
     private Texture background;
 
+    private LobbyScreenNormalBackButton backButton;
+
     /**
-     * the font
+     * font for header
      */
     private BitmapFont font;
 
     /**
-     * the glyphLayout for centering fonts
+     * font for text
      */
-    private GlyphLayout glyph = new GlyphLayout();
+    private BitmapFont textFont;
 
-    public  ChooseDifficultyScreen(Main main) {
+    private List<String> users;
+
+    public LobbyScreenNormal(Main main) {
         this.main = main;
 
         background = new Texture("1080p.png");
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
-        stage = new Stage(viewport);
-
-        easy = new DifficultyButton(new Texture("shipselector/button_easy.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this, 0);
-        middle = new DifficultyButton(new Texture("shipselector/button_normal.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96, 512, 48, this, 1);
-        hard = new DifficultyButton(new Texture("shipselector/button_hard.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*2, 512, 48, this, 2);
-
-        back = new DifficultyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*3, 512, 48, this, main);
+        users = new ArrayList<>();
+        users.add("test");
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
         //setting parameters of font
         params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
+        params.borderColor = Color.GOLD;
         params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
         params.magFilter = Texture.TextureFilter.Nearest;
         params.minFilter = Texture.TextureFilter.Nearest;
@@ -94,20 +61,36 @@ public class ChooseDifficultyScreen implements Screen {
         params.size = 40;
 
         font = generator.generateFont(params);
-        glyph.setText(font, "Choose A Difficulty");
 
-        stage.addActor(easy);
-        stage.addActor(middle);
-        stage.addActor(hard);
-        stage.addActor(back);
+        params.size = 20;
+        params.borderColor = Color.BLACK;
+
+        textFont = generator.generateFont(params);
+
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
+
+        backButton = new LobbyScreenNormalBackButton(0, 90, 512, 48, this, main);
+
+        stage.addActor(backButton);
 
         Gdx.input.setInputProcessor(stage);
     }
 
-    public void setDifficulty(int difficulty) {
-        //call controller
-        main.setScreen(new ShipSelector(main, true));
-        dispose();
+    /**
+     * update the users that are logged into this lobby
+     *
+     * @param users the new list
+     */
+    public void updateUsers(List<String> users) {
+        this.users = users;
+    }
+
+    /**
+     * continue the game with the players that are in the lobby
+     */
+    public void resumeGame() {
+
     }
 
     /**
@@ -125,13 +108,18 @@ public class ChooseDifficultyScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-
-        Gdx.gl.glClearColor(1,1,1,1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT - 400);
+        float y = main.HEIGHT / 2;
+        for (String u : users) {
+            textFont.draw(main.batch, u, main.WIDTH / 2, y);
+            y -= 10;
+        }
+        font.draw(main.batch, "L O B B Y", 75, main.HEIGHT - 100);
+        textFont.draw(main.batch, "Wait here until the host starts the game", 75, main.HEIGHT - 175);
         main.batch.end();
 
         stage.draw();
@@ -147,6 +135,7 @@ public class ChooseDifficultyScreen implements Screen {
     }
 
     /**
+     *
      */
     @Override
     public void pause() {
@@ -154,6 +143,7 @@ public class ChooseDifficultyScreen implements Screen {
     }
 
     /**
+     *
      */
     @Override
     public void resume() {
@@ -176,4 +166,5 @@ public class ChooseDifficultyScreen implements Screen {
         background.dispose();
         stage.dispose();
     }
+
 }

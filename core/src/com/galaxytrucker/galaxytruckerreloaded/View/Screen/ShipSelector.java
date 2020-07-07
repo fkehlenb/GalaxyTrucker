@@ -57,11 +57,14 @@ public class ShipSelector implements Screen {
      */
     private Viewport viewport;
 
+    private boolean singleplayer;
+
 
     /** Constructor
      * @param main - main class */
-    public ShipSelector(Main main){
+    public ShipSelector(Main main, boolean singleplayer){
         this.main = main;
+        this.singleplayer = singleplayer;
 
         background = new Texture("1080p.png");
 
@@ -129,7 +132,12 @@ public class ShipSelector implements Screen {
      * start the game
      */
     public void startGame() {
-        main.setScreen(new GamePlay(main));
+        if(singleplayer) {
+            main.setScreen(new GamePlay(main));
+        }
+        else {
+            
+        }
         dispose();
     }
 }

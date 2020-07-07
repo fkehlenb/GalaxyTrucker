@@ -149,6 +149,9 @@ public class SPNewOrResume implements Screen {
         if(singleplayer) {
             main.setScreen(new ChooseDifficultyScreen(main));
         }
+        else {
+            main.setScreen(new CreateOrJoinServer(main));
+        }
         dispose();
     }
 

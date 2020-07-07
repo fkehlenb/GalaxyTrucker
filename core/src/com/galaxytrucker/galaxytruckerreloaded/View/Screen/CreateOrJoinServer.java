@@ -9,20 +9,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.Select;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SelectLobbyBackButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SelectLobbyButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.LobbyScreenHost;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateOrJoinBackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.JoinServerButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.StartServerButton;
 
-/**
- * the screen to enter a server port on to continue an existing game
- */
-public class SelectLobbyScreen implements Screen {
+public class CreateOrJoinServer implements Screen {
 
     /**
      * the main class extending game
@@ -30,65 +24,44 @@ public class SelectLobbyScreen implements Screen {
     private Main main;
 
     /**
+     * the stage for buttons
+     */
+    private Stage stage;
+
+    /**
      * the viewport
      */
     private Viewport viewport;
 
     /**
-     * the stage for the buttons
-     */
-    private Stage stage;
-
-    /**
-     * the background
+     * the background texture
      */
     private Texture background;
 
     /**
-     * the textfield for user input
-     */
-    private TextField lobby;
-
-    /**
-     * the button to return back to the last screen
-     */
-    private SelectLobbyBackButton backButton;
-
-    /**
-     * the button with which to attempt to connect to the server
-     */
-    private SelectLobbyButton selectLobbyButton;
-
-    /**
-     * the font to draw text with
+     * the font
      */
     private BitmapFont font;
 
     /**
-     * the glyph layout for easy centering of text
+     * the glyphLayout for centering fonts
      */
     private GlyphLayout glyph = new GlyphLayout();
 
+    private StartServerButton start;
+
+    private JoinServerButton join;
+
+    private CreateOrJoinBackButton back;
+
     /**
-     * constructor
-     * @param main main class extending game
+     * the constructor
+     * @param main the class extending game
      */
-    public SelectLobbyScreen(Main main) {
+    public CreateOrJoinServer(Main main) {
         this.main = main;
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
-        stage = new Stage(viewport);
-
-        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        lobby = new TextField("", skin);
-        lobby.setPosition(main.WIDTH/2 - lobby.getWidth()/2, main.HEIGHT/2 - lobby.getHeight()/2 + 50);
-
-        backButton = new SelectLobbyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 100, 512, 48, this, main);
-        selectLobbyButton = new SelectLobbyButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 50, 512, 48, this);
-
-        stage.addActor(lobby);
-        stage.addActor(backButton);
-        stage.addActor(selectLobbyButton);
+        background = new Texture("1080p.png");
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
@@ -103,25 +76,35 @@ public class SelectLobbyScreen implements Screen {
         params.size = 40;
 
         font = generator.generateFont(params);
-        glyph.setText(font, "Please enter a server port");
+        glyph.setText(font, "Do you want to start the server or join one?");
 
-        background = new Texture("1080p.png");
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
+
+        join = new JoinServerButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this);
+        start = new StartServerButton(main.WIDTH/2 - 256, main.HEIGHT/2 + 70, 512, 48, this);
+        back = new CreateOrJoinBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 70, 512, 48, this, main);
+
+        stage.addActor(join);
+        stage.addActor(start);
+        stage.addActor(back);
 
         Gdx.input.setInputProcessor(stage);
     }
 
     /**
-     * join a lobby by taking the text from the text field
+     * join a server
      */
-    public void joinLobby() {
-        //controller call
-        boolean host = false;
-        if(host) {
-            main.setScreen(new LobbyScreenHost(main));
-        }
-        else {
-            main.setScreen(new LobbyScreenNormal(main));
-        }
+    public void joinServer() {
+        main.setScreen(new SelectLobbyScreen(main));
+        dispose();
+    }
+
+    /**
+     * start a game on a new server
+     */
+    public void startServer() {
+        main.setScreen(new ChooseDifficultyScreen(main));
         dispose();
     }
 
@@ -145,16 +128,15 @@ public class SelectLobbyScreen implements Screen {
 
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + 100);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT - 400);
         main.batch.end();
 
         stage.draw();
     }
 
     /**
-     * apply the resizing by the user to the viewport
-     * @param width the new width
-     * @param height the new height
+     * @param width
+     * @param height
      */
     @Override
     public void resize(int width, int height) {
@@ -176,7 +158,7 @@ public class SelectLobbyScreen implements Screen {
     }
 
     /**
-     * Called when this screen is no longer the current screen for a
+     * Called when this screen is no longer the current screen for
      */
     @Override
     public void hide() {
