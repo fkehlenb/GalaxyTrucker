@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateOrJoinBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.JoinServerButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.StartServerButton;
@@ -54,12 +55,15 @@ public class CreateOrJoinServer implements Screen {
 
     private CreateOrJoinBackButton back;
 
+    private Ship ship;
+
     /**
      * the constructor
      * @param main the class extending game
      */
-    public CreateOrJoinServer(Main main) {
+    public CreateOrJoinServer(Main main, Ship ship) {
         this.main = main;
+        this.ship = ship;
 
         background = new Texture("1080p.png");
 
@@ -83,7 +87,7 @@ public class CreateOrJoinServer implements Screen {
 
         join = new JoinServerButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this);
         start = new StartServerButton(main.WIDTH/2 - 256, main.HEIGHT/2 + 70, 512, 48, this);
-        back = new CreateOrJoinBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 70, 512, 48, this, main);
+        back = new CreateOrJoinBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 70, 512, 48, this);
 
         stage.addActor(join);
         stage.addActor(start);
@@ -96,7 +100,7 @@ public class CreateOrJoinServer implements Screen {
      * join a server
      */
     public void joinServer() {
-        main.setScreen(new SelectLobbyScreen(main));
+        main.setScreen(new SelectLobbyScreen(main, ship));
         dispose();
     }
 
@@ -104,8 +108,15 @@ public class CreateOrJoinServer implements Screen {
      * start a game on a new server
      */
     public void startServer() {
-        main.setScreen(new ChooseDifficultyScreen(main));
+        main.setScreen(new LobbyScreenHost(main, ship));
         dispose();
+    }
+
+    /**
+     * go back to last screen
+     */
+    public void goBack() {
+        main.setScreen(new ShipSelector(main, false, 0)); //TODO set difficulty once that is a ship attribute
     }
 
     /**

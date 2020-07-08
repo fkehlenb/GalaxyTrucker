@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.HangerController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CreateGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
@@ -74,6 +75,7 @@ public class ShipSelector implements Screen {
      * the glyph layout for easy centering of text
      */
     private GlyphLayout glyph = new GlyphLayout();
+    private int difficulty;
 
     /**
      * the font to draw text with
@@ -81,11 +83,15 @@ public class ShipSelector implements Screen {
     private BitmapFont font;
 
 
+    private Ship ship;
+
+
     /** Constructor
      * @param main - main class */
-    public ShipSelector(Main main, boolean singleplayer){
+    public ShipSelector(Main main, boolean singleplayer, int difficulty){
         this.main = main;
         this.singleplayer = singleplayer;
+        this.difficulty = difficulty;
 
         background = new Texture("1080p.png");
 
@@ -167,8 +173,9 @@ public class ShipSelector implements Screen {
      * the ship is selected
      * @param ship the index of the ship in the list of possible ships
      */
-    public void setShip(int ship) {
-
+    public void setShip(Ship ship) {
+        this.ship = ship;
+        //TODO set difficulty
     }
 
     /**
@@ -176,10 +183,10 @@ public class ShipSelector implements Screen {
      */
     public void startGame() {
         if(singleplayer) {
-            main.setScreen(new GamePlay(main));
+            main.setScreen(new GamePlay(main)); //TODO call controller to start game
         }
         else {
-            
+            main.setScreen(new CreateOrJoinServer(main, ship));
         }
         dispose();
     }

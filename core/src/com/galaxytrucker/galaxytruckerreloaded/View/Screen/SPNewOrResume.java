@@ -134,10 +134,10 @@ public class SPNewOrResume implements Screen {
      */
     public void resumeGame() {
         if(singleplayer) {
-            main.setScreen(new ContinueSelectSave(main));
+            main.setScreen(new LoginScreen(main, true));
         }
         else {
-            main.setScreen(new SelectLobbyScreen(main));
+            main.setScreen(new LoginScreen(main, false));
         }
         dispose();
     }
@@ -147,10 +147,10 @@ public class SPNewOrResume implements Screen {
      */
     public void newGame() {
         if(singleplayer) {
-            main.setScreen(new ChooseDifficultyScreen(main));
+            main.setScreen(new ChooseDifficultyScreen(main, true));
         }
         else {
-            main.setScreen(new CreateOrJoinServer(main));
+            main.setScreen(new ChooseDifficultyScreen(main, false));
         }
         dispose();
     }

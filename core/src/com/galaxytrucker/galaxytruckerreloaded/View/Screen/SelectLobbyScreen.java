@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Select;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SelectLobbyBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SelectLobbyButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.LobbyScreenHost;
@@ -69,12 +70,15 @@ public class SelectLobbyScreen implements Screen {
      */
     private GlyphLayout glyph = new GlyphLayout();
 
+    private Ship ship;
+
     /**
      * constructor
      * @param main main class extending game
      */
-    public SelectLobbyScreen(Main main) {
+    public SelectLobbyScreen(Main main, Ship ship) {
         this.main = main;
+        this.ship = ship;
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -115,13 +119,7 @@ public class SelectLobbyScreen implements Screen {
      */
     public void joinLobby() {
         //controller call
-        boolean host = false;
-        if(host) {
-            main.setScreen(new LobbyScreenHost(main));
-        }
-        else {
-            main.setScreen(new LobbyScreenNormal(main));
-        }
+        main.setScreen(new LobbyScreenNormal(main, ship));
         dispose();
     }
 

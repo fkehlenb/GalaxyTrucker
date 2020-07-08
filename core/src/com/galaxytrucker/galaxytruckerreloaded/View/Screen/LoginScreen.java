@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
 
 /**
@@ -67,13 +68,17 @@ public class LoginScreen implements Screen {
      */
     private GlyphLayout glyph = new GlyphLayout();
 
+    private boolean singleplayer;
+
     /**
      * Constructor
      *
      * @param main - main class
      */
-    public LoginScreen(Main main) {
+    public LoginScreen(Main main, boolean singleplayer) {
         this.main = main;
+        this.singleplayer = singleplayer;
+
         background = new Texture("1080p.png");
         loginButton = new LoginButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 200, 248, 50, this);
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -151,12 +156,24 @@ public class LoginScreen implements Screen {
      * login method, called by the button
      */
     public void login() {
-        System.out.println("here");
         String name = username.getText();
         //call to controller
         boolean success = true;
+        Ship ship = new Ship();
         if(success) {
-            main.setScreen(new MainMenu(main));
+            if(singleplayer) {
+                //main.setScreen(new MainMenu(main)); TODO zu lobby die samuel baut
+            }
+            else {
+                boolean host = false; //whether or not the player was host last time?
+                if(host) {
+                    main.setScreen(new LobbyScreenHost(main, ship));
+                }
+                else {
+                    main.setScreen(new LobbyScreenHost(main, ship));
+                }
+
+            }
             dispose();
         }
     }
