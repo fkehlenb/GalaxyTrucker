@@ -15,9 +15,6 @@ public class SelectLobbyBackButton extends ImButton {
      * Click sound effect
      */
     private Sound clickSound;
-
-    private Main main;
-
     /**
      * the screen this button is on
      */
@@ -28,8 +25,7 @@ public class SelectLobbyBackButton extends ImButton {
      */
     @Override
     public void leftClick() {
-        screen.dispose();
-        main.setScreen(new SPNewOrResume(main, false));
+        screen.goBack();
     }
 
     /**
@@ -37,10 +33,9 @@ public class SelectLobbyBackButton extends ImButton {
      *
      * @param screen  the screen this button is on
      */
-    public SelectLobbyBackButton(float x, float y, float width, float height, SelectLobbyScreen screen, Main main) {
+    public SelectLobbyBackButton(float x, float y, float width, float height, SelectLobbyScreen screen) {
         super(new Texture("buttons/back_button.png"), x, y, width, height);
         this.screen = screen;
-        this.main = main;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();

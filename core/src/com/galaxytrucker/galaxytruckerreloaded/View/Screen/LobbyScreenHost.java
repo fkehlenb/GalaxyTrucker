@@ -47,9 +47,15 @@ public class LobbyScreenHost implements Screen {
 
     private Ship ship;
 
-    public LobbyScreenHost(Main main, Ship ship) {
+    /**
+     * whether this comes from resuming a game or starting a new one (relevant for back)
+     */
+    private boolean resume;
+
+    public LobbyScreenHost(Main main, Ship ship, boolean resume) {
         this.main = main;
         this.ship = ship;
+        this.resume = resume;
 
         background = new Texture("1080p.png");
 
@@ -78,7 +84,7 @@ public class LobbyScreenHost implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        backButton = new LobbyScreenHostBackButton(0, 90, 512, 48, this, main);
+        backButton = new LobbyScreenHostBackButton(0, 90, 512, 48, this);
         startButton = new StartButton(main.WIDTH - 400, 90, 512, 48, this);
 
         stage.addActor(backButton);
@@ -89,7 +95,13 @@ public class LobbyScreenHost implements Screen {
     }
 
     public void goBack() {
-
+        if(resume) {
+            main.setScreen(new LoginScreen(main, false));
+        }
+        else {
+            main.setScreen(new CreateOrJoinServer(main, ship));
+        }
+        dispose();
     }
 
     /**

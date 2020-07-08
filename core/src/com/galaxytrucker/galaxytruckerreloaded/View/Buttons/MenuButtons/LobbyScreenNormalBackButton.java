@@ -15,9 +15,6 @@ public class LobbyScreenNormalBackButton extends ImButton {
      * Click sound effect
      */
     private Sound clickSound;
-
-    private Main main;
-
     /**
      * the screen this button is on
      */
@@ -36,10 +33,9 @@ public class LobbyScreenNormalBackButton extends ImButton {
      *
      * @param screen  the screen this button is on
      */
-    public LobbyScreenNormalBackButton(float x, float y, float width, float height, LobbyScreenNormal screen, Main main) {
+    public LobbyScreenNormalBackButton(float x, float y, float width, float height, LobbyScreenNormal screen) {
         super(new Texture("buttons/back_button.png"), x, y, width, height);
         this.screen = screen;
-        this.main = main;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();

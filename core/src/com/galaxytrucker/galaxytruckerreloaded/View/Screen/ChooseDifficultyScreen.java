@@ -82,7 +82,7 @@ public class ChooseDifficultyScreen implements Screen {
         middle = new DifficultyButton(new Texture("buttons/medium_button.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96, 512, 48, this, 1);
         hard = new DifficultyButton(new Texture("buttons/hard_button.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*2, 512, 48, this, 2);
 
-        back = new DifficultyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*3, 512, 48, this, main);
+        back = new DifficultyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*3, 512, 48, this);
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
@@ -122,6 +122,7 @@ public class ChooseDifficultyScreen implements Screen {
      */
     public void goBack() {
         main.setScreen(new SPNewOrResume(main, singleplayer));
+        dispose();
     }
 
     /**
