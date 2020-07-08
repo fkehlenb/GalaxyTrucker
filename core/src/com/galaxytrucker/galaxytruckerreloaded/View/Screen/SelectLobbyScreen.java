@@ -71,6 +71,9 @@ public class SelectLobbyScreen implements Screen {
      */
     private GlyphLayout glyph = new GlyphLayout();
 
+    /**
+     * the type of ship that was selected
+     */
     private ShipType ship;
 
     /**

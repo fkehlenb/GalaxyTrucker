@@ -18,16 +18,34 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LobbyScr
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * the screen for the multi player lobby from the normal perspective
+ */
 public class LobbyScreenNormal implements Screen {
 
+    /**
+     * the main class extending game
+     */
     private Main main;
 
+    /**
+     * the stage for the buttons
+     */
     private Stage stage;
 
+    /**
+     * the viewport
+     */
     private Viewport viewport;
 
+    /**
+     * the texture for the background
+     */
     private Texture background;
 
+    /**
+     * the button to return to the last screen
+     */
     private LobbyScreenNormalBackButton backButton;
 
     /**
@@ -40,12 +58,27 @@ public class LobbyScreenNormal implements Screen {
      */
     private BitmapFont textFont;
 
+    /**
+     * the names of the users that have already joined
+     */
     private List<String> users;
 
+    /**
+     * the ship type this user has chosen
+     */
     private ShipType ship;
 
+    /**
+     * whether or not the players will be resuming an old game. for going back to the correct screen
+     */
     private boolean resume;
 
+    /**
+     * constructor
+     * @param main main class extending game
+     * @param ship the ship type the player chose
+     * @param resume whether or not the game will be continued, or started new
+     */
     public LobbyScreenNormal(Main main, ShipType ship, boolean resume) {
         this.main = main;
         this.ship = ship;
@@ -85,6 +118,9 @@ public class LobbyScreenNormal implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * return to the last screen
+     */
     public void goBack() {
         if(resume) {
             main.setScreen(new LoginScreen(main, false));

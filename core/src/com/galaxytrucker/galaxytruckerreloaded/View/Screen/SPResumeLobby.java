@@ -15,6 +15,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 
+/**
+ * the single player lobby for resuming a game
+ */
 public class SPResumeLobby implements Screen {
 
     /**
@@ -64,10 +67,19 @@ public class SPResumeLobby implements Screen {
 
 
     //Müssen im Konstruktor durch echte, im Savegame gespeicherte Parameter ersetzt werden.
+    /**
+     * the name of the ship
+     */
     private String shipName = "TestShip1";
 
+    /**
+     * the difficulty chosen
+     */
     private String difficultyName = "TestDiff";
 
+    /**
+     * the seed of the map
+     */
     private String seedName = "TestSeed";
 
     /** Constructor  */

@@ -70,8 +70,14 @@ public class LoginScreen implements Screen {
      */
     private GlyphLayout glyph = new GlyphLayout();
 
+    /**
+     * whether or not the game will be single player, chosen on an earlier screen
+     */
     private boolean singleplayer;
 
+    /**
+     * the button to log in with
+     */
     private LoginBackButton backButton;
 
     /**

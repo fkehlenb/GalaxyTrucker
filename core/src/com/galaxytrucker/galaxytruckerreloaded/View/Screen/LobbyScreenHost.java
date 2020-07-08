@@ -20,18 +20,39 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.StartBut
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * the screen for the multiplayer lobby from the view of the host
+ */
 public class LobbyScreenHost implements Screen {
 
+    /**
+     * the main class extending game
+     */
     private Main main;
 
+    /**
+     * the stage for the buttons
+     */
     private Stage stage;
 
+    /**
+     * the viewport
+     */
     private Viewport viewport;
 
+    /**
+     * the texture for the background
+     */
     private Texture background;
 
+    /**
+     * the button to return to the last screen
+     */
     private LobbyScreenHostBackButton backButton;
 
+    /**
+     * the button to start the game
+     */
     private StartButton startButton;
 
     /**
@@ -44,8 +65,14 @@ public class LobbyScreenHost implements Screen {
      */
     private BitmapFont textFont;
 
+    /**
+     * the list of the names of the users already in the lobby
+     */
     private List<String> users;
 
+    /**
+     * the type of ship the player has selected
+     */
     private ShipType ship;
 
     /**
@@ -53,6 +80,13 @@ public class LobbyScreenHost implements Screen {
      */
     private boolean resume;
 
+    /**
+     * the constructor
+     * @param main main class extending game
+     * @param ship the ship type the player chose
+     * @param resume whether or not the players are resuming an old game
+     *                 used for going back to the correct screen
+     */
     public LobbyScreenHost(Main main, ShipType ship, boolean resume) {
         this.main = main;
         this.ship = ship;
@@ -95,6 +129,9 @@ public class LobbyScreenHost implements Screen {
 
     }
 
+    /**
+     * go back to the last screen
+     */
     public void goBack() {
         if(resume) {
             main.setScreen(new LoginScreen(main, false));

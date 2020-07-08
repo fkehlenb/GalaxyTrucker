@@ -15,6 +15,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyButton;
 
+/**
+ * the screen on which the difficulty for a new game is chosen
+ */
 public class ChooseDifficultyScreen implements Screen {
 
     /**
@@ -67,8 +70,16 @@ public class ChooseDifficultyScreen implements Screen {
      */
     private GlyphLayout glyph = new GlyphLayout();
 
+    /**
+     * whether or not singleplayer was chosen earlier
+     */
     private boolean singleplayer;
 
+    /**
+     * constructor
+     * @param main the main class extending game
+     * @param singleplayer whether the game will be singleplayer
+     */
     public  ChooseDifficultyScreen(Main main, boolean singleplayer) {
         this.main = main;
         this.singleplayer = singleplayer;
@@ -107,6 +118,10 @@ public class ChooseDifficultyScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * set the difficulty and load new screen
+     * @param difficulty
+     */
     public void setDifficulty(int difficulty) {
         if(singleplayer) {
             main.setScreen(new ShipSelector(main, true, difficulty));

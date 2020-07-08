@@ -18,6 +18,10 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateOr
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.JoinServerButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.StartServerButton;
 
+/**
+ * the screen on which the player choses to be the one
+ * creating or joining a server for multiplayer
+ */
 public class CreateOrJoinServer implements Screen {
 
     /**
@@ -50,12 +54,24 @@ public class CreateOrJoinServer implements Screen {
      */
     private GlyphLayout glyph = new GlyphLayout();
 
+    /**
+     * the button to chose to start a server
+     */
     private StartServerButton start;
 
+    /**
+     * the button to chose to join a server
+     */
     private JoinServerButton join;
 
+    /**
+     * the button to return to the last screen
+     */
     private CreateOrJoinBackButton back;
 
+    /**
+     * the type of ship selected
+     */
     private ShipType ship;
 
     /**
