@@ -45,7 +45,7 @@ public class SPResumeLobby implements Screen {
         this.main = main;
         background = new Texture("1080p.png");
 
-        spResumeStartGame = new SPResumeStartGame(main.WIDTH/2 - 124, main.HEIGHT/2 + 25, 248, 50, this);
+        spResumeStartGame = new SPResumeStartGame(main.WIDTH/2 - 124, main.HEIGHT/2 -240, 248, 50, this);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);

@@ -26,7 +26,7 @@ public class SPResumeStartGame extends ImButton {
      * @param screen the screen this button is on
      */
     public SPResumeStartGame(float x, float y, float width, float height, SPResumeLobby screen) {
-        super(new Texture("continue.png"), x, y, width, height);
+        super(new Texture("buttons/start_game_button.png"), x, y, width, height);
         this.screen = screen;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
