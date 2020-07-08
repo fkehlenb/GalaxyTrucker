@@ -17,7 +17,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.BlankRoom;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
@@ -156,12 +155,12 @@ public class GamePlay implements Screen {
         //Planet planet = new Planet("planet", 125f, 125f, PlanetEvent.SHOP, false, new LinkedList<>(), trader);
         Planet planet = new Planet();
         List<Room> rooms = new LinkedList<>();
-        rooms.add(new BlankRoom());
-        rooms.add(new BlankRoom());
-        rooms.add(new BlankRoom());
+//        rooms.add(new BlankRoom());
+//        rooms.add(new BlankRoom());
+//        rooms.add(new BlankRoom());
         List<Weapon> weapons = new LinkedList<>();
-        weapons.add(new LaserBlaster("karl"));
-        weapons.add(new LaserBlaster("test"));
+//        weapons.add(new LaserBlaster("karl"));
+//        weapons.add(new LaserBlaster("test"));
         return new Ship(1, "aaron", ShipType.DEFAULT, 100, 49, 5, 5, 7, 9, 23, 6f, planet, 6, 6, rooms, weapons, false);
     }
 
@@ -601,12 +600,13 @@ public class GamePlay implements Screen {
      * @return the crew members
      */
     public List<Crew> loadCrew(int shipId) {  //TODO call controller
-        List<Crew> result = new LinkedList<>();
-        Crew c1 = new Crew(1, "ana", 7, 10);
-        result.add(c1);
-        Crew c2 = new Crew(2, "battle", 8, 10);
-        result.add(c2);
-        return result;
+//        List<Crew> result = new LinkedList<>();
+//        Crew c1 = new Crew(1, "ana", 7, 10);
+//        result.add(c1);
+//        Crew c2 = new Crew(2, "battle", 8, 10);
+//        result.add(c2);
+//        return result;
+        return null;
     }
 
     /**
@@ -616,8 +616,8 @@ public class GamePlay implements Screen {
      */
     public List<Weapon> loadWeapons(int shipId) {
         List<Weapon> weapons = new LinkedList<>();
-        weapons.add(new LaserBlaster("karl"));
-        weapons.add(new LaserBlaster("test"));
+//        weapons.add(new LaserBlaster("karl"));
+//        weapons.add(new LaserBlaster("test"));
         return weapons;
     }
 

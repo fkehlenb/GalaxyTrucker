@@ -3,6 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import lombok.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -29,7 +30,7 @@ public class Tile implements Serializable {
     private int posY;
 
     /** Crew member on this tile */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Crew standingOnMe = null;
 
     /** If the tile is empty */

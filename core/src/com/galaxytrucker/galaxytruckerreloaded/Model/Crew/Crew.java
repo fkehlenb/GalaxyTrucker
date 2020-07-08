@@ -52,11 +52,11 @@ public class Crew implements Serializable {
     /**
      * The room this crew member is in
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Room currentRoom;
 
     /** Tile the crew member is standing on */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Tile tile;
 
     /**
