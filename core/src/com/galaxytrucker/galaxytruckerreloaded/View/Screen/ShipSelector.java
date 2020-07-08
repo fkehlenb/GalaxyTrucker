@@ -2,9 +2,15 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.HangerController;
@@ -57,7 +63,22 @@ public class ShipSelector implements Screen {
      */
     private Viewport viewport;
 
+    /**
+     * Username input text field
+     */
+    private TextField username;
+
     private boolean singleplayer;
+
+    /**
+     * the glyph layout for easy centering of text
+     */
+    private GlyphLayout glyph = new GlyphLayout();
+
+    /**
+     * the font to draw text with
+     */
+    private BitmapFont font;
 
 
     /** Constructor
@@ -68,11 +89,32 @@ public class ShipSelector implements Screen {
 
         background = new Texture("1080p.png");
 
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        username = new TextField("", skin);
+        username.setSize(248, 50);
+        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 - 100);
+
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        createGameButton = new CreateGameButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this);
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 15;
+
+        font = generator.generateFont(params);
+        glyph.setText(font, "Please enter your username");
+
+        createGameButton = new CreateGameButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 240, 512, 48, this);
         stage.addActor(createGameButton);
+        stage.addActor(username);
 
         //get ships from server, for each one texture and one button
 
@@ -90,6 +132,7 @@ public class ShipSelector implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 -30);
         main.batch.end();
         stage.draw();
     }
