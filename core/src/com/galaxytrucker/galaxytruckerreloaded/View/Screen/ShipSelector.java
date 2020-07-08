@@ -13,15 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.HangerController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CreateGameButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.DifficultyButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SinglePlayerButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectorBackButton;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -82,8 +79,9 @@ public class ShipSelector implements Screen {
      */
     private BitmapFont font;
 
-
     private Ship ship;
+
+    private ShipSelectorBackButton backButton;
 
 
     /** Constructor
@@ -119,12 +117,23 @@ public class ShipSelector implements Screen {
         glyph.setText(font, "Please enter your username");
 
         createGameButton = new CreateGameButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 240, 512, 48, this);
+        backButton = new ShipSelectorBackButton(0, 90, 512, 48, this);
+
         stage.addActor(createGameButton);
         stage.addActor(username);
+        stage.addActor(backButton);
 
         //get ships from server, for each one texture and one button
 
         Gdx.input.setInputProcessor(stage);
+    }
+
+    /**
+     * go back to last screen
+     */
+    public void goBack() {
+        main.setScreen(new ChooseDifficultyScreen(main, singleplayer));
+        dispose();
     }
 
     @Override

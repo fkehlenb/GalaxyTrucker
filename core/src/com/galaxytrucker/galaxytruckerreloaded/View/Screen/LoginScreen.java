@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
 
 /**
@@ -70,6 +71,8 @@ public class LoginScreen implements Screen {
 
     private boolean singleplayer;
 
+    private LoginBackButton backButton;
+
     /**
      * Constructor
      *
@@ -81,6 +84,9 @@ public class LoginScreen implements Screen {
 
         background = new Texture("1080p.png");
         loginButton = new LoginButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 200, 248, 50, this);
+        backButton = new LoginBackButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 300, 248, 50, this);
+
+
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
         username.setSize(248, 50);
@@ -106,8 +112,17 @@ public class LoginScreen implements Screen {
 
         stage.addActor(loginButton);
         stage.addActor(username);
+        stage.addActor(backButton);
 
         Gdx.input.setInputProcessor(stage);
+    }
+
+    /**
+     * go back to previous screen
+     */
+    public void goBack() {
+        main.setScreen(new SPNewOrResume(main, singleplayer));
+        dispose();
     }
 
     @Override
