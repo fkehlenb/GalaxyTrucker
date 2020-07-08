@@ -162,15 +162,15 @@ public class LoginScreen implements Screen {
         Ship ship = new Ship();
         if(success) {
             if(singleplayer) {
-                //main.setScreen(new MainMenu(main)); TODO zu lobby die samuel baut
+                main.setScreen(new SPResumeLobby(main));
             }
             else {
                 boolean host = false; //whether or not the player was host last time?
                 if(host) {
-                    main.setScreen(new LobbyScreenHost(main, ship));
+                    main.setScreen(new LobbyScreenHost(main, ship, true));
                 }
                 else {
-                    main.setScreen(new LobbyScreenHost(main, ship));
+                    main.setScreen(new LobbyScreenHost(main, ship, true));
                 }
 
             }

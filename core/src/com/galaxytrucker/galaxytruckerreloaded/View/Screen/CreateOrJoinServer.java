@@ -108,7 +108,7 @@ public class CreateOrJoinServer implements Screen {
      * start a game on a new server
      */
     public void startServer() {
-        main.setScreen(new LobbyScreenHost(main, ship));
+        main.setScreen(new LobbyScreenHost(main, ship, false));
         dispose();
     }
 

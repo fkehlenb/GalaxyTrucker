@@ -16,8 +16,6 @@ public class DifficultyBackButton extends ImButton {
      */
     private Sound clickSound;
 
-    private Main main;
-
     /**
      * the screen this button is on
      */
@@ -28,8 +26,7 @@ public class DifficultyBackButton extends ImButton {
      */
     @Override
     public void leftClick() {
-        screen.dispose();
-        main.setScreen(new SPNewOrResume(main, true));
+        screen.goBack();
     }
 
     /**
@@ -37,10 +34,9 @@ public class DifficultyBackButton extends ImButton {
      *
      * @param screen  the screen this button is on
      */
-    public DifficultyBackButton(float x, float y, float width, float height, ChooseDifficultyScreen screen, Main main) {
+    public DifficultyBackButton(float x, float y, float width, float height, ChooseDifficultyScreen screen) {
         super(new Texture("buttons/back_button.png"), x, y, width, height);
         this.screen = screen;
-        this.main = main;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();

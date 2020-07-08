@@ -87,7 +87,7 @@ public class SelectLobbyScreen implements Screen {
         lobby = new TextField("", skin);
         lobby.setPosition(main.WIDTH/2 - lobby.getWidth()/2, main.HEIGHT/2 - lobby.getHeight()/2 + 50);
 
-        backButton = new SelectLobbyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 100, 512, 48, this, main);
+        backButton = new SelectLobbyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 100, 512, 48, this);
         selectLobbyButton = new SelectLobbyButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 50, 512, 48, this);
 
         stage.addActor(lobby);
@@ -119,7 +119,12 @@ public class SelectLobbyScreen implements Screen {
      */
     public void joinLobby() {
         //controller call
-        main.setScreen(new LobbyScreenNormal(main, ship));
+        main.setScreen(new LobbyScreenNormal(main, ship, false));
+        dispose();
+    }
+
+    public void goBack() {
+        main.setScreen(new CreateOrJoinServer(main, ship));
         dispose();
     }
 

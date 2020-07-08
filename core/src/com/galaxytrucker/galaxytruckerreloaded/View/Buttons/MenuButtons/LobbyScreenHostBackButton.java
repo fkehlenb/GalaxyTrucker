@@ -16,8 +16,6 @@ public class LobbyScreenHostBackButton extends ImButton {
      */
     private Sound clickSound;
 
-    private Main main;
-
     /**
      * the screen this button is on
      */
@@ -36,10 +34,9 @@ public class LobbyScreenHostBackButton extends ImButton {
      *
      * @param screen  the screen this button is on
      */
-    public LobbyScreenHostBackButton(float x, float y, float width, float height, LobbyScreenHost screen, Main main) {
+    public LobbyScreenHostBackButton(float x, float y, float width, float height, LobbyScreenHost screen) {
         super(new Texture("buttons/back_button.png"), x, y, width, height);
         this.screen = screen;
-        this.main = main;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();

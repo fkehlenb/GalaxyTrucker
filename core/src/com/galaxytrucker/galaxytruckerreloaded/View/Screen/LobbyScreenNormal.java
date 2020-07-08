@@ -43,9 +43,12 @@ public class LobbyScreenNormal implements Screen {
 
     private Ship ship;
 
-    public LobbyScreenNormal(Main main, Ship ship) {
+    private boolean resume;
+
+    public LobbyScreenNormal(Main main, Ship ship, boolean resume) {
         this.main = main;
         this.ship = ship;
+        this.resume = resume;
 
         background = new Texture("1080p.png");
 
@@ -74,7 +77,7 @@ public class LobbyScreenNormal implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        backButton = new LobbyScreenNormalBackButton(0, 90, 512, 48, this, main);
+        backButton = new LobbyScreenNormalBackButton(0, 90, 512, 48, this);
 
         stage.addActor(backButton);
 
@@ -82,7 +85,13 @@ public class LobbyScreenNormal implements Screen {
     }
 
     public void goBack() {
-
+        if(resume) {
+            main.setScreen(new LoginScreen(main, false));
+        }
+        else {
+            main.setScreen(new SelectLobbyScreen(main, ship));
+        }
+        dispose();
     }
 
     /**
