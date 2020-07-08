@@ -43,7 +43,7 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
         dropchance = weapon.getDropChance();
         crewdamage = weapon.getCrewDamage();
         burst = weapon.getBurst();
-        precision = weapon.getPrecision();
+        precision = weapon.getAccuracy();
 
         weaponTexture = new Texture("shipsys/weapon/laser.png");
     }

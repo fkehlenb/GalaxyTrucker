@@ -136,7 +136,7 @@ public class ClientHandler implements Runnable {
                         send.println("[NEW-GAME]");
                         // ==================== Overworld Creation ====================
                         this.seed = UUID.randomUUID().hashCode();
-                        Overworld overworld = generateOverworld(this.seed,username);
+                        Overworld overworld = generateOverworld(this.seed, username);
                         user.setOverworld(overworld);
                         //====================== Ship Creation ==================
                         ShipType shipType = (ShipType) receiveObject.readObject();
@@ -197,7 +197,7 @@ public class ClientHandler implements Runnable {
      */
     private String getPlanetName(List<String> names, List<String> usedNames, int seed) {
         Random random = new Random(seed);
-        String newName = names.get(random.nextInt(names.size()-1));
+        String newName = names.get(random.nextInt(names.size() - 1));
         if (usedNames.contains(newName)) {
             getPlanetName(names, usedNames, seed);
         }
@@ -210,7 +210,7 @@ public class ClientHandler implements Runnable {
      * @param seed - the world seed
      * @return the generated overworld
      */
-    private Overworld generateOverworld(int seed,String username) {
+    private Overworld generateOverworld(int seed, String username) {
         Random random = new Random(seed);
         List<PlanetEvent> planetEvents = new ArrayList<PlanetEvent>();
         planetEvents.add(PlanetEvent.SHOP);
@@ -220,19 +220,21 @@ public class ClientHandler implements Runnable {
         planetEvents.add(PlanetEvent.NEBULA);
         List<Planet> planets = new ArrayList<Planet>();
         // Create start planet
-        planets.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,seed),
-                0,0,PlanetEvent.VOID,new ArrayList<Ship>()));
-        for (int i=0;i<5;i++){
-            for (int a = 0;a<5;a++){
-                String nextPlanet = getPlanetName(planetNames,usedPlanetNames,seed);
-                planets.add(new Planet(UUID.randomUUID().hashCode(),nextPlanet,i,a,
-                        planetEvents.get(random.nextInt(planetEvents.size()-1)),new ArrayList<Ship>()));
+        //TODO CHANGE RANDOMIZER TO HAVE EVERYTHING IN EACH MAP
+        //TODO ADD TRADER WITH ITEMS TO MAP
+        planets.add(new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, seed),
+                0, 0, PlanetEvent.VOID, new ArrayList<Ship>()));
+        for (int i = 0; i < 5; i++) {
+            for (int a = 0; a < 5; a++) {
+                String nextPlanet = getPlanetName(planetNames, usedPlanetNames, seed);
+                planets.add(new Planet(UUID.randomUUID().hashCode(), nextPlanet, i, a,
+                        planetEvents.get(random.nextInt(planetEvents.size() - 1)), new ArrayList<Ship>()));
             }
         }
         // Boss planet
-        planets.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,seed),
-                30,30,PlanetEvent.BOSS,new ArrayList<Ship>()));
-        Overworld overworld = new Overworld(UUID.randomUUID().hashCode(),seed,username);
+        planets.add(new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, seed),
+                30, 30, PlanetEvent.BOSS, new ArrayList<Ship>()));
+        Overworld overworld = new Overworld(UUID.randomUUID().hashCode(), seed, username);
         overworld.setStartPlanet(planets.get(0));
         overworld.setPlanetMap(planets);
         return overworld;
@@ -244,12 +246,18 @@ public class ClientHandler implements Runnable {
      * @param shipType - the ship type
      * @return the created ship
      */
+    @SuppressWarnings("Duplicates")
     private Ship generateShip(ShipType shipType, String username, Overworld overworld) {
         List<Weapon> inventory = new ArrayList<>();
         List<Room> rooms = new ArrayList<>();
         List<Tile> tiles = new ArrayList<>();
         switch (shipType) {
+            // ========== KESTREL A ==========
             case DEFAULT:
+                List<Integer> crewStats = new ArrayList<>();
+                for (int f = 0; f < 5; f++) {
+                    crewStats.add(2);
+                }
                 for (int i = 0; i < 17; i++) {
                     // ========== Tile generator ==========
                     // 2 Above each other
@@ -279,16 +287,41 @@ public class ClientHandler implements Runnable {
                     else if (i == 2) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
-                        //TODO add crew member
                         engine.setTiles(tiles);
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Isac", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
+                        crew.setTile(engine.getTiles().get(0));
+                        engine.getTiles().get(0).setStandingOnMe(crew);
+                        crew.setCurrentRoom(engine);
+                        List<Crew> crewInRoom = engine.getCrew();
+                        crewInRoom.add(crew);
+                        engine.setCrew(crewInRoom);
                         rooms.add(engine);
                     }
                     // Weapons
                     else if (i == 5) {
-                        Room weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
+                        System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
-                        //TODO add weapons and crew member
                         weapons.setTiles(tiles);
+                        // Add crew
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Newton", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
+                        crew.setTile(weapons.getTiles().get(0));
+                        crew.setCurrentRoom(weapons);
+                        List<Crew> crewInRoom = weapons.getCrew();
+                        crewInRoom.add(crew);
+                        weapons.getTiles().get(0).setStandingOnMe(crew);
+                        weapons.setCrew(crewInRoom);
+                        // Add Weapons
+                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(), 2, 1, 1, 1, 0,
+                                (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser Gun", 30);
+                        Weapon rocket = new Weapon(UUID.randomUUID().hashCode(), 1, 2, 2, 1, 1, (float) 1.0,
+                                (float) 0.25, 4, (float) 1.0, 2, 1, "Allahu Akbar", 30);
+                        // TODO add weapon price list
+                        laser.setWeaponSystem(weapons);
+                        rocket.setWeaponSystem(weapons);
+                        List<Weapon> shipWeapons = new ArrayList<>();
+                        shipWeapons.add(laser);
+                        shipWeapons.add(rocket);
+                        weapons.setShipWeapons(shipWeapons);
                         rooms.add(weapons);
                     }
                     // Medbay
@@ -316,8 +349,15 @@ public class ClientHandler implements Runnable {
                     else if (i == 16) {
                         Room cockpit = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 1, 5, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
-                        //TODO add crew member
                         cockpit.setTiles(tiles);
+                        // Add crew
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
+                        crew.setTile(cockpit.getTiles().get(0));
+                        crew.setCurrentRoom(cockpit);
+                        List<Crew> crewInRoom = cockpit.getCrew();
+                        crewInRoom.add(crew);
+                        cockpit.getTiles().get(0).setStandingOnMe(crew);
+                        cockpit.setCrew(crewInRoom);
                         rooms.add(cockpit);
                     } else {
                         Room room = new Room(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(), new ArrayList<Tile>());
@@ -326,8 +366,13 @@ public class ClientHandler implements Runnable {
                     }
                     tiles.clear();
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 0,
-                        0, 0, 0, overworld.getStartPlanet(), 1, 100, rooms, new ArrayList<Weapon>(), false);
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 8,
+                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
+            // ========== Bulwark A ==========
+            case TANK:
+                // ========== Tile Generator ==========
+
+                // ========== Room Generator ==========
             default:
                 return null;
         }

@@ -45,27 +45,30 @@ public class Crew implements Serializable {
      * Das Array besteht aus
      * [Weapon, Shield, Engine, Repair, Combat]
      */
+    @NonNull
     @ElementCollection
     private List<Integer> stats;
 
     /**
      * The room this crew member is in
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Room currentRoom;
 
     /** Tile the crew member is standing on */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Tile tile;
 
     /**
      * The price of the different crew-members
      */
+    @NonNull
     private int price;
 
     /**
      * The user who owns this crew member
      */
+    @NonNull
     private String associatedUser;
 
 }

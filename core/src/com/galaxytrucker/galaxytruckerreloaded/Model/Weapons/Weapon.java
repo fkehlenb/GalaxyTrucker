@@ -11,7 +11,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public abstract class Weapon implements Serializable {
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+public class Weapon implements Serializable {
 
     /**
      * ID
@@ -52,7 +54,7 @@ public abstract class Weapon implements Serializable {
      * Weapon accuracy
      */
     @NonNull
-    private float precision;
+    private float accuracy;
 
     /**
      * probability of randomly finding this weapon
@@ -93,5 +95,13 @@ public abstract class Weapon implements Serializable {
     /** Weapon system this weapon belongs to */
     @OneToOne
     private System weaponSystem;
+
+    /** Weapon name */
+    @NonNull
+    private String weaponName;
+
+    /** Weapon price */
+    @NonNull
+    private int weaponPrice;
 
 }
