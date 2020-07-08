@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LobbyScreenNormalBackButton;
 
 import java.util.ArrayList;
@@ -40,8 +41,11 @@ public class LobbyScreenNormal implements Screen {
 
     private List<String> users;
 
-    public LobbyScreenNormal(Main main) {
+    private Ship ship;
+
+    public LobbyScreenNormal(Main main, Ship ship) {
         this.main = main;
+        this.ship = ship;
 
         background = new Texture("1080p.png");
 

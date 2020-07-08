@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.ChooseDifficultyScreen;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.ContinueSelectSave;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.SPNewOrResume;
 
 public class DifficultyBackButton extends ImButton {

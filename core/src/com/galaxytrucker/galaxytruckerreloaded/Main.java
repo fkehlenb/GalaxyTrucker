@@ -24,7 +24,7 @@ public class Main extends Game {
     public void create() {
         batch = new SpriteBatch();
 
-        setScreen(new LoginScreen(this));
+        setScreen(new MainMenu(this));
     }
 
     @Override

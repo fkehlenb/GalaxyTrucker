@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LobbyScreenHostBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.StartButton;
 
@@ -44,8 +45,11 @@ public class LobbyScreenHost implements Screen {
 
     private List<String> users;
 
-    public LobbyScreenHost(Main main) {
+    private Ship ship;
+
+    public LobbyScreenHost(Main main, Ship ship) {
         this.main = main;
+        this.ship = ship;
 
         background = new Texture("1080p.png");
 

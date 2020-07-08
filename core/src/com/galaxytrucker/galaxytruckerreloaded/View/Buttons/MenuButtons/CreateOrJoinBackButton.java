@@ -8,6 +8,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.CreateOrJoinServer;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.SPNewOrResume;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.ShipSelector;
 
 public class CreateOrJoinBackButton extends ImButton {
 
@@ -15,8 +16,6 @@ public class CreateOrJoinBackButton extends ImButton {
      * Click sound effect
      */
     private Sound clickSound;
-
-    private Main main;
 
     /**
      * the screen this button is on
@@ -28,8 +27,7 @@ public class CreateOrJoinBackButton extends ImButton {
      */
     @Override
     public void leftClick() {
-        screen.dispose();
-        main.setScreen(new SPNewOrResume(main, false));
+        screen.goBack();
     }
 
     /**
@@ -37,10 +35,9 @@ public class CreateOrJoinBackButton extends ImButton {
      *
      * @param screen  the screen this button is on
      */
-    public CreateOrJoinBackButton(float x, float y, float width, float height, CreateOrJoinServer screen, Main main) {
+    public CreateOrJoinBackButton(float x, float y, float width, float height, CreateOrJoinServer screen) {
         super(new Texture("buttons/back_button.png"), x, y, width, height);
         this.screen = screen;
-        this.main = main;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();

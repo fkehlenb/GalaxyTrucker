@@ -67,8 +67,11 @@ public class ChooseDifficultyScreen implements Screen {
      */
     private GlyphLayout glyph = new GlyphLayout();
 
-    public  ChooseDifficultyScreen(Main main) {
+    private boolean singleplayer;
+
+    public  ChooseDifficultyScreen(Main main, boolean singleplayer) {
         this.main = main;
+        this.singleplayer = singleplayer;
 
         background = new Texture("1080p.png");
 
@@ -105,9 +108,20 @@ public class ChooseDifficultyScreen implements Screen {
     }
 
     public void setDifficulty(int difficulty) {
-        //call controller
-        main.setScreen(new ShipSelector(main, true));
+        if(singleplayer) {
+            main.setScreen(new ShipSelector(main, true, difficulty));
+        }
+        else {
+            main.setScreen(new ShipSelector(main, false, difficulty));
+        }
         dispose();
+    }
+
+    /**
+     * return to last screen
+     */
+    public void goBack() {
+        main.setScreen(new SPNewOrResume(main, singleplayer));
     }
 
     /**
