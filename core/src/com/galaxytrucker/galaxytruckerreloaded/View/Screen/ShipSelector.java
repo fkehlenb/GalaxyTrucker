@@ -76,6 +76,11 @@ public class ShipSelector implements Screen {
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
+     * the glyph layout for easy centering of text
+     */
+    private GlyphLayout glyph2 = new GlyphLayout();
+
+    /**
      * the font to draw text with
      */
     private BitmapFont font;
@@ -97,7 +102,7 @@ public class ShipSelector implements Screen {
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
         username.setSize(248, 50);
-        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 - 100);
+        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 - 180);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -116,6 +121,7 @@ public class ShipSelector implements Screen {
 
         font = generator.generateFont(params);
         glyph.setText(font, "Please enter your username");
+        glyph2.setText(font, "Please select your ship");
 
         createGameButton = new CreateGameButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 240, 512, 48, this);
         backButton = new ShipSelectorBackButton(0, 90, 512, 48, this);
@@ -148,7 +154,8 @@ public class ShipSelector implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 -30);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 -110);
+        font.draw(main.batch, glyph2, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 +400);
         main.batch.end();
         stage.draw();
     }
