@@ -20,7 +20,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.BlankRoom;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.LaserBlaster;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;

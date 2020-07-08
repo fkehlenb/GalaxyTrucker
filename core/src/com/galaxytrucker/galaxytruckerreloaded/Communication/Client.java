@@ -10,8 +10,9 @@ import lombok.NonNull;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.UUID;
 
-/** This class handles the client-side networking */
+/** This class handles the client side networking */
 public class Client {
 
     /**
@@ -48,6 +49,9 @@ public class Client {
     /** Client map */
     @Getter
     private Overworld overworld;
+
+    /** Ship type */
+    private Enum<ShipType> shipType;
 
     /**
      * Send a request to the server

@@ -3,6 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,6 +11,7 @@ import java.net.Socket;
 /**
  * This class creates the game server and handles storing the data
  */
+@SuppressWarnings("all") // TODO REMOVE THIS WHEN TEST PHASE IS DONE
 public class Server implements Runnable{
 
     /** Server socket for network communication  */
@@ -27,7 +29,21 @@ public class Server implements Runnable{
     /** Is the server running? */
     private boolean running = true;
 
-    /** Main method */
+    /** Run the server (USE THIS) */
+    public static void runServer(){
+        Server server = new Server();
+        server.setPort(5050);
+        server.serverServiceCommunicator = new ServerServiceCommunicator();
+        new Thread(server).start();
+        try {
+            Thread.sleep(1000);
+        }
+        catch (Exception f){
+            f.printStackTrace();
+        }
+    }
+
+    /** Main method (TESTING ONLY) */ // TODO REMOVE WHEN DONE
     public static void main(String[] args){
         Server server = new Server();
         server.setPort(5050);
@@ -37,7 +53,7 @@ public class Server implements Runnable{
             Thread.sleep(1000);
         }
         catch (Exception f){
-            System.out.println(f);
+            f.printStackTrace();
         }
         Client client = new Client("localhost",5050);
         boolean a = client.login("ahmad", ShipType.DEFAULT);

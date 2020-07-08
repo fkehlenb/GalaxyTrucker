@@ -5,7 +5,11 @@ import lombok.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
+/** Creates the database and entity manager */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Database {
@@ -31,12 +35,5 @@ public class Database {
      */
     public static EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
-    }
-
-    /**
-     * Backup database
-     */
-    public void backupDatabase() {
-
     }
 }

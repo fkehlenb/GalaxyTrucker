@@ -45,6 +45,7 @@ public class Crew implements Serializable {
      * Das Array besteht aus
      * [Weapon, Shield, Engine, Repair, Combat]
      */
+    @NonNull
     @ElementCollection
     private List<Integer> stats;
 
@@ -61,11 +62,13 @@ public class Crew implements Serializable {
     /**
      * The price of the different crew-members
      */
+    @NonNull
     private int price;
 
     /**
      * The user who owns this crew member
      */
+    @NonNull
     private String associatedUser;
 
 }
