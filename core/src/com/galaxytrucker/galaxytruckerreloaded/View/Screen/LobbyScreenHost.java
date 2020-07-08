@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LobbyScreenHostBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.StartButton;
 
@@ -45,14 +46,14 @@ public class LobbyScreenHost implements Screen {
 
     private List<String> users;
 
-    private Ship ship;
+    private ShipType ship;
 
     /**
      * whether this comes from resuming a game or starting a new one (relevant for back)
      */
     private boolean resume;
 
-    public LobbyScreenHost(Main main, Ship ship, boolean resume) {
+    public LobbyScreenHost(Main main, ShipType ship, boolean resume) {
         this.main = main;
         this.ship = ship;
         this.resume = resume;

@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectorBackButton;
@@ -66,8 +67,14 @@ public class ShipSelector implements Screen {
      */
     private TextField username;
 
+    /**
+     * whether or not the game will be singleplayer
+     */
     private boolean singleplayer;
 
+    /**
+     * the difficulty that was chosen
+     */
     private int difficulty;
 
     /**
@@ -85,8 +92,14 @@ public class ShipSelector implements Screen {
      */
     private BitmapFont font;
 
-    private Ship ship;
+    /**
+     * the ship that was selected
+     */
+    private ShipType ship;
 
+    /**
+     * the button to return to the last screen
+     */
     private ShipSelectorBackButton backButton;
 
 
@@ -190,7 +203,7 @@ public class ShipSelector implements Screen {
      * the ship is selected
      * @param ship the index of the ship in the list of possible ships
      */
-    public void setShip(Ship ship) {
+    public void setShip(ShipType ship) {
         this.ship = ship;
         //TODO set difficulty
     }

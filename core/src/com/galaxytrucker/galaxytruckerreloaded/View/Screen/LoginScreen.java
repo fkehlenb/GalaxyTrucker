@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
 
@@ -174,7 +175,7 @@ public class LoginScreen implements Screen {
         String name = username.getText();
         //call to controller
         boolean success = true;
-        Ship ship = new Ship();
+        ShipType ship = ShipType.DEFAULT;
         if(success) {
             if(singleplayer) {
                 main.setScreen(new SPResumeLobby(main));

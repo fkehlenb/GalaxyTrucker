@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateOrJoinBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.JoinServerButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.StartServerButton;
@@ -55,13 +56,13 @@ public class CreateOrJoinServer implements Screen {
 
     private CreateOrJoinBackButton back;
 
-    private Ship ship;
+    private ShipType ship;
 
     /**
      * the constructor
      * @param main the class extending game
      */
-    public CreateOrJoinServer(Main main, Ship ship) {
+    public CreateOrJoinServer(Main main, ShipType ship) {
         this.main = main;
         this.ship = ship;
 
