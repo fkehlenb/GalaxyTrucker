@@ -68,11 +68,12 @@ public class ShipSelector implements Screen {
 
     private boolean singleplayer;
 
+    private int difficulty;
+
     /**
      * the glyph layout for easy centering of text
      */
     private GlyphLayout glyph = new GlyphLayout();
-    private int difficulty;
 
     /**
      * the font to draw text with
