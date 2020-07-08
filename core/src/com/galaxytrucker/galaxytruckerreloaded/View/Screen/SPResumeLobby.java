@@ -68,7 +68,7 @@ public class SPResumeLobby implements Screen {
 
     private String difficultyName = "TestDiff";
 
-    private String mapName = "TestMap";
+    private String seedName = "TestSeed";
 
     /** Constructor  */
     public SPResumeLobby(Main main){
@@ -92,7 +92,7 @@ public class SPResumeLobby implements Screen {
         font = generator.generateFont(params);
         glyph.setText(font, "Your Ship: " + shipName);
         glyph2.setText(font, "Your Difficulty: " + difficultyName);
-        glyph3.setText(font, "Your Map: " + mapName);
+        glyph3.setText(font, "Your Seed: " + seedName);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
