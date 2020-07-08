@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.ShipSelector;
@@ -24,7 +25,7 @@ public class ShipSelectButton extends ImButton {
     /**
      * the ship this button represents in the ship selector
      */
-    private int ship;
+    private Ship ship;
 
     /**
      * the screen this button is on
@@ -44,7 +45,7 @@ public class ShipSelectButton extends ImButton {
      * @param ship the ship, (index of ship in list in shipselector)
      * @param screen the screen this button is on
      */
-    public ShipSelectButton(float x, float y, float width, float height, int ship, ShipSelector screen) {
+    public ShipSelectButton(float x, float y, float width, float height, Ship ship, ShipSelector screen) {
         super(new Texture("yes.png"), x, y, width, height);
         this.screen = screen;
         this.ship = ship;

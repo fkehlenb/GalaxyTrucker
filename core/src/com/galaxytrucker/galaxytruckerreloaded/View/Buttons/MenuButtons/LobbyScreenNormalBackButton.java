@@ -28,8 +28,7 @@ public class LobbyScreenNormalBackButton extends ImButton {
      */
     @Override
     public void leftClick() {
-        screen.dispose();
-        main.setScreen(new SelectLobbyScreen(main));
+        screen.goBack();
     }
 
     /**

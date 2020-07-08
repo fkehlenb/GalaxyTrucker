@@ -85,6 +85,11 @@ public class LobbyScreenHost implements Screen {
         stage.addActor(startButton);
 
         Gdx.input.setInputProcessor(stage);
+
+    }
+
+    public void goBack() {
+
     }
 
     /**

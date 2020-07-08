@@ -81,6 +81,10 @@ public class LobbyScreenNormal implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    public void goBack() {
+
+    }
+
     /**
      * update the users that are logged into this lobby
      *
