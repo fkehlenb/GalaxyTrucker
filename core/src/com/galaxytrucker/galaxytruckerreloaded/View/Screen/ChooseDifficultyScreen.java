@@ -78,9 +78,9 @@ public class ChooseDifficultyScreen implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        easy = new DifficultyButton(new Texture("shipselector/button_easy.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this, 0);
-        middle = new DifficultyButton(new Texture("shipselector/button_normal.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96, 512, 48, this, 1);
-        hard = new DifficultyButton(new Texture("shipselector/button_hard.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*2, 512, 48, this, 2);
+        easy = new DifficultyButton(new Texture("buttons/easy_button.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this, 0);
+        middle = new DifficultyButton(new Texture("buttons/medium_button.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96, 512, 48, this, 1);
+        hard = new DifficultyButton(new Texture("buttons/hard_button.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*2, 512, 48, this, 2);
 
         back = new DifficultyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*3, 512, 48, this, main);
 
