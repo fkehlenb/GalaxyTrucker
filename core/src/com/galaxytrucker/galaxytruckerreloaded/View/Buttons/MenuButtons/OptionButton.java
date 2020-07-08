@@ -27,7 +27,7 @@ public class OptionButton extends ImButton{
      *
      */
     public OptionButton(float x, float y, float width, float height, MainMenu mainMenu) {
-        super(new Texture("options_select2.png"), x, y, width, height);
+        super(new Texture("buttons/options_button.png"), x, y, width, height);
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();

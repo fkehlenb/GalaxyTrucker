@@ -95,7 +95,7 @@ public class MainMenu implements Screen {
         //newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this) ;
         singlePlayerButton = new SinglePlayerButton(main.WIDTH/2 - 124, main.HEIGHT/2 + 25, 248, 50, this);
         multiPlayerButton = new MultiPlayerButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
-        optionButton = new OptionButton(main.WIDTH/2 - 97, main.HEIGHT/2 -50 - 25, 194, 50,this);
+        optionButton = new OptionButton(main.WIDTH/2 - 124, main.HEIGHT/2 -50 - 25, 248, 50,this);
         quit = new QuitButton(main.WIDTH/2 - 124 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
