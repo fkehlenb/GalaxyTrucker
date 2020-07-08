@@ -2,8 +2,12 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -38,7 +42,33 @@ public class SPResumeLobby implements Screen {
      */
     private SPResumeStartGame spResumeStartGame;
 
+    /**
+     * the glyph layout for easy centering of text
+     */
+    private GlyphLayout glyph = new GlyphLayout();
 
+    /**
+     * the glyph layout for easy centering of text
+     */
+    private GlyphLayout glyph2 = new GlyphLayout();
+
+    /**
+     * the glyph layout for easy centering of text
+     */
+    private GlyphLayout glyph3 = new GlyphLayout();
+
+    /**
+     * the font to draw text with
+     */
+    private BitmapFont font;
+
+
+    //Müssen im Konstruktor durch echte, im Savegame gespeicherte Parameter ersetzt werden.
+    private String shipName = "TestShip1";
+
+    private String difficultyName = "TestDiff";
+
+    private String mapName = "TestMap";
 
     /** Constructor  */
     public SPResumeLobby(Main main){
@@ -46,6 +76,23 @@ public class SPResumeLobby implements Screen {
         background = new Texture("1080p.png");
 
         spResumeStartGame = new SPResumeStartGame(main.WIDTH/2 - 124, main.HEIGHT/2 -240, 248, 50, this);
+
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 15;
+
+        font = generator.generateFont(params);
+        glyph.setText(font, "Your Ship: " + shipName);
+        glyph2.setText(font, "Your Difficulty: " + difficultyName);
+        glyph3.setText(font, "Your Map: " + mapName);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -73,6 +120,9 @@ public class SPResumeLobby implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        font.draw(main.batch, glyph, main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 +140);
+        font.draw(main.batch, glyph2, 3*main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 +140);
+        font.draw(main.batch, glyph3, 2*main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 +140);
         main.batch.end();
         stage.draw();
     }
