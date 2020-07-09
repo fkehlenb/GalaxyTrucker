@@ -24,11 +24,6 @@ public class ShipSelectButton extends ImButton {
     private Sound clickSound;
 
     /**
-     * the ship this button represents in the ship selector
-     */
-    private ShipType ship;
-
-    /**
      * the screen this button is on
      */
     private ShipSelector screen;
@@ -38,18 +33,16 @@ public class ShipSelectButton extends ImButton {
      */
     @Override
     public void leftClick() {
-        screen.setShip(ship);
+        screen.setShip();
     }
 
     /**
      * constructor
-     * @param ship the ship, (index of ship in list in shipselector)
      * @param screen the screen this button is on
      */
-    public ShipSelectButton(float x, float y, float width, float height, ShipType ship, ShipSelector screen) {
+    public ShipSelectButton(float x, float y, float width, float height, ShipSelector screen) {
         super(new Texture("yes.png"), x, y, width, height);
         this.screen = screen;
-        this.ship = ship;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();

@@ -50,16 +50,6 @@ public class ShipSelector implements Screen {
     private Stage stage;
 
     /**
-     * the textures of the ships to choose from
-     */
-    private List<Texture> ships;
-
-    /**
-     * the buttons for the ships
-     */
-    private List<ShipSelectButton> shipButtons;
-
-    /**
      * button to create game
      */
     private CreateGameButton createGameButton;
@@ -125,6 +115,11 @@ public class ShipSelector implements Screen {
 
     private int currentShip = 0;
 
+    /**
+     * the button to choose the ship
+     */
+    private ShipSelectButton shipSelectButton;
+
     /** Constructor
      * @param main - main class */
     public ShipSelector(Main main, boolean singleplayer, int difficulty){
@@ -162,6 +157,7 @@ public class ShipSelector implements Screen {
         backButton = new ShipSelectorBackButton(main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
         leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
         rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
+        shipSelectButton = new ShipSelectButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 250, 512, 48, this);
 
         shipImage = new Image(new Texture(shipList[currentShip]));
         shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
@@ -172,8 +168,8 @@ public class ShipSelector implements Screen {
         stage.addActor(backButton);
         stage.addActor(leftArrowButton);
         stage.addActor(rightArrowButton);
+        stage.addActor(shipSelectButton);
 
-        //get ships from server, for each one texture and one button
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -209,6 +205,7 @@ public class ShipSelector implements Screen {
         backButton = new ShipSelectorBackButton(main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
         leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
         rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
+        shipSelectButton = new ShipSelectButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 250, 512, 48, this);
 
         shipImage = new Image(new Texture(shipList[currentShip]));
         shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
@@ -219,8 +216,7 @@ public class ShipSelector implements Screen {
         stage.addActor(backButton);
         stage.addActor(leftArrowButton);
         stage.addActor(rightArrowButton);
-
-        //get ships from server, for each one texture and one button
+        stage.addActor(shipSelectButton);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -278,11 +274,17 @@ public class ShipSelector implements Screen {
 
     /**
      * the ship is selected
-     * @param ship the index of the ship in the list of possible ships
      */
-    public void setShip(ShipType ship) {
-        this.ship = ship;
-        //TODO set difficulty
+    public void setShip() {
+        if(currentShip == 0) {
+            ship = ShipType.DEFAULT;
+        }
+        else if(currentShip == 1) {
+            ship = ShipType.KILLER; //TODO ist das manhunter
+        }
+        else if(currentShip == 2) {
+            ship = ShipType.BARRAGE;
+        }
     }
 
     /**
@@ -293,7 +295,7 @@ public class ShipSelector implements Screen {
             String[] args = new String[0];
             Server.main(args);
             main.setClient(new Client("localhost", 5050));
-            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText());
+            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText(), ship);
             if(success) {
                 main.setScreen(new GamePlay(main)); //TODO ?
             }

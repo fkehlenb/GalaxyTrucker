@@ -84,6 +84,16 @@ public class LoginScreen implements Screen {
     private LoginBackButton backButton;
 
     /**
+     * the glyphlayout for the server address, if multiplayer
+     * */
+    private GlyphLayout glyph2 = new GlyphLayout();
+
+    /**
+     * the server address field, if multiplayer
+     */
+    private TextField address;
+
+    /**
      * Constructor
      *
      * @param main - main class
@@ -124,6 +134,16 @@ public class LoginScreen implements Screen {
         stage.addActor(username);
         stage.addActor(backButton);
 
+        if(!singleplayer) {
+            address = new TextField("", skin);
+            address.setSize(248, 50);
+            address.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + 100);
+            stage.addActor(address);
+
+            glyph2.setText(font, "Please enter the server address"); //localhost if you are host
+
+        }
+
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -147,6 +167,9 @@ public class LoginScreen implements Screen {
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
         font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + 50);
+        if(!singleplayer) {
+            font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2 + 250);
+        }
         main.batch.end();
         stage.draw();
     }
@@ -182,24 +205,34 @@ public class LoginScreen implements Screen {
      */
     public void login() {
         String name = username.getText();
-        ShipType ship = ShipType.DEFAULT;
 
         if(singleplayer) {
-            String[] args = new String[0];
-            Server.main(args);
+            //String[] args = new String[0];
+            //Server.main(args); //TODO wird der server neu gestartet?
             main.setClient(new Client("localhost", 5050));
-            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText());
+            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT); //ShipType sowieso irrelevant, da kein neues schiff erstellt wird
             if(success) {
-                main.setScreen(new SPResumeLobby(main, singleplayer));
+                main.setScreen(new SPResumeLobby(main));
+                dispose();
             }
         }
         else {
-            boolean host = false; //whether or not the player was host last time?
-            if(host) {
-                main.setScreen(new LobbyScreenHost(main, ship, true, 0, name)); //TODO diff von server laden
+            if(address.getText().equals("localhost") || address.getText().equals("127.0.0.1"))
+            {
+                main.setClient(new Client("localhost", 5050));
+                boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT);
+                if(success) {
+                    main.setScreen(new LobbyScreenHost(main, main.getClient().getMyShip().getShipType(), true, 0, name)); //TODO diff von server laden
+                    dispose();
+                }
             }
             else {
-                main.setScreen(new LobbyScreenHost(main, ship, true, 0, name));
+                main.setClient(new Client(address.getText(), 5050));
+                boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT);
+                if(success) {
+                    main.setScreen(new LobbyScreenHost(main, main.getClient().getMyShip().getShipType(), true, 0, name));
+                    dispose();
+                }
             }
         }
     }

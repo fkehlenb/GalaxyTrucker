@@ -137,7 +137,7 @@ public class SelectLobbyScreen implements Screen {
      */
     public void joinLobby() {
         main.setClient(new Client(lobby.getText(), 5050));
-        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username);
+        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship);
         if(success) {
             main.setScreen(new LobbyScreenNormal(main, ship, false, difficulty, username));
         }

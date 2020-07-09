@@ -7,6 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.AutofireButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MoveButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShipButton;
@@ -110,8 +111,18 @@ public class ShipView extends AbstractShip {
         hull = new HullUI(main, ship.getHp());
         energy = new EnergyUI(main, ship.getEnergy());
 
-        shipBackground = new Texture("ship/anaerobic/an2base.png");
-        shipRoomBackground = new Texture("ship/anaerobic/an2floor.png");
+        if(main.getClient().getMyShip().getShipType() == ShipType.DEFAULT) {
+            shipBackground = new Texture("ship/kestral/kestral_base.png"); //TODO scaling richtig
+            shipRoomBackground = new Texture("ship/kestral/kestral_floor.png");
+        }
+        else if(main.getClient().getMyShip().getShipType() == ShipType.KILLER) {
+            shipBackground = new Texture("ship/anaerobic/an2base.png");
+            shipRoomBackground = new Texture("ship/anaerobic/an2floor.png");
+        }
+        else if(main.getClient().getMyShip().getShipType() == ShipType.BARRAGE) {
+            shipBackground = new Texture("ship/fed/fed_cruiser_2_base.png");
+            shipRoomBackground = new Texture("ship/fed/fed_cruiser_floor.png");
+        }
         weaponGeneralBackground = new Texture("shipsys/weapon/generalbox.png");
 
         stage.addActor(inventory);
