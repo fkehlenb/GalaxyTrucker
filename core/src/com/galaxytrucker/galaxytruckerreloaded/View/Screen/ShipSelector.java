@@ -118,7 +118,7 @@ public class ShipSelector implements Screen {
 
     private Image shipImage;
 
-    private String[] shipList = {"ship/kestral/kestral_base.png", "ship/anaerobic/an2base.png", "ship/fed/fed_cruiser_base.png"};
+    private String[] shipList = {"ship/kestral/kestral_base.png", "ship/anaerobic/an2base.png", "ship/fed/fed_cruiser_2_base.png"};
 
     private int currentShip = 0;
 
