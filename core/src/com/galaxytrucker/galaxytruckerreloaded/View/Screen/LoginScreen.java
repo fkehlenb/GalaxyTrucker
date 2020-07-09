@@ -14,9 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
 
@@ -179,24 +182,25 @@ public class LoginScreen implements Screen {
      */
     public void login() {
         String name = username.getText();
-        //call to controller
-        boolean success = true;
         ShipType ship = ShipType.DEFAULT;
-        if(success) {
-            if(singleplayer) {
+
+        if(singleplayer) {
+            String[] args = new String[0];
+            Server.main(args);
+            main.setClient(new Client("localhost", 5050));
+            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText());
+            if(success) {
                 main.setScreen(new SPResumeLobby(main, singleplayer));
             }
-            else {
-                boolean host = false; //whether or not the player was host last time?
-                if(host) {
-                    main.setScreen(new LobbyScreenHost(main, ship, true, 0, name)); //TODO diff von server laden
-                }
-                else {
-                    main.setScreen(new LobbyScreenHost(main, ship, true, 0, name));
-                }
-
+        }
+        else {
+            boolean host = false; //whether or not the player was host last time?
+            if(host) {
+                main.setScreen(new LobbyScreenHost(main, ship, true, 0, name)); //TODO diff von server laden
             }
-            dispose();
+            else {
+                main.setScreen(new LobbyScreenHost(main, ship, true, 0, name));
+            }
         }
     }
 }
