@@ -57,6 +57,9 @@ project(":desktop") {
         // h2 database
         runtimeOnly 'com.h2database:h2'
 
+        // true font for bitmap font
+        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+
         compile group: 'com.h2database', name: 'h2', version: '1.4.199'
     }
 }
@@ -99,6 +102,9 @@ project(":core") {
 
         // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
         testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.3.3'
+
+        // bitmap font
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
         testCompile 'junit:junit:4.12'
         compile 'junit:junit:4.12'

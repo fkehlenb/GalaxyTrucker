@@ -55,8 +55,8 @@ public class Server implements Runnable{
         catch (Exception f){
             f.printStackTrace();
         }
-        Client client = new Client("localhost",5050);
-        boolean a = client.login("ahmad", ShipType.DEFAULT);
+        //Client client = new Client("localhost",5050);
+        //boolean a = client.login("ahmad", ShipType.DEFAULT);
     }
 
     /** Start server on specified port

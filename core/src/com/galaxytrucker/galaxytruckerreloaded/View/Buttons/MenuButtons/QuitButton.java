@@ -25,7 +25,7 @@ public class QuitButton extends ImButton
      *
      */
     public QuitButton(float x, float y, float width, float height, MainMenu menu) {
-        super(new Texture("quit_on.png"), x, y, width, height);
+        super(new Texture("buttons/quit_button.png"), x, y, width, height);
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();

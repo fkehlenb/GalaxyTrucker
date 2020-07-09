@@ -2,18 +2,25 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
 
 /**
@@ -37,11 +44,6 @@ public class LoginScreen implements Screen {
     private LoginButton loginButton;
 
     /**
-     * Looping music track
-     */
-    private Music music;
-
-    /**
      * Click sound effect
      */
     private Sound clickSound;
@@ -57,20 +59,80 @@ public class LoginScreen implements Screen {
     private Stage stage;
 
     /**
+     * the viewpart
+     */
+    private Viewport viewport;
+
+    /**
+     * the font to draw text with
+     */
+    private BitmapFont font;
+
+    /**
+     * the glyph layout for easy centering of text
+     */
+    private GlyphLayout glyph = new GlyphLayout();
+
+    /**
+     * whether or not the game will be single player, chosen on an earlier screen
+     */
+    private boolean singleplayer;
+
+    /**
+     * the button to log in with
+     */
+    private LoginBackButton backButton;
+
+    /**
      * Constructor
      *
      * @param main - main class
      */
-    public LoginScreen(Main main) {
+    public LoginScreen(Main main, boolean singleplayer) {
         this.main = main;
-        background = new Texture("1080p.png");
-        loginButton = new LoginButton(main.WIDTH/2, main.HEIGHT/2, 248, 50, this);
-        username = new TextField("", new Skin());
+        this.singleplayer = singleplayer;
 
-        stage = new Stage();
+        background = new Texture("1080p.png");
+        loginButton = new LoginButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 200, 248, 50, this);
+        backButton = new LoginBackButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 300, 248, 50, this);
+
+
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        username = new TextField("", skin);
+        username.setSize(248, 50);
+        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 - 100);
+
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
+
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 40;
+
+        font = generator.generateFont(params);
+        glyph.setText(font, "Please enter your username");
+
         stage.addActor(loginButton);
+        stage.addActor(username);
+        stage.addActor(backButton);
 
         Gdx.input.setInputProcessor(stage);
+    }
+
+    /**
+     * go back to previous screen
+     */
+    public void goBack() {
+        main.setScreen(new SPNewOrResume(main, singleplayer));
+        dispose();
     }
 
     @Override
@@ -84,13 +146,14 @@ public class LoginScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + 50);
         main.batch.end();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
@@ -119,6 +182,25 @@ public class LoginScreen implements Screen {
      */
     public void login() {
         String name = username.getText();
-        //TODO welcher controller??
+        ShipType ship = ShipType.DEFAULT;
+
+        if(singleplayer) {
+            String[] args = new String[0];
+            Server.main(args);
+            main.setClient(new Client("localhost", 5050));
+            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText());
+            if(success) {
+                main.setScreen(new SPResumeLobby(main, singleplayer));
+            }
+        }
+        else {
+            boolean host = false; //whether or not the player was host last time?
+            if(host) {
+                main.setScreen(new LobbyScreenHost(main, ship, true, 0, name)); //TODO diff von server laden
+            }
+            else {
+                main.setScreen(new LobbyScreenHost(main, ship, true, 0, name));
+            }
+        }
     }
 }

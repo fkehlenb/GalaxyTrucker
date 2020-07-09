@@ -49,7 +49,7 @@ public class NewGameButton extends ImButton
      */
     public void leftClick()
     {
-        mainMenu.newGame();
+        //mainMenu.newGame();
     }
 
 }

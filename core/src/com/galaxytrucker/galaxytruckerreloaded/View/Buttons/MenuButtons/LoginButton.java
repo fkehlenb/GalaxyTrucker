@@ -40,7 +40,7 @@ public class LoginButton extends ImButton {
      * @param screen the login screen this button belongs to
      */
     public LoginButton(float x, float y, float width, float height, LoginScreen screen) {
-        super(new Texture("yes.png"), x, y, width, height);
+        super(new Texture("buttons/continue_button.png"), x, y, width, height);
         this.screen = screen;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
