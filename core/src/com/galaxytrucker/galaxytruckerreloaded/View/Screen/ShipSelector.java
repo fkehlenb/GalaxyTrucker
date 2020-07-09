@@ -118,6 +118,10 @@ public class ShipSelector implements Screen {
 
     private Image shipImage;
 
+    private String[] shipList = {"ship/kestral/kestral_base.png", "ship/anaerobic/an2base.png", "ship/fed/fed_cruiser_base.png"};
+
+    private int currentShip = 0;
+
     /** Constructor
      * @param main - main class */
     public ShipSelector(Main main, boolean singleplayer, int difficulty){
@@ -156,7 +160,54 @@ public class ShipSelector implements Screen {
         leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
         rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
 
-        shipImage = new Image(new Texture("ship/anaerobic/an2base.png"));
+        shipImage = new Image(new Texture(shipList[currentShip]));
+        shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
+
+        stage.addActor(shipImage);
+        stage.addActor(createGameButton);
+        stage.addActor(username);
+        stage.addActor(backButton);
+        stage.addActor(leftArrowButton);
+        stage.addActor(rightArrowButton);
+
+        //get ships from server, for each one texture and one button
+
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    public void prepareUI() {
+        background = new Texture("1080p.png");
+
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        username = new TextField("", skin);
+        username.setSize(248, 50);
+        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/8);
+
+        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        stage = new Stage(viewport);
+
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 15;
+
+        font = generator.generateFont(params);
+        glyph.setText(font, "Please enter your username");
+        glyph2.setText(font, "Please select your ship");
+
+        createGameButton = new CreateGameButton(7*main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
+        backButton = new ShipSelectorBackButton(main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
+        leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
+        rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
+
+        shipImage = new Image(new Texture(shipList[currentShip]));
         shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
 
         stage.addActor(shipImage);
@@ -248,13 +299,25 @@ public class ShipSelector implements Screen {
      * shows the next ship in shipselector
      */
     public void nextShip() {
-
+        currentShip +=1;
+        if(currentShip > shipList.length-1){
+            currentShip = 0;
+        }
+        dispose();
+        prepareUI();
+        //TODO Liste von SHips, die man durchschaltet
     }
 
     /**
      * shows the prev ship in shipselector
      */
     public void prevShip() {
-
+        //TODO Liste von SHips, die man durchschaltet
+        currentShip -=1;
+        if(currentShip < 0){
+            currentShip = shipList.length-1;
+        }
+        dispose();
+        prepareUI();
     }
 }
