@@ -3,8 +3,11 @@ package com.galaxytrucker.galaxytruckerreloaded;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.LoginScreen;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Main extends Game {
 
@@ -19,6 +22,13 @@ public class Main extends Game {
      * Sprite batch
      */
     public SpriteBatch batch;
+
+    /**
+     * the client
+     */
+    @Getter
+    @Setter
+    private Client client;
 
     @Override
     public void create() {

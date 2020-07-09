@@ -11,9 +11,12 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateOrJoinBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.JoinServerButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.StartServerButton;
@@ -75,12 +78,24 @@ public class CreateOrJoinServer implements Screen {
     private ShipType ship;
 
     /**
+     * the difficulty the player chose
+     */
+    private int difficulty;
+
+    /**
+     * the username the player entered
+     */
+    private String username;
+
+    /**
      * the constructor
      * @param main the class extending game
      */
-    public CreateOrJoinServer(Main main, ShipType ship) {
+    public CreateOrJoinServer(Main main, ShipType ship, int diff, String username) {
         this.main = main;
         this.ship = ship;
+        this.difficulty = diff;
+        this.username = username;
 
         background = new Texture("1080p.png");
 
@@ -117,7 +132,7 @@ public class CreateOrJoinServer implements Screen {
      * join a server
      */
     public void joinServer() {
-        main.setScreen(new SelectLobbyScreen(main, ship));
+        main.setScreen(new SelectLobbyScreen(main, ship, difficulty, username));
         dispose();
     }
 
@@ -125,7 +140,13 @@ public class CreateOrJoinServer implements Screen {
      * start a game on a new server
      */
     public void startServer() {
-        main.setScreen(new LobbyScreenHost(main, ship, false));
+        String[] args = new String[0];
+        Server.main(args);
+        main.setClient(new Client("localhost", 5050));
+        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username);
+        if(success) {
+            main.setScreen(new LobbyScreenHost(main, ship, false, difficulty, username));
+        }
         dispose();
     }
 

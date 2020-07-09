@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Select;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
@@ -77,12 +79,24 @@ public class SelectLobbyScreen implements Screen {
     private ShipType ship;
 
     /**
+     * the difficulty the player chose
+     */
+    private int difficulty;
+
+    /**
+     * the username the player entered
+     */
+    private String username;
+
+    /**
      * constructor
      * @param main main class extending game
      */
-    public SelectLobbyScreen(Main main, ShipType ship) {
+    public SelectLobbyScreen(Main main, ShipType ship, int diff, String username) {
         this.main = main;
         this.ship = ship;
+        this.difficulty = diff;
+        this.username = username;
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -111,7 +125,7 @@ public class SelectLobbyScreen implements Screen {
         params.size = 40;
 
         font = generator.generateFont(params);
-        glyph.setText(font, "Please enter a server port");
+        glyph.setText(font, "Please enter a server address");
 
         background = new Texture("1080p.png");
 
@@ -122,13 +136,19 @@ public class SelectLobbyScreen implements Screen {
      * join a lobby by taking the text from the text field
      */
     public void joinLobby() {
-        //controller call
-        main.setScreen(new LobbyScreenNormal(main, ship, false));
+        main.setClient(new Client(lobby.getText(), 5050));
+        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username);
+        if(success) {
+            main.setScreen(new LobbyScreenNormal(main, ship, false, difficulty, username));
+        }
         dispose();
     }
 
+    /**
+     * return to previous screen
+     */
     public void goBack() {
-        main.setScreen(new CreateOrJoinServer(main, ship));
+        main.setScreen(new CreateOrJoinServer(main, ship, difficulty, username));
         dispose();
     }
 

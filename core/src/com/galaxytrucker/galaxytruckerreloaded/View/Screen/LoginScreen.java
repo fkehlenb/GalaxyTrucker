@@ -189,10 +189,10 @@ public class LoginScreen implements Screen {
             else {
                 boolean host = false; //whether or not the player was host last time?
                 if(host) {
-                    main.setScreen(new LobbyScreenHost(main, ship, true));
+                    main.setScreen(new LobbyScreenHost(main, ship, true, 0, name)); //TODO diff von server laden
                 }
                 else {
-                    main.setScreen(new LobbyScreenHost(main, ship, true));
+                    main.setScreen(new LobbyScreenHost(main, ship, true, 0, name));
                 }
 
             }

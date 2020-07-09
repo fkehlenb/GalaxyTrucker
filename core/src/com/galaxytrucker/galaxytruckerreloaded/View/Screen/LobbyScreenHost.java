@@ -81,16 +81,28 @@ public class LobbyScreenHost implements Screen {
     private boolean resume;
 
     /**
+     * the difficulty the player chose
+     */
+    private int difficulty;
+
+    /**
+     * the username the player entered
+     */
+    private String username;
+
+    /**
      * the constructor
      * @param main main class extending game
      * @param ship the ship type the player chose
      * @param resume whether or not the players are resuming an old game
      *                 used for going back to the correct screen
      */
-    public LobbyScreenHost(Main main, ShipType ship, boolean resume) {
+    public LobbyScreenHost(Main main, ShipType ship, boolean resume, int diff, String username) {
         this.main = main;
         this.ship = ship;
         this.resume = resume;
+        this.difficulty = diff;
+        this.username = username;
 
         background = new Texture("1080p.png");
 
@@ -137,7 +149,7 @@ public class LobbyScreenHost implements Screen {
             main.setScreen(new LoginScreen(main, false));
         }
         else {
-            main.setScreen(new CreateOrJoinServer(main, ship));
+            main.setScreen(new CreateOrJoinServer(main, ship, difficulty, username));
         }
         dispose();
     }

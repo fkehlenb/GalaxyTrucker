@@ -74,15 +74,27 @@ public class LobbyScreenNormal implements Screen {
     private boolean resume;
 
     /**
+     * the difficulty the player chose
+     */
+    private int difficulty;
+
+    /**
+     * the username the player entered
+     */
+    private String username;
+
+    /**
      * constructor
      * @param main main class extending game
      * @param ship the ship type the player chose
      * @param resume whether or not the game will be continued, or started new
      */
-    public LobbyScreenNormal(Main main, ShipType ship, boolean resume) {
+    public LobbyScreenNormal(Main main, ShipType ship, boolean resume, int diff, String username) {
         this.main = main;
         this.ship = ship;
         this.resume = resume;
+        this.difficulty = diff;
+        this.username = username;
 
         background = new Texture("1080p.png");
 
@@ -126,7 +138,7 @@ public class LobbyScreenNormal implements Screen {
             main.setScreen(new LoginScreen(main, false));
         }
         else {
-            main.setScreen(new SelectLobbyScreen(main, ship));
+            main.setScreen(new SelectLobbyScreen(main, ship, difficulty, username));
         }
         dispose();
     }

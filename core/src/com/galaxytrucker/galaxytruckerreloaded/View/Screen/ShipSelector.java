@@ -13,9 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectorBackButton;
@@ -213,10 +216,16 @@ public class ShipSelector implements Screen {
      */
     public void startGame() {
         if(singleplayer) {
-            main.setScreen(new GamePlay(main)); //TODO call controller to start game
+            String[] args = new String[0];
+            Server.main(args);
+            main.setClient(new Client("localhost", 5050));
+            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText());
+            if(success) {
+                main.setScreen(new GamePlay(main)); //TODO ?
+            }
         }
         else {
-            main.setScreen(new CreateOrJoinServer(main, ship));
+            main.setScreen(new CreateOrJoinServer(main, ship, difficulty, username.getText()));
         }
         dispose();
     }
