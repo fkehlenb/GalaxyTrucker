@@ -184,7 +184,7 @@ public class LoginScreen implements Screen {
         ShipType ship = ShipType.DEFAULT;
         if(success) {
             if(singleplayer) {
-                main.setScreen(new SPResumeLobby(main));
+                main.setScreen(new SPResumeLobby(main, singleplayer));
             }
             else {
                 boolean host = false; //whether or not the player was host last time?

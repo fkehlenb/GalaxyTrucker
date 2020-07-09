@@ -82,12 +82,18 @@ public class SPResumeLobby implements Screen {
      */
     private String seedName = "TestSeed";
 
+    private boolean singleplayer;
+
+    private SPResumeLobbyBackButton spResumeLobbyBackButton;
+
     /** Constructor  */
-    public SPResumeLobby(Main main){
+    public SPResumeLobby(Main main, boolean singleplayer){
         this.main = main;
+        this.singleplayer = singleplayer;
         background = new Texture("1080p.png");
 
-        spResumeStartGame = new SPResumeStartGame(main.WIDTH/2 - 124, main.HEIGHT/2 -240, 248, 50, this);
+        spResumeStartGame = new SPResumeStartGame(7*main.WIDTH/8 - 124, main.HEIGHT/8 , 248, 50, this);
+        spResumeLobbyBackButton = new SPResumeLobbyBackButton(main.WIDTH/8 -124, main.HEIGHT/8, 248, 50,this);
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
@@ -109,6 +115,7 @@ public class SPResumeLobby implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
         stage.addActor(spResumeStartGame);
+        stage.addActor(spResumeLobbyBackButton);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -185,6 +192,14 @@ public class SPResumeLobby implements Screen {
      */
     public void startGame() {
         main.setScreen(new GamePlay(main));
+        dispose();
+    }
+
+    /**
+     * go back to previous screen
+     */
+    public void goBack() {
+        main.setScreen(new LoginScreen(main, singleplayer));
         dispose();
     }
 
