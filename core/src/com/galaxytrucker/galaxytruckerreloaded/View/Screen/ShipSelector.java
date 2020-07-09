@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -19,6 +20,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateGameButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectorBackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShipSelectorButtons.LeftArrowButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShipSelectorButtons.RightArrowButton;
+import org.h2.index.RangeIndex;
 
 import java.util.List;
 
@@ -102,6 +106,17 @@ public class ShipSelector implements Screen {
      */
     private ShipSelectorBackButton backButton;
 
+    /**
+     * rightArrowButton to select the ship
+     */
+    private RightArrowButton rightArrowButton;
+
+    /**
+     * leftArrowButto to select the ship
+     */
+    private LeftArrowButton leftArrowButton;
+
+    private Image shipImage;
 
     /** Constructor
      * @param main - main class */
@@ -115,7 +130,7 @@ public class ShipSelector implements Screen {
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
         username.setSize(248, 50);
-        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 - 180);
+        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/8);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -136,12 +151,20 @@ public class ShipSelector implements Screen {
         glyph.setText(font, "Please enter your username");
         glyph2.setText(font, "Please select your ship");
 
-        createGameButton = new CreateGameButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 240, 512, 48, this);
-        backButton = new ShipSelectorBackButton(0, 90, 512, 48, this);
+        createGameButton = new CreateGameButton(7*main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
+        backButton = new ShipSelectorBackButton(main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
+        leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
+        rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
 
+        shipImage = new Image(new Texture("ship/anaerobic/an2base.png"));
+        shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
+
+        stage.addActor(shipImage);
         stage.addActor(createGameButton);
         stage.addActor(username);
         stage.addActor(backButton);
+        stage.addActor(leftArrowButton);
+        stage.addActor(rightArrowButton);
 
         //get ships from server, for each one texture and one button
 
@@ -167,8 +190,8 @@ public class ShipSelector implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 -110);
-        font.draw(main.batch, glyph2, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 +400);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/8 +65);
+        font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2 +400);
         main.batch.end();
         stage.draw();
     }
@@ -219,5 +242,19 @@ public class ShipSelector implements Screen {
             main.setScreen(new CreateOrJoinServer(main, ship));
         }
         dispose();
+    }
+
+    /**
+     * shows the next ship in shipselector
+     */
+    public void nextShip() {
+
+    }
+
+    /**
+     * shows the prev ship in shipselector
+     */
+    public void prevShip() {
+
     }
 }
