@@ -29,7 +29,6 @@ public class Main extends Game {
      * the client
      */
     @Getter
-    @Setter
     private Client client;
 
     /**
@@ -44,15 +43,7 @@ public class Main extends Game {
      */
     public void startServer() {
         if(server == null) {
-            server = new Server();
-            server.setPort(5050);
-            server.setServerServiceCommunicator(new ServerServiceCommunicator());
-            new Thread(server).start();
-            try {
-                Thread.sleep(1000);
-            } catch (Exception f) {
-                f.printStackTrace();
-            }
+            Server.runServer();
         }
     }
 

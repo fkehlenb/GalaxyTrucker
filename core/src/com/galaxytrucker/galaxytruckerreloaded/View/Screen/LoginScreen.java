@@ -207,11 +207,7 @@ public class LoginScreen implements Screen {
         String name = username.getText();
 
         if(singleplayer) {
-            //String[] args = new String[0];
-            //Server.main(args); //TODO wird der server neu gestartet?
-            if(main.getClient() == null) {
-                main.setClient(new Client("localhost", 5050));
-            }
+            main.startClient();
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT); //ShipType sowieso irrelevant, da kein neues schiff erstellt wird
             if(success) {
                 main.setScreen(new SPResumeLobby(main));
@@ -221,7 +217,7 @@ public class LoginScreen implements Screen {
         else {
             if(address.getText().equals("localhost") || address.getText().equals("127.0.0.1"))
             {
-                main.setClient(new Client("localhost", 5050));
+                main.startClient();
                 boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT);
                 if(success) {
                     main.setScreen(new LobbyScreenHost(main, main.getClient().getMyShip().getShipType(), true, 0, name)); //TODO diff von server laden
@@ -229,7 +225,7 @@ public class LoginScreen implements Screen {
                 }
             }
             else {
-                main.setClient(new Client(address.getText(), 5050));
+                main.startClient();
                 boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT);
                 if(success) {
                     main.setScreen(new LobbyScreenHost(main, main.getClient().getMyShip().getShipType(), true, 0, name));

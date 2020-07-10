@@ -45,22 +45,6 @@ public class Server implements Runnable{
         }
     }
 
-    /** Main method (TESTING ONLY) */ // TODO REMOVE WHEN DONE
-    /*public static void main(String[] args){
-        Server server = new Server();
-        server.setPort(5050);
-        server.serverServiceCommunicator = new ServerServiceCommunicator();
-        new Thread(server).start();
-        try {
-            Thread.sleep(1000);
-        }
-        catch (Exception f){
-            f.printStackTrace();
-        }
-        //Client client = new Client("localhost",5050);
-        //boolean a = client.login("ahmad", ShipType.DEFAULT);
-    }*/
-
     /** Start server on specified port
      * @param port - the port to bind */
     private void bindPort(int port) {
