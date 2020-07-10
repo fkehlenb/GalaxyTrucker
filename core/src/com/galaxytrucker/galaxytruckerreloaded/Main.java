@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
+import com.galaxytrucker.galaxytruckerreloaded.Server.ServerServiceCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.LoginScreen;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 import lombok.Getter;
@@ -29,6 +31,39 @@ public class Main extends Game {
     @Getter
     @Setter
     private Client client;
+
+    /**
+     * the server
+     */
+    @Getter
+    @Setter
+    private Server server;
+
+    /**
+     * start a server, if there isnt one
+     */
+    public void startServer() {
+        if(server == null) {
+            server = new Server();
+            server.setPort(5050);
+            server.setServerServiceCommunicator(new ServerServiceCommunicator());
+            new Thread(server).start();
+            try {
+                Thread.sleep(1000);
+            } catch (Exception f) {
+                f.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * start a client, if there isnt already one
+     */
+    public void startClient() {
+        if(client == null) {
+            client = new Client("localhost", 5050);
+        }
+    }
 
     @Override
     public void create() {

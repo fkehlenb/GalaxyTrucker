@@ -140,9 +140,8 @@ public class CreateOrJoinServer implements Screen {
      * start a game on a new server
      */
     public void startServer() {
-        String[] args = new String[0];
-        Server.main(args);
-        main.setClient(new Client("localhost", 5050));
+        main.startServer();
+        main.startClient();
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship);
         if(success) {
             main.setScreen(new LobbyScreenHost(main, ship, false, difficulty, username));

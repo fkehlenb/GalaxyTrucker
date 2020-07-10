@@ -4,6 +4,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Server;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
+import lombok.Setter;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,6 +22,7 @@ public class Server implements Runnable{
     private Thread serverThread;
 
     /** ServerServiceCommunicator */
+    @Setter
     private ServerServiceCommunicator serverServiceCommunicator;
 
     /** Server port */
@@ -44,7 +46,7 @@ public class Server implements Runnable{
     }
 
     /** Main method (TESTING ONLY) */ // TODO REMOVE WHEN DONE
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         Server server = new Server();
         server.setPort(5050);
         server.serverServiceCommunicator = new ServerServiceCommunicator();
@@ -57,7 +59,7 @@ public class Server implements Runnable{
         }
         //Client client = new Client("localhost",5050);
         //boolean a = client.login("ahmad", ShipType.DEFAULT);
-    }
+    }*/
 
     /** Start server on specified port
      * @param port - the port to bind */

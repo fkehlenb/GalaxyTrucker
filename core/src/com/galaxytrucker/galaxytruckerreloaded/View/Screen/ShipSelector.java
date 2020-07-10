@@ -261,8 +261,7 @@ public class ShipSelector implements Screen {
      */
     public void startGame() {
         if(singleplayer) {
-            String[] args = new String[0];
-            Server.main(args);
+            main.startServer();
             if(main.getClient() == null) {
                 main.setClient(new Client("localhost", 5050));
             }
