@@ -244,18 +244,24 @@ public class ClientHandler implements Runnable {
          */
         int min = 1;
 
-        for (int i = 0; i < 200; i+=20) {
-            for (int a = 0; a < 200; a+=20) {
+        for (int x = 0; x < 1000; x+=100) {
+            for (int y = 0; y < 100; y+=50) {
+
                 //Random multiplication
                 int randomNumber = ThreadLocalRandom.current().nextInt(min,max +1);
 
-                //X und Y Koordinaten randomisen
-                int randX = i*randomNumber;
-                int randY = a*randomNumber;
+                int randomPlanetNumber = ThreadLocalRandom.current().nextInt(1, 5);
 
-                String nextPlanet = getPlanetName(planetNames, usedPlanetNames, seed);
-                planets.add(new Planet(UUID.randomUUID().hashCode(), nextPlanet,randX ,randY,
-                        planetEvents.get(random.nextInt(planetEvents.size() - 1)), new ArrayList<Ship>()));
+                //X und Y Koordinaten randomisen
+                int randX = x*randomNumber;
+                int randY = y*randomNumber;
+
+                for(int planetenAnzahl = 0; planetenAnzahl <= randomPlanetNumber; planetenAnzahl++){
+                    String nextPlanet = getPlanetName(planetNames, usedPlanetNames, seed);
+                    planets.add(new Planet(UUID.randomUUID().hashCode(), nextPlanet,x ,randY,
+                            planetEvents.get(random.nextInt(planetEvents.size() - 1)), new ArrayList<Ship>()));
+                }
+
 
                 //Doppelte Planeten check noch ohne Funktion!
                 for(Planet test : planets){
@@ -267,7 +273,7 @@ public class ClientHandler implements Runnable {
         }
         // Boss planet
         planets.add(new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, seed),
-                30, 30, PlanetEvent.BOSS, new ArrayList<Ship>()));
+                500, 200, PlanetEvent.BOSS, new ArrayList<Ship>()));
         Overworld overworld = new Overworld(UUID.randomUUID().hashCode(), seed, username);
         overworld.setStartPlanet(planets.get(0));
         overworld.setPlanetMap(planets);
