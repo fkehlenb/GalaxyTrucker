@@ -15,6 +15,7 @@ import lombok.Setter;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Handle each client in a separate thread
@@ -233,11 +234,35 @@ public class ClientHandler implements Runnable {
         //TODO ADD TRADER WITH ITEMS TO MAP
         planets.add(new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, seed),
                 0, 0, PlanetEvent.VOID, new ArrayList<Ship>()));
-        for (int i = 0; i < 5; i++) {
-            for (int a = 0; a < 5; a++) {
+
+        /**
+         * max - max range
+         */
+        int max = 3;
+        /**
+         * min -min range
+         */
+        int min = 1;
+
+        for (int i = 0; i < 200; i+=20) {
+            for (int a = 0; a < 200; a+=20) {
+                //Random multiplication
+                int randomNumber = ThreadLocalRandom.current().nextInt(min,max +1);
+
+                //X und Y Koordinaten randomisen
+                int randX = i*randomNumber;
+                int randY = a*randomNumber;
+
                 String nextPlanet = getPlanetName(planetNames, usedPlanetNames, seed);
-                planets.add(new Planet(UUID.randomUUID().hashCode(), nextPlanet, i, a,
+                planets.add(new Planet(UUID.randomUUID().hashCode(), nextPlanet,randX ,randY,
                         planetEvents.get(random.nextInt(planetEvents.size() - 1)), new ArrayList<Ship>()));
+
+                //Doppelte Planeten check noch ohne Funktion!
+                for(Planet test : planets){
+                    if(test.getPosX() == randX  && test.getPosY() == randY){
+
+                    }
+                }
             }
         }
         // Boss planet

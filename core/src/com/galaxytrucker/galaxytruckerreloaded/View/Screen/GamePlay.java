@@ -144,7 +144,7 @@ public class GamePlay implements Screen {
         stage = new Stage(viewport);
         pauseStage = new Stage(viewport);
 
-        player = new ShipView(main, fakeShip(), stage, fakeMap(), this); //TODO wie schiff aus controller?
+        player = new ShipView(main, main.getClient().getMyShip(), stage, main.getClient().getOverworld(), this); //TODO wie schiff aus controller?
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -168,8 +168,11 @@ public class GamePlay implements Screen {
      * später durch laden aus controller ersetzen
      */
     public Overworld fakeMap() {
-        Overworld res = new Overworld(2, 1, "aaron");
+        Overworld res = main.getClient().getOverworld();
+
         HashMap<String, Planet> hmap = new HashMap<>();
+
+
         Planet sp = new Planet(0, "planet1", (float) 78, (float) 199, PlanetEvent.SHOP, new LinkedList<Ship>());
         String f = "78, 199";
         hmap.put(f, sp);
