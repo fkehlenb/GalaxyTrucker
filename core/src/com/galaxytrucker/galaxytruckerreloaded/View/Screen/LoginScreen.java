@@ -209,7 +209,9 @@ public class LoginScreen implements Screen {
         if(singleplayer) {
             //String[] args = new String[0];
             //Server.main(args); //TODO wird der server neu gestartet?
-            main.setClient(new Client("localhost", 5050));
+            if(main.getClient() == null) {
+                main.setClient(new Client("localhost", 5050));
+            }
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT); //ShipType sowieso irrelevant, da kein neues schiff erstellt wird
             if(success) {
                 main.setScreen(new SPResumeLobby(main));

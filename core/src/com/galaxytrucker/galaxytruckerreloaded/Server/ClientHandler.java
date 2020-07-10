@@ -68,6 +68,8 @@ public class ClientHandler implements Runnable {
     @Setter
     private boolean gameActive = true;
 
+    private boolean clientRunning = true;
+
     /**
      * Map seed
      */
@@ -122,67 +124,74 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         planetNames.addAll(Arrays.asList(names));
-        // ==================== LOGIN ====================
-        try {
-            this.username = receive.readLine().replace("[LOGIN]:", "");
-            if (serverServiceCommunicator.isLoggedIn(username)) {
-                send.println(false);
-            } else {
-                send.println(true);
-                // ==================== NEW GAME ====================
-                try {
-                    this.user = serverServiceCommunicator.getUserService().getUser(username);
-                    if (user.isFirstGame()) {
-                        send.println("[NEW-GAME]");
-                        // ==================== Overworld Creation ====================
-                        this.seed = UUID.randomUUID().hashCode();
-                        Overworld overworld = generateOverworld(this.seed, username);
-                        user.setOverworld(overworld);
-                        //====================== Ship Creation ==================
-                        ShipType shipType = (ShipType) receiveObject.readObject();
-                        user.setUserShip(generateShip(shipType, username, overworld));
-                        //=======================================================
-                        user.setFirstGame(false);
-                    }
-                    // ==================== UPDATE LOGIN ====================
-                    user.setLoggedIn(true);
-                    serverServiceCommunicator.getUserService().updateUser(user);
-                    // ==================== FETCH SHIP ====================
-                    try {
-                        send.println("[FETCH-SHIP]");
-                        sendObject.writeObject(this.serverServiceCommunicator.getClientShip(username));
-                    } catch (Exception f) {
-                        f.printStackTrace();
-                        send.println("[EXCEPTION]:[FETCH-SHIP]:[USERNAME]:" + username);
-                        throw new IllegalArgumentException(f.getMessage());
-                    }
-                    // ==================== FETCH MAP ====================
-                    try {
-                        send.println("[FETCH-MAP]");
-                        sendObject.writeObject(this.serverServiceCommunicator.getClientMap(username));
-                    } catch (Exception f) {
-                        f.printStackTrace();
-                        send.println("[EXCEPTION]:[FETCH-MAP]:[USERNAME]:" + username);
-                        throw new IllegalArgumentException(f.getMessage());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    send.println("[EXCEPTION]:[NEW-GAME]:[USERNAME]:" + username);
-                }
-                // ==================== RUNNING ====================
-                while (gameActive) {
-                    sendObject.writeObject(this.serverServiceCommunicator.getResponse((RequestObject) receiveObject.readObject()));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Socket will be closed thanks to exception, therefor cannot send more data
-            // Thread will terminate with socket exception
+        while(clientRunning) {
+            // ==================== LOGIN ====================
             try {
-                serverServiceCommunicator.logoutAfterException(username);
-                send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
-            } catch (Exception f) {
-                f.printStackTrace();
+                this.username = receive.readLine().replace("[LOGIN]:", "");
+                if (serverServiceCommunicator.isLoggedIn(username)) {
+                    send.println(false);
+                } else {
+                    send.println(true);
+                    // ==================== NEW GAME ====================
+                    try {
+                        this.user = serverServiceCommunicator.getUserService().getUser(username);
+                        if (user.isFirstGame()) {
+                            send.println("[NEW-GAME]");
+                            // ==================== Overworld Creation ====================
+                            this.seed = UUID.randomUUID().hashCode();
+                            Overworld overworld = generateOverworld(this.seed, username);
+                            user.setOverworld(overworld);
+                            //====================== Ship Creation ==================
+                            ShipType shipType = (ShipType) receiveObject.readObject();
+                            user.setUserShip(generateShip(shipType, username, overworld));
+                            //=======================================================
+                            user.setFirstGame(false);
+                        }
+                        // ==================== UPDATE LOGIN ====================
+                        user.setLoggedIn(true);
+                        serverServiceCommunicator.getUserService().updateUser(user);
+                        // ==================== FETCH SHIP ====================
+                        try {
+                            send.println("[FETCH-SHIP]");
+                            sendObject.writeObject(this.serverServiceCommunicator.getClientShip(username));
+                        } catch (Exception f) {
+                            f.printStackTrace();
+                            send.println("[EXCEPTION]:[FETCH-SHIP]:[USERNAME]:" + username);
+                            throw new IllegalArgumentException(f.getMessage());
+                        }
+                        // ==================== FETCH MAP ====================
+                        try {
+                            send.println("[FETCH-MAP]");
+                            sendObject.writeObject(this.serverServiceCommunicator.getClientMap(username));
+                        } catch (Exception f) {
+                            f.printStackTrace();
+                            send.println("[EXCEPTION]:[FETCH-MAP]:[USERNAME]:" + username);
+                            throw new IllegalArgumentException(f.getMessage());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        send.println("[EXCEPTION]:[NEW-GAME]:[USERNAME]:" + username);
+                    }
+                    gameActive = true;
+                    // ==================== RUNNING ====================
+                    while (gameActive) {
+                        RequestObject request = (RequestObject) receiveObject.readObject();
+                        sendObject.writeObject(this.serverServiceCommunicator.getResponse(request));
+                        if (request.getRequestType() == RequestType.LOGOUT) {
+                            gameActive = false;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Socket will be closed thanks to exception, therefor cannot send more data
+                // Thread will terminate with socket exception
+                try {
+                    serverServiceCommunicator.logoutAfterException(username);
+                    send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
+                } catch (Exception f) {
+                    f.printStackTrace();
+                }
             }
         }
     }

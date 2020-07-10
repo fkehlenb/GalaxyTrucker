@@ -5,6 +5,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
+import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
 
@@ -55,6 +56,20 @@ public class ClientControllerCommunicator {
             this.map = client.getOverworld();
         }
         return permittedLogin;
+    }
+
+    public boolean logout() {
+        try {
+            RequestObject requestObject = new RequestObject();
+            requestObject.setRequestType(RequestType.LOGOUT);
+            requestObject.setShip(clientShip);
+            ResponseObject responseObject = sendRequest(requestObject);
+            return responseObject.isValidRequest();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /** Constructor
