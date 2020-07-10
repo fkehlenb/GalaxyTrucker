@@ -111,18 +111,8 @@ public class ShipView extends AbstractShip {
         hull = new HullUI(main, ship.getHp());
         energy = new EnergyUI(main, ship.getEnergy());
 
-        if(main.getClient().getMyShip().getShipType() == ShipType.DEFAULT) {
-            shipBackground = new Texture("ship/kestral/kestral_base.png"); //TODO scaling richtig
-            shipRoomBackground = new Texture("ship/kestral/kestral_floor.png");
-        }
-        else if(main.getClient().getMyShip().getShipType() == ShipType.KILLER) {
-            shipBackground = new Texture("ship/anaerobic/an2base.png");
-            shipRoomBackground = new Texture("ship/anaerobic/an2floor.png");
-        }
-        else if(main.getClient().getMyShip().getShipType() == ShipType.BARRAGE) {
-            shipBackground = new Texture("ship/fed/fed_cruiser_2_base.png");
-            shipRoomBackground = new Texture("ship/fed/fed_cruiser_floor.png");
-        }
+        shipBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "base.png");
+        shipRoomBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "floor.png");
         weaponGeneralBackground = new Texture("shipsys/weapon/generalbox.png");
 
         stage.addActor(inventory);
