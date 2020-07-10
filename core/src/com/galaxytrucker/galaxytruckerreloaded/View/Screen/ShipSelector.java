@@ -157,7 +157,6 @@ public class ShipSelector implements Screen {
         backButton = new ShipSelectorBackButton(main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
         leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
         rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
-        shipSelectButton = new ShipSelectButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 250, 512, 48, this);
 
         shipImage = new Image(new Texture(shipList[currentShip]));
         shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
@@ -168,8 +167,8 @@ public class ShipSelector implements Screen {
         stage.addActor(backButton);
         stage.addActor(leftArrowButton);
         stage.addActor(rightArrowButton);
-        stage.addActor(shipSelectButton);
 
+        ship = ShipType.DEFAULT;
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -205,7 +204,6 @@ public class ShipSelector implements Screen {
         backButton = new ShipSelectorBackButton(main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
         leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
         rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
-        shipSelectButton = new ShipSelectButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 250, 512, 48, this);
 
         shipImage = new Image(new Texture(shipList[currentShip]));
         shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
@@ -216,7 +214,6 @@ public class ShipSelector implements Screen {
         stage.addActor(backButton);
         stage.addActor(leftArrowButton);
         stage.addActor(rightArrowButton);
-        stage.addActor(shipSelectButton);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -314,6 +311,7 @@ public class ShipSelector implements Screen {
         if(currentShip > shipList.length-1){
             currentShip = 0;
         }
+        setShip();
         dispose();
         prepareUI();
         //TODO Liste von SHips, die man durchschaltet
@@ -328,6 +326,7 @@ public class ShipSelector implements Screen {
         if(currentShip < 0){
             currentShip = shipList.length-1;
         }
+        setShip();
         dispose();
         prepareUI();
     }
