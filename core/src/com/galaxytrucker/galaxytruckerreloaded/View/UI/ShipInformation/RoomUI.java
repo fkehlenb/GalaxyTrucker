@@ -27,15 +27,7 @@ public class RoomUI {
      */
     private Texture roomLowOxyTexture;
 
-    /**
-     * Höhe des Raumes. Räume sind immer rechteckig.
-     */
-    private int height;
-
-    /**
-     * Weite des Raumes. Räume sind immer rechteckig.
-     */
-    private int width;
+    private Room room;
 
     private Main main;
 
@@ -49,6 +41,7 @@ public class RoomUI {
      */
     public RoomUI(Main main, Room room, Stage stage, ShipView ship) {
         this.main = main;
+        this.room = room;
         // TODO
 //        height = room.getHeight();
 //        width = room.getWidth();
@@ -92,7 +85,7 @@ public class RoomUI {
      * @param amount how much should be subtracted/added
      */
     public void systemEnergyChosen(int id, int amount) {
-        ship.roomSystemEnergyChosen(id, amount);
+        ship.roomSystemEnergyChosen(room, amount);
     }
 
     /**

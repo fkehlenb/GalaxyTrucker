@@ -121,7 +121,7 @@ public class TraderService extends PlanetEventService {
                 ship.setCoins(shipCoins - crew.getPrice());
                 //List<Crew> shipCrew = ship. TODO wie crew von schiff?
                 //set current Room
-                crew.setCurrentRoom(ship.getSystems().get(0)); //TODO in welchen raum setzen?
+                crew.setCurrentRoom(ship.getSystems().get(0));
                 crew.setAssociatedUser(ship.getAssociatedUser());
                 crewDAO.update(crew);
                 return true;
@@ -133,7 +133,7 @@ public class TraderService extends PlanetEventService {
                     trader.setCrewStock(traderCrew);
                     traderDAO.update(trader);
                     //set current Room
-                    crew.setCurrentRoom(null); //TODO ?
+                    crew.setCurrentRoom(null);
                     crew.setAssociatedUser(user);
                     crewDAO.update(crew);
                     //remove from ship?

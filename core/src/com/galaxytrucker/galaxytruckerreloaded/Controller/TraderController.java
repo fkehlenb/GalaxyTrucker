@@ -16,22 +16,27 @@ import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TraderController extends Controller{
-
-    /** the trader */
-    @NonNull
-    private Trader trader;
 
     /** ClientControllerCommunicator */
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
 
+    private static TraderController singleton;
+
+    public static TraderController getInstance(ClientControllerCommunicator communicator) {
+        if(singleton == null) {
+            singleton = new TraderController(communicator);
+        }
+        return singleton;
+    }
+
     /**
      * Buy a weapon from the trader
      * @param weapon - the weapon to buy
      */
-    public boolean purchaseWeapon(Weapon weapon) {
+    public boolean purchaseWeapon(Trader trader, Weapon weapon) {
         try {
             RequestObject requestObject = new RequestObject();
             requestObject.setWeapon(weapon);
@@ -65,7 +70,7 @@ public class TraderController extends Controller{
      * Buy crew from a trader
      * @param crew   - the crew to buy
      */
-    public boolean purchaseCrew(Crew crew) {
+    public boolean purchaseCrew(Trader trader, Crew crew) {
         try {
             RequestObject requestObject = new RequestObject();
             requestObject.setRequestType(RequestType.TRADERBUYCREW);
@@ -98,7 +103,7 @@ public class TraderController extends Controller{
      * Buy rockets from the trader
      * @param amount - the amount of rockets to buy
      */
-    public boolean purchaseRockets(int amount) {
+    public boolean purchaseRockets(Trader trader, int amount) {
         try {
             RequestObject requestObject = new RequestObject();
             requestObject.setRequestType(RequestType.TRADERBUYROCKETS);
@@ -130,7 +135,7 @@ public class TraderController extends Controller{
      * Buy fuel from the trader
      * @param amount - the amount of fuel to buy
      */
-    public boolean purchaseFuel( int amount) {
+    public boolean purchaseFuel(Trader trader, int amount) {
         try {
             RequestObject requestObject = new RequestObject();
             requestObject.setShip(clientControllerCommunicator.getClientShip());
@@ -162,7 +167,7 @@ public class TraderController extends Controller{
      * Buy health from the trader
      * @param amount - the amount to buy
      */
-    public boolean purchaseHP(int amount) {
+    public boolean purchaseHP(Trader trader, int amount) {
         try {
             RequestObject requestObject = new RequestObject();
             requestObject.setShip(clientControllerCommunicator.getClientShip());
@@ -194,7 +199,7 @@ public class TraderController extends Controller{
      * Sell weapon to the trader
      * @param weapon the weapon
      */
-    public boolean sellWeapon(Weapon weapon) {
+    public boolean sellWeapon(Trader trader, Weapon weapon) {
         try {
             RequestObject requestObject = new RequestObject();
             requestObject.setShip(clientControllerCommunicator.getClientShip());
@@ -228,7 +233,7 @@ public class TraderController extends Controller{
      * sell rockets to the trader
      * @param amount the amount of rockets
      */
-    public boolean sellRockets(int amount) {
+    public boolean sellRockets(Trader trader, int amount) {
         try {
             RequestObject requestObject = new RequestObject();
             requestObject.setShip(clientControllerCommunicator.getClientShip());

@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Communication;
 
+import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
@@ -58,6 +59,10 @@ public class ClientControllerCommunicator {
         return permittedLogin;
     }
 
+    /**
+     * Issue logout request
+     * @return true if the user was succesfully logged out
+     */
     public boolean logout() {
         try {
             RequestObject requestObject = new RequestObject();
@@ -78,6 +83,10 @@ public class ClientControllerCommunicator {
         if (singleton == null){
             singleton = new ClientControllerCommunicator(client);
         }
+        CrewController.getInstance(singleton);
+        HangerController.getInstance();
+        TraderController.getInstance(singleton);
+        TravelController.getInstance(singleton);
         // TODO CREATE ALL CONTROLLERS HERE, all controllers should be singletons
         return singleton;
     }

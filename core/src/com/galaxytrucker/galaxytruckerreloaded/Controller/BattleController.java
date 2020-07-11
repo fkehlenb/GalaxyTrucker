@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class BattleController extends Controller{
+
     @NonNull
     private Ship myself;
 

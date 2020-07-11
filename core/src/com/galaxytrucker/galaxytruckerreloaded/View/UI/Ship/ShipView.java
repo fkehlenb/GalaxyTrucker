@@ -3,6 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
@@ -16,6 +17,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -94,14 +96,24 @@ public class ShipView extends AbstractShip {
      */
     public ShipView(Main main, Ship ship, Stage stage, Overworld map, GamePlay game) {
         super(main, ship, stage, game);
-        //java.util.List crew = ship.get ??
+
+        List<Crew> crews = new ArrayList<>();
+        for(Room r : ship.getSystems()) {
+            crews.addAll(r.getCrew());
+        }
+        crew = new HashMap<>();
+        float cy = main.HEIGHT - 150;
+        for(Crew c : crews) {
+            crew.put(c.getId(), new CrewUI(main, c, stage, ship, this, 30, cy));
+            cy -= 60;
+        }
 
         this.map = map;
 
         rooms = new HashMap<>();
-        List<Room> existingRooms = ship.getSystems();
-        for(Room r : existingRooms) {
-            //TODO wie system das zu raum gehört? dann sys id als key, roomui als value
+        List<Room> existingSystems = ship.getSystems();
+        for(Room r : existingSystems) {
+
         }
 
         moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this);
@@ -127,8 +139,8 @@ public class ShipView extends AbstractShip {
     public void render() {
 
         main.batch.begin();
-        main.batch.draw(shipBackground, main.WIDTH -1730, main.HEIGHT/2 - shipBackground.getHeight()/2 - 200, 1000, 1000);
-        main.batch.draw(shipRoomBackground, main.WIDTH -1500, main.HEIGHT/2 - shipRoomBackground.getHeight()/2 - 100, 550, 550);
+        main.batch.draw(shipBackground, 70, main.HEIGHT/2 - shipBackground.getHeight()/2, shipBackground.getWidth(), shipBackground.getHeight());
+        main.batch.draw(shipRoomBackground, (70 + shipBackground.getWidth()/2) - shipRoomBackground.getWidth()/2, main.HEIGHT/2 - shipRoomBackground.getHeight()/2, shipRoomBackground.getWidth(), shipRoomBackground.getHeight());
         main.batch.draw(weaponGeneralBackground, 700, 100, 328, 90);
         main.batch.end();
 
@@ -145,6 +157,10 @@ public class ShipView extends AbstractShip {
 
         for(RoomUI r : rooms.values()) {
             r.render();
+        }
+
+        for(CrewUI c : crew.values()) {
+            c.render();
         }
     }
 
@@ -165,6 +181,9 @@ public class ShipView extends AbstractShip {
         moveButton.remove();
         for(RoomUI r : rooms.values()) {
             r.disposeRoomUI();
+        }
+        for(CrewUI c : crew.values()) {
+            c.disposeCrewUI();
         }
     }
 
@@ -237,24 +256,24 @@ public class ShipView extends AbstractShip {
     /**
      * a crew member is moved to a new room
      * called by crew ui after player attempts to move a crew
-     * @param crewid the id of the crew member
+     * @param crew the crew member
      * @param room the new room
      */
-    public void crewMoved(int crewid, Room room) {
-        game.crewMoved(crewid, room);
+    public void crewMoved(Crew crew, Room room) {
+        game.crewMoved(crew, room);
     }
 
     /**
      * crew member health update. called by game
-     * @param crewid the crew member
+     * @param crew the crew member
      * @param health the new health
      */
-    public void crewHealth(int crewid, int health) {
+    public void crewHealth(Crew crew, int health) {
         if(health == 0) {
-            crew.get(crewid).crewDied();
+            this.crew.get(crew.getId()).crewDied();
         }
         else {
-            crew.get(crewid).statusUpdate(health);
+            this.crew.get(crew.getId()).statusUpdate(health);
         }
     }
 
@@ -266,25 +285,25 @@ public class ShipView extends AbstractShip {
      * update the energy of a system in a room
      * @param amount the new total amount
      */
-    public void roomSystemEnergyUpdate(int sysid, int amount) {
-        rooms.get(sysid).systemEnergyUpdate(amount);
+    public void roomSystemEnergyUpdate(Room room, int amount) {
+        rooms.get(room.getId()).systemEnergyUpdate(amount);
     }
 
     /**
      * update the status of a system in a room
-     * @param sysid the system id
+     * @param room the system
      * @param amount the new status
      */
-    public void roomSystemStatusUpdate(int sysid, int amount) {
-        rooms.get(sysid).systemStatusUpdate(amount);
+    public void roomSystemStatusUpdate(Room room, int amount) {
+        rooms.get(room.getId()).systemStatusUpdate(amount);
     }
 
     /**
      * the player has chosen a new amount of energy
      * @param amount how much should be subtracted/added
      */
-    public void roomSystemEnergyChosen(int id, int amount) {
-        game.roomSystemEnergyChosen(id, amount);
+    public void roomSystemEnergyChosen(Room room, int amount) {
+        game.roomSystemEnergyChosen(room, amount);
     }
 
     /**

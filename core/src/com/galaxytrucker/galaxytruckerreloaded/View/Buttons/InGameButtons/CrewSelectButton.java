@@ -15,7 +15,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.CrewUI;
 /**
  * Button for dismissing a Crew Member
  */
-public class CrewDismissButton extends ImButton
+public class CrewSelectButton extends ImButton
 {
     /**
      * Background
@@ -38,7 +38,7 @@ public class CrewDismissButton extends ImButton
      *
      * @param crew the crew member
      */
-    public CrewDismissButton(Texture texture, float x, float y, float width, float height, int crew, CrewUI ui) {
+    public CrewSelectButton(Texture texture, float x, float y, float width, float height, int crew, CrewUI ui) {
         super(texture, x, y, width, height);
         this.crewID = crew;
         this.ui = ui;

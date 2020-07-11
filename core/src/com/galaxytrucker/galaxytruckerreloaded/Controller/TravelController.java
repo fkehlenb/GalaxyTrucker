@@ -12,12 +12,21 @@ import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TravelController extends Controller{
 
     /** ClientControllerCommunicator */
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
+
+    private static TravelController singleton;
+
+    public static TravelController getInstance(ClientControllerCommunicator communicator) {
+        if(singleton == null) {
+            singleton = new TravelController(communicator);
+        }
+        return singleton;
+    }
 
     /**
      * travels from one location to another

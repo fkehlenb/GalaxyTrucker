@@ -7,8 +7,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class HangerController extends Controller {
+
+    private static HangerController singleton;
+
+    public static HangerController getInstance() {
+        if(singleton == null) {
+            singleton = new HangerController();
+        }
+        return singleton;
+    }
 
     /**
      * Picks a Shipmodel

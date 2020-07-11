@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
@@ -144,46 +146,9 @@ public class GamePlay implements Screen {
         stage = new Stage(viewport);
         pauseStage = new Stage(viewport);
 
-        player = new ShipView(main, main.getClient().getMyShip(), stage, main.getClient().getOverworld(), this); //TODO wie schiff aus controller?
+        player = new ShipView(main, main.getClient().getMyShip(), stage, main.getClient().getOverworld(), this);
 
         Gdx.input.setInputProcessor(stage);
-    }
-
-    //TODO only for testing
-    public Ship fakeShip(){
-        Trader trader = new Trader();
-        //Planet planet = new Planet("planet", 125f, 125f, PlanetEvent.SHOP, false, new LinkedList<>(), trader);
-        Planet planet = new Planet();
-        List<Room> rooms = new LinkedList<>();
-//        rooms.add(new BlankRoom());
-//        rooms.add(new BlankRoom());
-//        rooms.add(new BlankRoom());
-        List<Weapon> weapons = new LinkedList<>();
-//        weapons.add(new LaserBlaster("karl"));
-//        weapons.add(new LaserBlaster("test"));
-        return new Ship(1, "aaron", ShipType.DEFAULT, 100, 49, 5, 5, 7, 9, 23, 6f, planet, 6, 6, rooms, weapons, false);
-    }
-
-    /**
-     * später durch laden aus controller ersetzen
-     */
-    public Overworld fakeMap() {
-        Overworld res = main.getClient().getOverworld();
-
-        HashMap<String, Planet> hmap = new HashMap<>();
-
-
-        Planet sp = new Planet(0, "planet1", (float) 78, (float) 199, PlanetEvent.SHOP, new LinkedList<Ship>());
-        String f = "78, 199";
-        hmap.put(f, sp);
-        Planet sp1 = new Planet(1, "planet2", (float) 200, (float) 154, PlanetEvent.COMBAT, new LinkedList<Ship>());
-        String f1 = "200, 154";
-        hmap.put(f1, sp1);
-        //TODO
-        //res.setPlanetMap(hmap);
-        res.setStartPlanet(sp);
-
-        return res;
     }
 
 
@@ -271,7 +236,7 @@ public class GamePlay implements Screen {
      * @return whether or not it is a valid request
      */
     public boolean travel(Planet planet) {
-        boolean success = true; //TODO call to controller
+        boolean success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
         if(success) {
             createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
@@ -534,14 +499,14 @@ public class GamePlay implements Screen {
      * @param crew the id of the crew member
      * @param room the new room
      */
-    public void crewMoved(int crew, Room room) {} //call controller, ask for permission
+    public void crewMoved(Crew crew, Room room) {} //call controller, ask for permission
 
     /**
      * update the health of a crew member
      * @param crew the crew member
      * @param health the new health
      */
-    public void crewHealth(int crew, int health) { player.crewHealth(crew, health); }
+    public void crewHealth(Crew crew, int health) { player.crewHealth(crew, health); }
 
     /**
      * update the energy status of the overall energy not yet assigned to a system
@@ -559,7 +524,7 @@ public class GamePlay implements Screen {
      * the player has chosen a new amount of energy for a system
      * @param amount how much should be subtracted/added
      */
-    public void roomSystemEnergyChosen(int id, int amount) {
+    public void roomSystemEnergyChosen(Room room, int amount) {
         //call controller
     }
 
@@ -567,17 +532,17 @@ public class GamePlay implements Screen {
      * the energy for a system is updated
      * @param amount the new total amount
      */
-    public void roomSystemEnergyUpdate(int id, int amount) {
-        player.roomSystemEnergyUpdate(id, amount);
+    public void roomSystemEnergyUpdate(Room room, int amount) {
+        player.roomSystemEnergyUpdate(room, amount);
     }
 
     /**
      * update the status of a system
-     * @param id the id of the system
+     * @param room the system
      * @param amount the new status
      */
-    public void roomSystemStatusUpdate(int id, int amount) {
-        player.roomSystemStatusUpdate(id, amount);
+    public void roomSystemStatusUpdate(Room room, int amount) {
+        player.roomSystemStatusUpdate(room, amount);
     }
 
     /**
