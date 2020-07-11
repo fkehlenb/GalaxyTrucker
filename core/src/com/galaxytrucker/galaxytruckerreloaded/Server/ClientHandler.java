@@ -139,8 +139,9 @@ public class ClientHandler implements Runnable {
                         if (user.isFirstGame()) {
                             send.println("[NEW-GAME]");
                             // ==================== Overworld Creation ====================
+                            int difficulty = Integer.parseInt(receive.readLine());
                             this.seed = UUID.randomUUID().hashCode();
-                            Overworld overworld = generateOverworld(this.seed, username);
+                            Overworld overworld = generateOverworld(this.seed, username, difficulty);
                             user.setOverworld(overworld);
                             //====================== Ship Creation ==================
                             ShipType shipType = (ShipType) receiveObject.readObject();
@@ -220,7 +221,7 @@ public class ClientHandler implements Runnable {
      * @param seed - the world seed
      * @return the generated overworld
      */
-    private Overworld generateOverworld(int seed, String username) {
+    private Overworld generateOverworld(int seed, String username, int difficulty) {
         Random random = new Random(seed);
         List<PlanetEvent> planetEvents = new ArrayList<PlanetEvent>();
         planetEvents.add(PlanetEvent.SHOP);
@@ -277,6 +278,7 @@ public class ClientHandler implements Runnable {
         Overworld overworld = new Overworld(UUID.randomUUID().hashCode(), seed, username);
         overworld.setStartPlanet(planets.get(0));
         overworld.setPlanetMap(planets);
+        overworld.setDifficulty(difficulty);
         return overworld;
     }
 

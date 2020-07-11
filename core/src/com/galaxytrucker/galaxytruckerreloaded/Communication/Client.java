@@ -81,7 +81,7 @@ public class Client {
      *
      * @throws IllegalArgumentException on error
      */
-    public boolean login(String username, ShipType shipType) throws IllegalArgumentException {
+    public boolean login(String username, ShipType shipType, int difficulty) throws IllegalArgumentException {
         try {
             // ==================== LOG-IN ====================
             send.println("[LOGIN]:" + username);
@@ -97,7 +97,8 @@ public class Client {
                 received = receive.readLine();
                 // ==================== NEW GAME ====================
                 if (received.equals("[NEW-GAME]")){
-                    System.out.println("<CLIENT>:[NEW-GAME]:[USERNAME]:"+username+":[SHIP-TYPE]:"+shipType);
+                    System.out.println("<CLIENT>:[NEW-GAME]:[USERNAME]:"+username+":[SHIP-TYPE]:"+shipType+":[DIFFICULTY]:"+difficulty);
+                    send.println(difficulty);
                     sendObject.writeObject(shipType);
                     received = receive.readLine();
                 }

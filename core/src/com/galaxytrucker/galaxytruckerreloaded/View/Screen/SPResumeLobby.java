@@ -107,7 +107,7 @@ public class SPResumeLobby implements Screen {
 
         font = generator.generateFont(params);
         glyph.setText(font, "Your Ship: " + main.getClient().getMyShip().getShipType());
-        glyph2.setText(font, "Your Difficulty: " + difficultyName);
+        glyph2.setText(font, "Your Difficulty: " + main.getClient().getOverworld().getDifficulty());
         glyph3.setText(font, "Your Seed: " + main.getClient().getOverworld().getSeed());
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);

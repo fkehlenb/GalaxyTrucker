@@ -49,8 +49,8 @@ public class ClientControllerCommunicator {
      * @param username - the username
      * @return true if the user already exists else create a enw spaceship
      */
-    public boolean login(String username, ShipType ship) {
-        boolean permittedLogin = client.login(username, ship);
+    public boolean login(String username, ShipType ship, int difficulty) {
+        boolean permittedLogin = client.login(username, ship, difficulty);
         if (permittedLogin) {
             this.clientShip = client.getMyShip();
             this.map = client.getOverworld();

@@ -142,7 +142,7 @@ public class CreateOrJoinServer implements Screen {
     public void startServer() {
         main.startServer();
         main.startClient();
-        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship);
+        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
             main.setScreen(new LobbyScreenHost(main, ship, false, difficulty, username));
         }

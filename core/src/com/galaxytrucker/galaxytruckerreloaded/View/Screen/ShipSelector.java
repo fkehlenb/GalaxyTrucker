@@ -263,7 +263,7 @@ public class ShipSelector implements Screen {
         if(singleplayer) {
             main.startServer();
             main.startClient();
-            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText(), ship);
+            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText(), ship, difficulty);
             if(success) {
                 main.setScreen(new GamePlay(main)); //TODO ?
             }

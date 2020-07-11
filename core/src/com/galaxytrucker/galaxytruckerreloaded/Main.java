@@ -36,14 +36,15 @@ public class Main extends Game {
      */
     @Getter
     @Setter
-    private Server server;
+    private boolean server;
 
     /**
      * start a server, if there isnt one
      */
     public void startServer() {
-        if(server == null) {
+        if(!server) {
             Server.runServer();
+            server = true;
         }
     }
 
