@@ -8,16 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import java.util.LinkedList;
 import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Engine;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Shield;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.WeaponSystem;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.SystemButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 /**
  * shows the subsystems of the ship
  */
-public class SubsystemUI {
+public class SubsystemUI extends RoomUI {
 
     /**
      * the textures to display the system in its current damage level
@@ -38,16 +37,6 @@ public class SubsystemUI {
     private SystemButton energyButton;
 
     /**
-     * x position of the room
-     */
-    private float x;
-
-    /**
-     * y position of the room
-     */
-    private float y;
-
-    /**
      * the current energy level
      */
     private int energy;
@@ -65,97 +54,62 @@ public class SubsystemUI {
      */
     protected int id;
 
-    protected Main main;
-
-    protected Stage stage;
-
     private int currentStatus;
 
-    private RoomUI roomUI;
+    /**
+     * the x position of the subsystem in the lower left corner
+     */
+    private float sx;
 
     /**
      * constructor
      * @param main the main class
      * @param system the system
      */
-    public SubsystemUI(Main main, System system, Stage stage, RoomUI roomUI) {
-        this.main = main;
-        this.stage = stage;
-        this.roomUI = roomUI;
-
-//        x = system.getPosX();
-//        y = system.getPosY();
+    public SubsystemUI(Main main, Stage stage, ShipView ship, float x, float y, System system, float sx) {
+        super(main, system, stage, ship, x, y);
+        this.sx = sx;
         energy = system.getEnergy();
         maxEnergy = system.getMaxEnergy();
         damage = system.getDamage();
         systemTexture = new java.util.LinkedList<>();
         id = system.getId();
 
-        if(system instanceof Engine) {
-            systemTexture.add(new Texture("shipsys/engine/enginegreen.png"));
-            systemTexture.add(new Texture("shipsys/engine/engineorange.png"));
-            systemTexture.add(new Texture("shipsys/engine/enginered.png"));
-        }
-        else if (system instanceof Shield) {
-            systemTexture.add(new Texture("shipsys/shields/shieldsgreen.png"));
-            systemTexture.add(new Texture("shipsys/shields/shieldsorange.png"));
-            systemTexture.add(new Texture("shipsys/shields/shieldsred.png"));
-        }
-        else if(system instanceof WeaponSystem) {
-            systemTexture.add(new Texture("shipsys/weapon/weapongreen.png"));
-            systemTexture.add(new Texture("shipsys/weapon/weaponorange.png"));
-            systemTexture.add(new Texture("shipsys/weapon/weaponred.png"));
-        }
-        energyButton = new SystemButton(systemTexture.get(0), x, y, 15, 15, this); //TODO w, h also x y for corner!! not these
+        String sysType = system.getSystemType().toString().toLowerCase();
+
+        systemTexture.add(new Texture("shipsys/"+sysType+"/"+sysType+"green.png"));
+        systemTexture.add(new Texture("shipsys/"+sysType+"/"+sysType+"orange.png"));
+        systemTexture.add(new Texture("shipsys/"+sysType+"/"+sysType+"red.png"));
+        systemTexture.add(new Texture("shipsys/"+sysType+"/"+sysType+"overlay.png"));
+
+        energyButton = new SystemButton(systemTexture.get(0), sx, 50, 50, 50, this);
 
         energyTexture = new Texture("gameuis/energybar.png");
 
         stage.addActor(energyButton);
-
-        Gdx.input.setInputProcessor(stage);
     }
 
     public void render() {
+        super.render();
         main.batch.begin();
-        float x = 0; //TODO
+        float sy = 90;
         for(int i = 0; i<energy; i++) {
-            main.batch.draw(energyTexture, x, 0, 10, 10);
-            x += 5; //TODO?
+            main.batch.draw(energyTexture, sx + 18, sy, 20, 5);
+            sy += 8;
         }
-        //TODO else für alle level
-        main.batch.draw(systemTexture.get(currentStatus), 0, 0, 15, 15); //TODO position, w, h
+        main.batch.draw(systemTexture.get(3), (x + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosX()))-16, (y + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosX()))-16, 32, 32);
         main.batch.end();
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the Subsystem ui
-     */
-    public void showSubsystemUI() {
-
-    }
-
-    /**
-     * hide the Subsystem ui
-     */
-    public void hideSubsystemUI() {
-
     }
 
     /**
      * dispose of the Subsystem UI
      */
-    public void disposeSubsystemUI() {
+    public void disposeRoomUI() {
+        super.disposeRoomUI();
         energyTexture.dispose();
         for(Texture t : systemTexture) {
             t.dispose();
         }
-        stage.dispose();
 
         energyButton.remove();
     }
@@ -187,7 +141,7 @@ public class SubsystemUI {
      * if energy supply already activated and not at maximum, then more energy to this system
      */
     public void activateEnergy() {
-        roomUI.systemEnergyChosen(id, 1); //TODO how much
+        ship.roomSystemEnergyChosen(room, 1);
     }
 
     /**
@@ -195,6 +149,6 @@ public class SubsystemUI {
      * called by button
      */
     public void lessEnergy() {
-        roomUI.systemEnergyChosen(id, -1);
+        ship.roomSystemEnergyChosen(room, -1);
     }
 }

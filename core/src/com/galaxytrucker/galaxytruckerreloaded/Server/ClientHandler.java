@@ -292,7 +292,6 @@ public class ClientHandler implements Runnable {
     private Ship generateShip(ShipType shipType, String username, Overworld overworld) {
         List<Weapon> inventory = new ArrayList<>();
         List<Room> rooms = new ArrayList<>();
-        List<Tile> tiles = new ArrayList<>();
         switch (shipType) {
             // ========== KESTREL A ==========
             case DEFAULT:
@@ -301,6 +300,7 @@ public class ClientHandler implements Runnable {
                     crewStats.add(2);
                 }
                 for (int i = 0; i < 17; i++) {
+                    List<Tile> tiles = new ArrayList<>();
                     // ========== Tile generator ==========
                     // 2 Above each other
                     if (i == 0 || i == 16) {
@@ -406,7 +406,6 @@ public class ClientHandler implements Runnable {
                         room.setTiles(tiles);
                         rooms.add(room);
                     }
-                    tiles.clear();
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 8,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
@@ -419,6 +418,8 @@ public class ClientHandler implements Runnable {
                 crewStats.add(3);
                 crewStats.add(0);
                 for (int i = 0; i < 18; i++) {
+
+                    List<Tile> tiles = new ArrayList<>();
                     // ========== Tile Generator ==========
                     // 2 Above each other
                     if (i == 0 || i == 1 || i==2 || i==3 || i==4 || i==14 || i==16 || i==17) {
@@ -518,7 +519,6 @@ public class ClientHandler implements Runnable {
                         room.setTiles(tiles);
                         rooms.add(room);
                     }
-                    tiles.clear();
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 9,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
@@ -530,6 +530,7 @@ public class ClientHandler implements Runnable {
                 crewStats.add(1);
                 crewStats.add(2);
                 for (int i = 0; i < 16; i++) {
+                    List<Tile> tiles = new ArrayList<>();
                     // ========== Tile Generator ==========
                     // 2 Above each other
                     if (i == 11 || i == 12 || i==13 || i==14 || i==15) {
@@ -616,7 +617,6 @@ public class ClientHandler implements Runnable {
                         room.setTiles(tiles);
                         rooms.add(room);
                     }
-                    tiles.clear();
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 25, 40, 0, 10, 8,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
@@ -628,6 +628,7 @@ public class ClientHandler implements Runnable {
                 crewStats.add(1);
                 crewStats.add(1);
                 for(int i=0; i<18; i++) {
+                    List<Tile> tiles = new ArrayList<>();
                     // ========== Tile Generator ==========
                     // 2 Above each other
                     if (i == 0 || i == 1 || i==7 || i==8 || i==9 || i==12 || i==17) {
@@ -740,7 +741,6 @@ public class ClientHandler implements Runnable {
                         room.setTiles(tiles);
                         rooms.add(room);
                     }
-                    tiles.clear();
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 20, 10, 0, 3, 8,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
@@ -752,6 +752,7 @@ public class ClientHandler implements Runnable {
                 crewStats.add(3);
                 crewStats.add(2);
                 for(int i=0; i<15; i++) {
+                    List<Tile> tiles = new ArrayList<>();
                     // ========== Tile Generator ==========
                     // 2 Above each other
                     if (i == 2 || i == 6 || i==9 || i==14) {
@@ -852,7 +853,6 @@ public class ClientHandler implements Runnable {
                         room.setTiles(tiles);
                         rooms.add(room);
                     }
-                    tiles.clear();
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 100, 25, 25, 10,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
@@ -864,6 +864,7 @@ public class ClientHandler implements Runnable {
                 crewStats.add(0);
                 crewStats.add(4);
                 for(int i=0; i<16; i++) {
+                    List<Tile> tiles = new ArrayList<>();
                     // ========== Tile Generator ==========
                     // 2 Above each other
                     if (i == 1 || i == 3 || i==7 || i==8 || i==9 || i==10 || i==12 || i==14 || i==15) {
@@ -980,7 +981,6 @@ public class ClientHandler implements Runnable {
                         room.setTiles(tiles);
                         rooms.add(room);
                     }
-                    tiles.clear();
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 40, 10, 20, 7, 6,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);

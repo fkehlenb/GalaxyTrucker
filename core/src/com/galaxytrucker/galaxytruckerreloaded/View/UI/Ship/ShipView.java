@@ -7,8 +7,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.AutofireButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MoveButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShipButton;
@@ -90,6 +91,9 @@ public class ShipView extends AbstractShip {
      */
     private MapUI mapUI;
 
+    private float width, height;
+    private float roomWidth, roomHeight;
+
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
@@ -110,10 +114,36 @@ public class ShipView extends AbstractShip {
 
         this.map = map;
 
+        shipBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "base.png");
+        shipRoomBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "floor.png");
+        weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
+
+        width = shipBackground.getWidth()*1.5f;
+        height = shipBackground.getHeight()*1.5f;
+        roomWidth = shipRoomBackground.getWidth()*1.5f;
+        roomHeight = shipRoomBackground.getHeight()*1.5f;
+
+        //uis for all the systems/rooms
         rooms = new HashMap<>();
         List<Room> existingSystems = ship.getSystems();
+        float sx = 60;
         for(Room r : existingSystems) {
-
+            if(r instanceof System) {
+                if(r instanceof Shield) {
+                    rooms.put(r.getId(), new ShieldUI(main, stage, this, getRoomX(ship.getShipType(), r.getInteriorID(), (70 + width/2)), getRoomY(ship.getShipType(), r.getInteriorID(), main.HEIGHT/2), (Shield) r, sx));
+                }
+                else if(! (r instanceof WeaponSystem)) {
+                    rooms.put(r.getId(), new SubsystemUI(main, stage, this, getRoomX(ship.getShipType(), r.getInteriorID(), (70 + width/2)), getRoomY(ship.getShipType(), r.getInteriorID(), main.HEIGHT/2), (System) r, sx));
+                }
+                sx += 55;
+            }
+            else {
+                rooms.put(r.getId(), new RoomUI(main, r, stage, this, getRoomX(ship.getShipType(), r.getInteriorID(), (70 + width/2)), getRoomY(ship.getShipType(), r.getInteriorID(), main.HEIGHT/2)));
+            }
+        }
+        //need to be done extra bc they need the actual weapon, not just the system
+        for(Weapon w : ship.getInventory()) {
+            rooms.put(w.getId(), new WeaponUI(main, stage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), (70 + width/2)), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), main.HEIGHT/2), w, sx + 55));
         }
 
         moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this);
@@ -123,12 +153,93 @@ public class ShipView extends AbstractShip {
         hull = new HullUI(main, ship.getHp());
         energy = new EnergyUI(main, ship.getEnergy());
 
-        shipBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "base.png");
-        shipRoomBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "floor.png");
-        weaponGeneralBackground = new Texture("shipsys/weapon/generalbox.png");
-
         stage.addActor(inventory);
         stage.addActor(moveButton);
+    }
+
+    /**
+     * get the x position of a room depending on the interior id and the ship type
+     * @param id the interior id of the room (from left to right, up to down)
+     * @param bx the x position of the start (the most to the left)
+     * @return the total x position
+     */
+    private float getRoomX(ShipType type, int id, float bx) {
+        switch(type) {
+            case DEFAULT:
+                switch(id) {
+                    case 0: return bx - 360;
+                    case 1:
+                    case 2:
+                    case 3:
+                        return bx-312;
+                    case 4:
+                    case 6:
+                        return bx-216;
+                    case 5:
+                        return bx-168;
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        return bx-72;
+                    case 11:
+                    case 12:
+                        return bx+24;
+                    case 13:
+                    case 14:
+                        return bx+120;
+                    case 15:
+                        return bx+216;
+                    case 16: return bx+312;
+                }
+            case BARRAGE: return 0;
+            case BOARDER: return 0;
+            case TANK: return 0;
+            case KILLER: return 0;
+            case STEALTH: return 0;
+            default: return 0;
+        }
+    }
+
+    /**
+     * return the y position of a room, depending on the ship type
+     * @param type the ship type
+     * @param id the interior id
+     * @return
+     */
+    private float getRoomY(ShipType type, int id, float by) {
+        switch(type) {
+            case DEFAULT:
+                switch(id) {
+                    case 0:
+                    case 2:
+                    case 5:
+                    case 13:
+                    case 15:
+                    case 16:
+                        return by - 48;
+                    case 1:
+                    case 4:
+                    case 8:
+                    case 11:
+                        return by - 96;
+                    case 3:
+                    case 6:
+                        return by + 48;
+                    case 7: return by - 144;
+                    case 9:
+                    case 12:
+                    case 14:
+                        return by;
+                    case 10 : return by + 96;
+                }
+            case BARRAGE: return 0;
+            case BOARDER: return 0;
+            case TANK: return 0;
+            case KILLER: return 0;
+            case STEALTH: return 0;
+            default: return 0;
+        }
     }
 
     /**
@@ -139,8 +250,8 @@ public class ShipView extends AbstractShip {
     public void render() {
 
         main.batch.begin();
-        main.batch.draw(shipBackground, 70, main.HEIGHT/2 - shipBackground.getHeight()/2, shipBackground.getWidth(), shipBackground.getHeight());
-        main.batch.draw(shipRoomBackground, (70 + shipBackground.getWidth()/2) - shipRoomBackground.getWidth()/2, main.HEIGHT/2 - shipRoomBackground.getHeight()/2, shipRoomBackground.getWidth(), shipRoomBackground.getHeight());
+        main.batch.draw(shipBackground, 70, main.HEIGHT/2 - height/2, width, height);
+        main.batch.draw(shipRoomBackground, (70 + width/2) - roomWidth/2, main.HEIGHT/2 - roomHeight/2, roomWidth, roomHeight);
         main.batch.draw(weaponGeneralBackground, 700, 100, 328, 90);
         main.batch.end();
 
