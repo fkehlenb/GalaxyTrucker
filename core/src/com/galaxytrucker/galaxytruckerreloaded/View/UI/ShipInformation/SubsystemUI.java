@@ -97,7 +97,7 @@ public class SubsystemUI extends RoomUI {
             main.batch.draw(energyTexture, sx + 18, sy, 20, 5);
             sy += 8;
         }
-        main.batch.draw(systemTexture.get(3), (x + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosX()))-16, (y + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosX()))-16, 32, 32);
+        main.batch.draw(systemTexture.get(3), (x + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosX()))-16, (y + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosY()))-16, 32, 32);
         main.batch.end();
     }
 

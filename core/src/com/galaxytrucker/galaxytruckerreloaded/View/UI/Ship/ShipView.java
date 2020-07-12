@@ -214,24 +214,24 @@ public class ShipView extends AbstractShip {
                     case 0:
                     case 2:
                     case 5:
-                    case 13:
+                    case 14:
                     case 15:
                     case 16:
                         return by - 48;
                     case 1:
                     case 4:
-                    case 8:
-                    case 11:
-                        return by - 96;
+                        return by +48;
                     case 3:
                     case 6:
-                        return by + 48;
-                    case 7: return by - 144;
                     case 9:
                     case 12:
-                    case 14:
+                        return by -96;
+                    case 7: return by +96;
+                    case 8:
+                    case 11:
+                    case 13:
                         return by;
-                    case 10 : return by + 96;
+                    case 10 : return by -144;
                 }
             case BARRAGE: return 0;
             case BOARDER: return 0;
