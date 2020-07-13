@@ -40,7 +40,7 @@ public class TravelService {
 //            if (u.getOverworld().getPlanetMap().containsValue(p)) {
 //                return !s.getPlanet().equals(p) && s.getFTLCharge() == 100;
 //            }
-            return false;
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

@@ -68,11 +68,6 @@ public class CrewUI {
     private Main main;
 
     /**
-     * rooms of the ship
-     */
-    private List<Room> rooms;
-
-    /**
      * the shipview of this crewui
      */
     private ShipView shipView;
@@ -87,8 +82,19 @@ public class CrewUI {
      */
     private float y;
 
+    /**
+     * the position of the room the crew member is in
+     */
+    private float roomX, roomY;
+
+    /**
+     * the font used to draw the name
+     */
     private BitmapFont font;
 
+    /**
+     * the glyph layout used for better positioning
+     */
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
@@ -96,13 +102,15 @@ public class CrewUI {
      * @param main the main class
      * @param crew the crew member
      */
-    public CrewUI(Main main, Crew crew, Stage stage, Ship ship, ShipView shipView, float x, float y, BitmapFont font) {
+    public CrewUI(Main main, Crew crew, Stage stage, ShipView shipView, float x, float y, BitmapFont font, float rX, float rY) {
         this.main = main;
         this.crew = crew;
         this.shipView = shipView;
         this.x = x;
         this.y = y;
         this.font = font;
+        this.roomX = rX;
+        this.roomY = rY;
 
         glyph.setText(font, crew.getName());
 
@@ -128,8 +136,6 @@ public class CrewUI {
         background = new Texture("crew/background.png");
 
         currentTexture = 10;
-
-        rooms = ship.getSystems();
     }
 
     /**
@@ -152,7 +158,7 @@ public class CrewUI {
         main.batch.begin();
         main.batch.draw(background, x, y, 200, 55);
         font.draw(main.batch, glyph, x + 55, y + 40);
-        main.batch.draw(crewInShip, 0, 0, 0, 0); //TODO whxy
+        main.batch.draw(crewInShip, roomX, roomY, 50, 50);
         main.batch.draw(box, x + 35, y +5, 140, 20);
         float ex=x+55;
         for(int i=0;i<=currentTexture;i++) {
@@ -164,36 +170,21 @@ public class CrewUI {
 
     /**
      * the crew member was moved to a new room
-     *
+     * called by shipview
      *
      * @param room the new room
      */
     public void crewMoved(Room room) {
-        shipView.crewMoved(crew, room);
+
     }
 
     /**
      * the crew was chosen to be moved
-     * called by button crewdismiss
+     * called by button crewSelect
      * now waiting for the user to choose a room on the ship
      */
     public void crewMoving() {
-        boolean chosen = false;
-        while(!chosen) {
-            if(Gdx.input.justTouched()) {
-                int tx = Gdx.input.getX();
-                int ty = Gdx.input.getY();
-                for(Room r : rooms) {
-                    //TODO
-//                    if (r.getPosX() <= tx && r.getPosX() + r.getWidth() >= tx //TODO ist die berechnung richtig
-//                        && r.getPosY() <= ty && r.getPosY()+r.getHeight() >= ty) { //TODO wo sind die x und y koordinaten des schiffes?
-//                        chosen = true;
-//                        crewMoved(r);
-//                        break;
-//                    }
-                }
-            }
-        }
+        shipView.crewMoving(crew);
     }
 
     /**

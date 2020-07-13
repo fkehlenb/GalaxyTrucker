@@ -8,6 +8,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.TileButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -54,6 +55,10 @@ public class RoomUI {
         this.y = y;
 
         tileTexture = new Texture("ship/tile.png");
+
+        for(Tile t : room.getTiles()) {
+            stage.addActor(new TileButton(x + (t.getPosX()*48), y + (t.getPosY()*48), 48, 48, this));
+        }
     }
 
     /**
@@ -61,9 +66,9 @@ public class RoomUI {
      */
     public void render() {
         main.batch.begin();
-        for(Tile t : room.getTiles()) {
+        /*for(Tile t : room.getTiles()) {
             main.batch.draw(tileTexture, x + (t.getPosX()*48), y + (t.getPosY()*48), 48, 48);
-        }
+        }*/
         main.batch.end();
     }
 
@@ -109,6 +114,13 @@ public class RoomUI {
      */
     public void roomTarget() {
 
+    }
+
+    /**
+     * the room was chosen with a tile button
+     */
+    public void chosen() {
+        ship.roomChosen(room);
     }
 
     /**

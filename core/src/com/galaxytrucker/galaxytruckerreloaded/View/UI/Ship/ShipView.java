@@ -100,12 +100,15 @@ public class ShipView extends AbstractShip {
 
     private BitmapFont font15;
 
+    private Stage tileStage;
+
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
      */
-    public ShipView(Main main, Ship ship, Stage stage, Overworld map, GamePlay game) {
+    public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game) {
         super(main, ship, stage, game);
+        this.tileStage = tileStage;
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
@@ -121,14 +124,17 @@ public class ShipView extends AbstractShip {
 
         font15 = generator.generateFont(params);
 
+        float roomsBaseX = (70 + width/2);
+        float roomsBaseY = main.HEIGHT/2;
+
         List<Crew> crews = new ArrayList<>();
         for(Room r : ship.getSystems()) {
             crews.addAll(r.getCrew());
         }
         crew = new HashMap<>();
-        float cy = main.HEIGHT - 150;
+        float cy = Main.HEIGHT - 150;
         for(Crew c : crews) {
-            crew.put(c.getId(), new CrewUI(main, c, stage, ship, this, 30, cy, font15));
+            crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseY)));
             cy -= 60;
         }
 
@@ -150,20 +156,20 @@ public class ShipView extends AbstractShip {
         for(Room r : existingSystems) {
             if(r instanceof System) {
                 if(r instanceof Shield) {
-                    rooms.put(r.getId(), new ShieldUI(main, stage, this, getRoomX(ship.getShipType(), r.getInteriorID(), (70 + width/2)), getRoomY(ship.getShipType(), r.getInteriorID(), main.HEIGHT/2), (Shield) r, sx));
+                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (Shield) r, sx));
                 }
                 else if(! (r instanceof WeaponSystem)) {
-                    rooms.put(r.getId(), new SubsystemUI(main, stage, this, getRoomX(ship.getShipType(), r.getInteriorID(), (70 + width/2)), getRoomY(ship.getShipType(), r.getInteriorID(), main.HEIGHT/2), (System) r, sx));
+                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (System) r, sx));
                 }
                 sx += 55;
             }
             else {
-                rooms.put(r.getId(), new RoomUI(main, r, stage, this, getRoomX(ship.getShipType(), r.getInteriorID(), (70 + width/2)), getRoomY(ship.getShipType(), r.getInteriorID(), main.HEIGHT/2)));
+                rooms.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY)));
             }
         }
         //need to be done extra bc they need the actual weapon, not just the system
         for(Weapon w : ship.getInventory()) {
-            rooms.put(w.getId(), new WeaponUI(main, stage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), (70 + width/2)), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), main.HEIGHT/2), w, sx + 55));
+            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseY), w, sx + 55));
         }
 
         moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this);
@@ -279,6 +285,8 @@ public class ShipView extends AbstractShip {
         hull.render();
         energy.render();
 
+        tileStage.draw();
+
 
         for(RoomUI r : rooms.values()) {
             r.render();
@@ -393,7 +401,24 @@ public class ShipView extends AbstractShip {
      * @param room the new room
      */
     public void crewMoved(Crew crew, Room room) {
-        game.crewMoved(crew, room);
+        this.crew.get(crew.getId()).crewMoved(room);
+    }
+
+    /**
+     * a crew member is moving to a new room
+     * called by button
+     * @param crew the crew member that was chosen
+     */
+    public void crewMoving(Crew crew) {
+        game.crewMoving(crew);
+    }
+
+    /**
+     * a room was chosen to move a crew member to
+     * @param room the room
+     */
+    public void roomChosen(Room room) {
+        game.roomChosen(room);
     }
 
     /**

@@ -18,16 +18,34 @@ public class MapUI {
      */
     private Texture mapTexture;
 
+    /**
+     * the mapbuttons representing the locations on the map
+     */
     private List<MapButton> locations;
 
+    /**
+     * main class extending game
+     */
     private Main main;
 
-    private Stage stage;
-
+    /**
+     * the ui this is a part of
+     */
     private ShipView shipView;
 
+    /**
+     * the map this ui displays
+     */
     private Overworld map;
+
+    /**
+     * the x position
+     */
     private float x;
+
+    /**
+     * the y position
+     */
     private float y;
 
     /**
@@ -36,14 +54,13 @@ public class MapUI {
      */
     public MapUI(Main main, Stage stage, Overworld map, ShipView shipView) {
         this.main = main;
-        this.stage = stage;
         this.shipView = shipView;
         this.map = main.getClient().getOverworld();
 
         mapTexture = new Texture("map/map_overlay.png");
 
-        x = main.WIDTH/2 - mapTexture.getWidth()/2;
-        y = main.HEIGHT/2 - mapTexture.getHeight()/2;
+        x = Main.WIDTH/2f - mapTexture.getWidth()/2f;
+        y = Main.HEIGHT/2f - mapTexture.getHeight()/2f;
 
         locations = new LinkedList<>();
         //TODO

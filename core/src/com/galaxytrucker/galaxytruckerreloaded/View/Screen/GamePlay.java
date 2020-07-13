@@ -10,19 +10,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.CrewController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.WeaponSystem;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
@@ -31,7 +28,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -125,6 +121,8 @@ public class GamePlay implements Screen {
      */
     private Stage pauseStage;
 
+    private Stage tileStage;
+
     /**
      * the viewport
      */
@@ -136,6 +134,13 @@ public class GamePlay implements Screen {
     private PauseMenuUI pauseMenuUI;
 
     /**
+     * whether or not a crew member was chosen to be moved
+     */
+    private boolean crewMoving = false;
+
+    private Crew chosenCrew;
+
+    /**
      * Constructor
      *
      * @param main - main class
@@ -145,10 +150,11 @@ public class GamePlay implements Screen {
         background = new Texture("1080p.png");
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
-        stage = new Stage(viewport);
-        pauseStage = new Stage(viewport);
+        stage = new Stage(viewport, main.batch);
+        pauseStage = new Stage(viewport, main.batch);
+        tileStage = new Stage(viewport, main.batch);
 
-        player = new ShipView(main, main.getClient().getMyShip(), stage, main.getClient().getOverworld(), this);
+        player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -185,6 +191,7 @@ public class GamePlay implements Screen {
         else if(optionUI != null) { optionUI.render(); }
         else if(pauseMenuUI != null) { pauseMenuUI.render(); }
 
+
         stage.draw();
     }
 
@@ -210,6 +217,10 @@ public class GamePlay implements Screen {
             // Pause-menu
             Gdx.input.setInputProcessor(pauseStage);
             createPauseMenu();
+        }
+        if(crewMoving && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            Gdx.input.setInputProcessor(stage);
+            crewMoving = false;
         }
     }
 
@@ -501,7 +512,39 @@ public class GamePlay implements Screen {
      * @param crew the id of the crew member
      * @param room the new room
      */
-    public void crewMoved(Crew crew, Room room) {} //call controller, ask for permission
+    private void crewMoved(Crew crew, Room room) {
+        boolean success = CrewController.getInstance(null).moveCrewToRoom(crew, room);
+        if(success) {
+            player.crewMoved(crew, room);
+        }
+    }
+
+    /**
+     * a crew member was chosen to be moved.
+     * @param crew the crew member
+     */
+    public void crewMoving(Crew crew) {
+        crewMoving = !crewMoving;
+        if(crewMoving) {
+            Gdx.input.setInputProcessor(tileStage);
+            chosenCrew = crew;
+        }
+        else {
+            Gdx.input.setInputProcessor(stage);
+            chosenCrew = null;
+        }
+    }
+
+    /**
+     * a room was chosen with the tile buttons
+     * @param room the room that was chosen
+     */
+    public void roomChosen(Room room) {
+        if(crewMoving && chosenCrew != null) {
+            crewMoved(chosenCrew, room);
+            Gdx.input.setInputProcessor(stage);
+        }
+    }
 
     /**
      * update the health of a crew member
@@ -582,7 +625,8 @@ public class GamePlay implements Screen {
      * @return the weapons of the ship in a list
      */
     public List<Weapon> loadWeapons() {
-        List<Weapon> weapons = main.getClient().getMyShip().getInventory();
+        List<Weapon> weapons = new LinkedList<>();
+        weapons.addAll(main.getClient().getMyShip().getInventory());
         for(Room r : main.getClient().getMyShip().getSystems()) {
             if(r instanceof System) {
                 if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
