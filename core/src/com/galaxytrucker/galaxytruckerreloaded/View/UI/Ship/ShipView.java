@@ -1,6 +1,10 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
@@ -94,12 +98,28 @@ public class ShipView extends AbstractShip {
     private float width, height;
     private float roomWidth, roomHeight;
 
+    private BitmapFont font15;
+
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
      */
     public ShipView(Main main, Ship ship, Stage stage, Overworld map, GamePlay game) {
         super(main, ship, stage, game);
+
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 15;
+
+        font15 = generator.generateFont(params);
 
         List<Crew> crews = new ArrayList<>();
         for(Room r : ship.getSystems()) {
@@ -108,7 +128,7 @@ public class ShipView extends AbstractShip {
         crew = new HashMap<>();
         float cy = main.HEIGHT - 150;
         for(Crew c : crews) {
-            crew.put(c.getId(), new CrewUI(main, c, stage, ship, this, 30, cy));
+            crew.put(c.getId(), new CrewUI(main, c, stage, ship, this, 30, cy, font15));
             cy -= 60;
         }
 
@@ -297,6 +317,7 @@ public class ShipView extends AbstractShip {
         for(CrewUI c : crew.values()) {
             c.disposeCrewUI();
         }
+        font15.dispose();
     }
 
     /**
@@ -325,7 +346,7 @@ public class ShipView extends AbstractShip {
      */
     public void openInventory() {
         if(inventoryUI == null){
-            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this);
+            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this, font15);
         }
     }
 

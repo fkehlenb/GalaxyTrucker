@@ -17,8 +17,8 @@ public class InventoryIntSlotUI extends InventorySlotUI {
      *
      * @param main - main class
      */
-    public InventoryIntSlotUI(Main main, int value, float x, float y, String text) {
-        super(main, x, y);
+    public InventoryIntSlotUI(Main main, int value, float x, float y, String text, BitmapFont font) {
+        super(main, x, y, font);
 
         glyphLayout.setText(font, text + ": " + value);
     }
@@ -29,7 +29,6 @@ public class InventoryIntSlotUI extends InventorySlotUI {
     @Override
     public void disposeInventorySlotUI() {
         super.disposeInventorySlotUI();
-        font.dispose();
     }
 
     /**

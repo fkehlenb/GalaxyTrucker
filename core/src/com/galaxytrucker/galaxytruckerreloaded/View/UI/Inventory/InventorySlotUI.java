@@ -30,22 +30,9 @@ public abstract class InventorySlotUI {
      *
      * @param main - main class
      */
-    public InventorySlotUI(Main main, float x, float y) {
+    public InventorySlotUI(Main main, float x, float y, BitmapFont font) {
         this.main = main;
-
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = 15;
-
-        font = generator.generateFont(params);
+        this.font = font;
 
         posX = x;
         posY = y;

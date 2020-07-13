@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.LinkedList;
@@ -44,7 +45,7 @@ public class InventoryUI {
      * @param crew the crew members
      * @param weapons the weapons
      */
-    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, int fuel, int missiles, Stage stage, ShipView shipView) {
+    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font) {
         this.main = main;
         this.stage = stage;
         this.shipView = shipView;
@@ -61,17 +62,17 @@ public class InventoryUI {
         float cx = x + 25;
         float cy = y + 560;
         for(Crew c : crew) {
-            slots.add(new InventoryCrewSlotUI(main, c, cx, cy));
+            slots.add(new InventoryCrewSlotUI(main, c, cx, cy, font));
             cy -= 80;
         }
         float wy = y + 525;
         float wx = cx + 400;
         for(Weapon w : weapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy));
+            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, font));
             wy -=100;
         }
-        slots.add(new InventoryIntSlotUI(main, fuel, x+50, y+50, "fuel"));
-        slots.add(new InventoryIntSlotUI(main, missiles, x+150, y+50, "missiles"));
+        slots.add(new InventoryIntSlotUI(main, fuel, x+50, y+50, "fuel", font));
+        slots.add(new InventoryIntSlotUI(main, missiles, x+150, y+50, "missiles", font));
     }
 
     /**

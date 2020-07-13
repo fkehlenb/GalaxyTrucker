@@ -2,14 +2,12 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
-import sun.jvm.hotspot.gc.shared.G1YCType;
 
 /**
  * to represent a crew member in the inventory
@@ -60,8 +58,8 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
      *
      * @param main - main class
      */
-    public InventoryCrewSlotUI(Main main, Crew crew, float x, float y) {
-        super(main, x, y);
+    public InventoryCrewSlotUI(Main main, Crew crew, float x, float y, BitmapFont font) {
+        super(main, x, y, font);
 
         glyphName.setText(font, crew.getName());
         List<Integer> stats = crew.getStats();

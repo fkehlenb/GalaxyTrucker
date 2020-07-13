@@ -1,7 +1,12 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
 public class ScrapUI {
@@ -14,12 +19,16 @@ public class ScrapUI {
     /**
      * the amount of money
      */
-    private int amount;
+    private int amount = 0;
 
     /**
      * the main class with the sprite batch
      */
     private Main main;
+
+    private BitmapFont font;
+
+    private GlyphLayout glyph = new GlyphLayout();
 
     /**
      * Constructor
@@ -29,9 +38,25 @@ public class ScrapUI {
      */
     public ScrapUI(Main main, int money) {
         this.main = main;
-        amount = money;
+        this.amount = money;
 
         scrapBackground = new Texture("gameuis/top_scrap.png");
+
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 25;
+
+        font = generator.generateFont(params);
+
+        glyph.setText(font, Integer.toString(amount));
     }
 
     /**
@@ -40,7 +65,8 @@ public class ScrapUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(scrapBackground, 600, main.HEIGHT - 90, 147, 60);
+        main.batch.draw(scrapBackground, 600, Main.HEIGHT - 90, 147, 60);
+        font.draw(main.batch, glyph, 600 + (147f/2) - glyph.width/2, (Main.HEIGHT - 40) - glyph.height/2);
         main.batch.end();
     }
 
@@ -67,6 +93,7 @@ public class ScrapUI {
      */
     public void disposeScrapUI() {
         scrapBackground.dispose();
+        font.dispose();
     }
 
     /**
@@ -75,5 +102,6 @@ public class ScrapUI {
      */
     public void changeAmount(int amount) {
         this.amount += amount;
+        glyph.setText(font, Integer.toString(this.amount));
     }
 }

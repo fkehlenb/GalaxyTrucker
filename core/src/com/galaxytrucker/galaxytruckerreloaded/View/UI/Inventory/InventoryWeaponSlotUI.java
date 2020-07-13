@@ -27,8 +27,8 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
      * @param main the main class
      * @param weapon the weapon to be displayed
      */
-    public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y) {
-        super(main, x, y);
+    public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y, BitmapFont font) {
+        super(main, x, y, font);
         glyphDamage.setText(font, "Damage: "+weapon.getDamage());
         glyphCooldown.setText(font, "Cooldown: "+weapon.getCooldown());
         glyphMissile.setText(font, "Missile Cost: "+weapon.getMissileCost());

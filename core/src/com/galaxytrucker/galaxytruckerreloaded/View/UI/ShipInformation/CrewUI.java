@@ -96,26 +96,14 @@ public class CrewUI {
      * @param main the main class
      * @param crew the crew member
      */
-    public CrewUI(Main main, Crew crew, Stage stage, Ship ship, ShipView shipView, float x, float y) {
+    public CrewUI(Main main, Crew crew, Stage stage, Ship ship, ShipView shipView, float x, float y, BitmapFont font) {
         this.main = main;
         this.crew = crew;
         this.shipView = shipView;
         this.x = x;
         this.y = y;
+        this.font = font;
 
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = 15;
-
-        font = generator.generateFont(params);
         glyph.setText(font, crew.getName());
 
         if(crew.getName().equals("ana")) {
