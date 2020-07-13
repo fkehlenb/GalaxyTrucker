@@ -251,10 +251,10 @@ public class ClientHandler implements Runnable {
         List<Weapon> inventory = new ArrayList<>();
         List<Room> rooms = new ArrayList<>();
         List<Tile> tiles = new ArrayList<>();
+        List<Integer> crewStats = new ArrayList<>();
         switch (shipType) {
             // ========== KESTREL A ==========
             case DEFAULT:
-                List<Integer> crewStats = new ArrayList<>();
                 for (int f = 0; f < 5; f++) {
                     crewStats.add(2);
                 }
