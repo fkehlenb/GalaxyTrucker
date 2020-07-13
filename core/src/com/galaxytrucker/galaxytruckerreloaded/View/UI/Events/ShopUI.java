@@ -97,7 +97,7 @@ public class ShopUI {
             sellElements.add(new ShopSellElement(main, stage, new Texture("laser.png"), 0, 0, this, w, 0));
         }
 
-        closeButton = new InventoryCloseButton(0, 0, 10, 10, this, null);
+        closeButton = new InventoryCloseButton(0, 0, 10, 10, this, null, null);
         stage.addActor(closeButton);
 
         background = new Texture("shop/storeback.png");

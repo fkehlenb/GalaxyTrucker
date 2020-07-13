@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MapButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -19,6 +20,8 @@ public class MapUI {
     private Texture mapTexture;
 
     private List<MapButton> locations;
+
+    private InventoryCloseButton closeButton;
 
     private Main main;
 
@@ -44,6 +47,9 @@ public class MapUI {
 
         x = main.WIDTH/2 - mapTexture.getWidth()/2;
         y = main.HEIGHT/2 - mapTexture.getHeight()/2;
+
+        closeButton = new InventoryCloseButton(x+700, y+15, 248, 50, null, null, this);
+        stage.addActor(closeButton);
 
         locations = new LinkedList<>();
         //TODO
@@ -75,7 +81,7 @@ public class MapUI {
             m.remove();
         }
         shipView.deleteMap();
-
+        closeButton.remove();
     }
 
     /**
@@ -87,6 +93,7 @@ public class MapUI {
         boolean success = shipView.travel(planet);
         if(success) {
             disposeMapUI();
+            closeButton.remove();
         }
     }
 
