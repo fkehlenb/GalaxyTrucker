@@ -315,7 +315,7 @@ public class ClientHandler implements Runnable {
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser Gun", 30);
                         Weapon rocket = new Weapon(UUID.randomUUID().hashCode(), 1, 2, 2, 1, 1, (float) 1.0,
                                 (float) 0.25, 4, (float) 1.0, 2, 1, "Allahu Akbar", 30);
-                        // TODO add weapon price list
+                        // TODO Add weapon price list based on weapon level
                         laser.setWeaponSystem(weapons);
                         rocket.setWeaponSystem(weapons);
                         List<Weapon> shipWeapons = new ArrayList<>();
@@ -368,11 +368,106 @@ public class ClientHandler implements Runnable {
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 8,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
-            // ========== Bulwark A ==========
+            // ========== ROCK A ==========
             case TANK:
+                crewStats.add(0);
+                crewStats.add(3);
+                crewStats.add(4);
+                crewStats.add(3);
+                crewStats.add(0);
                 // ========== Tile Generator ==========
+                for (int i=0;i<18;++i){
+                    // Vertical 2x1
+                    if (i<=4 || i==14 || i==16 || i==17) {
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(),0,0));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(),0,1));
+                    }
+                    // Horizontal 1x2
+                    else if (i == 6 || i== 7 || i==10 || i==11){
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(),0,0));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(),1,0));
+                    }
+                    // Normal 4x4
+                    else{
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(),0,0));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(),1,0));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(),0,1));
+                        tiles.add(new Tile(UUID.randomUUID().hashCode(),1,1));
+                    }
+                    // ========== Room Generator ==========
+                    // O2
+                    if (i==0){
+                        rooms.add(new System(UUID.randomUUID().hashCode(),0,100,i,new ArrayList<Crew>(),
+                                tiles,1,5,0,SystemType.O2,new ArrayList<Weapon>()));
 
-                // ========== Room Generator ==========
+                    }
+                    // Cameras
+                    else if (i==1){
+                        rooms.add(new System(UUID.randomUUID().hashCode(),0,100,i,new ArrayList<Crew>(),
+                                tiles,1,5,0,SystemType.CAMERAS,new ArrayList<Weapon>()));
+                    }
+                    // Shields
+                    else if (i==5){
+                        rooms.add(new System(UUID.randomUUID().hashCode(),0,100,i, new ArrayList<Crew>(),
+                                tiles,2,5,0,SystemType.SHIELDS,new ArrayList<Weapon>()));
+                    }
+                    // Engine
+                    else if (i==8){
+                        Room engine = new System(UUID.randomUUID().hashCode(),0,100,i,new ArrayList<Crew>(),
+                                tiles,2,5, 0,SystemType.ENGINE,new ArrayList<Weapon>());
+                        Crew c = new Crew(UUID.randomUUID().hashCode(),"Varnas",8, 8, crewStats, 3 * crewStats.size() * 2, username);
+                        c.setTile(tiles.get(0));
+                        tiles.get(0).setStandingOnMe(c);
+                        engine.setTiles(tiles);
+                        c.setCurrentRoom(engine);
+                        List<Crew> crewInRoom = engine.getCrew();
+                        crewInRoom.add(c);
+                        engine.setCrew(crewInRoom);
+                        rooms.add(engine);
+                    }
+                    // Weapons
+                    else if (i==12){
+                        System weapons = new System(UUID.randomUUID().hashCode(),0,100,i,new ArrayList<Crew>(),
+                                tiles,3,5,0,SystemType.WEAPON_SYSTEM,new ArrayList<Weapon>());
+                        Weapon rocket2 = new Weapon(UUID.randomUUID().hashCode(),2,3,2,1,1,
+                                (float) 0.3,(float)0.25,4,(float)1.0,2,1,"Rocket 2",25);
+                        Weapon rocket1 = new Weapon(UUID.randomUUID().hashCode(),2,2,2,1,1,
+                                (float) 0.3,(float)0.25,4,(float)1.0,2,1,"Rocket 1",25);
+                        // TODO Add weapon price list based on weapon level
+                        List<Weapon> currentWeapons = weapons.getShipWeapons();
+                        rocket1.setWeaponSystem(weapons);
+                        rocket2.setWeaponSystem(weapons);
+                        currentWeapons.add(rocket1);
+                        currentWeapons.add(rocket2);
+                        weapons.setShipWeapons(currentWeapons);
+                        rooms.add(weapons);
+                    }
+                    // Medbay
+                    else if (i==15){
+                        rooms.add(new System(UUID.randomUUID().hashCode(),0,100,i,new ArrayList<Crew>(),
+                                tiles,1,5,0,SystemType.MEDBAY,new ArrayList<Weapon>()));
+                    }
+                    // Cockpit
+                    else if (i==16){
+                        Room cockpit = new System(UUID.randomUUID().hashCode(),0,100,i,new ArrayList<Crew>(),
+                                tiles,1,5,0,SystemType.COCKPIT,new ArrayList<Weapon>());
+                        Crew c = new Crew(UUID.randomUUID().hashCode(),"Bomfy",8,8,crewStats,3 * crewStats.size() * 2, username);
+                        c.setTile(cockpit.getTiles().get(0));
+                        c.setCurrentRoom(cockpit);
+                        tiles.get(0).setStandingOnMe(c);
+                        cockpit.setTiles(tiles);
+                        List<Crew> crewInRoom = cockpit.getCrew();
+                        crewInRoom.add(c);
+                        cockpit.setCrew(crewInRoom);
+                        rooms.add(cockpit);
+                    }
+                    else {
+                        rooms.add(new Room(UUID.randomUUID().hashCode(),0,100,i,new ArrayList<Crew>(),tiles));
+                    }
+                    tiles.clear();
+                }
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 9,
+                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
             default:
                 return null;
         }
