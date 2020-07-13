@@ -634,6 +634,7 @@ public class GamePlay implements Screen {
                 }
             }
         }
+        //BIS HIER LÖSCHEN
         return weapons;
     }
 

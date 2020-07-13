@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MapButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -22,6 +23,8 @@ public class MapUI {
      * the mapbuttons representing the locations on the map
      */
     private List<MapButton> locations;
+
+    private InventoryCloseButton closeButton;
 
     /**
      * main class extending game
@@ -62,12 +65,15 @@ public class MapUI {
         x = Main.WIDTH/2f - mapTexture.getWidth()/2f;
         y = Main.HEIGHT/2f - mapTexture.getHeight()/2f;
 
+        closeButton = new InventoryCloseButton(x+955, y-80, 248, 50, null, null, this);
+        stage.addActor(closeButton);
+
         locations = new LinkedList<>();
         //TODO
         for(Planet f : map.getPlanetMap()) {
             float fx = f.getPosX();
             float fy = f.getPosY();
-           MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+fx), (y+fy), 20, 20, this, f);
+           MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+fx+120), (y+fy+80), 20, 20, this, f);
            locations.add(mb);
             stage.addActor(mb);
         }
@@ -79,7 +85,7 @@ public class MapUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(mapTexture, x, y, 1160, 626);
+        main.batch.draw(mapTexture, x, y-100, 1160, 626);
         main.batch.end();
     }
 
@@ -92,7 +98,7 @@ public class MapUI {
             m.remove();
         }
         shipView.deleteMap();
-
+        closeButton.remove();
     }
 
     /**
@@ -104,6 +110,7 @@ public class MapUI {
         boolean success = shipView.travel(planet);
         if(success) {
             disposeMapUI();
+            closeButton.remove();
         }
     }
 

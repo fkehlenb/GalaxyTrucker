@@ -55,7 +55,7 @@ public class InventoryUI {
         x = main.WIDTH/2 - inventoryBackground.getWidth()/2;
         y = main.HEIGHT/2 - inventoryBackground.getHeight()/2;
 
-        closeButton = new InventoryCloseButton(x+700, y+15, 248, 50, null, this);
+        closeButton = new InventoryCloseButton(x+700, y+15, 248, 50, null, this, null);
         stage.addActor(closeButton);
 
         slots = new LinkedList<>();
