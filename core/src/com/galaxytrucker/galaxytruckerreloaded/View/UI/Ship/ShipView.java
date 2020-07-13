@@ -124,6 +124,15 @@ public class ShipView extends AbstractShip {
 
         font15 = generator.generateFont(params);
 
+        shipBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "base.png");
+        shipRoomBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "floor.png");
+        weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
+
+        width = shipBackground.getWidth()*1.5f;
+        height = shipBackground.getHeight()*1.5f;
+        roomWidth = shipRoomBackground.getWidth()*1.5f;
+        roomHeight = shipRoomBackground.getHeight()*1.5f;
+
         float roomsBaseX = (70 + width/2);
         float roomsBaseY = main.HEIGHT/2;
 
@@ -139,15 +148,6 @@ public class ShipView extends AbstractShip {
         }
 
         this.map = map;
-
-        shipBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "base.png");
-        shipRoomBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "floor.png");
-        weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
-
-        width = shipBackground.getWidth()*1.5f;
-        height = shipBackground.getHeight()*1.5f;
-        roomWidth = shipRoomBackground.getWidth()*1.5f;
-        roomHeight = shipRoomBackground.getHeight()*1.5f;
 
         //uis for all the systems/rooms
         rooms = new HashMap<>();
