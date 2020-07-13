@@ -183,6 +183,7 @@ public class SPResumeLobby implements Screen {
     public void dispose() {
         background.dispose();
         stage.dispose();
+        font.dispose();
     }
 
     /**

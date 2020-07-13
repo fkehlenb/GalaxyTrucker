@@ -1,8 +1,12 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
 public abstract class InventorySlotUI {
@@ -17,12 +21,9 @@ public abstract class InventorySlotUI {
      */
     protected float posY;
 
-    /**
-     * Inventory slot background
-     */
-    private Texture inventorySlotTexture;
-
     protected Main main;
+
+    protected BitmapFont font;
 
     /**
      * Constructor
@@ -32,10 +33,22 @@ public abstract class InventorySlotUI {
     public InventorySlotUI(Main main, float x, float y) {
         this.main = main;
 
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 15;
+
+        font = generator.generateFont(params);
+
         posX = x;
         posY = y;
-
-        //inventorySlotTexture = new Texture();
     }
 
     /**
@@ -43,9 +56,6 @@ public abstract class InventorySlotUI {
      * without stage stuff
      */
     public void render() {
-        /*main.batch.begin();
-        main.batch.draw(inventorySlotTexture, posX, posY, 0, 0); //TODO wh
-        main.batch.end();*/
     }
 
     /**

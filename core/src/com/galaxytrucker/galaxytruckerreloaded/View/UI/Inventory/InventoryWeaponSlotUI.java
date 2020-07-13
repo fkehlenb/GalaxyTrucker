@@ -1,6 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 
@@ -11,23 +13,14 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
      */
     private Texture weaponTexture;
 
-    /** Weapon damage */
-    private int damage;
+    private GlyphLayout glyphDamage = new GlyphLayout();
+    private GlyphLayout glyphCooldown = new GlyphLayout();
+    private GlyphLayout glyphMissile = new GlyphLayout();
+    private GlyphLayout glyphCrewDamage = new GlyphLayout();
+    private GlyphLayout glyphBurst = new GlyphLayout();
+    private GlyphLayout glyphPrecision = new GlyphLayout();
 
-    /** Weapon coolDown */
-    private int cooldown;
-
-    /** Weapon energy */
-    private int energy;
-
-    private int missileCost;
-    private float dropchance;
-    private int crewdamage;
-    /**
-     * How many projectiles are fired per burst
-     */
-    private int burst;
-    private float precision;
+    private GlyphLayout glyphName = new GlyphLayout();
 
     /**
      * constructor
@@ -36,16 +29,16 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
      */
     public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y) {
         super(main, x, y);
-        damage = weapon.getDamage();
-        cooldown = weapon.getCooldown();
-        energy = weapon.getEnergy();
-        missileCost = weapon.getMissileCost();
-        dropchance = weapon.getDropChance();
-        crewdamage = weapon.getCrewDamage();
-        burst = weapon.getBurst();
-        precision = weapon.getAccuracy();
+        glyphDamage.setText(font, "Damage: "+weapon.getDamage());
+        glyphCooldown.setText(font, "Cooldown: "+weapon.getCooldown());
+        glyphMissile.setText(font, "Missile Cost: "+weapon.getMissileCost());
+        glyphCrewDamage.setText(font, "Crew Damage: "+weapon.getCrewDamage());
+        glyphBurst.setText(font, "Burst: "+weapon.getBurst());
+        glyphPrecision.setText(font, "Precision: "+weapon.getAccuracy());
 
-        weaponTexture = new Texture("shipsys/weapon/laser.png");
+        String name = weapon.getWeaponName();
+        weaponTexture = new Texture("shipsys/weapon_system/"+name.toLowerCase()+".png");
+        glyphName.setText(font, name);
     }
 
     /**
@@ -60,7 +53,14 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     public void render() {
         super.render();
         main.batch.begin();
-        main.batch.draw(weaponTexture, posX, posY, 22, 67);
+        font.draw(main.batch, glyphName, posX, posY + weaponTexture.getHeight() + 25);
+        font.draw(main.batch, glyphBurst, posX+72, posY+60);
+        font.draw(main.batch, glyphCooldown, posX+72, posY+40);
+        font.draw(main.batch, glyphCrewDamage, posX+72, posY+20);
+        font.draw(main.batch, glyphDamage, posX+220, posY+60);
+        font.draw(main.batch, glyphMissile, posX+220, posY+40);
+        font.draw(main.batch, glyphPrecision, posX+220, posY+20);
+        main.batch.draw(weaponTexture, posX, posY, weaponTexture.getWidth(), weaponTexture.getHeight());
         main.batch.end();
     }
 

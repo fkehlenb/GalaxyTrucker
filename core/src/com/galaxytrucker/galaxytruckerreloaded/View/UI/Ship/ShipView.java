@@ -147,7 +147,7 @@ public class ShipView extends AbstractShip {
         }
 
         moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this);
-        inventory = new ShipButton(750,main.HEIGHT - 80, 50, 92, this);
+        inventory = new ShipButton(660,main.HEIGHT - 60, 248, 50, this);
 
         money = new ScrapUI(main, ship.getCoins());
         hull = new HullUI(main, ship.getHp());
@@ -161,7 +161,7 @@ public class ShipView extends AbstractShip {
      * get the x position of a room depending on the interior id and the ship type
      * @param id the interior id of the room (from left to right, up to down)
      * @param bx the x position of the start (the most to the left)
-     * @return the total x position
+     * @return the total x position (lower right corner of the room)
      */
     private float getRoomX(ShipType type, int id, float bx) {
         switch(type) {
@@ -205,7 +205,7 @@ public class ShipView extends AbstractShip {
      * return the y position of a room, depending on the ship type
      * @param type the ship type
      * @param id the interior id
-     * @return
+     * @return total y position (lower right corner of room)
      */
     private float getRoomY(ShipType type, int id, float by) {
         switch(type) {
@@ -259,12 +259,6 @@ public class ShipView extends AbstractShip {
         hull.render();
         energy.render();
 
-        if(inventoryUI != null) {
-            inventoryUI.render();
-        }
-        else if(mapUI != null) {
-            mapUI.render();
-        }
 
         for(RoomUI r : rooms.values()) {
             r.render();
@@ -272,6 +266,13 @@ public class ShipView extends AbstractShip {
 
         for(CrewUI c : crew.values()) {
             c.render();
+        }
+
+        if(inventoryUI != null) {
+            inventoryUI.render();
+        }
+        else if(mapUI != null) {
+            mapUI.render();
         }
     }
 
@@ -324,7 +325,7 @@ public class ShipView extends AbstractShip {
      */
     public void openInventory() {
         if(inventoryUI == null){
-            inventoryUI = new InventoryUI(main, game.loadCrew(id), game.loadWeapons(id), game.loadFuel(id), game.loadMissiles(id), stage, this);
+            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this);
         }
     }
 

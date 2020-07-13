@@ -20,7 +20,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.WeaponSystem;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
@@ -564,44 +566,48 @@ public class GamePlay implements Screen {
 
     /**
      * load the crew of a ship
-     * @param shipId the ship id
      * @return the crew members
      */
-    public List<Crew> loadCrew(int shipId) {  //TODO call controller
-//        List<Crew> result = new LinkedList<>();
-//        Crew c1 = new Crew(1, "ana", 7, 10);
-//        result.add(c1);
-//        Crew c2 = new Crew(2, "battle", 8, 10);
-//        result.add(c2);
-//        return result;
-        return null;
+    public List<Crew> loadCrew() {
+        List<Crew> crew = new LinkedList<>();
+        List<Room> rs = main.getClient().getMyShip().getSystems();
+        for(Room r : rs) {
+            crew.addAll(r.getCrew());
+        }
+        return crew;
     }
 
     /**
      * load the weapons of a ship
-     * @param shipId the ship id
      * @return the weapons of the ship in a list
      */
-    public List<Weapon> loadWeapons(int shipId) {
-        List<Weapon> weapons = new LinkedList<>();
-//        weapons.add(new LaserBlaster("karl"));
-//        weapons.add(new LaserBlaster("test"));
+    public List<Weapon> loadWeapons() {
+        List<Weapon> weapons = main.getClient().getMyShip().getInventory();
+        for(Room r : main.getClient().getMyShip().getSystems()) {
+            if(r instanceof System) {
+                if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
+                    weapons.addAll(((System) r).getShipWeapons());
+                }
+            }
+        }
         return weapons;
     }
 
     /**
      * load the missiles of a ship
-     * @param shipId the id of the ship
      * @return the amount of missiles
      */
-    public int loadMissiles(int shipId) { return 0; }
+    public int loadMissiles() {
+        return main.getClient().getMyShip().getMissiles();
+    }
 
     /**
      * load the fuel of a ship
-     * @param shipId the id of the ship
      * @return the amount of fuel
      */
-    public int loadFuel(int shipId) { return 0; }
+    public int loadFuel() {
+        return main.getClient().getMyShip().getFuel();
+    }
 
     @Override
     public void pause() {

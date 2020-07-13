@@ -54,7 +54,7 @@ public class InventoryUI {
         x = main.WIDTH/2 - inventoryBackground.getWidth()/2;
         y = main.HEIGHT/2 - inventoryBackground.getHeight()/2;
 
-        closeButton = new InventoryCloseButton(x+750, y+5, 248, 50, null, this);
+        closeButton = new InventoryCloseButton(x+700, y+15, 248, 50, null, this);
         stage.addActor(closeButton);
 
         slots = new LinkedList<>();
@@ -64,14 +64,14 @@ public class InventoryUI {
             slots.add(new InventoryCrewSlotUI(main, c, cx, cy));
             cy -= 80;
         }
-        float wy = y + 550;
-        float wx = cx + 200;
+        float wy = y + 525;
+        float wx = cx + 400;
         for(Weapon w : weapons) {
             slots.add(new InventoryWeaponSlotUI(main, w, wx, wy));
-            wy -=90;
+            wy -=100;
         }
-        slots.add(new InventoryIntSlotUI(main, fuel, wx+200, y+550, "fuel")); //TODO xy
-        slots.add(new InventoryIntSlotUI(main, missiles, wx+200, y+750, "missiles")); //TODO xy
+        slots.add(new InventoryIntSlotUI(main, fuel, x+50, y+50, "fuel"));
+        slots.add(new InventoryIntSlotUI(main, missiles, x+150, y+50, "missiles"));
     }
 
     /**
