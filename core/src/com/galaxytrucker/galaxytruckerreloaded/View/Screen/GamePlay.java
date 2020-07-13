@@ -583,13 +583,18 @@ public class GamePlay implements Screen {
      */
     public List<Weapon> loadWeapons() {
         List<Weapon> weapons = main.getClient().getMyShip().getInventory();
-        for(Room r : main.getClient().getMyShip().getSystems()) {
-            if(r instanceof System) {
-                if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
-                    weapons.addAll(((System) r).getShipWeapons());
+
+        //todo: Die Startwaffen sollten beim Spielstart ins Inventory hinzugefügt werden.
+        if(weapons.size() == 0) {
+            for (Room r : main.getClient().getMyShip().getSystems()) {
+                if (r instanceof System) {
+                    if (((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
+                        weapons.addAll(((System) r).getShipWeapons());
+                    }
                 }
             }
         }
+        //BIS HIER LÖSCHEN
         return weapons;
     }
 
