@@ -48,7 +48,7 @@ public class MapUI {
         x = main.WIDTH/2 - mapTexture.getWidth()/2;
         y = main.HEIGHT/2 - mapTexture.getHeight()/2;
 
-        closeButton = new InventoryCloseButton(x+700, y+15, 248, 50, null, null, this);
+        closeButton = new InventoryCloseButton(x+955, y-80, 248, 50, null, null, this);
         stage.addActor(closeButton);
 
         locations = new LinkedList<>();
@@ -56,7 +56,7 @@ public class MapUI {
         for(Planet f : map.getPlanetMap()) {
             float fx = f.getPosX();
             float fy = f.getPosY();
-           MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+fx), (y+fy), 20, 20, this, f);
+           MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+fx+120), (y+fy+80), 20, 20, this, f);
            locations.add(mb);
             stage.addActor(mb);
         }
@@ -68,7 +68,7 @@ public class MapUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(mapTexture, x, y, 1160, 626);
+        main.batch.draw(mapTexture, x, y-100, 1160, 626);
         main.batch.end();
     }
 
