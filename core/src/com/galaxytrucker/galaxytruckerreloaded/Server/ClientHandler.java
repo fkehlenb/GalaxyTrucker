@@ -9,6 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -292,10 +293,10 @@ public class ClientHandler implements Runnable {
     private Ship generateShip(ShipType shipType, String username, Overworld overworld) {
         List<Weapon> inventory = new ArrayList<>();
         List<Room> rooms = new ArrayList<>();
+        List<Integer> crewStats = new ArrayList<>();
         switch (shipType) {
             // ========== KESTREL A ==========
             case DEFAULT:
-                List<Integer> crewStats = new ArrayList<>();
                 for (int f = 0; f < 5; f++) {
                     crewStats.add(2);
                 }
@@ -409,7 +410,7 @@ public class ClientHandler implements Runnable {
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 8,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
-            // ========== Bulwark A ==========
+            // ========== ROCK A ==========
             case TANK:
                 crewStats = new ArrayList<>();
                 crewStats.add(0);
