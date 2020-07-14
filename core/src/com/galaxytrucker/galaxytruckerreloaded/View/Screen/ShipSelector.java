@@ -17,17 +17,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateGameButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectorBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShipSelectorButtons.LeftArrowButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShipSelectorButtons.RightArrowButton;
-import org.h2.index.RangeIndex;
-
-import java.util.List;
 
 /**
  * Ship selector screen when creating new game
@@ -48,16 +43,6 @@ public class ShipSelector implements Screen {
      * the stage for the buttons
      */
     private Stage stage;
-
-    /**
-     * the textures of the ships to choose from
-     */
-    private List<Texture> ships;
-
-    /**
-     * the buttons for the ships
-     */
-    private List<ShipSelectButton> shipButtons;
 
     /**
      * button to create game
@@ -121,10 +106,6 @@ public class ShipSelector implements Screen {
 
     private Image shipImage;
 
-    private String[] shipList = {"ship/kestral/kestral_base.png", "ship/anaerobic/an2base.png", "ship/fed/fed_cruiser_2_base.png"};
-
-    private int currentShip = 0;
-
     /** Constructor
      * @param main - main class */
     public ShipSelector(Main main, boolean singleplayer, int difficulty){
@@ -163,7 +144,9 @@ public class ShipSelector implements Screen {
         leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
         rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
 
-        shipImage = new Image(new Texture(shipList[currentShip]));
+
+        ship = ShipType.DEFAULT;
+        shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
         shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
 
         stage.addActor(shipImage);
@@ -173,7 +156,6 @@ public class ShipSelector implements Screen {
         stage.addActor(leftArrowButton);
         stage.addActor(rightArrowButton);
 
-        //get ships from server, for each one texture and one button
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -210,7 +192,7 @@ public class ShipSelector implements Screen {
         leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
         rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
 
-        shipImage = new Image(new Texture(shipList[currentShip]));
+        shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
         shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
 
         stage.addActor(shipImage);
@@ -219,8 +201,6 @@ public class ShipSelector implements Screen {
         stage.addActor(backButton);
         stage.addActor(leftArrowButton);
         stage.addActor(rightArrowButton);
-
-        //get ships from server, for each one texture and one button
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -274,15 +254,7 @@ public class ShipSelector implements Screen {
     public void dispose() {
         background.dispose();
         stage.dispose();
-    }
-
-    /**
-     * the ship is selected
-     * @param ship the index of the ship in the list of possible ships
-     */
-    public void setShip(ShipType ship) {
-        this.ship = ship;
-        //TODO set difficulty
+        font.dispose();
     }
 
     /**
@@ -290,10 +262,9 @@ public class ShipSelector implements Screen {
      */
     public void startGame() {
         if(singleplayer) {
-            String[] args = new String[0];
-            Server.main(args);
-            main.setClient(new Client("localhost", 5050));
-            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText());
+            main.startServer();
+            main.startClient();
+            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText(), ship, difficulty);
             if(success) {
                 main.setScreen(new GamePlay(main)); //TODO ?
             }
@@ -308,24 +279,16 @@ public class ShipSelector implements Screen {
      * shows the next ship in shipselector
      */
     public void nextShip() {
-        currentShip +=1;
-        if(currentShip > shipList.length-1){
-            currentShip = 0;
-        }
+        ship = ship.next();
         dispose();
         prepareUI();
-        //TODO Liste von SHips, die man durchschaltet
     }
 
     /**
      * shows the prev ship in shipselector
      */
     public void prevShip() {
-        //TODO Liste von SHips, die man durchschaltet
-        currentShip -=1;
-        if(currentShip < 0){
-            currentShip = shipList.length-1;
-        }
+        ship = ship.previous();
         dispose();
         prepareUI();
     }

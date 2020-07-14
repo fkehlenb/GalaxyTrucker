@@ -7,39 +7,39 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.TileButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 public class RoomUI {
 
-    /**
-     * the system of this room
-     */
-    private SubsystemUI system;
-
-    /**
-     * the normal texture of the room
-     */
-    private Texture roomTexture;
 
     /**
      * the texture for the case that the room is low on oxygen
      */
-    private Texture roomLowOxyTexture;
+    protected Texture roomLowOxyTexture;
 
     /**
-     * Höhe des Raumes. Räume sind immer rechteckig.
+     * the texture of the tiles the room is made up of
      */
-    private int height;
+    private Texture tileTexture;
+
+    protected Room room;
+
+    protected Main main;
+
+    protected ShipView ship;
 
     /**
-     * Weite des Raumes. Räume sind immer rechteckig.
+     * x position of the room
      */
-    private int width;
+    protected float x;
 
-    private Main main;
-
-    private ShipView ship;
+    /**
+     * y position of the room
+     */
+    protected float y;
 
     /**
      * Constructor
@@ -47,52 +47,36 @@ public class RoomUI {
      * @param main - the main class for SpriteBatch
      * @param room the room
      */
-    public RoomUI(Main main, Room room, Stage stage, ShipView ship) {
+    public RoomUI(Main main, Room room, Stage stage, ShipView ship, float x, float y) {
         this.main = main;
-        // TODO
-//        height = room.getHeight();
-//        width = room.getWidth();
+        this.room = room;
+        this.ship = ship;
+        this.x = x;
+        this.y = y;
 
-        //System sys = TODO wie system?
-        //dann neue systemui mit stage
+        tileTexture = new Texture("ship/tile.png");
+
+        for(Tile t : room.getTiles()) {
+            stage.addActor(new TileButton(x + (t.getPosX()*48), y + (t.getPosY()*48), 48, 48, this));
+        }
     }
 
     /**
      * renders everything this room consists of
      */
     public void render() {
-        system.render();
-        //und textures TODO räume schöner abtrennen? aktuell einfach generell + symbole
+        main.batch.begin();
+        /*for(Tile t : room.getTiles()) {
+            main.batch.draw(tileTexture, x + (t.getPosX()*48), y + (t.getPosY()*48), 48, 48);
+        }*/
+        main.batch.end();
     }
 
     /**
      * Dispose of room ui
      */
     public void disposeRoomUI() {
-        system.disposeSubsystemUI();
-        //texturen
-    }
 
-    /**
-     * energy status update from controller
-     */
-    public void systemEnergyUpdate(int energy) {
-        system.energyUpdate(energy);
-    }
-
-    /**
-     * system status update from controller
-     */
-    public void systemStatusUpdate(int damage) {
-        system.systemStatusUpdate(damage);
-    }
-
-    /**
-     * the player chooses a new amount
-     * @param amount how much should be subtracted/added
-     */
-    public void systemEnergyChosen(int id, int amount) {
-        ship.roomSystemEnergyChosen(id, amount);
     }
 
     /**
@@ -111,10 +95,32 @@ public class RoomUI {
     }
 
     /**
+     * the amount of energy given to a system (if this room is a system) is changed
+     * @param amount the new amount
+     */
+    public void systemEnergyUpdate(int amount) {
+
+    }
+
+    /**
+     * the status of the system (if this room is a system) is changed
+     * @param amount the new amount
+     */
+    public void systemStatusUpdate(int amount) {
+    }
+
+    /**
      * the room was targeted by a weapon of an enemy ship
      */
     public void roomTarget() {
 
+    }
+
+    /**
+     * the room was chosen with a tile button
+     */
+    public void chosen() {
+        ship.roomChosen(room);
     }
 
     /**

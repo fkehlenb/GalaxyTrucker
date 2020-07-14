@@ -140,10 +140,9 @@ public class CreateOrJoinServer implements Screen {
      * start a game on a new server
      */
     public void startServer() {
-        String[] args = new String[0];
-        Server.main(args);
-        main.setClient(new Client("localhost", 5050));
-        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username);
+        main.startServer();
+        main.startClient();
+        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
             main.setScreen(new LobbyScreenHost(main, ship, false, difficulty, username));
         }
@@ -154,7 +153,8 @@ public class CreateOrJoinServer implements Screen {
      * go back to last screen
      */
     public void goBack() {
-        main.setScreen(new ShipSelector(main, false, 0)); //TODO set difficulty once that is a ship attribute
+        main.setScreen(new ShipSelector(main, false, difficulty));
+        dispose();
     }
 
     /**
@@ -221,5 +221,6 @@ public class CreateOrJoinServer implements Screen {
     public void dispose() {
         background.dispose();
         stage.dispose();
+        font.dispose();
     }
 }

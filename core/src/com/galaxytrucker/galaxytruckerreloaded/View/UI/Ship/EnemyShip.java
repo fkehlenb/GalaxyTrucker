@@ -21,17 +21,32 @@ public class EnemyShip extends AbstractShip {
      */
     private List<EnemySystemUI> systems;
 
+    private float x;
+    private float y;
+
     /**
      * the hull status ui of the enemy ship
      */
     private EnemyHullUI hull;
+
+    public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Texture enemyBackground, List<EnemySystemUI> systems, EnemyHullUI hull) {
+        super(main, ship, stage, game);
+        this.enemyBackground = new Texture("battle/battle_overlay.png");
+        //TODO Systeme des Schiffes in SystemUI umwandeln
+        this.systems = systems;
+        this.hull = hull;
+        x = main.WIDTH - enemyBackground.getWidth() - main.WIDTH/6;
+        y = main.HEIGHT/2 - enemyBackground.getHeight()/2;
+    }
 
     /**
      * to render the ui
      */
     @Override
     public void render() {
-
+        main.batch.begin();
+        main.batch.draw(enemyBackground, x, y, 400, 700);
+        main.batch.end();
     }
 
     /**
@@ -56,6 +71,7 @@ public class EnemyShip extends AbstractShip {
     @Override
     public void disposeShipView() {
 
+        
     }
 
     /**

@@ -1,12 +1,19 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.AutofireButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MoveButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShipButton;
@@ -15,6 +22,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -87,35 +95,177 @@ public class ShipView extends AbstractShip {
      */
     private MapUI mapUI;
 
+    private float width, height;
+    private float roomWidth, roomHeight;
+
+    private BitmapFont font15;
+
+    private Stage tileStage;
+
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
      */
-    public ShipView(Main main, Ship ship, Stage stage, Overworld map, GamePlay game) {
+    public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game) {
         super(main, ship, stage, game);
-        //java.util.List crew = ship.get ??
+        this.tileStage = tileStage;
+
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 15;
+
+        font15 = generator.generateFont(params);
+
+        shipBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "base.png");
+        shipRoomBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "floor.png");
+        weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
+
+        width = shipBackground.getWidth()*1.5f;
+        height = shipBackground.getHeight()*1.5f;
+        roomWidth = shipRoomBackground.getWidth()*1.5f;
+        roomHeight = shipRoomBackground.getHeight()*1.5f;
+
+        float roomsBaseX = (70 + width/2);
+        float roomsBaseY = main.HEIGHT/2;
+
+        List<Crew> crews = new ArrayList<>();
+        for(Room r : ship.getSystems()) {
+            crews.addAll(r.getCrew());
+        }
+        crew = new HashMap<>();
+        float cy = Main.HEIGHT - 150;
+        for(Crew c : crews) {
+            crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseY)));
+            cy -= 60;
+        }
 
         this.map = map;
 
+        //uis for all the systems/rooms
         rooms = new HashMap<>();
-        List<Room> existingRooms = ship.getSystems();
-        for(Room r : existingRooms) {
-            //TODO wie system das zu raum gehört? dann sys id als key, roomui als value
+        List<Room> existingSystems = ship.getSystems();
+        float sx = 60;
+        for(Room r : existingSystems) {
+            if(r instanceof System) {
+                if(r instanceof Shield) {
+                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (Shield) r, sx));
+                }
+                else if(! (r instanceof WeaponSystem)) {
+                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (System) r, sx));
+                }
+                sx += 55;
+            }
+            else {
+                rooms.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY)));
+            }
+        }
+        //need to be done extra bc they need the actual weapon, not just the system
+        for(Weapon w : ship.getInventory()) {
+            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseY), w, sx + 55));
         }
 
         moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this);
-        inventory = new ShipButton(750,main.HEIGHT - 80, 50, 92, this);
+        inventory = new ShipButton(660,main.HEIGHT - 60, 248, 50, this);
 
         money = new ScrapUI(main, ship.getCoins());
         hull = new HullUI(main, ship.getHp());
         energy = new EnergyUI(main, ship.getEnergy());
 
-        shipBackground = new Texture("ship/anaerobic/an2base.png");
-        shipRoomBackground = new Texture("ship/anaerobic/an2floor.png");
-        weaponGeneralBackground = new Texture("shipsys/weapon/generalbox.png");
-
         stage.addActor(inventory);
         stage.addActor(moveButton);
+    }
+
+    /**
+     * get the x position of a room depending on the interior id and the ship type
+     * @param id the interior id of the room (from left to right, up to down)
+     * @param bx the x position of the start (the most to the left)
+     * @return the total x position (lower right corner of the room)
+     */
+    private float getRoomX(ShipType type, int id, float bx) {
+        switch(type) {
+            case DEFAULT:
+                switch(id) {
+                    case 0: return bx - 360;
+                    case 1:
+                    case 2:
+                    case 3:
+                        return bx-312;
+                    case 4:
+                    case 6:
+                        return bx-216;
+                    case 5:
+                        return bx-168;
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        return bx-72;
+                    case 11:
+                    case 12:
+                        return bx+24;
+                    case 13:
+                    case 14:
+                        return bx+120;
+                    case 15:
+                        return bx+216;
+                    case 16: return bx+312;
+                }
+            case BARRAGE: return 0;
+            case BOARDER: return 0;
+            case TANK: return 0;
+            case KILLER: return 0;
+            case STEALTH: return 0;
+            default: return 0;
+        }
+    }
+
+    /**
+     * return the y position of a room, depending on the ship type
+     * @param type the ship type
+     * @param id the interior id
+     * @return total y position (lower right corner of room)
+     */
+    private float getRoomY(ShipType type, int id, float by) {
+        switch(type) {
+            case DEFAULT:
+                switch(id) {
+                    case 0:
+                    case 2:
+                    case 5:
+                    case 14:
+                    case 15:
+                    case 16:
+                        return by - 48;
+                    case 1:
+                    case 4:
+                        return by +48;
+                    case 3:
+                    case 6:
+                    case 9:
+                    case 12:
+                        return by -96;
+                    case 7: return by +96;
+                    case 8:
+                    case 11:
+                    case 13:
+                        return by;
+                    case 10 : return by -144;
+                }
+            case BARRAGE: return 0;
+            case BOARDER: return 0;
+            case TANK: return 0;
+            case KILLER: return 0;
+            case STEALTH: return 0;
+            default: return 0;
+        }
     }
 
     /**
@@ -126,8 +276,8 @@ public class ShipView extends AbstractShip {
     public void render() {
 
         main.batch.begin();
-        main.batch.draw(shipBackground, main.WIDTH -1730, main.HEIGHT/2 - shipBackground.getHeight()/2 - 200, 1000, 1000);
-        main.batch.draw(shipRoomBackground, main.WIDTH -1500, main.HEIGHT/2 - shipRoomBackground.getHeight()/2 - 100, 550, 550);
+        main.batch.draw(shipBackground, 70, main.HEIGHT/2 - height/2, width, height);
+        main.batch.draw(shipRoomBackground, (70 + width/2) - roomWidth/2, main.HEIGHT/2 - roomHeight/2, roomWidth, roomHeight);
         main.batch.draw(weaponGeneralBackground, 700, 100, 328, 90);
         main.batch.end();
 
@@ -135,15 +285,22 @@ public class ShipView extends AbstractShip {
         hull.render();
         energy.render();
 
+        tileStage.draw();
+
+
+        for(RoomUI r : rooms.values()) {
+            r.render();
+        }
+
+        for(CrewUI c : crew.values()) {
+            c.render();
+        }
+
         if(inventoryUI != null) {
             inventoryUI.render();
         }
         else if(mapUI != null) {
             mapUI.render();
-        }
-
-        for(RoomUI r : rooms.values()) {
-            r.render();
         }
     }
 
@@ -165,6 +322,10 @@ public class ShipView extends AbstractShip {
         for(RoomUI r : rooms.values()) {
             r.disposeRoomUI();
         }
+        for(CrewUI c : crew.values()) {
+            c.disposeCrewUI();
+        }
+        font15.dispose();
     }
 
     /**
@@ -193,7 +354,7 @@ public class ShipView extends AbstractShip {
      */
     public void openInventory() {
         if(inventoryUI == null){
-            inventoryUI = new InventoryUI(main, game.loadCrew(id), game.loadWeapons(id), game.loadFuel(id), game.loadMissiles(id), stage, this);
+            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this, font15);
         }
     }
 
@@ -236,24 +397,41 @@ public class ShipView extends AbstractShip {
     /**
      * a crew member is moved to a new room
      * called by crew ui after player attempts to move a crew
-     * @param crewid the id of the crew member
+     * @param crew the crew member
      * @param room the new room
      */
-    public void crewMoved(int crewid, Room room) {
-        game.crewMoved(crewid, room);
+    public void crewMoved(Crew crew, Room room) {
+        this.crew.get(crew.getId()).crewMoved(room);
+    }
+
+    /**
+     * a crew member is moving to a new room
+     * called by button
+     * @param crew the crew member that was chosen
+     */
+    public void crewMoving(Crew crew) {
+        game.crewMoving(crew);
+    }
+
+    /**
+     * a room was chosen to move a crew member to
+     * @param room the room
+     */
+    public void roomChosen(Room room) {
+        game.roomChosen(room);
     }
 
     /**
      * crew member health update. called by game
-     * @param crewid the crew member
+     * @param crew the crew member
      * @param health the new health
      */
-    public void crewHealth(int crewid, int health) {
+    public void crewHealth(Crew crew, int health) {
         if(health == 0) {
-            crew.get(crewid).crewDied();
+            this.crew.get(crew.getId()).crewDied();
         }
         else {
-            crew.get(crewid).statusUpdate(health);
+            this.crew.get(crew.getId()).statusUpdate(health);
         }
     }
 
@@ -265,25 +443,25 @@ public class ShipView extends AbstractShip {
      * update the energy of a system in a room
      * @param amount the new total amount
      */
-    public void roomSystemEnergyUpdate(int sysid, int amount) {
-        rooms.get(sysid).systemEnergyUpdate(amount);
+    public void roomSystemEnergyUpdate(Room room, int amount) {
+        rooms.get(room.getId()).systemEnergyUpdate(amount);
     }
 
     /**
      * update the status of a system in a room
-     * @param sysid the system id
+     * @param room the system
      * @param amount the new status
      */
-    public void roomSystemStatusUpdate(int sysid, int amount) {
-        rooms.get(sysid).systemStatusUpdate(amount);
+    public void roomSystemStatusUpdate(Room room, int amount) {
+        rooms.get(room.getId()).systemStatusUpdate(amount);
     }
 
     /**
      * the player has chosen a new amount of energy
      * @param amount how much should be subtracted/added
      */
-    public void roomSystemEnergyChosen(int id, int amount) {
-        game.roomSystemEnergyChosen(id, amount);
+    public void roomSystemEnergyChosen(Room room, int amount) {
+        game.roomSystemEnergyChosen(room, amount);
     }
 
     /**

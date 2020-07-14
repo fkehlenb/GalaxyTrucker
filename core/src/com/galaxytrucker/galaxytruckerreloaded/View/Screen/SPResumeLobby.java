@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 
@@ -82,14 +83,11 @@ public class SPResumeLobby implements Screen {
      */
     private String seedName = "TestSeed";
 
-    private boolean singleplayer;
-
     private SPResumeLobbyBackButton spResumeLobbyBackButton;
 
     /** Constructor  */
-    public SPResumeLobby(Main main, boolean singleplayer){
+    public SPResumeLobby(Main main){
         this.main = main;
-        this.singleplayer = singleplayer;
         background = new Texture("1080p.png");
 
         spResumeStartGame = new SPResumeStartGame(7*main.WIDTH/8 - 124, main.HEIGHT/8 , 248, 50, this);
@@ -108,9 +106,9 @@ public class SPResumeLobby implements Screen {
         params.size = 15;
 
         font = generator.generateFont(params);
-        glyph.setText(font, "Your Ship: " + shipName);
-        glyph2.setText(font, "Your Difficulty: " + difficultyName);
-        glyph3.setText(font, "Your Seed: " + seedName);
+        glyph.setText(font, "Your Ship: " + main.getClient().getMyShip().getShipType());
+        glyph2.setText(font, "Your Difficulty: " + main.getClient().getOverworld().getDifficulty());
+        glyph3.setText(font, "Your Seed: " + main.getClient().getOverworld().getSeed());
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -185,6 +183,7 @@ public class SPResumeLobby implements Screen {
     public void dispose() {
         background.dispose();
         stage.dispose();
+        font.dispose();
     }
 
     /**
@@ -199,7 +198,7 @@ public class SPResumeLobby implements Screen {
      * go back to previous screen
      */
     public void goBack() {
-        main.setScreen(new LoginScreen(main, singleplayer));
+        main.setScreen(new LoginScreen(main, true));
         dispose();
     }
 

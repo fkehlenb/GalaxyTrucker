@@ -2,17 +2,20 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CrewDismissButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CrewSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 /**
@@ -47,27 +50,17 @@ public class CrewUI {
      * button to click to send the crew to another room. After the button is clicked,
      * the player needs to click on a room in their own ship
      */
-    private CrewDismissButton crewButton;
+    private CrewSelectButton crewButton;
 
     /**
-     * the name of the crew member
+     * the background box
      */
-    private String name;
+    private Texture background;
 
     /**
-     * id of the crew member
+     * the crew member displayed with this ui
      */
-    private int id;
-
-    /**
-     * the current health of the crew member
-     */
-    private int health;
-
-    /**
-     * the maximum health of the crew member
-     */
-    private int maxhealth;
+    private Crew crew;
 
     /**
      * the main class
@@ -75,31 +68,51 @@ public class CrewUI {
     private Main main;
 
     /**
-     * the stage for buttons
+     * the shipview of this crewui
      */
-    private Stage stage;
+    private ShipView shipView;
 
     /**
-     * rooms of the ship
+     * the x position of the picture of the crew member in the upper left corner
      */
-    private List<Room> rooms;
+    private float x;
 
-    private ShipView shipView;
+    /**
+     * the y position of the picture of the crew member in the upper left corner
+     */
+    private float y;
+
+    /**
+     * the position of the room the crew member is in
+     */
+    private float roomX, roomY;
+
+    /**
+     * the font used to draw the name
+     */
+    private BitmapFont font;
+
+    /**
+     * the glyph layout used for better positioning
+     */
+    private GlyphLayout glyph = new GlyphLayout();
 
     /**
      * constructor
      * @param main the main class
      * @param crew the crew member
      */
-    public CrewUI(Main main, Crew crew, Stage stage, Ship ship, ShipView shipView) {
+    public CrewUI(Main main, Crew crew, Stage stage, ShipView shipView, float x, float y, BitmapFont font, float rX, float rY) {
         this.main = main;
-        this.stage = stage;
+        this.crew = crew;
         this.shipView = shipView;
+        this.x = x;
+        this.y = y;
+        this.font = font;
+        this.roomX = rX;
+        this.roomY = rY;
 
-        name = crew.getName();
-        maxhealth = crew.getMaxhealth();
-        health = crew.getHealth();
-        id = crew.getId();
+        glyph.setText(font, crew.getName());
 
         if(crew.getName().equals("ana")) {
             crewImage = new Texture("crew/anaerobic.png");
@@ -108,21 +121,21 @@ public class CrewUI {
             crewImage = new Texture("crew/battle.png");
         }
         else {
-            crewImage = new Texture("crew/energy.png"); //TODO wie sieht das mit namen aus?
+            crewImage = new Texture("crew/energy.png");
         }
 
-        crewButton = new CrewDismissButton(crewImage, 0, 0, 10, 10, crew.getId(), this);
+        crewButton = new CrewSelectButton(crewImage, x, y+15, 50, 50, crew.getId(), this);
         stage.addActor(crewButton);
 
-        crewInShip = crewImage; //TODO for now
+        crewInShip = crewImage;
 
         crewStatus = new Texture("gameuis/energybar.png");
 
         box = new Texture("crew/health_box.png");
 
-        currentTexture = 10;
+        background = new Texture("crew/background.png");
 
-        rooms = ship.getSystems();
+        currentTexture = 10;
     }
 
     /**
@@ -143,48 +156,35 @@ public class CrewUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(crewInShip, 0, 0, 0, 0); //TODO whxy
-        main.batch.draw(box, 0, 0, 10, 10); //TODO xywh
-        float x=0;
+        main.batch.draw(background, x, y, 200, 55);
+        font.draw(main.batch, glyph, x + 55, y + 40);
+        main.batch.draw(crewInShip, roomX, roomY, 50, 50);
+        main.batch.draw(box, x + 35, y +5, 140, 20);
+        float ex=x+55;
         for(int i=0;i<=currentTexture;i++) {
-             main.batch.draw(crewStatus, x, 0, 0, 0); //TODO whxy
-            x+=5;
+             main.batch.draw(crewStatus, ex, y+13, 8.75f, 5);
+            ex+=8.75;
         }
         main.batch.end();
     }
 
     /**
      * the crew member was moved to a new room
-     *
+     * called by shipview
      *
      * @param room the new room
      */
     public void crewMoved(Room room) {
-        shipView.crewMoved(id, room);
+
     }
 
     /**
      * the crew was chosen to be moved
-     * called by button crewdismiss
+     * called by button crewSelect
      * now waiting for the user to choose a room on the ship
      */
     public void crewMoving() {
-        boolean chosen = false;
-        while(!chosen) {
-            if(Gdx.input.justTouched()) {
-                int tx = Gdx.input.getX();
-                int ty = Gdx.input.getY();
-                for(Room r : rooms) {
-                    //TODO
-//                    if (r.getPosX() <= tx && r.getPosX() + r.getWidth() >= tx //TODO ist die berechnung richtig
-//                        && r.getPosY() <= ty && r.getPosY()+r.getHeight() >= ty) { //TODO wo sind die x und y koordinaten des schiffes?
-//                        chosen = true;
-//                        crewMoved(r);
-//                        break;
-//                    }
-                }
-            }
-        }
+        shipView.crewMoving(crew);
     }
 
     /**
@@ -209,7 +209,7 @@ public class CrewUI {
      * @param status the new status
      */
     public void statusUpdate(int status) {
-        int percent = status/maxhealth;
+        int percent = status/crew.getMaxhealth();
         currentTexture = percent * 10;
         //adapt currentTexture according to amount of textures we end up having
     }

@@ -136,8 +136,8 @@ public class SelectLobbyScreen implements Screen {
      * join a lobby by taking the text from the text field
      */
     public void joinLobby() {
-        main.setClient(new Client(lobby.getText(), 5050));
-        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username);
+        main.startClient();
+        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
             main.setScreen(new LobbyScreenNormal(main, ship, false, difficulty, username));
         }
@@ -217,5 +217,6 @@ public class SelectLobbyScreen implements Screen {
     public void dispose() {
         background.dispose();
         stage.dispose();
+        font.dispose();
     }
 }
