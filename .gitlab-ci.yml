@@ -5,6 +5,7 @@ stages:
   - build
   - javadoc
   - test
+  - distribute
 
 cache:
   paths:
@@ -37,8 +38,17 @@ javadoc:
     paths:
       - build/doc/*
 
-
 test:
   stage: test
   script:
     - ./gradlew check
+    
+distribute:
+    stage: distribute
+    script:
+        - cd desktop
+        - gradle dist
+    artifacts:
+        paths:
+            - GalaxyTrucker.jar
+        expire-in: 1 week
