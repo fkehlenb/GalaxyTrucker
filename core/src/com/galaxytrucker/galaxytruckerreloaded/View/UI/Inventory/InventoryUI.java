@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
@@ -45,7 +46,7 @@ public class InventoryUI {
      * @param crew the crew members
      * @param weapons the weapons
      */
-    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font) {
+    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font, ShipType type) {
         this.main = main;
         this.stage = stage;
         this.shipView = shipView;
@@ -62,7 +63,7 @@ public class InventoryUI {
         float cx = x + 25;
         float cy = y + 560;
         for(Crew c : crew) {
-            slots.add(new InventoryCrewSlotUI(main, c, cx, cy, font));
+            slots.add(new InventoryCrewSlotUI(main, c, cx, cy, font, type));
             cy -= 80;
         }
         float wy = y + 525;

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 
 /**
  * to represent a crew member in the inventory
@@ -58,7 +59,7 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
      *
      * @param main - main class
      */
-    public InventoryCrewSlotUI(Main main, Crew crew, float x, float y, BitmapFont font) {
+    public InventoryCrewSlotUI(Main main, Crew crew, float x, float y, BitmapFont font, ShipType type) {
         super(main, x, y, font);
 
         glyphName.setText(font, crew.getName());
@@ -76,15 +77,7 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
         healthStatus = new Texture("gameuis/energybar.png");
         healthBox = new Texture("crew/health_box.png");
 
-        if(crew.getName().equals("ana")) {
-            crewTexture = new Texture("crew/anaerobic.png");
-        }
-        else if(crew.getName().equals("battle")) {
-            crewTexture = new Texture("crew/battle.png");
-        }
-        else {
-            crewTexture = new Texture("crew/energy.png"); //TODO wie sieht das mit namen aus?
-        }
+        crewTexture = new Texture("crew/"+type.toString().toLowerCase()+".png");
     }
 
     /**

@@ -107,6 +107,8 @@ public class ShipView extends AbstractShip {
 
     private Stage tileStage;
 
+    private ShipType shipType;
+
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
@@ -114,6 +116,8 @@ public class ShipView extends AbstractShip {
     public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game) {
         super(main, ship, stage, game);
         this.tileStage = tileStage;
+
+        shipType = ship.getShipType();
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
@@ -148,7 +152,7 @@ public class ShipView extends AbstractShip {
         crew = new HashMap<>();
         float cy = Main.HEIGHT - 150;
         for(Crew c : crews) {
-            crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseY)));
+            crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseY), ship.getShipType()));
             cy -= 60;
         }
 
@@ -362,7 +366,7 @@ public class ShipView extends AbstractShip {
      */
     public void openInventory() {
         if(inventoryUI == null){
-            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this, font15);
+            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this, font15, shipType);
         }
     }
 
