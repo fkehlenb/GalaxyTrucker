@@ -354,9 +354,9 @@ public class ClientHandler implements Runnable {
                         weapons.getTiles().get(0).setStandingOnMe(crew);
                         weapons.setCrew(crewInRoom);
                         // Add Weapons
-                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(), 2, 1, 1, 1, 0,
+                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 2, 1, 1, 1, 0,
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
-                        Weapon rocket = new Weapon(UUID.randomUUID().hashCode(), 1, 2, 2, 1, 1, (float) 1.0,
+                        Weapon rocket = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,1, 2, 2, 1, 1, (float) 1.0,
                                 (float) 0.25, 4, (float) 1.0, 2, 1, "Rocket", 30);
                         // TODO add weapon price list
                         laser.setWeaponSystem(weapons);
@@ -465,9 +465,9 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
-                        Weapon rocket2 = new Weapon(UUID.randomUUID().hashCode(), 2, 3, 2, 1, 1, (float) 1.0,
+                        Weapon rocket2 = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,2, 3, 2, 1, 1, (float) 1.0,
                                 (float) 0.25, 4, (float) 1.0, 2, 1, "Rocket", 30);
-                        Weapon rocket1 = new Weapon(UUID.randomUUID().hashCode(), 1, 2, 2, 1, 1, (float) 1.0,
+                        Weapon rocket1 = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,1, 2, 2, 1, 1, (float) 1.0,
                                 (float) 0.25, 4, (float) 1.0, 2, 1, "Rocket", 30);
                         // TODO add weapon price list
                         rocket1.setWeaponSystem(weapons);
@@ -570,9 +570,9 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
-                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(), 2, 1, 1, 1, 0,
+                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 2, 1, 1, 1, 0,
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
-                        Weapon radio = new Weapon(UUID.randomUUID().hashCode(), 4, 0, 3, 1, 0, (float) 1.0,
+                        Weapon radio = new Weapon(UUID.randomUUID().hashCode(), WeaponType.RADIO,4, 0, 3, 1, 0, (float) 1.0,
                                 (float) 0.12, 0, (float) 0.0, 2, 3, "Radio", 45);
                         // TODO add weapon price list
                         radio.setWeaponSystem(weapons);
@@ -719,11 +719,11 @@ public class ClientHandler implements Runnable {
                         weapons.getTiles().get(0).setStandingOnMe(crew);
                         weapons.setCrew(crewInRoom);
                         // Add Weapons
-                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(), 2, 1, 1, 1, 0,
+                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(), WeaponType.LASER,2, 1, 1, 1, 0,
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
-                        Weapon laser2 = new Weapon(UUID.randomUUID().hashCode(), 2, 1, 1, 1, 0,
+                        Weapon laser2 = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 2, 1, 1, 1, 0,
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
-                        Weapon laser3 = new Weapon(UUID.randomUUID().hashCode(), 2, 1, 1, 1, 0,
+                        Weapon laser3 = new Weapon(UUID.randomUUID().hashCode(), WeaponType.LASER, 2, 1, 1, 1, 0,
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
                         // TODO add weapon price list
                         laser.setWeaponSystem(weapons);
@@ -806,9 +806,9 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
-                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(), 1, 1, 1, 1, 0,
+                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 1, 1, 1, 1, 0,
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
-                        Weapon bomb = new Weapon(UUID.randomUUID().hashCode(), 2, 6, 5, 1, 1,
+                        Weapon bomb = new Weapon(UUID.randomUUID().hashCode(), WeaponType.BOMB,2, 6, 5, 1, 1,
                                 (float) 1.5, (float) 0.18, 4, (float) 1.5, 3, 1, "Bomb", 35);
                         // TODO add weapon price list
                         laser.setWeaponSystem(weapons);
@@ -926,9 +926,9 @@ public class ClientHandler implements Runnable {
                         weapons.getTiles().get(0).setStandingOnMe(crew);
                         weapons.setCrew(crewInRoom);
                         // Add Weapons
-                        Weapon radioBomb = new Weapon(UUID.randomUUID().hashCode(), 2, 2, 5, 1, 0,
+                        Weapon radioBomb = new Weapon(UUID.randomUUID().hashCode(), WeaponType.RADIO_BOMB,2, 2, 5, 1, 0,
                                 (float) 1.5, (float) 0.05, 4, (float) 1.5, 5, 1, "RadioBomb", 75);
-                        Weapon healBomb = new Weapon(UUID.randomUUID().hashCode(), 2, 0, 6, 1, 1,
+                        Weapon healBomb = new Weapon(UUID.randomUUID().hashCode(), WeaponType.HEAL_BOMB, 2, 0, 6, 1, 1,
                                 (float) 1.5, (float) 0.1, 4, (float) 0, -4, 1, "HealBomb", 60);
                         // TODO add weapon price list
                         radioBomb.setWeaponSystem(weapons);
