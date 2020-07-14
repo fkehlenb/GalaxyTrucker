@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -166,7 +167,7 @@ public class LobbyScreenHost implements Screen {
      * continue the game with the players that are in the lobby
      */
     public void resumeGame() {
-
+        main.setScreen(new GamePlay(main)); //TODO irgendwas an server kommunizieren?
     }
 
     /**
@@ -239,5 +240,6 @@ public class LobbyScreenHost implements Screen {
     public void dispose() {
         background.dispose();
         stage.dispose();
+        font.dispose();
     }
 }

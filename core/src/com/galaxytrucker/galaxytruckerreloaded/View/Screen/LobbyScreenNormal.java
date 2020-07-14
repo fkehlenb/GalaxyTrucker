@@ -231,6 +231,7 @@ public class LobbyScreenNormal implements Screen {
     public void dispose() {
         background.dispose();
         stage.dispose();
+        font.dispose();
     }
 
 }

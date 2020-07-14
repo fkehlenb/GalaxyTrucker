@@ -28,6 +28,14 @@ public class Overworld implements Serializable {
     @NonNull
     private int seed;
 
+    /**
+     * the difficulty of the map
+     * 0 = easy
+     * 1 = middle
+     * 2 = hard
+     */
+    private int difficulty;
+
     /** Username used as ID */
     @NonNull
     private String associatedUser;

@@ -7,8 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.WeaponActivateButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 /**
  * shows the weapons of the ship
@@ -54,8 +56,8 @@ public class WeaponUI extends SubsystemUI {
      * @param main the main class
      * @param weapon the weapon
      */
-    public WeaponUI(Main main, Weapon weapon, Stage stage, RoomUI roomUI) {
-        super(main, weapon.getWeaponSystem(), stage, roomUI);
+    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, Weapon weapon, float sx) {
+        super(main, stage, ship, x, y, weapon.getWeaponSystem(), sx);
 
         cooldown = weapon.getCooldown();
         energy = weapon.getEnergy();
@@ -88,8 +90,8 @@ public class WeaponUI extends SubsystemUI {
     /**
      * dispose of everything
      */
-    public void disposeWeaponUI() {
-        super.disposeSubsystemUI();
+    public void disposeRoomUI() {
+        super.disposeRoomUI();
 
         //weaponBackground.dispose();
 
@@ -98,12 +100,6 @@ public class WeaponUI extends SubsystemUI {
         }*/
 
         activateButton.remove();
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
     }
 
     /**

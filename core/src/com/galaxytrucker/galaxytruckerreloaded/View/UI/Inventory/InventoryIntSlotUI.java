@@ -1,35 +1,26 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
 public class InventoryIntSlotUI extends InventorySlotUI {
 
-    /**
-     * the value of the thing
-     */
-    private int value;
-
-    /**
-     * the texture
-     */
-    private Texture texture;
-
-    /**
-     * the text explaining what this inventory slot represents
-     */
-    private String text;
+    private GlyphLayout glyphLayout = new GlyphLayout();
 
     /**
      * Constructor
      *
      * @param main - main class
      */
-    public InventoryIntSlotUI(Main main, int value, float x, float y, String text) {
-        super(main, x, y);
-        this.value = value;
-        this.text = text;
-        //texture = new Texture();
+    public InventoryIntSlotUI(Main main, int value, float x, float y, String text, BitmapFont font) {
+        super(main, x, y, font);
+
+        glyphLayout.setText(font, text + ": " + value);
     }
 
     /**
@@ -38,18 +29,6 @@ public class InventoryIntSlotUI extends InventorySlotUI {
     @Override
     public void disposeInventorySlotUI() {
         super.disposeInventorySlotUI();
-        //texture.dispose();
-    }
-
-    /**
-     * render
-     * without stage stuff
-     */
-    public void render() {
-        super.render();
-        /*main.batch.begin();
-        main.batch.draw(texture, 0, 0, 0, 0);//TODO whxy
-        main.batch.end();*/
     }
 
     /**
@@ -66,5 +45,16 @@ public class InventoryIntSlotUI extends InventorySlotUI {
     @Override
     public void hideInventorySlotUI() {
 
+    }
+
+    /**
+     * render
+     * without stage stuff
+     */
+    public void render() {
+        super.render();
+        main.batch.begin();
+        font.draw(main.batch, glyphLayout, posX, posY);
+        main.batch.end();
     }
 }

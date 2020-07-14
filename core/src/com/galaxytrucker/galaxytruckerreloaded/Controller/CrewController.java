@@ -12,14 +12,28 @@ import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class CrewController extends Controller {
+
+    private static CrewController singleton;
 
     /**
      * ClientControllerCommunicator
      */
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
+
+    /**
+     * return the instance of this singleton
+     * @param communicator the communicator
+     * @return the singleton instance
+     */
+    public static CrewController getInstance(ClientControllerCommunicator communicator) {
+        if(singleton == null) {
+            singleton = new CrewController(communicator);
+        }
+        return singleton;
+    }
 
     /**
      * Move a crew member to a different section

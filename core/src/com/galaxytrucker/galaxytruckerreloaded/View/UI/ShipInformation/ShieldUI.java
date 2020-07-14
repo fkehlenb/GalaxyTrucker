@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Shield;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 public class ShieldUI extends SubsystemUI {
 
@@ -36,8 +37,8 @@ public class ShieldUI extends SubsystemUI {
      * @param main - the main class
      * @param shield the shield
      */
-    public ShieldUI(Main main, Shield shield, Stage stage, RoomUI roomUI) {
-        super(main, shield, stage, roomUI);
+    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, Shield shield, float sx) {
+        super(main, stage, ship, x, y, shield, sx);
 
         onShip = new Texture("ship/anaerobic/shields.png");
 
@@ -61,8 +62,8 @@ public class ShieldUI extends SubsystemUI {
     /**
      * Dispose of shield ui
      */
-    public void disposeShieldUI() {
-        super.disposeSubsystemUI();
+    public void disposeRoomUI() {
+        super.disposeRoomUI();
 
         shieldTexture.dispose();
         upperBackground.dispose();
@@ -87,24 +88,6 @@ public class ShieldUI extends SubsystemUI {
             x +=10; //TODO
         }
         main.batch.end();
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * Show shield ui
-     */
-    public void showShieldUI() {
-    }
-
-    /**
-     * hide the shield ui
-     */
-    public void hideShieldUI() {
     }
 
     /**
