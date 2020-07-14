@@ -51,4 +51,4 @@ distribute:
     artifacts:
         paths:
             - GalaxyTrucker.jar
-        expire-in: 1 week
+        expire_in: 1 week
