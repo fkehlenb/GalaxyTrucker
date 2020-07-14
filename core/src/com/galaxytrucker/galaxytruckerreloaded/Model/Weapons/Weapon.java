@@ -22,6 +22,10 @@ public class Weapon implements Serializable {
     @Id
     private int id;
 
+    /** Weapon type */
+    @NonNull
+    private WeaponType weaponType;
+
     /** Weapon level */
     @NonNull
     private int weaponLevel;

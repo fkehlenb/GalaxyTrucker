@@ -9,6 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -311,9 +312,9 @@ public class ClientHandler implements Runnable {
                         weapons.getTiles().get(0).setStandingOnMe(crew);
                         weapons.setCrew(crewInRoom);
                         // Add Weapons
-                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(), 2, 1, 1, 1, 0,
+                        Weapon laser = new Weapon(UUID.randomUUID().hashCode(), WeaponType.LASER, 2, 1, 1, 1, 0,
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser Gun", 30);
-                        Weapon rocket = new Weapon(UUID.randomUUID().hashCode(), 1, 2, 2, 1, 1, (float) 1.0,
+                        Weapon rocket = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,1, 2, 2, 1, 1, (float) 1.0,
                                 (float) 0.25, 4, (float) 1.0, 2, 1, "Allahu Akbar", 30);
                         // TODO Add weapon price list based on weapon level
                         laser.setWeaponSystem(weapons);
@@ -429,9 +430,9 @@ public class ClientHandler implements Runnable {
                     else if (i==12){
                         System weapons = new System(UUID.randomUUID().hashCode(),0,100,i,new ArrayList<Crew>(),
                                 tiles,3,5,0,SystemType.WEAPON_SYSTEM,new ArrayList<Weapon>());
-                        Weapon rocket2 = new Weapon(UUID.randomUUID().hashCode(),2,3,2,1,1,
+                        Weapon rocket2 = new Weapon(UUID.randomUUID().hashCode(),WeaponType.ROCKET,2,3,2,1,1,
                                 (float) 0.3,(float)0.25,4,(float)1.0,2,1,"Rocket 2",25);
-                        Weapon rocket1 = new Weapon(UUID.randomUUID().hashCode(),2,2,2,1,1,
+                        Weapon rocket1 = new Weapon(UUID.randomUUID().hashCode(),WeaponType.ROCKET,2,2,2,1,1,
                                 (float) 0.3,(float)0.25,4,(float)1.0,2,1,"Rocket 1",25);
                         // TODO Add weapon price list based on weapon level
                         List<Weapon> currentWeapons = weapons.getShipWeapons();
@@ -468,6 +469,11 @@ public class ClientHandler implements Runnable {
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 9,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
+            case KILLER:
+
+                // ========== Tile Generator ==========
+
+                // ========== Room Generator ==========
             default:
                 return null;
         }
