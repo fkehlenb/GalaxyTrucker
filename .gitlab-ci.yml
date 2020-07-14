@@ -47,7 +47,7 @@ distribute:
     stage: distribute
     script:
         - cd desktop
-        - gradle dist
+        - gradlew dist
     artifacts:
         paths:
             - GalaxyTrucker.jar
