@@ -54,6 +54,11 @@ public class ShipView extends AbstractShip {
     private ScrapUI money;
 
     /**
+     * the ui displaying the amount of missiles the player has
+     */
+    private MissileUI missiles;
+
+    /**
      * button to open the inventory (InventoryUI)
      */
     private ShipButton inventory;
@@ -176,6 +181,7 @@ public class ShipView extends AbstractShip {
         inventory = new ShipButton(660,main.HEIGHT - 60, 248, 50, this);
 
         money = new ScrapUI(main, ship.getCoins());
+        missiles = new MissileUI(main, ship.getMissiles());
         hull = new HullUI(main, ship.getHp());
         energy = new EnergyUI(main, ship.getEnergy());
 
@@ -282,6 +288,7 @@ public class ShipView extends AbstractShip {
         main.batch.end();
 
         money.render();
+        missiles.render();
         hull.render();
         energy.render();
 
@@ -312,6 +319,7 @@ public class ShipView extends AbstractShip {
         shipRoomBackground.dispose();
         weaponGeneralBackground.dispose();
         money.disposeScrapUI();
+        missiles.disposeMissileUI();
         hull.disposeHullUI();
         energy.disposeEnergyUI();
         if(mapUI!=null) {mapUI.disposeMapUI();}
@@ -469,6 +477,12 @@ public class ShipView extends AbstractShip {
      * @param amount by how much the amount is changed
      */
     public void changeAmountScrap(int amount) { money.changeAmount(amount);}
+
+    /**
+     * change the amount of missiles displayed
+     * @param amount by how much the amount is changed
+     */
+    public void changeAmountMissile(int amount) { missiles.changeAmount(amount);}
 
     public void weaponShot(int weaponid, Room room) { game.weaponShot(weaponid, room);}
 
