@@ -36,9 +36,9 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
         glyphBurst.setText(font, "Burst: "+weapon.getBurst());
         glyphPrecision.setText(font, "Precision: "+weapon.getAccuracy());
 
-        String name = weapon.getWeaponName();
+        String name = weapon.getWeaponType().toString();
         weaponTexture = new Texture("shipsys/weapon_system/"+name.toLowerCase()+".png");
-        glyphName.setText(font, name);
+        glyphName.setText(font, weapon.getWeaponName());
     }
 
     /**
