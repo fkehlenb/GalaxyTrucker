@@ -92,11 +92,10 @@ public class MainMenu implements Screen {
     public MainMenu(Main main){
         this.main = main;
         background = new Texture("1080p.png");
-        //newGame = new NewGameButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this) ;
-        singlePlayerButton = new SinglePlayerButton(main.WIDTH/2 - 124, main.HEIGHT/2 + 25, 248, 50, this);
-        multiPlayerButton = new MultiPlayerButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 25, 248, 50, this);
-        optionButton = new OptionButton(main.WIDTH/2 - 124, main.HEIGHT/2 -50 - 25, 248, 50,this);
-        quit = new QuitButton(main.WIDTH/2 - 124 , main.HEIGHT/2 - 100 - 25, 248, 50, this);
+        singlePlayerButton = new SinglePlayerButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        multiPlayerButton = new MultiPlayerButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        optionButton = new OptionButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f,this);
+        quit = new QuitButton(main.WIDTH/2 - main.WIDTH/7.74f/2 , main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*3, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);

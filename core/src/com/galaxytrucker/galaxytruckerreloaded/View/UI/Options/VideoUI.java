@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.SetResolutionButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.WindowedButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.FullscreenEnableButton;
@@ -49,6 +50,8 @@ public class VideoUI {
 
     private WindowedButton windowedButton;
 
+    private SetResolutionButton setResolutionButton;
+
     private Stage stage;
 
     /**
@@ -77,10 +80,13 @@ public class VideoUI {
         backButton = new BackButton(x + 220, y + 100, 128, 24, optionUI, this);
         windowedButton = new WindowedButton(x + 220+65, y + 320, 128, 24, main);
         fullscreenEnableButton = new FullscreenEnableButton(x + 220-65, y + 320, 128, 24, main);
+        setResolutionButton = new SetResolutionButton(x + 220, y + 420, 128, 24, main, 2560, 1440);
+
 
         stage.addActor(backButton);
         stage.addActor(windowedButton);
         stage.addActor(fullscreenEnableButton);
+        stage.addActor(setResolutionButton);
     }
 
     /**
@@ -104,6 +110,7 @@ public class VideoUI {
         backButton.remove();
         fullscreenEnableButton.remove();
         windowedButton.remove();
+        setResolutionButton.remove();
         if(gamePlay != null) {
             gamePlay.deleteVideoUI();
         }

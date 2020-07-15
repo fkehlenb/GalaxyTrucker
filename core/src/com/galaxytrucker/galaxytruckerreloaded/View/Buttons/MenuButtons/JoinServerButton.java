@@ -25,7 +25,7 @@ public class JoinServerButton extends ImButton {
      * @param screen the screen this button is on
      */
     public JoinServerButton (float x, float y, float width, float height, CreateOrJoinServer screen) {
-        super(new Texture("ingame_continue.png"), x, y, width, height);
+        super(new Texture("buttons/join_button.png"), x, y, width, height);
         this.screen = screen;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

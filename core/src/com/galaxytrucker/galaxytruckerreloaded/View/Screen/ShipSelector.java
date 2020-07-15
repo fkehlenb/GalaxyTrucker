@@ -117,7 +117,7 @@ public class ShipSelector implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
-        username.setSize(248, 50);
+        username.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
         username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/8);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
@@ -133,21 +133,22 @@ public class ShipSelector implements Screen {
         params.magFilter = Texture.TextureFilter.Nearest;
         params.minFilter = Texture.TextureFilter.Nearest;
         params.genMipMaps = true;
-        params.size = 15;
+        params.size = main.HEIGHT/72;
 
         font = generator.generateFont(params);
         glyph.setText(font, "Please enter your username");
         glyph2.setText(font, "Please select your ship");
 
-        createGameButton = new CreateGameButton(7*main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
-        backButton = new ShipSelectorBackButton(main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
-        leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
-        rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
+        createGameButton = new CreateGameButton(7*main.WIDTH/8 -main.WIDTH/7.74f/2, main.HEIGHT/8, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        backButton = new ShipSelectorBackButton(main.WIDTH/8 -main.WIDTH/7.74f/2, main.HEIGHT/8,  main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        leftArrowButton = new LeftArrowButton(main.WIDTH/4 -main.HEIGHT/18/2 , main.HEIGHT/2-main.HEIGHT/21.6f/2+main.HEIGHT/10.8f, main.HEIGHT/18, main.HEIGHT/21.6f, this);
+        rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -main.HEIGHT/18/2 , main.HEIGHT/2-main.HEIGHT/21.6f/2+main.HEIGHT/10.8f, main.HEIGHT/18, main.HEIGHT/21.6f, this);
 
 
         ship = ShipType.DEFAULT;
         shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
-        shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
+        shipImage.setScale(main.WIDTH/1920);
+        shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+main.HEIGHT/10.8f);
 
         stage.addActor(shipImage);
         stage.addActor(createGameButton);
@@ -165,7 +166,7 @@ public class ShipSelector implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
-        username.setSize(248, 50);
+        username.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
         username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/8);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
@@ -181,19 +182,21 @@ public class ShipSelector implements Screen {
         params.magFilter = Texture.TextureFilter.Nearest;
         params.minFilter = Texture.TextureFilter.Nearest;
         params.genMipMaps = true;
-        params.size = 15;
+        params.size = main.HEIGHT/72;
 
         font = generator.generateFont(params);
         glyph.setText(font, "Please enter your username");
         glyph2.setText(font, "Please select your ship");
 
-        createGameButton = new CreateGameButton(7*main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
-        backButton = new ShipSelectorBackButton(main.WIDTH/8 -256, main.HEIGHT/8, 512, 48, this);
-        leftArrowButton = new LeftArrowButton(main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
-        rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -30 , main.HEIGHT/2-25+100, 60, 50, this);
+        createGameButton = new CreateGameButton(7*main.WIDTH/8 -main.WIDTH/7.74f/2, main.HEIGHT/8, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        backButton = new ShipSelectorBackButton(main.WIDTH/8 -main.WIDTH/7.74f/2, main.HEIGHT/8,  main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        leftArrowButton = new LeftArrowButton(main.WIDTH/4 -main.HEIGHT/18/2 , main.HEIGHT/2-main.HEIGHT/21.6f/2+main.HEIGHT/10.8f, main.HEIGHT/18, main.HEIGHT/21.6f, this);
+        rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -main.HEIGHT/18/2 , main.HEIGHT/2-main.HEIGHT/21.6f/2+main.HEIGHT/10.8f, main.HEIGHT/18, main.HEIGHT/21.6f, this);
 
+        
         shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
-        shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+100);
+        shipImage.setScale(main.WIDTH/1920);
+        shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+main.HEIGHT/10.8f);
 
         stage.addActor(shipImage);
         stage.addActor(createGameButton);
@@ -201,6 +204,7 @@ public class ShipSelector implements Screen {
         stage.addActor(backButton);
         stage.addActor(leftArrowButton);
         stage.addActor(rightArrowButton);
+
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -224,8 +228,8 @@ public class ShipSelector implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/8 +65);
-        font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2 +400);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/8 + main.HEIGHT/16.6154f);
+        font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2 + main.HEIGHT/2.7f);
         main.batch.end();
         stage.draw();
     }

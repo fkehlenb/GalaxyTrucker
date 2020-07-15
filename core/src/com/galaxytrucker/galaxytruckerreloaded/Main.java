@@ -16,8 +16,8 @@ public class Main extends Game {
     /**
      * Settings
      */
-    public static final int WIDTH = 1920;
-    public static final int HEIGHT = 1080;
+    public static int WIDTH = 1920;
+    public static int HEIGHT = 1080;
 
     public static final String TITLE = "Galaxy Trucker";
     /**
@@ -91,4 +91,6 @@ public class Main extends Game {
     public void setWindowed() {
         Gdx.graphics.setWindowedMode(WIDTH,HEIGHT);
     }
+
+    public void setResolution(int width, int height){WIDTH = width; HEIGHT = height; create();}
 }

@@ -89,11 +89,11 @@ public class ChooseDifficultyScreen implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        easy = new DifficultyButton(new Texture("buttons/easy_button.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this, 0);
-        middle = new DifficultyButton(new Texture("buttons/medium_button.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96, 512, 48, this, 1);
-        hard = new DifficultyButton(new Texture("buttons/hard_button.png"), main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*2, 512, 48, this, 2);
+        easy = new DifficultyButton(new Texture("buttons/easy_button.png"), main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*0, main.WIDTH/7.74f, main.HEIGHT/21.6f, this, 0);
+        middle = new DifficultyButton(new Texture("buttons/medium_button.png"), main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this, 1);
+        hard = new DifficultyButton(new Texture("buttons/hard_button.png"), main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this, 2);
 
-        back = new DifficultyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*3, 512, 48, this);
+        back = new DifficultyBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*3, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
@@ -105,7 +105,7 @@ public class ChooseDifficultyScreen implements Screen {
         params.magFilter = Texture.TextureFilter.Nearest;
         params.minFilter = Texture.TextureFilter.Nearest;
         params.genMipMaps = true;
-        params.size = 40;
+        params.size = main.HEIGHT/48;
 
         font = generator.generateFont(params);
         glyph.setText(font, "Choose A Difficulty");
@@ -161,7 +161,7 @@ public class ChooseDifficultyScreen implements Screen {
 
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT - 400);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + main.HEIGHT/21.6f*2);
         main.batch.end();
 
         stage.draw();
