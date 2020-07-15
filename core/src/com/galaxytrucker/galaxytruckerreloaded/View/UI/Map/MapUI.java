@@ -65,7 +65,7 @@ public class MapUI {
         x = Main.WIDTH/2f - mapTexture.getWidth()/2f;
         y = Main.HEIGHT/2f - mapTexture.getHeight()/2f;
 
-        closeButton = new InventoryCloseButton(x+955, y-80, 248, 50, null, null, this);
+        closeButton = new InventoryCloseButton(x+(Main.WIDTH/2.01f), y-(Main.HEIGHT/13.5f), 248, 50, null, null, this);
         stage.addActor(closeButton);
 
         locations = new LinkedList<>();
