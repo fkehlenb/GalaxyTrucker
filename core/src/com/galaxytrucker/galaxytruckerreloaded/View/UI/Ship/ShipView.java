@@ -59,6 +59,11 @@ public class ShipView extends AbstractShip {
     private MissileUI missiles;
 
     /**
+     * Ui displaying the amount of fuel player has.
+     */
+    private FuelUI fuel;
+
+    /**
      * button to open the inventory (InventoryUI)
      */
     private ShipButton inventory;
@@ -187,6 +192,7 @@ public class ShipView extends AbstractShip {
         money = new ScrapUI(main, ship.getCoins());
         missiles = new MissileUI(main, ship.getMissiles());
         hull = new HullUI(main, ship.getHp());
+        fuel = new FuelUI(main, ship.getFuel());
         energy = new EnergyUI(main, ship.getEnergy());
 
         stage.addActor(inventory);
@@ -293,6 +299,7 @@ public class ShipView extends AbstractShip {
 
         money.render();
         missiles.render();
+        fuel.render();
         hull.render();
         energy.render();
 
@@ -325,6 +332,7 @@ public class ShipView extends AbstractShip {
         money.disposeScrapUI();
         missiles.disposeMissileUI();
         hull.disposeHullUI();
+        fuel.disposeFuelUI();
         energy.disposeEnergyUI();
         if(mapUI!=null) {mapUI.disposeMapUI();}
         if(inventoryUI!=null) {inventoryUI.disposeInventoryUI();}
@@ -487,6 +495,12 @@ public class ShipView extends AbstractShip {
      * @param amount by how much the amount is changed
      */
     public void changeAmountMissile(int amount) { missiles.changeAmount(amount);}
+
+    /**
+     * changes amount of fuel displayed
+     * @param amount by how much the amount is changed
+     */
+    public void changeAmountFuel(int amount) {fuel.changeAmount(amount);}
 
     public void weaponShot(int weaponid, Room room) { game.weaponShot(weaponid, room);}
 
