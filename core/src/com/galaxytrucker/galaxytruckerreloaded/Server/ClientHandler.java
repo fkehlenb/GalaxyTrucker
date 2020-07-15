@@ -294,6 +294,12 @@ public class ClientHandler implements Runnable {
         List<Weapon> inventory = new ArrayList<>();
         List<Room> rooms = new ArrayList<>();
         List<Integer> crewStats = new ArrayList<>();
+        List<Integer> weaponPrices = new ArrayList<>();
+        weaponPrices.add(15);
+        weaponPrices.add(25);
+        weaponPrices.add(40);
+        weaponPrices.add(60);
+        weaponPrices.add(80);
         switch (shipType) {
             // ========== KESTREL A ==========
             case DEFAULT:
@@ -358,7 +364,8 @@ public class ClientHandler implements Runnable {
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
                         Weapon rocket = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,1, 2, 2, 1, 1, (float) 1.0,
                                 (float) 0.25, 4, (float) 1.0, 2, 1, "Rocket", 30);
-                        // TODO add weapon price list
+                        laser.setPrice(weaponPrices);
+                        rocket.setPrice(weaponPrices);
                         laser.setWeaponSystem(weapons);
                         rocket.setWeaponSystem(weapons);
                         List<Weapon> shipWeapons = new ArrayList<>();
@@ -469,7 +476,8 @@ public class ClientHandler implements Runnable {
                                 (float) 0.25, 4, (float) 1.0, 2, 1, "Rocket", 30);
                         Weapon rocket1 = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,1, 2, 2, 1, 1, (float) 1.0,
                                 (float) 0.25, 4, (float) 1.0, 2, 1, "Rocket", 30);
-                        // TODO add weapon price list
+                        rocket2.setPrice(weaponPrices);
+                        rocket1.setPrice(weaponPrices);
                         rocket1.setWeaponSystem(weapons);
                         rocket2.setWeaponSystem(weapons);
                         List<Weapon> shipWeapons = new ArrayList<>();
@@ -574,7 +582,8 @@ public class ClientHandler implements Runnable {
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
                         Weapon radio = new Weapon(UUID.randomUUID().hashCode(), WeaponType.RADIO,4, 0, 3, 1, 0, (float) 1.0,
                                 (float) 0.12, 0, (float) 0.0, 2, 3, "Radio", 45);
-                        // TODO add weapon price list
+                        radio.setPrice(weaponPrices);
+                        laser.setPrice(weaponPrices);
                         radio.setWeaponSystem(weapons);
                         laser.setWeaponSystem(weapons);
                         List<Weapon> shipWeapons = new ArrayList<>();
@@ -725,7 +734,9 @@ public class ClientHandler implements Runnable {
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
                         Weapon laser3 = new Weapon(UUID.randomUUID().hashCode(), WeaponType.LASER, 2, 1, 1, 1, 0,
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
-                        // TODO add weapon price list
+                        laser2.setPrice(weaponPrices);
+                        laser.setPrice(weaponPrices);
+                        laser3.setPrice(weaponPrices);
                         laser.setWeaponSystem(weapons);
                         laser2.setWeaponSystem(weapons);
                         laser3.setWeaponSystem(weapons);
@@ -810,7 +821,8 @@ public class ClientHandler implements Runnable {
                                 (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
                         Weapon bomb = new Weapon(UUID.randomUUID().hashCode(), WeaponType.BOMB,2, 6, 5, 1, 1,
                                 (float) 1.5, (float) 0.18, 4, (float) 1.5, 3, 1, "Bomb", 35);
-                        // TODO add weapon price list
+                        bomb.setPrice(weaponPrices);
+                        laser.setPrice(weaponPrices);
                         laser.setWeaponSystem(weapons);
                         bomb.setWeaponSystem(weapons);
                         List<Weapon> shipWeapons = new ArrayList<>();
@@ -930,7 +942,8 @@ public class ClientHandler implements Runnable {
                                 (float) 1.5, (float) 0.05, 4, (float) 1.5, 5, 1, "RadioBomb", 75);
                         Weapon healBomb = new Weapon(UUID.randomUUID().hashCode(), WeaponType.HEAL_BOMB, 2, 0, 6, 1, 1,
                                 (float) 1.5, (float) 0.1, 4, (float) 0, -4, 1, "HealBomb", 60);
-                        // TODO add weapon price list
+                        radioBomb.setPrice(weaponPrices);
+                        healBomb.setPrice(weaponPrices);
                         radioBomb.setWeaponSystem(weapons);
                         healBomb.setWeaponSystem(weapons);
                         List<Weapon> shipWeapons = new ArrayList<>();
