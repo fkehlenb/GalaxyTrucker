@@ -109,7 +109,7 @@ public class CreateOrJoinServer implements Screen {
         params.magFilter = Texture.TextureFilter.Nearest;
         params.minFilter = Texture.TextureFilter.Nearest;
         params.genMipMaps = true;
-        params.size = 40;
+        params.size = main.HEIGHT/48;
 
         font = generator.generateFont(params);
         glyph.setText(font, "Do you want to start the server or join one?");
@@ -117,9 +117,9 @@ public class CreateOrJoinServer implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        join = new JoinServerButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this);
-        start = new StartServerButton(main.WIDTH/2 - 256, main.HEIGHT/2 + 70, 512, 48, this);
-        back = new CreateOrJoinBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 70, 512, 48, this);
+        join = new JoinServerButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*0, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        start = new StartServerButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        back = new CreateOrJoinBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
 
         stage.addActor(join);
         stage.addActor(start);
@@ -177,7 +177,7 @@ public class CreateOrJoinServer implements Screen {
 
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT - 400);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + main.HEIGHT/21.6f*2);
         main.batch.end();
 
         stage.draw();

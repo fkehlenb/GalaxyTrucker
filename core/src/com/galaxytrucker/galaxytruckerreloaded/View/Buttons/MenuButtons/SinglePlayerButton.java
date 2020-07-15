@@ -21,6 +21,7 @@ public class SinglePlayerButton extends ImButton {
      */
     private MainMenu screen;
 
+
     /**
      * Left-Click action of the Button.
      */

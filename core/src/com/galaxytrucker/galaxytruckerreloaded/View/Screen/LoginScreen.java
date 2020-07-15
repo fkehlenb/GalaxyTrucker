@@ -103,14 +103,16 @@ public class LoginScreen implements Screen {
         this.singleplayer = singleplayer;
 
         background = new Texture("1080p.png");
-        loginButton = new LoginButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 200, 248, 50, this);
-        backButton = new LoginBackButton(main.WIDTH/2 - 124, main.HEIGHT/2 - 300, 248, 50, this);
+        loginButton = new LoginButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*3, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        backButton = new LoginBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*4, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
 
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
-        username.setSize(248, 50);
-        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 - 100);
+        username.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
+        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2);
+
+
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
@@ -125,7 +127,7 @@ public class LoginScreen implements Screen {
         params.magFilter = Texture.TextureFilter.Nearest;
         params.minFilter = Texture.TextureFilter.Nearest;
         params.genMipMaps = true;
-        params.size = 40;
+        params.size = main.HEIGHT/48;
 
         font = generator.generateFont(params);
         glyph.setText(font, "Please enter your username");
@@ -136,8 +138,8 @@ public class LoginScreen implements Screen {
 
         if(!singleplayer) {
             address = new TextField("", skin);
-            address.setSize(248, 50);
-            address.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + 100);
+            address.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
+            address.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 +main.HEIGHT/21.6f*1);
             stage.addActor(address);
 
             glyph2.setText(font, "Please enter the server address"); //localhost if you are host
@@ -160,15 +162,16 @@ public class LoginScreen implements Screen {
 
     }
 
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + 50);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2  -main.HEIGHT/21.6f*0);
         if(!singleplayer) {
-            font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2 + 250);
+            font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2  +main.HEIGHT/21.6f*3);
         }
         main.batch.end();
         stage.draw();
