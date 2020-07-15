@@ -53,13 +53,13 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     public void render() {
         super.render();
         main.batch.begin();
-        font.draw(main.batch, glyphName, posX, posY + weaponTexture.getHeight() + 25);
-        font.draw(main.batch, glyphBurst, posX+72, posY+60);
-        font.draw(main.batch, glyphCooldown, posX+72, posY+40);
-        font.draw(main.batch, glyphCrewDamage, posX+72, posY+20);
-        font.draw(main.batch, glyphDamage, posX+220, posY+60);
-        font.draw(main.batch, glyphMissile, posX+220, posY+40);
-        font.draw(main.batch, glyphPrecision, posX+220, posY+20);
+        font.draw(main.batch, glyphName, posX, posY + weaponTexture.getHeight() + main.HEIGHT/76.8f);
+        font.draw(main.batch, glyphBurst, posX+Main.WIDTH/26.67f, posY+Main.HEIGHT/32);
+        font.draw(main.batch, glyphCooldown, posX+Main.WIDTH/26.67f, posY+Main.HEIGHT/48);
+        font.draw(main.batch, glyphCrewDamage, posX+Main.WIDTH/26.67f, posY+Main.HEIGHT/96);
+        font.draw(main.batch, glyphDamage, posX+Main.WIDTH/8.727f, posY+Main.HEIGHT/32);
+        font.draw(main.batch, glyphMissile, posX+Main.WIDTH/8.727f, posY+Main.HEIGHT/48);
+        font.draw(main.batch, glyphPrecision, posX+Main.WIDTH/8.727f, posY+Main.HEIGHT/96);
         main.batch.draw(weaponTexture, posX, posY, weaponTexture.getWidth(), weaponTexture.getHeight());
         main.batch.end();
     }
