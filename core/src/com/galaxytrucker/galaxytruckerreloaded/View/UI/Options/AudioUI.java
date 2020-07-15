@@ -5,6 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.MuteButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.VolumeDownButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.VolumeUpButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
@@ -19,6 +22,9 @@ public class AudioUI {
     private BackButton backButton;
     private Stage stage;
     private MainMenu mainMenu;
+    private MuteButton muteButton;
+    private VolumeUpButton volumeUpButton;
+    private VolumeDownButton volumeDownButton;
 
     /**
      * Constructor
@@ -44,8 +50,14 @@ public class AudioUI {
         y = main.HEIGHT / 2 - audioBackgroundTexture.getHeight() / 2;
 
         backButton = new BackButton(x + 220, y + 100, 128, 24, optionUI, this);
+        muteButton = new MuteButton(x + 220, y + (3*audioBackgroundTexture.getHeight() / 5),128,24,main);
+        volumeDownButton = new VolumeDownButton(x + 220 - 130, y + (3*audioBackgroundTexture.getHeight() / 5) ,128,24, main);
+        volumeUpButton = new VolumeUpButton(x + 220 + 130, y + (3*audioBackgroundTexture.getHeight() / 5) ,128,24,main);
 
         stage.addActor(backButton);
+        stage.addActor(muteButton);
+        stage.addActor(volumeDownButton);
+        stage.addActor(volumeUpButton);
     }
 
     /**
@@ -67,6 +79,9 @@ public class AudioUI {
     public void disposeAudioUI() {
         audioBackgroundTexture.dispose();
         backButton.remove();
+        volumeUpButton.remove();
+        volumeDownButton.remove();
+        muteButton.remove();
         if(gamePlay != null){
             gamePlay.deleteAudioUI();
         }
