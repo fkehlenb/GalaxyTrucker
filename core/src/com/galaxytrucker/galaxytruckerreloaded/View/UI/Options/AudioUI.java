@@ -8,7 +8,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.MuteButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.VolumeDownButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.VolumeUpButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General.BackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
@@ -35,7 +35,6 @@ public class AudioUI {
     public AudioUI(Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
         this.gamePlay = gamePlay;
-        this.stage = stage;
         this.mainMenu = mainMenu;
         //this.optionUI = gamePlay.getOptionUI();
         if(gamePlay!=null) {
@@ -44,6 +43,7 @@ public class AudioUI {
         else if(mainMenu != null) {
             this.optionUI = mainMenu.getOptionUI();
         }
+        this.stage = stage;
         audioBackgroundTexture = new Texture("options/audio.png");
 
         x = main.WIDTH / 2 - audioBackgroundTexture.getWidth() / 2;
@@ -93,23 +93,30 @@ public class AudioUI {
     /**
      * Open the options menu
      */
-    public void showGeneralUI() {
+    public void showAudioUI() {
         backButton.setVisible(true);
+        volumeDownButton.setVisible(true);
+        volumeUpButton.setVisible(true);
+        muteButton.setVisible(true);
+
     }
     /**
      * Close the options menu
      */
-    public void hideGeneralUI() {
+    public void hideAudioUI() {
         backButton.setVisible(false);
+        volumeDownButton.setVisible(false);
+        volumeUpButton.setVisible(false);
+        muteButton.setVisible(false);
     }
 
     /**
      * handles input to pause game, open options
      */
     public void updateInput() {
+        //macht nicht was es soll. im Kern ein Bastard diese Methode
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            disposeAudioUI();;
-            optionUI.showOptionsUI();
+            backButton.leftClick();
         }
     }
 

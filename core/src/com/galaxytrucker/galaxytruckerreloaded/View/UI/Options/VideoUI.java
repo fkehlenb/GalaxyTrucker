@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.BackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.WindowedButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.FullscreenEnableButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
@@ -140,9 +140,9 @@ public class VideoUI {
      * handles input to pause game, open options
      */
     public void updateInput() {
+        //macht nicht was es soll. im Kern ein Bastard diese Methode
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            disposeVideoUI();
-            optionUI.showOptionsUI();
+           backButton.leftClick();
         }
     }
 }

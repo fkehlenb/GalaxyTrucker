@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +22,8 @@ public class BackButton extends ImButton {
     private VideoUI videoUI;
 
     private AudioUI audioUI;
+
+    private PauseMenuUI pauseMenuUI;
 
     public BackButton(float x, float y, float width, float height, OptionUI optionUI, ControlUI controlUI) {
         super(new Texture("options/escape_back_on.png"), x, y, width, height);
@@ -78,14 +80,43 @@ public class BackButton extends ImButton {
         });
     }
 
+    public BackButton(float x, float y, float width, float height, OptionUI optionUI, PauseMenuUI pauseMenuUI) {
+        super(new Texture("options/escape_back_on.png"), x, y, width, height);
+        this.optionUI = optionUI;
+        this.pauseMenuUI = pauseMenuUI;
+        this.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                leftClick();
+            }
+        });
+    }
+
+    /**
+     * closes current Menu
+     */
     @Override
     public void leftClick() {
-
-        if(controlUI != null){controlUI.disposeControlUI();}
-        else if(creditUI != null){creditUI.disposeCreditUI();}
-        else if(generalUI != null){generalUI.disposeGeneralUI();}
-        else if(videoUI != null){videoUI.disposeVideoUI();}
-        else if(audioUI != null){audioUI.disposeAudioUI();}
-        optionUI.showOptionsUI();
+        if (controlUI != null) {
+            controlUI.disposeControlUI();
+            optionUI.showOptionsUI();
+        } else if (creditUI != null) {
+            creditUI.disposeCreditUI();
+            optionUI.showOptionsUI();
+        } else if (generalUI != null) {
+            generalUI.disposeGeneralUI();
+            optionUI.showOptionsUI();
+        } else if (videoUI != null) {
+            videoUI.disposeVideoUI();
+            optionUI.showOptionsUI();
+        } else if (audioUI != null) {
+            audioUI.disposeAudioUI();
+            optionUI.showOptionsUI();
+        } else if (optionUI != null) {
+            optionUI.disposeOptionsUI();
+            pauseMenuUI.showPauseMenuUI();
+        }else if (pauseMenuUI != null){
+            pauseMenuUI.disposePauseMenuUI();
+        }
     }
+
 }
