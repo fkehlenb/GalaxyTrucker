@@ -165,9 +165,9 @@ public class ShipView extends AbstractShip {
 
         //uis for all the systems/rooms
         rooms = new HashMap<>();
-        List<Room> existingSystems = ship.getSystems();
+        List<Room> existingRooms = ship.getSystems();
         float sx = 60;
-        for(Room r : existingSystems) {
+        for(Room r : existingRooms) {
             if(r instanceof System) {
                 if(r instanceof Shield) {
                     rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (Shield) r, sx));
@@ -193,7 +193,15 @@ public class ShipView extends AbstractShip {
         missiles = new MissileUI(main, ship.getMissiles());
         hull = new HullUI(main, ship.getHp());
         fuel = new FuelUI(main, ship.getFuel());
-        energy = new EnergyUI(main, ship.getEnergy());
+
+        //Um eine List aller Systems (existingSystems2) an EnergyUI zu übergeben.
+        List<System> existingSystems2 = new ArrayList<>();
+        for (Room r: existingRooms) {
+            if(r instanceof System) {
+                existingSystems2.add((System) r);
+            }
+        }
+        energy = new EnergyUI(main, ship.getEnergy(), existingSystems2);
 
         stage.addActor(inventory);
         stage.addActor(moveButton);
