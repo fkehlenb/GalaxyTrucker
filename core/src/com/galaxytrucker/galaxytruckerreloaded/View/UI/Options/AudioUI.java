@@ -15,7 +15,6 @@ public class AudioUI {
     private Main main;
     private GamePlay gamePlay;
     private OptionUI optionUI;
-    private float x, y;
     private BackButton backButton;
     private Stage stage;
     private MainMenu mainMenu;
@@ -40,10 +39,7 @@ public class AudioUI {
         }
         audioBackgroundTexture = new Texture("options/audio.png");
 
-        x = main.WIDTH / 2 - audioBackgroundTexture.getWidth() / 2;
-        y = main.HEIGHT / 2 - audioBackgroundTexture.getHeight() / 2;
-
-        backButton = new BackButton(x + 220, y + 100, 128, 24, optionUI, this);
+        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
 
         stage.addActor(backButton);
     }
@@ -55,7 +51,7 @@ public class AudioUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(audioBackgroundTexture, x, y, 601, 471);
+        main.batch.draw(audioBackgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();
