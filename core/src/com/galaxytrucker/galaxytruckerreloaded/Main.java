@@ -16,8 +16,8 @@ public class Main extends Game {
     /**
      * Settings
      */
-    public static int WIDTH = 2560;
-    public static int HEIGHT = 1440;
+    public static int WIDTH = 1920;
+    public static int HEIGHT = 1080;
 
     public static final String TITLE = "Galaxy Trucker";
     /**
