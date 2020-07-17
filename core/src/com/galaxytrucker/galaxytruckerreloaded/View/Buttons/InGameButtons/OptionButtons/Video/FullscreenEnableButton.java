@@ -14,7 +14,7 @@ public class FullscreenEnableButton extends ImButton {
     private Main main;
 
     public FullscreenEnableButton(float x, float y, float width, float height, Main main) {
-        super(new Texture("options/escape_enable_on.png"), x, y, width, height);
+        super(new Texture("options/fullsc_button.png"), x, y, width, height);
         this.main = main;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
