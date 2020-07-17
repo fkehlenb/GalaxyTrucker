@@ -186,8 +186,8 @@ public class ShipView extends AbstractShip {
             rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseY), w, sx + 55));
         }
 
-        moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(12.8f), Main.HEIGHT/(11.739f), this);
-        inventory = new ShipButton(Main.WIDTH/(2.5f),main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(12.8f), Main.HEIGHT/(11.739f), this);
+        moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
+        inventory = new ShipButton(Main.WIDTH/(2.5f),main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
 
         money = new ScrapUI(main, ship.getCoins());
         missiles = new MissileUI(main, ship.getMissiles());

@@ -70,7 +70,7 @@ public class InventoryUI {
         float wy = y + Main.HEIGHT/2.057f;
         float wx = cx + Main.WIDTH/4.8f;
         for(Weapon w : weapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, font));
+            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font));
             wy -=Main.HEIGHT/10.8f;
         }
         slots.add(new InventoryIntSlotUI(main, fuel, x+Main.WIDTH/38.4f, y+Main.HEIGHT/21.6f, "fuel", font));

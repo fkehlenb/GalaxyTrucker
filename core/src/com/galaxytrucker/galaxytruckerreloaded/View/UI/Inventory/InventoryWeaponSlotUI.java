@@ -3,8 +3,10 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EquipmentAndUpgradesMenu.EquipButton;
 
 public class InventoryWeaponSlotUI extends InventorySlotUI {
 
@@ -22,13 +24,18 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
 
     private GlyphLayout glyphName = new GlyphLayout();
 
+    private Stage stage;
+
+    private EquipButton equipButton;
+
     /**
      * constructor
      * @param main the main class
      * @param weapon the weapon to be displayed
      */
-    public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y, BitmapFont font) {
+    public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y, Stage stage, BitmapFont font) {
         super(main, x, y, font);
+        this.stage = stage;
         glyphDamage.setText(font, "Damage: "+weapon.getDamage());
         glyphCooldown.setText(font, "Cooldown: "+weapon.getCooldown());
         glyphMissile.setText(font, "Missile Cost: "+weapon.getMissileCost());
@@ -39,6 +46,9 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
         String name = weapon.getWeaponType().toString();
         weaponTexture = new Texture("shipsys/weapon_system/"+name.toLowerCase()+".png");
         glyphName.setText(font, weapon.getWeaponName());
+
+        equipButton = new EquipButton(posX+Main.WIDTH/20.67f, posY+Main.HEIGHT/25, main.WIDTH/24f, main.HEIGHT/45f, weapon, this);
+        stage.addActor(equipButton);
     }
 
     /**
@@ -48,6 +58,7 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     public void disposeInventorySlotUI() {
         super.disposeInventorySlotUI();
         weaponTexture.dispose();
+        equipButton.remove();
     }
 
     public void render() {
@@ -86,5 +97,9 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     private void setup()
     {
 
+    }
+
+    public void equipWeapon(Weapon weapon){
+        //TODO: equipWeapon Controllermethode in Systemcontroller oder eigenem Controllermodul
     }
 }

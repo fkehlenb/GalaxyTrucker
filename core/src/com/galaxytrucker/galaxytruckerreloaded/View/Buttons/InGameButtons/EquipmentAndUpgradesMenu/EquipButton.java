@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryWeaponSlotUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
@@ -28,7 +29,7 @@ public class EquipButton extends ImButton {
          * the inventory ui, if button on inventory
          * otherwise null
          */
-        private InventoryUI inventory;
+        private InventoryWeaponSlotUI inventory;
 
         /**
          * Left-Click action of the Button.
@@ -44,7 +45,7 @@ public class EquipButton extends ImButton {
          * @param inventory the inventory ui this is on, or null
          * @param map the map ui this is on, or null
          */
-        public EquipButton(float x, float y, float width, float height, Weapon weapon, InventoryUI inventory, MapUI map) {
+        public EquipButton(float x, float y, float width, float height, Weapon weapon, InventoryWeaponSlotUI inventory) {
             super(new Texture("buttons/equip_button.png"), x, y, width, height);
             this.weapon = weapon;
             this.inventory = inventory;
