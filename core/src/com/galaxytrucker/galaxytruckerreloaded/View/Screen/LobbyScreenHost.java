@@ -132,8 +132,8 @@ public class LobbyScreenHost implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        backButton = new LobbyScreenHostBackButton(0, 90, 512, 48, this);
-        startButton = new StartButton(main.WIDTH - 400, 90, 512, 48, this);
+        backButton = new LobbyScreenHostBackButton(0, Main.HEIGHT/12, Main.WIDTH/3.75f, Main.HEIGHT/22.5f, this);
+        startButton = new StartButton(main.WIDTH - Main.WIDTH/4.8f, Main.HEIGHT/12, Main.WIDTH/3.75f, Main.HEIGHT/22.5f, this);
 
         stage.addActor(backButton);
         stage.addActor(startButton);
@@ -193,10 +193,10 @@ public class LobbyScreenHost implements Screen {
         float y = main.HEIGHT/2;
         for(String u : users) {
             textFont.draw(main.batch, u, main.WIDTH/2, y);
-            y-=10;
+            y-=Main.HEIGHT/108;
         }
-        font.draw(main.batch, "L O B B Y", 75, main.HEIGHT - 100);
-        textFont.draw(main.batch, "Click Continue to resume your game with the players currently in the lobby, or wait for more!", 75, main.HEIGHT - 175);
+        font.draw(main.batch, "L O B B Y", main.WIDTH/25.6f, main.HEIGHT - main.HEIGHT/10.8f);
+        textFont.draw(main.batch, "Click Continue to resume your game with the players currently in the lobby, or wait for more!", main.WIDTH/25.6f, main.HEIGHT - main.HEIGHT/6.171f);
         main.batch.end();
 
         stage.draw();

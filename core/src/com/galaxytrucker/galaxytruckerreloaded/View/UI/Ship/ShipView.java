@@ -203,6 +203,7 @@ public class ShipView extends AbstractShip {
         }
         energy = new EnergyUI(main, ship.getEnergy(), existingSystems2);
 
+
         stage.addActor(inventory);
         stage.addActor(moveButton);
     }

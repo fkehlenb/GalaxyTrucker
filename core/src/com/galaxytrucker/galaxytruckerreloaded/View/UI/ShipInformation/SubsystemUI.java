@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
@@ -29,6 +31,8 @@ public class SubsystemUI extends RoomUI {
      * bottom left corner
      */
     private Texture energyTexture;
+
+    private SystemType systemType;
 
     /**
      * botton representing the system in the bottom left corner.
@@ -72,6 +76,7 @@ public class SubsystemUI extends RoomUI {
         energy = system.getEnergy();
         maxEnergy = system.getMaxEnergy();
         damage = system.getDamage();
+        systemType = system.getSystemType();
         systemTexture = new java.util.LinkedList<>();
         id = system.getId();
 
@@ -141,7 +146,13 @@ public class SubsystemUI extends RoomUI {
      * if energy supply already activated and not at maximum, then more energy to this system
      */
     public void activateEnergy() {
-        ship.roomSystemEnergyChosen(room, 1);
+        if (systemType==SystemType.SHIELDS)
+        {
+            ship.roomSystemEnergyChosen(room, 2);
+        }
+        else {
+            ship.roomSystemEnergyChosen(room, 1);
+        }
     }
 
     /**
@@ -149,6 +160,13 @@ public class SubsystemUI extends RoomUI {
      * called by button
      */
     public void lessEnergy() {
-        ship.roomSystemEnergyChosen(room, -1);
+
+        if (systemType==SystemType.SHIELDS)
+        {
+            ship.roomSystemEnergyChosen(room, -2);
+        }
+        else {
+            ship.roomSystemEnergyChosen(room, -1);
+        }
     }
 }
