@@ -182,7 +182,7 @@ public class ShipView extends AbstractShip {
             }
         }
         //need to be done extra bc they need the actual weapon, not just the system
-        for(Weapon w : ship.getInventory()) {
+        for(Weapon w : game.loadWeapons()) {
             rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseY), w, sx + 55));
         }
 
