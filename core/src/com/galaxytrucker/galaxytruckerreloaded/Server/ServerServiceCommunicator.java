@@ -8,12 +8,16 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RequestObjectDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.TraderService;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.TravelService;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.UserService;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.WeaponService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
 
 /** ServerServiceCommunicator for executing logic using services, singleton */
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
@@ -22,6 +26,9 @@ public class ServerServiceCommunicator {
 
     /** ServerServiceCommunicator */
     private static ServerServiceCommunicator serverServiceCommunicator = null;
+
+    /** Request Object DAO */
+    private RequestObjectDAO requestObjectDAO = RequestObjectDAO.getInstance();
 
     /** User service */
     private UserService userService = new UserService();
@@ -32,10 +39,20 @@ public class ServerServiceCommunicator {
     /** TraderService */
     private TraderService traderService = new TraderService();
 
+    /** Weapon service */
+    private WeaponService weaponService = new WeaponService();
+
     /** Take a request from the client side, pass it through the services
      * and return a response
      * @return the server's response to the client's request */
     public ResponseObject getResponse(RequestObject request){
+        try {
+            request.setId(UUID.randomUUID().hashCode());
+            requestObjectDAO.persist(request);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         switch (request.getRequestType()){
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
@@ -56,6 +73,10 @@ public class ServerServiceCommunicator {
                 return sellRockets(request.getShip(), request.getTrader(), request.getIntAmount());
             case TRADERSELLWEAPON:
                 return sellWeapons(request.getShip(), request.getTrader(), request.getWeapon());
+            case EQUIP_WEAPON:
+                return weaponService.equipWeapon(request.getShip(),request.getWeapon());
+            case UNEQIP_WEAPON:
+                return weaponService.unequipWeapon(request.getShip(),request.getWeapon());
         }
         return null;
     }

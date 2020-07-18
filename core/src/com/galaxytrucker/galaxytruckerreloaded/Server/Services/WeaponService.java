@@ -5,6 +5,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RequestObjectDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ResponseObjectDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.WeaponDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
@@ -12,6 +14,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /** Used for managing the ship's weapons */
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
@@ -21,15 +24,15 @@ public class WeaponService {
 
     /** ShipDAO */
     @NonNull
-    private ShipDAO shipDAO;
+    private ShipDAO shipDAO = ShipDAO.getInstance();
 
     /** WeaponDAO */
     @NonNull
-    private WeaponDAO weaponDAO;
+    private WeaponDAO weaponDAO = WeaponDAO.getInstance();
 
-    /** Weapon System */
+    /** Reponse Object DAO */
     @NonNull
-    private System weaponSystem;
+    private ResponseObjectDAO responseObjectDAO = ResponseObjectDAO.getInstance();
 
     /** Equip a weapon
      * @param s - the user's ship
@@ -57,6 +60,7 @@ public class WeaponService {
                             weaponDAO.update(w);
                             shipDAO.update(s);
                             responseObject.setValidRequest(true);
+                            responseObject.setResponseShip(s);
                         }
                     }
                 }
@@ -65,6 +69,13 @@ public class WeaponService {
         catch (Exception e){
             e.printStackTrace();
             // TODO Rollback actions
+        }
+        responseObject.setId(UUID.randomUUID().hashCode());
+        try {
+            responseObjectDAO.persist(responseObject);
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
         return responseObject;
     }
@@ -94,6 +105,7 @@ public class WeaponService {
                         weaponDAO.update(w);
                         shipDAO.update(s);
                         responseObject.setValidRequest(true);
+                        responseObject.setResponseShip(s);
                     }
                 }
             }
@@ -101,6 +113,13 @@ public class WeaponService {
         catch (Exception e){
             e.printStackTrace();
             // TODO Rollback actions
+        }
+        responseObject.setId(UUID.randomUUID().hashCode());
+        try {
+            responseObjectDAO.persist(responseObject);
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
         return responseObject;
     }

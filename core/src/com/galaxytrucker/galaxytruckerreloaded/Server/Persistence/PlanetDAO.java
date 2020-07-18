@@ -4,7 +4,19 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicatePlanetException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
 
+/** Manages the planet objects in the database */
 public class PlanetDAO extends ObjectDAO<Planet> {
+
+    /** Instance */
+    private static PlanetDAO instance = null;
+
+    /** Get the DAO instance */
+    public static PlanetDAO getInstance(){
+        if (instance == null){
+            instance = new PlanetDAO();
+        }
+        return instance;
+    }
 
     /**
      * Add a new planet to the database

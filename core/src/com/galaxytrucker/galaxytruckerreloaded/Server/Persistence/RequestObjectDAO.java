@@ -7,6 +7,17 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 /** Used for retracing game steps */
 public class RequestObjectDAO extends ObjectDAO<RequestObject> {
 
+    /** Instance */
+    private static RequestObjectDAO instance = null;
+
+    /** Get the DAO instance */
+    public static RequestObjectDAO getInstance(){
+        if (instance == null){
+            instance = new RequestObjectDAO();
+        }
+        return instance;
+    }
+
     /** Add a new request object to the database
      * @param o - the request object to add
      * @throws DuplicateRequestObjectException if the request object already exists in the database */

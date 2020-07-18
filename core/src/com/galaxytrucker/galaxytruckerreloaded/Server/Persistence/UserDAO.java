@@ -5,7 +5,19 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateUserExc
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import lombok.NonNull;
 
+/** Manages the user objects in the database */
 public class UserDAO extends ObjectDAO<User> {
+
+    /** Instance */
+    private static UserDAO instance = null;
+
+    /** Get the DAO instance */
+    public static UserDAO getInstance(){
+        if (instance == null){
+            instance = new UserDAO();
+        }
+        return instance;
+    }
 
     /**
      * Add a new user to the database
