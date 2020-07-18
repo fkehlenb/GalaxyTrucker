@@ -115,6 +115,11 @@ public class ShipView extends AbstractShip {
     private ShipType shipType;
 
     /**
+     * the x and y position the ship starts at on the screen
+     */
+    private float baseX, baseY;
+
+    /**
      * Constructor
      * @param main - the main class for SpriteBatch
      */
@@ -147,8 +152,8 @@ public class ShipView extends AbstractShip {
         roomWidth = shipRoomBackground.getWidth()*1.5f;
         roomHeight = shipRoomBackground.getHeight()*1.5f;
 
-        float roomsBaseX = (70 + width/2);
-        float roomsBaseY = main.HEIGHT/2;
+        baseX = (70 + width/2);
+        baseY = main.HEIGHT/2;
 
         List<Crew> crews = new ArrayList<>();
         for(Room r : ship.getSystems()) {
@@ -157,7 +162,7 @@ public class ShipView extends AbstractShip {
         crew = new HashMap<>();
         float cy = Main.HEIGHT - 150;
         for(Crew c : crews) {
-            crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseY), ship.getShipType()));
+            crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY), ship.getShipType()));
             cy -= 60;
         }
 
@@ -170,20 +175,20 @@ public class ShipView extends AbstractShip {
         for(Room r : existingRooms) {
             if(r instanceof System) {
                 if(r instanceof Shield) {
-                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (Shield) r, sx));
+                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (Shield) r, sx));
                 }
                 else if(! (r instanceof WeaponSystem)) {
-                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (System) r, sx));
+                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx));
                 }
                 sx += 55;
             }
             else {
-                rooms.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY)));
+                rooms.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY)));
             }
         }
         //need to be done extra bc they need the actual weapon, not just the system
         for(Weapon w : game.loadWeapons()) {
-            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseY), w, sx + 55));
+            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseY), w, sx + 55));
         }
 
         moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
@@ -671,10 +676,9 @@ public class ShipView extends AbstractShip {
      * a crew member is moved to a new room
      * called by crew ui after player attempts to move a crew
      * @param crew the crew member
-     * @param room the new room
      */
     public void crewMoved(Crew crew, Room room) {
-        this.crew.get(crew.getId()).crewMoved(room);
+        this.crew.get(crew.getId()).crewMoved(getRoomX(shipType, room.getInteriorID(), baseX), getRoomY(shipType, room.getInteriorID(), baseY));
     }
 
     /**

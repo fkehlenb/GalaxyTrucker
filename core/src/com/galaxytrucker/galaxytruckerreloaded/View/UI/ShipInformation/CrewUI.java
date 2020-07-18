@@ -165,10 +165,11 @@ public class CrewUI {
      * the crew member was moved to a new room
      * called by shipview
      *
-     * @param room the new room
+     * @param roomX the x position of the lower left corner the crew member is in
      */
-    public void crewMoved(Room room) {
-
+    public void crewMoved(float roomX, float roomY) {
+        this.roomX = roomX;
+        this.roomY = roomY;
     }
 
     /**
