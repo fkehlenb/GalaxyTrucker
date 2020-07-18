@@ -9,6 +9,17 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.TraderNotFoundEx
  */
 public class TraderDAO extends ObjectDAO<Trader> {
 
+    /** Instance */
+    private static TraderDAO instance = null;
+
+    /** Get the DAO instance */
+    public static TraderDAO getInstance(){
+        if (instance == null){
+            instance = new TraderDAO();
+        }
+        return instance;
+    }
+
     /**
      * Add a new trader to the database
      *

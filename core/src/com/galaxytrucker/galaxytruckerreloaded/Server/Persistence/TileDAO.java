@@ -7,6 +7,17 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.TileNotFoundExce
 /** Handles tile objects in the database */
 public class TileDAO extends ObjectDAO<Tile> {
 
+    /** Instance */
+    private static TileDAO instance = null;
+
+    /** Get the DAO instance */
+    public static TileDAO getInstance(){
+        if (instance == null){
+            instance = new TileDAO();
+        }
+        return instance;
+    }
+
     /** Add a new tile to the database
      * @param t - the tile to add
      * @throws DuplicateTileException if the tile already exists in the database */

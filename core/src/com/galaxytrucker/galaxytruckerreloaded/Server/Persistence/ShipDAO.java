@@ -6,7 +6,19 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.ShipNotFoundExce
 
 import lombok.NonNull;
 
+/** Manages the ship objects in the database */
 public class ShipDAO extends ObjectDAO<Ship> {
+
+    /** Instance */
+    private static ShipDAO instance = null;
+
+    /** Get the DAO instance */
+    public static ShipDAO getInstance(){
+        if (instance == null){
+            instance = new ShipDAO();
+        }
+        return instance;
+    }
 
     /**
      * Add a new ship to the database

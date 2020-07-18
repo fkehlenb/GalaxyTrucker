@@ -10,6 +10,17 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.WeaponNotFoundEx
  */
 public class WeaponDAO extends ObjectDAO<Weapon> {
 
+    /** Instance */
+    private static WeaponDAO instance = null;
+
+    /** Get the DAO instance */
+    public static WeaponDAO getInstance(){
+        if (instance == null){
+            instance = new WeaponDAO();
+        }
+        return instance;
+    }
+
     /**
      * Add a new weapon to the database
      *

@@ -6,7 +6,19 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.OverworldNotFoun
 import lombok.NonNull;
 
 
+/** Manages the overworld objects in the database */
 public class OverworldDAO extends ObjectDAO<Overworld> {
+
+    /** Instance */
+    private static OverworldDAO instance = null;
+
+    /** Get the DAO instance */
+    public static OverworldDAO getInstance(){
+        if (instance == null){
+            instance = new OverworldDAO();
+        }
+        return instance;
+    }
 
     /**
      * Add a new OverWorld to the database

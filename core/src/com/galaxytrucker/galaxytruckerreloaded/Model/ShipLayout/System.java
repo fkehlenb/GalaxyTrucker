@@ -73,5 +73,6 @@ public class System extends Room implements Serializable {
         this.damage = damage;
         this.systemType = systemType;
         this.shipWeapons = shipWeapons;
+        super.setSystem(true);
     }
 }

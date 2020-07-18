@@ -8,6 +8,17 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundExce
 /** This class manages room objects in the database */
 public class RoomDAO extends ObjectDAO<Room> {
 
+    /** Instance */
+    private static RoomDAO instance = null;
+
+    /** Get the DAO instance */
+    public static RoomDAO getInstance(){
+        if (instance == null){
+            instance = new RoomDAO();
+        }
+        return instance;
+    }
+
     /**
      * Add a new room to the database
      *

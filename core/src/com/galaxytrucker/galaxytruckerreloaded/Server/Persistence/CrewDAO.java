@@ -7,7 +7,19 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateCrewExc
 
 import javax.persistence.EntityManager;
 
+/** Manages the crew objects in the database */
 public class CrewDAO extends ObjectDAO<Crew> {
+
+    /** Instance */
+    private static CrewDAO instance = null;
+
+    /** Get the crewDAO instance */
+    public static CrewDAO getInstance(){
+        if (instance == null){
+            instance = new CrewDAO();
+        }
+        return instance;
+    }
 
     /**
      * Add a new crew member to the database
