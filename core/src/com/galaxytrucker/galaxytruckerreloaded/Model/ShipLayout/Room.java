@@ -49,4 +49,8 @@ public class Room implements Serializable {
     @NonNull
     @OneToMany(cascade = CascadeType.ALL)
     private List<Tile> tiles;
+
+    /** Whether or not it is a system */
+    @NonNull
+    private boolean isSystem = false;
 }
