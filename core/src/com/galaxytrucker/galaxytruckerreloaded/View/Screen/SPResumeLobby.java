@@ -90,8 +90,8 @@ public class SPResumeLobby implements Screen {
         this.main = main;
         background = new Texture("1080p.png");
 
-        spResumeStartGame = new SPResumeStartGame(7*main.WIDTH/8 - 124, main.HEIGHT/8 , 248, 50, this);
-        spResumeLobbyBackButton = new SPResumeLobbyBackButton(main.WIDTH/8 -124, main.HEIGHT/8, 248, 50,this);
+        spResumeStartGame = new SPResumeStartGame(7*main.WIDTH/8 - Main.WIDTH/15.484f, main.HEIGHT/8 , Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this);
+        spResumeLobbyBackButton = new SPResumeLobbyBackButton(main.WIDTH/8 - Main.WIDTH/15.484f, main.HEIGHT/8, Main.WIDTH/7.742f, Main.HEIGHT/21.6f,this);
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
@@ -137,9 +137,9 @@ public class SPResumeLobby implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 +140);
-        font.draw(main.batch, glyph2, 3*main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 +140);
-        font.draw(main.batch, glyph3, 2*main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 +140);
+        font.draw(main.batch, glyph, main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 + Main.HEIGHT/77.143f);
+        font.draw(main.batch, glyph2, 3*main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 + Main.HEIGHT/77.143f);
+        font.draw(main.batch, glyph3, 2*main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 + Main.HEIGHT/77.143f);
         main.batch.end();
         stage.draw();
     }

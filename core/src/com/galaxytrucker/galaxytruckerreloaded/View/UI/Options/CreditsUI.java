@@ -14,7 +14,6 @@ public class CreditsUI {
     private Main main;
     private GamePlay gamePlay;
     private OptionUI optionUI;
-    private float x, y;
     private BackButton backButton;
     private Stage stage;
     private MainMenu mainMenu;
@@ -40,10 +39,7 @@ public class CreditsUI {
 
         CreditBackgroundTexture = new Texture("options/credits.png");
 
-        x = main.WIDTH / 2 - CreditBackgroundTexture.getWidth() / 2;
-        y = main.HEIGHT / 2 - CreditBackgroundTexture.getHeight() / 2;
-
-        backButton = new BackButton(x + 220, y + 100, 128, 24, optionUI, this);
+        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
 
         stage.addActor(backButton);
     }
@@ -55,7 +51,7 @@ public class CreditsUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(CreditBackgroundTexture, x, y, 601, 471);
+        main.batch.draw(CreditBackgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();

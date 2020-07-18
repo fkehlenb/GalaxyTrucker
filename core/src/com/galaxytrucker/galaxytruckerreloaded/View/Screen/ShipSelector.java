@@ -106,12 +106,16 @@ public class ShipSelector implements Screen {
 
     private Image shipImage;
 
+    private float bildScale;
+
     /** Constructor
      * @param main - main class */
     public ShipSelector(Main main, boolean singleplayer, int difficulty){
         this.main = main;
         this.singleplayer = singleplayer;
         this.difficulty = difficulty;
+
+        bildScale = (float)main.WIDTH/1920;
 
         background = new Texture("1080p.png");
 
@@ -147,8 +151,8 @@ public class ShipSelector implements Screen {
 
         ship = ShipType.DEFAULT;
         shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
-        shipImage.setScale(main.WIDTH/1920);
-        shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+main.HEIGHT/10.8f);
+        shipImage.setScale(bildScale);
+        shipImage.setPosition(main.WIDTH/2 - (shipImage.getWidth()*bildScale)/2, main.HEIGHT/2 - (shipImage.getHeight()*bildScale)/2+main.HEIGHT/10.8f);
 
         stage.addActor(shipImage);
         stage.addActor(createGameButton);
@@ -195,8 +199,8 @@ public class ShipSelector implements Screen {
 
         
         shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
-        shipImage.setScale(main.WIDTH/1920);
-        shipImage.setPosition(main.WIDTH/2 - shipImage.getWidth()/2, main.HEIGHT/2 - shipImage.getHeight()/2+main.HEIGHT/10.8f);
+        shipImage.setScale(bildScale, bildScale);
+        shipImage.setPosition(main.WIDTH/2 - (shipImage.getWidth()*bildScale)/2, main.HEIGHT/2 - (shipImage.getHeight()*bildScale)/2+main.HEIGHT/10.8f);
 
         stage.addActor(shipImage);
         stage.addActor(createGameButton);

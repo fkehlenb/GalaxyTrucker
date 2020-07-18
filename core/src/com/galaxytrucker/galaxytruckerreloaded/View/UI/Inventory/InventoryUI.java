@@ -66,10 +66,11 @@ public class InventoryUI {
             slots.add(new InventoryCrewSlotUI(main, c, cx, cy, font, type));
             cy -= Main.HEIGHT/13.5f;
         }
+
         float wy = y + Main.HEIGHT/2.057f;
         float wx = cx + Main.WIDTH/4.8f;
         for(Weapon w : weapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, font));
+            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font));
             wy -=Main.HEIGHT/10.8f;
         }
         slots.add(new InventoryIntSlotUI(main, fuel, x+Main.WIDTH/38.4f, y+Main.HEIGHT/21.6f, "fuel", font));
@@ -108,6 +109,10 @@ public class InventoryUI {
      * here the inventory slots are initialised for fuel, missiles, crew, weapons, and money
      */
     private void setup() {
+    }
+
+    public void equipWeapon(Weapon weapon){
+        //TODO: equipWeapon Controllermethode in Systemcontroller oder eigenem Controllermodul
     }
 
     /**
