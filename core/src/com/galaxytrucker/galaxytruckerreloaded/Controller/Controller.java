@@ -8,6 +8,4 @@ public abstract class Controller {
     /** ClientControllerCommunicator */
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
-
-
 }

@@ -302,7 +302,7 @@ public class ClientHandler implements Runnable {
         weaponPrices.add(80);
         switch (shipType) {
             // ========== KESTREL A ==========
-            case DEFAULT:
+            case DEFAULT: //------------------done
                 for (int f = 0; f < 5; f++) {
                     crewStats.add(2);
                 }
@@ -418,7 +418,7 @@ public class ClientHandler implements Runnable {
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 8,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
             // ========== ROCK A ==========
-            case TANK:
+            case TANK: //-------done
                 crewStats = new ArrayList<>();
                 crewStats.add(0);
                 crewStats.add(3);
@@ -531,7 +531,7 @@ public class ClientHandler implements Runnable {
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 9,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
-            case KILLER:
+            case KILLER: //-------done
                 crewStats = new ArrayList<>();
                 crewStats.add(3);
                 crewStats.add(4);
@@ -547,7 +547,7 @@ public class ClientHandler implements Runnable {
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
                     }
                     // 2 beside each other
-                    else if (i == 2 || i ==3 || i == 5 || i == 6 || i==7 || i==10 ) {
+                    else if (i == 2 || i ==3 || i == 4 || i == 5 || i==7 || i==10 ) {
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
                     } else {
@@ -566,7 +566,7 @@ public class ClientHandler implements Runnable {
                     }
                     //Medbay TODO??
                     //Engine
-                    else if(i==4) {
+                    else if(i==6) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
@@ -608,7 +608,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(cockpit);
                     }
                     //Cameras
-                    else if(i==6) {
+                    else if(i==5) {
                         Room cameras = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 1, 5, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
                         cameras.setTiles(tiles);
@@ -646,7 +646,7 @@ public class ClientHandler implements Runnable {
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
                     }
                     // 2 beside each other
-                    else if (i == 2 || i ==3 || i == 5 || i == 6 || i==13 || i==14 ) {
+                    else if (i == 2 || i ==4 || i == 5 || i == 6 || i==13 || i==14 ) {
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
                     } else {
@@ -664,7 +664,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(o2);
                     }
                     //Engine
-                    else if(i==4) {
+                    else if(i==3) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
@@ -756,7 +756,7 @@ public class ClientHandler implements Runnable {
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 20, 10, 0, 3, 8,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
-            case STEALTH:
+            case STEALTH: //------------ done
                 crewStats = new ArrayList<>();
                 crewStats.add(4);
                 crewStats.add(1);
@@ -767,12 +767,12 @@ public class ClientHandler implements Runnable {
                     List<Tile> tiles = new ArrayList<>();
                     // ========== Tile Generator ==========
                     // 2 Above each other
-                    if (i == 2 || i == 6 || i==9 || i==14) {
+                    if (i == 2 || i == 7 || i==10 || i==14) {
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
                     }
                     // 2 beside each other
-                    else if (i == 1 || i ==3 || i == 8 || i == 10 || i==12 || i==13 ) {
+                    else if (i == 1 || i ==3 || i == 8 || i == 9 || i==12 || i==13 ) {
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
                     } else {
@@ -832,7 +832,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(weapons);
                     }
                     //Shields
-                    else if(i==4) {
+                    else if(i==3) {
                         Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 2, 5, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
@@ -880,7 +880,7 @@ public class ClientHandler implements Runnable {
                     List<Tile> tiles = new ArrayList<>();
                     // ========== Tile Generator ==========
                     // 2 Above each other
-                    if (i == 1 || i == 3 || i==7 || i==8 || i==9 || i==10 || i==12 || i==14 || i==15) {
+                    if (i == 2 || i == 3 || i==7 || i==8 || i==9 || i==10 || i==12 || i==14 || i==15) {
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
                         tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
                     }
@@ -903,7 +903,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(o2);
                     }
                     //Engines
-                    else if (i ==2) {
+                    else if (i ==1) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
