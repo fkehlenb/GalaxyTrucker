@@ -4,6 +4,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
@@ -224,6 +225,18 @@ public class ClientHandler implements Runnable {
      */
     private Overworld generateOverworld(int seed, String username, int difficulty) {
         Random random = new Random(seed);
+        // TODO IMPEOVED RANDOMISER
+        List<Planet> planetMap = new ArrayList<>();
+        // Add traders to map
+        int traders = random.nextInt(4) + 1;
+        for (int i=0;i<traders;i++){
+            Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, seed),
+                    0, 0, PlanetEvent.VOID, new ArrayList<Ship>());
+
+        }
+
+
+
         List<PlanetEvent> planetEvents = new ArrayList<PlanetEvent>();
         planetEvents.add(PlanetEvent.SHOP);
         planetEvents.add(PlanetEvent.VOID);
