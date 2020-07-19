@@ -9,10 +9,21 @@ import javax.persistence.EntityManager;
 
 public class UserService {
 
+    /** Instance */
+    private static UserService instance;
+
+    /** Get the instance */
+    public static UserService getInstance(){
+        if (instance == null){
+            instance = new UserService();
+        }
+        return instance;
+    }
+
     /**
      * The userDAO used to store and fetch data
      */
-    private UserDAO userDAO = new UserDAO();
+    private UserDAO userDAO = UserDAO.getInstance();
 
     /** Entity Manager */
     private EntityManager entityManager = userDAO.entityManager;

@@ -61,6 +61,6 @@ public class Planet implements Serializable {
     private Trader trader;
 
     /** The overWorld this planet belongs to */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Overworld overworld;
 }

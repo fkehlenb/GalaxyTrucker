@@ -9,43 +9,57 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.WeaponDAO;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 /** This class handles battle logic on the server side */
+@Entity
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NamedQueries({
+        @NamedQuery(name = "BattleService.fetchAll",query = "select b from BattleService b")
+})
 public class BattleService {
 
-    /** ShipDAO */
+    /** ID */
+    @Id
     @NonNull
-    private ShipDAO shipDAO;
+    private UUID id;
+
+    /** ShipDAO */
+    @Transient
+    private ShipDAO shipDAO = ShipDAO.getInstance();
 
     /** WeaponDAO */
-    @NonNull
-    private WeaponDAO weaponDAO;
+    @Transient
+    private WeaponDAO weaponDAO = WeaponDAO.getInstance();
 
     /** CrewDAO */
-    @NonNull
-    private CrewDAO crewDAO;
+    @Transient
+    private CrewDAO crewDAO = CrewDAO.getInstance();
 
     /** RoomDAO */
-    @NonNull
-    private RoomDAO roomDAO;
+    @Transient
+    private RoomDAO roomDAO = RoomDAO.getInstance();
 
     /** List of ships participating in the fight */
     @NonNull
+    @OneToMany(cascade = CascadeType.DETACH)
     private List<Ship> participants;
 
     /** The ship which's round it is */
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Ship currentRound;
 
     /** Disabled system round counter */
     private int disabledSystemCounter = 3;
 
     /** Reward service */
-    @NonNull
-    private RewardService rewardService;
+    @Transient
+    private RewardService rewardService = RewardService.getInstance();
 
     /** Change the ship which's round it is */
     public void nextRound(){

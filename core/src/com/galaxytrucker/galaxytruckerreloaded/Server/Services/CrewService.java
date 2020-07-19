@@ -16,23 +16,13 @@ import lombok.*;
 public class CrewService {
 
     /** ShipDAO */
-    @NonNull
-    private ShipDAO shipDAO;
+    private ShipDAO shipDAO = ShipDAO.getInstance();
 
     /** CrewDAO */
-    @NonNull
-    private CrewDAO crewDAO;
+    private CrewDAO crewDAO = CrewDAO.getInstance();
 
     /** RoomDAO */
-    @NonNull
-    private RoomDAO roomDAO;
-
-    /** Validate the command given
-     * @param s - the given command
-     * @return true if it is valid, else false */
-    public boolean validateCrewMove(String s){
-        return false;
-    }
+    private RoomDAO roomDAO = RoomDAO.getInstance();
 
     /** Move a crew member to a different section
      * @param ship - the ship the crew is on
