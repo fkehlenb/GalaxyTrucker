@@ -18,29 +18,36 @@ import lombok.*;
 @Setter
 public class RewardService {
 
+    /** Instance */
+    private static RewardService instance;
+
+    /** Get instance */
+    public static RewardService getInstance(){
+        if (instance == null){
+            instance = new RewardService();
+        }
+        return instance;
+    }
+
     /**
      * ShipDAO
      */
-    @NonNull
-    private ShipDAO shipDAO;
+    private ShipDAO shipDAO = ShipDAO.getInstance();
 
     /**
      * WeaponDAO
      */
-    @NonNull
-    private WeaponDAO weaponDAO;
+    private WeaponDAO weaponDAO = WeaponDAO.getInstance();
 
     /**
      * Room DAO
      */
-    @NonNull
-    private RoomDAO roomDAO;
+    private RoomDAO roomDAO = RoomDAO.getInstance();
 
     /**
      * Crew DAO
      */
-    @NonNull
-    private CrewDAO crewDAO;
+    private CrewDAO crewDAO = CrewDAO.getInstance();
 
     /**
      * Weapon reward
@@ -49,7 +56,7 @@ public class RewardService {
      * @param dropTable - possible weapon drops
      * @return the weapon given
      */
-    public Weapon weaponReward(Ship s, List<Weapon> dropTable) {
+    public Weapon weaponReward(Ship s, List<Weapon> dropTable,int seed) {
         return null;
     }
 
@@ -59,7 +66,7 @@ public class RewardService {
      * @param s - the ship to give reward to
      * @param c - the coins to give it
      */
-    public void coinsReward(Ship s, int c) {
+    public void coinsReward(Ship s, int c,int seed) {
 
     }
 
@@ -69,7 +76,7 @@ public class RewardService {
      * @param s - the ship to give reward to
      * @param f - the fuel to give it
      */
-    public void fuelReward(Ship s, int f) {
+    public void fuelReward(Ship s, int f,int seed) {
 
     }
 
@@ -79,7 +86,7 @@ public class RewardService {
      * @param s - the ship to give reward to
      * @param r - the rockets to give it
      */
-    public void rocketReward(Ship s, int r) {
+    public void rocketReward(Ship s, int r,int seed) {
 
     }
 
@@ -89,7 +96,7 @@ public class RewardService {
      * @param s    - the ship to give the reward to
      * @param crew - a list of possible crew member drops
      */
-    public void crewReward(Ship s, List<Crew> crew) {
+    public void crewReward(Ship s, List<Crew> crew,int seed) {
 
     }
 }

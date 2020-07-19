@@ -2,17 +2,11 @@ package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** Handles weapons on board */
 @Getter

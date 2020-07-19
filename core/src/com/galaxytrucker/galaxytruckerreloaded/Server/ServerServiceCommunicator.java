@@ -57,7 +57,7 @@ public class ServerServiceCommunicator {
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
             case HYPERJUMP:
-                return jump(request.getShip(),request.getPlanet());
+                return travelService.jump(request.getShip(),request.getPlanet());
                 //TODO OTHERS
             case TRADERBUYCREW:
                 return purchaseCrew(request.getShip(), request.getTrader(), request.getCrew());
@@ -147,28 +147,6 @@ public class ServerServiceCommunicator {
      * @param username - the username */
     public void logoutAfterException(String username){
         logout(username);
-    }
-
-    // ==================================== TRAVEL SERVICE ====================================
-
-    /** Make a jump to a target planet
-     * @param s - the client ship
-     * @param p - the target planet
-     * @return a ResponseObject */
-    private ResponseObject jump(Ship s, Planet p){
-        ResponseObject responseObject = new ResponseObject();
-        try {
-            if (travelService.validateJump(s, p,userService.getUser(s.getAssociatedUser()))) {
-                boolean successfulJump = travelService.jump(s, p);
-                if (successfulJump) {
-                    responseObject.setValidRequest(true);
-                }
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return responseObject;
     }
 
     // ==================================== TRADER SERVICE ====================================

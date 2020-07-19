@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,4 +39,10 @@ public class User implements Serializable {
 
     /** First game */
     private boolean firstGame = true;
+
+    /**
+     * Battle service
+     */
+    @ManyToOne
+    private BattleService battleService = null;
 }

@@ -28,7 +28,23 @@ public class ResponseObject implements Serializable {
     @ManyToOne
     private Ship responseShip;
 
+    /** Opponent ship */
+    @ManyToOne
+    private Ship opponent;
+
     /** The updated overworld */
     @ManyToOne
     private Overworld responseOverworld;
+
+    /** Combat won */
+    private boolean combatWon = false;
+
+    /** Died? */
+    private boolean dead = false;
+
+    /** Fight over? */
+    private boolean combatOver = false;
+
+    /** Your round? */
+    private boolean myRound = false;
 }

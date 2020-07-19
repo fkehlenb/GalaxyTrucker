@@ -36,6 +36,10 @@ public class RequestObject implements Serializable {
     @OneToOne
     private Ship ship;
 
+    /** Opponent ship */
+    @OneToOne
+    private Ship opponentShip;
+
     /** Trader */
     @OneToOne
     private Trader trader;

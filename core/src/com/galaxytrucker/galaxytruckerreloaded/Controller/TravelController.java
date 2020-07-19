@@ -19,8 +19,10 @@ public class TravelController extends Controller{
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
 
+    /** Instance */
     private static TravelController singleton;
 
+    /** Get controller instance */
     public static TravelController getInstance(ClientControllerCommunicator communicator) {
         if(singleton == null) {
             singleton = new TravelController(communicator);
@@ -40,18 +42,8 @@ public class TravelController extends Controller{
             requestObject.setPlanet(destination);
             ResponseObject object = clientControllerCommunicator.sendRequest(requestObject);
             if (object.isValidRequest()){
-                Ship s = clientControllerCommunicator.getClientShip();
-                // Remove ship from planet
-                List<Ship> currentShips = s.getPlanet().getShips();
-                currentShips.remove(s);
-                s.getPlanet().setShips(currentShips);
-                // Set ship to target planet
-                s.setPlanet(destination);
-                // Set planet ship list
-                currentShips = destination.getShips();
-                currentShips.add(s);
-                destination.setShips(currentShips);
-                clientControllerCommunicator.setClientShip(s);
+                clientControllerCommunicator.setClientShip(object.getResponseShip());
+                clientControllerCommunicator.setMap(object.getResponseOverworld());
                 return true;
             }
             return false;

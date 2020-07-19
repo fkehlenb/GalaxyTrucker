@@ -4,13 +4,13 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
+import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.Getter;
 import lombok.NonNull;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.UUID;
 
 /** This class handles the client side networking */
 public class Client {
@@ -140,6 +140,28 @@ public class Client {
             throw new IllegalArgumentException();
         }
     }
+
+
+    /** Send a logout request and terminate the connection
+     * @param username - client username
+     * @return successful logout */
+    public boolean logout(String username){
+        try {
+            RequestObject requestObject = new RequestObject();
+            requestObject.setUsername(username);
+            requestObject.setRequestType(RequestType.LOGOUT);
+            ResponseObject responseObject = sendAndReceive(requestObject);
+            if (responseObject.isValidRequest()){
+                this.socket.close();
+                return true;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     /**
      * Constructor
