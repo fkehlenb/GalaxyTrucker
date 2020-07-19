@@ -113,8 +113,4 @@ public class Ship implements Serializable {
     @NonNull
     private boolean inCombat = false;
 
-    /** Battle service */
-    @ManyToOne()
-    private BattleService battleService = null;
-
 }

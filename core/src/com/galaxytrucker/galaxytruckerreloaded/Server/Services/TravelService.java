@@ -100,7 +100,7 @@ public class TravelService {
                         // Todo service
                     }
                     else {
-                        s.setBattleService(new BattleService(UUID.randomUUID(), dest.getShips()));
+//                        s.setBattleService(new BattleService(UUID.randomUUID(), dest.getShips()));
                     }
                 }
                 shipDAO.update(s);
