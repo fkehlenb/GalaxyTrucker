@@ -28,6 +28,10 @@ public class ResponseObject implements Serializable {
     @ManyToOne
     private Ship responseShip;
 
+    /** Opponent ship */
+    @ManyToOne
+    private Ship opponent;
+
     /** The updated overworld */
     @ManyToOne
     private Overworld responseOverworld;

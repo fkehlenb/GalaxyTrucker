@@ -78,6 +78,7 @@ public class TravelService {
      * @param s    - the ship to jump
      * @param dest - the destination star
      */
+    // TODO check fuel
     public ResponseObject jump(Ship s, Planet dest) {
         ResponseObject responseObject = new ResponseObject();
         Planet current = s.getPlanet();
