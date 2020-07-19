@@ -20,18 +20,15 @@ public class AudioController extends Controller /**implements Audio*/ {
 
     private static AudioController singleton;
 
-    @NonNull
-    private ClientControllerCommunicator clientControllerCommunicator;
-
 
     /**
      * return the instance of this singleton
-     * @param communicator the communicator
+     * @
      * @return the singleton instance
      */
-    public static AudioController getInstance(ClientControllerCommunicator communicator) {
+    public static AudioController getInstance() {
         if(singleton == null) {
-            singleton = new AudioController(communicator);
+            singleton = new AudioController();
         }
         return singleton;
     }
@@ -40,7 +37,6 @@ public class AudioController extends Controller /**implements Audio*/ {
         if(music!= null) {
             music = Gdx.audio.newMusic(file);
             music.setLooping(true);
-            music.setVolume(0.5f);
             music.play();
         }
 

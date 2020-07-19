@@ -112,6 +112,7 @@ public class AudioUI {
 
     /**
      * handles input to pause game, open options
+     * TODO: funktioniert nicht, ist auch nicht zwingend Nötig
      */
     public void updateInput() {
         //macht nicht was es soll. im Kern ein Bastard diese Methode

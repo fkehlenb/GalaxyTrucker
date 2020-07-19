@@ -86,6 +86,7 @@ public class VideoUI {
     /**
      * render
      * no stage stuff
+     * TODO: Absolutwerte durch Realtive Position ersetzen.
      */
     public void render() {
         updateInput();
@@ -138,6 +139,7 @@ public class VideoUI {
 
     /**
      * handles input to pause game, open options
+     * TODO: funktioniert nicht, ist auch nicht zwingend Nötig
      */
     public void updateInput() {
         //macht nicht was es soll. im Kern ein Bastard diese Methode

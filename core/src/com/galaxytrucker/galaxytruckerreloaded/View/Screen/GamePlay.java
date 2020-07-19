@@ -159,9 +159,6 @@ public class GamePlay implements Screen {
         pauseStage = new Stage(viewport, main.batch);
         tileStage = new Stage(viewport, main.batch);
 
-        //evtl. an anderer Stelle callen
-        AudioController.getInstance(null).setMusic(Gdx.files.internal("Sounds/Music/bp_MUS_WastelandEXPLORE.ogg"));
-
 
         player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this);
 
