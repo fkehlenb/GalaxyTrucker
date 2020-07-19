@@ -53,7 +53,7 @@ public class Planet implements Serializable {
 
     /** Ships at this planet */
     @NonNull
-    @OneToMany
+    @OneToMany(cascade = CascadeType.MERGE)
     private List<Ship> ships;
 
     /** Trader */

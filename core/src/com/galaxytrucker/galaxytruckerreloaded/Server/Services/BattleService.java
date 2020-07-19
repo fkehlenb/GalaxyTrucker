@@ -10,6 +10,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.WeaponDAO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ import java.util.UUID;
 @NamedQueries({
         @NamedQuery(name = "BattleService.fetchAll",query = "select b from BattleService b")
 })
-public class BattleService {
+public class BattleService implements Serializable {
 
     /** ID */
     @Id

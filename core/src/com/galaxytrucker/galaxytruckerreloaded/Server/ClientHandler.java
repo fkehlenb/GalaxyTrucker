@@ -148,6 +148,12 @@ public class ClientHandler implements Runnable {
                             //====================== Ship Creation ==================
                             ShipType shipType = (ShipType) receiveObject.readObject();
                             user.setUserShip(generateShip(shipType, username, overworld));
+                            Ship userShip = user.getUserShip();
+                            Planet startPlanet = overworld.getStartPlanet();
+                            List<Ship> startPlanetShips = startPlanet.getShips();
+                            startPlanetShips.add(userShip);
+                            startPlanet.setShips(startPlanetShips);
+                            userShip.setPlanet(startPlanet);
                             //=======================================================
                             user.setFirstGame(false);
                         }
@@ -205,14 +211,13 @@ public class ClientHandler implements Runnable {
      *
      * @param names     - planet names
      * @param usedNames - the already used planet names
-     * @param seed      - the world seed
+     * @param random - the randomizer
      * @return an unused planet name
      */
-    private String getPlanetName(List<String> names, List<String> usedNames, int seed) {
-        Random random = new Random(seed);
+    private String getPlanetName(List<String> names, List<String> usedNames, Random random) {
         String newName = names.get(random.nextInt(names.size() - 1));
         if (usedNames.contains(newName)) {
-            getPlanetName(names, usedNames, seed);
+            getPlanetName(names, usedNames, random);
         }
         return newName;
     }
@@ -225,74 +230,90 @@ public class ClientHandler implements Runnable {
      */
     private Overworld generateOverworld(int seed, String username, int difficulty) {
         Random random = new Random(seed);
-        // TODO IMPEOVED RANDOMISER
         List<Planet> planetMap = new ArrayList<>();
-        // Add traders to map
+        List<Planet> finalMap = new ArrayList<>();
+        // ======================= Add traders to map =======================
         int traders = random.nextInt(4) + 1;
+        List<WeaponType> weaponTypes = new ArrayList<>();
+        weaponTypes.add(WeaponType.LASER);
+        weaponTypes.add(WeaponType.ROCKET);
+        weaponTypes.add(WeaponType.BOMB);
+        weaponTypes.add(WeaponType.HEAL_BOMB);
+        weaponTypes.add(WeaponType.RADIO);
+        weaponTypes.add(WeaponType.RADIO_BOMB);
         for (int i=0;i<traders;i++){
-            Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, seed),
+            Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, random),
                     0, 0, PlanetEvent.VOID, new ArrayList<Ship>());
-
+            // TODO add trader stock and traders
+            planetMap.add(planet);
         }
-
-
-
-        List<PlanetEvent> planetEvents = new ArrayList<PlanetEvent>();
-        planetEvents.add(PlanetEvent.SHOP);
-        planetEvents.add(PlanetEvent.VOID);
-        planetEvents.add(PlanetEvent.COMBAT);
-        planetEvents.add(PlanetEvent.METEORSHOWER);
-        planetEvents.add(PlanetEvent.NEBULA);
-        List<Planet> planets = new ArrayList<Planet>();
-        // Create start planet
-        //TODO CHANGE RANDOMIZER TO HAVE EVERYTHING IN EACH MAP
-        //TODO ADD TRADER WITH ITEMS TO MAP
-        planets.add(new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, seed),
-                0, 0, PlanetEvent.VOID, new ArrayList<Ship>()));
-
-        /**
-         * max - max range
-         */
-        int max = 3;
-        /**
-         * min -min range
-         */
-        int min = 1;
-
-        for (int x = 0; x < 1000; x+=100) {
-            for (int y = 0; y < 100; y+=50) {
-
-                //Random multiplication
-                int randomNumber = ThreadLocalRandom.current().nextInt(min,max +1);
-
-                int randomPlanetNumber = ThreadLocalRandom.current().nextInt(1, 5);
-
-                //X und Y Koordinaten randomisen
-                int randX = x*randomNumber;
-                int randY = y*randomNumber;
-
-                for(int planetenAnzahl = 0; planetenAnzahl <= randomPlanetNumber; planetenAnzahl++){
-                    String nextPlanet = getPlanetName(planetNames, usedPlanetNames, seed);
-                    planets.add(new Planet(UUID.randomUUID().hashCode(), nextPlanet,x ,randY,
-                            planetEvents.get(random.nextInt(planetEvents.size() - 1)), new ArrayList<Ship>()));
-                }
-
-
-                //Doppelte Planeten check noch ohne Funktion!
-                for(Planet test : planets){
-                    if(test.getPosX() == randX  && test.getPosY() == randY){
-
+        // ======================= Add combat =======================
+        int battles = random.nextInt(4) + 5;
+        for (int i=0;i<battles;i++){
+            Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
+                    0,0,PlanetEvent.COMBAT,new ArrayList<Ship>());
+            // TODO add opponents
+            planetMap.add(planet);
+        }
+        // ======================= Add minibosses =======================
+        int minibosses = random.nextInt(2) + 1;
+        for (int i=0;i<minibosses;i++){
+            Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
+                    0,0,PlanetEvent.MINIBOSS,new ArrayList<Ship>());
+            // TODO add miniboss oponents
+            planetMap.add(planet);
+        }
+        // ======================= Add void =======================
+        int voids = random.nextInt(2);
+        for (int i=0;i<voids;i++){
+            planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
+                    0,0,PlanetEvent.VOID,new ArrayList<Ship>()));
+        }
+        // ======================= Add Nebulae =======================
+        int nebulae = random.nextInt(4) + 1;
+        for (int i=0;i<nebulae;i++){
+            planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
+                    0,0,PlanetEvent.NEBULA,new ArrayList<Ship>()));
+        }
+        // ======================= Add meteorshower =======================
+        int meteors = random.nextInt(3) + 1;
+        for (int i=0;i<meteors;i++){
+            planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
+                    0,0,PlanetEvent.METEORSHOWER,new ArrayList<Ship>()));
+        }
+        // Add start planet
+        Planet startPlanet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
+                -1,-1,PlanetEvent.VOID,new ArrayList<Ship>());
+        startPlanet.setDiscovered(true);
+        finalMap.add(startPlanet);
+        // ======================= Generate grid map =======================
+        int grid = planetMap.size()/2 + 1;
+        for (int i=0;i<grid;i++){
+            for (int a=0;a<grid;a++){
+                if (planetMap.size()>=1) {
+                    Planet addToMap;
+                    if (planetMap.size()>1) {
+                        addToMap = planetMap.get(random.nextInt((planetMap.size() - 1)));
                     }
+                    else{
+                        addToMap = planetMap.get(0);
+                    }
+                    addToMap.setPosX(i);
+                    addToMap.setPosY(a);
+                    planetMap.remove(addToMap);
+                    finalMap.add(addToMap);
                 }
             }
         }
-        // Boss planet
-        planets.add(new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, seed),
-                500, 200, PlanetEvent.BOSS, new ArrayList<Ship>()));
-        Overworld overworld = new Overworld(UUID.randomUUID().hashCode(), seed, username);
-        overworld.setStartPlanet(planets.get(0));
-        overworld.setPlanetMap(planets);
-        overworld.setDifficulty(difficulty);
+        // Add boss planet
+        Planet boss = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
+                30,30,PlanetEvent.BOSS,new ArrayList<Ship>());
+        // Todo Add boss ship
+        finalMap.add(boss);
+        Overworld overworld = new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet);
+        for (Planet p : overworld.getPlanetMap()){
+            p.setOverworld(overworld);
+        }
         return overworld;
     }
 

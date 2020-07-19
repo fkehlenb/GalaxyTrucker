@@ -141,6 +141,8 @@ public class Client {
         }
     }
 
+    //TODO logout function
+
     /**
      * Constructor
      *

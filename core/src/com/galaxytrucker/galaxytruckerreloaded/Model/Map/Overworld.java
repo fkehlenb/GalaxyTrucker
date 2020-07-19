@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NamedQueries({
