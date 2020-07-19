@@ -35,4 +35,16 @@ public class ResponseObject implements Serializable {
     /** The updated overworld */
     @ManyToOne
     private Overworld responseOverworld;
+
+    /** Combat won */
+    private boolean combatWon = false;
+
+    /** Died? */
+    private boolean dead = false;
+
+    /** Fight over? */
+    private boolean combatOver = false;
+
+    /** Your round? */
+    private boolean myRound = false;
 }

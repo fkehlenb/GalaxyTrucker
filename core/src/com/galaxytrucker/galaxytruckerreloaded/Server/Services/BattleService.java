@@ -6,10 +6,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.CrewDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.WeaponDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
 
@@ -43,6 +40,10 @@ public class BattleService implements Serializable {
     @Transient
     private ShipDAO shipDAO = ShipDAO.getInstance();
 
+    /** Battle service dao */
+    @Transient
+    private BattleServiceDAO battleServiceDAO = BattleServiceDAO.getInstance();
+
     /**
      * ID of current round ship
      */
@@ -73,13 +74,26 @@ public class BattleService implements Serializable {
      * @return a responseObject containing the updated ships */
     public ResponseObject getUpdatedData(Ship clientShip){
         ResponseObject responseObject = new ResponseObject();
+        responseObject.setValidRequest(true);
         if (playerOne.getId()==clientShip.getId()){
             responseObject.setResponseShip(playerOne);
             responseObject.setOpponent(playerTwo);
+            if (playerOne.getHp()<=0){
+                responseObject.setDead(true);
+            }
+            else if (currentRound == clientShip.getId()){
+                responseObject.setMyRound(true);
+            }
         }
         else{
             responseObject.setResponseShip(playerTwo);
             responseObject.setOpponent(playerOne);
+            if (playerTwo.getHp()<=0){
+                responseObject.setDead(true);
+            }
+            else if (currentRound == clientShip.getId()){
+                responseObject.setMyRound(true);
+            }
         }
         return responseObject;
     }
@@ -101,13 +115,119 @@ public class BattleService implements Serializable {
      * @param ship - own ship
      * @param weapon - the weapon to attack with
      * @param opponent - opponent ship
-     * @param room - room to attack */
-    public ResponseObject attackShip(Ship ship,Weapon weapon,Ship opponent,Room room){
+     * @param room - room to attack
+     * @param seed - world seed */
+    public ResponseObject attackShip(Ship ship,Weapon weapon,Ship opponent,Room room,int seed){
         ResponseObject responseObject = new ResponseObject();
-        if (currentRound == ship.getId()) {
-
-            nextRound();
-            // TODO add rewards and kick client if he died
+        try {
+            if (currentRound == ship.getId()) {
+                if (weapon.getMissileCost()>0 && ship.getMissiles() >= weapon.getMissileCost()){
+                    ship.setMissiles(ship.getMissiles()-weapon.getMissileCost());
+                }
+                else{
+                    return responseObject;
+                }
+                if (cooldowns.containsKey(weapon)){
+                    return responseObject;
+                }
+                // TODO check energy requirement
+                // Damage shields
+                int weaponDamange = (int) (weapon.getDamage() * weapon.getWeaponLevel() * weapon.getAccuracy());
+                Random random = new Random(seed);
+                // TODO remove me, just in case atm
+                if (weaponDamange == 0) {
+                    weaponDamange = 1;
+                }
+                weaponDamange = weaponDamange - random.nextInt(weaponDamange / 2);
+                int piercing = weapon.getShieldPiercing();
+                // ===== Damage shields =====
+                int shieldDamage = opponent.getShields() - piercing;
+                while (shieldDamage > 0) {
+                    if (weaponDamange > 0) {
+                        weaponDamange -= 1;
+                        opponent.setShields(opponent.getShields() - 1);
+                        shieldDamage -= 1;
+                    } else {
+                        break;
+                    }
+                }
+                weaponDamange -= shieldDamage;
+                if (piercing == 0){
+                    while (opponent.getShields()>0){
+                        if (weaponDamange>0){
+                            opponent.setShields(opponent.getShields()-1);
+                            weaponDamange -= 1;
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                }
+                // ===== Damage hull =====
+                while (weaponDamange > 0) {
+                    opponent.setHp(opponent.getHp() - 1);
+                    weaponDamange -= 1;
+                }
+                // ===== Damage crew in room =====
+                for (Room r : opponent.getSystems()) {
+                    if (r.getId() == room.getId()) {
+                        List<Crew> crewInRoom = r.getCrew();
+                        for (Crew c : crewInRoom) {
+                            c.setHealth(c.getHealth() - weapon.getCrewDamage());
+                            if (c.getHealth() <= 0) {
+                                crewInRoom.remove(c);
+                            }
+                        }
+                        r.setCrew(crewInRoom);
+                    }
+                }
+                // ===== Attempt to cause a breach =====
+                if (random.nextInt(5) == 0) {
+                    for (Room r : opponent.getSystems()) {
+                        if (r.getId() == room.getId()) {
+                            r.setBreach(random.nextInt(3) + 2);
+                        }
+                    }
+                }
+                // ===== Add weapon cooldown =====
+                cooldowns.put(weapon,weapon.getCooldown());
+                // ===== Combat Won =====
+                if (opponent.getHp() <= 0) {
+                    responseObject.setCombatWon(true);
+                    responseObject.setCombatOver(true);
+                    ship.setInCombat(false);
+                    // TODO add rewards
+                }
+                // ===== Update data =====
+                shipDAO.update(ship);
+                shipDAO.update(opponent);
+                battleServiceDAO.update(this);
+                // ===== Switch round =====
+                if (!responseObject.isCombatOver()) {
+                    if (playerOne.getId() == ship.getId()){
+                        playerOne = ship;
+                        playerTwo = opponent;
+                    }
+                    else{
+                        playerOne = opponent;
+                        playerTwo = ship;
+                    }
+                    nextRound();
+                    responseObject.setMyRound(false);
+                }
+                if (ship.getId() == playerOne.getId()){
+                    responseObject.setResponseShip(playerOne);
+                    responseObject.setOpponent(playerTwo);
+                }
+                else{
+                    responseObject.setResponseShip(playerTwo);
+                    responseObject.setOpponent(playerOne);
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            responseObject.setValidRequest(false);
         }
         return responseObject;
     }
@@ -198,6 +318,7 @@ public class BattleService implements Serializable {
                 ship.setFTLCharge(ship.getFTLCharge() + 10);
             }
             shipDAO.update(ship);
+            battleServiceDAO.update(this);
             return ship;
         } catch (Exception e) {
             e.printStackTrace();
