@@ -14,6 +14,7 @@ public class WindowedButton extends ImButton {
 
     private Main main;
 
+
     public WindowedButton(float x, float y, float width, float height, Main main) {
         super(new Texture("options/escape_window_on.png"), x, y, width, height);
         this.main = main;
@@ -26,6 +27,6 @@ public class WindowedButton extends ImButton {
 
     @Override
     public void leftClick() {
-        VideoController.getInstance(null).setWindowed();
+        VideoController.getInstance().setWindowed();
     }
 }
