@@ -87,5 +87,15 @@ public class Main extends Game {
     public SpriteBatch getBatch() {
         return this.batch;
     }
+
+    public void setFullscreen() {
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+    }
+
+    public void setWindowed() {
+        Gdx.graphics.setWindowedMode(WIDTH,HEIGHT);
+    }
+
+    public void setResolution(int width, int height){WIDTH = width; HEIGHT = height; create();}
 }
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 
 /**
  * to represent a crew member in the inventory
@@ -58,7 +59,7 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
      *
      * @param main - main class
      */
-    public InventoryCrewSlotUI(Main main, Crew crew, float x, float y, BitmapFont font) {
+    public InventoryCrewSlotUI(Main main, Crew crew, float x, float y, BitmapFont font, ShipType type) {
         super(main, x, y, font);
 
         glyphName.setText(font, crew.getName());
@@ -76,15 +77,7 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
         healthStatus = new Texture("gameuis/energybar.png");
         healthBox = new Texture("crew/health_box.png");
 
-        if(crew.getName().equals("ana")) {
-            crewTexture = new Texture("crew/anaerobic.png");
-        }
-        else if(crew.getName().equals("battle")) {
-            crewTexture = new Texture("crew/battle.png");
-        }
-        else {
-            crewTexture = new Texture("crew/energy.png"); //TODO wie sieht das mit namen aus?
-        }
+        crewTexture = new Texture("crew/"+type.toString().toLowerCase()+".png");
     }
 
     /**
@@ -94,18 +87,18 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
     public void render() {
         super.render();
         main.batch.begin();
-        font.draw(main.batch, glyphName, posX+72, posY + 50);
-        font.draw(main.batch, glyphEngine, posX+72, posY + 30);
-        font.draw(main.batch, glyphWeapon, posX+72, posY + 10);
-        font.draw(main.batch, glyphShield, posX+200, posY + 50);
-        font.draw(main.batch, glyphRepair, posX+200, posY + 30);
-        font.draw(main.batch, glyphCombat, posX+200, posY + 10);
-        main.batch.draw(crewTexture, posX, posY, 72, 72); //48
-        main.batch.draw(healthBox, posX+5, posY-15, 50, 15);
-        float x = posX+11;
+        font.draw(main.batch, glyphName, posX+Main.WIDTH/(1920/72), posY + Main.HEIGHT/(1080/50));
+        font.draw(main.batch, glyphEngine, posX+Main.WIDTH/(1920/72), posY + Main.HEIGHT/(1080/30));
+        font.draw(main.batch, glyphWeapon, posX+Main.WIDTH/(1920/72), posY + Main.HEIGHT/(1080/10));
+        font.draw(main.batch, glyphShield, posX+Main.WIDTH/(1920/200), posY + Main.HEIGHT/(1080/50));
+        font.draw(main.batch, glyphRepair, posX+Main.WIDTH/(1920/200), posY + Main.HEIGHT/(1080/30));
+        font.draw(main.batch, glyphCombat, posX+Main.WIDTH/(1920/200), posY + Main.HEIGHT/(1080/10));
+        main.batch.draw(crewTexture, posX, posY, Main.WIDTH/(1920/72), Main.HEIGHT/(1080/72)); //48
+        main.batch.draw(healthBox, posX+Main.WIDTH/(1920/5), posY-Main.HEIGHT/(1080/15), 50, Main.HEIGHT/(1080/15));
+        float x = posX+Main.WIDTH/(1920/11);
         for(int i=0;i<currTexture;i++) {
-            main.batch.draw(healthStatus, x, posY-10, 4, 5);
-            x+=4;
+            main.batch.draw(healthStatus, x, posY-Main.HEIGHT/(1080/10), Main.WIDTH/(1920/4), Main.HEIGHT/(1080/5));
+            x+=Main.WIDTH/(1920/4);
         }
         main.batch.end();
     }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.SetResolutionButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.WindowedButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video.FullscreenEnableButton;
@@ -36,11 +37,6 @@ public class VideoUI {
     private OptionUI optionUI;
 
     /**
-     * Position of the Window
-     */
-    private float x, y;
-
-    /**
      * Back Button
      */
     private BackButton backButton;
@@ -48,6 +44,8 @@ public class VideoUI {
     private FullscreenEnableButton fullscreenEnableButton;
 
     private WindowedButton windowedButton;
+
+    private SetResolutionButton setResolutionButton;
 
     private Stage stage;
 
@@ -70,17 +68,17 @@ public class VideoUI {
         this.stage = stage;
         backgroundTexture = new Texture("options/video.png");
 
-        x = main.WIDTH / 2 - backgroundTexture.getWidth() / 2;
-        y = main.HEIGHT / 2 - backgroundTexture.getHeight() / 2;
 
+        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
+        windowedButton = new WindowedButton(main.WIDTH/2 , main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40, main);
+        fullscreenEnableButton = new FullscreenEnableButton(main.WIDTH/2 - (main.WIDTH/15), main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40, main);
+        setResolutionButton = new SetResolutionButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*1, main.WIDTH/15, main.HEIGHT/40, main, 2560, 1440);
 
-        backButton = new BackButton(x + 220, y + 100, 128, 24, optionUI, this);
-        windowedButton = new WindowedButton(x + 220+65, y + 320, 128, 24, main);
-        fullscreenEnableButton = new FullscreenEnableButton(x + 220-65, y + 320, 128, 24, main);
 
         stage.addActor(backButton);
         stage.addActor(windowedButton);
         stage.addActor(fullscreenEnableButton);
+        stage.addActor(setResolutionButton);
     }
 
     /**
@@ -91,7 +89,7 @@ public class VideoUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(backgroundTexture, x, y, 601, 471);
+        main.batch.draw(backgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();
@@ -105,6 +103,7 @@ public class VideoUI {
         backButton.remove();
         fullscreenEnableButton.remove();
         windowedButton.remove();
+        setResolutionButton.remove();
         if(gamePlay != null) {
             gamePlay.deleteVideoUI();
         }

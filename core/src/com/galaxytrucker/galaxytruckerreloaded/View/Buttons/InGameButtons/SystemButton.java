@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.SubsystemUI;
@@ -50,7 +52,7 @@ public class SystemButton extends ImButton
 
 
     /**
-     * decrease the Energie provided for a System
+     * decrease the Energy provided for a System
      */
     public void rightClick()
     {

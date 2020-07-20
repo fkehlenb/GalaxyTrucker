@@ -25,7 +25,7 @@ public class StartServerButton extends ImButton {
      * @param screen the screen this button is on
      */
     public StartServerButton (float x, float y, float width, float height, CreateOrJoinServer screen) {
-        super(new Texture("buttons/start_button.png"), x, y, width, height);
+        super(new Texture("buttons/start_server_button.png"), x, y, width, height);
         this.screen = screen;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

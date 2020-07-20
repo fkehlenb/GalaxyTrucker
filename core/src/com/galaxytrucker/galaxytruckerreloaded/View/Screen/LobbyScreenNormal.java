@@ -123,7 +123,7 @@ public class LobbyScreenNormal implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        backButton = new LobbyScreenNormalBackButton(0, 90, 512, 48, this);
+        backButton = new LobbyScreenNormalBackButton(0, Main.WIDTH/12, Main.WIDTH/3.75f, Main.HEIGHT/22.5f, this);
 
         stage.addActor(backButton);
 
@@ -185,7 +185,7 @@ public class LobbyScreenNormal implements Screen {
             y -= 10;
         }
         font.draw(main.batch, "L O B B Y", 75, main.HEIGHT - 100);
-        textFont.draw(main.batch, "Wait here until the host starts the game", 75, main.HEIGHT - 175);
+        textFont.draw(main.batch, "Wait here until the host starts the game", Main.WIDTH/25.6f, main.HEIGHT - Main.HEIGHT/6.171f);
         main.batch.end();
 
         stage.draw();

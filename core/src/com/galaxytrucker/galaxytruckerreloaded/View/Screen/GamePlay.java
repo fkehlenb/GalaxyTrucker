@@ -576,7 +576,7 @@ public class GamePlay implements Screen {
      * @param amount how much should be subtracted/added
      */
     public void roomSystemEnergyChosen(Room room, int amount) {
-        //call controller
+        //TODO: call controller
     }
 
     /**

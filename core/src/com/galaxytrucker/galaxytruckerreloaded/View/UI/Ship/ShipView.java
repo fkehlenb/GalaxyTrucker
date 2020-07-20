@@ -54,6 +54,16 @@ public class ShipView extends AbstractShip {
     private ScrapUI money;
 
     /**
+     * the ui displaying the amount of missiles the player has
+     */
+    private MissileUI missiles;
+
+    /**
+     * Ui displaying the amount of fuel player has.
+     */
+    private FuelUI fuel;
+
+    /**
      * button to open the inventory (InventoryUI)
      */
     private ShipButton inventory;
@@ -102,6 +112,13 @@ public class ShipView extends AbstractShip {
 
     private Stage tileStage;
 
+    private ShipType shipType;
+
+    /**
+     * the x and y position the ship starts at on the screen
+     */
+    private float baseX, baseY;
+
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
@@ -109,6 +126,8 @@ public class ShipView extends AbstractShip {
     public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game) {
         super(main, ship, stage, game);
         this.tileStage = tileStage;
+
+        shipType = ship.getShipType();
 
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
@@ -133,8 +152,8 @@ public class ShipView extends AbstractShip {
         roomWidth = shipRoomBackground.getWidth()*1.5f;
         roomHeight = shipRoomBackground.getHeight()*1.5f;
 
-        float roomsBaseX = (70 + width/2);
-        float roomsBaseY = main.HEIGHT/2;
+        baseX = (70 + width/2);
+        baseY = main.HEIGHT/2;
 
         List<Crew> crews = new ArrayList<>();
         for(Room r : ship.getSystems()) {
@@ -143,7 +162,7 @@ public class ShipView extends AbstractShip {
         crew = new HashMap<>();
         float cy = Main.HEIGHT - 150;
         for(Crew c : crews) {
-            crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), roomsBaseY)));
+            crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY), ship.getShipType()));
             cy -= 60;
         }
 
@@ -151,33 +170,44 @@ public class ShipView extends AbstractShip {
 
         //uis for all the systems/rooms
         rooms = new HashMap<>();
-        List<Room> existingSystems = ship.getSystems();
+        List<Room> existingRooms = ship.getSystems();
         float sx = 60;
-        for(Room r : existingSystems) {
+        for(Room r : existingRooms) {
             if(r instanceof System) {
                 if(r instanceof Shield) {
-                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (Shield) r, sx));
+                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (Shield) r, sx));
                 }
                 else if(! (r instanceof WeaponSystem)) {
-                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY), (System) r, sx));
+                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx));
                 }
                 sx += 55;
             }
             else {
-                rooms.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), r.getInteriorID(), roomsBaseY)));
+                rooms.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY)));
             }
         }
         //need to be done extra bc they need the actual weapon, not just the system
-        for(Weapon w : ship.getInventory()) {
-            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), roomsBaseY), w, sx + 55));
+        for(Weapon w : game.loadWeapons()) {
+            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseY), w, sx + 55));
         }
 
-        moveButton = new MoveButton(850, main.HEIGHT - 90, 150, 92, this);
-        inventory = new ShipButton(660,main.HEIGHT - 60, 248, 50, this);
+        moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
+        inventory = new ShipButton(Main.WIDTH/(2.5f),main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
 
         money = new ScrapUI(main, ship.getCoins());
+        missiles = new MissileUI(main, ship.getMissiles());
         hull = new HullUI(main, ship.getHp());
-        energy = new EnergyUI(main, ship.getEnergy());
+        fuel = new FuelUI(main, ship.getFuel());
+
+        //Um eine List aller Systems (existingSystems2) an EnergyUI zu übergeben.
+        List<System> existingSystems2 = new ArrayList<>();
+        for (Room r: existingRooms) {
+            if(r instanceof System) {
+                existingSystems2.add((System) r);
+            }
+        }
+        energy = new EnergyUI(main, ship.getEnergy(), existingSystems2);
+
 
         stage.addActor(inventory);
         stage.addActor(moveButton);
@@ -185,8 +215,11 @@ public class ShipView extends AbstractShip {
 
     /**
      * get the x position of a room depending on the interior id and the ship type
+     *
+     * one tile = 48*48
+     *
      * @param id the interior id of the room (from left to right, up to down)
-     * @param bx the x position of the start (the most to the left)
+     * @param bx the x position of the start (the middle of the ship)
      * @return the total x position (lower right corner of the room)
      */
     private float getRoomX(ShipType type, int id, float bx) {
@@ -218,11 +251,134 @@ public class ShipView extends AbstractShip {
                         return bx+216;
                     case 16: return bx+312;
                 }
-            case BARRAGE: return 0;
-            case BOARDER: return 0;
-            case TANK: return 0;
-            case KILLER: return 0;
-            case STEALTH: return 0;
+            case BARRAGE:
+                switch(id) {
+                    case 0:
+                    case 1:
+                        return bx - 360;
+                    case 2:
+                    case 3:
+                    case 4:
+                        return bx - 312;
+                    case 5:
+                    case 6:
+                        return bx - 264;
+                    case 7: return bx - 216;
+                    case 8:
+                    case 9:
+                        return bx - 168;
+                    case 10:
+                        return bx - 120;
+                    case 11: return bx - 24;
+                    case 12: return bx + 72;
+                    case 13:
+                    case 14:
+                        return bx + 120;
+                    case 15:
+                    case 16:
+                        return bx + 216;
+                    case 17:
+                        return bx + 312;
+
+                }
+            case BOARDER:
+                switch(id) {
+                    case 0:
+                    case 1:
+                        return bx - 216;
+                    case 2: return bx- 168;
+                    case 3:
+                    case 4:
+                        return bx-120;
+                    case 5:
+                    case 6:
+                        return bx - 72;
+                    case 7:
+                    case 8:
+                        return bx - 24;
+                    case 9:
+                    case 10:
+                        return bx + 24;
+                    case 11:
+                    case 12:
+                    case 13:
+                        return bx + 72;
+                    case 14: return bx + 120;
+                    case 15: return bx + 168;
+
+                };
+            case TANK: switch(id) {
+                case 0:
+                case 1:
+                    return bx - 216;
+                case 2:
+                case 3:
+                case 4:
+                    return bx - 168;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    return bx - 120;
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                    return bx - 24;
+                case 13:
+                case 14:
+                case 15:
+                    return bx + 72;
+                case 16:
+                case 17:
+                    return bx + 168;
+            }
+            case KILLER:
+                switch(id) {
+                    case 0:
+                    case 1:
+                        return bx - 192;
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                        return bx - 96;
+                    case 6: return bx - 48;
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        return bx;
+                    case 11:
+                    case 12:
+                        return bx + 96;
+                    case 13:
+                    case 14:
+                    case 15:
+                        return bx + 144;
+                }
+            case STEALTH:
+                switch(id) {
+                    case 0: return bx - 312;
+                    case 1:
+                    case 2:
+                    case 3:
+                        return bx - 216;
+                    case 4: return bx - 168;
+                    case 5:
+                    case 6:
+                        return bx - 120;
+                    case 7: return bx - 72;
+                    case 8:
+                    case 9:
+                        return bx - 24;
+                    case 10: return bx + 24;
+                    case 11: return bx + 72;
+                    case 12:
+                    case 13:
+                        return bx + 168;
+                    case 14: return bx + 264;
+                }
             default: return 0;
         }
     }
@@ -231,6 +387,7 @@ public class ShipView extends AbstractShip {
      * return the y position of a room, depending on the ship type
      * @param type the ship type
      * @param id the interior id
+     * @param by the base y position (in the middle of the ship)
      * @return total y position (lower right corner of room)
      */
     private float getRoomY(ShipType type, int id, float by) {
@@ -259,11 +416,128 @@ public class ShipView extends AbstractShip {
                         return by;
                     case 10 : return by -144;
                 }
-            case BARRAGE: return 0;
-            case BOARDER: return 0;
-            case TANK: return 0;
-            case KILLER: return 0;
-            case STEALTH: return 0;
+            case BARRAGE:
+                switch (id) {
+                    case 8:
+                    case 13:
+                    case 15:
+                        return by;
+                    case 5: return by + 48;
+                    case 2:
+                    case 0:
+                        return by + 96;
+                    case 3:
+                    case 7:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 14:
+                    case 17:
+                        return by-48;
+                    case 6:
+                    case 9:
+                    case 16:
+                        return by - 96;
+                    case 4: return by - 144;
+                    case 1: return by - 192;
+                }
+            case BOARDER:
+                switch(id) {
+                    case 5: return by + 120;
+                    case 0:
+                    case 6:
+                    case 9:
+                        return by + 72;
+                    case 3:
+                    case 11:
+                        return by + 24;
+                    case 2:
+                        return by - 24;
+                    case 7:
+                    case 12:
+                    case 14:
+                        return by - 72;
+                    case 1:
+                    case 4:
+                    case 10:
+                        return by - 120;
+                    case 8:
+                    case 13:
+                    case 15:
+                        return by - 168;
+                }
+            case TANK:
+                switch(id) {
+                    case 0:
+                    case 2:
+                    case 5:
+                    case 9:
+                    case 13:
+                    case 16:
+                        return by + 48;
+                    case 6:
+                    case 10:
+                        return by;
+                    case 3:
+                    case 7:
+                    case 11:
+                    case 14:
+                        return by - 48;
+                    case 1:
+                    case 4:
+                    case 8:
+                    case 12:
+                    case 15:
+                    case 17:
+                        return by - 144;
+                }
+            case KILLER:
+                switch(id) {
+                    case 2:
+                    case 7:
+                        return by + 144;
+                    case 0:
+                    case 3:
+                    case 11:
+                        return by + 96;
+                    case 8:
+                    case 13:
+                        return by + 48;
+                    case 6:
+                    case 14:
+                        return by - 48;
+                    case 4:
+                    case 9:
+                    case 15:
+                        return by - 144;
+                    case 1:
+                    case 5:
+                    case 10:
+                    case 12:
+                        return by - 196;
+
+                }
+            case STEALTH:
+                switch (id) {
+                    case 1: return by + 96;
+                    case 5:
+                    case 8:
+                        return by + 48;
+                    case 12: return by;
+                    case 0:
+                    case 2:
+                    case 4:
+                    case 7:
+                    case 10:
+                    case 11:
+                    case 13:
+                    case 14:
+                        return by - 48;
+                    case 9: return by - 96;
+                    case 3:
+                    case 6:
+                        return by - 144;
+                }
             default: return 0;
         }
     }
@@ -282,6 +556,8 @@ public class ShipView extends AbstractShip {
         main.batch.end();
 
         money.render();
+        missiles.render();
+        fuel.render();
         hull.render();
         energy.render();
 
@@ -312,7 +588,9 @@ public class ShipView extends AbstractShip {
         shipRoomBackground.dispose();
         weaponGeneralBackground.dispose();
         money.disposeScrapUI();
+        missiles.disposeMissileUI();
         hull.disposeHullUI();
+        fuel.disposeFuelUI();
         energy.disposeEnergyUI();
         if(mapUI!=null) {mapUI.disposeMapUI();}
         if(inventoryUI!=null) {inventoryUI.disposeInventoryUI();}
@@ -354,7 +632,7 @@ public class ShipView extends AbstractShip {
      */
     public void openInventory() {
         if(inventoryUI == null){
-            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this, font15);
+            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this, font15, shipType);
         }
     }
 
@@ -398,10 +676,9 @@ public class ShipView extends AbstractShip {
      * a crew member is moved to a new room
      * called by crew ui after player attempts to move a crew
      * @param crew the crew member
-     * @param room the new room
      */
     public void crewMoved(Crew crew, Room room) {
-        this.crew.get(crew.getId()).crewMoved(room);
+        this.crew.get(crew.getId()).crewMoved(getRoomX(shipType, room.getInteriorID(), baseX), getRoomY(shipType, room.getInteriorID(), baseY));
     }
 
     /**
@@ -469,6 +746,18 @@ public class ShipView extends AbstractShip {
      * @param amount by how much the amount is changed
      */
     public void changeAmountScrap(int amount) { money.changeAmount(amount);}
+
+    /**
+     * change the amount of missiles displayed
+     * @param amount by how much the amount is changed
+     */
+    public void changeAmountMissile(int amount) { missiles.changeAmount(amount);}
+
+    /**
+     * changes amount of fuel displayed
+     * @param amount by how much the amount is changed
+     */
+    public void changeAmountFuel(int amount) {fuel.changeAmount(amount);}
 
     public void weaponShot(int weaponid, Room room) { game.weaponShot(weaponid, room);}
 
