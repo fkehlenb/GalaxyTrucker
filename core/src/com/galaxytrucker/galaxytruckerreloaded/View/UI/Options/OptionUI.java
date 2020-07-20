@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.AudioButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Control.ControlButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Credits.CreditsButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General.GeneralButton;
@@ -26,7 +27,7 @@ public class OptionUI {
 
     private VideoButton videoButton;
 
-    private OptionenBackButton optionenBackButton;
+    private BackButton backButton;
 
     private GeneralButton generalButton;
 
@@ -48,6 +49,8 @@ public class OptionUI {
 
     private MainMenu mainMenu;
 
+    public boolean startedFromMain = false;
+
     /**
      * Constructor
      *
@@ -58,20 +61,23 @@ public class OptionUI {
         this.game = game;
         this.stage = stage;
         this.mainMenu = mainMenu;
-        if(game != null){this.pauseMenuUI = game.getPauseMenuUI(); }
+        if(game != null){
+            this.pauseMenuUI = game.getPauseMenuUI();
+            startedFromMain = true;
+        }
         optionsBackgroundTexture = new Texture("options/options.png");
 
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
 
-        optionenBackButton = new OptionenBackButton(x+220, y+(y/6), 128, 24, this, pauseMenuUI);
+        backButton = new BackButton(x+220, y+(y/6), 128, 24, this, pauseMenuUI);
         videoButton = new VideoButton(x+220, y+(2*y/6), 128, 24, this);
         generalButton = new GeneralButton(x+220, y+(3*y/6), 128, 24, this);
         controlButton = new ControlButton(x+ 220, y+ (4*y/6), 128, 24, this );
         creditsButton = new CreditsButton(x + 220, y + (5*y/6), 128, 24, this);
         audioButton = new AudioButton(x +220, y+(6*y/6), 128, 24, this);
 
-        stage.addActor(optionenBackButton);
+        stage.addActor(backButton);
         stage.addActor(generalButton);
         stage.addActor(videoButton);
         stage.addActor(controlButton);
@@ -96,7 +102,7 @@ public class OptionUI {
      */
     public void disposeOptionsUI() {
         optionsBackgroundTexture.dispose();
-        optionenBackButton.remove();
+        backButton.remove();
         generalButton.remove();
         videoButton.remove();
         audioButton.remove();
@@ -121,7 +127,7 @@ public class OptionUI {
      */
     public void showOptionsUI() {
         generalButton.setVisible(true);
-        optionenBackButton.setVisible(true);
+        backButton.setVisible(true);
         videoButton.setVisible(true);
         audioButton.setVisible(true);
         creditsButton.setVisible(true);
@@ -134,7 +140,7 @@ public class OptionUI {
      */
     public void hideOptionsUI() {
         generalButton.setVisible(false);
-        optionenBackButton.setVisible(false);
+        backButton.setVisible(false);
         videoButton.setVisible(false);
         audioButton.setVisible(false);
         creditsButton.setVisible(false);
@@ -146,10 +152,7 @@ public class OptionUI {
      */
     public void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            disposeOptionsUI();
-            if(pauseMenuUI!=null) {
-                pauseMenuUI.showPauseMenuUI();
-            }
+            backButton.leftClick();
         }
     }
 
@@ -202,4 +205,5 @@ public class OptionUI {
             mainMenu.createControlUI();
         }
     }
+
 }
