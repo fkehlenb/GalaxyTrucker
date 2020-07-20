@@ -107,10 +107,13 @@ public class BattleService implements Serializable {
         }
         // Set the updated data
         if (clientShip.getId()==playerOne.getId()){
+            // ===== YOU DEAD =====
             if (playerOne.getHp()<=0){
+                // Set combat stats
                 responseObject.setCombatOver(true);
                 responseObject.setDead(true);
                 responseObject.setPreviousRoundAction(PreviousRoundAction.YOU_DEAD);
+                // Remove ship from database
                 try {
                     shipDAO.remove(playerOne);
                 }
@@ -118,10 +121,14 @@ public class BattleService implements Serializable {
                     e.printStackTrace();
                 }
             }
+            // ===== OPPONENT DEAD =====
+            // Todo check for crew
             else if (playerTwo.getHp()<=0){
+                // Set combat stats
                 responseObject.setCombatOver(true);
                 responseObject.setCombatWon(true);
                 responseObject.setPreviousRoundAction(PreviousRoundAction.OPPONENT_DEAD);
+                // Update planet list
                 List<Planet> planets = overworld.getPlanetMap();
                 if (planets.contains(playerOne.getPlanet())){
                     Planet current = playerOne.getPlanet();
@@ -133,6 +140,7 @@ public class BattleService implements Serializable {
                             planets.set(planets.indexOf(p),current);
                         }
                     }
+                    // Update overworld
                     overworld.setPlanetMap(planets);
                     try {
                         overworldDAO.update(overworld);
@@ -141,6 +149,7 @@ public class BattleService implements Serializable {
                         e.printStackTrace();
                     }
                 }
+                // Remove opponent ship from database
                 try {
                     shipDAO.remove(playerTwo);
                 }
@@ -148,20 +157,26 @@ public class BattleService implements Serializable {
                     e.printStackTrace();
                 }
             }
+            // ===== OPPONENT FLED FIGHT =====
             else if (previousRoundAction!=null && previousRoundAction==PreviousRoundAction.FLEE_FIGHT){
                 responseObject.setCombatWon(true);
                 responseObject.setCombatOver(true);
                 // Todo add rewards
             }
+            // ===== DEFAULTS =====
             responseObject.setResponseShip(playerOne);
             responseObject.setOpponent(playerTwo);
             responseObject.setMyRound(true);
         }
         else{
+            // ===== OPPONENT DEAD =====
+            // Todo check for crew
             if (playerOne.getHp()<=0){
+                // Set combat status
                 responseObject.setCombatOver(true);
                 responseObject.setCombatWon(true);
                 responseObject.setPreviousRoundAction(PreviousRoundAction.OPPONENT_DEAD);
+                // Update planet map in overworld
                 List<Planet> planets = overworld.getPlanetMap();
                 if (planets.contains(playerOne.getPlanet())){
                     Planet current = playerOne.getPlanet();
@@ -173,6 +188,7 @@ public class BattleService implements Serializable {
                             planets.set(planets.indexOf(p),current);
                         }
                     }
+                    // Update overworld
                     overworld.setPlanetMap(planets);
                     try {
                         overworldDAO.update(overworld);
@@ -180,6 +196,7 @@ public class BattleService implements Serializable {
                     catch (Exception e){
                         e.printStackTrace();
                     }
+                    // Remove opponent ship from database
                     try {
                         shipDAO.remove(playerOne);
                     }
@@ -188,10 +205,12 @@ public class BattleService implements Serializable {
                     }
                 }
             }
+            // ===== YOU DEAD =====
             else if (playerTwo.getHp()<=0){
                 responseObject.setCombatOver(true);
                 responseObject.setDead(true);
                 responseObject.setPreviousRoundAction(PreviousRoundAction.YOU_DEAD);
+                // Remove ship from database
                 try {
                     shipDAO.remove(playerTwo);
                 }
@@ -199,11 +218,13 @@ public class BattleService implements Serializable {
                     e.printStackTrace();
                 }
             }
+            // ===== OPPONENT FLED FIGHT =====
             else if (previousRoundAction!=null && previousRoundAction==PreviousRoundAction.FLEE_FIGHT){
                 responseObject.setCombatWon(true);
                 responseObject.setCombatOver(true);
                 // Todo add rewards
             }
+            // ===== DEFAULTS =====
             responseObject.setResponseShip(playerTwo);
             responseObject.setOpponent(playerOne);
             responseObject.setMyRound(true);
