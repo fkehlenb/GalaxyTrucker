@@ -62,4 +62,7 @@ public class ResponseObject implements Serializable {
     /** Reward crew */
     @ManyToMany(cascade = CascadeType.MERGE)
     private List<Crew> rewardCrew;
+
+    /** Successful flee fight */
+    private boolean fledFight = false;
 }

@@ -236,8 +236,12 @@ public class BattleService implements Serializable {
      * Next round
      */
     private void nextRound() {
-        playerOne = passiveChanges(playerOne);
-        playerTwo = passiveChanges(playerTwo);
+        if (playerOne!=null) {
+            playerOne = passiveChanges(playerOne);
+        }
+        if (playerTwo!=null) {
+            playerTwo = passiveChanges(playerTwo);
+        }
         if (playerOne.getId() == currentRound) {
             currentRound = playerTwo.getId();
         } else {
@@ -272,7 +276,7 @@ public class BattleService implements Serializable {
                 if (weaponDamange == 0) {
                     weaponDamange = 1;
                 }
-                weaponDamange = weaponDamange - random.nextInt(weaponDamange / 2);
+                weaponDamange = weaponDamange - random.nextInt(weaponDamange / 2); // todo will always roll same
                 int piercing = weapon.getShieldPiercing();
                 // ===== Damage shields =====
                 int shieldDamage = opponent.getShields() - piercing;
@@ -368,10 +372,45 @@ public class BattleService implements Serializable {
 
 
     /** Flee fight
-     * @param ship - the ship to flee the fight */
-    public ResponseObject fleeFight(Ship ship){
+     * @param ship - the ship to flee the fight
+     * @param dest - destination planet */
+    public ResponseObject fleeFight(Ship ship,Planet dest){
         ResponseObject responseObject = new ResponseObject();
-
+        if (ship.getId() == currentRound){
+            if (ship.getFTLCharge() == 100){
+                Random random = new Random(UUID.randomUUID().hashCode());
+                if ((float) random.nextInt(30)*ship.getEvasionChance() > 2){
+                    if (ship.getId()==playerOne.getId()){
+                        ship = playerOne;
+                    }
+                    else{
+                        ship = playerTwo;
+                    }
+                    // Remove combat properties
+                    playerOne.setInCombat(false);
+                    playerTwo.setInCombat(false);
+                    previousRoundAction = PreviousRoundAction.FLEE_FIGHT;
+                    // Use travel service to send client to new planet
+                    ResponseObject travelObject = TravelService.getInstance().jump(ship,dest);
+                    responseObject.setResponseOverworld(travelObject.getResponseOverworld());
+                    travelObject.setCombatOver(true);
+                    travelObject.setMyRound(false);
+                    travelObject.setFledFight(true);
+                    travelObject.setPreviousRoundAction(previousRoundAction);
+                    if (playerOne.getId()==ship.getId()){
+                        playerOne = null;
+                    }
+                    else{
+                        playerTwo = null;
+                    }
+                    nextRound();
+                    return travelObject;
+                }
+            }
+            responseObject.setValidRequest(true);
+            responseObject.setFledFight(false);
+            nextRound();
+        }
         return responseObject;
     }
 
