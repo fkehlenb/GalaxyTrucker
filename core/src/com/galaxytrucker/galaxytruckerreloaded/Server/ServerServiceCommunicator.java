@@ -53,7 +53,9 @@ public class ServerServiceCommunicator {
         catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Attemting action " + request.getRequestType().toString());
+        System.out.println("[SERVER]:Attemting action " + request.getRequestType().toString()+":[CLIENT-ID]:" + request.getShip().getId());
+        System.out.println("[IS-IN-COMBAT]:" + request.getShip().isInCombat() + ":[PLANET]:" + request.getShip().getPlanet() +
+                ":[PLANET-EVENT]:" + request.getShip().getPlanet().getEvent());
         switch (request.getRequestType()){
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
