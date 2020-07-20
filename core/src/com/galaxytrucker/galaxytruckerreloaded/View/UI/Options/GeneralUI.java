@@ -37,10 +37,6 @@ public class GeneralUI {
      */
     private OptionUI optionUI;
 
-    /**
-     * Position of the Window
-     */
-    private float x, y;
 
     /**
      * Back Button
@@ -68,10 +64,7 @@ public class GeneralUI {
         }
         generalBackgroundTexture = new Texture("options/general.png");
 
-        x = main.WIDTH / 2 - generalBackgroundTexture.getWidth() / 2;
-        y = main.HEIGHT / 2 - generalBackgroundTexture.getHeight() / 2;
-
-        backButton = new BackButton(x + 220, y + 100, 128, 24, optionUI, this);
+        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
 
         stage.addActor(backButton);
     }
@@ -83,7 +76,7 @@ public class GeneralUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(generalBackgroundTexture, x, y, 601, 471);
+        main.batch.draw(generalBackgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();

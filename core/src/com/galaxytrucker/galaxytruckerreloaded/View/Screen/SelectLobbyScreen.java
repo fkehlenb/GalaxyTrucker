@@ -103,10 +103,11 @@ public class SelectLobbyScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         lobby = new TextField("", skin);
-        lobby.setPosition(main.WIDTH/2 - lobby.getWidth()/2, main.HEIGHT/2 - lobby.getHeight()/2 + 50);
+        lobby.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
+        lobby.setPosition(main.WIDTH/2 - lobby.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*0);
 
-        backButton = new SelectLobbyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 100, 512, 48, this);
-        selectLobbyButton = new SelectLobbyButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 50, 512, 48, this);
+        backButton = new SelectLobbyBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        selectLobbyButton = new SelectLobbyButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
 
         stage.addActor(lobby);
         stage.addActor(backButton);
@@ -122,7 +123,7 @@ public class SelectLobbyScreen implements Screen {
         params.magFilter = Texture.TextureFilter.Nearest;
         params.minFilter = Texture.TextureFilter.Nearest;
         params.genMipMaps = true;
-        params.size = 40;
+        params.size = main.HEIGHT/48;
 
         font = generator.generateFont(params);
         glyph.setText(font, "Please enter a server address");
@@ -172,7 +173,7 @@ public class SelectLobbyScreen implements Screen {
 
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + 100);
+        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + main.HEIGHT/21.6f*2);
         main.batch.end();
 
         stage.draw();

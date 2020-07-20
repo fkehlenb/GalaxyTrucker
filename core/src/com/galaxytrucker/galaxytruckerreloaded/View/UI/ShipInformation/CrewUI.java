@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CrewSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -102,7 +103,7 @@ public class CrewUI {
      * @param main the main class
      * @param crew the crew member
      */
-    public CrewUI(Main main, Crew crew, Stage stage, ShipView shipView, float x, float y, BitmapFont font, float rX, float rY) {
+    public CrewUI(Main main, Crew crew, Stage stage, ShipView shipView, float x, float y, BitmapFont font, float rX, float rY, ShipType type) {
         this.main = main;
         this.crew = crew;
         this.shipView = shipView;
@@ -114,17 +115,9 @@ public class CrewUI {
 
         glyph.setText(font, crew.getName());
 
-        if(crew.getName().equals("ana")) {
-            crewImage = new Texture("crew/anaerobic.png");
-        }
-        else if(crew.getName().equals("battle")) {
-            crewImage = new Texture("crew/battle.png");
-        }
-        else {
-            crewImage = new Texture("crew/energy.png");
-        }
+        crewImage = new Texture("crew/"+type.toString().toLowerCase()+".png");
 
-        crewButton = new CrewSelectButton(crewImage, x, y+15, 50, 50, crew.getId(), this);
+        crewButton = new CrewSelectButton(crewImage, x, y, 50, 50, crew.getId(), this);
         stage.addActor(crewButton);
 
         crewInShip = crewImage;
@@ -172,10 +165,11 @@ public class CrewUI {
      * the crew member was moved to a new room
      * called by shipview
      *
-     * @param room the new room
+     * @param roomX the x position of the lower left corner the crew member is in
      */
-    public void crewMoved(Room room) {
-
+    public void crewMoved(float roomX, float roomY) {
+        this.roomX = roomX;
+        this.roomY = roomY;
     }
 
     /**

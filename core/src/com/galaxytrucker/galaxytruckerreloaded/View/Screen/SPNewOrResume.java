@@ -63,9 +63,9 @@ public class SPNewOrResume implements Screen {
         background = new Texture("1080p.png");
 
 
-        startNewGameButton = new StartNewGameButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24, 512, 48, this);
-        resumeButton = new ResumeButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96, 512, 48, this);
-        backButton = new SPNewOrResumeBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 24 - 96*2, 512, 48, this, main);
+        startNewGameButton = new StartNewGameButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        resumeButton = new ResumeButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        backButton = new SPNewOrResumeBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this, main);
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
