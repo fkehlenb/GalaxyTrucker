@@ -91,6 +91,13 @@ public class BattleService implements Serializable {
     @SuppressWarnings("Duplicates")
     public ResponseObject getUpdatedData(Ship clientShip, Overworld overworld){
         ResponseObject responseObject = new ResponseObject();
+        // Not trusting the client data
+        if (clientShip.getId()==playerOne.getId()){
+            clientShip = playerOne;
+        }
+        else{
+            clientShip = playerTwo;
+        }
         // While not your turn, stuck in waiting loop
         while (clientShip.getId()!=currentRound){
             continue;
@@ -257,6 +264,13 @@ public class BattleService implements Serializable {
      * @param seed - world seed */
     public ResponseObject attackShip(Ship ship,Weapon weapon,Ship opponent,Room room,int seed){
         ResponseObject responseObject = new ResponseObject();
+        // Not trusting the client data
+        if (ship.getId()==playerOne.getId()){
+            ship = playerOne;
+        }
+        else{
+            ship = playerTwo;
+        }
         try {
             if (currentRound == ship.getId()) {
                 if (weapon.getMissileCost()>0 && ship.getMissiles() >= weapon.getMissileCost()){
@@ -376,16 +390,17 @@ public class BattleService implements Serializable {
      * @param dest - destination planet */
     public ResponseObject fleeFight(Ship ship,Planet dest){
         ResponseObject responseObject = new ResponseObject();
+        // Not trusting the client data
+        if (ship.getId()==playerOne.getId()){
+            ship = playerOne;
+        }
+        else{
+            ship = playerTwo;
+        }
         if (ship.getId() == currentRound){
             if (ship.getFTLCharge() == 100){
                 Random random = new Random(UUID.randomUUID().hashCode());
                 if ((float) random.nextInt(30)*ship.getEvasionChance() > 2){
-                    if (ship.getId()==playerOne.getId()){
-                        ship = playerOne;
-                    }
-                    else{
-                        ship = playerTwo;
-                    }
                     // Remove combat properties
                     playerOne.setInCombat(false);
                     playerTwo.setInCombat(false);
