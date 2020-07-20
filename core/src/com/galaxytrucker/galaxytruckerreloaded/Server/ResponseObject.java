@@ -1,14 +1,15 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /** Response sent from the server to the client */
 @Getter
@@ -47,4 +48,18 @@ public class ResponseObject implements Serializable {
 
     /** Your round? */
     private boolean myRound = false;
+
+    /** Previous action carried out */
+    private PreviousRoundAction previousRoundAction;
+
+    /** Weapon used for the above action */
+    private WeaponType weaponUsed;
+
+    /** Reward weapons */
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private List<Weapon> rewardWeapons;
+
+    /** Reward crew */
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private List<Crew> rewardCrew;
 }

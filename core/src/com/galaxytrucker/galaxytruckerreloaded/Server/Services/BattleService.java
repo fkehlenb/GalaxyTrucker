@@ -1,12 +1,16 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
+import com.galaxytrucker.galaxytruckerreloaded.Server.PreviousRoundAction;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
 
@@ -44,6 +48,10 @@ public class BattleService implements Serializable {
     @Transient
     private BattleServiceDAO battleServiceDAO = BattleServiceDAO.getInstance();
 
+    /** Overworld DAO */
+    @Transient
+    private OverworldDAO overworldDAO = OverworldDAO.getInstance();
+
     /**
      * ID of current round ship
      */
@@ -70,30 +78,135 @@ public class BattleService implements Serializable {
     @NonNull
     private Ship playerTwo;
 
+    /** Last action carried out */
+    private PreviousRoundAction previousRoundAction;
+
+    /** Previous weapon type used */
+    private WeaponType previousWeaponUsed;
+
     /** Give updated ships to clients
+     * @param clientShip - the client's ship
+     * @param overworld - the clien't overworld
      * @return a responseObject containing the updated ships */
-    public ResponseObject getUpdatedData(Ship clientShip){
+    @SuppressWarnings("Duplicates")
+    public ResponseObject getUpdatedData(Ship clientShip, Overworld overworld){
         ResponseObject responseObject = new ResponseObject();
+        // While not your turn, stuck in waiting loop
+        while (clientShip.getId()!=currentRound){
+            continue;
+        }
+        // Set valid request
         responseObject.setValidRequest(true);
-        if (playerOne.getId()==clientShip.getId()){
+        // Put in the previous action
+        if (previousRoundAction != null){
+            responseObject.setPreviousRoundAction(previousRoundAction);
+        }
+        // Set previous weapon used
+        if (previousWeaponUsed != null){
+            responseObject.setWeaponUsed(previousWeaponUsed);
+        }
+        // Set the updated data
+        if (clientShip.getId()==playerOne.getId()){
+            if (playerOne.getHp()<=0){
+                responseObject.setCombatOver(true);
+                responseObject.setDead(true);
+                responseObject.setPreviousRoundAction(PreviousRoundAction.YOU_DEAD);
+                try {
+                    shipDAO.remove(playerOne);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            else if (playerTwo.getHp()<=0){
+                responseObject.setCombatOver(true);
+                responseObject.setCombatWon(true);
+                responseObject.setPreviousRoundAction(PreviousRoundAction.OPPONENT_DEAD);
+                List<Planet> planets = overworld.getPlanetMap();
+                if (planets.contains(playerOne.getPlanet())){
+                    Planet current = playerOne.getPlanet();
+                    List<Ship> ships = current.getShips();
+                    ships.remove(playerTwo);
+                    current.setShips(ships);
+                    for (Planet p : planets){
+                        if (p.getId() == current.getId()){
+                            planets.set(planets.indexOf(p),current);
+                        }
+                    }
+                    overworld.setPlanetMap(planets);
+                    try {
+                        overworldDAO.update(overworld);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    shipDAO.remove(playerTwo);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            else if (previousRoundAction!=null && previousRoundAction==PreviousRoundAction.FLEE_FIGHT){
+                responseObject.setCombatWon(true);
+                responseObject.setCombatOver(true);
+                // Todo add rewards
+            }
             responseObject.setResponseShip(playerOne);
             responseObject.setOpponent(playerTwo);
-            if (playerOne.getHp()<=0){
-                responseObject.setDead(true);
-            }
-            else if (currentRound == clientShip.getId()){
-                responseObject.setMyRound(true);
-            }
+            responseObject.setMyRound(true);
         }
         else{
+            if (playerOne.getHp()<=0){
+                responseObject.setCombatOver(true);
+                responseObject.setCombatWon(true);
+                responseObject.setPreviousRoundAction(PreviousRoundAction.OPPONENT_DEAD);
+                List<Planet> planets = overworld.getPlanetMap();
+                if (planets.contains(playerOne.getPlanet())){
+                    Planet current = playerOne.getPlanet();
+                    List<Ship> ships = current.getShips();
+                    ships.remove(playerOne);
+                    current.setShips(ships);
+                    for (Planet p : planets){
+                        if (p.getId() == current.getId()){
+                            planets.set(planets.indexOf(p),current);
+                        }
+                    }
+                    overworld.setPlanetMap(planets);
+                    try {
+                        overworldDAO.update(overworld);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    try {
+                        shipDAO.remove(playerOne);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            else if (playerTwo.getHp()<=0){
+                responseObject.setCombatOver(true);
+                responseObject.setDead(true);
+                responseObject.setPreviousRoundAction(PreviousRoundAction.YOU_DEAD);
+                try {
+                    shipDAO.remove(playerTwo);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            else if (previousRoundAction!=null && previousRoundAction==PreviousRoundAction.FLEE_FIGHT){
+                responseObject.setCombatWon(true);
+                responseObject.setCombatOver(true);
+                // Todo add rewards
+            }
             responseObject.setResponseShip(playerTwo);
             responseObject.setOpponent(playerOne);
-            if (playerTwo.getHp()<=0){
-                responseObject.setDead(true);
-            }
-            else if (currentRound == clientShip.getId()){
-                responseObject.setMyRound(true);
-            }
+            responseObject.setMyRound(true);
         }
         return responseObject;
     }
@@ -191,7 +304,7 @@ public class BattleService implements Serializable {
                 }
                 // ===== Add weapon cooldown =====
                 cooldowns.put(weapon,weapon.getCooldown());
-                // ===== Combat Won =====
+                // ===== Combat Won ===== //TODO add all crew dead
                 if (opponent.getHp() <= 0) {
                     responseObject.setCombatWon(true);
                     responseObject.setCombatOver(true);
@@ -229,6 +342,15 @@ public class BattleService implements Serializable {
             e.printStackTrace();
             responseObject.setValidRequest(false);
         }
+        return responseObject;
+    }
+
+
+    /** Flee fight
+     * @param ship - the ship to flee the fight */
+    public ResponseObject fleeFight(Ship ship){
+        ResponseObject responseObject = new ResponseObject();
+
         return responseObject;
     }
 
