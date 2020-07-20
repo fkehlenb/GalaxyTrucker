@@ -26,8 +26,6 @@ public class OptionUI {
 
     private VideoButton videoButton;
 
-    private OptionenBackButton optionenBackButton;
-
     private GeneralButton generalButton;
 
     private ControlButton controlButton;
@@ -48,6 +46,8 @@ public class OptionUI {
 
     private float scale;
 
+    private OptionenBackButton optionenBackButton;
+
     /**
      * Constructor
      *
@@ -58,7 +58,9 @@ public class OptionUI {
         this.game = game;
         this.stage = stage;
         this.mainMenu = mainMenu;
-        if(game != null){this.pauseMenuUI = game.getPauseMenuUI(); }
+        if(game != null){
+            this.pauseMenuUI = game.getPauseMenuUI();
+        }
         optionsBackgroundTexture = new Texture("options/options.png");
 
         scale = main.WIDTH/1920;
@@ -147,10 +149,7 @@ public class OptionUI {
      */
     public void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            disposeOptionsUI();
-            if(pauseMenuUI!=null) {
-                pauseMenuUI.showPauseMenuUI();
-            }
+            optionenBackButton.leftClick();
         }
     }
 
@@ -203,4 +202,5 @@ public class OptionUI {
             mainMenu.createControlUI();
         }
     }
+
 }

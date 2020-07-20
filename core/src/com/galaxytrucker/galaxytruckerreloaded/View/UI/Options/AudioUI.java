@@ -5,7 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General.BackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.MuteButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.VolumeDownButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Audio.VolumeUpButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
@@ -18,6 +21,9 @@ public class AudioUI {
     private BackButton backButton;
     private Stage stage;
     private MainMenu mainMenu;
+    private MuteButton muteButton;
+    private VolumeUpButton volumeUpButton;
+    private VolumeDownButton volumeDownButton;
 
     /**
      * Constructor
@@ -28,7 +34,6 @@ public class AudioUI {
     public AudioUI(Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
         this.gamePlay = gamePlay;
-        this.stage = stage;
         this.mainMenu = mainMenu;
         //this.optionUI = gamePlay.getOptionUI();
         if(gamePlay!=null) {
@@ -37,11 +42,21 @@ public class AudioUI {
         else if(mainMenu != null) {
             this.optionUI = mainMenu.getOptionUI();
         }
+        this.stage = stage;
         audioBackgroundTexture = new Texture("options/audio.png");
 
         backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
 
+           
+
+        muteButton = new MuteButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*5, main.WIDTH/15, main.HEIGHT/40,  main);
+        volumeDownButton = new VolumeDownButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*6, main.WIDTH/15, main.HEIGHT/40,  main);
+        volumeUpButton = new VolumeUpButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*7, main.WIDTH/15, main.HEIGHT/40,  main);
+
         stage.addActor(backButton);
+        stage.addActor(muteButton);
+        stage.addActor(volumeDownButton);
+        stage.addActor(volumeUpButton);
     }
 
     /**
@@ -63,6 +78,9 @@ public class AudioUI {
     public void disposeAudioUI() {
         audioBackgroundTexture.dispose();
         backButton.remove();
+        volumeUpButton.remove();
+        volumeDownButton.remove();
+        muteButton.remove();
         if(gamePlay != null){
             gamePlay.deleteAudioUI();
         }
@@ -74,22 +92,29 @@ public class AudioUI {
     /**
      * Open the options menu
      */
-    public void showGeneralUI() {
+    public void showAudioUI() {
         backButton.setVisible(true);
+        volumeDownButton.setVisible(true);
+        volumeUpButton.setVisible(true);
+        muteButton.setVisible(true);
+
     }
     /**
      * Close the options menu
      */
-    public void hideGeneralUI() {
+    public void hideAudioUI() {
         backButton.setVisible(false);
+        volumeDownButton.setVisible(false);
+        volumeUpButton.setVisible(false);
+        muteButton.setVisible(false);
     }
 
     /**
      * handles input to pause game, open options
      */
     public void updateInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            disposeAudioUI();;
+         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            disposeAudioUI();
             optionUI.showOptionsUI();
         }
     }
