@@ -1,12 +1,16 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
+import com.galaxytrucker.galaxytruckerreloaded.Server.PreviousRoundAction;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
 
@@ -44,6 +48,10 @@ public class BattleService implements Serializable {
     @Transient
     private BattleServiceDAO battleServiceDAO = BattleServiceDAO.getInstance();
 
+    /** Overworld DAO */
+    @Transient
+    private OverworldDAO overworldDAO = OverworldDAO.getInstance();
+
     /**
      * ID of current round ship
      */
@@ -70,30 +78,163 @@ public class BattleService implements Serializable {
     @NonNull
     private Ship playerTwo;
 
+    /** Last action carried out */
+    private PreviousRoundAction previousRoundAction;
+
+    /** Previous weapon type used */
+    private WeaponType previousWeaponUsed;
+
     /** Give updated ships to clients
+     * @param clientShip - the client's ship
+     * @param overworld - the clien't overworld
      * @return a responseObject containing the updated ships */
-    public ResponseObject getUpdatedData(Ship clientShip){
+    @SuppressWarnings("Duplicates")
+    public ResponseObject getUpdatedData(Ship clientShip, Overworld overworld){
         ResponseObject responseObject = new ResponseObject();
-        responseObject.setValidRequest(true);
-        if (playerOne.getId()==clientShip.getId()){
-            responseObject.setResponseShip(playerOne);
-            responseObject.setOpponent(playerTwo);
-            if (playerOne.getHp()<=0){
-                responseObject.setDead(true);
-            }
-            else if (currentRound == clientShip.getId()){
-                responseObject.setMyRound(true);
-            }
+        // Not trusting the client data
+        if (clientShip.getId()==playerOne.getId()){
+            clientShip = playerOne;
         }
         else{
+            clientShip = playerTwo;
+        }
+        // While not your turn, stuck in waiting loop
+        while (clientShip.getId()!=currentRound){
+            continue;
+        }
+        // Set valid request
+        responseObject.setValidRequest(true);
+        // Put in the previous action
+        if (previousRoundAction != null){
+            responseObject.setPreviousRoundAction(previousRoundAction);
+        }
+        // Set previous weapon used
+        if (previousWeaponUsed != null){
+            responseObject.setWeaponUsed(previousWeaponUsed);
+        }
+        // Set the updated data
+        if (clientShip.getId()==playerOne.getId()){
+            // ===== YOU DEAD =====
+            if (playerOne.getHp()<=0){
+                // Set combat stats
+                responseObject.setCombatOver(true);
+                responseObject.setDead(true);
+                responseObject.setPreviousRoundAction(PreviousRoundAction.YOU_DEAD);
+                // Remove ship from database
+                try {
+                    shipDAO.remove(playerOne);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            // ===== OPPONENT DEAD =====
+            // Todo check for crew
+            else if (playerTwo.getHp()<=0){
+                // Set combat stats
+                responseObject.setCombatOver(true);
+                responseObject.setCombatWon(true);
+                responseObject.setPreviousRoundAction(PreviousRoundAction.OPPONENT_DEAD);
+                // Update planet list
+                List<Planet> planets = overworld.getPlanetMap();
+                if (planets.contains(playerOne.getPlanet())){
+                    Planet current = playerOne.getPlanet();
+                    List<Ship> ships = current.getShips();
+                    ships.remove(playerTwo);
+                    current.setShips(ships);
+                    for (Planet p : planets){
+                        if (p.getId() == current.getId()){
+                            planets.set(planets.indexOf(p),current);
+                        }
+                    }
+                    // Update overworld
+                    overworld.setPlanetMap(planets);
+                    try {
+                        overworldDAO.update(overworld);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                // Remove opponent ship from database
+                try {
+                    shipDAO.remove(playerTwo);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            // ===== OPPONENT FLED FIGHT =====
+            else if (previousRoundAction!=null && previousRoundAction==PreviousRoundAction.FLEE_FIGHT){
+                responseObject.setCombatWon(true);
+                responseObject.setCombatOver(true);
+                // Todo add rewards
+            }
+            // ===== DEFAULTS =====
+            responseObject.setResponseShip(playerOne);
+            responseObject.setOpponent(playerTwo);
+            responseObject.setMyRound(true);
+        }
+        else{
+            // ===== OPPONENT DEAD =====
+            // Todo check for crew
+            if (playerOne.getHp()<=0){
+                // Set combat status
+                responseObject.setCombatOver(true);
+                responseObject.setCombatWon(true);
+                responseObject.setPreviousRoundAction(PreviousRoundAction.OPPONENT_DEAD);
+                // Update planet map in overworld
+                List<Planet> planets = overworld.getPlanetMap();
+                if (planets.contains(playerOne.getPlanet())){
+                    Planet current = playerOne.getPlanet();
+                    List<Ship> ships = current.getShips();
+                    ships.remove(playerOne);
+                    current.setShips(ships);
+                    for (Planet p : planets){
+                        if (p.getId() == current.getId()){
+                            planets.set(planets.indexOf(p),current);
+                        }
+                    }
+                    // Update overworld
+                    overworld.setPlanetMap(planets);
+                    try {
+                        overworldDAO.update(overworld);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    // Remove opponent ship from database
+                    try {
+                        shipDAO.remove(playerOne);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            // ===== YOU DEAD =====
+            else if (playerTwo.getHp()<=0){
+                responseObject.setCombatOver(true);
+                responseObject.setDead(true);
+                responseObject.setPreviousRoundAction(PreviousRoundAction.YOU_DEAD);
+                // Remove ship from database
+                try {
+                    shipDAO.remove(playerTwo);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            // ===== OPPONENT FLED FIGHT =====
+            else if (previousRoundAction!=null && previousRoundAction==PreviousRoundAction.FLEE_FIGHT){
+                responseObject.setCombatWon(true);
+                responseObject.setCombatOver(true);
+                // Todo add rewards
+            }
+            // ===== DEFAULTS =====
             responseObject.setResponseShip(playerTwo);
             responseObject.setOpponent(playerOne);
-            if (playerTwo.getHp()<=0){
-                responseObject.setDead(true);
-            }
-            else if (currentRound == clientShip.getId()){
-                responseObject.setMyRound(true);
-            }
+            responseObject.setMyRound(true);
         }
         return responseObject;
     }
@@ -102,8 +243,12 @@ public class BattleService implements Serializable {
      * Next round
      */
     private void nextRound() {
-        playerOne = passiveChanges(playerOne);
-        playerTwo = passiveChanges(playerTwo);
+        if (playerOne!=null) {
+            playerOne = passiveChanges(playerOne);
+        }
+        if (playerTwo!=null) {
+            playerTwo = passiveChanges(playerTwo);
+        }
         if (playerOne.getId() == currentRound) {
             currentRound = playerTwo.getId();
         } else {
@@ -119,6 +264,13 @@ public class BattleService implements Serializable {
      * @param seed - world seed */
     public ResponseObject attackShip(Ship ship,Weapon weapon,Ship opponent,Room room,int seed){
         ResponseObject responseObject = new ResponseObject();
+        // Not trusting the client data
+        if (ship.getId()==playerOne.getId()){
+            ship = playerOne;
+        }
+        else{
+            ship = playerTwo;
+        }
         try {
             if (currentRound == ship.getId()) {
                 if (weapon.getMissileCost()>0 && ship.getMissiles() >= weapon.getMissileCost()){
@@ -138,7 +290,7 @@ public class BattleService implements Serializable {
                 if (weaponDamange == 0) {
                     weaponDamange = 1;
                 }
-                weaponDamange = weaponDamange - random.nextInt(weaponDamange / 2);
+                weaponDamange = weaponDamange - random.nextInt(weaponDamange / 2); // todo will always roll same
                 int piercing = weapon.getShieldPiercing();
                 // ===== Damage shields =====
                 int shieldDamage = opponent.getShields() - piercing;
@@ -191,7 +343,7 @@ public class BattleService implements Serializable {
                 }
                 // ===== Add weapon cooldown =====
                 cooldowns.put(weapon,weapon.getCooldown());
-                // ===== Combat Won =====
+                // ===== Combat Won ===== //TODO add all crew dead
                 if (opponent.getHp() <= 0) {
                     responseObject.setCombatWon(true);
                     responseObject.setCombatOver(true);
@@ -228,6 +380,51 @@ public class BattleService implements Serializable {
         catch (Exception e){
             e.printStackTrace();
             responseObject.setValidRequest(false);
+        }
+        return responseObject;
+    }
+
+
+    /** Flee fight
+     * @param ship - the ship to flee the fight
+     * @param dest - destination planet */
+    public ResponseObject fleeFight(Ship ship,Planet dest){
+        ResponseObject responseObject = new ResponseObject();
+        // Not trusting the client data
+        if (ship.getId()==playerOne.getId()){
+            ship = playerOne;
+        }
+        else{
+            ship = playerTwo;
+        }
+        if (ship.getId() == currentRound){
+            if (ship.getFTLCharge() == 100){
+                Random random = new Random(UUID.randomUUID().hashCode());
+                if ((float) random.nextInt(30)*ship.getEvasionChance() > 2){
+                    // Remove combat properties
+                    playerOne.setInCombat(false);
+                    playerTwo.setInCombat(false);
+                    previousRoundAction = PreviousRoundAction.FLEE_FIGHT;
+                    // Use travel service to send client to new planet
+                    ResponseObject travelObject = TravelService.getInstance().jump(ship,dest);
+                    responseObject.setResponseOverworld(travelObject.getResponseOverworld());
+                    travelObject.setCombatOver(true);
+                    travelObject.setMyRound(false);
+                    travelObject.setFledFight(true);
+                    travelObject.setPreviousRoundAction(previousRoundAction);
+                    if (playerOne.getId()==ship.getId()){
+                        playerOne = null;
+                    }
+                    else{
+                        playerTwo = null;
+                    }
+                    nextRound();
+                    return travelObject;
+                }
+            }
+            responseObject.setValidRequest(true);
+            responseObject.setFledFight(false);
+            nextRound();
         }
         return responseObject;
     }

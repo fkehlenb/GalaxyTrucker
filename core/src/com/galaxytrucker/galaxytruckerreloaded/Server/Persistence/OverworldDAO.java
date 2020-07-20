@@ -39,6 +39,21 @@ public class OverworldDAO extends ObjectDAO<Overworld> {
         }
     }
 
+    /** Update overworld
+     * @param o - the overworld to update
+     * @throws OverworldNotFoundException if it cannot be found in the database */
+    public void update(Overworld o) throws OverworldNotFoundException{
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(o);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new OverworldNotFoundException();
+        }
+    }
+
     /**
      * Remove an existing OverWorld from the database
      *

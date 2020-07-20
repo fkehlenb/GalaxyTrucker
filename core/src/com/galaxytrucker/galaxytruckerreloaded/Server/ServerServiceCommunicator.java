@@ -53,6 +53,7 @@ public class ServerServiceCommunicator {
         catch (Exception e){
             e.printStackTrace();
         }
+        System.out.println("Attemting action " + request.getRequestType().toString());
         switch (request.getRequestType()){
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());

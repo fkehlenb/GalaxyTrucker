@@ -39,10 +39,4 @@ public class User implements Serializable {
 
     /** First game */
     private boolean firstGame = true;
-
-    /**
-     * Battle service
-     */
-    @ManyToOne
-    private BattleService battleService = null;
 }
