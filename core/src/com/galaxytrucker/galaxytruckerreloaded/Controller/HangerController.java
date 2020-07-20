@@ -19,6 +19,10 @@ public class HangerController extends Controller {
         return singleton;
     }
 
+    public static void remove() {
+        singleton = null;
+    }
+
     /**
      * Picks a Shipmodel
      * @param username - the specified username

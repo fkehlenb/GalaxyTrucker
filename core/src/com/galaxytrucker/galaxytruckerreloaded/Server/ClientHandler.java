@@ -65,15 +65,6 @@ public class ClientHandler implements Runnable {
     private String username;
 
     /**
-     * Game running
-     */
-    @Getter
-    @Setter
-    private boolean gameActive = true;
-
-    private boolean clientRunning = true;
-
-    /**
      * Map seed
      */
     private int seed;
@@ -127,7 +118,6 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         planetNames.addAll(Arrays.asList(names));
-        while(clientRunning) {
             // ==================== LOGIN ====================
             try {
                 this.username = receive.readLine().replace("[LOGIN]:", "");
@@ -182,14 +172,10 @@ public class ClientHandler implements Runnable {
                         e.printStackTrace();
                         send.println("[EXCEPTION]:[NEW-GAME]:[USERNAME]:" + username);
                     }
-                    gameActive = true;
                     // ==================== RUNNING ====================
-                    while (gameActive) {
+                    while (true) {
                         RequestObject request = (RequestObject) receiveObject.readObject();
                         sendObject.writeObject(this.serverServiceCommunicator.getResponse(request));
-                        if (request.getRequestType() == RequestType.LOGOUT) {
-                            gameActive = false;
-                        }
                     }
                 }
             } catch (Exception e) {
@@ -204,7 +190,6 @@ public class ClientHandler implements Runnable {
                 }
             }
         }
-    }
 
     /**
      * Get a new planet name

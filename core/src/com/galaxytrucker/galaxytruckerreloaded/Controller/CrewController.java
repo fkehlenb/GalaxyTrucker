@@ -35,6 +35,10 @@ public class CrewController extends Controller {
         return singleton;
     }
 
+    public static void remove() {
+        singleton = null;
+    }
+
     /**
      * Move a crew member to a different section
      *

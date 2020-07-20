@@ -32,6 +32,10 @@ public class TraderController extends Controller{
         return singleton;
     }
 
+    public static void remove() {
+        singleton = null;
+    }
+
     /**
      * Buy a weapon from the trader
      * @param weapon - the weapon to buy

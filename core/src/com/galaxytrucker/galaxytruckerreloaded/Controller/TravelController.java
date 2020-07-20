@@ -30,6 +30,10 @@ public class TravelController extends Controller{
         return singleton;
     }
 
+    public static void remove() {
+        singleton = null;
+    }
+
     /**
      * travels from one location to another
      * @param destination - the destination

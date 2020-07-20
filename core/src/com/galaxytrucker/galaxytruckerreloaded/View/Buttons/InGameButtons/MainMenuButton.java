@@ -32,6 +32,7 @@ public class MainMenuButton extends ImButton {
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).logout();
         if(success) {
             main.setScreen(new MainMenu(main));
+            main.removeClient();
         }
     }
 

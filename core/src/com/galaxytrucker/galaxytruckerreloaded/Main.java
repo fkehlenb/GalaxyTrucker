@@ -57,6 +57,10 @@ public class Main extends Game {
         }
     }
 
+    public void removeClient() {
+        client = null;
+    }
+
     @Override
     public void create() {
         batch = new SpriteBatch();

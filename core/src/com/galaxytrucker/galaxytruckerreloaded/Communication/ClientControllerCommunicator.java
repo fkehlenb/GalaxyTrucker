@@ -64,17 +64,15 @@ public class ClientControllerCommunicator {
      * @return true if the user was succesfully logged out
      */
     public boolean logout() {
-        try {
-            RequestObject requestObject = new RequestObject();
-            requestObject.setRequestType(RequestType.LOGOUT);
-            requestObject.setShip(clientShip);
-            ResponseObject responseObject = sendRequest(requestObject);
-            return responseObject.isValidRequest();
+        boolean permitted = client.logout(client.getMyShip().getAssociatedUser());
+        if(permitted) {
+            singleton = null;
         }
-        catch(Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        TravelController.remove();
+        TraderController.remove();
+        HangerController.remove();
+        CrewController.remove();
+        return permitted;
     }
 
     /** Constructor

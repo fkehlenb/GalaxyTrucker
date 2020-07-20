@@ -55,7 +55,7 @@ public class ServerServiceCommunicator {
         }
         switch (request.getRequestType()){
             case LOGOUT:
-                return logout(request.getShip().getAssociatedUser());
+                return logout(request.getUsername());
             case HYPERJUMP:
                 return travelService.jump(request.getShip(),request.getPlanet());
                 //TODO OTHERS
