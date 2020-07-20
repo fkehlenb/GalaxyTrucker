@@ -17,7 +17,7 @@ public class WeaponSystem extends System {
     private boolean manned = false;
 
     /** List of weapons this ship has */
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Weapon> shipWeapons;
 
 }

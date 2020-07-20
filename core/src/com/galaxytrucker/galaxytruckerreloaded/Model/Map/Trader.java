@@ -20,13 +20,13 @@ public class Trader implements Serializable {
     private int id;
 
     /** Planet the trader is located at */
-    @OneToOne
+    @ManyToOne
     @NonNull
     private Planet planet;
 
     /** Weapons for sale */
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Weapon> weaponStock;
 
     /** Rockets for sale */
@@ -42,7 +42,7 @@ public class Trader implements Serializable {
     private int hpStock;
 
     /** Crew for sale */
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @NonNull
     private List<Crew> crewStock;
 

@@ -42,12 +42,12 @@ public class Room implements Serializable {
 
     /** Crew in this system */
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Crew> crew;
 
     /** Tiles the room is made out of */
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Tile> tiles;
 
     /** Whether or not it is a system */

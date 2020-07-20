@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.List;
@@ -50,7 +51,7 @@ public class System extends Room implements Serializable {
     private SystemType systemType;
 
     /** List of weapons this ship has */
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Weapon> shipWeapons;
 
     /** Required args constructor

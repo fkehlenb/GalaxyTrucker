@@ -102,12 +102,12 @@ public class Ship implements Serializable {
 
     /** This ship's systems */
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Room> systems;
 
     /** Inventory */
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Weapon> inventory;
 
     /** Whether or not the ship is in combat */

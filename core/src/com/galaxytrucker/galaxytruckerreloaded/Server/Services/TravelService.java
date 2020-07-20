@@ -77,7 +77,7 @@ public class TravelService {
         ResponseObject responseObject = new ResponseObject();
         try {
             // Check for fuel and ftlCharge
-            if (s.getFuel() > 0 && s.getFTLCharge() == 100) {
+            if (s.getFuel() > 0 && s.getFTLCharge() == 100 && dest.getId() != s.getPlanet().getId()) {
                 Planet currentPlanet = s.getPlanet();
                 s.setFuel(s.getFuel() - 1);
                 // Todo distance validation

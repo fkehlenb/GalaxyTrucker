@@ -42,10 +42,10 @@ public class Overworld implements Serializable {
     private String associatedUser;
 
     /** Stores planet and their location on the map */
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Planet> planetMap;
 
     /** The start planet */
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Planet startPlanet;
 }

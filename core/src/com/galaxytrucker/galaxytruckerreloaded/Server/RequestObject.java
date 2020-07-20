@@ -8,10 +8,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,35 +30,35 @@ public class RequestObject implements Serializable {
     private String username;
 
     /** Ship */
-    @OneToOne
+    @ManyToOne
     private Ship ship;
 
     /** Opponent ship */
-    @OneToOne
+    @ManyToOne
     private Ship opponentShip;
 
     /** Trader */
-    @OneToOne
+    @ManyToOne
     private Trader trader;
 
     /** Planet */
-    @OneToOne
+    @ManyToOne
     private Planet planet;
 
     /** Crew */
-    @OneToOne
+    @ManyToOne
     private Crew crew;
 
     /** List of crew */
-    @OneToMany
+    @ManyToMany
     private List<Crew> moreCrew;
 
     /** Room */
-    @OneToOne
+    @ManyToOne
     private Room room;
 
     /** Weapon */
-    @OneToOne
+    @ManyToOne
     private Weapon weapon;
 
     /** Heal amount */
