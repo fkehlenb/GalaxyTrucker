@@ -36,6 +36,7 @@ public class AudioController extends Controller /**implements Audio*/ {
     public void setMusic(FileHandle file){
         if(music == null) {
             music = Gdx.audio.newMusic(file);
+            music.setVolume(0.5f);
             music.setLooping(true);
             music.play();
         }
@@ -46,7 +47,7 @@ public class AudioController extends Controller /**implements Audio*/ {
         music.play();
     }
     public void mute(){
-        music.pause();
+        music.stop();
     }
 
     public void volumeUp(){

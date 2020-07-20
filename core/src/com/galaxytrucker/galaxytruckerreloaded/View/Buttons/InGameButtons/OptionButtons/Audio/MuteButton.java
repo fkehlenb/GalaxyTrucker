@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.audio.*;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.AudioController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 
@@ -26,7 +27,8 @@ public class MuteButton extends ImButton {
 
     @Override
     public void leftClick(){
-       //gamesound pausieren
-        return;
+        if(AudioController.getInstance().getMusic().isPlaying()){
+            AudioController.getInstance().mute();
+        } else AudioController.getInstance().play();
     }
 }
