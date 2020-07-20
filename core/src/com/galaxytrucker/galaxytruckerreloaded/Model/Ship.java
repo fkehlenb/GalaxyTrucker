@@ -20,7 +20,8 @@ import java.util.UUID;
 @Setter
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Ship.getByUsername", query = "select s from Ship s where s.associatedUser =: username")
+        @NamedQuery(name = "Ship.getByUsername", query = "select s from Ship s where s.associatedUser =: username"),
+        @NamedQuery(name = "Ship.getById",query = "select s from Ship s where s.id =: id")
 })
 public class Ship implements Serializable {
 

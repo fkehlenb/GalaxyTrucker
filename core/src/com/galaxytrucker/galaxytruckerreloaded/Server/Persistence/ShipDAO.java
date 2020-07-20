@@ -71,6 +71,27 @@ public class ShipDAO extends ObjectDAO<Ship> {
         }
     }
 
+    /** Get a ship using its id
+     * @param id - the ship id
+     * @return the ship with a matching id
+     * @throws ShipNotFoundException if the ship does not exist */
+    public Ship getById(int id) throws ShipNotFoundException{
+        try {
+            Ship s = null;
+            entityManager.getTransaction().begin();
+            s = entityManager.createNamedQuery("Ship.getById",Ship.class).setParameter("id",id).getSingleResult();
+            entityManager.getTransaction().commit();
+            if (s == null){
+                throw new NullPointerException();
+            }
+            return s;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new ShipNotFoundException();
+        }
+    }
+
     /**
      * Remove a ship from the database
      *

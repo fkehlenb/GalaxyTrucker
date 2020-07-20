@@ -14,6 +14,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Planet.getById",query = "select p from Planet p where p.id =: id")
+})
 public class Planet implements Serializable {
 
     /** ID */
@@ -60,7 +63,11 @@ public class Planet implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Trader trader;
 
-    /** The overWorld this planet belongs to */
-    @ManyToOne
-    private Overworld overworld;
+    @Override
+    public boolean equals(Object o){
+        if (o==null){
+            return false;
+        }
+        return ((Planet) o).getId()==this.getId();
+    }
 }

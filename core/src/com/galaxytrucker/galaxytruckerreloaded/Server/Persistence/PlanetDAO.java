@@ -55,6 +55,27 @@ public class PlanetDAO extends ObjectDAO<Planet> {
         }
     }
 
+    /** Get a planet using its id
+     * @param id - the planet id
+     * @return the planet with a matching id
+     * @throws PlanetNotFoundException if the planet with the requested id does not exist */
+    public Planet getById(int id) throws PlanetNotFoundException{
+        try {
+            Planet p = null;
+            entityManager.getTransaction().begin();
+            p = entityManager.createNamedQuery("Planet.getById",Planet.class).setParameter("id",id).getSingleResult();
+            entityManager.getTransaction().commit();
+            if (p==null){
+                throw new NullPointerException();
+            }
+            return p;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new PlanetNotFoundException();
+        }
+    }
+
     /**
      * Remove an existing planet from the database
      *

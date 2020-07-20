@@ -7,10 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.BattleServiceDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.OverworldDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.PlanetDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ServerServiceCommunicator;
 import lombok.*;
@@ -59,6 +56,9 @@ public class TravelService {
      */
     private ShipDAO shipDAO = ShipDAO.getInstance();
 
+    /** User DAO */
+    private UserDAO userDAO = UserDAO.getInstance();
+
     /**
      * PlanetDAO
      */
@@ -76,6 +76,8 @@ public class TravelService {
     public ResponseObject jump(Ship s, Planet dest) {
         ResponseObject responseObject = new ResponseObject();
         try {
+            s = shipDAO.getById(s.getId());
+            dest = planetDAO.getById(dest.getId());
             // Check for fuel and ftlCharge
             if (s.getFuel() > 0 && s.getFTLCharge() == 100 && dest.getId() != s.getPlanet().getId()) {
                 Planet currentPlanet = s.getPlanet();
@@ -119,7 +121,7 @@ public class TravelService {
                 }
                 // ===== Remove ship from planet =====
                 ships.remove(currentAtPlanet);
-                planetDAO.update(currentPlanet);
+                currentPlanet.setShips(ships);
                 // ===== Add ship to destination =====
                 List<Ship> shipsAtDestination = dest.getShips();
                 shipsAtDestination.add(s);
@@ -127,7 +129,30 @@ public class TravelService {
                 dest.setDiscovered(true);
                 // ===== Update ship planet =====
                 s.setPlanet(dest);
+                // ===== Update Data =====
                 planetDAO.update(dest);
+                planetDAO.update(currentPlanet);
+                shipDAO.update(s);
+                // ===== Update overworld =====
+                // TODO ich habe keine ahnung ob es noch richtig ist, glaube wohl, gucke morgen
+                User u = UserService.getInstance().getUser(s.getAssociatedUser());
+                Overworld o = u.getOverworld();
+                List<Planet> planets = o.getPlanetMap();
+                for (Planet p : planets){
+                    if (p.equals(currentPlanet)){
+                        planets.set(planets.indexOf(p),planetDAO.getById(currentPlanet.getId()));
+                    }
+                    else if (p.equals(dest)){
+                        planets.set(planets.indexOf(p),planetDAO.getById(dest.getId()));
+                    }
+                }
+                o.setPlanetMap(new ArrayList<Planet>(planets));
+                for (Planet p : planets){
+                    planetDAO.update(p);
+                }
+                overworldDAO.update(o);
+                u.setOverworld(o);
+                userDAO.update(u);
                 // ===== Set valid =====
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(s);

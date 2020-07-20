@@ -311,9 +311,6 @@ public class ClientHandler implements Runnable {
         // Todo Add boss ship
         finalMap.add(boss);
         Overworld overworld = new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet);
-        for (Planet p : overworld.getPlanetMap()){
-            p.setOverworld(overworld);
-        }
         return overworld;
     }
 
