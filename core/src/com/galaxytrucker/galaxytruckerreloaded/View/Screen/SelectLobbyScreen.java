@@ -54,6 +54,11 @@ public class SelectLobbyScreen implements Screen {
     private TextField lobby;
 
     /**
+     * the textfield to enter the port
+     */
+    private TextField port;
+
+    /**
      * the button to return back to the last screen
      */
     private SelectLobbyBackButton backButton;
@@ -105,10 +110,14 @@ public class SelectLobbyScreen implements Screen {
         lobby = new TextField("", skin);
         lobby.setPosition(main.WIDTH/2 - lobby.getWidth()/2, main.HEIGHT/2 - lobby.getHeight()/2 + 50);
 
+        port = new TextField("", skin);
+        port.setPosition(main.WIDTH/2f - port.getWidth()/2, main.HEIGHT/2-lobby.getHeight() - port.getHeight()/2);
+
         backButton = new SelectLobbyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 100, 512, 48, this);
         selectLobbyButton = new SelectLobbyButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 50, 512, 48, this);
 
         stage.addActor(lobby);
+        stage.addActor(port);
         stage.addActor(backButton);
         stage.addActor(selectLobbyButton);
 
@@ -125,7 +134,7 @@ public class SelectLobbyScreen implements Screen {
         params.size = 40;
 
         font = generator.generateFont(params);
-        glyph.setText(font, "Please enter a server address");
+        glyph.setText(font, "Please enter a server address and port");
 
         background = new Texture("1080p.png");
 
@@ -136,7 +145,8 @@ public class SelectLobbyScreen implements Screen {
      * join a lobby by taking the text from the text field
      */
     public void joinLobby() {
-        main.startClient();
+        int portnumber = Integer.parseInt(port.getText());
+        main.startClient(portnumber);
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
             main.setScreen(new LobbyScreenNormal(main, ship, false, difficulty, username));
