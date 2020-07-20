@@ -53,7 +53,7 @@ public class Planet implements Serializable {
 
     /** Ships at this planet */
     @NonNull
-    @OneToMany(cascade = CascadeType.MERGE)
+    @ManyToMany
     private List<Ship> ships;
 
     /** Trader */
@@ -61,6 +61,6 @@ public class Planet implements Serializable {
     private Trader trader;
 
     /** The overWorld this planet belongs to */
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Overworld overworld;
 }

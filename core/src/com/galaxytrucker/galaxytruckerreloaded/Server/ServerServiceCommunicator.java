@@ -2,30 +2,34 @@ package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.BattleServiceDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RequestObjectDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Services.TraderService;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Services.TravelService;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Services.UserService;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Services.WeaponService;
-import lombok.AccessLevel;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.*;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /** ServerServiceCommunicator for executing logic using services, singleton */
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
+@Setter
 public class ServerServiceCommunicator {
 
     /** ServerServiceCommunicator */
     private static ServerServiceCommunicator serverServiceCommunicator = null;
+
+    /** List of battle services */
+    private List<BattleService> battleServices;
+
+    /** Battle service dao */
+    private BattleServiceDAO battleServiceDAO = BattleServiceDAO.getInstance();
 
     /** Request Object DAO */
     private RequestObjectDAO requestObjectDAO = RequestObjectDAO.getInstance();
@@ -53,9 +57,11 @@ public class ServerServiceCommunicator {
         catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("[SERVER]:Attemting action " + request.getRequestType().toString()+":[CLIENT-ID]:" + request.getShip().getId());
-        System.out.println("[IS-IN-COMBAT]:" + request.getShip().isInCombat() + ":[PLANET]:" + request.getShip().getPlanet() +
-                ":[PLANET-EVENT]:" + request.getShip().getPlanet().getEvent());
+        System.out.println("\n==================== NEW ACTION ====================");
+        System.out.println("[SERVER]:[ACTION]:" + request.getRequestType().toString()+":[CLIENT-ID]:" + request.getShip().getId());
+        System.out.println("[IS-IN-COMBAT]:" + request.getShip().isInCombat() + ":[PLANET]:" + request.getShip().getPlanet().getName() +
+                ":[PLANET-EVENT]:" + request.getShip().getPlanet().getEvent()+":[DISCOVERED]:"+request.getShip().getPlanet().isDiscovered());
+        System.out.println("====================================================");
         switch (request.getRequestType()){
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
@@ -320,6 +326,17 @@ public class ServerServiceCommunicator {
             serverServiceCommunicator = new ServerServiceCommunicator();
         }
         return serverServiceCommunicator;
+    }
+
+    /** Constructor */
+    private ServerServiceCommunicator(){
+        try {
+            battleServices = battleServiceDAO.getAll();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            battleServices = new ArrayList<>();
+        }
     }
 
 }

@@ -7,6 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -86,7 +87,7 @@ public class Ship implements Serializable {
      * The planet the ship is currently at
      */
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Planet planet;
 
     /** Shields */

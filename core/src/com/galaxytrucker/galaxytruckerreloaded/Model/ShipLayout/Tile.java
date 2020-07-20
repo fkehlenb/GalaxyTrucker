@@ -30,7 +30,7 @@ public class Tile implements Serializable {
     private int posY;
 
     /** Crew member on this tile */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Crew standingOnMe = null;
 
     /** If the tile is empty */

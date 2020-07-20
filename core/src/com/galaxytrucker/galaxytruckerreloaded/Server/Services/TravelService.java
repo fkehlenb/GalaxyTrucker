@@ -1,14 +1,18 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Controller.BattleController;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.BattleServiceDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.OverworldDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.PlanetDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
+import com.galaxytrucker.galaxytruckerreloaded.Server.ServerServiceCommunicator;
 import lombok.*;
 
 import javax.persistence.EntityManager;
@@ -39,8 +43,16 @@ public class TravelService {
         return instance;
     }
 
-    /** Entity Manager */
+    /**
+     * Entity Manager
+     */
     private EntityManager entityManager = Database.getEntityManager();
+
+    /** Battle service dao */
+    private BattleServiceDAO battleServiceDAO = BattleServiceDAO.getInstance();
+
+    /** Overworld DAO */
+    private OverworldDAO overworldDAO = OverworldDAO.getInstance();
 
     /**
      * ShipDAO
@@ -52,26 +64,8 @@ public class TravelService {
      */
     private PlanetDAO planetDAO = PlanetDAO.getInstance();
 
-    /**
-     * Validate the travel request
-     *
-     * @param s - the ship that wishes to travel
-     * @param p - the destination planet
-     * @return true if the travel request is valid
-     */
-    public boolean validateJump(Ship s, Planet p, User u) {
-        try {
-            if (s.isInCombat()){
-                //TODO rewards for opponent
-            }
-            return true;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
+    // TODO DONT USE THIS WHEN IN COMBAT, USE FLEEFIGHT INSTEAD
+    // TODO DONT USE THIS FOR PVP
     /**
      * Jump ship from one star to another
      *
@@ -81,49 +75,67 @@ public class TravelService {
     // TODO check fuel
     public ResponseObject jump(Ship s, Planet dest) {
         ResponseObject responseObject = new ResponseObject();
-        Planet current = s.getPlanet();
         try {
-            User u = UserService.getInstance().getUser(s.getAssociatedUser());
-            if (validateJump(s, dest, u)) {
-                // Remove ship from current planet
-                List<Ship> ships = current.getShips();
-                ships.remove(s);
-                current.setShips(ships);
-                s.setPlanet(dest);
-                ships = new ArrayList<>(dest.getShips());
-                ships.add(s);
-                dest.setShips(ships);
-                dest.setDiscovered(true);
-                if (dest.getEvent().equals(PlanetEvent.COMBAT) || dest.getEvent().equals(PlanetEvent.BOSS)
-                        || dest.getEvent().equals(PlanetEvent.MINIBOSS) || dest.getEvent().equals(PlanetEvent.PVP)){
-                    s.setInCombat(true);
-                    if (dest.getEvent().equals(PlanetEvent.PVP)){
-                        // Todo service
-                    }
-                    else {
-//                        s.setBattleService(new BattleService(UUID.randomUUID(), dest.getShips()));
+            // Check for fuel and ftlCharge
+            if (s.getFuel() > 0 && s.getFTLCharge() == 100) {
+                Planet currentPlanet = s.getPlanet();
+                s.setFuel(s.getFuel() - 1);
+                // Todo distance validation
+                // ===== Ships at current planet =====
+                List<Ship> ships = currentPlanet.getShips();
+                // ===== No Trusting the Client =====
+                Ship currentAtPlanet = null;
+                for (Ship a : ships) {
+                    if (s.getId() == a.getId()) {
+                        currentAtPlanet = a;
                     }
                 }
-                shipDAO.update(s);
+                // ===== Combat planet =====
+                if (!(dest.getEvent().equals(PlanetEvent.VOID) || dest.getEvent().equals(PlanetEvent.METEORSHOWER)
+                        || dest.getEvent().equals(PlanetEvent.SHOP) || dest.getEvent().equals(PlanetEvent.NEBULA))) {
+                    s.setFTLCharge(0);
+                    Ship enemyShip = null;
+                    try {
+                        enemyShip = dest.getShips().get(0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (enemyShip != null) {
+                        try {
+                            s.setInCombat(true);
+                            // ===== Create new Battle Service =====
+                            BattleService battleService = new BattleService(UUID.randomUUID(), s.getId(), s, enemyShip);
+                            battleServiceDAO.persist(battleService);
+                            ServerServiceCommunicator serverServiceCommunicator = ServerServiceCommunicator.getInstance();
+                            List<BattleService> battleServices = serverServiceCommunicator.getBattleServices();
+                            battleServices.add(battleService);
+                            synchronized (serverServiceCommunicator.getBattleServices()) {
+                                serverServiceCommunicator.setBattleServices(battleServices);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                // ===== Remove ship from planet =====
+                ships.remove(currentAtPlanet);
+                planetDAO.update(currentPlanet);
+                // ===== Add ship to destination =====
+                List<Ship> shipsAtDestination = dest.getShips();
+                shipsAtDestination.add(s);
+                dest.setShips(shipsAtDestination);
+                dest.setDiscovered(true);
+                // ===== Update ship planet =====
+                s.setPlanet(dest);
                 planetDAO.update(dest);
-                planetDAO.update(current);
+                // ===== Set valid =====
+                responseObject.setValidRequest(true);
                 responseObject.setResponseShip(s);
                 responseObject.setResponseOverworld(UserService.getInstance().getUser(s.getAssociatedUser()).getOverworld());
-                responseObject.setValidRequest(true);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            List<Ship> ships = new ArrayList<>(dest.getShips());
-            if (ships.contains(s)){
-                ships.remove(s);
-            }
-            dest.setShips(ships);
-            s.setPlanet(current);
-            dest.setDiscovered(false);
-            ships = current.getShips();
-            if (!ships.contains(s)){
-
-            }
+        }
+        catch (Exception f){
+            f.printStackTrace();
         }
         return responseObject;
     }
