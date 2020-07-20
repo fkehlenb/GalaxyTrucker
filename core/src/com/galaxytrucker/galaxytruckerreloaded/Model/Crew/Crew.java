@@ -52,11 +52,11 @@ public class Crew implements Serializable {
     /**
      * The room this crew member is in
      */
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne
     private Room currentRoom;
 
     /** Tile the crew member is standing on */
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(cascade = CascadeType.ALL)
     private Tile tile;
 
     /**

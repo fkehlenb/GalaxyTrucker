@@ -27,11 +27,11 @@ public class User implements Serializable {
     /**
      * The user's ship
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Ship userShip;
 
     /** The user's overWorld map */
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Overworld overworld;
 
     /** Whether or not the user is logged in */

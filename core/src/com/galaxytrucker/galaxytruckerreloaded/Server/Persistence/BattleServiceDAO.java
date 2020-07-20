@@ -4,6 +4,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.BattleServiceNot
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateBattleServiceException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** Manages battle service objects in the database */
 public class BattleServiceDAO extends ObjectDAO<BattleService> {
 
@@ -62,6 +65,25 @@ public class BattleServiceDAO extends ObjectDAO<BattleService> {
         catch (Exception e){
             e.printStackTrace();
             throw new BattleServiceNotFoundException();
+        }
+    }
+
+    /** Get all battle services from the database
+     * @return a list of all battle services or an empty arraylist */
+    public List<BattleService> getAll(){
+        try {
+            List<BattleService> battleServices;
+            entityManager.getTransaction().begin();
+            battleServices = entityManager.createNamedQuery("BattleService.fetchAll",BattleService.class).getResultList();
+            entityManager.getTransaction().commit();
+            if (!battleServices.isEmpty()){
+                return new ArrayList<>(battleServices);
+            }
+            return new ArrayList<>();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }

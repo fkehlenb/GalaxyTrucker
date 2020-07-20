@@ -7,6 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +20,8 @@ import java.util.UUID;
 @Setter
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Ship.getByUsername", query = "select s from Ship s where s.associatedUser =: username")
+        @NamedQuery(name = "Ship.getByUsername", query = "select s from Ship s where s.associatedUser =: username"),
+        @NamedQuery(name = "Ship.getById",query = "select s from Ship s where s.id =: id")
 })
 public class Ship implements Serializable {
 
@@ -86,7 +88,7 @@ public class Ship implements Serializable {
      * The planet the ship is currently at
      */
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Planet planet;
 
     /** Shields */
@@ -101,12 +103,12 @@ public class Ship implements Serializable {
 
     /** This ship's systems */
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Room> systems;
 
     /** Inventory */
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Weapon> inventory;
 
     /** Whether or not the ship is in combat */

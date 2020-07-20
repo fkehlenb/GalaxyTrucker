@@ -35,7 +35,7 @@ public class Server implements Runnable{
     public static void runServer(){
         Server server = new Server();
         server.setPort(5050);
-        server.serverServiceCommunicator = new ServerServiceCommunicator();
+        server.serverServiceCommunicator = ServerServiceCommunicator.getInstance();
         new Thread(server).start();
         try {
             Thread.sleep(1000);
