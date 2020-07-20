@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.AudioController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.CrewController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -31,6 +33,8 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.badlogic.gdx.Gdx.audio;
+
 /**
  * Main game screen
  */
@@ -50,6 +54,7 @@ public class GamePlay implements Screen {
      * Click sound effect
      */
     private Sound clickSound;
+
 
     /**
      * ship of the player
@@ -153,6 +158,7 @@ public class GamePlay implements Screen {
         stage = new Stage(viewport, main.batch);
         pauseStage = new Stage(viewport, main.batch);
         tileStage = new Stage(viewport, main.batch);
+
 
         player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this);
 
