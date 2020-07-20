@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.VideoController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
+import org.graalvm.compiler.graph.Node;
 
 public class FullscreenEnableButton extends ImButton {
 
@@ -26,6 +27,6 @@ public class FullscreenEnableButton extends ImButton {
 
     @Override
     public void leftClick() {
-        VideoController.getInstance(null).setFullscreen();
+        VideoController.getInstance().setFullscreen();
     }
 }

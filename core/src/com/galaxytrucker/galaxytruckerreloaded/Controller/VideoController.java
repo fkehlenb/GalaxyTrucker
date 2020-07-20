@@ -12,25 +12,20 @@ import org.hibernate.graph.internal.parse.HEGLTokenTypes;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 
-public class VideoController extends Controller{
+public class VideoController {
 
     private static VideoController singleton;
 
     private Main main;
-
-
-    @NonNull
-    private ClientControllerCommunicator clientControllerCommunicator;
-
 
     /**
      * return the instance of this singleton
      * @param communicator the communicator
      * @return the singleton instance
      */
-    public static VideoController getInstance(ClientControllerCommunicator communicator) {
+    public static VideoController getInstance() {
         if(singleton == null) {
-            singleton = new VideoController(communicator);
+            singleton = new VideoController();
         }
         return singleton;
     }
