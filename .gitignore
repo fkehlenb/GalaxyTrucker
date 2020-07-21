@@ -16,7 +16,8 @@ hs_err_pid*
 gwt-unitCache/
 www-test/
 .gwt-tmp/
-
+./database.mv.db
+database.mv.db
 ## Android Studio and Intellij and Android in general
 /android/libs/armeabi/
 /android/libs/armeabi-v7a/

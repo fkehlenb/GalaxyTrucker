@@ -57,11 +57,6 @@ public class ServerServiceCommunicator {
         catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("\n==================== NEW ACTION ====================");
-        System.out.println("[SERVER]:[ACTION]:" + request.getRequestType().toString()+":[CLIENT-ID]:" + request.getShip().getId());
-        System.out.println("[IS-IN-COMBAT]:" + request.getShip().isInCombat() + ":[PLANET]:" + request.getShip().getPlanet().getName() +
-                ":[PLANET-EVENT]:" + request.getShip().getPlanet().getEvent()+":[DISCOVERED]:"+request.getShip().getPlanet().isDiscovered());
-        System.out.println("====================================================");
         switch (request.getRequestType()){
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());

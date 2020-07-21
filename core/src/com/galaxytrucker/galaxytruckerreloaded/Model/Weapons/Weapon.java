@@ -97,7 +97,7 @@ public class Weapon implements Serializable {
     private List<Integer> price;
 
     /** Weapon system this weapon belongs to */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private System weaponSystem;
 
     /** Weapon name */

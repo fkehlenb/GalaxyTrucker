@@ -18,6 +18,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 /**
  * Handle each client in a separate thread
@@ -288,8 +289,8 @@ public class ClientHandler implements Runnable {
         finalMap.add(startPlanet);
         // ======================= Generate grid map =======================
         int grid = planetMap.size()/2 + 1;
-        for (int i=0;i<grid;i++){
-            for (int a=0;a<grid;a++){
+        for (int i=0;i<grid/2+1;i++){
+            for (int a=0;a<grid/2+1;a++){
                 if (planetMap.size()>=1) {
                     Planet addToMap;
                     if (planetMap.size()>1) {
@@ -310,8 +311,7 @@ public class ClientHandler implements Runnable {
                 30,30,PlanetEvent.BOSS,new ArrayList<Ship>());
         // Todo Add boss ship
         finalMap.add(boss);
-        Overworld overworld = new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet);
-        return overworld;
+        return new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet,boss);
     }
 
     /**
