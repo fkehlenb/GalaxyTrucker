@@ -141,7 +141,7 @@ public class CreateOrJoinServer implements Screen {
      */
     public void startServer() {
         main.startServer();
-        main.startClient();
+        main.startClient(5050); //TODO hier evtl anderen port eingeben?
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
             main.setScreen(new LobbyScreenHost(main, ship, false, difficulty, username));

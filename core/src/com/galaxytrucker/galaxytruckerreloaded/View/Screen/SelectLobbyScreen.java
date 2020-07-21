@@ -103,18 +103,20 @@ public class SelectLobbyScreen implements Screen {
         this.difficulty = diff;
         this.username = username;
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport);
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         lobby = new TextField("", skin);
-        lobby.setPosition(main.WIDTH/2 - lobby.getWidth()/2, main.HEIGHT/2 - lobby.getHeight()/2 + 50);
+        lobby.setPosition(Main.WIDTH/2f - lobby.getWidth()/2, Main.HEIGHT/2f - lobby.getHeight()/2 + 50);
 
         port = new TextField("", skin);
-        port.setPosition(main.WIDTH/2f - port.getWidth()/2, main.HEIGHT/2-lobby.getHeight() - port.getHeight()/2);
+        port.setPosition(Main.WIDTH /2f - port.getWidth()/2, Main.HEIGHT/2f-lobby.getHeight() - port.getHeight()/2);
 
-        backButton = new SelectLobbyBackButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 100, 512, 48, this);
-        selectLobbyButton = new SelectLobbyButton(main.WIDTH/2 - 256, main.HEIGHT/2 - 50, 512, 48, this);
+        //at the bottom under the fields and the select lobby button
+        backButton = new SelectLobbyBackButton(Main.WIDTH/2f - 256, Main.HEIGHT/2f - lobby.getHeight() - port.getHeight() - 48 - 100 - 24, 512, 48, this);
+        //under the fields, above the back button
+        selectLobbyButton = new SelectLobbyButton(Main.WIDTH/2f - 256, Main.HEIGHT/2f - lobby.getHeight() - port.getHeight() - 50 - 24, 512, 48, this);
 
         stage.addActor(lobby);
         stage.addActor(port);

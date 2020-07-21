@@ -94,6 +94,11 @@ public class LoginScreen implements Screen {
     private TextField address;
 
     /**
+     * the server port field, if multiplayer
+     */
+    private TextField port;
+
+    /**
      * Constructor
      *
      * @param main - main class
@@ -137,10 +142,16 @@ public class LoginScreen implements Screen {
         if(!singleplayer) {
             address = new TextField("", skin);
             address.setSize(248, 50);
-            address.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + 100);
+            address.setPosition(Main.WIDTH/2f - username.getWidth()/2, Main.HEIGHT/2f + 200);
             stage.addActor(address);
 
-            glyph2.setText(font, "Please enter the server address"); //localhost if you are host
+
+            port = new TextField("", skin);
+            port.setSize(248, 50);
+            port.setPosition(Main.WIDTH/2f - port.getWidth()/2, Main.HEIGHT/2f + 200 - address.getHeight() - port.getHeight()/2);
+            stage.addActor(port);
+
+            glyph2.setText(font, "Please enter the server address and port (eg 5050 or 5051)"); //localhost if you are host
 
         }
 
@@ -168,7 +179,7 @@ public class LoginScreen implements Screen {
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
         font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + 50);
         if(!singleplayer) {
-            font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2 + 250);
+            font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2 + 350);
         }
         main.batch.end();
         stage.draw();
@@ -208,7 +219,7 @@ public class LoginScreen implements Screen {
         String name = username.getText();
 
         if(singleplayer) {
-            main.startClient();
+            main.startClient(5050);
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0); //ShipType sowieso irrelevant, da kein neues schiff erstellt wird
             if(success) {
                 main.setScreen(new SPResumeLobby(main));
@@ -218,7 +229,7 @@ public class LoginScreen implements Screen {
         else {
             if(address.getText().equals("localhost") || address.getText().equals("127.0.0.1"))
             {
-                main.startClient();
+                main.startClient(Integer.parseInt(port.getText()));
                 boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
                 if(success) {
                     main.setScreen(new LobbyScreenHost(main, main.getClient().getMyShip().getShipType(), true, 0, name)); //TODO diff von server laden
@@ -226,7 +237,7 @@ public class LoginScreen implements Screen {
                 }
             }
             else {
-                main.startClient();
+                main.startClient(Integer.parseInt(port.getText()));
                 boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
                 if(success) {
                     main.setScreen(new LobbyScreenHost(main, main.getClient().getMyShip().getShipType(), true, 0, name));
