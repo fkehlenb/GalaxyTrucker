@@ -310,8 +310,7 @@ public class ClientHandler implements Runnable {
                 30,30,PlanetEvent.BOSS,new ArrayList<Ship>());
         // Todo Add boss ship
         finalMap.add(boss);
-        Overworld overworld = new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet);
-        return overworld;
+        return new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet,boss);
     }
 
     /**

@@ -48,4 +48,8 @@ public class Overworld implements Serializable {
     /** The start planet */
     @ManyToOne(cascade = CascadeType.ALL)
     private Planet startPlanet;
+
+    /** The boss planet */
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Planet bossPlanet;
 }

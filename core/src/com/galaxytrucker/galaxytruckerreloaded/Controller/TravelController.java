@@ -13,18 +13,24 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class TravelController extends Controller{
+public class TravelController extends Controller {
 
-    /** ClientControllerCommunicator */
+    /**
+     * ClientControllerCommunicator
+     */
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
 
-    /** Instance */
+    /**
+     * Instance
+     */
     private static TravelController singleton;
 
-    /** Get controller instance */
+    /**
+     * Get controller instance
+     */
     public static TravelController getInstance(ClientControllerCommunicator communicator) {
-        if(singleton == null) {
+        if (singleton == null) {
             singleton = new TravelController(communicator);
         }
         return singleton;
@@ -32,23 +38,26 @@ public class TravelController extends Controller{
 
     /**
      * travels from one location to another
+     *
      * @param destination - the destination
      */
-    public boolean travel(Planet destination){
+    public boolean travel(Planet destination) {
         try {
             RequestObject requestObject = new RequestObject();
             requestObject.setRequestType(RequestType.HYPERJUMP);
             requestObject.setShip(clientControllerCommunicator.getClientShip());
             requestObject.setPlanet(destination);
+            System.out.println("\n<Client>:[Action]:[Hyperjump]:[Request]:[Planet]:" + clientControllerCommunicator.getClientShip().getPlanet().getName()
+                    + ":[Destination]:" + destination.getName());
             ResponseObject object = clientControllerCommunicator.sendRequest(requestObject);
-            if (object.isValidRequest()){
+            if (object.isValidRequest()) {
                 clientControllerCommunicator.setClientShip(object.getResponseShip());
                 clientControllerCommunicator.setMap(object.getResponseOverworld());
+                System.out.println("<Client>:[Action]:[Hyperjump]:[Successful]:[Planet]:" + object.getResponseShip().getPlanet().getName());
                 return true;
             }
             return false;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
