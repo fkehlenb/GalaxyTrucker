@@ -38,6 +38,27 @@ public class RoomDAO extends ObjectDAO<Room> {
         }
     }
 
+    /** Grab a room from the database using its id
+     * @param id - the id of the room to fetch
+     * @return the room
+     * @throws RoomNotFoundException if the room cannot be found in the database */
+    public Room getById(int id) throws RoomNotFoundException{
+        try {
+            Room r = null;
+            entityManager.getTransaction().begin();
+            r = entityManager.createNamedQuery("Room.getById",Room.class).setParameter("id",id).getSingleResult();
+            entityManager.getTransaction().commit();
+            if (r==null){
+                throw new NullPointerException();
+            }
+            return r;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new RoomNotFoundException();
+        }
+    }
+
     /**
      * Edit an existing room in the database
      *

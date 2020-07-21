@@ -39,6 +39,27 @@ public class CrewDAO extends ObjectDAO<Crew> {
         }
     }
 
+    /** Grab a crew member from the database using his id
+     * @param id - the crew member id
+     * @return the crew member
+     * @throws CrewNotFoundException if the crew cannot be found in the database */
+    public Crew getById(int id) throws CrewNotFoundException{
+        try {
+            Crew c = null;
+            entityManager.getTransaction().begin();
+            c = entityManager.createNamedQuery("Crew.getById",Crew.class).setParameter("id",id).getSingleResult();
+            entityManager.getTransaction().commit();
+            if (c==null){
+                throw new NullPointerException();
+            }
+            return c;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new CrewNotFoundException();
+        }
+    }
+
     /**
      * Update a crew member in the database
      *

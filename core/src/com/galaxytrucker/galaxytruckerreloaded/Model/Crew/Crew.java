@@ -13,6 +13,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Crew.getById",query = "select c from Crew c where c.id =: id")
+})
 public class Crew implements Serializable {
 
     /**

@@ -142,27 +142,6 @@ public class Client {
     }
 
 
-    /** Send a logout request and terminate the connection
-     * @param username - client username
-     * @return successful logout */
-    public boolean logout(String username){
-        try {
-            RequestObject requestObject = new RequestObject();
-            requestObject.setUsername(username);
-            requestObject.setRequestType(RequestType.LOGOUT);
-            ResponseObject responseObject = sendAndReceive(requestObject);
-            if (responseObject.isValidRequest()){
-                this.socket.close();
-                return true;
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-
     /**
      * Constructor
      *

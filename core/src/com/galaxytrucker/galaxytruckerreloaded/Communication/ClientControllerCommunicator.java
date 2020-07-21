@@ -68,7 +68,9 @@ public class ClientControllerCommunicator {
             RequestObject requestObject = new RequestObject();
             requestObject.setRequestType(RequestType.LOGOUT);
             requestObject.setShip(clientShip);
+            System.out.println("<Client>:[Name]:" + clientShip.getAssociatedUser() + ":[Logout]:[Request]");
             ResponseObject responseObject = sendRequest(requestObject);
+            System.out.println("<Client>:[Name]:" + clientShip.getAssociatedUser() + ":[Logout]:" + responseObject.isValidRequest());
             return responseObject.isValidRequest();
         }
         catch(Exception e) {
