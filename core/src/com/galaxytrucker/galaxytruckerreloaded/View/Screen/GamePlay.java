@@ -11,7 +11,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.AudioController;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.BattleController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.CrewController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -19,6 +22,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
@@ -162,6 +166,8 @@ public class GamePlay implements Screen {
 
         player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this);
 
+        createEnemy(); //TODO weg, is nur zum testen der enemy anzeige
+
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -184,7 +190,7 @@ public class GamePlay implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
         main.batch.end();
 
         player.render();
@@ -196,6 +202,7 @@ public class GamePlay implements Screen {
         else if(generalUI != null) { generalUI.render(); }
         else if(optionUI != null) { optionUI.render(); }
         else if(pauseMenuUI != null) { pauseMenuUI.render(); }
+        else if(enemy != null) { enemy.render(); }
 
 
         stage.draw();
@@ -212,6 +219,7 @@ public class GamePlay implements Screen {
         if(generalUI != null) { generalUI.disposeGeneralUI(); }
         if(optionUI != null) { optionUI.disposeOptionsUI(); }
         if(pauseMenuUI != null) { pauseMenuUI.disposePauseMenuUI(); }
+        if(enemy != null) { enemy.disposeShipView(); }
         stage.dispose();
     }
 
@@ -261,14 +269,33 @@ public class GamePlay implements Screen {
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 createShop(planet.getTrader());
             }
+            else if(planet.getEvent() == PlanetEvent.COMBAT) { //TODO wer erstellt wo den controller?
+                createEnemy();
+            }
         }
         return success;
     }
 
     /**
+     * create the enemy ui, if there is an enemy
+     */
+    private void createEnemy() {
+        if(enemy == null) {
+            enemy = new EnemyShip(main, new Ship(), stage, this); //TODO hier das ship aus battleController nehmen
+        }
+    }
+
+    /**
+     * remove the enemy ui again
+     */
+    public void deleteEnemy() {
+        enemy = null;
+    }
+
+    /**
      * shop ui pops up
      */
-    public void createShop(Trader trader) {
+    private void createShop(Trader trader) {
         if(shopUI == null) {
             shopUI = new ShopUI(main, stage, this, trader, null, 0);
         }
@@ -631,8 +658,7 @@ public class GamePlay implements Screen {
      * @return the weapons of the ship in a list
      */
     public List<Weapon> loadWeapons() {
-        List<Weapon> weapons = new LinkedList<>();
-        weapons.addAll(main.getClient().getMyShip().getInventory());
+        List<Weapon> weapons = new LinkedList<>(main.getClient().getMyShip().getInventory());
         for(Room r : main.getClient().getMyShip().getSystems()) {
             if(r instanceof System) {
                 if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {

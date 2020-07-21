@@ -9,25 +9,33 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 public class EnemyHullUI {
 
     /**
-     * SpriteBatch
-     */
-    private SpriteBatch batch;
-
-    /**
-     * Orthographic camera
-     */
-    private OrthographicCamera camera;
-
-    /**
      * the texture for the background
      */
-    private Texture HullBackground;
+    private Texture hullBackground;
 
     /**
-     * the textures to display the current status of the hull
+     * the main class extending game
      */
-    private List<Texture> hullStatusTextures;
+    private Main main;
 
+    /**
+     * constructor
+     * @param main the main class
+     */
+    public EnemyHullUI(Main main) {
+        this.main = main;
+
+        //hullBackground = new Texture();
+    }
+
+    /**
+     * render the textures
+     */
+    public void render() {
+        main.batch.begin();
+        main.batch.draw(hullBackground, 0, 0, hullBackground.getWidth(), hullBackground.getHeight());
+        main.batch.end();
+    }
 
     /**
      * the status needs to be updated
@@ -61,14 +69,6 @@ public class EnemyHullUI {
      * dispose of the enemy hull UI
      */
     public void disposeEnemyHullUI() {
-
-    }
-
-    /**
-     * constructor
-     * @param main the main class
-     */
-    public EnemyHullUI(Main main) {
 
     }
 }

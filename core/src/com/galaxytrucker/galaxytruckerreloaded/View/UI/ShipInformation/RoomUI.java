@@ -29,7 +29,7 @@ public class RoomUI {
 
     protected Main main;
 
-    protected ShipView ship;
+    protected AbstractShip ship;
 
     /**
      * x position of the room
@@ -47,7 +47,7 @@ public class RoomUI {
      * @param main - the main class for SpriteBatch
      * @param room the room
      */
-    public RoomUI(Main main, Room room, Stage stage, ShipView ship, float x, float y) {
+    public RoomUI(Main main, Room room, Stage stage, AbstractShip ship, float x, float y) {
         this.main = main;
         this.room = room;
         this.ship = ship;
@@ -98,7 +98,7 @@ public class RoomUI {
      * the amount of energy given to a system (if this room is a system) is changed
      * @param amount the new amount
      */
-    public void systemEnergyUpdate(int amount) {
+    public void systemEnergyUpdate(int amount) { //TODO
 
     }
 
@@ -106,7 +106,7 @@ public class RoomUI {
      * the status of the system (if this room is a system) is changed
      * @param amount the new amount
      */
-    public void systemStatusUpdate(int amount) {
+    public void systemStatusUpdate(int amount) { //TODO
     }
 
     /**
