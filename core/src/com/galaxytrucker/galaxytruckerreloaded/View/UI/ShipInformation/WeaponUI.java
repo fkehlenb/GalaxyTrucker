@@ -31,11 +31,6 @@ public class WeaponUI extends SubsystemUI {
     private int id;
 
     /**
-     * the texure to display the weapon background
-     */
-    private Texture weaponBackground;
-
-    /**
      * the textures to display the cooldown until the weapon can be used again
      */
     private List<Texture> weaponCooldown;
@@ -64,13 +59,12 @@ public class WeaponUI extends SubsystemUI {
         burst = weapon.getBurst();
         id = weapon.getId();
 
-        //weaponBackground = new Texture("shipsys/weapon/smallbox.png");
-
         //weaponCooldown = new LinkedList<>();
         //weaponCooldown.add(new Texture(""));
         //currentTexture = 0;
 
         activateButton = new WeaponActivateButton(new Texture("shipsys/weapon/minibox.png"), 0, 0, 10, 10, this);
+
         stage.addActor(activateButton);
     }
 
@@ -81,10 +75,6 @@ public class WeaponUI extends SubsystemUI {
     public void render() {
         super.render();
 
-        /*main.batch.begin();
-        main.batch.draw(weaponBackground, 0, 0, 0, 0); //TODO whxy
-        //main.batch.draw(weaponCooldown.get(currentTexture), 0, 0, 0, 0); //TODO whxy
-        main.batch.end();*/
     }
 
     /**
@@ -92,8 +82,6 @@ public class WeaponUI extends SubsystemUI {
      */
     public void disposeRoomUI() {
         super.disposeRoomUI();
-
-        //weaponBackground.dispose();
 
         /*for(Texture t : weaponCooldown) {
             t.dispose();

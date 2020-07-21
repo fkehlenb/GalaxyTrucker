@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
@@ -22,19 +23,16 @@ public class EnemyShip extends AbstractShip {
     private Texture enemyBackground;
 
     /**
-     * the base texture for the enemy ship
+     * the texture region using the enemy ship texture
+     * needed to rotate the texture easier
      */
-    private Texture enemyShipTexture;
+    private TextureRegion enemyShipTextureRegion;
 
     /**
-     * the grey room background texture
+     * the texture region using the enemy room background texture
+     * needed to rotate the texture easier
      */
-    private Texture enemyRoomBackgroundTexture;
-
-    /**
-     * the uis of the systems belonging to the enemy ship
-     */
-    private List<EnemySystemUI> systems;
+    private TextureRegion enemyRoomBackgroundTextureRegion;
 
     /**
      * x position this is starting at
@@ -45,6 +43,21 @@ public class EnemyShip extends AbstractShip {
      * y position this is starting at
      */
     private float y;
+
+    /**
+     * the width and height used for drawin
+     */
+    private float width, height;
+
+    /**
+     * width and height used for drawing the room background(grey thingy)
+     */
+    private float roomWidth, roomHeight;
+
+    /**
+     * the width and height of the box around the enemy ship
+     */
+    private float boxWidth, boxHeight;
 
     /**
      * the hashmap of the rooms and their uis
@@ -74,20 +87,34 @@ public class EnemyShip extends AbstractShip {
     public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
         super(main, ship, stage, game, tileStage);
         enemyBackground = new Texture("battle/battle_overlay.png");
-        enemyShipTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "base.png");
-        enemyRoomBackgroundTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "floor.png");
+        /**
+         * the base texture for the enemy ship
+         */
+        Texture enemyShipTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "base.png");
+        /**
+         * the grey room background texture
+         */
+        Texture enemyRoomBackgroundTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "floor.png");
+        enemyShipTextureRegion = new TextureRegion(enemyShipTexture);
+        enemyRoomBackgroundTextureRegion = new TextureRegion(enemyRoomBackgroundTexture);
 
-        x = Main.WIDTH - enemyBackground.getWidth() - 20;
-        y = Main.HEIGHT/2f - enemyBackground.getHeight()/2f;
+        width = enemyShipTexture.getWidth()*1.5f;
+        height = enemyShipTexture.getHeight()*1.5f;
+        roomWidth = enemyRoomBackgroundTexture.getWidth()*1.5f;
+        roomHeight = enemyRoomBackgroundTexture.getHeight()*1.5f;
+        boxWidth = enemyBackground.getWidth()*1.5f;
+        boxHeight = enemyBackground.getHeight()*1.5f;
+        x = Main.WIDTH - boxWidth - 20;
+        y = Main.HEIGHT/2f - boxHeight/2f;
 
         roomUIHashMap = new HashMap<>();
         List<Room> existingRooms = ship.getSystems();
         for(Room r : existingRooms) { //TODO bx, by
             if(r instanceof System) {
-                roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), x), getRoomY(ship.getShipType(), r.getInteriorID(), y), (System) r));
+                roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), x), getRoomX(ship.getShipType(), r.getInteriorID(), y), (System) r));
             }
             else {
-                roomUIHashMap.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), x), getRoomY(ship.getShipType(), r.getInteriorID(), y)));
+                roomUIHashMap.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), x), getRoomX(ship.getShipType(), r.getInteriorID(), y)));
             }
         }
     }
@@ -108,7 +135,9 @@ public class EnemyShip extends AbstractShip {
     @Override
     public void render() {
         main.batch.begin();
-        main.batch.draw(enemyBackground, x, y, enemyBackground.getWidth(), enemyBackground.getHeight());
+        main.batch.draw(enemyBackground, x, y, boxWidth, boxHeight);
+        main.batch.draw(enemyShipTextureRegion, x, Main.HEIGHT/2f - height/2f, width/2, height/2, width, height, 1, 1, 90);
+        main.batch.draw(enemyRoomBackgroundTextureRegion, (x+width/2) - roomWidth/2, Main.HEIGHT/2f - roomHeight/2f, roomWidth/2, roomHeight/2, roomWidth, roomHeight, 1, 1, 90);
         main.batch.end();
     }
 
