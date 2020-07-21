@@ -103,18 +103,22 @@ public class EnemyShip extends AbstractShip {
         roomWidth = enemyRoomBackgroundTexture.getWidth()*1.5f;
         roomHeight = enemyRoomBackgroundTexture.getHeight()*1.5f;
         boxWidth = enemyBackground.getWidth()*1.5f;
-        boxHeight = enemyBackground.getHeight()*1.5f;
+        boxHeight = Main.HEIGHT - 20;
         x = Main.WIDTH - boxWidth - 20;
         y = Main.HEIGHT/2f - boxHeight/2f;
 
+        //the base x and y for the rooms, meaning the middle of the ship
+        float tileX = x + width/2;
+        float tileY = Main.HEIGHT/2f;
+
         roomUIHashMap = new HashMap<>();
         List<Room> existingRooms = ship.getSystems();
-        for(Room r : existingRooms) { //TODO bx, by
+        for(Room r : existingRooms) {
             if(r instanceof System) {
-                roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), x), getRoomX(ship.getShipType(), r.getInteriorID(), y), (System) r));
+                roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), tileX), getRoomX(ship.getShipType(), r.getInteriorID(), tileY), (System) r));
             }
             else {
-                roomUIHashMap.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), x), getRoomX(ship.getShipType(), r.getInteriorID(), y)));
+                roomUIHashMap.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), tileX), getRoomX(ship.getShipType(), r.getInteriorID(), tileY)));
             }
         }
     }
@@ -125,8 +129,8 @@ public class EnemyShip extends AbstractShip {
      * @param room the room that was chosen
      */
     @Override
-    public void roomChosen(Room room) { //TODO make the weapon targeting work
-
+    public void roomChosen(Room room) {
+        game.roomChosenAsTarget(room);
     }
 
     /**
@@ -134,11 +138,30 @@ public class EnemyShip extends AbstractShip {
      */
     @Override
     public void render() {
+        render1();
+        tileStage.draw();
+        render2();
+    }
+
+    /**
+     * rendering everything up to the tile stage
+     * seperation neeeded because tilestage is shared with the player ship
+     */
+    public void render1() {
         main.batch.begin();
         main.batch.draw(enemyBackground, x, y, boxWidth, boxHeight);
         main.batch.draw(enemyShipTextureRegion, x, Main.HEIGHT/2f - height/2f, width/2, height/2, width, height, 1, 1, 90);
         main.batch.draw(enemyRoomBackgroundTextureRegion, (x+width/2) - roomWidth/2, Main.HEIGHT/2f - roomHeight/2f, roomWidth/2, roomHeight/2, roomWidth, roomHeight, 1, 1, 90);
         main.batch.end();
+    }
+
+    /**
+     * rendering everything after the tile stage
+     */
+    public void render2() {
+        for(RoomUI r : roomUIHashMap.values()) {
+            r.render();
+        }
     }
 
     /**

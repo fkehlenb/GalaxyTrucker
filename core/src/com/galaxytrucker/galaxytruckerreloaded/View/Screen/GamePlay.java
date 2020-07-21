@@ -150,6 +150,16 @@ public class GamePlay implements Screen {
     private Crew chosenCrew;
 
     /**
+     * whether the player has chosen a weapon and is now in the process of choosing a room as a target
+     */
+    private boolean takingAim = false;
+
+    /**
+     * the weapon a player has chosen, if not null
+     */
+    private Weapon chosenWeapon;
+
+    /**
      * Constructor
      *
      * @param main - main class
@@ -193,7 +203,16 @@ public class GamePlay implements Screen {
         main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
         main.batch.end();
 
-        player.render();
+        if(enemy == null) {
+            player.render();
+        }
+        else {
+            player.render1();
+            enemy.render1();
+            tileStage.draw();
+            player.render2();
+            enemy.render2();
+        }
 
         if(eventGUI != null) { eventGUI.render(); }
         else if(shopUI != null) { shopUI.render(); }
@@ -202,7 +221,6 @@ public class GamePlay implements Screen {
         else if(generalUI != null) { generalUI.render(); }
         else if(optionUI != null) { optionUI.render(); }
         else if(pauseMenuUI != null) { pauseMenuUI.render(); }
-        else if(enemy != null) { enemy.render(); }
 
 
         stage.draw();
@@ -232,9 +250,10 @@ public class GamePlay implements Screen {
             Gdx.input.setInputProcessor(pauseStage);
             createPauseMenu();
         }
-        if(crewMoving && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if(crewMoving && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || takingAim && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             Gdx.input.setInputProcessor(stage);
             crewMoving = false;
+            takingAim = false;
         }
     }
 
@@ -580,6 +599,43 @@ public class GamePlay implements Screen {
     }
 
     /**
+     * a room on the enemy ship was chosen as a target for a weapon
+     * TODO: problem: man kann bisher nicht auf sein eigenes schiff feuern
+     * @param room the room that was chosen
+     */
+    public void roomChosenAsTarget(Room room) {
+        if(takingAim && chosenWeapon != null) {
+            weaponShot(chosenWeapon, room);
+            Gdx.input.setInputProcessor(stage);
+        }
+    }
+
+    /**
+     * a weapon from the bottom left corner is activated. next, a room needs to be chosen as a target
+     * @param weapon the weapon that was chosen
+     */
+    public void weaponActivated(Weapon weapon) {
+        takingAim = !takingAim;
+        if(takingAim) {
+            Gdx.input.setInputProcessor(tileStage);
+            chosenWeapon = weapon;
+        }
+        else {
+            Gdx.input.setInputProcessor(stage);
+            chosenWeapon = null;
+        }
+    }
+
+    /**
+     * the player has chosen a weapon and a room
+     * call to controller, add id of the enemyship
+     *
+     * @param weapon the weapon
+     * @param room the room
+     */
+    private void weaponShot(Weapon weapon, Room room) {} //TODO call controller
+
+    /**
      * update the health of a crew member
      * @param crew the crew member
      * @param health the new health
@@ -630,15 +686,6 @@ public class GamePlay implements Screen {
     public void changeAmountScrap(int amount) {
         player.changeAmountScrap(amount);
     }
-
-    /**
-     * the player has chosen a weapon and a room
-     * call to controller, add id of the enemyship
-     *
-     * @param id the weapon id
-     * @param room the room
-     */
-    public void weaponShot(int id, Room room) {} //call controller
 
     /**
      * load the crew of a ship

@@ -64,7 +64,7 @@ public class RoomUI {
         }
         else if(ship instanceof EnemyShip) {
             for(Tile t : room.getTiles()) {
-                stage.addActor();
+                stage.addActor(new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this));
             }
         }
     }

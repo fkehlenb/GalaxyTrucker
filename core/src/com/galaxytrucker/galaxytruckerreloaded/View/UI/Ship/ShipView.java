@@ -216,7 +216,16 @@ public class ShipView extends AbstractShip {
      */
     @Override
     public void render() {
+        render1();
+        tileStage.draw();
+        render2();
+    }
 
+    /**
+     * rendering the first part up to the tile stage
+     * this seperation is needed because the enemy ship uses the same tile stage, and otherwise it does not work
+     */
+    public void render1() {
         main.batch.begin();
         main.batch.draw(shipBackground, 70, main.HEIGHT/2 - height/2, width, height);
         main.batch.draw(shipRoomBackground, (70 + width/2) - roomWidth/2, main.HEIGHT/2 - roomHeight/2, roomWidth, roomHeight);
@@ -228,10 +237,12 @@ public class ShipView extends AbstractShip {
         fuel.render();
         hull.render();
         energy.render();
+    }
 
-        tileStage.draw();
-
-
+    /**
+     * rendering everything after the tile stage
+     */
+    public void render2() {
         for(RoomUI r : rooms.values()) {
             r.render();
         }
@@ -428,7 +439,23 @@ public class ShipView extends AbstractShip {
      */
     public void changeAmountFuel(int amount) {fuel.changeAmount(amount);}
 
-    public void weaponShot(int weaponid, Room room) { game.weaponShot(weaponid, room);}
+    /**
+     * a weapon is chosen for an attack
+     * called by button
+     * @param weapon the weapon that was chosen
+     */
+    public void weaponChosen(Weapon weapon) {
+        game.weaponActivated(weapon);
+    }
+
+    /**
+     * a weapon was fired
+     * called by gameplay screen after communication with controller
+     * @param weapon the weapon that was fired
+     */
+    public void weaponFired(Weapon weapon) {
+
+    }
 
     /**
      * Ship hop animation
