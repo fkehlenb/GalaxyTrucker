@@ -69,4 +69,7 @@ public class RequestObject implements Serializable {
 
     /** int - eg fuel, rockets, hp for trader */
     private int intAmount;
+
+    /** Is player currently in a pvp situation? */
+    private boolean pvp = false;
 }

@@ -68,7 +68,9 @@ public class ClientControllerCommunicator {
             RequestObject requestObject = new RequestObject();
             requestObject.setRequestType(RequestType.LOGOUT);
             requestObject.setShip(clientShip);
+            System.out.println("<Client>:[Name]:" + clientShip.getAssociatedUser() + ":[Logout]:[Request]");
             ResponseObject responseObject = sendRequest(requestObject);
+            System.out.println("<Client>:[Name]:" + clientShip.getAssociatedUser() + ":[Logout]:" + responseObject.isValidRequest());
             return responseObject.isValidRequest();
         }
         catch(Exception e) {
@@ -87,6 +89,7 @@ public class ClientControllerCommunicator {
         HangerController.getInstance();
         TraderController.getInstance(singleton);
         TravelController.getInstance(singleton);
+        PlanetEventController.getInstance(singleton);
         AudioController.getInstance();
         // TODO CREATE ALL CONTROLLERS HERE, all controllers should be singletons
         return singleton;

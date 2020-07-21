@@ -7,6 +7,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
+import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
@@ -52,6 +54,18 @@ public class BattleService implements Serializable {
     @Transient
     private OverworldDAO overworldDAO = OverworldDAO.getInstance();
 
+    /** CrewDAO */
+    @Transient
+    private CrewDAO crewDAO = CrewDAO.getInstance();
+
+    /** Room DAO */
+    @Transient
+    private RoomDAO roomDAO = RoomDAO.getInstance();
+
+    /** Tile DAO */
+    @Transient
+    private TileDAO tileDAO = TileDAO.getInstance();
+
     /**
      * ID of current round ship
      */
@@ -86,11 +100,22 @@ public class BattleService implements Serializable {
 
     /** Give updated ships to clients
      * @param clientShip - the client's ship
-     * @param overworld - the clien't overworld
      * @return a responseObject containing the updated ships */
     @SuppressWarnings("Duplicates")
-    public ResponseObject getUpdatedData(Ship clientShip, Overworld overworld){
+    public ResponseObject getUpdatedData(Ship clientShip){
         ResponseObject responseObject = new ResponseObject();
+        Overworld overworld = null;
+        try {
+             overworld = UserService.getInstance().getUser(clientShip.getAssociatedUser()).getOverworld();
+             if (overworld==null){
+                 throw new NullPointerException();
+             }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return responseObject;
+        }
+
         // Not trusting the client data
         if (clientShip.getId()==playerOne.getId()){
             clientShip = playerOne;
@@ -260,9 +285,8 @@ public class BattleService implements Serializable {
      * @param ship - own ship
      * @param weapon - the weapon to attack with
      * @param opponent - opponent ship
-     * @param room - room to attack
-     * @param seed - world seed */
-    public ResponseObject attackShip(Ship ship,Weapon weapon,Ship opponent,Room room,int seed){
+     * @param room - room to attack  */
+    public ResponseObject attackShip(Ship ship,Weapon weapon,Ship opponent,Room room){
         ResponseObject responseObject = new ResponseObject();
         // Not trusting the client data
         if (ship.getId()==playerOne.getId()){
@@ -285,7 +309,7 @@ public class BattleService implements Serializable {
                 // TODO check energy requirement
                 // Damage shields
                 int weaponDamange = (int) (weapon.getDamage() * weapon.getWeaponLevel() * weapon.getAccuracy());
-                Random random = new Random(seed);
+                Random random = new Random();
                 // TODO remove me, just in case atm
                 if (weaponDamange == 0) {
                     weaponDamange = 1;
@@ -425,6 +449,89 @@ public class BattleService implements Serializable {
             responseObject.setValidRequest(true);
             responseObject.setFledFight(false);
             nextRound();
+        }
+        return responseObject;
+    }
+
+    /** Move a crew member to a different room while in combat
+     * this skips a turn
+     * @param ship - the client ship
+     * @param crew - the crew member to move
+     * @param room - the room to move him into */
+    public ResponseObject moveCrewToRoom(Ship ship,Crew crew,Room room){
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            // Dont trust client data
+            ship = shipDAO.getById(ship.getId());
+            crew = crewDAO.getById(crew.getId());
+            room = roomDAO.getById(room.getId());
+            // Check if the ship contains the room
+            for (Room r : ship.getSystems()){
+                if (r.getId()==room.getId()){
+                    // check for an empty tile
+                    for (Tile t : room.getTiles()){
+                        if (t.isEmpty()){
+                            // Clear current tile
+                            Tile tile = crew.getTile();
+                            tile.setStandingOnMe(null);
+                            // Update the room
+                            Room currentRoom = crew.getCurrentRoom();
+                            // Remove crew from room
+                            List<Crew> crewInRoom = currentRoom.getCrew();
+                            crewInRoom.remove(crew);
+                            currentRoom.setCrew(crewInRoom);
+                            // Remove crew from tile
+                            List<Tile> tiles = currentRoom.getTiles();
+                            for (Tile tile1 : tiles){
+                                if (tile1.getId()==tile.getId()){
+                                    tiles.set(tiles.indexOf(tile1),tile);
+                                    currentRoom.setTiles(tiles);
+                                    roomDAO.update(currentRoom);
+                                    break;
+                                }
+                            }
+                            // Move crew to new room
+                            // Update tiles
+                            t.setStandingOnMe(crew);
+                            crew.setTile(t);
+                            crew.setCurrentRoom(room);
+                            tiles = room.getTiles();
+                            for (Tile tile1 : tiles){
+                                if (tile1.getId()==t.getId()){
+                                    tiles.set(tiles.indexOf(tile1),t);
+                                    room.setTiles(tiles);
+                                    break;
+                                }
+                            }
+                            // Put crew in room
+                            crewInRoom = room.getCrew();
+                            crewInRoom.add(crew);
+                            room.setCrew(crewInRoom);
+                            roomDAO.update(room);
+                            // Update ship
+                            List<Room> rooms = ship.getSystems();
+                            for (Room room1 : rooms){
+                                if (room1.getId() == currentRoom.getId()){
+                                    rooms.set(rooms.indexOf(room1),currentRoom);
+                                }
+                                else if (room1.getId() == room.getId()){
+                                    rooms.set(rooms.indexOf(room1),room);
+                                }
+                            }
+                            ship.setSystems(rooms);
+                            shipDAO.update(ship);
+                            responseObject.setValidRequest(true);
+                            responseObject.setResponseShip(ship);
+                            nextRound();
+                            return responseObject;
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            //todo rollback
         }
         return responseObject;
     }

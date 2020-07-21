@@ -61,8 +61,47 @@ public class ServerServiceCommunicator {
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
             case HYPERJUMP:
+                if (request.getShip().isInCombat()&&!request.isPvp()){
+                    for (BattleService b : battleServices){
+                        if (b.getPlayerOne().getId()==request.getShip().getId()
+                                || b.getPlayerTwo().getId()==request.getShip().getId()){
+                            return b.fleeFight(request.getShip(),request.getPlanet());
+                        }
+                    }
+                }
+                else if (request.getShip().isInCombat()&&request.isPvp()){
+                    // Todo pvp service
+                }
                 return travelService.jump(request.getShip(),request.getPlanet());
-                //TODO OTHERS
+            case ROUND_UPDATE_DATA:
+                if (request.getShip().isInCombat()){
+                    if (!request.isPvp()){
+                        for (BattleService b : battleServices){
+                            if (b.getPlayerOne().getId()==request.getShip().getId()
+                                    || b.getPlayerTwo().getId()==request.getShip().getId()){
+                                return b.getUpdatedData(request.getShip());
+                            }
+                        }
+                    }
+                    else{
+                        // Todo pvp
+                    }
+                }
+            case ATTACK_SHIP:
+                if (request.getShip().isInCombat()){
+                    if (!request.isPvp()){
+                        for (BattleService b : battleServices){
+                            if (b.getPlayerOne().getId()==request.getShip().getId()
+                                    || b.getPlayerTwo().getId()==request.getShip().getId()){
+                                return b.attackShip(request.getShip(),request.getWeapon(),
+                                        request.getOpponentShip(),request.getRoom());
+                            }
+                        }
+                    }
+                    else{
+                        // todo pvp
+                    }
+                }
             case TRADERBUYCREW:
                 return purchaseCrew(request.getShip(), request.getTrader(), request.getCrew());
             case TRADERBUYFUEL:
@@ -82,7 +121,10 @@ public class ServerServiceCommunicator {
             case UNEQIP_WEAPON:
                 return weaponService.unequipWeapon(request.getShip(),request.getWeapon());
         }
-        return null;
+        // Returning null is VORBIDDEN!
+        ResponseObject defaultResponse = new ResponseObject();
+        defaultResponse.setValidRequest(false);
+        return defaultResponse;
     }
 
     // ==================================== USER SERVICE ====================================
