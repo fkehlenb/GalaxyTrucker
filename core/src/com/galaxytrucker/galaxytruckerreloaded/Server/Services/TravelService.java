@@ -115,7 +115,7 @@ public class TravelService {
                 // Get maximum x value in map
                 float maxX = 0f;
                 for (Float f : xPositions) {
-                    if (f > maxX) {
+                    if (f > maxX && f!=30f) {
                         maxX = f;
                     }
                 }
