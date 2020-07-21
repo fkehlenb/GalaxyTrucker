@@ -98,7 +98,7 @@ public class EnemyShip extends AbstractShip {
      * @param room the room that was chosen
      */
     @Override
-    public void roomChosen(Room room) {
+    public void roomChosen(Room room) { //TODO make the weapon targeting work
 
     }
 

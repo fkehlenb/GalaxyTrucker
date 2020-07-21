@@ -281,7 +281,7 @@ public class GamePlay implements Screen {
      */
     private void createEnemy() {
         if(enemy == null) {
-            enemy = new EnemyShip(main, new Ship(), stage, this); //TODO hier das ship aus battleController nehmen
+            enemy = new EnemyShip(main, new Ship(), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
         }
     }
 
