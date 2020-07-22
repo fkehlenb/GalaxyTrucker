@@ -54,9 +54,6 @@ public class System extends Room implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Weapon> shipWeapons;
 
-    /** System level */
-    private int level = 1;
-
     /** Whether or not the system is unlocked */
     private boolean unlocked = true;
 
