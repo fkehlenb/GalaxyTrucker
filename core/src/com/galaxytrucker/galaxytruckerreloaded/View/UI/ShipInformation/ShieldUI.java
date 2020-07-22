@@ -3,10 +3,8 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import java.util.LinkedList;
-import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Shield;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 public class ShieldUI extends SubsystemUI {
@@ -37,13 +35,13 @@ public class ShieldUI extends SubsystemUI {
      * @param main - the main class
      * @param shield the shield
      */
-    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, Shield shield, float sx, Stage normalStage) {
+    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, System shield, float sx, Stage normalStage) {
         super(main, stage, ship, x, y, shield, sx, normalStage);
 
-        onShip = new Texture("ship/anaerobic/shields.png");
+        onShip = new Texture("ship/killer/shields.png");
 
-        shieldTexture = new Texture("gameuis/shield_top.png");
-        upperBackground = new Texture("gameuis/shield_topbackground.png");
+        //shieldTexture = new Texture("gameuis/shield_top.png");
+        //upperBackground = new Texture("gameuis/shield_topbackground.png");
 
         currentTexture = 4;
     } //TODO display in upper left corner
@@ -65,8 +63,8 @@ public class ShieldUI extends SubsystemUI {
     public void disposeRoomUI() {
         super.disposeRoomUI();
 
-        shieldTexture.dispose();
-        upperBackground.dispose();
+        //shieldTexture.dispose();
+        //upperBackground.dispose();
 
         onShip.dispose();
 
@@ -81,12 +79,12 @@ public class ShieldUI extends SubsystemUI {
 
         main.batch.begin();
         main.batch.draw(onShip, 0, 0, 0 ,0); //TODO whxy
-        main.batch.draw(upperBackground, 0, 0, 10, 10);
+        //main.batch.draw(upperBackground, 0, 0, 10, 10);
         float x = 0; //TODO
-        for(int i = 0; i <= currentTexture; i++) {
+        /*for(int i = 0; i <= currentTexture; i++) {
             main.batch.draw(shieldTexture, x, 0, 10, 10); //TODO whxy
             x +=10; //TODO
-        }
+        }*/
         main.batch.end();
     }
 

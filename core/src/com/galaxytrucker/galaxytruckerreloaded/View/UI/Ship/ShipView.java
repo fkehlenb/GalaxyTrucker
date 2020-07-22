@@ -85,11 +85,6 @@ public class ShipView extends AbstractShip {
     private Texture shipRoomBackground;
 
     /**
-     * the general background for the weapon display in the bottom left corner next to the energy status display
-     */
-    private Texture weaponGeneralBackground;
-
-    /**
      * the map (needed for the mapui)
      */
     private Overworld map;
@@ -145,7 +140,6 @@ public class ShipView extends AbstractShip {
 
         shipBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "base.png");
         shipRoomBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "floor.png");
-        weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
 
         width = shipBackground.getWidth()*1.5f;
         height = shipBackground.getHeight()*1.5f;
@@ -174,10 +168,13 @@ public class ShipView extends AbstractShip {
         float sx = 60;
         for(Room r : existingRooms) {
             if(r instanceof System) {
-                if(r instanceof Shield) {
-                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (Shield) r, sx, stage));
+                if(((System) r).getSystemType() == SystemType.SHIELDS) {
+                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
                 }
-                else if(! (r instanceof WeaponSystem)) {
+                else if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
+                    rooms.put(r.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx + 55, stage));
+                }
+                else {
                     rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
                 }
                 sx += 55;
@@ -185,10 +182,6 @@ public class ShipView extends AbstractShip {
             else {
                 rooms.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY)));
             }
-        }
-        //need to be done extra bc they need the actual weapon, not just the system
-        for(Weapon w : game.loadWeapons()) {
-            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseY), w, sx + 55, stage));
         }
 
         moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
@@ -552,7 +545,6 @@ public class ShipView extends AbstractShip {
         main.batch.begin();
         main.batch.draw(shipBackground, 70, main.HEIGHT/2 - height/2, width, height);
         main.batch.draw(shipRoomBackground, (70 + width/2) - roomWidth/2, main.HEIGHT/2 - roomHeight/2, roomWidth, roomHeight);
-        main.batch.draw(weaponGeneralBackground, 700, 100, 328, 90);
         main.batch.end();
 
         money.render();
@@ -586,7 +578,6 @@ public class ShipView extends AbstractShip {
     public void disposeShipView() {
         shipBackground.dispose();
         shipRoomBackground.dispose();
-        weaponGeneralBackground.dispose();
         money.disposeScrapUI();
         missiles.disposeMissileUI();
         hull.disposeHullUI();

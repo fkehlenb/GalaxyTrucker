@@ -17,34 +17,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
  */
 public class WeaponUI extends SubsystemUI {
 
-    /** Weapon coolDown */
-    private int cooldown;
-
-    /** Weapon energy */
-    private int energy;
-
-    /**
-     * How many projectiles are fired per burst
-     */
-    private int burst;
-
-    private int id;
-
-    /**
-     * the texure to display the weapon background
-     */
-    private Texture weaponBackground;
-
-    /**
-     * the textures to display the cooldown until the weapon can be used again
-     */
-    private List<Texture> weaponCooldown;
-
-    /**
-     * the current texture in weapon cooldown
-     */
-    private int currentTexture;
-
     /**
      * button used to activate/deactive weapon in the bottom left corner
      * after weapon is activated, a room in the enemy ship needs to be selected
@@ -52,23 +24,19 @@ public class WeaponUI extends SubsystemUI {
     private WeaponActivateButton activateButton;
 
     /**
+     * the general background for the weapon display in the bottom left corner next to the energy status display
+     */
+    private Texture weaponGeneralBackground;
+
+    /**
      * constructor
      * @param main the main class
      * @param weapon the weapon
      */
-    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, Weapon weapon, float sx, Stage normalStage) {
-        super(main, stage, ship, x, y, weapon.getWeaponSystem(), sx, normalStage);
+    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, System weapon, float sx, Stage normalStage) {
+        super(main, stage, ship, x, y, weapon, sx, normalStage);
 
-        cooldown = weapon.getCooldown();
-        energy = weapon.getEnergy();
-        burst = weapon.getBurst();
-        id = weapon.getId();
-
-        //weaponBackground = new Texture("shipsys/weapon/smallbox.png");
-
-        //weaponCooldown = new LinkedList<>();
-        //weaponCooldown.add(new Texture(""));
-        //currentTexture = 0;
+        weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
 
         activateButton = new WeaponActivateButton(new Texture("shipsys/weapon/minibox.png"), 0, 0, 10, 10, this);
         stage.addActor(activateButton);
@@ -80,11 +48,7 @@ public class WeaponUI extends SubsystemUI {
      */
     public void render() {
         super.render();
-
-        /*main.batch.begin();
-        main.batch.draw(weaponBackground, 0, 0, 0, 0); //TODO whxy
-        //main.batch.draw(weaponCooldown.get(currentTexture), 0, 0, 0, 0); //TODO whxy
-        main.batch.end();*/
+        //main.batch.draw(weaponGeneralBackground, 700, 100, 328, 90);
     }
 
     /**
@@ -92,12 +56,6 @@ public class WeaponUI extends SubsystemUI {
      */
     public void disposeRoomUI() {
         super.disposeRoomUI();
-
-        //weaponBackground.dispose();
-
-        /*for(Texture t : weaponCooldown) {
-            t.dispose();
-        }*/
 
         activateButton.remove();
     }
