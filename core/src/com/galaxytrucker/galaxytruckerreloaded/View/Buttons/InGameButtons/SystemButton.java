@@ -1,16 +1,10 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.SubsystemUI;
@@ -56,13 +50,13 @@ public class SystemButton extends ImButton
      */
     public void rightClick()
     {
-        ui.lessEnergy(); //TODO how much?
+        ui.removeEnergy(); //TODO how much?
     }
 
     /**
      * increases the Energie provided for a System
      */
     public void leftClick() {
-        ui.activateEnergy();
+        ui.addEnergy();
     }
 }
