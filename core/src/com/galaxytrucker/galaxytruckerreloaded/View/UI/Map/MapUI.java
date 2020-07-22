@@ -78,7 +78,7 @@ public class MapUI {
             //StartPlanet Extra
             if(fx == -1 && fy == -1){
                  //Start
-                MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+fx+Main.WIDTH/(1920/120)), (y+fy+Main.HEIGHT/(1080/95)), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+fx+Main.WIDTH/(1920/100)), (y+fy+Main.HEIGHT/(1080/100)), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
                 locations.add(mb);
                 stage.addActor(mb);
             }
