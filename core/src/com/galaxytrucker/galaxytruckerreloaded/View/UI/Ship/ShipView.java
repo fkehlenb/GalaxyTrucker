@@ -168,13 +168,16 @@ public class ShipView extends AbstractShip {
         rooms = new HashMap<>();
         List<Room> existingRooms = ship.getSystems();
         float sx = 60;
+        //id and weaponui for the weaponui, saved temporarily bc it needs to be added to the list last
+        int weaponroomid = 0;
         for(Room r : existingRooms) {
             if(r instanceof System) {
                 if(((System) r).getSystemType() == SystemType.SHIELDS) {
                     rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
                 }
                 else if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
-                    rooms.put(r.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx + 55, stage));
+                    weaponroomid = r.getId();
+                    rooms.put(weaponroomid, new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage, font15));
                 }
                 else {
                     rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
@@ -185,6 +188,7 @@ public class ShipView extends AbstractShip {
                 rooms.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY)));
             }
         }
+        ((WeaponUI) rooms.get(weaponroomid)).setBoxPosition(sx + 10, 80);
 
         moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
         inventory = new ShipButton(Main.WIDTH/(2.5f),main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
