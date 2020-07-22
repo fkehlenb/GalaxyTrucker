@@ -394,11 +394,9 @@ public class GamePlay implements Screen {
      * called by controller
      */
     public void createPauseMenu() {
-        if(pauseMenuUI == null) {
-            pauseStage = new Stage(viewport);
-            Gdx.input.setInputProcessor(pauseStage);
-            pauseMenuUI = new PauseMenuUI(main, pauseStage, this);
-        }
+        pauseStage = new Stage(viewport);
+        Gdx.input.setInputProcessor(pauseStage);
+        pauseMenuUI = new PauseMenuUI(main, pauseStage, this);
         //TODO controller sagen dass spiel "pausiert"?
     }
 
