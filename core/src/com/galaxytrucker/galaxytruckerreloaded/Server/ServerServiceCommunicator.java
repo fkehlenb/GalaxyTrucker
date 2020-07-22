@@ -46,6 +46,9 @@ public class ServerServiceCommunicator {
     /** Weapon service */
     private WeaponService weaponService = new WeaponService();
 
+    /** System Service */
+    private SystemService systemService = new SystemService();
+
     /** Take a request from the client side, pass it through the services
      * and return a response
      * @return the server's response to the client's request */
@@ -60,6 +63,12 @@ public class ServerServiceCommunicator {
         switch (request.getRequestType()){
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
+            case ADD_ENERGY_SYSTEM:
+                return systemService.addEnergy(request.getShip(),request.getSystem(),request.getIntAmount());
+            case REMOVE_ENERGY_SYSTEM:
+                return systemService.removeEnergy(request.getShip(),request.getSystem(),request.getIntAmount());
+            case UPGRADE_SYSTEM:
+                return systemService.upgradeSystem(request.getShip(),request.getSystem());
             case HYPERJUMP:
                 if (request.getShip().isInCombat()&&!request.isPvp()){
                     for (BattleService b : battleServices){

@@ -1,38 +1,42 @@
 package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+
+/** Manages ship systems */
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class SystemController extends Controller {
 
-    /** My own ship*/
-    private Ship myself;
+    /** ClientControllerCummunicator */
+    @NonNull
+    private ClientControllerCommunicator clientControllerCommunicator;
 
-    /**
-     * Install a new system on a ship
-     *
-     * @param system - the system to install
-     * @param room   - the room to install the system in
-     */
-    public void installSystem(System system, Room room) {
-
+    /** Remove energy from system
+     * @param system - the system to remove energy from
+     * @param amount - amount of energy to remove
+     * @return valid action */
+    public boolean removeEnergy(System system,int amount){
+        return false;
     }
 
-    /**
-     * Uninstall a system on a ship
-     *
-     * @param system - the system to remove
-     */
-    public void uninstalledSystem(System system) {
-
+    /** Add energy to a system
+     * @param system - the system to add energy to
+     * @param amount - amount of energy to add
+     * @return valid action */
+    public boolean addEnergy(System system,int amount){
+        return false;
     }
 
+    /** Upgrade a system
+     * @param system - the system to upgrade
+     * @return valid action */
+    public boolean upgradeSystem(System system){
+        return false;
+    }
 }

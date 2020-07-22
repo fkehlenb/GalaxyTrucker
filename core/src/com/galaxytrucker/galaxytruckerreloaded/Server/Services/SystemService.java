@@ -7,47 +7,37 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRoomExc
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 
+/** Manages ship systems actions */
 public class SystemService {
 
-    /**
-     * System dao
-     */
-    private RoomDAO roomDAO;
+    /** ShipDAO */
+    private ShipDAO shipDAO = ShipDAO.getInstance();
 
-    /**
-     * Ship DAO
-     */
-    private ShipDAO shipDAO;
+    /** RoomDAO */
+    private RoomDAO roomDAO = RoomDAO.getInstance();
 
-    /**
-     * Validate system install/uninstall
-     *
-     * @param s - the command
-     * @return true if it is valid, else false
-     */
-    public boolean validateSystemReplacement(String s) {
-        return false;
+    /** Add energy to a system
+     * @param ship - the client's ship
+     * @param system - the system to add energy to
+     * @param amount - the amount of energy to add */
+    public ResponseObject addEnergy(Ship ship,System system,int amount){
+        return null;
     }
 
-    /**
-     * Install a new system on a ship
-     *
-     * @param ship   - the ship to install the system on
-     * @param system - the system to install
-     * @param room   - the room to install the system in
-     */
-    public void installSystem(Ship ship, System system, Room room) {
-
+    /** Remove energy from a system
+     * @param ship - the client's ship
+     * @param system - the system to remove energy from
+     * @param amount - the amount of energy to remove */
+    public ResponseObject removeEnergy(Ship ship,System system,int amount){
+        return null;
     }
 
-    /**
-     * Uninstall a system on a ship
-     *
-     * @param ship   - the ship to remove the system from
-     * @param system - the system to remove
-     */
-    public void uninstalledSystem(Ship ship, System system) {
-
+    /** Upgrade a system
+     * @param ship - the client's ship
+     * @param system - the system to upgrade */
+    public ResponseObject upgradeSystem(Ship ship,System system){
+        return null;
     }
 }

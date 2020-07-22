@@ -54,6 +54,9 @@ public class System extends Room implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Weapon> shipWeapons;
 
+    /** System level */
+    private int level = 1;
+
     /** Required args constructor
      * @param id - the database id
      * @param breach - breach

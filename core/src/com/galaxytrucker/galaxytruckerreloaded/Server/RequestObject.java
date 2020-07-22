@@ -5,6 +5,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.*;
 
@@ -56,6 +57,10 @@ public class RequestObject implements Serializable {
     /** Room */
     @ManyToOne
     private Room room;
+
+    /** System */
+    @ManyToOne
+    private System system;
 
     /** Weapon */
     @ManyToOne
