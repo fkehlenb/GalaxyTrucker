@@ -80,7 +80,7 @@ public class SystemController extends Controller {
         requestObject.setRequestType(RequestType.UPGRADE_SYSTEM);
         requestObject.setShip(clientControllerCommunicator.getClientShip());
         requestObject.setSystem(system);
-        java.lang.System.out.println("<Client>:[Upgrade-System]:[System]:" + system.getSystemType() + ":[System-Level]:" + system.getLevel());
+        java.lang.System.out.println("<Client>:[Upgrade-System]:[System]:" + system.getSystemType() + ":[System-Level]:" + system.getMaxEnergy());
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());

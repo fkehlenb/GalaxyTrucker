@@ -107,7 +107,7 @@ public class TravelService {
                         System.out.println("[Engine-Has-Energy]:true");
                     } else if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getSystemType().equals(SystemType.COCKPIT)
                             && !((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).isDisabled()) {
-                        if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getLevel() >= 2) {
+                        if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getMaxEnergy() >= 2) {
                             System.out.println("[Cockpit-Level]:<=2");
                             crewInCockpit = true;
                         } else if (r.getCrew().size() >= 1) {
