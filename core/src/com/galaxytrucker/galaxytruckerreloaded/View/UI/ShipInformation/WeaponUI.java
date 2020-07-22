@@ -47,12 +47,20 @@ public class WeaponUI extends SubsystemUI {
     private WeaponActivateButton activateButton;
 
     /**
+     * the position the weapon button should be at
+     */
+    private float wx, wy;
+
+    /**
      * constructor
      * @param main the main class
      * @param weapon the weapon
      */
-    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, Weapon weapon, float sx) {
+    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, Weapon weapon, float sx, float wx, float wy) {
         super(main, stage, ship, x, y, weapon.getWeaponSystem(), sx);
+
+        this.wx = wx;
+        this.wy = wy;
 
         cooldown = weapon.getCooldown();
         energy = weapon.getEnergy();
@@ -63,7 +71,7 @@ public class WeaponUI extends SubsystemUI {
         //weaponCooldown.add(new Texture(""));
         //currentTexture = 0;
 
-        activateButton = new WeaponActivateButton(new Texture("shipsys/weapon/minibox.png"), 0, 0, 10, 10, this);
+        activateButton = new WeaponActivateButton(new Texture("shipsys/weapon/minibox.png"), wx, wy, 248, 50, this);
 
         stage.addActor(activateButton);
     }
