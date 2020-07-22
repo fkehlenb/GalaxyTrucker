@@ -1,38 +1,75 @@
 package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
+import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
+import lombok.*;
 
+
+/** Manages ship systems */
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@SuppressWarnings("Duplicates")
 public class SystemController extends Controller {
 
-    /** My own ship*/
-    private Ship myself;
+    /** ClientControllerCummunicator */
+    @NonNull
+    private ClientControllerCommunicator clientControllerCommunicator;
 
-    /**
-     * Install a new system on a ship
-     *
-     * @param system - the system to install
-     * @param room   - the room to install the system in
-     */
-    public void installSystem(System system, Room room) {
-
+    /** Remove energy from system
+     * @param system - the system to remove energy from
+     * @param amount - amount of energy to remove
+     * @return valid action */
+    public boolean removeEnergy(System system,int amount){
+        RequestObject requestObject = new RequestObject();
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
+        requestObject.setSystem(system);
+        requestObject.setIntAmount(amount);
+        requestObject.setRequestType(RequestType.REMOVE_ENERGY_SYSTEM);
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()){
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            return true;
+        }
+        return false;
     }
 
-    /**
-     * Uninstall a system on a ship
-     *
-     * @param system - the system to remove
-     */
-    public void uninstalledSystem(System system) {
-
+    /** Add energy to a system
+     * @param system - the system to add energy to
+     * @param amount - amount of energy to add
+     * @return valid action */
+    public boolean addEnergy(System system,int amount){
+        RequestObject requestObject = new RequestObject();
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
+        requestObject.setSystem(system);
+        requestObject.setIntAmount(amount);
+        requestObject.setRequestType(RequestType.ADD_ENERGY_SYSTEM);
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()){
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            return true;
+        }
+        return false;
     }
 
+    /** Upgrade a system
+     * @param system - the system to upgrade
+     * @return valid action */
+    public boolean upgradeSystem(System system){
+        RequestObject requestObject = new RequestObject();
+        requestObject.setRequestType(RequestType.UPGRADE_SYSTEM);
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
+        requestObject.setSystem(system);
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()){
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            return true;
+        }
+        return false;
+    }
 }

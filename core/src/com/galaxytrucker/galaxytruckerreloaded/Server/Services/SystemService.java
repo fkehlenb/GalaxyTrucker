@@ -7,47 +7,120 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRoomExc
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 
+import java.util.List;
+
+/**
+ * Manages ship systems actions
+ */
+@SuppressWarnings("Duplicates")
 public class SystemService {
 
     /**
-     * System dao
+     * ShipDAO
      */
-    private RoomDAO roomDAO;
+    private ShipDAO shipDAO = ShipDAO.getInstance();
 
     /**
-     * Ship DAO
+     * RoomDAO
      */
-    private ShipDAO shipDAO;
+    private RoomDAO roomDAO = RoomDAO.getInstance();
+
+    // Todo cameras and cockpit cannot remove energy, max level 3, always max energy
 
     /**
-     * Validate system install/uninstall
+     * Add energy to a system
      *
-     * @param s - the command
-     * @return true if it is valid, else false
+     * @param ship   - the client's ship
+     * @param system - the system to add energy to
+     * @param amount - the amount of energy to add
      */
-    public boolean validateSystemReplacement(String s) {
-        return false;
+    public ResponseObject addEnergy(Ship ship, System system, int amount) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            ship = shipDAO.getById(ship.getId());
+            system = (System) roomDAO.getById(system.getId());
+
+            // Todo implement me
+
+            List<Room> rooms = ship.getSystems();
+            for (Room r : rooms) {
+                if (r.getId() == system.getId()) {
+                    rooms.set(rooms.indexOf(r), system);
+                }
+            }
+            ship.setSystems(rooms);
+            roomDAO.update(system);
+            shipDAO.update(ship);
+            responseObject.setValidRequest(true);
+            responseObject.setResponseShip(ship);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
     }
 
     /**
-     * Install a new system on a ship
+     * Remove energy from a system
      *
-     * @param ship   - the ship to install the system on
-     * @param system - the system to install
-     * @param room   - the room to install the system in
+     * @param ship   - the client's ship
+     * @param system - the system to remove energy from
+     * @param amount - the amount of energy to remove
      */
-    public void installSystem(Ship ship, System system, Room room) {
+    public ResponseObject removeEnergy(Ship ship, System system, int amount) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            ship = shipDAO.getById(ship.getId());
+            system = (System) roomDAO.getById(system.getId());
 
+            // Todo implement me
+
+            List<Room> rooms = ship.getSystems();
+            for (Room r : rooms) {
+                if (r.getId() == system.getId()) {
+                    rooms.set(rooms.indexOf(r), system);
+                }
+            }
+            ship.setSystems(rooms);
+            roomDAO.update(system);
+            shipDAO.update(ship);
+            responseObject.setValidRequest(true);
+            responseObject.setResponseShip(ship);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
     }
 
     /**
-     * Uninstall a system on a ship
+     * Upgrade a system
      *
-     * @param ship   - the ship to remove the system from
-     * @param system - the system to remove
+     * @param ship   - the client's ship
+     * @param system - the system to upgrade
      */
-    public void uninstalledSystem(Ship ship, System system) {
+    public ResponseObject upgradeSystem(Ship ship, System system) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            ship = shipDAO.getById(ship.getId());
+            system = (System) roomDAO.getById(system.getId());
 
+            // Todo implement me
+
+            List<Room> rooms = ship.getSystems();
+            for (Room r : rooms) {
+                if (r.getId() == system.getId()) {
+                    rooms.set(rooms.indexOf(r), system);
+                }
+            }
+            ship.setSystems(rooms);
+            roomDAO.update(system);
+            shipDAO.update(ship);
+            responseObject.setValidRequest(true);
+            responseObject.setResponseShip(ship);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
     }
 }
