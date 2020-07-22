@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Map;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.PlanetEventController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
@@ -25,6 +26,9 @@ public class MapUI {
      */
     private List<MapButton> locations;
 
+    /**
+     * Button to close the map
+     */
     private InventoryCloseButton closeButton;
 
     /**
@@ -63,6 +67,11 @@ public class MapUI {
     private float yDist;
 
     /**
+     * players ship
+     */
+    private Ship ship;
+
+    /**
      * Constructor
      * @param main - main class
      */
@@ -70,6 +79,8 @@ public class MapUI {
         this.main = main;
         this.shipView = shipView;
         this.map = main.getClient().getOverworld();
+
+        this.ship = PlanetEventController.getInstance(null).getClientShip();
 
         mapTexture = new Texture("map/map_overlay.png");
 
@@ -91,19 +102,34 @@ public class MapUI {
             //StartPlanet Extra
             if(fx == -1 && fy == -1){
                  //Start
-                MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+Main.WIDTH/(1920/100)), (y+2*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                MapButton mb;
+                if (ship.getPlanet().getPosX() == fx && ship.getPlanet().getPosY() == fy){
+                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+Main.WIDTH/(1920/100)), (y+2*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                } else {
+                    mb = new MapButton(new Texture("map/map_button.png"), (x + Main.WIDTH / (1920 / 100)), (y + 2 * yDist), Main.WIDTH / (1920 / 20), Main.HEIGHT / (1080 / 20), this, f);
+                }
                 locations.add(mb);
                 stage.addActor(mb);
             }
             else if (fx == 30 && fy == 30){
                 //Boss
-                MapButton mb = new MapButton(new Texture("map/map_icon_boss.png"), (x+5*xDist+Main.WIDTH/(1920/120)), (y+2*Main.HEIGHT/(1080/50)), Main.WIDTH/(1920/70), Main.HEIGHT/(1080/70), this, f);
+                MapButton mb;
+                if (ship.getPlanet().getPosX() == fx && ship.getPlanet().getPosY() == fy){
+                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+5*xDist+Main.WIDTH/(1920/120)), (y+2*Main.HEIGHT/(1080/50)), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                } else {
+                    mb = new MapButton(new Texture("map/map_icon_boss.png"), (x+5*xDist+Main.WIDTH/(1920/120)), (y+2*Main.HEIGHT/(1080/50)), Main.WIDTH/(1920/70), Main.HEIGHT/(1080/70), this, f);
+                }
                 locations.add(mb);
                 stage.addActor(mb);
             }
             else {
                 //Alle anderen
-                MapButton mb = new MapButton(new Texture("map/map_button.png"), (x+fx*xDist+Main.WIDTH/(1920/150)), (y+fy*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                MapButton mb;
+                if (ship.getPlanet().getPosX() == fx && ship.getPlanet().getPosY() == fy){
+                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+fx*xDist+Main.WIDTH/(1920/150)), (y+fy*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                } else {
+                    mb = new MapButton(new Texture("map/map_button.png"), (x+fx*xDist+Main.WIDTH/(1920/150)), (y+fy*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                }
                 locations.add(mb);
                 stage.addActor(mb);
             }
