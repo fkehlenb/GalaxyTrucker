@@ -4,6 +4,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCom
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
@@ -65,6 +66,22 @@ public class SystemController extends Controller {
         requestObject.setRequestType(RequestType.UPGRADE_SYSTEM);
         requestObject.setShip(clientControllerCommunicator.getClientShip());
         requestObject.setSystem(system);
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()){
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            return true;
+        }
+        return false;
+    }
+
+    /** Install a new system
+     * @param systemType - the type of system to install
+     * @return valid action */
+    public boolean installSystem(SystemType systemType){
+        RequestObject requestObject = new RequestObject();
+        requestObject.setRequestType(RequestType.INSTALL_SYSTEM);
+        requestObject.setSystemType(systemType);
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());

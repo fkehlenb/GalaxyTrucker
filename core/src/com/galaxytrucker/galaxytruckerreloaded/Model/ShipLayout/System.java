@@ -57,6 +57,9 @@ public class System extends Room implements Serializable {
     /** System level */
     private int level = 1;
 
+    /** Whether or not the system is unlocked */
+    private boolean unlocked = true;
+
     /** Required args constructor
      * @param id - the database id
      * @param breach - breach
