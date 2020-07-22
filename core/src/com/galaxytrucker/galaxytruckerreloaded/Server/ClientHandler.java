@@ -1,12 +1,13 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
@@ -231,6 +232,11 @@ public class ClientHandler implements Runnable {
         Random random = new Random(seed);
         List<Planet> planetMap = new ArrayList<>();
         List<Planet> finalMap = new ArrayList<>();
+
+        // ======================= add textures to map =======================
+        //int randomPlanetTextureInt = random.nextInt(7)+1;
+        //String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
+
         // ======================= Add traders to map =======================
         int traders = random.nextInt(4) + 1;
         List<WeaponType> weaponTypes = new ArrayList<>();
@@ -241,50 +247,69 @@ public class ClientHandler implements Runnable {
         weaponTypes.add(WeaponType.RADIO);
         weaponTypes.add(WeaponType.RADIO_BOMB);
         for (int i=0;i<traders;i++){
+            int randomPlanetTextureInt = random.nextInt(7)+1;
+            String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, random),
-                    0, 0, PlanetEvent.VOID, new ArrayList<Ship>());
+                    0, 0, PlanetEvent.VOID, new ArrayList<Ship>(),new Texture(randomPlanetTexture));
             // TODO add trader stock and traders
             planetMap.add(planet);
         }
         // ======================= Add combat =======================
         int battles = random.nextInt(4) + 5;
         for (int i=0;i<battles;i++){
+            //Random planet texture
+            int randomPlanetTextureInt = random.nextInt(7)+1;
+            String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
+
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.COMBAT,new ArrayList<Ship>());
+                    0,0,PlanetEvent.COMBAT,new ArrayList<Ship>(), new Texture(randomPlanetTexture));
             // TODO add opponents
             planetMap.add(planet);
         }
         // ======================= Add minibosses =======================
         int minibosses = random.nextInt(2) + 1;
         for (int i=0;i<minibosses;i++){
+            //Random planet texture
+            int randomPlanetTextureInt = random.nextInt(7)+1;
+            String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
+
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.MINIBOSS,new ArrayList<Ship>());
+                    0,0,PlanetEvent.MINIBOSS,new ArrayList<Ship>(), new Texture(randomPlanetTexture));
             // TODO add miniboss oponents
             planetMap.add(planet);
         }
         // ======================= Add void =======================
         int voids = random.nextInt(2);
         for (int i=0;i<voids;i++){
+            //Random planet texture
+            int randomPlanetTextureInt = random.nextInt(7)+1;
+            String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
+
             planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.VOID,new ArrayList<Ship>()));
+                    0,0,PlanetEvent.VOID,new ArrayList<Ship>(), new Texture(randomPlanetTexture)));
         }
         // ======================= Add Nebulae =======================
         int nebulae = random.nextInt(4) + 1;
         for (int i=0;i<nebulae;i++){
             planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.NEBULA,new ArrayList<Ship>()));
+                    0,0,PlanetEvent.NEBULA,new ArrayList<Ship>(), new Texture("map/nebula.png")));
         }
         // ======================= Add meteorshower =======================
         int meteors = random.nextInt(3) + 1;
         for (int i=0;i<meteors;i++){
             planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.METEORSHOWER,new ArrayList<Ship>()));
+                    0,0,PlanetEvent.METEORSHOWER,new ArrayList<Ship>(), new Texture("map/asteroid.png")));
         }
-        // Add start planet
+        // ======================= Add start planet =======================
+        //Random planet texture
+        int randomPlanetTextureInt = random.nextInt(7)+1;
+        String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
+
         Planet startPlanet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                -1,-1,PlanetEvent.VOID,new ArrayList<Ship>());
+                -1,-1,PlanetEvent.VOID,new ArrayList<Ship>(), new Texture(randomPlanetTexture));
         startPlanet.setDiscovered(true);
         finalMap.add(startPlanet);
+
         // ======================= Generate grid map =======================
         int grid = planetMap.size()/2 + 1;
         for (int i=0;i<grid/2+1;i++){
@@ -306,7 +331,7 @@ public class ClientHandler implements Runnable {
         }
         // Add boss planet
         Planet boss = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                30,30,PlanetEvent.BOSS,new ArrayList<Ship>());
+                30,30,PlanetEvent.BOSS,new ArrayList<Ship>(), new Texture("map/planet_sun1.png"));
         // Todo Add boss ship
         finalMap.add(boss);
         return new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet,boss);

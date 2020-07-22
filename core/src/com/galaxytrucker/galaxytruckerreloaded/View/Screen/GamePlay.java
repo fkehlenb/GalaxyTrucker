@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.AudioController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.CrewController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -33,8 +31,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.badlogic.gdx.Gdx.audio;
-
 /**
  * Main game screen
  */
@@ -44,6 +40,11 @@ public class GamePlay implements Screen {
      * Background texture
      */
     private Texture background;
+
+    /**
+     * Planet texture
+     */
+    private Texture planetTexture;
 
     /**
      * Looping music
@@ -185,7 +186,9 @@ public class GamePlay implements Screen {
 
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.draw(planetTexture,0,0,Main.WIDTH,Main.HEIGHT);
         main.batch.end();
+
 
         player.render();
 
@@ -258,6 +261,7 @@ public class GamePlay implements Screen {
         boolean success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
         if(success) {
             createEvent(planet.getEvent());
+
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 createShop(planet.getTrader());
             }

@@ -3,13 +3,13 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EventPageButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Shows an event
@@ -70,7 +70,7 @@ public class EventGUI {
 
         backgroundTexture = new Texture("event/eventbackground.png");
 
-        nextPage = new EventPageButton(0, 0, 10, 10, this); //TODO whxy
+        nextPage = new EventPageButton(0, 0, 10, 10, this); //TODO whxy (Text/Planet info)
         stage.addActor(nextPage);
 
         eventPages = new LinkedList<>();
