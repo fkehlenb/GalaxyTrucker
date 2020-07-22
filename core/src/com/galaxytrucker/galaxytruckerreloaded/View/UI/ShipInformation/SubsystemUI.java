@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.SystemController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
@@ -39,6 +40,11 @@ public class SubsystemUI extends RoomUI {
      * used to give the system energy
      */
     private SystemButton energyButton;
+
+    /**
+     * Controller that contains logic for managing energy
+     */
+    SystemController systemController;
 
     /**
      * the current energy level
@@ -77,6 +83,7 @@ public class SubsystemUI extends RoomUI {
         maxEnergy = system.getMaxEnergy();
         damage = system.getDamage();
         systemType = system.getSystemType();
+        systemController = SystemController.getInstance(null);
         systemTexture = new java.util.LinkedList<>();
         id = system.getId();
 
@@ -145,13 +152,14 @@ public class SubsystemUI extends RoomUI {
      * called by systembutton
      * if energy supply already activated and not at maximum, then more energy to this system
      */
-    public void activateEnergy() {
+    public void addEnergy() {
         if (systemType==SystemType.SHIELDS)
         {
-            ship.roomSystemEnergyChosen(room, 2);
+
+            systemController.addEnergy((System) room,2);
         }
         else {
-            ship.roomSystemEnergyChosen(room, 1);
+            systemController.addEnergy((System) room,1);
         }
     }
 
@@ -159,14 +167,14 @@ public class SubsystemUI extends RoomUI {
      * subtracts energy supply
      * called by button
      */
-    public void lessEnergy() {
+    public void removeEnergy() {
 
         if (systemType==SystemType.SHIELDS)
         {
-            ship.roomSystemEnergyChosen(room, -2);
+            systemController.removeEnergy((System) room, 2);
         }
         else {
-            ship.roomSystemEnergyChosen(room, -1);
+            systemController.removeEnergy((System) room, 1);
         }
     }
 }
