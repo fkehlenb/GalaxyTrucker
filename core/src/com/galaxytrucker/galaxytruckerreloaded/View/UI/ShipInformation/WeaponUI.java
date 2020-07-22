@@ -56,8 +56,8 @@ public class WeaponUI extends SubsystemUI {
      * @param main the main class
      * @param weapon the weapon
      */
-    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, Weapon weapon, float sx) {
-        super(main, stage, ship, x, y, weapon.getWeaponSystem(), sx);
+    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, Weapon weapon, float sx, Stage normalStage) {
+        super(main, stage, ship, x, y, weapon.getWeaponSystem(), sx, normalStage);
 
         cooldown = weapon.getCooldown();
         energy = weapon.getEnergy();

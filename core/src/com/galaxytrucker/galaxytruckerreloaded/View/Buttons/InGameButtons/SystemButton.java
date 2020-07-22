@@ -32,14 +32,14 @@ public class SystemButton extends ImButton
     public SystemButton(Texture texture, float x, float y, float width, float height, SubsystemUI ui) {
         super(texture, x, y, width, height);
         this.ui = ui;
-        this.addListener(new ClickListener() {
+        this.addListener(new ClickListener(Input.Buttons.LEFT) {
             public void clicked(InputEvent event, float x, float y) {
-                if(event.getButton() == Input.Buttons.RIGHT) {
-                    rightClick();
-                }
-                else if(event.getButton() == Input.Buttons.LEFT) {
-                    leftClick();
-                }
+                leftClick();
+            }
+        });
+        this.addListener(new ClickListener(Input.Buttons.RIGHT) {
+            public void clicked(InputEvent event, float x, float y) {
+                rightClick();
             }
         });
     }
