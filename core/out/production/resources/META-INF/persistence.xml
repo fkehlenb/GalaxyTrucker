@@ -17,6 +17,7 @@
         <class>com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject</class>
         <class>com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject</class>
+        <class>com.badlogic.gdx.graphics.Texture</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:./database" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

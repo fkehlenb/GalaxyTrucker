@@ -199,7 +199,7 @@ public class SystemService {
             for (Room r : rooms){
                 if (r.isSystem() && ((System) r).getSystemType().equals(systemType) && !((System) r).isUnlocked()){
                     System updated = (System) r;
-                    updated.setDisabled(false);
+                    updated.setDisabled(true);
                     updated.setUnlocked(true);
                     rooms.set(rooms.indexOf(r),updated);
                     roomDAO.update(updated);
