@@ -10,6 +10,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.TileButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 public class RoomUI {
@@ -29,7 +30,7 @@ public class RoomUI {
 
     protected Main main;
 
-    protected ShipView ship;
+    protected AbstractShip ship;
 
     /**
      * x position of the room
@@ -47,7 +48,7 @@ public class RoomUI {
      * @param main - the main class for SpriteBatch
      * @param room the room
      */
-    public RoomUI(Main main, Room room, Stage stage, ShipView ship, float x, float y) {
+    public RoomUI(Main main, Room room, Stage stage, AbstractShip ship, float x, float y) {
         this.main = main;
         this.room = room;
         this.ship = ship;
@@ -56,8 +57,15 @@ public class RoomUI {
 
         tileTexture = new Texture("ship/tile.png");
 
-        for(Tile t : room.getTiles()) {
-            stage.addActor(new TileButton(x + (t.getPosX()*48), y + (t.getPosY()*48), 48, 48, this));
+        if(ship instanceof ShipView) {
+            for (Tile t : room.getTiles()) {
+                stage.addActor(new TileButton(x + (t.getPosX() * 48), y + (t.getPosY() * 48), 48, 48, this));
+            }
+        }
+        else if(ship instanceof EnemyShip) {
+            for(Tile t : room.getTiles()) {
+                stage.addActor(new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this));
+            }
         }
     }
 
@@ -98,7 +106,7 @@ public class RoomUI {
      * the amount of energy given to a system (if this room is a system) is changed
      * @param amount the new amount
      */
-    public void systemEnergyUpdate(int amount) {
+    public void systemEnergyUpdate(int amount) { //TODO
 
     }
 
@@ -106,7 +114,7 @@ public class RoomUI {
      * the status of the system (if this room is a system) is changed
      * @param amount the new amount
      */
-    public void systemStatusUpdate(int amount) {
+    public void systemStatusUpdate(int amount) { //TODO
     }
 
     /**

@@ -38,7 +38,12 @@ public class WeaponUI extends SubsystemUI {
 
         weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
 
-        activateButton = new WeaponActivateButton(new Texture("shipsys/weapon/minibox.png"), 0, 0, 10, 10, this);
+        //weaponCooldown = new LinkedList<>();
+        //weaponCooldown.add(new Texture(""));
+        //currentTexture = 0;
+
+        activateButton = new WeaponActivateButton(new Texture("shipsys/weapon/minibox.png"), wx, wy, 248, 50, this);
+
         stage.addActor(activateButton);
     }
 

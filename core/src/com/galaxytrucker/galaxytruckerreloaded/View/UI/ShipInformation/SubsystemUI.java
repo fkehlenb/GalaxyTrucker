@@ -29,7 +29,7 @@ public class SubsystemUI extends RoomUI {
 
     /**
      * the textures for the energy
-     * bottom left corner
+     *
      */
     private Texture energyTexture;
 
@@ -155,10 +155,10 @@ public class SubsystemUI extends RoomUI {
     public void addEnergy() {
         if (systemType==SystemType.SHIELDS)
         {
-            systemController.addEnergy((System) room,2);
+            ((ShipView) ship).roomSystemEnergyChosen(room, 2);
         }
         else {
-            systemController.addEnergy((System) room,1);
+            ((ShipView) ship).roomSystemEnergyChosen(room, 1);
         }
     }
 
@@ -169,10 +169,10 @@ public class SubsystemUI extends RoomUI {
     public void removeEnergy() {
         if (systemType==SystemType.SHIELDS)
         {
-            systemController.removeEnergy((System) room, 2);
+            ((ShipView) ship).roomSystemEnergyChosen(room, -2);
         }
         else {
-            systemController.removeEnergy((System) room, 1);
+            ((ShipView) ship).roomSystemEnergyChosen(room, -1);
         }
     }
 }
