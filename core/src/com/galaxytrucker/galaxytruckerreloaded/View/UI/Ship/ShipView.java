@@ -118,6 +118,11 @@ public class ShipView extends AbstractShip {
     private float baseX, baseY;
 
     /**
+     * the x position of the weapon buttons and the weapon box
+     */
+    private float wx;
+
+    /**
      * Constructor
      * @param main - the main class for SpriteBatch
      */
@@ -184,10 +189,11 @@ public class ShipView extends AbstractShip {
             }
         }
         //need to be done extra bc they need the actual weapon, not just the system
-        float wx = sx+10;
+        wx = sx+10;
+        float bwx = wx;
         for(Weapon w : game.loadWeapons()) {
-            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseY), w, sx, wx, 100));
-            wx += 100;
+            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseY), w, sx, bwx, 100));
+            bwx += 100;
         }
 
         moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
@@ -231,7 +237,7 @@ public class ShipView extends AbstractShip {
         main.batch.begin();
         main.batch.draw(shipBackground, 70, main.HEIGHT/2 - height/2, width, height);
         main.batch.draw(shipRoomBackground, (70 + width/2) - roomWidth/2, main.HEIGHT/2 - roomHeight/2, roomWidth, roomHeight);
-        main.batch.draw(weaponGeneralBackground, 700, 100, 328, 90);
+        main.batch.draw(weaponGeneralBackground, wx, 90, 328, 90);
         main.batch.end();
 
         money.render();
