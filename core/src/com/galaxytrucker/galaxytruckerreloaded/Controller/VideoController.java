@@ -1,10 +1,10 @@
 package com.galaxytrucker.galaxytruckerreloaded.Controller;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import lombok.*;
-import org.hibernate.graph.internal.parse.HEGLTokenTypes;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
@@ -20,7 +20,6 @@ public class VideoController {
 
     /**
      * return the instance of this singleton
-     * @param communicator the communicator
      * @return the singleton instance
      */
     public static VideoController getInstance() {

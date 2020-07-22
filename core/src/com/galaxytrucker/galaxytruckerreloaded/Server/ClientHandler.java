@@ -359,14 +359,14 @@ public class ClientHandler implements Runnable {
                     // O2
                     if (i == 1) {
                         Room o2 = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.O2, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 2, 0, SystemType.O2, new ArrayList<Weapon>());
                         o2.setTiles(tiles);
                         rooms.add(o2);
                     }
                     // Engine
                     else if (i == 2) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 3, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Isac", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
                         crew.setTile(engine.getTiles().get(0));
@@ -380,7 +380,7 @@ public class ClientHandler implements Runnable {
                     // Weapons
                     else if (i == 5) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 3, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Newton", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
@@ -408,28 +408,28 @@ public class ClientHandler implements Runnable {
                     // Medbay
                     else if (i == 11) {
                         Room medbay = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 2, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
                         medbay.setTiles(tiles);
                         rooms.add(medbay);
                     }
                     // Shields
                     else if (i == 12) {
                         Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 4, 4, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
                         rooms.add(shields);
                     }
                     // Cameras
                     else if (i == 14) {
                         Room cameras = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 1, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
                         cameras.setTiles(tiles);
                         rooms.add(cameras);
                     }
                     // Cockpit
                     else if (i == 16) {
                         Room cockpit = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 1, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
@@ -446,7 +446,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 8,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 3,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
             // ========== ROCK A ==========
             case TANK: //-------done
@@ -479,14 +479,14 @@ public class ClientHandler implements Runnable {
                     //O2
                     if(i==0) {
                         Room o2 = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.O2, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 3, 0, SystemType.O2, new ArrayList<Weapon>());
                         o2.setTiles(tiles);
                         rooms.add(o2);
                     }
                     //Engine
                     else if(i==8) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 1, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Isac", 8, 8, crewStats, 3*3+3*4+3*3, username);
                         crew.setTile(engine.getTiles().get(0));
@@ -500,7 +500,7 @@ public class ClientHandler implements Runnable {
                     //Weapons
                     else if(i==12) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 4, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
                         Weapon rocket2 = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,2, 3, 2, 1, 1, (float) 1.0,
@@ -520,28 +520,28 @@ public class ClientHandler implements Runnable {
                     //Medbay
                     else if(i==15) {
                         Room medbay = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 2, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
                         medbay.setTiles(tiles);
                         rooms.add(medbay);
                     }
                     //Shields
                     else if(i==5) {
                         Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 6, 6, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
                         rooms.add(shields);
                     }
                     //Cameras
                     else if(i==1) { //TODO irgendeine logik hinter energy/maxenergy?
                         Room cameras = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 1, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
                         cameras.setTiles(tiles);
                         rooms.add(cameras);
                     }
                     //Cockpit
                     else if(i==16) {
                         Room cockpit = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 2, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 3*3+3*4+3*3, username);
@@ -560,7 +560,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 9,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 2,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
             case KILLER: //-------done
                 crewStats = new ArrayList<>();
@@ -591,7 +591,7 @@ public class ClientHandler implements Runnable {
                     //O2
                     if(i==7) {
                         Room o2 = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.O2, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 3, 0, SystemType.O2, new ArrayList<Weapon>());
                         o2.setTiles(tiles);
                         rooms.add(o2);
                     }
@@ -599,14 +599,14 @@ public class ClientHandler implements Runnable {
                     //Engine
                     else if(i==6) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 4, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
                         rooms.add(engine);
                     }
                     //Weapon
                     else if(i==9) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 4, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
                         Weapon laser = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 2, 1, 1, 1, 0,
@@ -626,7 +626,7 @@ public class ClientHandler implements Runnable {
                     //Cockpit
                     else if(i==14) {
                         Room cockpit = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 2, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 30, username);
@@ -648,7 +648,7 @@ public class ClientHandler implements Runnable {
                     //Shields
                     else if(i==8) {
                         Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 2, 2, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
                         rooms.add(shields);
                     }
@@ -659,7 +659,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 25, 40, 0, 10, 8,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 25, 40, 0, 10, 5,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
             case BARRAGE:
                 crewStats = new ArrayList<>();
@@ -690,14 +690,14 @@ public class ClientHandler implements Runnable {
                     //O2
                     if(i==9) {
                         Room o2 = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.O2, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 1, 0, SystemType.O2, new ArrayList<Weapon>());
                         o2.setTiles(tiles);
                         rooms.add(o2);
                     }
                     //Engine
                     else if(i==3) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 2, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Isac", 8, 8, crewStats, 30, username);
@@ -712,28 +712,28 @@ public class ClientHandler implements Runnable {
                     //Medbay
                     else if(i==10) {
                         Room medbay = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 1, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
                         medbay.setTiles(tiles);
                         rooms.add(medbay);
                     }
                     //Shields
                     else if(i==11) {
                         Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 4, 4, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
                         rooms.add(shields);
                     }
                     //Cameras
                     else if(i==13) {
                         Room cameras = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 1, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
                         cameras.setTiles(tiles);
                         rooms.add(cameras);
                     }
                     //Cockpit
                     else if(i==7) {
                         Room cockpit = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 1, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 30, username);
@@ -748,7 +748,7 @@ public class ClientHandler implements Runnable {
                     //Weapons
                     else if(i==15) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 6, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Newton", 8, 8, crewStats, 30, username);
@@ -785,7 +785,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 20, 10, 0, 3, 8,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 20, 10, 0, 3, 3,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
             case STEALTH: //------------ done
                 crewStats = new ArrayList<>();
@@ -816,14 +816,14 @@ public class ClientHandler implements Runnable {
                     //O2
                     if(i==12) {
                         Room o2 = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.O2, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 2, 0, SystemType.O2, new ArrayList<Weapon>());
                         o2.setTiles(tiles);
                         rooms.add(o2);
                     }
                     //Engines
                     else if(i==0) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 8, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Isac", 8, 8, crewStats, 30, username);
@@ -838,14 +838,14 @@ public class ClientHandler implements Runnable {
                     //Medbay
                     else if(i==5) {
                         Room medbay = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 2, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
                         medbay.setTiles(tiles);
                         rooms.add(medbay);
                     }
                     //Weapons
                     else if(i==11) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 2, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
                         Weapon laser = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 1, 1, 1, 1, 0,
@@ -865,21 +865,21 @@ public class ClientHandler implements Runnable {
                     //Shields
                     else if(i==3) {
                         Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 0, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
                         rooms.add(shields);
                     }
                     //Cameras
                     else if(i==1) {
                         Room cameras = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 3, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
                         cameras.setTiles(tiles);
                         rooms.add(cameras);
                     }
                     //Cockpit
                     else if(i==14) {
                         Room cockpit = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 3, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 30, username);
@@ -898,7 +898,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 100, 25, 25, 10,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 100, 25, 25, 9,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
             case BOARDER:
                 crewStats = new ArrayList<>();
@@ -929,14 +929,14 @@ public class ClientHandler implements Runnable {
                     //O2
                     if (i ==3) {
                         Room o2 = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.O2, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 2, 0, SystemType.O2, new ArrayList<Weapon>());
                         o2.setTiles(tiles);
                         rooms.add(o2);
                     }
                     //Engines
                     else if (i ==1) {
                         Room engine = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.ENGINE, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 3, 0, SystemType.ENGINE, new ArrayList<Weapon>());
                         engine.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Isac", 8, 8, crewStats, 30, username);
@@ -951,14 +951,14 @@ public class ClientHandler implements Runnable {
                     //Medbay
                     else if (i ==13) {
                         Room medbay = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 3, 0, SystemType.MEDBAY, new ArrayList<Weapon>());
                         medbay.setTiles(tiles);
                         rooms.add(medbay);
                     }
                     //Weapons
                     else if (i ==11) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 3, 5, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 3, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "crew1", 8, 8, crewStats, 30, username);
@@ -986,7 +986,7 @@ public class ClientHandler implements Runnable {
                     //Shields
                     else if (i ==4) {
                         Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 2, 5, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 4, 4, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "crew2", 8, 8, crewStats, 30, username);
@@ -1001,14 +1001,14 @@ public class ClientHandler implements Runnable {
                     //Cameras
                     else if (i ==7) {
                         Room cameras = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 3, 0, SystemType.CAMERAS, new ArrayList<Weapon>());
                         cameras.setTiles(tiles);
                         rooms.add(cameras);
                     }
                     //Cockpit
                     else if (i ==15) {
                         Room cockpit = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 1, 5, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 1, 3, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 30, username);
@@ -1027,7 +1027,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 40, 10, 20, 7, 6,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 40, 10, 20, 7, 2,
                         0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
             default:
                 return null;
