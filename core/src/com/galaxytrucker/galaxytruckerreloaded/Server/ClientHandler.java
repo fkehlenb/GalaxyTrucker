@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
@@ -250,7 +249,7 @@ public class ClientHandler implements Runnable {
             int randomPlanetTextureInt = random.nextInt(7)+1;
             String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, random),
-                    0, 0, PlanetEvent.VOID, new ArrayList<Ship>(),new Texture(randomPlanetTexture));
+                    0, 0, PlanetEvent.VOID, new ArrayList<Ship>(),randomPlanetTexture);
             // TODO add trader stock and traders
             planetMap.add(planet);
         }
@@ -262,7 +261,7 @@ public class ClientHandler implements Runnable {
             String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
 
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.COMBAT,new ArrayList<Ship>(), new Texture(randomPlanetTexture));
+                    0,0,PlanetEvent.COMBAT,new ArrayList<Ship>(), randomPlanetTexture);
             // TODO add opponents
             planetMap.add(planet);
         }
@@ -274,7 +273,7 @@ public class ClientHandler implements Runnable {
             String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
 
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.MINIBOSS,new ArrayList<Ship>(), new Texture(randomPlanetTexture));
+                    0,0,PlanetEvent.MINIBOSS,new ArrayList<Ship>(), randomPlanetTexture);
             // TODO add miniboss oponents
             planetMap.add(planet);
         }
@@ -286,19 +285,19 @@ public class ClientHandler implements Runnable {
             String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
 
             planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.VOID,new ArrayList<Ship>(), new Texture(randomPlanetTexture)));
+                    0,0,PlanetEvent.VOID,new ArrayList<Ship>(), randomPlanetTexture));
         }
         // ======================= Add Nebulae =======================
         int nebulae = random.nextInt(4) + 1;
         for (int i=0;i<nebulae;i++){
             planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.NEBULA,new ArrayList<Ship>(), new Texture("map/nebula.png")));
+                    0,0,PlanetEvent.NEBULA,new ArrayList<Ship>(), "map/nebula.png"));
         }
         // ======================= Add meteorshower =======================
         int meteors = random.nextInt(3) + 1;
         for (int i=0;i<meteors;i++){
             planetMap.add(new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.METEORSHOWER,new ArrayList<Ship>(), new Texture("map/asteroid.png")));
+                    0,0,PlanetEvent.METEORSHOWER,new ArrayList<Ship>(),"map/asteroid.png"));
         }
         // ======================= Add start planet =======================
         //Random planet texture
@@ -306,7 +305,7 @@ public class ClientHandler implements Runnable {
         String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
 
         Planet startPlanet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                -1,-1,PlanetEvent.VOID,new ArrayList<Ship>(), new Texture(randomPlanetTexture));
+                -1,-1,PlanetEvent.VOID,new ArrayList<Ship>(), randomPlanetTexture);
         startPlanet.setDiscovered(true);
         finalMap.add(startPlanet);
 
@@ -331,7 +330,7 @@ public class ClientHandler implements Runnable {
         }
         // Add boss planet
         Planet boss = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                30,30,PlanetEvent.BOSS,new ArrayList<Ship>(), new Texture("map/planet_sun1.png"));
+                30,30,PlanetEvent.BOSS,new ArrayList<Ship>(), "map/planet_sun1.png");
         // Todo Add boss ship
         finalMap.add(boss);
         return new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet,boss);

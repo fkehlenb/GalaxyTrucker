@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.Test.Server.Persistence;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
@@ -25,7 +24,7 @@ public class PlanetDAOTest {
     /** Test adding a new planet to the database */
     @Test
     public void testPersist(){
-        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),new Texture("map/planets/1.png"));
+        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),"map/planets/1.png");
         try {
             planetDAO.persist(planet);
             entityManager.getTransaction().begin();
@@ -41,7 +40,7 @@ public class PlanetDAOTest {
     /** Test editing a planet in the database */
     @Test
     public void testEdit(){
-        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),new Texture("map/planets/1.png"));
+        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),"map/planets/1.png");
         try {
             planetDAO.persist(planet);
             planet.setEvent(PlanetEvent.SHOP);
@@ -59,7 +58,7 @@ public class PlanetDAOTest {
     /** Test removing a planet from the database */
     @Test
     public void testRemove(){
-        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),new Texture("map/planets/1.png"));
+        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),"map/planets/1.png");
         try {
             planetDAO.persist(planet);
             planetDAO.remove(planet);

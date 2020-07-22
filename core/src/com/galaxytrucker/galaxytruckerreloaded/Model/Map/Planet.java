@@ -66,7 +66,7 @@ public class Planet implements Serializable {
     private Trader trader;
 
     @NonNull
-    private Texture planetTexture;
+    private String planetTexture;
 
     @Override
     public boolean equals(Object o){

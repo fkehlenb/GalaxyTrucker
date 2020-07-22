@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.Test.Server.Persistence;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
@@ -38,7 +37,7 @@ public class TraderDAOTest {
     @Test
     public void testPersist() {
         Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>(),new Texture("map/planets/1.png")), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
+                PlanetEvent.SHOP, new ArrayList<Ship>(),"map/planets/1.png"), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
         try {
             traderDAO.persist(trader);
             entityManager.getTransaction().begin();
@@ -57,7 +56,7 @@ public class TraderDAOTest {
     @Test
     public void testEdit() {
         Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>(),new Texture("map/planets/1.png")), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
+                PlanetEvent.SHOP, new ArrayList<Ship>(),"map/planets/1.png"), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
         try {
             traderDAO.persist(trader);
             entityManager.getTransaction().begin();
@@ -78,7 +77,7 @@ public class TraderDAOTest {
     @Test
     public void testRemove() {
         Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>(),new Texture("map/planets/1.png")), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
+                PlanetEvent.SHOP, new ArrayList<Ship>(),"map/planets/1.png"), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
         try {
             traderDAO.persist(trader);
             traderDAO.remove(trader);
