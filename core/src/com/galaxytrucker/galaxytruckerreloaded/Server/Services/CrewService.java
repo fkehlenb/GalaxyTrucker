@@ -44,7 +44,8 @@ public class CrewService {
             room = roomDAO.getById(room.getId());
             // Manual verification
             java.lang.System.out.println("\n==================== ACTION MOVE CREW ====================");
-            java.lang.System.out.println("[PRE]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[ROOM]:" + crew.getCurrentRoom().getId());
+            java.lang.System.out.println("[PRE]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[ROOM]:"
+                    + crew.getCurrentRoom().getId());
             // Check if the crew exists in the ship
             boolean existsInShip = false;
             for (Room r : ship.getSystems()){
@@ -54,7 +55,7 @@ public class CrewService {
                 }
             }
             // Crew must not move to same room it is already in
-            if (existsInShip && room.getId()!=crew.getCurrentRoom().getId()&&!ship.isInCombat()){
+            if (existsInShip && room.getId()!=crew.getCurrentRoom().getId()){
                 Room currentRoom = crew.getCurrentRoom();
                 List<Crew> crewInRoom = currentRoom.getCrew();
                 List<Tile> roomTiles = currentRoom.getTiles();
@@ -101,7 +102,8 @@ public class CrewService {
                 crewDAO.update(crew);
                 shipDAO.update(ship);
                 // Manual verification
-                java.lang.System.out.println("[POST]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[ROOM]:" + crew.getCurrentRoom().getId());
+                java.lang.System.out.println("[POST]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[ROOM]:"
+                        + crew.getCurrentRoom().getId());
                 java.lang.System.out.println("==========================================================");
                 // Set valid data
                 responseObject.setValidRequest(true);
@@ -118,8 +120,61 @@ public class CrewService {
      * @param ship - the ship the crew is on
      * @param crew - the crew member to heal
      * @param healAmount - amount to heal */
-    public void healCrewMember(Ship ship,Crew crew,int healAmount){
-
+    public ResponseObject healCrewMember(Ship ship,Crew crew,int healAmount){
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            // No trusting client data
+            ship = shipDAO.getById(ship.getId());
+            crew = crewDAO.getById(crew.getId());
+            // Manual verification
+            java.lang.System.out.println("\n==================== ACTION HEAL CREW ====================");
+            java.lang.System.out.println("[PRE]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[HP]:"
+                    + crew.getHealth() + ":[Max-HP]:" + crew.getMaxhealth());
+            // Check if crew exists aboard the ship
+            Room crewRoom = crew.getCurrentRoom();
+            // Check for max hp
+            if (crew.getHealth()+healAmount>crew.getMaxhealth()){
+                return responseObject;
+            }
+            for (Room r : ship.getSystems()){
+                if (r.getCrew().contains(crew)){
+                    java.lang.System.out.println("[CREW-FOUND]");
+                    crewRoom = r;
+                    List<Crew> crewInRoom = crewRoom.getCrew();
+                    for (Crew c : crewInRoom){
+                        if (c.getId() == crew.getId()){
+                            crew = c;
+                            crew.setHealth(crew.getHealth()+healAmount);
+                            crewInRoom.set(crewInRoom.indexOf(c),crew);
+                        }
+                    }
+                    r.setCrew(crewInRoom);
+                    List<Room> shipRooms = ship.getSystems();
+                    for (Room a : shipRooms){
+                        if (a.getId() == r.getId()){
+                            shipRooms.set(shipRooms.indexOf(a),r);
+                        }
+                    }
+                    ship.setSystems(shipRooms);
+                    // Update data
+                    crewDAO.update(crew);
+                    roomDAO.update(r);
+                    shipDAO.update(ship);
+                    // Manual verification
+                    java.lang.System.out.println("[PRE]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[HP]:"
+                            + crew.getHealth() + ":[Max-HP]:" + crew.getMaxhealth());
+                    java.lang.System.out.println("==========================================================");
+                    // Set valid data
+                    responseObject.setValidRequest(true);
+                    responseObject.setResponseShip(ship);
+                    break;
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseObject;
     }
 
     /** Heal crew in a room

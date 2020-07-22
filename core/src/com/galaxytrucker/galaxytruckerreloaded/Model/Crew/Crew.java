@@ -74,4 +74,12 @@ public class Crew implements Serializable {
     @NonNull
     private String associatedUser;
 
+    @Override
+    public boolean equals(Object o){
+        if (o==null){
+            return false;
+        }
+        return ((Crew) o).getId() == this.getId();
+    }
+
 }

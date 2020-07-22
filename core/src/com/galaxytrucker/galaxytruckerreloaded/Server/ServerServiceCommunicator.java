@@ -65,8 +65,13 @@ public class ServerServiceCommunicator {
         }
         switch (request.getRequestType()){
             case MoveCrew:
+                // TODO combat
                 return crewService.moveCrewToRoom(request.getShip(),request.getCrew(),request.getRoom());
+            case HealCrew:
+                // TODO combat
+                return crewService.healCrewMember(request.getShip(),request.getCrew(),request.getHealAmount());
             case LOGOUT:
+                // TODO combat
                 return logout(request.getShip().getAssociatedUser());
             case ADD_ENERGY_SYSTEM:
                 return systemService.addEnergy(request.getShip(),request.getSystem(),request.getIntAmount());
