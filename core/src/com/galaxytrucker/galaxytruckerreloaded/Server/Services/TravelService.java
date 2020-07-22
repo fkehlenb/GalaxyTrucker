@@ -1,10 +1,11 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
-import com.galaxytrucker.galaxytruckerreloaded.Controller.BattleController;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
@@ -94,11 +95,31 @@ public class TravelService {
             System.out.println("[PlanetX]:" + s.getPlanet().getPosX() + ":[PlanetY]:" + s.getPlanet().getPosY() +
                     ":[DestinationX]:" + dest.getPosX() + ":[DestinationY]:" + dest.getPosY());
 
-            // Entweder 1 crew in cockpit, 1 energy engine
-            // oder cockpit level 2, 1 energy in engine
-
+            // 1 Crew in cockpit with cockpit level 1, 1 energy in engine
+            // or no crew in cockpit with level 2 and 1 energy in engine
+            boolean crewInCockpit = false;
+            boolean engineActive = false;
+            for (Room r : s.getSystems()) {
+                if (r.isSystem()) {
+                    if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getSystemType().equals(SystemType.ENGINE)) {
+                        engineActive = ((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getEnergy() > 0
+                                && !((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).isDisabled();
+                        System.out.println("[Engine-Has-Energy]:true");
+                    } else if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getSystemType().equals(SystemType.COCKPIT)
+                            && !((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).isDisabled()) {
+                        if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getEnergy() > 2) {
+                            System.out.println("[Cockpit-Level]:2");
+                            crewInCockpit = true;
+                        } else if (r.getCrew().size() >= 1) {
+                            System.out.println("[Cockpit-Level]:1:[Crew-In-Cockpit]:[Yes]");
+                            crewInCockpit = true;
+                        }
+                    }
+                }
+            }
+            boolean allowedToJump = crewInCockpit && engineActive;
             // Check for fuel and ftlCharge
-            if (s.getFuel() > 0 && s.getFTLCharge() == 100 && dest.getId() != s.getPlanet().getId()) {
+            if (s.getFuel() > 0 && s.getFTLCharge() == 100 && dest.getId() != s.getPlanet().getId() && allowedToJump) {
                 // User
                 User user = UserService.getInstance().getUser(s.getAssociatedUser());
                 // Overworld
@@ -117,7 +138,7 @@ public class TravelService {
                 // Get maximum x value in map
                 float maxX = 0f;
                 for (Float f : xPositions) {
-                    if (f > maxX && f!=30f) {
+                    if (f > maxX && f != 30f) {
                         maxX = f;
                     }
                 }
@@ -137,12 +158,12 @@ public class TravelService {
                 int distanceY = Math.round(dest.getPosY() - currentPlanet.getPosY());
 
                 // Manual verification
-                System.out.println("[DistanceX]:"+distanceX+":[DistanceY]:"+distanceY);
+                System.out.println("[DistanceX]:" + distanceX + ":[DistanceY]:" + distanceY);
 
                 // Distance verification
                 // Boss Planet / Start planet / planet in same or next matrix column / CANT RETURN TO START PLANET!
                 if (((startPlanet && dest.getPosX() == 0f) || (bossPlanet && currentPlanet.getPosX() == maxX)
-                        || (Math.abs(distanceX) <= 1 && Math.abs(distanceY) <= 1)) && dest.getPosX()!=-1f) {
+                        || (Math.abs(distanceX) <= 1 && Math.abs(distanceY) <= 1)) && dest.getPosX() != -1f) {
                     // Reduce fuel
                     s.setFuel(s.getFuel() - 1);
                     // ===== Ships at current planet =====
@@ -218,11 +239,12 @@ public class TravelService {
                     // ===== Set valid =====
                     responseObject.setValidRequest(true);
                     responseObject.setResponseShip(s);
-                    System.out.println("[RESPONSE-OBJECT]:[SHIP-LOCATION]:" + s.getPlanet().getName());
+                    System.out.println("[RESPONSE-OBJECT]:[SHIP-LOCATION]:" + s.getPlanet().getName() + ":[Planet-Event]:" + s.getPlanet().getEvent().toString());
                     responseObject.setResponseOverworld(overworld);
                     // Manual verification
                     System.out.println("[Client]:" + s.getId() + "[PROCESSED]:[Planet]:" + s.getPlanet().getName() + ":[Fuel]:" + s.getFuel()
                             + ":[FTL-Charge]:" + s.getFTLCharge() + ":[IN-COMBAT]:" + s.isInCombat());
+                    System.out.println("[Ships-at-previous]:" + currentPlanet.getShips().toString() + ":[Ships-at-destination]:" + dest.getShips().toString());
                 }
             }
         } catch (Exception f) {
