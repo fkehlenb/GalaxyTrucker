@@ -22,6 +22,18 @@ public class SystemController extends Controller {
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
 
+    /** Instance */
+    private static SystemController instance;
+
+    /** Get instance
+     * @param clientControllerCommunicator - the client controller communicator */
+    public static SystemController getInstance(ClientControllerCommunicator clientControllerCommunicator){
+        if (instance == null){
+            instance = new SystemController(clientControllerCommunicator);
+        }
+        return instance;
+    }
+
     /** Remove energy from system
      * @param system - the system to remove energy from
      * @param amount - amount of energy to remove
