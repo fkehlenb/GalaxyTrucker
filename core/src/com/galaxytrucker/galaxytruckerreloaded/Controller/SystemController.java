@@ -44,6 +44,7 @@ public class SystemController extends Controller {
         requestObject.setSystem(system);
         requestObject.setIntAmount(amount);
         requestObject.setRequestType(RequestType.REMOVE_ENERGY_SYSTEM);
+        java.lang.System.out.println("<Client>:[Remove-Energy]:[System]:" + system.getSystemType() + ":[Energy]:" + system.getEnergy());
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
@@ -62,6 +63,7 @@ public class SystemController extends Controller {
         requestObject.setSystem(system);
         requestObject.setIntAmount(amount);
         requestObject.setRequestType(RequestType.ADD_ENERGY_SYSTEM);
+        java.lang.System.out.println("<Client>:[Add-Energy]:[System]:" + system.getSystemType() + ":[Energy]:" + system.getEnergy());
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
@@ -78,6 +80,7 @@ public class SystemController extends Controller {
         requestObject.setRequestType(RequestType.UPGRADE_SYSTEM);
         requestObject.setShip(clientControllerCommunicator.getClientShip());
         requestObject.setSystem(system);
+        java.lang.System.out.println("<Client>:[Upgrade-System]:[System]:" + system.getSystemType() + ":[System-Level]:" + system.getLevel());
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
@@ -94,6 +97,7 @@ public class SystemController extends Controller {
         requestObject.setRequestType(RequestType.INSTALL_SYSTEM);
         requestObject.setSystemType(systemType);
         requestObject.setShip(clientControllerCommunicator.getClientShip());
+        java.lang.System.out.println("<Client>:[Install-System]:[System]:" + systemType.toString());
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
