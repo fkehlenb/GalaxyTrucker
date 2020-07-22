@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,13 @@ public class PlanetEventController {
      * @return the current planet event */
     public PlanetEvent getPlanetEvent() throws NullPointerException {
         return clientControllerCommunicator.getClientShip().getPlanet().getEvent();
+    }
+
+    /**
+     * loads the current players ship
+     * @return the players ship
+     */
+    public Ship getClientShip(){
+        return clientControllerCommunicator.getClientShip();
     }
 }
