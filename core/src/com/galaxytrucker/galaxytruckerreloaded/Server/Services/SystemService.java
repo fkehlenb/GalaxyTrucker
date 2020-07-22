@@ -195,7 +195,24 @@ public class SystemService {
     public ResponseObject installSystem(Ship ship,SystemType systemType){
         ResponseObject responseObject = new ResponseObject();
         try {
-
+            List<Room> rooms = ship.getSystems();
+            for (Room r : rooms){
+                if (r.isSystem() && ((System) r).getSystemType().equals(systemType) && !((System) r).isUnlocked()){
+                    System updated = (System) r;
+                    updated.setDisabled(false);
+                    updated.setUnlocked(true);
+                    rooms.set(rooms.indexOf(r),updated);
+                    roomDAO.update(updated);
+                    break;
+                }
+                else if (r.isSystem() && ((System) r).getSystemType().equals(systemType) && ((System) r).isUnlocked()){
+                    return responseObject;
+                }
+            }
+            ship.setSystems(rooms);
+            shipDAO.update(ship);
+            responseObject.setValidRequest(true);
+            responseObject.setResponseShip(ship);
         }
         catch (Exception e){
             e.printStackTrace();
