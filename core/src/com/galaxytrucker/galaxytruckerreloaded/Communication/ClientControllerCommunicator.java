@@ -86,7 +86,6 @@ public class ClientControllerCommunicator {
             singleton = new ClientControllerCommunicator(client);
         }
         CrewController.getInstance(singleton);
-        HangerController.getInstance();
         TraderController.getInstance(singleton);
         TravelController.getInstance(singleton);
         PlanetEventController.getInstance(singleton);

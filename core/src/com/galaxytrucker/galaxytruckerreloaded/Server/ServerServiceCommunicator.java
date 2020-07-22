@@ -49,6 +49,9 @@ public class ServerServiceCommunicator {
     /** System Service */
     private SystemService systemService = new SystemService();
 
+    /** Crew Service */
+    private CrewService crewService = new CrewService();
+
     /** Take a request from the client side, pass it through the services
      * and return a response
      * @return the server's response to the client's request */
@@ -61,6 +64,8 @@ public class ServerServiceCommunicator {
             e.printStackTrace();
         }
         switch (request.getRequestType()){
+            case MoveCrew:
+                return crewService.moveCrewToRoom(request.getShip(),request.getCrew(),request.getRoom());
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
             case ADD_ENERGY_SYSTEM:

@@ -48,6 +48,7 @@ public class SystemController extends Controller {
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            java.lang.System.out.println("<Client>:[Removed-Energy]:[System]:" + system.getSystemType().toString());
             return true;
         }
         return false;
@@ -67,6 +68,7 @@ public class SystemController extends Controller {
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            java.lang.System.out.println("<Client>:[Added-Energy]:[System]:" + system.getSystemType().toString());
             return true;
         }
         return false;
@@ -84,6 +86,7 @@ public class SystemController extends Controller {
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            java.lang.System.out.println("<Client>:[System-Upgraded]:[System]:" + system.getSystemType().toString());
             return true;
         }
         return false;
@@ -101,6 +104,7 @@ public class SystemController extends Controller {
         ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            java.lang.System.out.println("<Client>:[System-Installed]:[System]:" + systemType.toString());
             return true;
         }
         return false;
