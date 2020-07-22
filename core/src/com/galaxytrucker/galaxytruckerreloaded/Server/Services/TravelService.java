@@ -130,12 +130,16 @@ public class TravelService {
                     bossPlanet = true;
                 }
                 // Distance between current planet and next planet
-                float distanceX = dest.getPosX() - currentPlanet.getPosX();
-                float distanceY = dest.getPosX() - currentPlanet.getPosY();
+                int distanceX = Math.round(dest.getPosX() - currentPlanet.getPosX());
+                int distanceY = Math.round(dest.getPosY() - currentPlanet.getPosY());
+
+                // Manual verification
+                System.out.println("[DistanceX]:"+distanceX+":[DistanceY]:"+distanceY);
+
                 // Distance verification
                 // Boss Planet / Start planet / planet in same or next matrix column / CANT RETURN TO START PLANET!
                 if (((startPlanet && dest.getPosX() == 0f) || (bossPlanet && currentPlanet.getPosX() == maxX)
-                        || (Math.abs(distanceX) <= 1f && Math.abs(distanceY) <= 1f)) && dest.getPosX()!=-1f) {
+                        || (Math.abs(distanceX) <= 1 && Math.abs(distanceY) <= 1)) && dest.getPosX()!=-1f) {
                     // Reduce fuel
                     s.setFuel(s.getFuel() - 1);
                     // ===== Ships at current planet =====
@@ -195,9 +199,9 @@ public class TravelService {
                     // ===== Update overworld =====
                     List<Planet> planets = overworld.getPlanetMap();
                     for (Planet p : planets) {
-                        if (p.equals(currentPlanet)) {
+                        if (p.getId() == currentPlanet.getId()) {
                             planets.set(planets.indexOf(p), planetDAO.getById(currentPlanet.getId()));
-                        } else if (p.equals(dest)) {
+                        } else if (p.getId() == dest.getId()) {
                             planets.set(planets.indexOf(p), planetDAO.getById(dest.getId()));
                         }
                     }
@@ -211,6 +215,7 @@ public class TravelService {
                     // ===== Set valid =====
                     responseObject.setValidRequest(true);
                     responseObject.setResponseShip(s);
+                    System.out.println("[RESPONSE-OBJECT]:[SHIP-LOCATION]:" + s.getPlanet().getName());
                     responseObject.setResponseOverworld(overworld);
                     // Manual verification
                     System.out.println("[Client]:" + s.getId() + "[PROCESSED]:[Planet]:" + s.getPlanet().getName() + ":[Fuel]:" + s.getFuel()

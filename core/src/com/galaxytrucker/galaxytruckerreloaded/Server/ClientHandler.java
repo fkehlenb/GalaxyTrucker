@@ -187,6 +187,7 @@ public class ClientHandler implements Runnable {
                     // ==================== RUNNING ====================
                     while (gameActive) {
                         RequestObject request = (RequestObject) receiveObject.readObject();
+                        sendObject.reset();
                         sendObject.writeObject(this.serverServiceCommunicator.getResponse(request));
                         if (request.getRequestType() == RequestType.LOGOUT) {
                             gameActive = false;
