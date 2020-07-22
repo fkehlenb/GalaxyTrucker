@@ -104,7 +104,7 @@ public class MapUI {
                  //Start
                 MapButton mb;
                 if (ship.getPlanet().getPosX() == fx && ship.getPlanet().getPosY() == fy){
-                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+Main.WIDTH/(1920/100)), (y+2*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+Main.WIDTH/(1920/100)), (y+2*yDist), Main.WIDTH/(1920/30), Main.HEIGHT/(1080/30), this, f);
                 } else {
                     mb = new MapButton(new Texture("map/map_button.png"), (x + Main.WIDTH / (1920 / 100)), (y + 2 * yDist), Main.WIDTH / (1920 / 20), Main.HEIGHT / (1080 / 20), this, f);
                 }
@@ -126,7 +126,7 @@ public class MapUI {
                 //Alle anderen
                 MapButton mb;
                 if (ship.getPlanet().getPosX() == fx && ship.getPlanet().getPosY() == fy){
-                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+fx*xDist+Main.WIDTH/(1920/150)), (y+fy*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+fx*xDist+Main.WIDTH/(1920/150)), (y+fy*yDist), Main.WIDTH/(1920/30), Main.HEIGHT/(1080/30), this, f);
                 } else {
                     mb = new MapButton(new Texture("map/map_button.png"), (x+fx*xDist+Main.WIDTH/(1920/150)), (y+fy*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
                 }
