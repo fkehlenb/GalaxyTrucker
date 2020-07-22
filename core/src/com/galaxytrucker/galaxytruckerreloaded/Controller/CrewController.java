@@ -50,14 +50,13 @@ public class CrewController extends Controller {
             requestObject.setRoom(room);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if (responseObject.isValidRequest()) {
-                crew.setCurrentRoom(room);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
                 return true;
             }
-            return false;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -74,14 +73,13 @@ public class CrewController extends Controller {
             requestObject.setHealAmount(healAmount);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if (responseObject.isValidRequest()) {
-                crew.setHealth(crew.getHealth() + healAmount);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
                 return true;
             }
-            return false;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -98,16 +96,13 @@ public class CrewController extends Controller {
             requestObject.setHealAmount(amount);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if (responseObject.isValidRequest()) {
-                for (Crew c : room.getCrew()) {
-                    c.setHealth(c.getHealth() + amount);
-                }
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
                 return true;
             }
-            return false;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -124,18 +119,14 @@ public class CrewController extends Controller {
             requestObject.setRoom(room);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if (responseObject.isValidRequest()){
-                for (Crew c : room.getCrew()){
-                    c.setHealth(c.getHealth()-amount);
-                    //TODO DIE IF HP EMPTY
-                }
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
                 return true;
             }
-            return false;
         }
         catch (Exception e){
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
