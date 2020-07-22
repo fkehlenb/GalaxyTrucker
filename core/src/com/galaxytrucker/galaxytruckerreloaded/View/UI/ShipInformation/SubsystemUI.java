@@ -76,8 +76,8 @@ public class SubsystemUI extends RoomUI {
      * @param main the main class
      * @param system the system
      */
-    public SubsystemUI(Main main, Stage stage, ShipView ship, float x, float y, System system, float sx) {
-        super(main, system, stage, ship, x, y);
+    public SubsystemUI(Main main, Stage tileStage, ShipView ship, float x, float y, System system, float sx, Stage normalStage) {
+        super(main, system, tileStage, ship, x, y);
         this.sx = sx;
         energy = system.getEnergy();
         maxEnergy = system.getMaxEnergy();
@@ -98,7 +98,7 @@ public class SubsystemUI extends RoomUI {
 
         energyTexture = new Texture("gameuis/energybar.png");
 
-        stage.addActor(energyButton);
+        normalStage.addActor(energyButton);
     }
 
     public void render() {
@@ -155,7 +155,6 @@ public class SubsystemUI extends RoomUI {
     public void addEnergy() {
         if (systemType==SystemType.SHIELDS)
         {
-
             systemController.addEnergy((System) room,2);
         }
         else {
@@ -168,7 +167,6 @@ public class SubsystemUI extends RoomUI {
      * called by button
      */
     public void removeEnergy() {
-
         if (systemType==SystemType.SHIELDS)
         {
             systemController.removeEnergy((System) room, 2);

@@ -37,8 +37,8 @@ public class ShieldUI extends SubsystemUI {
      * @param main - the main class
      * @param shield the shield
      */
-    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, Shield shield, float sx) {
-        super(main, stage, ship, x, y, shield, sx);
+    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, Shield shield, float sx, Stage normalStage) {
+        super(main, stage, ship, x, y, shield, sx, normalStage);
 
         onShip = new Texture("ship/anaerobic/shields.png");
 
@@ -46,7 +46,7 @@ public class ShieldUI extends SubsystemUI {
         upperBackground = new Texture("gameuis/shield_topbackground.png");
 
         currentTexture = 4;
-    }
+    } //TODO display in upper left corner
 
     /**
      * the status of the system was updated either by damage or by repair

@@ -175,10 +175,10 @@ public class ShipView extends AbstractShip {
         for(Room r : existingRooms) {
             if(r instanceof System) {
                 if(r instanceof Shield) {
-                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx));
+                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (Shield) r, sx, stage));
                 }
                 else if(! (r instanceof WeaponSystem)) {
-                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx));
+                    rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
                 }
                 sx += 55;
             }
@@ -188,7 +188,7 @@ public class ShipView extends AbstractShip {
         }
         //need to be done extra bc they need the actual weapon, not just the system
         for(Weapon w : game.loadWeapons()) {
-            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseY), w, sx + 55));
+            rooms.put(w.getId(), new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseX), getRoomY(ship.getShipType(), w.getWeaponSystem().getInteriorID(), baseY), w, sx + 55, stage));
         }
 
         moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
