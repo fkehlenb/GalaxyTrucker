@@ -94,6 +94,9 @@ public class TravelService {
             System.out.println("[PlanetX]:" + s.getPlanet().getPosX() + ":[PlanetY]:" + s.getPlanet().getPosY() +
                     ":[DestinationX]:" + dest.getPosX() + ":[DestinationY]:" + dest.getPosY());
 
+            // Entweder 1 crew in cockpit, 1 energy engine
+            // oder cockpit level 2, 1 energy in engine
+
             // Check for fuel and ftlCharge
             if (s.getFuel() > 0 && s.getFTLCharge() == 100 && dest.getId() != s.getPlanet().getId()) {
                 // User

@@ -4,7 +4,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
@@ -17,8 +16,6 @@ import lombok.Setter;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Logger;
 
 /**
  * Handle each client in a separate thread
