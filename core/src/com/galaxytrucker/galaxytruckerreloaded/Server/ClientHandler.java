@@ -446,7 +446,7 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 3,
-                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
+                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false,false);
             // ========== ROCK A ==========
             case TANK: //-------done
                 crewStats = new ArrayList<>();
@@ -560,7 +560,7 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 2,
-                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
+                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false,false);
             case KILLER: //-------done
                 crewStats = new ArrayList<>();
                 crewStats.add(3);
@@ -659,7 +659,7 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 25, 40, 0, 10, 5,
-                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
+                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false,false);
             case BARRAGE:
                 crewStats = new ArrayList<>();
                 crewStats.add(2);
@@ -785,7 +785,7 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 20, 10, 0, 3, 3,
-                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
+                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false,false);
             case STEALTH: //------------ done
                 crewStats = new ArrayList<>();
                 crewStats.add(4);
@@ -898,7 +898,7 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 100, 25, 25, 9,
-                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
+                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false,false);
             case BOARDER:
                 crewStats = new ArrayList<>();
                 crewStats.add(2);
@@ -1027,7 +1027,7 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 40, 10, 20, 7, 2,
-                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false);
+                        0, 0, 0, overworld.getStartPlanet(), 0, 100, rooms, inventory, false,false);
             default:
                 return null;
         }

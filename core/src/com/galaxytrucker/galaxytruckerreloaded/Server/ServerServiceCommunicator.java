@@ -69,7 +69,7 @@ public class ServerServiceCommunicator {
     /**
      * Crew Service
      */
-    private CrewService crewService = new CrewService();
+    private CrewService crewService = CrewService.getInstance();
 
     /**
      * Take a request from the client side, pass it through the services

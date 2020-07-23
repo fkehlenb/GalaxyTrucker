@@ -113,7 +113,7 @@ public class Weapon implements Serializable {
 
     @Override
     public boolean equals(Object o){
-        if (o==null){
+        if (o==null||getClass()!=o.getClass()){
             return false;
         }
         return ((Weapon) o).getId() == this.getId();
