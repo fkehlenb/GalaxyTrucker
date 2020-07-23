@@ -115,4 +115,15 @@ public class Ship implements Serializable {
     @NonNull
     private boolean inCombat = false;
 
+    /** Invited to pvp? */
+    private boolean pvp = false;
+
+    @Override
+    public boolean equals(Object o){
+        if (o==null||getClass()!=o.getClass()){
+            return false;
+        }
+        return ((Ship) o).getId() == this.getId();
+    }
+
 }

@@ -76,7 +76,7 @@ public class Crew implements Serializable {
 
     @Override
     public boolean equals(Object o){
-        if (o==null){
+        if (o==null||getClass()!=o.getClass()){
             return false;
         }
         return ((Crew) o).getId() == this.getId();

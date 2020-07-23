@@ -47,25 +47,41 @@ public class BattleService implements Serializable {
     @Transient
     private ShipDAO shipDAO = ShipDAO.getInstance();
 
-    /** Battle service dao */
+    /**
+     * Battle service dao
+     */
     @Transient
     private BattleServiceDAO battleServiceDAO = BattleServiceDAO.getInstance();
 
-    /** Overworld DAO */
+    /**
+     * Overworld DAO
+     */
     @Transient
     private OverworldDAO overworldDAO = OverworldDAO.getInstance();
 
-    /** CrewDAO */
+    /**
+     * CrewDAO
+     */
     @Transient
     private CrewDAO crewDAO = CrewDAO.getInstance();
 
-    /** Room DAO */
+    /**
+     * Room DAO
+     */
     @Transient
     private RoomDAO roomDAO = RoomDAO.getInstance();
 
-    /** Tile DAO */
+    /**
+     * Tile DAO
+     */
     @Transient
     private TileDAO tileDAO = TileDAO.getInstance();
+
+    /**
+     * Crew service
+     */
+    @Transient
+    private CrewService crewService = CrewService.getInstance();
 
     /**
      * ID of current round ship
@@ -93,55 +109,60 @@ public class BattleService implements Serializable {
     @NonNull
     private Ship playerTwo;
 
-    /** Last action carried out */
+    /**
+     * Last action carried out
+     */
     private PreviousRoundAction previousRoundAction;
 
-    /** Previous weapon type used */
+    /**
+     * Previous weapon type used
+     */
     private WeaponType previousWeaponUsed;
 
-    /** Give updated ships to clients
+    /**
+     * Give updated ships to clients
+     *
      * @param clientShip - the client's ship
-     * @return a responseObject containing the updated ships */
+     * @return a responseObject containing the updated ships
+     */
     @SuppressWarnings("Duplicates")
-    public ResponseObject getUpdatedData(Ship clientShip){
+    public ResponseObject getUpdatedData(Ship clientShip) {
         ResponseObject responseObject = new ResponseObject();
         Overworld overworld = null;
         try {
-             overworld = UserService.getInstance().getUser(clientShip.getAssociatedUser()).getOverworld();
-             if (overworld==null){
-                 throw new NullPointerException();
-             }
-        }
-        catch (Exception e){
+            overworld = UserService.getInstance().getUser(clientShip.getAssociatedUser()).getOverworld();
+            if (overworld == null) {
+                throw new NullPointerException();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             return responseObject;
         }
 
         // Not trusting the client data
-        if (clientShip.getId()==playerOne.getId()){
+        if (clientShip.getId() == playerOne.getId()) {
             clientShip = playerOne;
-        }
-        else{
+        } else {
             clientShip = playerTwo;
         }
         // While not your turn, stuck in waiting loop
-        while (clientShip.getId()!=currentRound){
+        while (clientShip.getId() != currentRound) {
             continue;
         }
         // Set valid request
         responseObject.setValidRequest(true);
         // Put in the previous action
-        if (previousRoundAction != null){
+        if (previousRoundAction != null) {
             responseObject.setPreviousRoundAction(previousRoundAction);
         }
         // Set previous weapon used
-        if (previousWeaponUsed != null){
+        if (previousWeaponUsed != null) {
             responseObject.setWeaponUsed(previousWeaponUsed);
         }
         // Set the updated data
-        if (clientShip.getId()==playerOne.getId()){
+        if (clientShip.getId() == playerOne.getId()) {
             // ===== YOU DEAD =====
-            if (playerOne.getHp()<=0){
+            if (playerOne.getHp() <= 0) {
                 // Set combat stats
                 responseObject.setCombatOver(true);
                 responseObject.setDead(true);
@@ -149,49 +170,46 @@ public class BattleService implements Serializable {
                 // Remove ship from database
                 try {
                     shipDAO.remove(playerOne);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             // ===== OPPONENT DEAD =====
             // Todo check for crew
-            else if (playerTwo.getHp()<=0){
+            else if (playerTwo.getHp() <= 0) {
                 // Set combat stats
                 responseObject.setCombatOver(true);
                 responseObject.setCombatWon(true);
                 responseObject.setPreviousRoundAction(PreviousRoundAction.OPPONENT_DEAD);
                 // Update planet list
                 List<Planet> planets = overworld.getPlanetMap();
-                if (planets.contains(playerOne.getPlanet())){
+                if (planets.contains(playerOne.getPlanet())) {
                     Planet current = playerOne.getPlanet();
                     List<Ship> ships = current.getShips();
                     ships.remove(playerTwo);
                     current.setShips(ships);
-                    for (Planet p : planets){
-                        if (p.getId() == current.getId()){
-                            planets.set(planets.indexOf(p),current);
+                    for (Planet p : planets) {
+                        if (p.getId() == current.getId()) {
+                            planets.set(planets.indexOf(p), current);
                         }
                     }
                     // Update overworld
                     overworld.setPlanetMap(planets);
                     try {
                         overworldDAO.update(overworld);
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 // Remove opponent ship from database
                 try {
                     shipDAO.remove(playerTwo);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             // ===== OPPONENT FLED FIGHT =====
-            else if (previousRoundAction!=null && previousRoundAction==PreviousRoundAction.FLEE_FIGHT){
+            else if (previousRoundAction != null && previousRoundAction == PreviousRoundAction.FLEE_FIGHT) {
                 responseObject.setCombatWon(true);
                 responseObject.setCombatOver(true);
                 // Todo add rewards
@@ -200,59 +218,55 @@ public class BattleService implements Serializable {
             responseObject.setResponseShip(playerOne);
             responseObject.setOpponent(playerTwo);
             responseObject.setMyRound(true);
-        }
-        else{
+        } else {
             // ===== OPPONENT DEAD =====
             // Todo check for crew
-            if (playerOne.getHp()<=0){
+            if (playerOne.getHp() <= 0) {
                 // Set combat status
                 responseObject.setCombatOver(true);
                 responseObject.setCombatWon(true);
                 responseObject.setPreviousRoundAction(PreviousRoundAction.OPPONENT_DEAD);
                 // Update planet map in overworld
                 List<Planet> planets = overworld.getPlanetMap();
-                if (planets.contains(playerOne.getPlanet())){
+                if (planets.contains(playerOne.getPlanet())) {
                     Planet current = playerOne.getPlanet();
                     List<Ship> ships = current.getShips();
                     ships.remove(playerOne);
                     current.setShips(ships);
-                    for (Planet p : planets){
-                        if (p.getId() == current.getId()){
-                            planets.set(planets.indexOf(p),current);
+                    for (Planet p : planets) {
+                        if (p.getId() == current.getId()) {
+                            planets.set(planets.indexOf(p), current);
                         }
                     }
                     // Update overworld
                     overworld.setPlanetMap(planets);
                     try {
                         overworldDAO.update(overworld);
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     // Remove opponent ship from database
                     try {
                         shipDAO.remove(playerOne);
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
             // ===== YOU DEAD =====
-            else if (playerTwo.getHp()<=0){
+            else if (playerTwo.getHp() <= 0) {
                 responseObject.setCombatOver(true);
                 responseObject.setDead(true);
                 responseObject.setPreviousRoundAction(PreviousRoundAction.YOU_DEAD);
                 // Remove ship from database
                 try {
                     shipDAO.remove(playerTwo);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             // ===== OPPONENT FLED FIGHT =====
-            else if (previousRoundAction!=null && previousRoundAction==PreviousRoundAction.FLEE_FIGHT){
+            else if (previousRoundAction != null && previousRoundAction == PreviousRoundAction.FLEE_FIGHT) {
                 responseObject.setCombatWon(true);
                 responseObject.setCombatOver(true);
                 // Todo add rewards
@@ -269,42 +283,43 @@ public class BattleService implements Serializable {
      * Next round
      */
     private void nextRound() {
-        if (playerOne!=null) {
+        if (playerOne != null) {
             playerOne = passiveChanges(playerOne);
         }
-        if (playerTwo!=null) {
+        if (playerTwo != null) {
             playerTwo = passiveChanges(playerTwo);
         }
-        if (playerOne.getId() == currentRound) {
+        if (playerOne != null && playerOne.getId() == currentRound) {
             currentRound = playerTwo.getId();
-        } else {
+        } else if (playerOne != null) {
             currentRound = playerOne.getId();
         }
     }
 
-    /** Attack a ship
-     * @param ship - own ship
-     * @param weapon - the weapon to attack with
+    /**
+     * Attack a ship
+     *
+     * @param ship     - own ship
+     * @param weapon   - the weapon to attack with
      * @param opponent - opponent ship
-     * @param room - room to attack  */
-    public ResponseObject attackShip(Ship ship,Weapon weapon,Ship opponent,Room room){
+     * @param room     - room to attack
+     */
+    public ResponseObject attackShip(Ship ship, Weapon weapon, Ship opponent, Room room) {
         ResponseObject responseObject = new ResponseObject();
         // Not trusting the client data
-        if (ship.getId()==playerOne.getId()){
+        if (ship.getId() == playerOne.getId()) {
             ship = playerOne;
-        }
-        else{
+        } else {
             ship = playerTwo;
         }
         try {
             if (currentRound == ship.getId()) {
-                if (weapon.getMissileCost()>0 && ship.getMissiles() >= weapon.getMissileCost()){
-                    ship.setMissiles(ship.getMissiles()-weapon.getMissileCost());
-                }
-                else{
+                if (weapon.getMissileCost() > 0 && ship.getMissiles() >= weapon.getMissileCost()) {
+                    ship.setMissiles(ship.getMissiles() - weapon.getMissileCost());
+                } else {
                     return responseObject;
                 }
-                if (cooldowns.containsKey(weapon)){
+                if (cooldowns.containsKey(weapon)) {
                     return responseObject;
                 }
                 // TODO check energy requirement
@@ -329,13 +344,12 @@ public class BattleService implements Serializable {
                     }
                 }
                 weaponDamange -= shieldDamage;
-                if (piercing == 0){
-                    while (opponent.getShields()>0){
-                        if (weaponDamange>0){
-                            opponent.setShields(opponent.getShields()-1);
+                if (piercing == 0) {
+                    while (opponent.getShields() > 0) {
+                        if (weaponDamange > 0) {
+                            opponent.setShields(opponent.getShields() - 1);
                             weaponDamange -= 1;
-                        }
-                        else {
+                        } else {
                             break;
                         }
                     }
@@ -367,7 +381,7 @@ public class BattleService implements Serializable {
                     }
                 }
                 // ===== Add weapon cooldown =====
-                cooldowns.put(weapon,weapon.getCooldown());
+                cooldowns.put(weapon, weapon.getCooldown());
                 // ===== Combat Won ===== //TODO add all crew dead
                 if (opponent.getHp() <= 0) {
                     responseObject.setCombatWon(true);
@@ -381,28 +395,25 @@ public class BattleService implements Serializable {
                 battleServiceDAO.update(this);
                 // ===== Switch round =====
                 if (!responseObject.isCombatOver()) {
-                    if (playerOne.getId() == ship.getId()){
+                    if (playerOne.getId() == ship.getId()) {
                         playerOne = ship;
                         playerTwo = opponent;
-                    }
-                    else{
+                    } else {
                         playerOne = opponent;
                         playerTwo = ship;
                     }
                     nextRound();
                     responseObject.setMyRound(false);
                 }
-                if (ship.getId() == playerOne.getId()){
+                if (ship.getId() == playerOne.getId()) {
                     responseObject.setResponseShip(playerOne);
                     responseObject.setOpponent(playerTwo);
-                }
-                else{
+                } else {
                     responseObject.setResponseShip(playerTwo);
                     responseObject.setOpponent(playerOne);
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             responseObject.setValidRequest(false);
         }
@@ -410,37 +421,38 @@ public class BattleService implements Serializable {
     }
 
 
-    /** Flee fight
+    /**
+     * Flee fight
+     *
      * @param ship - the ship to flee the fight
-     * @param dest - destination planet */
-    public ResponseObject fleeFight(Ship ship,Planet dest){
+     * @param dest - destination planet
+     */
+    public ResponseObject fleeFight(Ship ship, Planet dest) {
         ResponseObject responseObject = new ResponseObject();
         // Not trusting the client data
-        if (ship.getId()==playerOne.getId()){
+        if (ship.getId() == playerOne.getId()) {
             ship = playerOne;
-        }
-        else{
+        } else {
             ship = playerTwo;
         }
-        if (ship.getId() == currentRound){
-            if (ship.getFTLCharge() == 100){
+        if (ship.getId() == currentRound) {
+            if (ship.getFTLCharge() == 100) {
                 Random random = new Random(UUID.randomUUID().hashCode());
-                if ((float) random.nextInt(30)*ship.getEvasionChance() > 2){
+                if ((float) random.nextInt(30) * ship.getEvasionChance() > 2) {
                     // Remove combat properties
                     playerOne.setInCombat(false);
                     playerTwo.setInCombat(false);
                     previousRoundAction = PreviousRoundAction.FLEE_FIGHT;
                     // Use travel service to send client to new planet
-                    ResponseObject travelObject = TravelService.getInstance().jump(ship,dest);
+                    ResponseObject travelObject = TravelService.getInstance().jump(ship, dest);
                     responseObject.setResponseOverworld(travelObject.getResponseOverworld());
                     travelObject.setCombatOver(true);
                     travelObject.setMyRound(false);
                     travelObject.setFledFight(true);
                     travelObject.setPreviousRoundAction(previousRoundAction);
-                    if (playerOne.getId()==ship.getId()){
+                    if (playerOne.getId() == ship.getId()) {
                         playerOne = null;
-                    }
-                    else{
+                    } else {
                         playerTwo = null;
                     }
                     nextRound();
@@ -454,85 +466,107 @@ public class BattleService implements Serializable {
         return responseObject;
     }
 
-    /** Move a crew member to a different room while in combat
+    /**
+     * Move a crew member to a different room while in combat
      * this skips a turn
+     *
      * @param ship - the client ship
      * @param crew - the crew member to move
-     * @param room - the room to move him into */
-    public ResponseObject moveCrewToRoom(Ship ship,Crew crew,Room room){
+     * @param room - the room to move him into
+     */
+    public ResponseObject moveCrewToRoom(Ship ship, Crew crew, Room room) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            // Dont trust client data
-            ship = shipDAO.getById(ship.getId());
-            crew = crewDAO.getById(crew.getId());
-            room = roomDAO.getById(room.getId());
-            // Check if the ship contains the room
-            for (Room r : ship.getSystems()){
-                if (r.getId()==room.getId()){
-                    // check for an empty tile
-                    for (Tile t : room.getTiles()){
-                        if (t.isEmpty()){
-                            // Clear current tile
-                            Tile tile = crew.getTile();
-                            tile.setStandingOnMe(null);
-                            // Update the room
-                            Room currentRoom = crew.getCurrentRoom();
-                            // Remove crew from room
-                            List<Crew> crewInRoom = currentRoom.getCrew();
-                            crewInRoom.remove(crew);
-                            currentRoom.setCrew(crewInRoom);
-                            // Remove crew from tile
-                            List<Tile> tiles = currentRoom.getTiles();
-                            for (Tile tile1 : tiles){
-                                if (tile1.getId()==tile.getId()){
-                                    tiles.set(tiles.indexOf(tile1),tile);
-                                    currentRoom.setTiles(tiles);
-                                    roomDAO.update(currentRoom);
-                                    break;
-                                }
-                            }
-                            // Move crew to new room
-                            // Update tiles
-                            t.setStandingOnMe(crew);
-                            crew.setTile(t);
-                            crew.setCurrentRoom(room);
-                            tiles = room.getTiles();
-                            for (Tile tile1 : tiles){
-                                if (tile1.getId()==t.getId()){
-                                    tiles.set(tiles.indexOf(tile1),t);
-                                    room.setTiles(tiles);
-                                    break;
-                                }
-                            }
-                            // Put crew in room
-                            crewInRoom = room.getCrew();
-                            crewInRoom.add(crew);
-                            room.setCrew(crewInRoom);
-                            roomDAO.update(room);
-                            // Update ship
-                            List<Room> rooms = ship.getSystems();
-                            for (Room room1 : rooms){
-                                if (room1.getId() == currentRoom.getId()){
-                                    rooms.set(rooms.indexOf(room1),currentRoom);
-                                }
-                                else if (room1.getId() == room.getId()){
-                                    rooms.set(rooms.indexOf(room1),room);
-                                }
-                            }
-                            ship.setSystems(rooms);
-                            shipDAO.update(ship);
-                            responseObject.setValidRequest(true);
-                            responseObject.setResponseShip(ship);
-                            nextRound();
-                            return responseObject;
-                        }
+            if (currentRound == ship.getId()) {
+                // Fetch data
+                ship = shipDAO.getById(ship.getId());
+                crew = crewDAO.getById(crew.getId());
+                room = roomDAO.getById(room.getId());
+                ResponseObject moveCrewObject = crewService.moveCrewToRoom(ship, crew, room);
+                if (moveCrewObject.isValidRequest()) {
+                    ship = moveCrewObject.getResponseShip();
+                    if (playerOne.getId() == ship.getId()) {
+                        playerOne = ship;
+                    } else {
+                        playerTwo = ship;
                     }
+                    responseObject.setResponseShip(ship);
+                    responseObject.setValidRequest(true);
+                    previousRoundAction = PreviousRoundAction.MOVE_CREW;
+                    nextRound();
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            //todo rollback
+        }
+        return responseObject;
+    }
+
+    /**
+     * Heal a crew member
+     *
+     * @param ship   - the client's ship
+     * @param crew   - the crew member to heal
+     * @param amount - amount of healing
+     */
+    public ResponseObject healCrewMember(Ship ship, Crew crew, int amount) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            if (currentRound == ship.getId()) {
+                // Fetch data
+                ship = shipDAO.getById(ship.getId());
+                crew = crewDAO.getById(crew.getId());
+                ResponseObject checkme = crewService.healCrewMember(ship, crew, amount);
+                if (checkme.isValidRequest()) {
+                    ship = checkme.getResponseShip();
+                    if (playerOne.getId() == ship.getId()) {
+                        playerOne = ship;
+                    } else {
+                        playerTwo = ship;
+                    }
+                    responseObject.setResponseShip(ship);
+                    responseObject.setValidRequest(true);
+                    previousRoundAction = PreviousRoundAction.HEAL_CREW;
+                    nextRound();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /**
+     * Heal crew members in a specific room
+     *
+     * @param ship   - the client's ship
+     * @param room   - the room
+     * @param amount - the amount to heal
+     */
+    public ResponseObject healCrewInRoom(Ship ship, Room room, int amount) {
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            if (currentRound == ship.getId()) {
+                // Fetch data
+                ship = shipDAO.getById(ship.getId());
+                room = roomDAO.getById(room.getId());
+                ResponseObject checkme = crewService.healCrewInRoom(ship,room,amount);
+                if (checkme.isValidRequest()){
+                    ship = checkme.getResponseShip();
+                    if (playerOne.getId() == ship.getId()){
+                        playerOne = ship;
+                    }
+                    else{
+                        playerTwo = ship;
+                    }
+                    responseObject.setResponseShip(ship);
+                    responseObject.setValidRequest(true);
+                    previousRoundAction = PreviousRoundAction.HEAL_CREW_IN_ROOM;
+                    nextRound();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return responseObject;
     }
@@ -546,11 +580,13 @@ public class BattleService implements Serializable {
      */
     private Ship passiveChanges(Ship ship) throws IllegalArgumentException {
         try {
+            java.lang.System.out.println("\n==================== Passive Change ====================");
+            java.lang.System.out.println("[Ship]:" + ship.getId());
             // ========== Remove oxygen from rooms with breach ==========
             List<Room> rooms = ship.getSystems();
             for (Room r : rooms) {
                 if (r.getBreach() > 0) {
-                    if (r.getCrew().size() > 1) {
+                    if (r.getCrew().size() >= 1) {
                         r.setBreach(r.getBreach() - r.getCrew().size());
                         if (r.getBreach() < 0) {
                             r.setBreach(0);
