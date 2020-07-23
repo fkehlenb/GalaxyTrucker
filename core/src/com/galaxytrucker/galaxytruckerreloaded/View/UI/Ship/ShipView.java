@@ -417,8 +417,12 @@ public class ShipView extends AbstractShip {
      * the player has chosen a new amount of energy
      * @param amount how much should be subtracted/added
      */
-    public void roomSystemEnergyChosen(Room room, int amount) {
-        game.roomSystemEnergyChosen(room, amount);
+    public void roomSystemEnergyAdded(Room room, int amount) {
+        game.roomSystemEnergyAdded(room, amount);
+    }
+
+    public void roomSystemEnergyRemoved(Room room, int amount) {
+        game.roomSystemEnergyRemoved(room, amount);
     }
 
     /**

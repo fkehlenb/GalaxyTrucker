@@ -13,10 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.AudioController;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.BattleController;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.CrewController;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
@@ -654,8 +651,23 @@ public class GamePlay implements Screen {
      * the player has chosen a new amount of energy for a system
      * @param amount how much should be subtracted/added
      */
-    public void roomSystemEnergyChosen(Room room, int amount) {
-        //TODO: call controller
+    public void roomSystemEnergyAdded(Room room, int amount) {
+        boolean success = SystemController.getInstance(null).addEnergy((System) room, amount);
+        if(success) {
+            roomSystemEnergyUpdate(room, amount);
+        }
+    }
+
+    /**
+     * the player has chosen a new amount of energy for a system
+     * @param room the room
+     * @param amount how much should be removed
+     */
+    public void roomSystemEnergyRemoved(Room room, int amount) {
+        boolean success = SystemController.getInstance(null).removeEnergy((System) room, amount);
+        if(success) {
+            roomSystemEnergyUpdate(room, amount);
+        }
     }
 
     /**
