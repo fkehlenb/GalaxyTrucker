@@ -11,6 +11,8 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Invent
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopBuyButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopSellButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,13 +38,15 @@ public class ShopUI {
     private ShopUpgrade shopUpgrade;
     private ShopUpgradeButton shopUpgradeButton;
 
-    private  ShopSellElement shopSellElement;
+    private  ShopSell shopSell;
     private ShopSellButton shopSellButton;
 
     private ShopResource shopResource;
-    private ShopResourceButton shopResourceBUtton;
+    private ShopResourceButton shopResourceButton;
 
-
+    @Getter
+    @Setter
+    private CurrentShopUI current;
 
     /**
      * to close the shop
@@ -74,6 +78,10 @@ public class ShopUI {
      */
     private GamePlay game;
 
+    private Stage stage;
+
+    private Trader trader;
+
     /**
      * constructor
      * @param main the main class
@@ -82,43 +90,16 @@ public class ShopUI {
         this.main = main;
         this.game = game;
 
-        shopCrew = new ShopCrew();
-        shopSellElement = new ShopSellElement();
-        shopSystem = new ShopSystem();
-        shopUpgrade = new ShopUpgrade();
-        shopWeapon = new ShopWeapon();
-        shopResource = new ShopResource();
-
-        // add all the items the trader has to offer to the ui
-        //elements = new LinkedList<>();
-        //crew stock
-        for(Crew c : trader.getCrewStock()) {
-            Texture t;
-            if(c.getName().equals("ana")) {
-                t = new Texture("crew/anaerobic.png");
-            }
-            else if(c.getName().equals("battle")) {
-                t = new Texture("crew/battle.png");
-            }
-            else {
-                t = new Texture("crew/energy.png"); //TODO wie sieht das mit namen aus?
-            }
-            elements.add(new ShopElement(main, stage, t, 0, 0, this, null, c, 0, null));
-        }
-        //weapon stock
-        for(Weapon w : trader.getWeaponStock()) {
-            elements.add(new ShopElement(main, stage, new Texture("laser.png"), 0, 0, this, w, null, 0, null));
-        }
-        //fuel
-        elements.add(new ShopElement(main, stage, new Texture("fuel.png"), 0, 0, this, null, null, trader.getFuelStock(), "fuel"));
-        //hp
-        elements.add(new ShopElement(main, stage, new Texture("hp.png"), 0, 0, this, null, null, trader.getHpStock(), "hp"));
-        //missiles/rockets
-        elements.add(new ShopElement(main, stage, new Texture("missiles.png"), 0, 0, this, null, null, trader.getMissileStock(), "missiles"));
+        //shopCrew = new ShopCrew(main, stage, game, trader, this);
+        //shopSell = new ShopSell(main, stage, game, trader, this);
+        //shopSystem = new ShopSystem(main, stage, game, trader, this);
+        //shopUpgrade = new ShopUpgrade(main, stage, game, trader, this);
+        //shopWeapon = new ShopWeapon(main, stage, game, trader, this);
+        //shopResource = new ShopResource(main, stage, game, trader, this);
 
         shopCrewButton =new ShopCrewButton(0, 0, 10, 10, this, null, null);
         shopWeaponButton = new ShopWeaponButton(0, 0, 10, 10, this, null, null);
-        shopResourceBUtton = new ShopResourceButton(0, 0, 10, 10, this, null, null);
+        shopResourceButton = new ShopResourceButton(0, 0, 10, 10, this, null, null);
         shopSellButton = new ShopSellButton(0, 0, 10, 10, this, null, null);
         shopSystemButton = new ShopSystemButton(0, 0, 10, 10, this, null, null);
         shopUpgradeButton = new ShopUpgradeButton(0, 0, 10, 10, this, null, null);
@@ -128,63 +109,13 @@ public class ShopUI {
         stage.addActor(shopSellButton);
         stage.addActor(shopCrewButton);
         stage.addActor(shopWeaponButton);
-        stage.addActor(shopResourceBUtton);
+        stage.addActor(shopResourceButton);
         stage.addActor(shopSystemButton);
         stage.addActor(shopUpgradeButton);
 
         background = new Texture("shop/storeback.png");
     }
 
-
-
-    /**
-     * buy a weapon from the trader
-     * @param weapon the weapon
-     */
-    boolean buyWeapon(Weapon weapon) {
-        return game.buyWeapon(weapon);
-    }
-
-    /**
-     * buy a crew member from the trader
-     * @param crew the crew member
-     */
-    boolean buyCrew(Crew crew) {
-        return game.buyCrew(crew);
-    }
-
-    /**
-     * buy fuel from the trader
-     * @param amount the amount of fuel
-     */
-    boolean buyFuel(int amount) {
-        return game.buyFuel(amount);
-    }
-
-    /**
-     * buy missiles from the trader
-     * @param amount the amount of missiles
-     */
-    boolean buyMissiles(int amount) {
-        return game.buyMissiles(amount);
-    }
-
-    /**
-     * buy hp from the trader
-     * @param amount the amount of hp
-     */
-    boolean buyHp(int amount) {
-        return game.buyHp(amount);
-    }
-
-    /**
-     * sell missiles to the trader
-     * @param amount the amount
-     * @return successful?
-     */
-    boolean sellMissiles(int amount) {
-        return game.sellMissiles(amount);
-    }
 
     /**
      * sell weapon to trader
@@ -214,14 +145,6 @@ public class ShopUI {
     }
 
     /**
-     * remove a sellable element
-     * @param e the element
-     */
-    public void removeSellElement(ShopSellElement e) {
-        sellElements.remove(e); //TODO add to the list of buyable items
-    }
-
-    /**
      * render without stage stuff
      */
     public void render() {
@@ -231,6 +154,30 @@ public class ShopUI {
         for(ShopElement e : elements) {
             e.render();
         }
+    }
+
+    public void openSellUI(){
+        new ShopSell(main, stage, game, trader, this);
+    }
+
+    public void openShopCrewUI(){
+        new ShopCrew(main, stage, game, trader, this);
+    }
+
+    public void openShopResourceUI(){
+        new ShopResource(main, stage, game, trader, this);
+    }
+
+    public void openShopSystemUI(){
+        new ShopSystem(main, stage, game, trader, this);
+    }
+
+    public void openShopUpgrade(){
+        new ShopUpgrade(main, stage, game, trader, this);
+    }
+
+    public void openShopWeapon(){
+        new ShopWeapon(main, stage, game, trader, this);
     }
 
     /**
