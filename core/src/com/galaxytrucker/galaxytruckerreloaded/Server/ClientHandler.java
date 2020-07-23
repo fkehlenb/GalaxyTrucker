@@ -260,7 +260,7 @@ public class ClientHandler implements Runnable {
             int randomPlanetTextureInt = random.nextInt(7)+1;
             String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, random),
-                    0, 0, PlanetEvent.SHOP, new ArrayList<Ship>());
+                    0, 0, PlanetEvent.SHOP, new ArrayList<Ship>(),randomPlanetTexture);
             // TODO add trader stock and traders
             planetMap.add(planet);
         }
@@ -272,7 +272,7 @@ public class ClientHandler implements Runnable {
             String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
 
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
-                    0,0,PlanetEvent.COMBAT,new ArrayList<Ship>());
+                    0,0,PlanetEvent.COMBAT,new ArrayList<Ship>(),randomPlanetTexture);
             List<Ship> ships = planet.getShips();
             Ship opponent = generateShip(shipTypes.get(random.nextInt(shipTypes.size()-1)),"[ENEMY]",planet);
             try {

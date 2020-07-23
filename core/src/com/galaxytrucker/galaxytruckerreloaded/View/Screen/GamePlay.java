@@ -16,7 +16,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
@@ -199,7 +198,15 @@ public class GamePlay implements Screen {
         
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        main.batch.draw(getPlanetTexture(),main.WIDTH/2,main.HEIGHT/2,getPlanetTexture().getWidth(),getPlanetTexture().getHeight());
+
+        if(PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.NEBULA || PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.METEORSHOWER){
+            background = new Texture(PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture());
+        }
+        else{
+            background = new Texture("1080p.png");
+            main.batch.draw(getPlanetTexture(),main.WIDTH/2,main.HEIGHT/2,getPlanetTexture().getWidth(),getPlanetTexture().getHeight());
+        }
+
         main.batch.end();
 
         if(enemy == null) {
