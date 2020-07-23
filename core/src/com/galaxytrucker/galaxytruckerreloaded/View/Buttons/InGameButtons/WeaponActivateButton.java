@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.WeaponUI;
@@ -29,20 +30,26 @@ public class WeaponActivateButton extends ImButton {
     private WeaponUI ui;
 
     /**
+     * the weapon this belongs to
+     */
+    private Weapon weapon;
+
+    /**
      * Left-Click action of the Button.
      */
     @Override
     public void leftClick() {
-        ui.weaponactivated();
+        ui.weaponactivated(weapon);
     }
 
     /**
      * constructor
      * @param ui the ui this button belongs to
      */
-    public WeaponActivateButton(Texture texture, float x, float y, float width, float height, WeaponUI ui) {
+    public WeaponActivateButton(Texture texture, float x, float y, float width, float height, WeaponUI ui, Weapon weapon) {
         super(texture, x, y, width, height);
         this.ui = ui;
+        this.weapon = weapon;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
