@@ -9,6 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopBuyButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopSellButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
 import java.util.LinkedList;
@@ -22,6 +23,26 @@ import java.util.List;
  *
  */
 public class ShopUI {
+
+    private ShopCrew shopCrew;
+    private ShopCrewButton shopCrewButton;
+
+    private ShopWeapon shopWeapon;
+    private ShopWeaponButton shopWeaponButton;
+
+    private  ShopSystem shopSystem;
+    private ShopSystemButton shopSystemButton;
+
+    private ShopUpgrade shopUpgrade;
+    private ShopUpgradeButton shopUpgradeButton;
+
+    private  ShopSellElement shopSellElement;
+    private ShopSellButton shopSellButton;
+
+    private ShopResource shopResource;
+    private ShopResourceButton shopResourceBUtton;
+
+
 
     /**
      * to close the shop
@@ -61,8 +82,15 @@ public class ShopUI {
         this.main = main;
         this.game = game;
 
+        shopCrew = new ShopCrew();
+        shopSellElement = new ShopSellElement();
+        shopSystem = new ShopSystem();
+        shopUpgrade = new ShopUpgrade();
+        shopWeapon = new ShopWeapon();
+        shopResource = new ShopResource();
+
         // add all the items the trader has to offer to the ui
-        elements = new LinkedList<>();
+        //elements = new LinkedList<>();
         //crew stock
         for(Crew c : trader.getCrewStock()) {
             Texture t;
@@ -88,20 +116,26 @@ public class ShopUI {
         //missiles/rockets
         elements.add(new ShopElement(main, stage, new Texture("missiles.png"), 0, 0, this, null, null, trader.getMissileStock(), "missiles"));
 
-        //add all the items that can be sold TODO geldanzeige immer ändern
-        sellElements = new LinkedList<>();
-        //missiles
-        sellElements.add(new ShopSellElement(main, stage, new Texture("missiles.png"), 0, 0, this, null, shipMissiles));
-        //weapons
-        for(Weapon w : shipWeapons) {
-            sellElements.add(new ShopSellElement(main, stage, new Texture("laser.png"), 0, 0, this, w, 0));
-        }
+        shopCrewButton =new ShopCrewButton(0, 0, 10, 10, this, null, null);
+        shopWeaponButton = new ShopWeaponButton(0, 0, 10, 10, this, null, null);
+        shopResourceBUtton = new ShopResourceButton(0, 0, 10, 10, this, null, null);
+        shopSellButton = new ShopSellButton(0, 0, 10, 10, this, null, null);
+        shopSystemButton = new ShopSystemButton(0, 0, 10, 10, this, null, null);
+        shopUpgradeButton = new ShopUpgradeButton(0, 0, 10, 10, this, null, null);
 
         closeButton = new InventoryCloseButton(0, 0, 10, 10, this, null, null);
         stage.addActor(closeButton);
+        stage.addActor(shopSellButton);
+        stage.addActor(shopCrewButton);
+        stage.addActor(shopWeaponButton);
+        stage.addActor(shopResourceBUtton);
+        stage.addActor(shopSystemButton);
+        stage.addActor(shopUpgradeButton);
 
         background = new Texture("shop/storeback.png");
     }
+
+
 
     /**
      * buy a weapon from the trader
