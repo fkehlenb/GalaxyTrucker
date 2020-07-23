@@ -2,13 +2,10 @@ package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -48,7 +45,7 @@ public class TravelController extends Controller {
             requestObject.setShip(clientControllerCommunicator.getClientShip());
             requestObject.setPlanet(destination);
             System.out.println("\n<Client>:[Action]:[Hyperjump]:[Request]:[Planet]:" + clientControllerCommunicator.getClientShip().getPlanet().getName()
-                    + ":[Destination]:" + destination.getName());
+                    + ":[Destination]:" + destination.getName() + destination.getEvent());
             ResponseObject object = clientControllerCommunicator.sendRequest(requestObject);
             if (object.isValidRequest()) {
                 clientControllerCommunicator.setClientShip(object.getResponseShip());

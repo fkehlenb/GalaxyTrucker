@@ -84,7 +84,7 @@ public class ShopUI {
         ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),0, 0, 10, 10, this, ShopButtonType.CREW);
         ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),0, 0, 10, 10, this,  ShopButtonType.SYSTEM);
         ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),0, 0, 10, 10, this,  ShopButtonType.UPGRADES);;
-        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab"), 0, 0, 10, 10, this,  ShopButtonType.SELL);
+        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), 0, 0, 10, 10, this,  ShopButtonType.SELL);
 
         closeButton = new InventoryCloseButton(0, 0, 10, 10, this, null, null);
         stage.addActor(closeButton);
@@ -173,9 +173,9 @@ public class ShopUI {
         main.batch.begin();
         main.batch.draw(background, 0, 0, 10, 10); //TODO whxy
         main.batch.end();
-        for(ShopElement e : elements) {
+        /*for(ShopElement e : elements) {
             e.render();
-        }
+        }*/
     }
 
     //TODO woher wissen wir was wir verkaufen?
