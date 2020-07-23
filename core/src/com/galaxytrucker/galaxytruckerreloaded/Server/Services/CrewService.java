@@ -13,7 +13,9 @@ import lombok.*;
 
 import java.util.List;
 
-/** This class handles the logic for crew aboard the ship, server side */
+/**
+ * This class handles the logic for crew aboard the ship, server side
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
@@ -22,32 +24,45 @@ public class CrewService {
 
     // TODO *** DO NOT USE WHEN IN COMBAT, USE THE DESIGNATED COMBAT AND PVP CONTROLLERS! ***
 
-    /** ShipDAO */
+    /**
+     * ShipDAO
+     */
     private ShipDAO shipDAO = ShipDAO.getInstance();
 
-    /** CrewDAO */
+    /**
+     * CrewDAO
+     */
     private CrewDAO crewDAO = CrewDAO.getInstance();
 
-    /** RoomDAO */
+    /**
+     * RoomDAO
+     */
     private RoomDAO roomDAO = RoomDAO.getInstance();
 
-    /** Instance */
+    /**
+     * Instance
+     */
     private static CrewService instance;
 
-    /** Get instance */
-    public static CrewService getInstance(){
-        if (instance == null){
+    /**
+     * Get instance
+     */
+    public static CrewService getInstance() {
+        if (instance == null) {
             instance = new CrewService();
         }
         return instance;
     }
 
-    /** Move a crew member to a different section
+    /**
+     * Move a crew member to a different section
+     *
      * @param ship - the ship the crew is on
      * @param crew - the crew member
-     * @param room - the room to move him to */
+     * @param room - the room to move him to
+     */
     @SuppressWarnings("Duplicates")
-    public ResponseObject moveCrewToRoom(Ship ship, Crew crew, Room room){
+    public ResponseObject moveCrewToRoom(Ship ship, Crew crew, Room room) {
         ResponseObject responseObject = new ResponseObject();
         try {
             // No trusting client data
@@ -60,20 +75,20 @@ public class CrewService {
                     + crew.getCurrentRoom().getId());
             // Check if the crew exists in the ship
             boolean existsInShip = false;
-            for (Room r : ship.getSystems()){
-                if (r.getCrew().contains(crew) && r.getTiles().size()>r.getCrew().size()){
+            for (Room r : ship.getSystems()) {
+                if (r.getCrew().contains(crew) && r.getTiles().size() > r.getCrew().size()) {
                     existsInShip = true;
                     java.lang.System.out.println("[CREW-FOUND]:[ENOUGH-ROOM-REMAINING]");
                 }
             }
             // Crew must not move to same room it is already in
-            if (existsInShip && room.getId()!=crew.getCurrentRoom().getId()){
+            if (existsInShip && room.getId() != crew.getCurrentRoom().getId()) {
                 Room currentRoom = crew.getCurrentRoom();
                 List<Crew> crewInRoom = currentRoom.getCrew();
                 List<Tile> roomTiles = currentRoom.getTiles();
                 // Remove crew from tile
-                for (Tile t : roomTiles){
-                    if (t.getStandingOnMe().getId()==crew.getId()){
+                for (Tile t : roomTiles) {
+                    if (t.getStandingOnMe().getId() == crew.getId()) {
                         t.setStandingOnMe(null);
                         roomTiles.set(roomTiles.indexOf(t), t);
                     }
@@ -84,10 +99,10 @@ public class CrewService {
                 currentRoom.setCrew(crewInRoom);
                 // Add crew to tile in new room
                 roomTiles = room.getTiles();
-                for (Tile t : roomTiles){
-                    if (t.isEmpty()){
+                for (Tile t : roomTiles) {
+                    if (t.isEmpty()) {
                         t.setStandingOnMe(crew);
-                        roomTiles.set(roomTiles.indexOf(t),t);
+                        roomTiles.set(roomTiles.indexOf(t), t);
                     }
                 }
                 room.setTiles(roomTiles);
@@ -99,12 +114,11 @@ public class CrewService {
                 crew.setCurrentRoom(room);
                 // Update ship rooms
                 List<Room> rooms = ship.getSystems();
-                for (Room r : rooms){
-                    if (r.getId()==currentRoom.getId()){
-                        rooms.set(rooms.indexOf(r),currentRoom);
-                    }
-                    else if (r.getId()==room.getId()){
-                        rooms.set(rooms.indexOf(r),room);
+                for (Room r : rooms) {
+                    if (r.getId() == currentRoom.getId()) {
+                        rooms.set(rooms.indexOf(r), currentRoom);
+                    } else if (r.getId() == room.getId()) {
+                        rooms.set(rooms.indexOf(r), room);
                     }
                 }
                 ship.setSystems(rooms);
@@ -121,18 +135,20 @@ public class CrewService {
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(ship);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return responseObject;
     }
 
-    /** Heal crew
-     * @param ship - the ship the crew is on
-     * @param crew - the crew member to heal
-     * @param healAmount - amount to heal */
-    public ResponseObject healCrewMember(Ship ship,Crew crew,int healAmount){
+    /**
+     * Heal crew
+     *
+     * @param ship       - the ship the crew is on
+     * @param crew       - the crew member to heal
+     * @param healAmount - amount to heal
+     */
+    public ResponseObject healCrewMember(Ship ship, Crew crew, int healAmount) {
         ResponseObject responseObject = new ResponseObject();
         try {
             // No trusting client data
@@ -145,26 +161,26 @@ public class CrewService {
             // Check if crew exists aboard the ship
             Room crewRoom = crew.getCurrentRoom();
             // Check for max hp
-            if (crew.getHealth()+healAmount>crew.getMaxhealth()){
+            if (crew.getHealth() + healAmount > crew.getMaxhealth()) {
                 return responseObject;
             }
-            for (Room r : ship.getSystems()){
-                if (r.getCrew().contains(crew)){
+            for (Room r : ship.getSystems()) {
+                if (r.getCrew().contains(crew)) {
                     java.lang.System.out.println("[CREW-FOUND]");
                     crewRoom = r;
                     List<Crew> crewInRoom = crewRoom.getCrew();
-                    for (Crew c : crewInRoom){
-                        if (c.getId() == crew.getId()){
+                    for (Crew c : crewInRoom) {
+                        if (c.getId() == crew.getId()) {
                             crew = c;
-                            crew.setHealth(crew.getHealth()+healAmount);
-                            crewInRoom.set(crewInRoom.indexOf(c),crew);
+                            crew.setHealth(crew.getHealth() + healAmount);
+                            crewInRoom.set(crewInRoom.indexOf(c), crew);
                         }
                     }
                     r.setCrew(crewInRoom);
                     List<Room> shipRooms = ship.getSystems();
-                    for (Room a : shipRooms){
-                        if (a.getId() == r.getId()){
-                            shipRooms.set(shipRooms.indexOf(a),r);
+                    for (Room a : shipRooms) {
+                        if (a.getId() == r.getId()) {
+                            shipRooms.set(shipRooms.indexOf(a), r);
                         }
                     }
                     ship.setSystems(shipRooms);
@@ -182,18 +198,20 @@ public class CrewService {
                     break;
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return responseObject;
     }
 
-    /** Heal crew in a room
-     * @param ship - the ship the crew are on
-     * @param room - the room which's crew members to heal
-     * @param amount - amount to heal */
-    public ResponseObject healCrewInRoom(Ship ship,Room room,int amount){
+    /**
+     * Heal crew in a room
+     *
+     * @param ship   - the ship the crew are on
+     * @param room   - the room which's crew members to heal
+     * @param amount - amount to heal
+     */
+    public ResponseObject healCrewInRoom(Ship ship, Room room, int amount) {
         ResponseObject responseObject = new ResponseObject();
         try {
             // Fetch data
@@ -234,18 +252,20 @@ public class CrewService {
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(ship);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return responseObject;
     }
 
-    /** Damage crew
-     * @param ship - the ship the crew is on
-     * @param room - the room in which to damage the crew
-     * @param amount - the amount of damage to take */
-    public ResponseObject damageCrew(Ship ship,Room room,int amount){
+    /**
+     * Damage crew
+     *
+     * @param ship   - the ship the crew is on
+     * @param room   - the room in which to damage the crew
+     * @param amount - the amount of damage to take
+     */
+    public ResponseObject damageCrew(Ship ship, Room room, int amount) {
         ResponseObject responseObject = new ResponseObject();
         try {
             // Fetch data
@@ -284,17 +304,19 @@ public class CrewService {
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(ship);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return responseObject;
     }
 
-    /** Fix a system
-     * @param ship - the ship to fix a system on
-     * @param system - the system to fix */
-    public ResponseObject fixSystem(Ship ship, System system){
+    /**
+     * Fix a system
+     *
+     * @param ship   - the ship to fix a system on
+     * @param system - the system to fix
+     */
+    public ResponseObject fixSystem(Ship ship, System system) {
         ResponseObject responseObject = new ResponseObject();
         try {
             // Fetch data
@@ -313,33 +335,38 @@ public class CrewService {
                 }
             }
             if (exists) {
-                if (system.getCrew().size() > 0) {
-                    if (system.isDisabled()) {
+                if (system.getCrew().size() > 0 && system.getDamage()>0) {
+                    if (system.getDamage() - system.getCrew().size() <= 0) {
+                        system.setDamage(0);
                         system.setDisabled(false);
-                        // Update data
-                        roomDAO.update(system);
-                        shipDAO.update(ship);
-                        // Verification
-                        java.lang.System.out.println("[POST]:[Ship]:" + ship.getId() + ":[System]:" + system.getId() + ":[SystemType]:"
-                                + system.getSystemType() + ":[Disabled]:" + system.isDisabled() + ":[Crew]:" + system.getCrew().size());
-                        java.lang.System.out.println("======================================================");
-                        // Set valid
-                        responseObject.setValidRequest(true);
-                        responseObject.setResponseShip(ship);
+                    } else {
+                        system.setDamage(system.getDamage() - system.getCrew().size());
                     }
+                    // Update data
+                    roomDAO.update(system);
+                    shipDAO.update(ship);
+                    // Verification
+                    java.lang.System.out.println("[POST]:[Ship]:" + ship.getId() + ":[System]:" + system.getId() + ":[SystemType]:"
+                            + system.getSystemType() + ":[Disabled]:" + system.isDisabled() + ":[Crew]:" + system.getCrew().size());
+                    java.lang.System.out.println("======================================================");
+                    // Set valid
+                    responseObject.setValidRequest(true);
+                    responseObject.setResponseShip(ship);
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return responseObject;
     }
 
-    /** Repair a breach in a room
+    /**
+     * Repair a breach in a room
+     *
      * @param ship - the ship to fix the rbeach on
-     * @param room - the room to fix the breach in */
-    public ResponseObject repairBreach(Ship ship,Room room){
+     * @param room - the room to fix the breach in
+     */
+    public ResponseObject repairBreach(Ship ship, Room room) {
         ResponseObject responseObject = new ResponseObject();
         try {
             // Fetch data
@@ -351,19 +378,18 @@ public class CrewService {
                     ":[Breach]:" + room.getBreach() + ":[Crew]:" + room.getCrew().size());
             // Exists in ship?
             boolean exists = false;
-            for (Room r : ship.getSystems()){
-                if (r.getId()==room.getId()){
+            for (Room r : ship.getSystems()) {
+                if (r.getId() == room.getId()) {
                     exists = true;
                     break;
                 }
             }
-            if (room.getBreach()>0&&room.getCrew().size()>0&&exists){
+            if (room.getBreach() > 0 && room.getCrew().size() > 0 && exists) {
                 int crewAmount = room.getCrew().size();
-                if (room.getBreach()-crewAmount<0){
+                if (room.getBreach() - crewAmount < 0) {
                     room.setBreach(0);
-                }
-                else{
-                    room.setBreach(room.getBreach()-crewAmount);
+                } else {
+                    room.setBreach(room.getBreach() - crewAmount);
                 }
                 // Update data
                 roomDAO.update(room);
@@ -377,8 +403,7 @@ public class CrewService {
                 responseObject.setResponseShip(ship);
             }
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return responseObject;

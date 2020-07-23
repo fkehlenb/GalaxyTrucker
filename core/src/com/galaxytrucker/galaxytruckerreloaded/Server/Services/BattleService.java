@@ -160,7 +160,7 @@ public class BattleService implements Serializable {
             responseObject.setWeaponUsed(previousWeaponUsed);
         }
         // Set the updated data
-        if (clientShip.getId() == playerOne.getId()) {
+        if (playerOne!=null && clientShip.getId() == playerOne.getId()) {
             // ===== YOU DEAD =====
             if (playerOne.getHp() <= 0) {
                 // Set combat stats
@@ -207,6 +207,7 @@ public class BattleService implements Serializable {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                // Todo rewards
             }
             // ===== OPPONENT FLED FIGHT =====
             else if (previousRoundAction != null && previousRoundAction == PreviousRoundAction.FLEE_FIGHT) {
@@ -221,7 +222,7 @@ public class BattleService implements Serializable {
         } else {
             // ===== OPPONENT DEAD =====
             // Todo check for crew
-            if (playerOne.getHp() <= 0) {
+            if (playerOne!=null && playerOne.getHp() <= 0) {
                 // Set combat status
                 responseObject.setCombatOver(true);
                 responseObject.setCombatWon(true);
@@ -289,7 +290,7 @@ public class BattleService implements Serializable {
         if (playerTwo != null) {
             playerTwo = passiveChanges(playerTwo);
         }
-        if (playerOne != null && playerOne.getId() == currentRound) {
+        if (playerOne != null && playerOne.getId() == currentRound && playerTwo!=null) {
             currentRound = playerTwo.getId();
         } else if (playerOne != null) {
             currentRound = playerOne.getId();
@@ -635,8 +636,9 @@ public class BattleService implements Serializable {
                     if (r.getCrew().size() > 0) {
                         if (((System) r).getDamage() > 0) {
                             ((System) r).setDamage(((System) r).getDamage() - r.getCrew().size());
-                            if (((System) r).getDamage() < 0) {
+                            if (((System) r).getDamage() <= 0) {
                                 ((System) r).setDamage(0);
+                                ((System) r).setDisabled(false);
                             }
                         }
                     }
