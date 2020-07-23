@@ -31,6 +31,7 @@ import java.util.*;
 @NamedQueries({
         @NamedQuery(name = "BattleService.fetchAll", query = "select b from BattleService b")
 })
+@SuppressWarnings("Duplicates")
 public class BattleService implements Serializable {
 
     /**
