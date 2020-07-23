@@ -83,7 +83,7 @@ public class ShopUI {
         ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab.png"),0, 0, 10, 10, this, ShopButtonType.RESOURCE);
         ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),0, 0, 10, 10, this, ShopButtonType.CREW);
         ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),0, 0, 10, 10, this,  ShopButtonType.SYSTEM);
-        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/levelTab.png"),0, 0, 10, 10, this,  ShopButtonType.UPGRADES);;
+        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),0, 0, 10, 10, this,  ShopButtonType.UPGRADES);;
         ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab"), 0, 0, 10, 10, this,  ShopButtonType.SELL);
 
         closeButton = new InventoryCloseButton(0, 0, 10, 10, this, null, null);
