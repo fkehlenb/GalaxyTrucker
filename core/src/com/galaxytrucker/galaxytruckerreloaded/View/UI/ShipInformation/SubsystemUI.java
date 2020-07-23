@@ -127,13 +127,13 @@ public class SubsystemUI extends RoomUI {
     }
 
     /**
-     * updates the energy of the system (bottom left)
-     * called by controller
-     * @param energy the new amount
+     * the amount of energy given to a system (if this room is a system) is changed
+     *
+     * @param amount the new amount
      */
-    public void energyUpdate(int energy) {
-        this.energy = energy;
-        //TODO call controller
+    @Override
+    public void systemEnergyUpdate(int amount) {
+        this.energy += amount;
     }
 
     /**
@@ -155,10 +155,10 @@ public class SubsystemUI extends RoomUI {
     public void addEnergy() {
         if (systemType==SystemType.SHIELDS)
         {
-            ((ShipView) ship).roomSystemEnergyChosen(room, 2);
+            ((ShipView) ship).roomSystemEnergyAdded(room, 2);
         }
         else {
-            ((ShipView) ship).roomSystemEnergyChosen(room, 1);
+            ((ShipView) ship).roomSystemEnergyAdded(room, 1);
         }
     }
 
@@ -169,10 +169,10 @@ public class SubsystemUI extends RoomUI {
     public void removeEnergy() {
         if (systemType==SystemType.SHIELDS)
         {
-            ((ShipView) ship).roomSystemEnergyChosen(room, -2);
+            ((ShipView) ship).roomSystemEnergyRemoved(room, -2);
         }
         else {
-            ((ShipView) ship).roomSystemEnergyChosen(room, -1);
+            ((ShipView) ship).roomSystemEnergyRemoved(room, -1);
         }
     }
 }
