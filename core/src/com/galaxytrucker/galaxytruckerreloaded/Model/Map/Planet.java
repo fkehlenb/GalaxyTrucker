@@ -63,6 +63,9 @@ public class Planet implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Trader trader;
 
+    /** Whether or not the planet has been looted */
+    private boolean looted = false;
+
     @Override
     public boolean equals(Object o){
         if (o==null){

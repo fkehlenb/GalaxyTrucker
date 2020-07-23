@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("Duplicates")
 public class TraderController extends Controller{
 
     /** ClientControllerCommunicator */
@@ -45,25 +46,15 @@ public class TraderController extends Controller{
             requestObject.setRequestType(RequestType.TRADERBUYWEAPON);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if (responseObject.isValidRequest()) {
-                //remove from trader
-                List<Weapon> traderWeapons = trader.getWeaponStock();
-                traderWeapons.remove(weapon);
-                trader.setWeaponStock(traderWeapons);
-                //add to ship
-                Ship ship = clientControllerCommunicator.getClientShip();
-                List<Weapon> shipWeapons = ship.getInventory();
-                shipWeapons.add(weapon);
-                ship.setInventory(shipWeapons);
-                ship.setCoins(ship.getCoins() - weapon.getPrice().get(weapon.getWeaponLevel()));
-                clientControllerCommunicator.setClientShip(ship);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+                clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
                 return true;
             }
-            return false;
         }
         catch(Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -79,24 +70,15 @@ public class TraderController extends Controller{
             requestObject.setCrew(crew);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if(responseObject.isValidRequest()) {
-                //remove from trader
-                List<Crew> tcrew = trader.getCrewStock();
-                tcrew.remove(crew);
-                trader.setCrewStock(tcrew);
-                //put in room
-                Ship ship = clientControllerCommunicator.getClientShip();
-                crew.setCurrentRoom(ship.getSystems().get(0));
-                crew.setAssociatedUser(clientControllerCommunicator.getClientShip().getAssociatedUser());
-                ship.setCoins(ship.getCoins() - crew.getPrice());
-                clientControllerCommunicator.setClientShip(ship);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+                clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
                 return true;
             }
-            return false;
         }
         catch(Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -112,23 +94,15 @@ public class TraderController extends Controller{
             requestObject.setIntAmount(amount);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if(responseObject.isValidRequest()) {
-                //remove from trader
-                int tAmount = trader.getMissileStock();
-                tAmount -= amount;
-                trader.setMissileStock(tAmount);
-                //add to ship
-                Ship ship = clientControllerCommunicator.getClientShip();
-                ship.setMissiles(ship.getMissiles() + amount);
-                ship.setCoins(ship.getCoins() - 5*amount); //TODO festpreis
-                clientControllerCommunicator.setClientShip(ship);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+                clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
                 return true;
             }
-            return false;
         }
         catch(Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -144,23 +118,15 @@ public class TraderController extends Controller{
             requestObject.setIntAmount(amount);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if(responseObject.isValidRequest()) {
-                //remove from trader
-                int tAmount = trader.getFuelStock();
-                tAmount -= amount;
-                trader.setFuelStock(tAmount);
-                //add to ship
-                Ship ship = clientControllerCommunicator.getClientShip();
-                ship.setFuel(ship.getFuel() + amount);
-                ship.setCoins(ship.getCoins() - 5*amount); //TODO festpreis
-                clientControllerCommunicator.setClientShip(ship);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+                clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
                 return true;
             }
-            return false;
         }
         catch(Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -176,23 +142,15 @@ public class TraderController extends Controller{
             requestObject.setIntAmount(amount);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if(responseObject.isValidRequest()) {
-                //remove from trader
-                int tAmount = trader.getHpStock();
-                tAmount -= amount;
-                trader.setHpStock(tAmount);
-                //add to ship
-                Ship ship = clientControllerCommunicator.getClientShip();
-                ship.setHp(ship.getHp() + amount);
-                ship.setCoins(ship.getCoins() - 5*amount); //TODO festpreis
-                clientControllerCommunicator.setClientShip(ship);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+                clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
                 return true;
             }
-            return false;
         }
         catch(Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -208,25 +166,15 @@ public class TraderController extends Controller{
             requestObject.setRequestType(RequestType.TRADERSELLWEAPON);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if(responseObject.isValidRequest()) {
-                //add to trader
-                List<Weapon> traderWeapon = trader.getWeaponStock();
-                traderWeapon.add(weapon);
-                trader.setWeaponStock(traderWeapon);
-                //remove from ship
-                Ship ship = clientControllerCommunicator.getClientShip();
-                List<Weapon> shipWeapon = ship.getInventory();
-                shipWeapon.remove(weapon);
-                ship.setInventory(shipWeapon);
-                ship.setCoins(ship.getCoins() + weapon.getPrice().get(weapon.getWeaponLevel()));
-                clientControllerCommunicator.setClientShip(ship);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+                clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
                 return true;
             }
-            return false;
         }
         catch(Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     /**
@@ -242,20 +190,14 @@ public class TraderController extends Controller{
             requestObject.setIntAmount(amount);
             ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
             if(responseObject.isValidRequest()) {
-                //add to trader
-                trader.setMissileStock(trader.getMissileStock() + amount);
-                //remove from ship
-                Ship ship = clientControllerCommunicator.getClientShip();
-                ship.setMissiles(ship.getMissiles() - amount);
-                ship.setCoins(ship.getCoins() + 5*amount);
-                clientControllerCommunicator.setClientShip(ship);
+                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+                clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
                 return true;
             }
-            return false;
         }
         catch(Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 }
