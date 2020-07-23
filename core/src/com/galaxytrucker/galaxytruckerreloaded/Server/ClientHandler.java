@@ -4,6 +4,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
@@ -242,7 +243,7 @@ public class ClientHandler implements Runnable {
         weaponTypes.add(WeaponType.RADIO_BOMB);
         for (int i=0;i<traders;i++){
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, random),
-                    0, 0, PlanetEvent.VOID, new ArrayList<Ship>());
+                    0, 0, PlanetEvent.SHOP, new ArrayList<Ship>());
             // TODO add trader stock and traders
             planetMap.add(planet);
         }

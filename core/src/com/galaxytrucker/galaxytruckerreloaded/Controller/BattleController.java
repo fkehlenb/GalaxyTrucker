@@ -47,9 +47,32 @@ public class BattleController extends Controller {
         return false;
     }
 
+    // Todo: "if at pvp planet, remove hyperjump button and replace with different one
+    // todo: that returns user to previous/destination planet"
     // After arriving at planet:
-    // getPlanetEvent (Non PVP) -> [isMyRound:true->action->isMyRound]
-    //                             [isMyRound:false->isCombatOver->isCombatWon->isCombatLost->continue]
+    // getPlanetEvent -> [isMyRound:true->action->isMyRound]
+    //                   [isMyRound:false->isCombatOver->isCombatWon->isCombatLost->continue]
+
+    /** Check if the combat is over
+     * @return combat over
+     * @throws NullPointerException if the previous response object is null */
+    public boolean isCombatOver() throws NullPointerException{
+        return previousResponse.isCombatOver();
+    }
+
+    /** Check if the combat was won
+     * @return combat won
+     * @throws NullPointerException if the previous response object is null */
+    public boolean isCombatWon() throws NullPointerException{
+        return previousResponse.isCombatWon();
+    }
+
+    /** Check if combat was lost
+     * @return combat lost
+     * @throws NullPointerException if the previous response object is null */
+    public boolean isCombatLost() throws NullPointerException{
+        return previousResponse.isDead();
+    }
 
     /**
      * Attack opponent ship

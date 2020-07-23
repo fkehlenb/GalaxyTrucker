@@ -30,6 +30,8 @@ public class PlanetEventController {
     /** Fetch the current planet event
      * @return the current planet event */
     public PlanetEvent getPlanetEvent() throws NullPointerException {
+        // Todo check for combat/pvp/boss and miniboss in UI
+        // if one of these, call battlecontroller isMyTurn
         return clientControllerCommunicator.getClientShip().getPlanet().getEvent();
     }
 
