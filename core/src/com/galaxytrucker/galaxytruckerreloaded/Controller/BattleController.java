@@ -88,7 +88,6 @@ public class BattleController extends Controller {
      * @param room   - the room to attack
      */
     public boolean attack(Weapon weapon, Room room) {
-        if (isMyRound()) {
             RequestObject requestObject = new RequestObject();
             requestObject.setRequestType(RequestType.ATTACK_SHIP);
             requestObject.setShip(clientControllerCommunicator.getClientShip());
@@ -101,7 +100,6 @@ public class BattleController extends Controller {
                 opponent = responseObject.getOpponent();
                 return true;
             }
-        }
         return false;
     }
 }

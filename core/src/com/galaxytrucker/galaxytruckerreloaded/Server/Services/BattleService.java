@@ -11,6 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Opponent.NormalAI;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
 import com.galaxytrucker.galaxytruckerreloaded.Server.PreviousRoundAction;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
@@ -109,6 +110,10 @@ public class BattleService implements Serializable {
     @NonNull
     private Ship playerTwo;
 
+    /** AI simulating enemy */
+    @Transient
+    private NormalAI ai = NormalAI.getInstance();
+
     /**
      * Last action carried out
      */
@@ -128,6 +133,7 @@ public class BattleService implements Serializable {
     @SuppressWarnings("Duplicates")
     public ResponseObject getUpdatedData(Ship clientShip) {
         ResponseObject responseObject = new ResponseObject();
+        java.lang.System.out.println(currentRound);
         Overworld overworld = null;
         try {
             overworld = UserService.getInstance().getUser(clientShip.getAssociatedUser()).getOverworld();

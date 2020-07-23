@@ -111,6 +111,9 @@ public class Weapon implements Serializable {
     @NonNull
     private int weaponPrice;
 
+    /** Current cooldown counter */
+    private int currentCooldown = 0;
+
     @Override
     public boolean equals(Object o){
         if (o==null||getClass()!=o.getClass()){
