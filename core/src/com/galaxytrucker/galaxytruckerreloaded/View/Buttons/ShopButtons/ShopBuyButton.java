@@ -1,11 +1,11 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopElement;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopElement;
 
 /**
  * button used to buy something in the shop

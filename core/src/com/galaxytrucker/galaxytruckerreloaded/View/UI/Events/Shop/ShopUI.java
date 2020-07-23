@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
+package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
 
 import com.badlogic.gdx.graphics.Texture;
@@ -8,13 +8,11 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopBuyButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopSellButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -26,23 +24,7 @@ import java.util.List;
  */
 public class ShopUI {
 
-    private ShopCrew shopCrew;
-    private ShopCrewButton shopCrewButton;
-
-    private ShopWeapon shopWeapon;
-    private ShopWeaponButton shopWeaponButton;
-
-    private  ShopSystem shopSystem;
-    private ShopSystemButton shopSystemButton;
-
-    private ShopUpgrade shopUpgrade;
-    private ShopUpgradeButton shopUpgradeButton;
-
-    private  ShopSell shopSell;
-    private ShopSellButton shopSellButton;
-
-    private ShopResource shopResource;
-    private ShopResourceButton shopResourceButton;
+    ShopUIButton ShopTab;
 
     @Getter
     @Setter
@@ -97,25 +79,33 @@ public class ShopUI {
         //shopWeapon = new ShopWeapon(main, stage, game, trader, this);
         //shopResource = new ShopResource(main, stage, game, trader, this);
 
-        shopCrewButton =new ShopCrewButton(0, 0, 10, 10, this, null, null);
-        shopWeaponButton = new ShopWeaponButton(0, 0, 10, 10, this, null, null);
-        shopResourceButton = new ShopResourceButton(0, 0, 10, 10, this, null, null);
-        shopSellButton = new ShopSellButton(0, 0, 10, 10, this, null, null);
-        shopSystemButton = new ShopSystemButton(0, 0, 10, 10, this, null, null);
-        shopUpgradeButton = new ShopUpgradeButton(0, 0, 10, 10, this, null, null);
+        ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),0, 0, 10, 10, this, ShopButtonType.WEAPON);
+        ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab"),0, 0, 10, 10, this, ShopButtonType.RESOURCE);
+        ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),0, 0, 10, 10, this, ShopButtonType.CREW);
+        ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),0, 0, 10, 10, this,  ShopButtonType.SYSTEM);
+        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/levelTab.png"),0, 0, 10, 10, this,  ShopButtonType.UPGRADES);;
+        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab"), 0, 0, 10, 10, this,  ShopButtonType.SELL);
 
         closeButton = new InventoryCloseButton(0, 0, 10, 10, this, null, null);
         stage.addActor(closeButton);
-        stage.addActor(shopSellButton);
-        stage.addActor(shopCrewButton);
         stage.addActor(shopWeaponButton);
         stage.addActor(shopResourceButton);
+        stage.addActor(shopCrewButton);
         stage.addActor(shopSystemButton);
         stage.addActor(shopUpgradeButton);
+        stage.addActor(shopSellButton);
 
         background = new Texture("shop/storeback.png");
     }
 
+    /**
+     * buy a weapon from the trader
+     * @param weapon the weapon
+     */
+    boolean buyWeapon(Weapon weapon) {
+        //TODO Controllerklassen verbinden
+        return game.buyWeapon(weapon);
+    }
 
     /**
      * sell weapon to trader
@@ -126,12 +116,44 @@ public class ShopUI {
     }
 
     /**
+     *  Hire Crew from Trader
+     * @param crew the crewmember
+     * @return success of transaction
+     */
+    boolean buyCrew(Crew crew){return game.buyCrew(crew);}
+
+    //TODO SellCrew???
+    boolean sellCrew(Crew crew){
+        return false;
+        //return game.sellCrew(crew);
+    }
+
+    /**
+     * Buy a Unit of Fuel from the Trader
+     * @return success of transaction
+     */
+    boolean buyFuel(){return game.buyFuel(1);}
+
+    /**
+     * Buy a missile from the Trader
+     * @return success of transaction
+     */
+    boolean buyMissiles(){return game.buyMissiles(1);}
+
+    /**
+     * Buy some repairs from the Trader
+     * @return success of transaction
+     */
+    boolean buyHP(int amount){return game.buyHp(amount);}
+
+    /**
      * Dispose shop ui
      */
     public void disposeShopUI() {
         for(ShopElement e : elements) {
             e.disposeShopElement();
         }
+        current.dispose();
         closeButton.remove();
         background.dispose();
         game.deleteShop();
@@ -147,7 +169,7 @@ public class ShopUI {
     /**
      * render without stage stuff
      */
-    public void render() {
+    public void render(){
         main.batch.begin();
         main.batch.draw(background, 0, 0, 10, 10); //TODO whxy
         main.batch.end();
@@ -156,6 +178,7 @@ public class ShopUI {
         }
     }
 
+    //TODO woher wissen wir was wir verkaufen?
     public void openSellUI(){
         new ShopSell(main, stage, game, trader, this);
     }

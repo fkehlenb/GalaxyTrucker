@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.AudioController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.CrewController;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -25,15 +23,13 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.badlogic.gdx.Gdx.audio;
 
 /**
  * Main game screen

@@ -1,13 +1,13 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopResource;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 
 public class ShopResourceButton extends ImButton {
 
@@ -20,7 +20,7 @@ public class ShopResourceButton extends ImButton {
     private Trader trader;
 
     public ShopResourceButton(int i, int i1, int i2, int i3, ShopUI shopUI, Object o, Object o1) {
-
+    super(new Texture("Shop.ResourcesTab.png"), i, i1, i2, i3);
 
     }
 
@@ -52,6 +52,5 @@ public class ShopResourceButton extends ImButton {
     public void leftClick() {
             shop.getCurrent().dispose();
             new ShopResource(main, stage, game, trader, shop);
-        }
     }
 }

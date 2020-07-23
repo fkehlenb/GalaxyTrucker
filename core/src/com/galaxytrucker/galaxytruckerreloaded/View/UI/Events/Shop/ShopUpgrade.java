@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
+package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -6,7 +6,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopBuyButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.ShopBuyButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
 public class ShopUpgrade extends CurrentShopUI {

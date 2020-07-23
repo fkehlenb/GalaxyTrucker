@@ -1,14 +1,11 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
+package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
-import java.util.List;
-
-public class ShopResource extends CurrentShopUI{
+public class ShopResource extends CurrentShopUI {
 
 
     /**
