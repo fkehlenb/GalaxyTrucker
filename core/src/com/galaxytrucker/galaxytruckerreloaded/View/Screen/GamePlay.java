@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -11,15 +10,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
-import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.BattleController;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.CrewController;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.SystemController;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
@@ -33,8 +32,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.badlogic.gdx.Gdx.audio;
 
 /**
  * Main game screen
@@ -156,6 +153,8 @@ public class GamePlay implements Screen {
      */
     private Weapon chosenWeapon;
 
+    private BattleController battleController = BattleController.getInstance(null);
+
     /**
      * Constructor
      *
@@ -240,6 +239,7 @@ public class GamePlay implements Screen {
      * handles input to pause game, open options
      */
     public void updateInput() {
+        Gdx.input.setInputProcessor(stage);
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             // Pause-menu
             Gdx.input.setInputProcessor(pauseStage);
@@ -283,8 +283,12 @@ public class GamePlay implements Screen {
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 createShop(planet.getTrader());
             }
-            else if(planet.getEvent() == PlanetEvent.COMBAT) { //TODO wer erstellt wo den controller?
-                createEnemy();
+            else if(planet.getEvent().equals(PlanetEvent.COMBAT)) { //TODO wer erstellt wo den controller?
+                if (planet.getShips().size() > 1){
+                    battleController.setOpponent(planet.getShips().get(0));
+                    createEnemy();
+                }
+
             }
         }
         return success;
@@ -295,7 +299,8 @@ public class GamePlay implements Screen {
      */
     private void createEnemy() {
         if(enemy == null) {
-            enemy = new EnemyShip(main, main.getClient().getMyShip(), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
+            java.lang.System.out.println("--- Rendering ship ---");
+            enemy = new EnemyShip(main, battleController.getOpponent(), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
         }
     }
 

@@ -17,9 +17,16 @@ public class BattleController extends Controller {
     /**
      * Opponent ship
      */
-    @NonNull
     private Ship opponent;
 
+    private static BattleController battleController;
+
+    public static BattleController getInstance(ClientControllerCommunicator clientControllerCommunicator){
+        if (battleController == null){
+            battleController = new BattleController(clientControllerCommunicator);
+        }
+        return battleController;
+    }
     /**
      * ClientControllerCommunicator
      */

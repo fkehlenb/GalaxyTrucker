@@ -2,7 +2,6 @@ package com.galaxytrucker.galaxytruckerreloaded.Communication;
 
 import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
@@ -85,6 +84,7 @@ public class ClientControllerCommunicator {
         if (singleton == null){
             singleton = new ClientControllerCommunicator(client);
         }
+        BattleController.getInstance(singleton);
         CrewController.getInstance(singleton);
         TraderController.getInstance(singleton);
         TravelController.getInstance(singleton);
