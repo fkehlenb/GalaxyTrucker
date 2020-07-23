@@ -26,16 +26,6 @@ public class Server implements Runnable{
     /** Server socket for network communication  */
     private ServerSocket serverSocket;
 
-    public static Server instance = null;
-
-    /** Get the instance */
-    public static Server getInstance(){
-        if(instance == null){
-            Server.runServer();
-        }
-        return instance;
-    }
-
     /** Server thread */
     private Thread serverThread;
 
