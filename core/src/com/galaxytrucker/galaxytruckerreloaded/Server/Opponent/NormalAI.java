@@ -7,6 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
+import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 import lombok.NonNull;
@@ -260,6 +261,10 @@ public class NormalAI {
                         nextMoves.add(requestObject);
                     }
                 }
+                RequestObject requestObject = new RequestObject();
+                requestObject.setShip(ship);
+                requestObject.setRequestType(RequestType.ROUND_OVER);
+                nextMoves.add(requestObject);
                 for (RequestObject r : nextMoves) {
                     battleService.attackShip(r.getShip(), r.getWeapon(), r.getOpponentShip(), r.getRoom());
                 }
