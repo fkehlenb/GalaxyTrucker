@@ -237,7 +237,7 @@ public class GamePlay implements Screen {
      * handles input to pause game, open options
      */
     public void updateInput() {
-        Gdx.input.setInputProcessor(stage);
+        //Gdx.input.setInputProcessor(stage);
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             // Pause-menu
             Gdx.input.setInputProcessor(pauseStage);
@@ -630,7 +630,9 @@ public class GamePlay implements Screen {
      * @param weapon the weapon
      * @param room the room
      */
-    private void weaponShot(Weapon weapon, Room room) {} //TODO call controller
+    private void weaponShot(Weapon weapon, Room room) {
+        battleController.attack(weapon, room);
+    } 
 
     /**
      * update the health of a crew member
