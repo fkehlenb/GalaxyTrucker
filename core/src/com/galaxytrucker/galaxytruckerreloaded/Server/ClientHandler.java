@@ -10,6 +10,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +27,9 @@ public class ClientHandler implements Runnable {
      * Client socket
      */
     private Socket clientSocket;
+
+    /** ShipDAO */
+    private ShipDAO shipDAO = ShipDAO.getInstance();
 
     /**
      * The server
@@ -251,8 +255,16 @@ public class ClientHandler implements Runnable {
         for (int i=0;i<battles;i++){
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
                     0,0,PlanetEvent.COMBAT,new ArrayList<Ship>());
-            planet.getShips().add(generateShip(ShipType.DEFAULT,"[ENEMY]",planet));
-            // TODO add opponents
+            List<Ship> ships = planet.getShips();
+            Ship opponent = generateShip(ShipType.KILLER,"[ENEMY]",planet);
+            try {
+                shipDAO.persist(opponent);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            ships.add(opponent);
+            planet.setShips(ships);
             planetMap.add(planet);
         }
         // ======================= Add minibosses =======================

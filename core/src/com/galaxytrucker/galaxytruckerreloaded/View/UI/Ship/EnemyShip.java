@@ -110,7 +110,7 @@ public class EnemyShip extends AbstractShip {
         roomUIHashMap = new HashMap<>();
         List<Room> existingRooms = ship.getSystems();
         for(Room r : existingRooms) {
-            if(r instanceof System) {
+            if(r.isSystem()) {
                 roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), tileX), getRoomX(ship.getShipType(), r.getInteriorID(), tileY), (System) r));
             }
             else {

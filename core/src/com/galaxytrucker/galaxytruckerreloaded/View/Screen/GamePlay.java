@@ -16,6 +16,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
@@ -284,7 +285,7 @@ public class GamePlay implements Screen {
             else if(planet.getEvent().equals(PlanetEvent.COMBAT)) { //TODO wer erstellt wo den controller?
                 if (planet.getShips().size() > 1){
                     battleController.setOpponent(planet.getShips().get(0));
-                    createEnemy(planet);
+                    createEnemy();
                 }
 
             }
@@ -295,10 +296,10 @@ public class GamePlay implements Screen {
     /**
      * create the enemy ui, if there is an enemy
      */
-    private void createEnemy(Planet planet) {
+    private void createEnemy(){
         if(enemy == null) {
             java.lang.System.out.println("--- Rendering ship ---");
-            enemy = new EnemyShip(main, planet.getShips().get(0), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
+            enemy = new EnemyShip(main, battleController.getOpponent(), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
         }
     }
 
