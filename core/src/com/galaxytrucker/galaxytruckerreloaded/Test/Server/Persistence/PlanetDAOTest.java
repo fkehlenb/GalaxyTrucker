@@ -24,7 +24,7 @@ public class PlanetDAOTest {
     /** Test adding a new planet to the database */
     @Test
     public void testPersist(){
-        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>());
+        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),"map/planets/1.png");
         try {
             planetDAO.persist(planet);
             entityManager.getTransaction().begin();
@@ -40,7 +40,7 @@ public class PlanetDAOTest {
     /** Test editing a planet in the database */
     @Test
     public void testEdit(){
-        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>());
+        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),"map/planets/1.png");
         try {
             planetDAO.persist(planet);
             planet.setEvent(PlanetEvent.SHOP);
@@ -58,7 +58,7 @@ public class PlanetDAOTest {
     /** Test removing a planet from the database */
     @Test
     public void testRemove(){
-        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>());
+        Planet planet = new Planet(UUID.randomUUID().hashCode(),TraderDAOTest.planetNameGenerator(),0,0, PlanetEvent.VOID,new ArrayList<Ship>(),"map/planets/1.png");
         try {
             planetDAO.persist(planet);
             planetDAO.remove(planet);

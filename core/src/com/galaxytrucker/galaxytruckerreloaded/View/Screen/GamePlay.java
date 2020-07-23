@@ -42,6 +42,12 @@ public class GamePlay implements Screen {
     private Texture background;
 
     /**
+     * Planet texture
+     */
+    private String planetTextureString;
+
+
+    /**
      * Looping music
      */
     private Music music;
@@ -190,9 +196,10 @@ public class GamePlay implements Screen {
 
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        
         main.batch.begin();
-        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
+        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.draw(getPlanetTexture(),main.WIDTH/2,main.HEIGHT/2,getPlanetTexture().getWidth(),getPlanetTexture().getHeight());
         main.batch.end();
 
         if(enemy == null) {
@@ -221,6 +228,7 @@ public class GamePlay implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        getPlanetTexture().dispose();
         player.disposeShipView();
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
@@ -308,6 +316,16 @@ public class GamePlay implements Screen {
      */
     public void deleteEnemy() {
         enemy = null;
+    }
+
+    /**
+     * gets the current position of the ship and returns the planet texture
+     * @return the new planet texture
+     */
+    public Texture getPlanetTexture(){
+        planetTextureString = PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture();
+
+        return new Texture(planetTextureString);
     }
 
     /**

@@ -70,7 +70,7 @@ public class EventGUI {
 
         backgroundTexture = new Texture("event/eventbackground.png");
 
-        nextPage = new EventPageButton(0, 0, 10, 10, this); //TODO whxy
+        nextPage = new EventPageButton(0, 0, 10, 10, this); //TODO whxy (Text/Planet info)
         stage.addActor(nextPage);
 
         eventPages = new LinkedList<>();
