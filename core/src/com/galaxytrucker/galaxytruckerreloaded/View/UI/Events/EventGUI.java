@@ -3,13 +3,13 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EventPageButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Shows an event
@@ -98,11 +98,11 @@ public class EventGUI {
             eventPages.add(currentPage);
         }
         else if(event == PlanetEvent.PVP) {
-            currentPage = new EventPage(main, null, "this is a pvp fight", 0, 0);
+            currentPage = new EventPage(main, drawables, "this is a pvp fight", 0, 0);
             eventPages.add(currentPage);
         }
         else { //VOID
-            currentPage = new EventPage(main, null, "this planet is empty", 0, 0);
+            currentPage = new EventPage(main, drawables, "this planet is empty", 0, 0);
             eventPages.add(currentPage);
         }
     }
