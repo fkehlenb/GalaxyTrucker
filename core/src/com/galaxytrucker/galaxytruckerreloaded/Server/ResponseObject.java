@@ -50,10 +50,12 @@ public class ResponseObject implements Serializable {
     private boolean myRound = false;
 
     /** Previous action carried out */
-    private PreviousRoundAction previousRoundAction;
+    @ElementCollection
+    private List<PreviousRoundAction> previousRoundAction;
 
     /** Weapon used for the above action */
-    private WeaponType weaponUsed;
+    @ElementCollection
+    private List<WeaponType> weaponUsed;
 
     /** Reward weapons */
     @ManyToMany(cascade = CascadeType.MERGE)

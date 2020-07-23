@@ -103,32 +103,28 @@ public class ServerServiceCommunicator {
             case HYPERJUMP:
                 if (request.getShip().isInCombat() && !request.isPvp()) {
                     for (BattleService b : battleServices) {
-                        if (b.getPlayerOne().getId() == request.getShip().getId()
-                                || b.getPlayerTwo().getId() == request.getShip().getId()) {
-                            return b.fleeFight(request.getShip(), request.getPlanet());
-                        }
+                        // todo
                     }
                 } else if (request.getShip().isInCombat() && request.isPvp()) {
                     // Todo pvp service
                 }
                 return travelService.jump(request.getShip(), request.getPlanet());
             case ROUND_UPDATE_DATA:
-                if (request.getShip().isInCombat()) {
-                    for (BattleService b : battleServices) {
-                        if (b.getPlayerOne().getId() == request.getShip().getId()
-                                || b.getPlayerTwo().getId() == request.getShip().getId()) {
-                            return b.getUpdatedData(request.getShip());
-                        }
+                for (BattleService b : battleServices){
+                    if (b.getCombatants().contains(request.getShip())){
+                        return b.getUpdatedData(request.getShip());
                     }
                 }
             case ATTACK_SHIP:
-                if (request.getShip().isInCombat()) {
-                    for (BattleService b : battleServices) {
-                        if (b.getPlayerOne().getId() == request.getShip().getId()
-                                || b.getPlayerTwo().getId() == request.getShip().getId()) {
-                            return b.attackShip(request.getShip(), request.getWeapon(),
-                                    request.getOpponentShip(), request.getRoom());
-                        }
+                for (BattleService b : battleServices){
+                    if (b.getCombatants().contains(request.getShip())){
+                        return b.addToQueue(request);
+                    }
+                }
+            case ROUND_OVER:
+                for (BattleService b : battleServices){
+                    if (b.getCombatants().contains(request.getShip())){
+                        return b.playMoves(request.getShip());
                     }
                 }
             case TRADERBUYCREW:

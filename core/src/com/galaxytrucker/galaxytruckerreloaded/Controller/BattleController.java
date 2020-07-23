@@ -19,87 +19,76 @@ public class BattleController extends Controller {
      */
     private Ship opponent;
 
+    /** Instance */
     private static BattleController battleController;
 
-    public static BattleController getInstance(ClientControllerCommunicator clientControllerCommunicator){
-        if (battleController == null){
+    /** Get instance */
+    public static BattleController getInstance(ClientControllerCommunicator clientControllerCommunicator) {
+        if (battleController == null) {
             battleController = new BattleController(clientControllerCommunicator);
         }
         return battleController;
     }
+
     /**
      * ClientControllerCommunicator
      */
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
 
-    /** Response object */
+    /**
+     * Response object
+     */
     private ResponseObject previousResponse = null;
 
     /**
-     * Fetch updated data before each round
-     *
-     * @return is it my round?
+     * Play your round's moves
      */
-    public boolean isMyRound() {
+    public boolean playMoves() {
         RequestObject requestObject = new RequestObject();
-        requestObject.setRequestType(RequestType.ROUND_UPDATE_DATA);
+        requestObject.setRequestType(RequestType.ROUND_OVER);
         requestObject.setShip(clientControllerCommunicator.getClientShip());
-        previousResponse = clientControllerCommunicator.sendRequest(requestObject);
-        if (previousResponse.isValidRequest()) {
-            clientControllerCommunicator.setClientShip(previousResponse.getResponseShip());
-            opponent = previousResponse.getResponseShip();
-            return previousResponse.isMyRound();
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()) {
+            clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            return true;
         }
         return false;
     }
 
-    // Todo: "if at pvp planet, remove hyperjump button and replace with different one
-    // todo: that returns user to previous/destination planet"
-    // After arriving at planet:
-    // getPlanetEvent -> [isMyRound:true->action->isMyRound]
-    //                   [isMyRound:false->isCombatOver->isCombatWon->isCombatLost->continue]
-
-    /** Check if the combat is over
-     * @return combat over
-     * @throws NullPointerException if the previous response object is null */
-    public boolean isCombatOver() throws NullPointerException{
-        return previousResponse.isCombatOver();
+    /**
+     * Fetch updated data
+     */
+    public boolean fetchUpdatedData() {
+        RequestObject requestObject = new RequestObject();
+        requestObject.setRequestType(RequestType.ROUND_UPDATE_DATA);
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()) {
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
+            previousResponse = responseObject;
+            return true;
+        }
+        return false;
     }
 
-    /** Check if the combat was won
-     * @return combat won
-     * @throws NullPointerException if the previous response object is null */
-    public boolean isCombatWon() throws NullPointerException{
-        return previousResponse.isCombatWon();
-    }
-
-    /** Check if combat was lost
-     * @return combat lost
-     * @throws NullPointerException if the previous response object is null */
-    public boolean isCombatLost() throws NullPointerException{
-        return previousResponse.isDead();
-    }
 
     /**
-     * Attack opponent ship
+     * Attack opponent
      *
-     * @param weapon - the weapon to attack with
+     * @param weapon - the weapon to use
      * @param room   - the room to attack
      */
     public boolean attack(Weapon weapon, Room room) {
-            RequestObject requestObject = new RequestObject();
-            requestObject.setRequestType(RequestType.ATTACK_SHIP);
-            requestObject.setShip(clientControllerCommunicator.getClientShip());
-            requestObject.setOpponentShip(opponent);
-            requestObject.setWeapon(weapon);
-            requestObject.setRoom(room);
-            ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
-            if (responseObject.isValidRequest()) {
-                clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
-                opponent = responseObject.getOpponent();
-                return true;
-            }
-        return false;
+        RequestObject requestObject = new RequestObject();
+        requestObject.setRequestType(RequestType.ATTACK_SHIP);
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
+        requestObject.setOpponentShip(opponent);
+        requestObject.setWeapon(weapon);
+        requestObject.setRoom(room);
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        return responseObject.isValidRequest();
     }
 }

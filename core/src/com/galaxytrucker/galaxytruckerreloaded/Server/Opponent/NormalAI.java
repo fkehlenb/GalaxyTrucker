@@ -6,6 +6,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Server.PreviousRoundAction;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
@@ -71,48 +72,51 @@ public class NormalAI {
                         crewHealth[i] = crew.get(i).getHealth();
                     }
                 }
-                switch (responseObject.getPreviousRoundAction()) {
-                    case ATTACK_SHIP:
-                        if (previousCrewHealth != null && crewHealth != null && sum(previousCrewHealth) < sum(crewHealth)) {
+                List<PreviousRoundAction> actions = responseObject.getPreviousRoundAction();
+                for (PreviousRoundAction previousRoundAction : actions) {
+                    switch (previousRoundAction) {
+                        case ATTACK_SHIP:
+                            if (previousCrewHealth != null && crewHealth != null && sum(previousCrewHealth) < sum(crewHealth)) {
+                                targets.add(TargetMode.CREW);
+                            } else {
+                                targets.add(TargetMode.WEAPON_SYSTEM);
+                            }
+                            previousCrewHealth = crewHealth;
+                            targets.add(TargetMode.SHIELDS);
+                            break;
+                        case HEAL_CREW:
                             targets.add(TargetMode.CREW);
-                        } else {
+                            targets.add(TargetMode.O2);
+                            targets.add(TargetMode.MEDBAY);
+                            targets.add(TargetMode.ENGINE);
+                            break;
+                        case HEAL_CREW_IN_ROOM:
+                            targets.add(TargetMode.CREW);
+                            targets.add(TargetMode.O2);
+                            targets.add(TargetMode.SHIELDS);
+                            targets.add(TargetMode.MEDBAY);
+                            break;
+                        case MOVE_CREW:
+                            targets.add(TargetMode.CREW);
                             targets.add(TargetMode.WEAPON_SYSTEM);
-                        }
-                        previousCrewHealth = crewHealth;
-                        targets.add(TargetMode.SHIELDS);
-                        break;
-                    case HEAL_CREW:
-                        targets.add(TargetMode.CREW);
-                        targets.add(TargetMode.O2);
-                        targets.add(TargetMode.MEDBAY);
-                        targets.add(TargetMode.ENGINE);
-                        break;
-                    case HEAL_CREW_IN_ROOM:
-                        targets.add(TargetMode.CREW);
-                        targets.add(TargetMode.O2);
-                        targets.add(TargetMode.SHIELDS);
-                        targets.add(TargetMode.MEDBAY);
-                        break;
-                    case MOVE_CREW:
-                        targets.add(TargetMode.CREW);
-                        targets.add(TargetMode.WEAPON_SYSTEM);
-                        targets.add(TargetMode.COCKPIT);
-                        break;
-                    case HEAL_SHIP:
-                        targets.add(TargetMode.CREW);
-                        targets.add(TargetMode.O2);
-                        targets.add(TargetMode.MEDBAY);
-                        targets.add(TargetMode.SHIELDS);
-                        targets.add(TargetMode.WEAPON_SYSTEM);
-                        targets.add(TargetMode.ENGINE);
-                        break;
-                    default:
-                        targets.add(TargetMode.WEAPON_SYSTEM);
-                        targets.add(TargetMode.SHIELDS);
-                        targets.add(TargetMode.COCKPIT);
-                        targets.add(TargetMode.ENGINE);
-                        targets.add(TargetMode.MEDBAY);
-                        break;
+                            targets.add(TargetMode.COCKPIT);
+                            break;
+                        case HEAL_SHIP:
+                            targets.add(TargetMode.CREW);
+                            targets.add(TargetMode.O2);
+                            targets.add(TargetMode.MEDBAY);
+                            targets.add(TargetMode.SHIELDS);
+                            targets.add(TargetMode.WEAPON_SYSTEM);
+                            targets.add(TargetMode.ENGINE);
+                            break;
+                        default:
+                            targets.add(TargetMode.WEAPON_SYSTEM);
+                            targets.add(TargetMode.SHIELDS);
+                            targets.add(TargetMode.COCKPIT);
+                            targets.add(TargetMode.ENGINE);
+                            targets.add(TargetMode.MEDBAY);
+                            break;
+                    }
                 }
                 for (Room r : responseObject.getOpponent().getSystems()) {
                     if (r.getCrew().size() > 0) {
@@ -265,9 +269,9 @@ public class NormalAI {
                 requestObject.setShip(ship);
                 requestObject.setRequestType(RequestType.ROUND_OVER);
                 nextMoves.add(requestObject);
-                for (RequestObject r : nextMoves) {
-                    battleService.attackShip(r.getShip(), r.getWeapon(), r.getOpponentShip(), r.getRoom());
-                }
+                battleService.getUpdatedData(ship);
+                battleService.setRoundActions(nextMoves);
+                battleService.playMoves(ship);
             }
         } catch (Exception e) {
             e.printStackTrace();

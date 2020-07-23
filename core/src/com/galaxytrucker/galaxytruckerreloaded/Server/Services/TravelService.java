@@ -176,6 +176,7 @@ public class TravelService {
                         }
                     }
                     // ===== Combat planet =====
+                    // todo pvp
                     if (!(dest.getEvent().equals(PlanetEvent.VOID) || dest.getEvent().equals(PlanetEvent.METEORSHOWER)
                             || dest.getEvent().equals(PlanetEvent.SHOP) || dest.getEvent().equals(PlanetEvent.NEBULA))) {
                         System.out.println("[DESTINATION]:[COMBAT]");
@@ -190,7 +191,11 @@ public class TravelService {
                             try {
                                 s.setInCombat(true);
                                 // ===== Create new Battle Service =====
-                                BattleService battleService = new BattleService(UUID.randomUUID(), s.getId(), s, enemyShip);
+                                BattleService battleService = new BattleService(UUID.randomUUID(), s.getId());
+                                List<Ship> combatants = new ArrayList<>();
+                                combatants.add(enemyShip);
+                                combatants.add(s);
+                                battleService.setCombatants(combatants);
                                 battleServiceDAO.persist(battleService);
                                 ServerServiceCommunicator serverServiceCommunicator = ServerServiceCommunicator.getInstance();
                                 List<BattleService> battleServices = serverServiceCommunicator.getBattleServices();

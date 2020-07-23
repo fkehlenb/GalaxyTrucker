@@ -15,6 +15,17 @@ import java.net.Socket;
 @SuppressWarnings("all") // TODO REMOVE THIS WHEN TEST PHASE IS DONE
 public class Server implements Runnable{
 
+    /** Server instance */
+    private static Server instance = null;
+
+    /** Get the instance */
+    public static Server getInstance(){
+        if (instance == null){
+            Server.runServer();
+        }
+        return instance;
+    }
+
     /** Server socket for network communication  */
     private ServerSocket serverSocket;
 
@@ -33,10 +44,10 @@ public class Server implements Runnable{
 
     /** Run the server (USE THIS) */
     public static void runServer(){
-        Server server = new Server();
-        server.setPort(5050);
-        server.serverServiceCommunicator = ServerServiceCommunicator.getInstance();
-        new Thread(server).start();
+        instance = new Server();
+        instance.setPort(5050);
+        instance.serverServiceCommunicator = ServerServiceCommunicator.getInstance();
+        new Thread(instance).start();
         try {
             Thread.sleep(1000);
         }
