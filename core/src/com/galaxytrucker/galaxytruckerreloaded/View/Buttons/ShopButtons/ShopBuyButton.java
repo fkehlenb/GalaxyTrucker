@@ -1,14 +1,17 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopElement;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopSellElement;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopElement;
 
-public class ShopSellButton extends ImButton {
+/**
+ * button used to buy something in the shop
+ */
+public class ShopBuyButton extends ImButton {
+
     /**
      * Click sound effect
      */
@@ -17,14 +20,14 @@ public class ShopSellButton extends ImButton {
     /**
      * the ui this button is on
      */
-    private ShopSellElement shop;
+    private ShopElement shop;
 
     /**
      * Constructor
      *
      * @param ui the ui this button is on
      */
-    public ShopSellButton(float x, float y, float width, float height, ShopSellElement ui) {
+    public ShopBuyButton(float x, float y, float width, float height, ShopElement ui) {
         super(new Texture("sell_buy_on.png"), x, y, width, height);
         shop = ui;
         this.addListener(new ClickListener() {
@@ -36,6 +39,6 @@ public class ShopSellButton extends ImButton {
 
     public void leftClick()
     {
-        shop.sell();
+        shop.buy();
     }
 }

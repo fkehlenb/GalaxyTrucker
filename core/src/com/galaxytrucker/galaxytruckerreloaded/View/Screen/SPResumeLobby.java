@@ -12,9 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.*;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SPResumeLobbyBackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SPResumeStartGame;
 
 /**
  * the single player lobby for resuming a game

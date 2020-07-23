@@ -1,9 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 
-import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
 import lombok.Setter;
 
 import java.net.ServerSocket;
@@ -28,6 +25,16 @@ public class Server implements Runnable{
 
     /** Server socket for network communication  */
     private ServerSocket serverSocket;
+
+    public static Server instance = null;
+
+    /** Get the instance */
+    public static Server getInstance(){
+        if(instance == null){
+            Server.runServer();
+        }
+        return instance;
+    }
 
     /** Server thread */
     private Thread serverThread;

@@ -1,9 +1,11 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 
 import lombok.*;
+import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -62,6 +64,9 @@ public class Planet implements Serializable {
     /** Trader */
     @ManyToOne(cascade = CascadeType.ALL)
     private Trader trader;
+
+    @NonNull
+    private String planetTexture;
 
     /** Whether or not the planet has been looted */
     private boolean looted = false;

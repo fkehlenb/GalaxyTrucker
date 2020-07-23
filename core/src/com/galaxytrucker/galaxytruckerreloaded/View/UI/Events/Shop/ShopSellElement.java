@@ -1,10 +1,11 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
+package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShopSellButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.ShopSellButton;
 import lombok.Getter;
 
 @Getter
@@ -38,7 +39,7 @@ public class ShopSellElement {
     /**
      * the amount, if this is fuel, hp or missiles
      */
-    private int amount;
+    private Crew crew;
 
     /**
      * the shop ui this element is on
@@ -54,18 +55,18 @@ public class ShopSellElement {
      * @param y the position
      * @param shop the shop this is on
      * @param weapon the weapon if this represents a weapon
-     * @param amount the amount, if this represents missiles
+     * @param crew the amount, if this represents missiles
      */
-    public ShopSellElement(Main main, Stage stage, Texture texture, float x, float y, ShopUI shop, Weapon weapon, int amount) {
+    public ShopSellElement(Main main, Stage stage, Texture texture, float x, float y, ShopUI shop, Weapon weapon, Crew crew) {
         this.main = main;
         this.texture = texture;
         this.x = x;
         this.y = y;
         this.shop = shop;
         this.weapon = weapon;
-        this.amount = amount;
+        this.crew = crew;
 
-        button = new ShopSellButton(0, 0, 10, 10, this);
+        //button = new ShopSellButton(0, 0, 10, 10, this);
         stage.addActor(button);
     }
 
@@ -73,7 +74,7 @@ public class ShopSellElement {
      * dispose of the shop sell element
      */
     public void disposeShopSellElement() {
-        shop.removeSellElement(this);
+        //shop.removeSellElement(this);
         texture.dispose();
         button.remove();
     }
@@ -93,7 +94,7 @@ public class ShopSellElement {
             success = sellWeapon();
         }
         else {
-            success = sellMissiles();
+            success = sellCrew();
         }
         if(success) {
             disposeShopSellElement();
@@ -108,9 +109,8 @@ public class ShopSellElement {
     }
 
     /**
-     * sell missiles
+     * transfer away a Crewmember but receive compensation for the early end of contract which makes this totally not human trafficking at all, I swear
      */
-    private boolean sellMissiles() {
-        return shop.sellMissiles(amount);
-    }
+    private boolean sellCrew() {return shop.sellCrew(crew);}
+
 }
