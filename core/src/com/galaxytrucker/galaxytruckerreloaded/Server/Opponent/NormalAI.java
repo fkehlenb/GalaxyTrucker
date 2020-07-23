@@ -77,6 +77,7 @@ public class NormalAI {
                         } else {
                             targets.add(TargetMode.WEAPON_SYSTEM);
                         }
+                        previousCrewHealth = crewHealth;
                         targets.add(TargetMode.SHIELDS);
                         break;
                     case HEAL_CREW:
