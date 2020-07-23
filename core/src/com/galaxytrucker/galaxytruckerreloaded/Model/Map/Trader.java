@@ -13,6 +13,9 @@ import java.io.Serializable;
 @Entity
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NamedQueries({
+        @NamedQuery(name = "Trader.getById",query = "select t from Trader t where t.id =: id")
+})
 public class Trader implements Serializable {
 
     /** ID */

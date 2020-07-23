@@ -40,6 +40,27 @@ public class WeaponDAO extends ObjectDAO<Weapon> {
         }
     }
 
+    /** Get a weapon using its id
+     * @param id - the weapons id
+     * @return the weapon with a matching id
+     * @throws WeaponNotFoundException if the weapon cannot be found */
+    public Weapon getById(int id) throws WeaponNotFoundException{
+        try {
+            Weapon w = null;
+            entityManager.getTransaction().begin();
+            w = entityManager.createNamedQuery("Weapon.getById",Weapon.class).setParameter("id",id).getSingleResult();
+            entityManager.getTransaction().commit();
+            if (w==null){
+                throw new NullPointerException();
+            }
+            return w;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new WeaponNotFoundException();
+        }
+    }
+
     /**
      * Edit an existing weapon in the database
      *

@@ -39,6 +39,27 @@ public class TraderDAO extends ObjectDAO<Trader> {
         }
     }
 
+    /** Get a trader using his id
+     * @param id - the trader id
+     * @return the trader with a matching id
+     * @throws TraderNotFoundException if the trader cannot be found */
+    public Trader getById(int id) throws TraderNotFoundException{
+        try {
+            Trader t = null;
+            entityManager.getTransaction().begin();
+            t = entityManager.createNamedQuery("Trader.getById",Trader.class).setParameter("id",id).getSingleResult();
+            entityManager.getTransaction().commit();
+            if (t==null){
+                throw new NullPointerException();
+            }
+            return t;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new TraderNotFoundException();
+        }
+    }
+
     /**
      * Edit an existing trader in the database
      *

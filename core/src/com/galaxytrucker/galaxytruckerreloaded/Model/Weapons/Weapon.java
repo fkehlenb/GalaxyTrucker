@@ -13,6 +13,9 @@ import java.util.List;
 @Entity
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NamedQueries({
+        @NamedQuery(name = "Weapon.getById",query = "select w from Weapon w where w.id =: id")
+})
 public class Weapon implements Serializable {
 
     /**
@@ -107,5 +110,13 @@ public class Weapon implements Serializable {
     /** Weapon price */
     @NonNull
     private int weaponPrice;
+
+    @Override
+    public boolean equals(Object o){
+        if (o==null){
+            return false;
+        }
+        return ((Weapon) o).getId() == this.getId();
+    }
 
 }
