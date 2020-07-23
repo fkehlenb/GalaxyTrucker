@@ -87,16 +87,12 @@ public class EnemyShip extends AbstractShip {
     public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
         super(main, ship, stage, game, tileStage);
         enemyBackground = new Texture("battle/battle_overlay.png");
-        /**
-         * the base texture for the enemy ship
-         */
         Texture enemyShipTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "base.png");
-        /**
-         * the grey room background texture
-         */
         Texture enemyRoomBackgroundTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "floor.png");
         enemyShipTextureRegion = new TextureRegion(enemyShipTexture);
         enemyRoomBackgroundTextureRegion = new TextureRegion(enemyRoomBackgroundTexture);
+        enemyShipTextureRegion.flip(false, true);
+        enemyRoomBackgroundTextureRegion.flip(false, true);
 
         width = enemyShipTexture.getWidth()*1.5f;
         height = enemyShipTexture.getHeight()*1.5f;

@@ -177,7 +177,7 @@ public class ShipView extends AbstractShip {
                 }
                 else if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
                     weaponroomid = r.getId();
-                    rooms.put(weaponroomid, new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage, font15));
+                    rooms.put(weaponroomid, new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
                 }
                 else {
                     rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
@@ -441,7 +441,7 @@ public class ShipView extends AbstractShip {
 
     /**
      * a weapon is chosen for an attack
-     * called by button
+     * called by weapon ui
      * @param weapon the weapon that was chosen
      */
     public void weaponChosen(Weapon weapon) {

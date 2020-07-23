@@ -40,30 +40,18 @@ public class WeaponUI extends SubsystemUI {
     private Stage stage;
 
     /**
-     * the font used to draw the names of the weapons under the buttons
-     */
-    private BitmapFont font15;
-
-    /**
-     * the glyph layouts and the id of the weapon they belong to
-     */
-    private HashMap<Integer, GlyphLayout> glyphs;
-
-    /**
      * constructor
      * @param main the main class
      * @param weapon the weapon
      */
-    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, System weapon, float sx, Stage normalStage, BitmapFont font15) {
+    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, System weapon, float sx, Stage normalStage) {
         super(main, stage, ship, x, y, weapon, sx, normalStage);
         this.stage = normalStage;
-        this.font15 = font15;
         weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
         wx = sx;
         wy = 100;
 
         weapons = weapon.getShipWeapons();
-        glyphs = new HashMap<>();
     } //TODO: equip/unequip + what ever needs to be done to make the firing of weapons possible
 
     /**
@@ -76,11 +64,11 @@ public class WeaponUI extends SubsystemUI {
     public void setBoxPosition(float wx, float wy) {
         this.wx = wx;
         this.wy = wy;
-        float bwx = wx - 50;
+        float bwx = wx+15;
         buttons = new HashMap<>();
         for(Weapon w : weapons) {
-            buttons.put(w.getId(), new WeaponActivateButton(new Texture("shipsys/weapon/minibox.png"), bwx, wy+25, 248, 50, this));
-            glyphs.put(w.getId(), new GlyphLayout(font15, w.getWeaponName()));
+            String name = w.getWeaponType().toString().toLowerCase();
+            buttons.put(w.getId(), new WeaponActivateButton(new Texture("shipsys/weapon/"+name+"button.png"), bwx, wy, 100, 100, this, w));
             stage.addActor(buttons.get(w.getId()));
             bwx += 110;
 
@@ -95,11 +83,6 @@ public class WeaponUI extends SubsystemUI {
         super.render();
         main.batch.begin();
         main.batch.draw(weaponGeneralBackground, wx, wy, 450, 90);
-        float gwx = wx;
-        for(GlyphLayout g : glyphs.values()) {
-            font15.draw(main.batch, g, gwx, wy+25);
-            gwx += 110;
-        }
         main.batch.end();
     }
 
@@ -125,7 +108,7 @@ public class WeaponUI extends SubsystemUI {
      * if weapon is active, it is deactivated
      * called by weaponactivatebutton
      */
-    public void weaponactivated() {
-        //TODO do this
+    public void weaponactivated(Weapon weapon) {
+        ((ShipView) ship).weaponChosen(weapon);
     }
 }
