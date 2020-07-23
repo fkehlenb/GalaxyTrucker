@@ -51,8 +51,10 @@ public class EventPage {
         main.batch.begin();
         int i = 0;
         for(Texture t : drawables) {
-            main.batch.draw(t, x+i, y+i, 10, 10);
-            i += 15;
+            if (t!=null) {
+                main.batch.draw(t, x + i, y + i, 10, 10);
+                i += 15;
+            }
         }
         main.batch.end();
     }
