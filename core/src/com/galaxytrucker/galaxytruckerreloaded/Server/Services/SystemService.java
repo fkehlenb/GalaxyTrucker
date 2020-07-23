@@ -103,6 +103,9 @@ public class SystemService {
     public ResponseObject removeEnergy(Ship ship, System system, int amount) {
         ResponseObject responseObject = new ResponseObject();
         try {
+            if (amount<0){
+                amount *= -1;
+            }
             // Dont trust client data
             ship = shipDAO.getById(ship.getId());
             system = (System) roomDAO.getById(system.getId());

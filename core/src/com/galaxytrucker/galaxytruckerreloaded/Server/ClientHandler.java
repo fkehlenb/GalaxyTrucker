@@ -244,6 +244,13 @@ public class ClientHandler implements Runnable {
         weaponTypes.add(WeaponType.HEAL_BOMB);
         weaponTypes.add(WeaponType.RADIO);
         weaponTypes.add(WeaponType.RADIO_BOMB);
+        List<ShipType> shipTypes = new ArrayList<>();
+        shipTypes.add(ShipType.DEFAULT);
+        shipTypes.add(ShipType.BARRAGE);
+        shipTypes.add(ShipType.KILLER);
+        shipTypes.add(ShipType.BOARDER);
+        shipTypes.add(ShipType.STEALTH);
+        shipTypes.add(ShipType.TANK);
         for (int i=0;i<traders;i++){
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, random),
                     0, 0, PlanetEvent.SHOP, new ArrayList<Ship>());
@@ -256,7 +263,7 @@ public class ClientHandler implements Runnable {
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames,usedPlanetNames,random),
                     0,0,PlanetEvent.COMBAT,new ArrayList<Ship>());
             List<Ship> ships = planet.getShips();
-            Ship opponent = generateShip(ShipType.KILLER,"[ENEMY]",planet);
+            Ship opponent = generateShip(shipTypes.get(random.nextInt(shipTypes.size()-1)),"[ENEMY]",planet);
             try {
                 shipDAO.persist(opponent);
             }

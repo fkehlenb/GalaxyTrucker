@@ -169,10 +169,10 @@ public class SubsystemUI extends RoomUI {
     public void removeEnergy() {
         if (systemType==SystemType.SHIELDS)
         {
-            ((ShipView) ship).roomSystemEnergyRemoved(room, -2);
+            ((ShipView) ship).roomSystemEnergyRemoved(room, 2);
         }
         else {
-            ((ShipView) ship).roomSystemEnergyRemoved(room, -1);
+            ((ShipView) ship).roomSystemEnergyRemoved(room, 1);
         }
     }
 }
