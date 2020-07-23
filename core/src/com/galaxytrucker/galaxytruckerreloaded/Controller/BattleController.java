@@ -26,6 +26,9 @@ public class BattleController extends Controller {
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
 
+    /** Response object */
+    private ResponseObject previousResponse = null;
+
     /**
      * Fetch updated data before each round
      *
@@ -35,11 +38,18 @@ public class BattleController extends Controller {
         RequestObject requestObject = new RequestObject();
         requestObject.setRequestType(RequestType.ROUND_UPDATE_DATA);
         requestObject.setShip(clientControllerCommunicator.getClientShip());
-        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
-        clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
-        opponent = responseObject.getResponseShip();
-        return responseObject.isMyRound();
+        previousResponse = clientControllerCommunicator.sendRequest(requestObject);
+        if (previousResponse.isValidRequest()) {
+            clientControllerCommunicator.setClientShip(previousResponse.getResponseShip());
+            opponent = previousResponse.getResponseShip();
+            return previousResponse.isMyRound();
+        }
+        return false;
     }
+
+    // After arriving at planet:
+    // getPlanetEvent (Non PVP) -> [isMyRound:true->action->isMyRound]
+    //                             [isMyRound:false->isCombatOver->isCombatWon->isCombatLost->continue]
 
     /**
      * Attack opponent ship
@@ -59,7 +69,6 @@ public class BattleController extends Controller {
             if (responseObject.isValidRequest()) {
                 clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
                 opponent = responseObject.getOpponent();
-                // TODO add fight won, return false
                 return true;
             }
         }
