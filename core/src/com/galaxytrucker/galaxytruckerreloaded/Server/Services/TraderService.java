@@ -48,19 +48,6 @@ public class TraderService extends PlanetEventService {
     private TileDAO tileDAO = TileDAO.getInstance();
 
     /**
-     * Validate purchase by checking if the client has enough money
-     *
-     * @param ship  - the ship which's purchase to validate
-     * @param price - the price to pay in coins
-     * @return true if the ship has enough money else false
-     */
-    public boolean validatePurchase(Ship ship, int price) {
-        return ship.getCoins() >= price;
-    }
-
-    // rockets - 6, fuel - 3, hp - 2
-
-    /**
      * Buy a weapon from the trader
      *
      * @param ship   - the ship that wishes to buy the weapon

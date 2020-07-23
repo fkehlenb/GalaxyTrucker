@@ -1,11 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
-import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.BattleServiceDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RequestObjectDAO;
