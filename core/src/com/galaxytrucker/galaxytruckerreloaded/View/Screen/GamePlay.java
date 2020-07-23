@@ -22,7 +22,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.ShopUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
