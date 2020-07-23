@@ -176,8 +176,6 @@ public class GamePlay implements Screen {
 
         player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this);
 
-        createEnemy(); //TODO weg, is nur zum testen der enemy anzeige
-
         Gdx.input.setInputProcessor(stage);
     }
 
