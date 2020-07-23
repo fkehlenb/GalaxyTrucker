@@ -10,10 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.BattleController;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.CrewController;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.SystemController;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.TravelController;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
@@ -278,15 +275,16 @@ public class GamePlay implements Screen {
      */
     public boolean travel(Planet planet) {
         boolean success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
+        planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
-            createEvent(planet.getEvent());
+            //createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 createShop(planet.getTrader());
             }
             else if(planet.getEvent().equals(PlanetEvent.COMBAT)) { //TODO wer erstellt wo den controller?
                 if (planet.getShips().size() > 1){
                     battleController.setOpponent(planet.getShips().get(0));
-                    createEnemy();
+                    createEnemy(planet);
                 }
 
             }
@@ -297,10 +295,10 @@ public class GamePlay implements Screen {
     /**
      * create the enemy ui, if there is an enemy
      */
-    private void createEnemy() {
+    private void createEnemy(Planet planet) {
         if(enemy == null) {
             java.lang.System.out.println("--- Rendering ship ---");
-            enemy = new EnemyShip(main, battleController.getOpponent(), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
+            enemy = new EnemyShip(main, planet.getShips().get(0), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
         }
     }
 
