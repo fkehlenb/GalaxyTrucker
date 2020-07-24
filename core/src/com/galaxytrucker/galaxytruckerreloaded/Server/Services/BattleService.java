@@ -110,6 +110,9 @@ public class BattleService implements Serializable {
      */
     private boolean combatOver = false;
 
+    /** Winner */
+    private int winner;
+
     /**
      * AI simulating enemy
      */
@@ -176,6 +179,11 @@ public class BattleService implements Serializable {
         return responseObject;
     }
 
+    /** Flee fight
+     * @param coward - the ship that wants to flee fight
+     * @return valid */
+
+
     /**
      * Get updated data
      *
@@ -187,28 +195,44 @@ public class BattleService implements Serializable {
         try {
             // Fetch new data
             ship = shipDAO.getById(ship.getId());
+            // Wait your round
             if (myRound(ship)) {
+                // Set valid
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(ship);
+                // Load overworld if player
                 if (!ship.getAssociatedUser().equals("[ENEMY]")) {
                     responseObject.setResponseOverworld(UserService.getInstance()
                             .getUser(ship.getAssociatedUser()).getOverworld());
                 }
+                // Set combat over
                 responseObject.setCombatOver(combatOver);
+                // If combat over
                 if (combatOver) {
-                    if (combatants.contains(ship)) {
-                        responseObject.setDead(false);
+                    // Check if combat won
+                    if (ship.getId() == winner){
                         responseObject.setCombatWon(true);
-                        //todo add rewards
-                    } else {
-                        responseObject.setDead(true);
-                        responseObject.setCombatWon(false);
+                        responseObject.setDead(false);
+                        // todo rewards
                     }
+                    else{
+                        responseObject.setCombatWon(false);
+                        responseObject.setDead(true);
+                    }
+                    // Clear the combatants
                     combatants.clear();
+                    // Update data
                     battleServiceDAO.update(this);
                 }
-                responseObject.setPreviousRoundAction(previousRoundActions);
-                responseObject.setWeaponUsed(previousWeaponsUsed);
+                if (!previousRoundActions.isEmpty()) {
+                    // Set previous round actions
+                    responseObject.setPreviousRoundAction(previousRoundActions);
+                }
+                if (!previousWeaponsUsed.isEmpty()) {
+                    // Set weapons used
+                    responseObject.setWeaponUsed(previousWeaponsUsed);
+                }
+                // Update ships in list
                 for (Ship s : combatants){
                     if (s.getId()==ship.getId()){
                         // update ships in local list
@@ -403,8 +427,8 @@ public class BattleService implements Serializable {
                             // Attempt to cause a breach
                             if (difficulty<=0){
                                 difficulty=1;
-                            }
-                            int randomInt = random.nextInt((int) (weapon.getBreachChance() * difficulty * 10));
+                            } // todo negative bound
+                            int randomInt = random.nextInt((int) (weapon.getBreachChance() * (float) difficulty * 10f));
                             if (randomInt == 0) {
                                 room.setBreach(5);
                             }
