@@ -189,7 +189,12 @@ public class EnemyShip extends AbstractShip {
     @Override
     public void disposeShipView() {
         enemyBackground.dispose();
-        
+        for(RoomUI r : roomUIHashMap.values()) {
+            r.disposeRoomUI();
+        }
+        for(EnemyCrewUI c : crewUIHashMap.values()) {
+            c.disposeEnemyCrewUI();
+        }
     }
 
     /**
