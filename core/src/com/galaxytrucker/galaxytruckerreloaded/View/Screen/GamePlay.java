@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -169,6 +172,11 @@ public class GamePlay implements Screen {
     private NextRoundButton nextRoundButton;
 
     /**
+     * a font used to draw text
+     */
+    private BitmapFont font15;
+
+    /**
      * the battle controller
      */
     private BattleController battleController = BattleController.getInstance(null);
@@ -182,13 +190,27 @@ public class GamePlay implements Screen {
         this.main = main;
         background = new Texture("1080p.png");
 
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 15;
+
+        font15 = generator.generateFont(params);
+
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport, main.batch);
         pauseStage = new Stage(viewport, main.batch);
         tileStage = new Stage(viewport, main.batch);
 
 
-        player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this);
+        player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this, font15);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -212,14 +234,14 @@ public class GamePlay implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
 
         if(PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.NEBULA || PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.METEORSHOWER){
             background = new Texture(PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture());
         }
         else{
             background = new Texture("1080p.png");
-            main.batch.draw(getPlanetTexture(),main.WIDTH/2,main.HEIGHT/2,getPlanetTexture().getWidth(),getPlanetTexture().getHeight());
+            main.batch.draw(getPlanetTexture(),Main.WIDTH/2f,Main.HEIGHT/2f,getPlanetTexture().getWidth(),getPlanetTexture().getHeight());
         }
 
         main.batch.end();
@@ -284,7 +306,7 @@ public class GamePlay implements Screen {
      * new event ui
      */
     public void createEvent(PlanetEvent event) {
-        eventGUI = new EventGUI(main, event, stage, this);
+        eventGUI = new EventGUI(main, event, stage, this, font15);
     }
 
     /**
@@ -308,7 +330,7 @@ public class GamePlay implements Screen {
         boolean success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
         planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
-            //createEvent(planet.getEvent());
+            createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 createShop(planet.getTrader());
             }
