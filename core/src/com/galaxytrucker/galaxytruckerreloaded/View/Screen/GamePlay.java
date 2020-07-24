@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
@@ -45,9 +46,9 @@ public class GamePlay implements Screen {
     private Texture background;
 
     /**
-     * Planet texture
+     * the texture to display a planet on top of the background
      */
-    private String planetTextureString;
+    private Texture planetTexture;
 
 
     /**
@@ -181,6 +182,7 @@ public class GamePlay implements Screen {
      */
     private BattleController battleController = BattleController.getInstance(null);
 
+
     /**
      * Constructor
      *
@@ -272,8 +274,9 @@ public class GamePlay implements Screen {
     @Override
     public void dispose() {
         background.dispose();
-        getPlanetTexture().dispose();
+        planetTexture.dispose();
         player.disposeShipView();
+        font15.dispose();
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
@@ -385,9 +388,9 @@ public class GamePlay implements Screen {
      * @return the new planet texture
      */
     public Texture getPlanetTexture(){
-        planetTextureString = PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture();
-
-        return new Texture(planetTextureString);
+        String planetTextureString = PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture();
+        planetTexture = new Texture(planetTextureString);
+        return planetTexture;
     }
 
     /**
@@ -673,15 +676,7 @@ public class GamePlay implements Screen {
             crewMoved(chosenCrew, room);
             Gdx.input.setInputProcessor(stage);
         }
-    }
-
-    /**
-     * a room on the enemy ship was chosen as a target for a weapon
-     * TODO: problem: man kann bisher nicht auf sein eigenes schiff feuern
-     * @param room the room that was chosen
-     */
-    public void roomChosenAsTarget(Room room) {
-        if(takingAim && chosenWeapon != null) {
+        else if(takingAim && chosenWeapon != null) {
             weaponShot(chosenWeapon, room);
             Gdx.input.setInputProcessor(stage);
         }
@@ -760,7 +755,7 @@ public class GamePlay implements Screen {
      * the energy for a system is updated
      * @param amount the new total amount
      */
-    public void roomSystemEnergyUpdate(Room room, int amount) {
+    private void roomSystemEnergyUpdate(Room room, int amount) {
         player.roomSystemEnergyUpdate(room, amount);
     }
 

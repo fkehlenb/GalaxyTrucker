@@ -126,7 +126,7 @@ public class EnemyShip extends AbstractShip {
      */
     @Override
     public void roomChosen(Room room) {
-        game.roomChosenAsTarget(room);
+        game.roomChosen(room);
     }
 
     /**

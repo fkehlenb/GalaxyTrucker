@@ -269,7 +269,6 @@ public class ShipView extends AbstractShip {
         for(CrewUI c : crew.values()) {
             c.disposeCrewUI();
         }
-        font15.dispose();
     }
 
     /**
