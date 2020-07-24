@@ -364,7 +364,6 @@ public class BattleService implements Serializable {
                             .getUser(ship.getAssociatedUser()).getOverworld());
                 }
                 // Set combat over
-                java.lang.System.out.println("[COMBAT-OVER]:" + combatOver);
                 responseObject.setCombatOver(combatOver);
                 // If combat over
                 if (combatOver) {
@@ -413,8 +412,6 @@ public class BattleService implements Serializable {
                         }
                     }
                 }
-                java.lang.System.out.println("[Get-Updated-Data]:[Ship]:" + ship.getId() + ":[HP]:" +
-                        ship.getHp() + ":[Shields]:" + ship.getShields());
                 // If all ships removed, remove this from communicator list
                 if (combatants.isEmpty()) {
                     ServerServiceCommunicator.getInstance().getBattleServices().remove(this);
@@ -478,6 +475,10 @@ public class BattleService implements Serializable {
                                     }
                                 }
                             }
+                            if (s.getId() != coward.getId()){
+                                s.setInCombat(false);
+                                this.winner = s.getId();
+                            }
                             s.setShields(s.getShieldCharge() / 2);
                             // Because of travel
                             if (!s.isInCombat()) {
@@ -530,6 +531,10 @@ public class BattleService implements Serializable {
         try {
             // Fetch data
             ship = shipDAO.getById(ship.getId());
+            // Update combatants
+            for (Ship s : combatants){
+                combatants.set(combatants.indexOf(s),shipDAO.getById(s.getId()));
+            }
             if (ship.getId() == currentRound) {
                 java.lang.System.out.println("[PRE]:[Play-Moves]:[Ship]:" + ship.getId() + "[Current-Round]:" + currentRound);
                 // ===== Clear old data =====
@@ -620,6 +625,7 @@ public class BattleService implements Serializable {
                         if (combatants.size() > 1) {
                             for (Ship s : combatants) {
                                 if (s.getId() == currentRound) {
+                                    ServerServiceCommunicator.getInstance().getBattleServices().set(ServerServiceCommunicator.getInstance().getBattleServices().indexOf(this),this);
                                     ai.nextMove(s, ship, this);
                                     break;
                                 }
@@ -628,11 +634,11 @@ public class BattleService implements Serializable {
                         // Fight over
                         else {
                             combatants.clear();
-                            battleServiceDAO.update(this);
                             ServerServiceCommunicator.getInstance().getBattleServices().remove(this);
                         }
                     }
                 }
+                battleServiceDAO.update(this);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -660,12 +666,19 @@ public class BattleService implements Serializable {
             // ===== Check existence of data =====
             boolean weaponEquipped = false;
             boolean existsInShip = false;
+            boolean manned = false;
+            List<Crew> mannedCrew = new ArrayList<>();
             int energyInWeaponSystem = 0;
             for (Room r : ship.getSystems()) {
                 if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)) {
                     if (((System) r).getShipWeapons().contains(weapon)) {
                         weaponEquipped = true;
                         energyInWeaponSystem = ((System) r).getEnergy();
+                        if (r.getCrew().size() > 0) {
+                            manned = true;
+                            mannedCrew.addAll(r.getCrew());
+                        }
+                        break;
                     }
                 }
             }
@@ -674,9 +687,11 @@ public class BattleService implements Serializable {
                     existsInShip = true;
                 }
             }
+            java.lang.System.out.println("[Exists-In-Ship]:" + existsInShip + ":[Weapon-Equipped]:" + weaponEquipped +
+                    ":[Energy-In-System]:" + energyInWeaponSystem + ":[Weapon-Cooldown]:" + weapon.getCurrentCooldown());
             if (existsInShip && weaponEquipped && energyInWeaponSystem > 0) {
                 // ===== Check for cooldown =====
-                if (weapon.getCurrentCooldown() == 0) {
+                if (weapon.getCurrentCooldown() <= 0) {
                     // ===== Check for rocket cost =====
                     if (ship.getMissiles() >= weapon.getMissileCost()) {
                         // ===== Set cooldown =====
@@ -688,8 +703,13 @@ public class BattleService implements Serializable {
                         // ===== Weapon burst =====
                         for (int i = 0; i < weapon.getBurst(); i++) {
                             // ===== Compute weapon damage =====
-                            int damage = (int) ((float) weapon.getDamage() * weapon.getAccuracy() * ((float) weapon.getWeaponLevel()) / (float) energyInWeaponSystem);
-                            java.lang.System.out.println("[Damage]:" + damage);
+                            int damage = (int) (((float) weapon.getDamage() / weapon.getAccuracy()) * ((float) weapon.getWeaponLevel()) / (float) energyInWeaponSystem);
+                            // ===== Add crew damage =====
+                            if (manned) {
+                                for (Crew c : mannedCrew) {
+                                    damage += c.getStats().get(0);
+                                }
+                            }
                             // ===== Pierce =====
                             if (weapon.getShieldPiercing() < opponent.getShields()) {
                                 damage -= (opponent.getShields() - weapon.getShieldPiercing());
@@ -711,7 +731,8 @@ public class BattleService implements Serializable {
                             }
                             opponent.setShields(weapon.getShieldPiercing());
                             // todo remove me
-                            damage = 1000;
+//                            damage = 1000;
+                            java.lang.System.out.println("[DAMAGE]:" + damage);
                             // Damage ship hull
                             while (damage > 0) {
                                 opponent.setHp(opponent.getHp() - 1);
@@ -744,7 +765,11 @@ public class BattleService implements Serializable {
                             if (difficulty <= 0) {
                                 difficulty = 1;
                             } // todo negative bound exception
-                            int randomInt = random.nextInt((int) (weapon.getBreachChance() * (float) difficulty * 10f));
+                            int breachChance = (int) (weapon.getBreachChance() * (float) difficulty * 10f);
+                            if (breachChance == 0){
+                                breachChance = random.nextInt(20);
+                            }
+                            int randomInt = random.nextInt(breachChance);
                             if (randomInt == 0) {
                                 room.setBreach(5);
                             }
@@ -764,6 +789,7 @@ public class BattleService implements Serializable {
                         if (!this.combatOver) {
                             weapon.setCurrentCooldown(weapon.getCooldown());
                             weaponDAO.update(weapon);
+                            java.lang.System.out.println("[Weapon]:" + weapon.getWeaponName() + ":[Set-Cooldown]:" + weapon.getCurrentCooldown());
                         }
                         return true;
                     }
@@ -784,8 +810,6 @@ public class BattleService implements Serializable {
         try {
             // fetch data
             ship = shipDAO.getById(ship.getId());
-            // Verification
-            java.lang.System.out.println("[PRE]:[PASSIVE-CHANGES]:[Ship]:" + ship.getId() + ":[FTL]:" + ship.getFTLCharge());
             // ===== Recharge FTL Drive =====
             for (Room r : ship.getSystems()) {
                 if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.ENGINE) && !((System) r).isDisabled()) {
@@ -892,8 +916,6 @@ public class BattleService implements Serializable {
             }
             // Update ship
             shipDAO.update(ship);
-            // Verification
-            java.lang.System.out.println("[POST]:[PASSIVE-CHANGES]:[Ship]:" + ship.getId() + ":[FTL]:" + ship.getFTLCharge());
         } catch (Exception e) {
             e.printStackTrace();
         }

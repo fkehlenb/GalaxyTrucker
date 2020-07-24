@@ -219,7 +219,6 @@ public class NormalAI implements Serializable {
      */
     public void nextMove(Ship ship, Ship opponent, BattleService battleService) {
         try {
-            java.lang.System.out.println("\n==========[AI-Playing]==========");
             List<Weapon> weapons = new ArrayList<>();
             for (Room r : ship.getSystems()){
                 if (r.isSystem()&& ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
@@ -271,16 +270,12 @@ public class NormalAI implements Serializable {
                         requestObject.setRoom(targetRoom);
                         requestObject.setRequestType(RequestType.ATTACK_SHIP);
                         nextMoves.add(requestObject);
-                        java.lang.System.out.println("[AI]:[Added-Action]:" + target);
                     }
                 }
                 for (RequestObject requestObject : nextMoves){
                     battleService.addToQueue(requestObject);
                 }
-                java.lang.System.out.println("[AI]:[Round-Over]");
-                java.lang.System.out.println("[AI]:[Play-Moves]");
                 battleService.playMoves(ship);
-                java.lang.System.out.println("=====[AI-Done]=====");
             }
         } catch (Exception e) {
             e.printStackTrace();
