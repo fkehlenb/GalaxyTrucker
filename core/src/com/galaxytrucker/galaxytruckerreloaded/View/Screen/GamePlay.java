@@ -755,8 +755,17 @@ public class GamePlay implements Screen {
     public void roomSystemEnergyAdded(Room room, int amount) {
         boolean success = SystemController.getInstance(null).addEnergy((System) room, amount);
         if(success) {
-            roomSystemEnergyUpdate(room, amount);
+            roomSystemEnergyUpdate(room, getNewSystemEnergyAmount(room));
         }
+    }
+
+    private int getNewSystemEnergyAmount(Room room) {
+        for(Room r : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()) {
+            if(r.getId() == room.getId()) {
+                return ((System) r).getEnergy();
+            }
+        }
+        return 0;
     }
 
     /**
@@ -767,7 +776,7 @@ public class GamePlay implements Screen {
     public void roomSystemEnergyRemoved(Room room, int amount) {
         boolean success = SystemController.getInstance(null).removeEnergy((System) room, amount);
         if(success) {
-            roomSystemEnergyUpdate(room, amount);
+            roomSystemEnergyUpdate(room, getNewSystemEnergyAmount(room));
         }
     }
 

@@ -127,11 +127,11 @@ public class SubsystemUI extends RoomUI {
     /**
      * the amount of energy given to a system (if this room is a system) is changed
      *
-     * @param amount how much is added
+     * @param amount the new amount
      */
     @Override
     public void systemEnergyUpdate(int amount) {
-        this.energy += amount;
+        this.energy = amount;
     }
 
     /**
