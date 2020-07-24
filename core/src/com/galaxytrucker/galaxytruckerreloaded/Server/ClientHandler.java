@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.*;
 
@@ -187,11 +188,19 @@ public class ClientHandler implements Runnable {
                     gameActive = true;
                     // ==================== RUNNING ====================
                     while (gameActive) {
-                        RequestObject request = (RequestObject) receiveObject.readObject();
-                        sendObject.reset();
-                        sendObject.writeObject(this.serverServiceCommunicator.getResponse(request));
-                        if (request.getRequestType() == RequestType.LOGOUT) {
-                            gameActive = false;
+                        if (!clientSocket.getInetAddress().isReachable(2000)) {
+                            RequestObject requestObject = new RequestObject();
+                            requestObject.setRequestType(RequestType.LOGOUT);
+                            requestObject.setUsername(username);
+                            this.serverServiceCommunicator.getResponse(requestObject);
+                            java.lang.System.out.println("[Client-Disconnected]:[Auto-Logout]");
+                        } else {
+                            RequestObject request = (RequestObject) receiveObject.readObject();
+                            sendObject.reset();
+                            sendObject.writeObject(this.serverServiceCommunicator.getResponse(request));
+                            if (request.getRequestType() == RequestType.LOGOUT) {
+                                gameActive = false;
+                            }
                         }
                     }
                 }

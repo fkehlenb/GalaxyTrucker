@@ -96,6 +96,7 @@ public class Server implements Runnable{
             Socket clientSocket = null;
             try {
                 clientSocket = serverSocket.accept();
+                clientSocket.setSoTimeout(0);
                 System.out.println("Accepted new connection from "+ clientSocket.getInetAddress().getHostAddress());
             }
             catch (Exception e){

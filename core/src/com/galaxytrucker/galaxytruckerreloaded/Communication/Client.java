@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /** This class handles the client side networking */
@@ -152,7 +153,8 @@ public class Client {
      */
     public Client(@NonNull String ipAddress, @NonNull int port) throws IllegalArgumentException {
         try {
-            socket = new Socket(ipAddress, port);
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(ipAddress,port),0);
             send = new PrintWriter(socket.getOutputStream(), true);
             receive = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             sendObject = new ObjectOutputStream(socket.getOutputStream());
