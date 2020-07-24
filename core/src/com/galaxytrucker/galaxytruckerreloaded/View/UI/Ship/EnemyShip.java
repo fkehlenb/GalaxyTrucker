@@ -124,6 +124,23 @@ public class EnemyShip extends AbstractShip {
     }
 
     /**
+     * the update method
+     * @param ship the new ship
+     */
+    public void update(Ship ship) {
+        List<Crew> crews = new ArrayList<>();
+        //Room
+        for(Room r : ship.getSystems()) {
+            roomUIHashMap.get(r.getId()).update(r);
+            crews.addAll(r.getCrew());
+        }
+        //Crew
+        for(Crew c : crews) {
+            crewUIHashMap.get(c.getId()).update(c);
+        }
+    }
+
+    /**
      * the room was chosen by the player using a tile button
      *
      * @param room the room that was chosen
