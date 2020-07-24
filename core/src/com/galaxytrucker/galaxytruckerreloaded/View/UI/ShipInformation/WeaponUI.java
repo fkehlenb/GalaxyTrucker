@@ -3,6 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.HashMap;
@@ -39,14 +40,19 @@ public class WeaponUI extends SubsystemUI {
 
     private Stage stage;
 
+    private BitmapFont font;
+
+    private HashMap<Integer, GlyphLayout> glyphs = new HashMap<>();
+
     /**
      * constructor
      * @param main the main class
      * @param weapon the weapon
      */
-    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, System weapon, float sx, Stage normalStage) {
+    public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, System weapon, float sx, Stage normalStage, BitmapFont font) {
         super(main, stage, ship, x, y, weapon, sx, normalStage);
         this.stage = normalStage;
+        this.font = font;
         weaponGeneralBackground = new Texture("shipsys/weapon_system/generalbox.png");
         wx = sx;
         wy = 100;
@@ -74,13 +80,20 @@ public class WeaponUI extends SubsystemUI {
     private void createButtons(List<Weapon> ws) {
         buttons = new HashMap<>();
         float bwx = wx+15;
+        boolean createGlyphs = false;
+        if(glyphs.size() == 0) {
+            createGlyphs = true;
+        }
         for(Weapon w : ws) {
             String name = w.getWeaponType().toString().toLowerCase();
             buttons.put(w.getId(), new WeaponActivateButton(new Texture("shipsys/weapon/"+name+"button.png"), bwx, wy, 100, 100, this, w));
             stage.addActor(buttons.get(w.getId()));
             bwx += 110;
-
+            if(createGlyphs) {
+                glyphs.put(w.getId(), new GlyphLayout(font, Integer.toString(w.getCooldown())));
+            }
         }
+
     }
 
     /**
@@ -103,6 +116,9 @@ public class WeaponUI extends SubsystemUI {
         System sys = (System) room;
         deleteButtons();
         createButtons(sys.getShipWeapons());
+        for(Weapon w : sys.getShipWeapons()) {
+            glyphs.get(w.getId()).setText(font, Integer.toString(w.getCooldown()));
+        }
     }
 
     /**
@@ -113,6 +129,9 @@ public class WeaponUI extends SubsystemUI {
         super.render();
         main.batch.begin();
         main.batch.draw(weaponGeneralBackground, wx, wy, 450, 90);
+        for(int i : glyphs.keySet()) {
+            font.draw(main.batch, glyphs.get(i), buttons.get(i).getX(), buttons.get(i).getY());
+        }
         main.batch.end();
     }
 

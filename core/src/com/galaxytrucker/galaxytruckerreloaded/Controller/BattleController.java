@@ -116,6 +116,7 @@ public class BattleController extends Controller {
         if (responseObject.isValidRequest()) {
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
             clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
+            opponent = responseObject.getOpponent();
             previousResponse = responseObject;
             if (responseObject.getPreviousRoundAction()!=null&&!responseObject.getPreviousRoundAction().isEmpty()){
                 previousRoundActions = responseObject.getPreviousRoundAction();

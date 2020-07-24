@@ -404,6 +404,7 @@ public class GamePlay implements Screen {
         if (success){
             boolean combatOver = battleController.fetchUpdatedData();
             player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+            enemy.update(BattleController.getInstance(null).getOpponent());
             if (combatOver){
                 if (battleController.combatOver()){
                     if (battleController.combatWon()){

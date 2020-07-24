@@ -166,7 +166,7 @@ public class ShipView extends AbstractShip {
                 }
                 else if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
                     weaponroomid = r.getId();
-                    rooms.put(weaponroomid, new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
+                    rooms.put(weaponroomid, new WeaponUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage, font15));
                 }
                 else {
                     rooms.put(r.getId(), new SubsystemUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
