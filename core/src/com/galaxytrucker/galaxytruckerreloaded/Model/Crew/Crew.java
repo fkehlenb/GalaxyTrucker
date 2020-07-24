@@ -78,7 +78,7 @@ public class Crew implements Serializable {
     private String associatedUser;
 
     /** Whether or not the crew member was just moved */
-    private int justMoved = 2;
+    private boolean justMoved = false;
 
     @Override
     public boolean equals(Object o){

@@ -6,6 +6,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -51,19 +53,32 @@ public class ResponseObject implements Serializable {
 
     /** Previous action carried out */
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<PreviousRoundAction> previousRoundAction;
 
     /** Weapon used for the above action */
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<WeaponType> weaponUsed;
 
     /** Reward weapons */
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Weapon> rewardWeapons;
 
     /** Reward crew */
-    @ManyToMany(cascade = CascadeType.MERGE)
-    private List<Crew> rewardCrew;
+    @ManyToOne
+    private Crew rewardCrew;
+
+    /** Reward coins */
+    private int rewardCash = 0;
+
+    /** Reward rockets */
+    private int rewardRockets = 0;
+
+    /** Reward fuel */
+    private int rewardFuel = 0;
+
 
     /** Successful flee fight */
     private boolean fledFight = false;

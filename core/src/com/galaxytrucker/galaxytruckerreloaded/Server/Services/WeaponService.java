@@ -100,6 +100,7 @@ public class WeaponService {
                         weapons.remove(w);
                         sys.setShipWeapons(weapons);
                         w.setWeaponSystem(null);
+                        w.setCurrentCooldown(0);
                         List<Weapon> inventory = new ArrayList<>(s.getInventory());
                         inventory.add(w);
                         s.setInventory(inventory);
@@ -113,7 +114,6 @@ public class WeaponService {
         }
         catch (Exception e){
             e.printStackTrace();
-            // TODO Rollback actions
         }
         responseObject.setId(UUID.randomUUID().hashCode());
         try {

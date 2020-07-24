@@ -103,7 +103,9 @@ public class ServerServiceCommunicator {
             case HYPERJUMP:
                 if (request.getShip().isInCombat()) {
                     for (BattleService b : battleServices) {
-                        return b.fleeFight(request.getShip(),request.getPlanet());
+                        if (b.getCombatants().contains(request.getShip()) && !b.isCombatOver()) {
+                            return b.fleeFight(request.getShip(), request.getPlanet());
+                        }
                     }
                 }
                 return travelService.jump(request.getShip(), request.getPlanet());
@@ -115,13 +117,13 @@ public class ServerServiceCommunicator {
                 }
             case ATTACK_SHIP:
                 for (BattleService b : battleServices){
-                    if (b.getCombatants().contains(request.getShip())){
+                    if (b.getCombatants().contains(request.getShip()) && !b.isCombatOver()){
                         return b.addToQueue(request);
                     }
                 }
             case ROUND_OVER:
                 for (BattleService b : battleServices){
-                    if (b.getCombatants().contains(request.getShip())){
+                    if (b.getCombatants().contains(request.getShip()) && !b.isCombatOver()){
                         return b.playMoves(request.getShip());
                     }
                 }
