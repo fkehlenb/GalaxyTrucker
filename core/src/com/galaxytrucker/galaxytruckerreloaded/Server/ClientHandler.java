@@ -431,7 +431,7 @@ public class ClientHandler implements Runnable {
                     // Weapons
                     else if (i == 5) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 0, 3, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 2, 3, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Newton", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
@@ -551,7 +551,7 @@ public class ClientHandler implements Runnable {
                     //Weapons
                     else if(i==12) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 0, 4, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 2, 4, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
                         Weapon rocket2 = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,2, 3, 2, 1, 1, (float) 1.0,
@@ -657,7 +657,7 @@ public class ClientHandler implements Runnable {
                     //Weapon
                     else if(i==9) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 0, 4, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 2, 4, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
                         Weapon laser = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 2, 1, 1, 1, 0,
@@ -799,7 +799,7 @@ public class ClientHandler implements Runnable {
                     //Weapons
                     else if(i==15) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 0, 6, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 2, 6, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "Newton", 8, 8, crewStats, 30, username);
@@ -896,7 +896,7 @@ public class ClientHandler implements Runnable {
                     //Weapons
                     else if(i==11) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 0, 2, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 2, 2, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add Weapons
                         Weapon laser = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 1, 1, 1, 1, 0,
@@ -1009,7 +1009,7 @@ public class ClientHandler implements Runnable {
                     //Weapons
                     else if (i ==11) {
                         System weapons = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 0, 3, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 2, 3, 0, SystemType.WEAPON_SYSTEM, new ArrayList<Weapon>());
                         weapons.setTiles(tiles);
                         // Add crew
                         Crew crew = new Crew(UUID.randomUUID().hashCode(), "crew1", 8, 8, crewStats, 30, username);

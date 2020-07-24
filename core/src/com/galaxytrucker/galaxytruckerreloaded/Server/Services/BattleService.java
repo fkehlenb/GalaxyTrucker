@@ -185,6 +185,8 @@ public class BattleService implements Serializable {
     public ResponseObject getUpdatedData(Ship ship) {
         ResponseObject responseObject = new ResponseObject();
         try {
+            // Fetch new data
+            ship = shipDAO.getById(ship.getId());
             if (myRound(ship)) {
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(ship);
@@ -216,7 +218,8 @@ public class BattleService implements Serializable {
                         responseObject.setOpponent(s);
                     }
                 }
-                java.lang.System.out.println("\n[Get-Updated-Data]:[Ship]:" + ship.getId());
+                java.lang.System.out.println("\n[Get-Updated-Data]:[Ship]:" + ship.getId()+":[HP]:" +
+                        ship.getHp() + ":[Shields]:" + ship.getShields());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,6 +235,8 @@ public class BattleService implements Serializable {
     public ResponseObject playMoves(Ship ship) {
         ResponseObject responseObject = new ResponseObject();
         try {
+            // Fetch data
+            ship = shipDAO.getById(ship.getId());
             if (ship.getId() == currentRound) {
                 java.lang.System.out.println("\n[PRE]:[Play-Moves]:[Current-Round]:" + currentRound);
                 // ===== Passive Changes =====
@@ -254,6 +259,7 @@ public class BattleService implements Serializable {
                 else{
                     difficulty = UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld().getDifficulty();
                 }
+                java.lang.System.out.println("[ACTIONS]:" + roundActions.size());
                 if (!roundActions.isEmpty()) {
                     for (RequestObject move : roundActions) {
                         if (move.getRequestType().equals(RequestType.ATTACK_SHIP)) {
@@ -345,6 +351,7 @@ public class BattleService implements Serializable {
                         for (int i = 0; i < weapon.getBurst(); i++) {
                             // ===== Compute weapon damage =====
                             int damage = (int) ((float) weapon.getDamage() * weapon.getAccuracy() * ((float) weapon.getWeaponLevel()) / (float) energyInWeaponSystem);
+                            java.lang.System.out.println("[Damage]:" + damage);
                             // ===== Pierce =====
                             if (weapon.getShieldPiercing() < opponent.getShields()) {
                                 damage -= (opponent.getShields() - weapon.getShieldPiercing());
@@ -356,23 +363,29 @@ public class BattleService implements Serializable {
                             }
                             // Cause shield damage
                             opponent.setShields(shieldLevel);
-                            for (int a = damage; a > 0; a--) {
+                           while (damage>0){
                                 if (opponent.getShields() > 0) {
                                     opponent.setShields(opponent.getShields() - 1);
+                                    damage-=1;
                                 } else {
                                     break;
                                 }
                             }
                             opponent.setShields(weapon.getShieldPiercing());
+                            // Damage ship hull
+                            while (damage>0){
+                                opponent.setHp(opponent.getHp()-1);
+                                damage-=1;
+                            }
                             shipDAO.update(opponent);
                             // Damage system and disable it
-                            if (damage > 0 && room.isSystem()) {
-                                System s = (System) room;
-                                s.setDamage(damage);
-                                if (damage > 5) {
-                                    s.setDisabled(true);
-                                }
-                            }
+//                            if (damage > 0 && room.isSystem()) {
+//                                System s = (System) room;
+//                                s.setDamage(damage);
+//                                if (damage > 5) {
+//                                    s.setDisabled(true);
+//                                } todo
+//                            }
                             // Damage crew in room
                             List<Crew> crewInRoom = room.getCrew();
                             for (Crew c : crewInRoom) {
@@ -391,7 +404,7 @@ public class BattleService implements Serializable {
                             if (difficulty<=0){
                                 difficulty=1;
                             }
-                            int randomInt = random.nextInt((int) (weapon.getBreachChance() * difficulty * 5));
+                            int randomInt = random.nextInt((int) (weapon.getBreachChance() * difficulty * 10));
                             if (randomInt == 0) {
                                 room.setBreach(5);
                             }
