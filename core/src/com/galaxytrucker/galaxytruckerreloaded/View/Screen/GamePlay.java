@@ -20,6 +20,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
@@ -127,6 +128,9 @@ public class GamePlay implements Screen {
      */
     private Stage pauseStage;
 
+    /**
+     * the stage for the room buttons
+     */
     private Stage tileStage;
 
     /**
@@ -144,6 +148,9 @@ public class GamePlay implements Screen {
      */
     private boolean crewMoving = false;
 
+    /**
+     * the crew member that was chosen to move
+     */
     private Crew chosenCrew;
 
     /**
@@ -156,6 +163,14 @@ public class GamePlay implements Screen {
      */
     private Weapon chosenWeapon;
 
+    /**
+     * the button to move on to the next round in a combat
+     */
+    private NextRoundButton nextRoundButton;
+
+    /**
+     * the battle controller
+     */
     private BattleController battleController = BattleController.getInstance(null);
 
     /**
@@ -297,10 +312,11 @@ public class GamePlay implements Screen {
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 createShop(planet.getTrader());
             }
-            else if(planet.getEvent().equals(PlanetEvent.COMBAT)) { //TODO wer erstellt wo den controller?
+            else if(planet.getEvent().equals(PlanetEvent.COMBAT)) {
                 if (planet.getShips().size() > 1){
                     battleController.setOpponent(planet.getShips().get(0));
                     createEnemy();
+                    createRoundButton();
                 }
 
             }
@@ -314,8 +330,25 @@ public class GamePlay implements Screen {
     private void createEnemy(){
         if(enemy == null) {
             java.lang.System.out.println("--- Rendering ship ---");
-            enemy = new EnemyShip(main, battleController.getOpponent(), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
+            enemy = new EnemyShip(main, battleController.getOpponent(), stage, this, tileStage);
         }
+    }
+
+    /**
+     * create next round button
+     */
+    private void createRoundButton() { //TODO remove from the stage when battle over
+        nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), 248, 50, this);
+        stage.addActor(nextRoundButton);
+    }
+
+    /**
+     * move on to the next fight round
+     * called by next round button
+     * calling the battle controller
+     */
+    public void nextFightRound() {
+        boolean success = battleController.playMoves();
     }
 
     /**
