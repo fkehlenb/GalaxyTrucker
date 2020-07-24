@@ -420,13 +420,6 @@ public class GamePlay implements Screen {
     }
 
     /**
-     * remove the enemy ui again
-     */
-    public void deleteEnemy() {
-        enemy = null;
-    }
-
-    /**
      * gets the current position of the ship and returns the planet texture
      * @return the new planet texture
      */
