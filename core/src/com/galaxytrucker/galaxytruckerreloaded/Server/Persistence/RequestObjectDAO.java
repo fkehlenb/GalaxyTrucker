@@ -4,8 +4,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRequest
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RequestObjectNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 
+import java.io.Serializable;
+
 /** Used for retracing game steps */
-public class RequestObjectDAO extends ObjectDAO<RequestObject> {
+public class RequestObjectDAO extends ObjectDAO<RequestObject> implements Serializable {
 
     /** Instance */
     private static RequestObjectDAO instance = null;

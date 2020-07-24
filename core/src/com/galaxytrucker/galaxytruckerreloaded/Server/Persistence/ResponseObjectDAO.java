@@ -4,8 +4,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRespons
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.ResponseObjectNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 
+import java.io.Serializable;
+
 /** Manages response objects in the database */
-public class ResponseObjectDAO extends ObjectDAO<ResponseObject> {
+public class ResponseObjectDAO extends ObjectDAO<ResponseObject> implements Serializable {
 
     /** Instance */
     private static ResponseObjectDAO instance = null;

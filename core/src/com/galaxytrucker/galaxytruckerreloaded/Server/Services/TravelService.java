@@ -14,6 +14,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.ServerServiceCommunicator;
 import lombok.*;
 
 import javax.persistence.EntityManager;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +25,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
-public class TravelService {
+public class TravelService implements Serializable {
 
     /**
      * Instance

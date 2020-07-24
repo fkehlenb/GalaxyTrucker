@@ -1,6 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
@@ -9,12 +11,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.*;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Opponent.NormalAI;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
-import com.galaxytrucker.galaxytruckerreloaded.Server.PreviousRoundAction;
-import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
-import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
-import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -92,6 +91,14 @@ public class BattleService implements Serializable {
     @Transient
     private CrewService crewService = CrewService.getInstance();
 
+    /** Planet DAO */
+    @Transient
+    private PlanetDAO planetDAO = PlanetDAO.getInstance();
+
+    /** Travel service */
+    @Transient
+    private TravelService travelService = TravelService.getInstance();
+
     /**
      * ID of current round ship
      */
@@ -109,6 +116,9 @@ public class BattleService implements Serializable {
      * Combat over?
      */
     private boolean combatOver = false;
+
+    /** Winner */
+    private int winner;
 
     /**
      * AI simulating enemy
@@ -145,7 +155,7 @@ public class BattleService implements Serializable {
      */
     private boolean myRound(Ship ship) {
         int id = ship.getId();
-        java.lang.System.out.println("\n[Waiting-In-Queue]:[Ship]:" + ship.getId());
+        java.lang.System.out.println("[Waiting-In-Queue]:[Ship]:" + ship.getId());
         while (true) {
             if (currentRound == id) {
                 break;
@@ -187,28 +197,45 @@ public class BattleService implements Serializable {
         try {
             // Fetch new data
             ship = shipDAO.getById(ship.getId());
+            // Wait your round
             if (myRound(ship)) {
+                // Set valid
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(ship);
+                // Load overworld if player
                 if (!ship.getAssociatedUser().equals("[ENEMY]")) {
                     responseObject.setResponseOverworld(UserService.getInstance()
                             .getUser(ship.getAssociatedUser()).getOverworld());
                 }
+                // Set combat over
+                java.lang.System.out.println("[COMBAT-OVER]:" + combatOver);
                 responseObject.setCombatOver(combatOver);
+                // If combat over
                 if (combatOver) {
-                    if (combatants.contains(ship)) {
-                        responseObject.setDead(false);
+                    // Check if combat won
+                    if (ship.getId() == winner){
                         responseObject.setCombatWon(true);
-                        //todo add rewards
-                    } else {
-                        responseObject.setDead(true);
-                        responseObject.setCombatWon(false);
+                        responseObject.setDead(false);
+                        // todo rewards
                     }
+                    else{
+                        responseObject.setCombatWon(false);
+                        responseObject.setDead(true);
+                    }
+                    // Clear the combatants
                     combatants.clear();
+                    // Update data
                     battleServiceDAO.update(this);
                 }
-                responseObject.setPreviousRoundAction(previousRoundActions);
-                responseObject.setWeaponUsed(previousWeaponsUsed);
+                if (!previousRoundActions.isEmpty()) {
+                    // Set previous round actions
+                    responseObject.setPreviousRoundAction(previousRoundActions);
+                }
+                if (!previousWeaponsUsed.isEmpty()) {
+                    // Set weapons used
+                    responseObject.setWeaponUsed(previousWeaponsUsed);
+                }
+                // Update ships in list
                 for (Ship s : combatants){
                     if (s.getId()==ship.getId()){
                         // update ships in local list
@@ -218,10 +245,103 @@ public class BattleService implements Serializable {
                         responseObject.setOpponent(s);
                     }
                 }
-                java.lang.System.out.println("\n[Get-Updated-Data]:[Ship]:" + ship.getId()+":[HP]:" +
+                java.lang.System.out.println("[Get-Updated-Data]:[Ship]:" + ship.getId()+":[HP]:" +
                         ship.getHp() + ":[Shields]:" + ship.getShields());
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /** Flee fight
+     * @param coward - the ship that wants to flee fight
+     * @param planet - the planet to flee to
+     * @return valid */
+    public ResponseObject fleeFight(Ship coward, Planet planet){
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            Random random = new Random();
+            // fetch data
+            coward = shipDAO.getById(coward.getId());
+            planet = planetDAO.getById(planet.getId());
+            if (currentRound == coward.getId() && coward.getFTLCharge()==100) {
+                // ===== Compute Evasion chance =====
+                if (coward.getEvasionChance()==0f){
+                    coward.setEvasionChance(0.33f);
+                }
+                int successfulAttempt = (int) (coward.getEvasionChance() * (float) random.nextInt(100));
+                java.lang.System.out.println("[SHIP-EVASION]" + coward.getEvasionChance() + "[EVASION]:" + successfulAttempt);
+                // ===== Successful evasion =====
+                if (successfulAttempt>=15) {
+                    // Attempt the hyperJump
+                    coward.setInCombat(false);
+                    ResponseObject responseObject1 = travelService.jump(coward, planet);
+                    // ===== Valid hyperJump =====
+                    if (responseObject1.isValidRequest()){
+                        // ===== Repair systems, heal crew, restore shields, replenish cooldowns, repair breaches =====
+                        for (Ship s : combatants){
+                            for (Room r : s.getSystems()){
+                                if (r.getBreach()>0){
+                                    r.setBreach(0);
+                                }
+                                if (r.isSystem()&&((System) r).isDisabled()){
+                                    ((System) r).setDisabled(false);
+                                }
+                                if (r.isSystem() && ((System) r).getDamage()>0){
+                                    ((System) r).setDamage(0);
+                                }
+                                if (r.isSystem()&&((System) r).getSystemType().equals(SystemType.MEDBAY)){
+                                    for (Crew c : r.getCrew()){
+                                        c.setHealth(c.getMaxhealth());
+                                    }
+                                }
+                                if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
+                                    for (Weapon w : ((System) r).getShipWeapons()){
+                                        w.setCurrentCooldown(0);
+                                        weaponDAO.update(w);
+                                    }
+                                }
+                            }
+                            s.setShields(s.getShieldCharge()/2);
+                            // Because of travel
+                            if (!s.isInCombat()){
+                                s.setFTLCharge(100);
+                            }
+                            shipDAO.update(s);
+                        }
+                        // ===== Set valid data =====
+                        responseObject1.setCombatWon(false);
+                        responseObject1.setResponseShip(responseObject1.getResponseShip());
+                        responseObject1.setCombatOver(true);
+                        responseObject1.setDead(false);
+                        // Set combat over
+                        combatOver = true;
+                        // Clear actions and set opponent round
+                        roundActions.clear();
+                        // Remove yourself
+                        this.combatants.remove(coward);
+                        this.setCombatants(this.combatants);
+                        // Set opponent as winner
+                        winner = combatants.get(0).getId();
+                        this.setWinner(this.winner);
+                        battleServiceDAO.update(this);
+                        // Remove from singleton
+                        ServerServiceCommunicator.getInstance().getBattleServices().remove(this);
+                        java.lang.System.out.println("[REMOVED-BATTLE-SERVICE]:[BattleServices]:"
+                                +ServerServiceCommunicator.getInstance().getBattleServices().size());
+                        // Next round
+                        playMoves(coward);
+                        return responseObject1;
+                    }
+                }
+                else{
+                    roundActions.clear();
+                    playMoves(coward);
+                }
+            }
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
         return responseObject;
@@ -238,7 +358,8 @@ public class BattleService implements Serializable {
             // Fetch data
             ship = shipDAO.getById(ship.getId());
             if (ship.getId() == currentRound) {
-                java.lang.System.out.println("\n[PRE]:[Play-Moves]:[Current-Round]:" + currentRound);
+                java.lang.System.out.println("[PRE]:[Play-Moves]:[Ship]:"+ship.getId()+"[Current-Round]:" + currentRound);
+                // todo check for combat over
                 // ===== Passive Changes =====
                 for (Ship s : combatants) {
                     passiveChanges(s);
@@ -258,6 +379,10 @@ public class BattleService implements Serializable {
                 }
                 else{
                     difficulty = UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld().getDifficulty();
+                }
+                // todo change diff 0 to 1
+                if (difficulty==0){
+                    difficulty = 1;
                 }
                 java.lang.System.out.println("[ACTIONS]:" + roundActions.size());
                 if (!roundActions.isEmpty()) {
@@ -280,19 +405,29 @@ public class BattleService implements Serializable {
                         break;
                     }
                 }
+                // ===== Set valid =====
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(shipDAO.getById(ship.getId()));
                 if (!ship.getAssociatedUser().equals("[ENEMY]")) {
                     responseObject.setResponseOverworld(UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld());
                 }
-                java.lang.System.out.println("[Play-Moves]:[Ship]:" + ship.getId());
-                java.lang.System.out.println("[POST]:[Play-Moves]:[Current-Round]:" + currentRound);
+                // Verification
+                java.lang.System.out.println("[POST]:[Play-Moves]:[Ship]:" + ship.getId() + "[Current-Round]:" + currentRound);
+                // ===== AI Playing =====
                 if (shipDAO.getById(currentRound).getAssociatedUser().equals("[ENEMY]")){
-                    for (Ship s : combatants){
-                        if (s.getId()==currentRound){
-                            ai.nextMove(s,ship,this);
-                            break;
+                    // Fight still going on
+                    if (combatants.size()>1) {
+                        for (Ship s : combatants) {
+                            if (s.getId() == currentRound) {
+                                ai.nextMove(s, ship, this);
+                                break;
+                            }
                         }
+                    }
+                    // Fight over
+                    else{
+                        combatants.clear();
+                        battleServiceDAO.update(this);
                     }
                 }
             }
@@ -403,8 +538,8 @@ public class BattleService implements Serializable {
                             // Attempt to cause a breach
                             if (difficulty<=0){
                                 difficulty=1;
-                            }
-                            int randomInt = random.nextInt((int) (weapon.getBreachChance() * difficulty * 10));
+                            } // todo negative bound
+                            int randomInt = random.nextInt((int) (weapon.getBreachChance() * (float) difficulty * 10f));
                             if (randomInt == 0) {
                                 room.setBreach(5);
                             }
@@ -428,9 +563,31 @@ public class BattleService implements Serializable {
      */
     private void passiveChanges(Ship ship) {
         try {
-            // todo
+            // fetch data
+            ship = shipDAO.getById(ship.getId());
+            // Verification
+            java.lang.System.out.println("[PRE]:[PASSIVE-CHANGES]:[Ship]:"+ship.getId()+":[FTL]:"+ship.getFTLCharge());
+            // ===== Recharge FTL Drive =====
+            for (Room r : ship.getSystems()){
+                if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.ENGINE) && !((System) r).isDisabled()){
+                    if (ship.getFTLCharge()<100){
+                        ship.setFTLCharge(ship.getFTLCharge()+10);
+                    }
+                }
+            }
+            shipDAO.update(ship);
+            // Verification
+            java.lang.System.out.println("[POST]:[PASSIVE-CHANGES]:[Ship]:"+ship.getId()+":[FTL]:"+ship.getFTLCharge());
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o==null || o.getClass()!=this.getClass()){
+            return false;
+        }
+        return ((BattleService) o).getId() == this.id;
     }
 }

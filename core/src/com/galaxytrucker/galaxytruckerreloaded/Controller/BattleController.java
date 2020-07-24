@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
@@ -128,6 +129,23 @@ public class BattleController extends Controller {
             else{
                 previousWeaponsUsed = new ArrayList<>();
             }
+            return true;
+        }
+        return false;
+    }
+
+    /** Flee the fight
+     * @param planet - the planet to flee to */
+    private boolean fleeFight(Planet planet){
+        RequestObject requestObject = new RequestObject();
+        requestObject.setRequestType(RequestType.HYPERJUMP);
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
+        requestObject.setPlanet(planet);
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()){
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            opponent = null;
+            previousResponse = responseObject;
             return true;
         }
         return false;

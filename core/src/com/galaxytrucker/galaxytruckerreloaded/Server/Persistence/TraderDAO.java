@@ -4,10 +4,12 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateTraderException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.TraderNotFoundException;
 
+import java.io.Serializable;
+
 /**
  * This class handles trader objects in the database
  */
-public class TraderDAO extends ObjectDAO<Trader> {
+public class TraderDAO extends ObjectDAO<Trader> implements Serializable {
 
     /** Instance */
     private static TraderDAO instance = null;

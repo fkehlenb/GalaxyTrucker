@@ -4,8 +4,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicatePlanetException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
 
+import java.io.Serializable;
+
 /** Manages the planet objects in the database */
-public class PlanetDAO extends ObjectDAO<Planet> {
+public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
 
     /** Instance */
     private static PlanetDAO instance = null;
