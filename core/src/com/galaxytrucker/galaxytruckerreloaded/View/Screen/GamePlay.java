@@ -45,10 +45,14 @@ public class GamePlay implements Screen {
     private Texture background;
 
     /**
-     * Planet texture
+     * Planet Textrue Filepath
      */
     private String planetTextureString;
 
+    /**
+     * Texture of the planet
+     */
+    private Texture planetTexture;
 
     /**
      * Looping music
@@ -188,8 +192,9 @@ public class GamePlay implements Screen {
      */
     public GamePlay(Main main) {
         this.main = main;
+        //initialising the textures at the beginning
         background = new Texture("1080p.png");
-
+        planetTexture = getPlanetTexture();
         //font generator to get bitmapfont from .ttf file
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -232,17 +237,14 @@ public class GamePlay implements Screen {
 
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         main.batch.begin();
         main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
+        if (planetTexture != null){
+            main.batch.draw(planetTexture,Main.WIDTH/2f,Main.HEIGHT/2f,planetTexture.getWidth(),planetTexture.getHeight());
+        }
 
-        if(PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.NEBULA || PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.METEORSHOWER){
-            background = new Texture(PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture());
-        }
-        else{
-            background = new Texture("1080p.png");
-            main.batch.draw(getPlanetTexture(),Main.WIDTH/2f,Main.HEIGHT/2f,getPlanetTexture().getWidth(),getPlanetTexture().getHeight());
-        }
+
 
         main.batch.end();
 
@@ -272,7 +274,7 @@ public class GamePlay implements Screen {
     @Override
     public void dispose() {
         background.dispose();
-        getPlanetTexture().dispose();
+        planetTexture.dispose();
         player.disposeShipView();
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
@@ -332,15 +334,24 @@ public class GamePlay implements Screen {
         if(success) {
             createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
+                background = new Texture("1080p.png");
                 createShop(planet.getTrader());
             }
             else if(planet.getEvent().equals(PlanetEvent.COMBAT)) {
                 if (planet.getShips().size() > 1){
+                    background = new Texture("1080p.png");
                     battleController.setOpponent(planet.getShips().get(0));
                     createEnemy();
                     createRoundButton();
                 }
-
+            }
+            else if(PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.NEBULA || PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.METEORSHOWER){
+                background = new Texture(PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture());
+                planetTexture = null;
+            }
+            else{
+                background = new Texture("1080p.png");
+                planetTexture = getPlanetTexture();
             }
         }
         return success;
@@ -417,6 +428,7 @@ public class GamePlay implements Screen {
      */
     public void deleteShop() {
         shopUI = null;
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
