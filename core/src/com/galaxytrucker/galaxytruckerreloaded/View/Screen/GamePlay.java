@@ -173,6 +173,11 @@ public class GamePlay implements Screen {
     private BitmapFont font25;
 
     /**
+     * whether the player is currently in combat
+     */
+    private boolean isInCombat = false;
+
+    /**
      * the battle controller
      */
     private BattleController battleController = BattleController.getInstance(null);
@@ -327,8 +332,14 @@ public class GamePlay implements Screen {
      * @return whether or not it is a valid request
      */
     public boolean travel(Planet planet) {
-        boolean success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
-        planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
+        boolean success;
+        if(isInCombat) {
+            success = BattleController.getInstance(null).fleeFight(planet);
+        }
+        else {
+            success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
+        }
+            planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
             createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
@@ -336,6 +347,7 @@ public class GamePlay implements Screen {
                 createShop(planet.getTrader());
             }
             else if(planet.getEvent().equals(PlanetEvent.COMBAT)) {
+                isInCombat = true;
                 if (planet.getShips().size() > 1){
                     background = new Texture("1080p.png");
                     battleController.setOpponent(planet.getShips().get(0));
@@ -366,11 +378,27 @@ public class GamePlay implements Screen {
     }
 
     /**
+     *  remove the enemey ui after fight
+     */
+    private void removeEnemy() {
+        enemy.disposeShipView();
+        enemy = null;
+    }
+
+    /**
      * create next round button
      */
     private void createRoundButton() { //TODO remove from the stage when battle over
         nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), 248, 50, this);
         stage.addActor(nextRoundButton);
+    }
+
+    /**
+     * remove the round button after fight
+     */
+    private void removeRoundButton() {
+        nextRoundButton.remove();
+        nextRoundButton = null;
     }
 
     /**
@@ -390,6 +418,9 @@ public class GamePlay implements Screen {
                     else{
                         // todo
                     }
+                    removeEnemy();
+                    removeRoundButton();
+                    isInCombat = false;
                 }
             }
         }
