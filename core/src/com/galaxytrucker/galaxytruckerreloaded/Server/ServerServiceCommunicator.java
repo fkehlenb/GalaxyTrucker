@@ -101,12 +101,10 @@ public class ServerServiceCommunicator {
             case UPGRADE_SYSTEM:
                 return systemService.upgradeSystem(request.getShip(), request.getSystem());
             case HYPERJUMP:
-                if (request.getShip().isInCombat() && !request.isPvp()) {
+                if (request.getShip().isInCombat()) {
                     for (BattleService b : battleServices) {
-                        // todo
+                        return b.fleeFight(request.getShip(),request.getPlanet());
                     }
-                } else if (request.getShip().isInCombat() && request.isPvp()) {
-                    // Todo pvp service
                 }
                 return travelService.jump(request.getShip(), request.getPlanet());
             case ROUND_UPDATE_DATA:

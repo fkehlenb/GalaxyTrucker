@@ -5,8 +5,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateUserExc
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import lombok.NonNull;
 
+import java.io.Serializable;
+
 /** Manages the user objects in the database */
-public class UserDAO extends ObjectDAO<User> {
+public class UserDAO extends ObjectDAO<User> implements Serializable {
 
     /** Instance */
     private static UserDAO instance = null;
