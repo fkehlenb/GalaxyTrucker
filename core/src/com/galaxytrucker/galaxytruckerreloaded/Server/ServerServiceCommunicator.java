@@ -115,18 +115,21 @@ public class ServerServiceCommunicator {
                         return b.getUpdatedData(request.getShip());
                     }
                 }
+                break;
             case ATTACK_SHIP:
                 for (BattleService b : battleServices){
                     if (b.getCombatants().contains(request.getShip()) && !b.isCombatOver()){
                         return b.addToQueue(request);
                     }
                 }
+                break;
             case ROUND_OVER:
                 for (BattleService b : battleServices){
                     if (b.getCombatants().contains(request.getShip()) && !b.isCombatOver()){
                         return b.playMoves(request.getShip());
                     }
                 }
+                break;
             case TRADERBUYCREW:
                 return traderService.purchaseCrew(request.getShip(), request.getTrader(), request.getCrew());
             case TRADERBUYFUEL:

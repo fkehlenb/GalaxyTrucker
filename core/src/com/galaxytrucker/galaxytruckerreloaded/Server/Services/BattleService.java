@@ -239,6 +239,11 @@ public class BattleService implements Serializable {
                     }
                 }
                 if (!winner.getAssociatedUser().equals("[ENEMY]")) {
+                    if (!winner.getPlanet().getEvent().equals(PlanetEvent.PVP)) {
+                        Planet p = winner.getPlanet();
+                        p.getShips().remove(loser);
+                        planetDAO.update(p);
+                    } // todo else
                     // Possible weapon loot
                     List<Weapon> weaponLoot = new ArrayList<>();
                     weaponLoot.addAll(loser.getInventory());
@@ -247,7 +252,7 @@ public class BattleService implements Serializable {
                             weaponLoot.addAll(((System) r).getShipWeapons());
                         }
                     }
-                    if (winner.getInventory().size() < 4 && weaponLoot.size()>1) {
+                    if (winner.getInventory().size() < 4 && weaponLoot.size() > 1) {
                         Weapon temp = weaponLoot.get(random.nextInt(weaponLoot.size() - 1));
                         Weapon loot = new Weapon(UUID.randomUUID().hashCode(), temp.getWeaponType(), temp.getWeaponLevel(), temp.getDamage(), temp.getCooldown(),
                                 temp.getEnergy(), temp.getMissileCost(), temp.getAccuracy(), temp.getDropChance(), temp.getShieldPiercing(), temp.getBreachChance(),
@@ -262,12 +267,12 @@ public class BattleService implements Serializable {
                         }
                     }
                     // Possible fuel loot
-                    this.rewardFuel = random.nextInt(loser.getFuel()+1);
-                    this.rewardCash = random.nextInt(loser.getCoins()+1);
-                    this.rewardRockets = random.nextInt(loser.getMissiles()+1);
-                    winner.setFuel(winner.getFuel()+rewardFuel);
-                    winner.setCoins(winner.getCoins()+rewardCash);
-                    winner.setMissiles(winner.getMissiles()+rewardRockets);
+                    this.rewardFuel = random.nextInt(loser.getFuel() + 1);
+                    this.rewardCash = random.nextInt(loser.getCoins() + 1);
+                    this.rewardRockets = random.nextInt(loser.getMissiles() + 1);
+                    winner.setFuel(winner.getFuel() + rewardFuel);
+                    winner.setCoins(winner.getCoins() + rewardCash);
+                    winner.setMissiles(winner.getMissiles() + rewardRockets);
                     shipDAO.update(winner);
                     // possible crew loot
                     int randomNumber = random.nextInt(25);
@@ -325,14 +330,11 @@ public class BattleService implements Serializable {
                                 }
                             }
                             s.setShields(s.getShieldCharge() / 2);
-                            // Because of travel
-                            if (!s.isInCombat()) {
-                                s.setFTLCharge(100);
-                            }
+                            s.setFTLCharge(100);
+                            java.lang.System.out.println("[COMBAT-OVER-WON]");
                         }
                         shipDAO.update(s);
                     }
-                    battleServiceDAO.update(this);
                 }
             }
         } catch (Exception e) {
@@ -754,19 +756,15 @@ public class BattleService implements Serializable {
                             }
                             if (opponent.getHp() <= 0 || crewOnBoard.isEmpty()) {
                                 this.combatOver = true;
-                                for (Ship s : combatants) {
-                                    if (s.getId() != opponent.getId()) {
-                                        winner = s.getId();
-                                        break;
-                                    }
-                                }
+                                this.winner = ship.getId();
                                 battleOver();
-                                battleServiceDAO.update(this);
                             }
                         }
                         // ===== CoolDown =====
-                        weapon.setCurrentCooldown(weapon.getCooldown());
-                        weaponDAO.update(weapon);
+                        if (!this.combatOver) {
+                            weapon.setCurrentCooldown(weapon.getCooldown());
+                            weaponDAO.update(weapon);
+                        }
                         return true;
                     }
                 }
