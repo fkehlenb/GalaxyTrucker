@@ -3,7 +3,6 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -173,11 +172,6 @@ public class GamePlay implements Screen {
     private BitmapFont font25;
 
     /**
-     * whether the player is currently in combat
-     */
-    private boolean isInCombat = false;
-
-    /**
      * the battle controller
      */
     private BattleController battleController = BattleController.getInstance(null);
@@ -333,7 +327,7 @@ public class GamePlay implements Screen {
      */
     public boolean travel(Planet planet) {
         boolean success;
-        if(isInCombat) {
+        if(ClientControllerCommunicator.getInstance(null).getClientShip().isInCombat()) {
             success = BattleController.getInstance(null).fleeFight(planet);
         }
         else {
@@ -347,7 +341,6 @@ public class GamePlay implements Screen {
                 createShop(planet.getTrader());
             }
             else if(planet.getEvent().equals(PlanetEvent.COMBAT)) {
-                isInCombat = true;
                 if (planet.getShips().size() > 1){
                     background = new Texture("1080p.png");
                     battleController.setOpponent(planet.getShips().get(0));
@@ -388,7 +381,7 @@ public class GamePlay implements Screen {
     /**
      * create next round button
      */
-    private void createRoundButton() { //TODO remove from the stage when battle over
+    private void createRoundButton() {
         nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), 248, 50, this);
         stage.addActor(nextRoundButton);
     }
@@ -420,7 +413,6 @@ public class GamePlay implements Screen {
                     }
                     removeEnemy();
                     removeRoundButton();
-                    isInCombat = false;
                 }
             }
         }
