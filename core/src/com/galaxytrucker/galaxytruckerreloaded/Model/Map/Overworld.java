@@ -33,9 +33,9 @@ public class Overworld implements Serializable {
 
     /**
      * the difficulty of the map
-     * 0 = easy
-     * 1 = middle
-     * 2 = hard
+     * 1 = easy
+     * 2 = middle
+     * 3 = hard
      */
     private int difficulty;
 

@@ -27,10 +27,6 @@ public class HullUI {
 
     private Main main;
 
-    /**
-     * how many bars in hullTexture?
-     */
-    private int currentTexture;
 
     /**
      * Constructor
@@ -41,8 +37,6 @@ public class HullUI {
     public HullUI(Main main, int status) {
         this.main = main;
         this.status = status;
-
-        currentTexture = 8;
 
         hullBackgroundTexture = new Texture("gameuis/top_hull.png");
         hullTexture = new Texture("gameuis/hull.png");
@@ -55,7 +49,6 @@ public class HullUI {
      */
     public void updateStatus(int status) {
         this.status = status;
-        //TODO richtige texture berechnen
     }
 
     /**
@@ -65,7 +58,7 @@ public class HullUI {
     public void render() {
         main.batch.begin();
         float x = 25;
-        for(int i=0; i<=currentTexture; i++) {
+        for(int i=0; i<=status; i++) {
             main.batch.draw(hullTexture, x, main.HEIGHT - 83, 25, 25);
             x+=12;
         }
