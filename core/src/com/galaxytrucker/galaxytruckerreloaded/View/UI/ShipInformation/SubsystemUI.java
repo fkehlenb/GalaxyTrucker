@@ -42,22 +42,9 @@ public class SubsystemUI extends RoomUI {
     private SystemButton energyButton;
 
     /**
-     * Controller that contains logic for managing energy
-     */
-    SystemController systemController;
-
-    /**
      * the current energy level
      */
     private int energy;
-    /**
-     * the maximum energy level
-     */
-    private int maxEnergy;
-    /**
-     * the amount of damage to this system
-     */
-    private int damage;
 
     /**
      * id of the subsystem
@@ -80,10 +67,7 @@ public class SubsystemUI extends RoomUI {
         super(main, system, tileStage, ship, x, y);
         this.sx = sx;
         energy = system.getEnergy();
-        maxEnergy = system.getMaxEnergy();
-        damage = system.getDamage();
         systemType = system.getSystemType();
-        systemController = SystemController.getInstance(null);
         systemTexture = new java.util.LinkedList<>();
         id = system.getId();
 
@@ -126,10 +110,24 @@ public class SubsystemUI extends RoomUI {
         energyButton.remove();
     }
 
+
+    /**
+     * the room was updated in the backend and the display needs to be updated
+     *
+     * @param room the room with updated stats
+     */
+    @Override
+    public void update(Room room) {
+        super.update(room);
+        System sys = (System) room;
+        this.energy = sys.getEnergy();
+        //TODO status?
+    }
+
     /**
      * the amount of energy given to a system (if this room is a system) is changed
      *
-     * @param amount the new amount
+     * @param amount how much is added
      */
     @Override
     public void systemEnergyUpdate(int amount) {

@@ -28,7 +28,7 @@ public class WeaponUI extends SubsystemUI {
     /**
      * the list of all the buttons for all the weapons this system has
      */
-    private HashMap<Integer, WeaponActivateButton> buttons;
+    private HashMap<Integer, WeaponActivateButton> buttons = new HashMap<>();
 
     /**
      * the base position for the box and buttons
@@ -64,15 +64,45 @@ public class WeaponUI extends SubsystemUI {
     public void setBoxPosition(float wx, float wy) {
         this.wx = wx;
         this.wy = wy;
+        createButtons(weapons);
+    }
+
+    /**
+     * create the buttons
+     * @param ws the list of weapons
+     */
+    private void createButtons(List<Weapon> ws) {
         float bwx = wx+15;
-        buttons = new HashMap<>();
-        for(Weapon w : weapons) {
+        for(Weapon w : ws) {
             String name = w.getWeaponType().toString().toLowerCase();
             buttons.put(w.getId(), new WeaponActivateButton(new Texture("shipsys/weapon/"+name+"button.png"), bwx, wy, 100, 100, this, w));
             stage.addActor(buttons.get(w.getId()));
             bwx += 110;
 
         }
+    }
+
+    /**
+     * delete the buttons
+     */
+    private void deleteButtons() {
+        for(int i : buttons.keySet()) {
+            buttons.get(i).remove();
+            buttons.remove(i);
+        }
+    }
+
+    /**
+     * the room was updated in the backend and the display needs to be updated
+     *
+     * @param room the room with updated stats
+     */
+    @Override
+    public void update(Room room) {
+        super.update(room);
+        System sys = (System) room;
+        deleteButtons();
+        createButtons(sys.getShipWeapons());
     }
 
     /**

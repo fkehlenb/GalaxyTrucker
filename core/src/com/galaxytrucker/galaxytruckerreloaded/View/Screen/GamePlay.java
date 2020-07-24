@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
@@ -47,23 +48,12 @@ public class GamePlay implements Screen {
     /**
      * Planet Textrue Filepath
      */
-    private String planetTextureString;
-
-    /**
-     * Texture of the planet
-     */
     private Texture planetTexture;
-
-    /**
-     * Looping music
-     */
-    private Music music;
 
     /**
      * Click sound effect
      */
     private Sound clickSound;
-
 
     /**
      * ship of the player
@@ -180,10 +170,13 @@ public class GamePlay implements Screen {
      */
     private BitmapFont font15;
 
+    private BitmapFont font25;
+
     /**
      * the battle controller
      */
     private BattleController battleController = BattleController.getInstance(null);
+
 
     /**
      * Constructor
@@ -209,13 +202,17 @@ public class GamePlay implements Screen {
 
         font15 = generator.generateFont(params);
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        params.size = 25;
+
+        font25 = generator.generateFont(params);
+
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport, main.batch);
         pauseStage = new Stage(viewport, main.batch);
         tileStage = new Stage(viewport, main.batch);
 
 
-        player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this, font15);
+        player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this, font15, font25);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -276,6 +273,7 @@ public class GamePlay implements Screen {
         background.dispose();
         planetTexture.dispose();
         player.disposeShipView();
+        font15.dispose();
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
@@ -409,9 +407,9 @@ public class GamePlay implements Screen {
      * @return the new planet texture
      */
     public Texture getPlanetTexture(){
-        planetTextureString = PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture();
-
-        return new Texture(planetTextureString);
+        String planetTextureString = PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture();
+        planetTexture = new Texture(planetTextureString);
+        return planetTexture;
     }
 
     /**
@@ -698,15 +696,7 @@ public class GamePlay implements Screen {
             crewMoved(chosenCrew, room);
             Gdx.input.setInputProcessor(stage);
         }
-    }
-
-    /**
-     * a room on the enemy ship was chosen as a target for a weapon
-     * TODO: problem: man kann bisher nicht auf sein eigenes schiff feuern
-     * @param room the room that was chosen
-     */
-    public void roomChosenAsTarget(Room room) {
-        if(takingAim && chosenWeapon != null) {
+        else if(takingAim && chosenWeapon != null) {
             weaponShot(chosenWeapon, room);
             Gdx.input.setInputProcessor(stage);
         }
@@ -785,7 +775,7 @@ public class GamePlay implements Screen {
      * the energy for a system is updated
      * @param amount the new total amount
      */
-    public void roomSystemEnergyUpdate(Room room, int amount) {
+    private void roomSystemEnergyUpdate(Room room, int amount) {
         player.roomSystemEnergyUpdate(room, amount);
     }
 

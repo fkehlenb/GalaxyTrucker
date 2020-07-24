@@ -37,25 +37,12 @@ public class FuelUI {
      * @param main - main class used for sprite batch and camera
      * @param fuel the amount of fuel
      */
-    public FuelUI(Main main, int fuel) {
+    public FuelUI(Main main, int fuel, BitmapFont font) {
         this.main = main;
         this.amount = fuel;
+        this.font = font;
 
         fuelBackground = new Texture("gameuis/top_fuel2.png");
-
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = 25;
-
-        font = generator.generateFont(params);
 
         glyph.setText(font, Integer.toString(amount));
     }
@@ -103,6 +90,15 @@ public class FuelUI {
      */
     public void changeAmount(int amount) {
         this.amount += amount;
+        glyph.setText(font, Integer.toString(this.amount));
+    }
+
+    /**
+     * the amount of fuel is updated
+     * @param amount the new total amount
+     */
+    public void changeOverallAmount(int amount) {
+        this.amount = amount;
         glyph.setText(font, Integer.toString(this.amount));
     }
 }
