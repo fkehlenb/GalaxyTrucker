@@ -4,9 +4,11 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRoomException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundException;
 
+import java.io.Serializable;
+
 
 /** This class manages room objects in the database */
-public class RoomDAO extends ObjectDAO<Room> {
+public class RoomDAO extends ObjectDAO<Room> implements Serializable {
 
     /** Instance */
     private static RoomDAO instance = null;

@@ -6,8 +6,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.ShipNotFoundExce
 
 import lombok.NonNull;
 
+import java.io.Serializable;
+
 /** Manages the ship objects in the database */
-public class ShipDAO extends ObjectDAO<Ship> {
+public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
 
     /** Instance */
     private static ShipDAO instance = null;

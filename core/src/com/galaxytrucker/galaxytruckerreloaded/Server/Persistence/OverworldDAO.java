@@ -5,9 +5,11 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateOverwor
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.OverworldNotFoundException;
 import lombok.NonNull;
 
+import java.io.Serializable;
+
 
 /** Manages the overworld objects in the database */
-public class OverworldDAO extends ObjectDAO<Overworld> {
+public class OverworldDAO extends ObjectDAO<Overworld> implements Serializable {
 
     /** Instance */
     private static OverworldDAO instance = null;

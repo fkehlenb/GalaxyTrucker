@@ -11,6 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @SuppressWarnings("Duplicates")
-public class CrewService {
+public class CrewService implements Serializable {
 
     // TODO *** DO NOT USE WHEN IN COMBAT, USE THE DESIGNATED COMBAT AND PVP CONTROLLERS! ***
 

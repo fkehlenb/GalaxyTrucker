@@ -4,11 +4,13 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateWeaponException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.WeaponNotFoundException;
 
+import java.io.Serializable;
+
 
 /**
  * This class manages weapons in the database
  */
-public class WeaponDAO extends ObjectDAO<Weapon> {
+public class WeaponDAO extends ObjectDAO<Weapon> implements Serializable {
 
     /** Instance */
     private static WeaponDAO instance = null;

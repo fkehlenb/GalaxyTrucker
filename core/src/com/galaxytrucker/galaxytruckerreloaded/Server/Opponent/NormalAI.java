@@ -13,6 +13,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 import lombok.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Random;
 /**
  * Controls the opponent ship during combat
  */
-public class NormalAI {
+public class NormalAI implements Serializable {
 
     /**
      * Targeting modes
@@ -214,11 +215,17 @@ public class NormalAI {
      *
      * @param ship          - the ai's ship
      * @param opponent      - the opponent's ship
-     * @param weapons       - the ship's weapons
      * @param battleService - the battleService used
      */
-    public void nextMove(Ship ship, Ship opponent, List<Weapon> weapons, BattleService battleService) {
+    public void nextMove(Ship ship, Ship opponent, BattleService battleService) {
         try {
+            java.lang.System.out.println("\n==========[AI-Playing]==========");
+            List<Weapon> weapons = new ArrayList<>();
+            for (Room r : ship.getSystems()){
+                if (r.isSystem()&& ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
+                    weapons.addAll(((System) r).getShipWeapons());
+                }
+            }
             List<RequestObject> nextMoves = new ArrayList<>();
             Random random = new Random();
             // Wait your turn
@@ -262,16 +269,18 @@ public class NormalAI {
                         requestObject.setWeapon(w);
                         requestObject.setOpponentShip(opponent);
                         requestObject.setRoom(targetRoom);
+                        requestObject.setRequestType(RequestType.ATTACK_SHIP);
                         nextMoves.add(requestObject);
+                        java.lang.System.out.println("[AI]:[Added-Action]:" + target);
                     }
                 }
-                RequestObject requestObject = new RequestObject();
-                requestObject.setShip(ship);
-                requestObject.setRequestType(RequestType.ROUND_OVER);
-                nextMoves.add(requestObject);
-                battleService.getUpdatedData(ship);
-                battleService.setRoundActions(nextMoves);
+                for (RequestObject requestObject : nextMoves){
+                    battleService.addToQueue(requestObject);
+                }
+                java.lang.System.out.println("[AI]:[Round-Over]");
+                java.lang.System.out.println("[AI]:[Play-Moves]");
                 battleService.playMoves(ship);
+                java.lang.System.out.println("=====[AI-Done]=====");
             }
         } catch (Exception e) {
             e.printStackTrace();

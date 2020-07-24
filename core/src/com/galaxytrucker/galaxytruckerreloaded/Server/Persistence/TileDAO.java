@@ -4,8 +4,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateTileException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.TileNotFoundException;
 
+import java.io.Serializable;
+
 /** Handles tile objects in the database */
-public class TileDAO extends ObjectDAO<Tile> {
+public class TileDAO extends ObjectDAO<Tile> implements Serializable {
 
     /** Instance */
     private static TileDAO instance = null;

@@ -4,11 +4,12 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.BattleServiceNot
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateBattleServiceException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Manages battle service objects in the database */
-public class BattleServiceDAO extends ObjectDAO<BattleService> {
+public class BattleServiceDAO extends ObjectDAO<BattleService> implements Serializable {
 
     /** Instance */
     private static BattleServiceDAO instance = null;

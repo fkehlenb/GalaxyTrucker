@@ -371,6 +371,19 @@ public class GamePlay implements Screen {
      */
     public void nextFightRound() {
         boolean success = battleController.playMoves();
+        if (success){
+            boolean combatOver = battleController.fetchUpdatedData();
+            if (combatOver){
+                if (battleController.combatOver()){
+                    if (battleController.combatWon()){
+                        // todo
+                    }
+                    else{
+                        // todo
+                    }
+                }
+            }
+        }
     }
 
     /**

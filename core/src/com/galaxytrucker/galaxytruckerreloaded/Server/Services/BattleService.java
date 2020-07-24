@@ -16,6 +16,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -100,6 +102,7 @@ public class BattleService implements Serializable {
      * Battle participants
      */
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Ship> combatants = new ArrayList<>();
 
     /**
@@ -117,18 +120,21 @@ public class BattleService implements Serializable {
      * Last action carried out
      */
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<PreviousRoundAction> previousRoundActions = new ArrayList<>();
 
     /**
      * Previous weapon type used
      */
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<WeaponType> previousWeaponsUsed = new ArrayList<>();
 
     /**
      * Attack object queue
      */
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<RequestObject> roundActions = new ArrayList<>();
 
     /**
@@ -139,13 +145,13 @@ public class BattleService implements Serializable {
      */
     private boolean myRound(Ship ship) {
         int id = ship.getId();
-        java.lang.System.out.println("[Waiting-In-Queue]");
+        java.lang.System.out.println("\n[Waiting-In-Queue]:[Ship]:" + ship.getId());
         while (true) {
             if (currentRound == id) {
                 break;
             }
         }
-        java.lang.System.out.println("[Done-Waiting]");
+        java.lang.System.out.println("[Done-Waiting]:[Ship]:" + ship.getId());
         return true;
     }
 
@@ -161,7 +167,8 @@ public class BattleService implements Serializable {
             if (requestObject.getShip().getId() == currentRound) {
                 roundActions.add(requestObject);
                 responseObject.setValidRequest(true);
-                java.lang.System.out.println("[Added-Action]:" + requestObject.getRequestType() + ":[To Queue]");
+                java.lang.System.out.println("[Ship]:" + requestObject.getShip().getId() +
+                        "[Added-Action]:" + requestObject.getRequestType() + ":[To Queue]");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,8 +188,10 @@ public class BattleService implements Serializable {
             if (myRound(ship)) {
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(ship);
-                responseObject.setResponseOverworld(UserService.getInstance()
-                        .getUser(ship.getAssociatedUser()).getOverworld());
+                if (!ship.getAssociatedUser().equals("[ENEMY]")) {
+                    responseObject.setResponseOverworld(UserService.getInstance()
+                            .getUser(ship.getAssociatedUser()).getOverworld());
+                }
                 responseObject.setCombatOver(combatOver);
                 if (combatOver) {
                     if (combatants.contains(ship)) {
@@ -198,7 +207,16 @@ public class BattleService implements Serializable {
                 }
                 responseObject.setPreviousRoundAction(previousRoundActions);
                 responseObject.setWeaponUsed(previousWeaponsUsed);
-                java.lang.System.out.println("[Get-Updated-Data]:[Ship]:" + ship.getId());
+                for (Ship s : combatants){
+                    if (s.getId()==ship.getId()){
+                        // update ships in local list
+                        combatants.set(combatants.indexOf(ship),ship);
+                    }
+                    if (s.getId()!=ship.getId()){
+                        responseObject.setOpponent(s);
+                    }
+                }
+                java.lang.System.out.println("\n[Get-Updated-Data]:[Ship]:" + ship.getId());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,6 +233,7 @@ public class BattleService implements Serializable {
         ResponseObject responseObject = new ResponseObject();
         try {
             if (ship.getId() == currentRound) {
+                java.lang.System.out.println("\n[PRE]:[Play-Moves]:[Current-Round]:" + currentRound);
                 // ===== Passive Changes =====
                 for (Ship s : combatants) {
                     passiveChanges(s);
@@ -223,14 +242,27 @@ public class BattleService implements Serializable {
                 previousRoundActions.clear();
                 previousWeaponsUsed.clear();
                 // ===== Play battle moves =====
-                User u = UserService.getInstance().getUser(roundActions.get(0).getShip().getAssociatedUser());
-                for (RequestObject move : roundActions) {
-                    if (move.getRequestType().equals(RequestType.ATTACK_SHIP)) {
-                        boolean success = attackOpponent(move.getShip(), move.getOpponentShip(), move.getWeapon(), move.getRoom(),
-                                u.getOverworld().getDifficulty());
-                        if (success) {
-                            previousRoundActions.add(PreviousRoundAction.ATTACK_SHIP);
-                            previousWeaponsUsed.add(move.getWeapon().getWeaponType());
+                int difficulty = 1;
+                if (ship.getAssociatedUser().equals("[ENEMY]")){
+                    for (Ship s : combatants){
+                        if (!s.getAssociatedUser().equals("[ENEMY]")){
+                            difficulty = UserService.getInstance().getUser(s.getAssociatedUser()).getOverworld().getDifficulty();
+                            break;
+                        }
+                    }
+                }
+                else{
+                    difficulty = UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld().getDifficulty();
+                }
+                if (!roundActions.isEmpty()) {
+                    for (RequestObject move : roundActions) {
+                        if (move.getRequestType().equals(RequestType.ATTACK_SHIP)) {
+                            boolean success = attackOpponent(move.getShip(), move.getOpponentShip(), move.getWeapon(), move.getRoom(),
+                                    difficulty);
+                            if (success) {
+                                previousRoundActions.add(PreviousRoundAction.ATTACK_SHIP);
+                                previousWeaponsUsed.add(move.getWeapon().getWeaponType());
+                            }
                         }
                     }
                 }
@@ -244,8 +276,19 @@ public class BattleService implements Serializable {
                 }
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(shipDAO.getById(ship.getId()));
-                responseObject.setResponseOverworld(u.getOverworld());
+                if (!ship.getAssociatedUser().equals("[ENEMY]")) {
+                    responseObject.setResponseOverworld(UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld());
+                }
                 java.lang.System.out.println("[Play-Moves]:[Ship]:" + ship.getId());
+                java.lang.System.out.println("[POST]:[Play-Moves]:[Current-Round]:" + currentRound);
+                if (shipDAO.getById(currentRound).getAssociatedUser().equals("[ENEMY]")){
+                    for (Ship s : combatants){
+                        if (s.getId()==currentRound){
+                            ai.nextMove(s,ship,this);
+                            break;
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -301,7 +344,6 @@ public class BattleService implements Serializable {
                         // ===== Weapon burst =====
                         for (int i = 0; i < weapon.getBurst(); i++) {
                             // ===== Compute weapon damage =====
-                            // todo difficulty management
                             int damage = (int) ((float) weapon.getDamage() * weapon.getAccuracy() * ((float) weapon.getWeaponLevel()) / (float) energyInWeaponSystem);
                             // ===== Pierce =====
                             if (weapon.getShieldPiercing() < opponent.getShields()) {
@@ -346,6 +388,9 @@ public class BattleService implements Serializable {
                             }
                             room.setCrew(crewInRoom);
                             // Attempt to cause a breach
+                            if (difficulty<=0){
+                                difficulty=1;
+                            }
                             int randomInt = random.nextInt((int) (weapon.getBreachChance() * difficulty * 5));
                             if (randomInt == 0) {
                                 room.setBreach(5);

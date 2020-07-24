@@ -6,9 +6,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.CrewNotFoundExce
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateCrewException;
 
 import javax.persistence.EntityManager;
+import java.io.Serializable;
 
 /** Manages the crew objects in the database */
-public class CrewDAO extends ObjectDAO<Crew> {
+public class CrewDAO extends ObjectDAO<Crew> implements Serializable {
 
     /** Instance */
     private static CrewDAO instance = null;
