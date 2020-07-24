@@ -1,11 +1,9 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.TileButton;
@@ -14,17 +12,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 public class RoomUI {
-
-
-    /**
-     * the texture for the case that the room is low on oxygen
-     */
-    protected Texture roomLowOxyTexture;
-
-    /**
-     * the texture of the tiles the room is made up of
-     */
-    private Texture tileTexture;
 
     protected Room room;
 
@@ -55,7 +42,6 @@ public class RoomUI {
         this.x = x;
         this.y = y;
 
-        tileTexture = new Texture("ship/tile.png");
 
         if(ship instanceof ShipView) {
             for (Tile t : room.getTiles()) {
@@ -73,11 +59,14 @@ public class RoomUI {
      * renders everything this room consists of
      */
     public void render() {
-        main.batch.begin();
-        /*for(Tile t : room.getTiles()) {
-            main.batch.draw(tileTexture, x + (t.getPosX()*48), y + (t.getPosY()*48), 48, 48);
-        }*/
-        main.batch.end();
+    }
+
+    /**
+     * the room was updated in the backend and the display needs to be updated
+     * @param room the room with updated stats
+     */
+    public void update(Room room) {
+        this.room = room;
     }
 
     /**
@@ -88,25 +77,10 @@ public class RoomUI {
     }
 
     /**
-     * animation for the case that the room was hit
-     */
-    public void roomHitAnimation() {
-
-    }
-
-    /**
-     * the rooms texture changes because it is low on oxygen
-     *
-     */
-    public void roomLowOnOxygen() {
-
-    }
-
-    /**
      * the amount of energy given to a system (if this room is a system) is changed
      * @param amount the new amount
      */
-    public void systemEnergyUpdate(int amount) { //TODO
+    public void systemEnergyUpdate(int amount) {
 
     }
 
@@ -114,14 +88,7 @@ public class RoomUI {
      * the status of the system (if this room is a system) is changed
      * @param amount the new amount
      */
-    public void systemStatusUpdate(int amount) { //TODO
-    }
-
-    /**
-     * the room was targeted by a weapon of an enemy ship
-     */
-    public void roomTarget() {
-
+    public void systemStatusUpdate(int amount) {
     }
 
     /**

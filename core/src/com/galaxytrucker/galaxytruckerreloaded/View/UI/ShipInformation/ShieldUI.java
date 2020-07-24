@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -89,9 +90,12 @@ public class ShieldUI extends SubsystemUI {
     }
 
     /**
-     * shield was hit
+     * the room was updated in the backend and the display needs to be updated
+     *
+     * @param room the room with updated stats
      */
-    public void shieldHitAnimation() {
-
+    @Override
+    public void update(Room room) {
+        super.update(room);
     }
 }

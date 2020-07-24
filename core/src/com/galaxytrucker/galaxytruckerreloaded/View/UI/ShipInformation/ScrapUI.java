@@ -36,25 +36,12 @@ public class ScrapUI {
      * @param main - main class used for sprite batch and camera
      * @param money the amount of money
      */
-    public ScrapUI(Main main, int money) {
+    public ScrapUI(Main main, int money, BitmapFont font) {
         this.main = main;
         this.amount = money;
+        this.font = font;
 
         scrapBackground = new Texture("gameuis/top_scrap.png");
-
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = 25;
-
-        font = generator.generateFont(params);
 
         glyph.setText(font, Integer.toString(amount));
     }
@@ -102,6 +89,15 @@ public class ScrapUI {
      */
     public void changeAmount(int amount) {
         this.amount += amount;
+        glyph.setText(font, Integer.toString(this.amount));
+    }
+
+    /**
+     * the amount of money is updated
+     * @param amount the new total amount
+     */
+    public void changeOverallAmount(int amount) {
+        this.amount = amount;
         glyph.setText(font, Integer.toString(this.amount));
     }
 }

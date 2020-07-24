@@ -36,25 +36,12 @@ public class MissileUI {
          * @param main - main class used for sprite batch and camera
          * @param missiles the amount of missiles
          */
-        public MissileUI(Main main, int missiles) {
+        public MissileUI(Main main, int missiles, BitmapFont font) {
             this.main = main;
             this.amount = missiles;
+            this.font = font;
 
             missileBackground = new Texture("gameuis/top_missile.png");
-
-            //font generator to get bitmapfont from .ttf file
-            FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-            FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            //setting parameters of font
-            params.borderWidth = 1;
-            params.borderColor = Color.BLACK;
-            params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-            params.magFilter = Texture.TextureFilter.Nearest;
-            params.minFilter = Texture.TextureFilter.Nearest;
-            params.genMipMaps = true;
-            params.size = 25;
-
-            font = generator.generateFont(params);
 
             glyph.setText(font, Integer.toString(amount));
         }
@@ -102,6 +89,15 @@ public class MissileUI {
          */
         public void changeAmount(int amount) {
             this.amount += amount;
+            glyph.setText(font, Integer.toString(this.amount));
+        }
+
+    /**
+     * the amount of missiles is updated
+     * @param amount the new total amount
+     */
+    public void changeOverallAmount(int amount) {
+            this.amount = amount;
             glyph.setText(font, Integer.toString(this.amount));
         }
 }

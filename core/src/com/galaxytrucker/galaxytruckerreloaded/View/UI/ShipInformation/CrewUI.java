@@ -162,6 +162,15 @@ public class CrewUI {
     }
 
     /**
+     * the crew member is updated
+     * @param crew the new crew member
+     */
+    public void update(Crew crew) {
+        this.crew = crew;
+        statusUpdate(crew.getHealth());
+    }
+
+    /**
      * the crew member was moved to a new room
      * called by shipview
      *

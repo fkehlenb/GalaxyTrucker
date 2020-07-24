@@ -105,6 +105,8 @@ public class ShipView extends AbstractShip {
 
     private BitmapFont font15;
 
+    private BitmapFont font25;
+
     private ShipType shipType;
 
     /**
@@ -121,9 +123,10 @@ public class ShipView extends AbstractShip {
      * Constructor
      * @param main - the main class for SpriteBatch
      */
-    public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game, BitmapFont font15) {
+    public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game, BitmapFont font15, BitmapFont font25) {
         super(main, ship, stage, game, tileStage);
         this.font15 = font15;
+        this.font25 = font25;
 
         shipType = ship.getShipType();
 
@@ -180,10 +183,10 @@ public class ShipView extends AbstractShip {
         moveButton = new MoveButton(Main.WIDTH/(2.259f), Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
         inventory = new ShipButton(Main.WIDTH/(2.5f),Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
 
-        money = new ScrapUI(main, ship.getCoins());
-        missiles = new MissileUI(main, ship.getMissiles());
+        money = new ScrapUI(main, ship.getCoins(), font25);
+        missiles = new MissileUI(main, ship.getMissiles(), font25);
         hull = new HullUI(main, ship.getHp());
-        fuel = new FuelUI(main, ship.getFuel());
+        fuel = new FuelUI(main, ship.getFuel(), font25);
 
         //Um eine List aller Systems (existingSystems2) an EnergyUI zu übergeben.
         List<System> existingSystems2 = new ArrayList<>();
@@ -269,7 +272,33 @@ public class ShipView extends AbstractShip {
         for(CrewUI c : crew.values()) {
             c.disposeCrewUI();
         }
-        font15.dispose();
+    }
+
+    /**
+     * update everything that belongs to the ship
+     * @param ship the ship with all the updated attributes
+     */
+    public void update(Ship ship) {
+        //Hull
+        hullStatusUpdate(ship.getHp());
+        //Rooms
+        //Crew
+        List<Crew> crews = new ArrayList<>();
+        for(Room r : ship.getSystems()) {
+            crews.addAll(r.getCrew());
+            rooms.get(r.getId()).update(r);
+        }
+        for(Crew c : crews) {
+            crew.get(c.getId()).update(c);
+        }
+        //Energy
+        energy.energyUpdate(ship.getEnergy());
+        //Money
+        money.changeOverallAmount(ship.getCoins());
+        //Missiles
+        missiles.changeOverallAmount(ship.getMissiles());
+        //Fuel
+        fuel.changeOverallAmount(ship.getFuel());
     }
 
     /**

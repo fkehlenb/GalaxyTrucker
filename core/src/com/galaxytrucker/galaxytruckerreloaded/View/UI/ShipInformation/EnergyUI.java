@@ -52,16 +52,13 @@ public class EnergyUI {
             maxEnergy += sys.getEnergy();
         }
 
-
-        this.maxEnergy = maxEnergy;
-
         energyTexture = new Texture("gameuis/energybar.png");
         emptyEnergyTexture = new Texture("gameuis/emptyenergybar.png");
     }
 
     /**
      * the current status of the energy needs to be updated
-     * @param energyStatus the new status
+     * @param energyStatus the new total status
      */
     public void energyUpdate(int energyStatus) {
         energy = energyStatus;

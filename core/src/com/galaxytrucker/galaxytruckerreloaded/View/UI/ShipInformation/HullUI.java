@@ -51,6 +51,7 @@ public class HullUI {
 
     /**
      * the status of the hull was updated, meaning a new texture needs to be displayed
+     * @param status the new total status
      */
     public void updateStatus(int status) {
         this.status = status;
