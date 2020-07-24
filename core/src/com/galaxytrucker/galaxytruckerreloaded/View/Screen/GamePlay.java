@@ -782,6 +782,11 @@ public class GamePlay implements Screen {
         }
     }
 
+    /**
+     * get the new total system energy amount from the ship saved in the clientcontrollercommunicator
+     * @param room the system whose energy status is queried
+     * @return the total energy currently allocated to this system
+     */
     private int getNewSystemEnergyAmount(Room room) {
         for(Room r : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()) {
             if(r.getId() == room.getId()) {
@@ -809,6 +814,7 @@ public class GamePlay implements Screen {
      */
     private void roomSystemEnergyUpdate(Room room, int amount) {
         player.roomSystemEnergyUpdate(room, amount);
+        energyStatusUpdate(ClientControllerCommunicator.getInstance(null).getClientShip().getEnergy());
     }
 
     /**
@@ -834,7 +840,7 @@ public class GamePlay implements Screen {
      */
     public List<Crew> loadCrew() {
         List<Crew> crew = new LinkedList<>();
-        List<Room> rs = main.getClient().getMyShip().getSystems();
+        List<Room> rs = ClientControllerCommunicator.getInstance(null).getClientShip().getSystems();
         for(Room r : rs) {
             crew.addAll(r.getCrew());
         }
@@ -846,7 +852,7 @@ public class GamePlay implements Screen {
      * @return the weapons of the ship in a list
      */
     public List<Weapon> loadWeapons() {
-        List<Weapon> weapons = new LinkedList<>(main.getClient().getMyShip().getInventory());
+        List<Weapon> weapons = new LinkedList<>(ClientControllerCommunicator.getInstance(null).getClientShip().getInventory());
         for(Room r : main.getClient().getMyShip().getSystems()) {
             if(r instanceof System) {
                 if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
@@ -863,7 +869,7 @@ public class GamePlay implements Screen {
      * @return the amount of missiles
      */
     public int loadMissiles() {
-        return main.getClient().getMyShip().getMissiles();
+        return ClientControllerCommunicator.getInstance(null).getClientShip().getMissiles();
     }
 
     /**
@@ -871,7 +877,7 @@ public class GamePlay implements Screen {
      * @return the amount of fuel
      */
     public int loadFuel() {
-        return main.getClient().getMyShip().getFuel();
+        return ClientControllerCommunicator.getInstance(null).getClientShip().getFuel();
     }
 
     @Override

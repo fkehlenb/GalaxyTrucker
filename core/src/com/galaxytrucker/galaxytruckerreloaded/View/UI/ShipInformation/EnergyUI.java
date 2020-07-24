@@ -47,8 +47,7 @@ public class EnergyUI {
         this.maxEnergy = energy;
 
         this.existingSystems = existingSystems;
-        for (System sys: existingSystems
-             ) {
+        for (System sys: existingSystems) {
             maxEnergy += sys.getEnergy();
         }
 
@@ -62,7 +61,6 @@ public class EnergyUI {
      */
     public void energyUpdate(int energyStatus) {
         energy = energyStatus;
-        //TODO currentTexture berechnen
     }
 
     public void render() {

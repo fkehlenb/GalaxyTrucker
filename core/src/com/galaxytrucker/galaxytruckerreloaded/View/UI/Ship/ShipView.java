@@ -407,6 +407,10 @@ public class ShipView extends AbstractShip {
         }
     }
 
+    /**
+     * updating the amount of unallocated energy
+     * @param status the new total status
+     */
     public void energyStatusUpdate(int status) {
         energy.energyUpdate(status);
     }
