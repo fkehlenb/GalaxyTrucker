@@ -2,6 +2,8 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
 import java.util.List;
@@ -30,18 +32,31 @@ public class EventPage {
     private Main main;
 
     /**
+     * font used to draw text
+     */
+    private BitmapFont font15;
+
+    /**
+     * the glyphlayout needed to properly center the text
+     */
+    private GlyphLayout glyph = new GlyphLayout();
+
+    /**
      * Constructor
      *
      * @param main - the main class object
      * @param draw the drawables on this page
      * @param text the text displayed on this page
      */
-    public EventPage(Main main, List<Texture> draw, String text, float x, float y) {
+    public EventPage(Main main, List<Texture> draw, String text, float x, float y, BitmapFont font15) {
         drawables = draw;
         this.text = text;
         this.main = main;
         this.x = x;
         this.y = y;
+        this.font15 = font15;
+
+        glyph.setText(font15, text);
     }
 
     /**
@@ -56,6 +71,7 @@ public class EventPage {
                 i += 15;
             }
         }
+        font15.draw(main.batch, glyph, x - glyph.width/2, y - glyph.height/2);
         main.batch.end();
     }
 

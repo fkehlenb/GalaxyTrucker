@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
@@ -57,53 +58,55 @@ public class EventGUI {
     private GamePlay game;
 
     /**
+     * the font used to draw text on the pages
+     */
+    private BitmapFont font15;
+
+    /**
      * Constructor
      *
      * @param main - main class object for SpriteBatch
      * @param event what kind of event it is
      *
      */
-    public EventGUI(Main main, PlanetEvent event, Stage stage, GamePlay game) {
+    public EventGUI(Main main, PlanetEvent event, Stage stage, GamePlay game, BitmapFont font15) {
         this.main = main;
         this.event = event;
         this.game = game;
+        this.font15 = font15;
 
         backgroundTexture = new Texture("event/eventbackground.png");
 
-        nextPage = new EventPageButton(0, 0, 10, 10, this); //TODO whxy (Text/Planet info)
+        nextPage = new EventPageButton(Main.WIDTH/2f + backgroundTexture.getWidth()/2f - 248, Main.HEIGHT/2f - backgroundTexture.getHeight()/2f, 248, 50, this);
         stage.addActor(nextPage);
 
         eventPages = new LinkedList<>();
 
         List<Texture> drawables = new LinkedList<>();
 
+        float px = Main.WIDTH/2f;
+        float py = Main.HEIGHT/2f;
+
         if(event == PlanetEvent.SHOP) {
-            currentPage = new EventPage(main, drawables, "this is a shop", 0, 0); //TODO drawables, xy
-            eventPages.add(currentPage);
+            currentPage = new EventPage(main, drawables, "There is a trader at this planet", px, py, font15);
         }
         else if(event == PlanetEvent.COMBAT) {
-            currentPage = new EventPage(main, drawables, "this is a fight", 0, 0); //TODO drawables, xy
-            eventPages.add(currentPage);
+            currentPage = new EventPage(main, drawables, "There is a hostile ship at this planet", px, py, font15);
         }
         else if(event == PlanetEvent.BOSS) {
-            currentPage = new EventPage(main, drawables, "this is the boss", 0, 0);
-            eventPages.add(currentPage);
+            currentPage = new EventPage(main, drawables, "The boss is waiting on this planet", px, py, font15);
         }
         else if(event == PlanetEvent.METEORSHOWER) {
-            currentPage = new EventPage(main, drawables, "this is a meteor shower", 0, 0);
-            eventPages.add(currentPage);
+            currentPage = new EventPage(main, drawables, "Seems like you have gotten into a meteor shower!", px, py, font15);
         }
         else if(event == PlanetEvent.NEBULA) {
-            currentPage = new EventPage(main, drawables, "this is a nebula", 0, 0);
-            eventPages.add(currentPage);
+            currentPage = new EventPage(main, drawables, "You can barely see through the thick nebula", px, py, font15);
         }
         else if(event == PlanetEvent.PVP) {
-            currentPage = new EventPage(main, drawables, "this is a pvp fight", 0, 0);
-            eventPages.add(currentPage);
+            currentPage = new EventPage(main, drawables, "You have been intercepted! Wherever you are now, there seems to be a hostile ship here", px, py, font15);
         }
         else { //VOID
-            currentPage = new EventPage(main, drawables, "this planet is empty", 0, 0);
-            eventPages.add(currentPage);
+            currentPage = new EventPage(main, drawables, "There is nothing here", px, py, font15);
         }
     }
 
@@ -125,7 +128,7 @@ public class EventGUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(backgroundTexture, 0, 0, 15, 15);
+        main.batch.draw(backgroundTexture, Main.WIDTH/2f - backgroundTexture.getWidth()/2f, Main.HEIGHT/2f - backgroundTexture.getHeight()/2f, backgroundTexture.getWidth(), backgroundTexture.getHeight());
         main.batch.end();
         currentPage.render();
     }

@@ -121,24 +121,11 @@ public class ShipView extends AbstractShip {
      * Constructor
      * @param main - the main class for SpriteBatch
      */
-    public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game) {
+    public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game, BitmapFont font15) {
         super(main, ship, stage, game, tileStage);
+        this.font15 = font15;
 
         shipType = ship.getShipType();
-
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = 15;
-
-        font15 = generator.generateFont(params);
 
         shipBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "base.png");
         shipRoomBackground = new Texture("ship/" + main.getClient().getMyShip().getShipType().toString().toLowerCase() + "floor.png");
@@ -190,8 +177,8 @@ public class ShipView extends AbstractShip {
         }
         ((WeaponUI) rooms.get(weaponroomid)).setBoxPosition(sx + 10, 80);
 
-        moveButton = new MoveButton(Main.WIDTH/(2.259f), main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
-        inventory = new ShipButton(Main.WIDTH/(2.5f),main.HEIGHT - Main.HEIGHT/(12), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
+        moveButton = new MoveButton(Main.WIDTH/(2.259f), Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
+        inventory = new ShipButton(Main.WIDTH/(2.5f),Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
 
         money = new ScrapUI(main, ship.getCoins());
         missiles = new MissileUI(main, ship.getMissiles());

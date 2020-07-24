@@ -36,7 +36,7 @@ public class EventPageButton extends ImButton {
      * @param eventgui the ui the button is on
      */
     public EventPageButton(float x, float y, float width, float height, EventGUI eventgui) {
-        super(new Texture("continue_on.png"), x, y, width, height);
+        super(new Texture("ingame_continue.png"), x, y, width, height);
         this.eventgui = eventgui;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

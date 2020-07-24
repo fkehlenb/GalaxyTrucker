@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -20,6 +23,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
@@ -127,6 +131,9 @@ public class GamePlay implements Screen {
      */
     private Stage pauseStage;
 
+    /**
+     * the stage for the room buttons
+     */
     private Stage tileStage;
 
     /**
@@ -144,6 +151,9 @@ public class GamePlay implements Screen {
      */
     private boolean crewMoving = false;
 
+    /**
+     * the crew member that was chosen to move
+     */
     private Crew chosenCrew;
 
     /**
@@ -156,6 +166,19 @@ public class GamePlay implements Screen {
      */
     private Weapon chosenWeapon;
 
+    /**
+     * the button to move on to the next round in a combat
+     */
+    private NextRoundButton nextRoundButton;
+
+    /**
+     * a font used to draw text
+     */
+    private BitmapFont font15;
+
+    /**
+     * the battle controller
+     */
     private BattleController battleController = BattleController.getInstance(null);
 
     /**
@@ -167,13 +190,27 @@ public class GamePlay implements Screen {
         this.main = main;
         background = new Texture("1080p.png");
 
+        //font generator to get bitmapfont from .ttf file
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //setting parameters of font
+        params.borderWidth = 1;
+        params.borderColor = Color.BLACK;
+        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
+        params.magFilter = Texture.TextureFilter.Nearest;
+        params.minFilter = Texture.TextureFilter.Nearest;
+        params.genMipMaps = true;
+        params.size = 15;
+
+        font15 = generator.generateFont(params);
+
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport, main.batch);
         pauseStage = new Stage(viewport, main.batch);
         tileStage = new Stage(viewport, main.batch);
 
 
-        player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this);
+        player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this, font15);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -197,14 +234,14 @@ public class GamePlay implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
 
         if(PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.NEBULA || PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.METEORSHOWER){
             background = new Texture(PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture());
         }
         else{
             background = new Texture("1080p.png");
-            main.batch.draw(getPlanetTexture(),main.WIDTH/2,main.HEIGHT/2,getPlanetTexture().getWidth(),getPlanetTexture().getHeight());
+            main.batch.draw(getPlanetTexture(),Main.WIDTH/2f,Main.HEIGHT/2f,getPlanetTexture().getWidth(),getPlanetTexture().getHeight());
         }
 
         main.batch.end();
@@ -269,7 +306,7 @@ public class GamePlay implements Screen {
      * new event ui
      */
     public void createEvent(PlanetEvent event) {
-        eventGUI = new EventGUI(main, event, stage, this);
+        eventGUI = new EventGUI(main, event, stage, this, font15);
     }
 
     /**
@@ -293,14 +330,15 @@ public class GamePlay implements Screen {
         boolean success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
         planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
-            //createEvent(planet.getEvent());
+            createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 createShop(planet.getTrader());
             }
-            else if(planet.getEvent().equals(PlanetEvent.COMBAT)) { //TODO wer erstellt wo den controller?
+            else if(planet.getEvent().equals(PlanetEvent.COMBAT)) {
                 if (planet.getShips().size() > 1){
                     battleController.setOpponent(planet.getShips().get(0));
                     createEnemy();
+                    createRoundButton();
                 }
 
             }
@@ -314,8 +352,25 @@ public class GamePlay implements Screen {
     private void createEnemy(){
         if(enemy == null) {
             java.lang.System.out.println("--- Rendering ship ---");
-            enemy = new EnemyShip(main, battleController.getOpponent(), stage, this, tileStage); //TODO hier das ship aus battleController nehmen
+            enemy = new EnemyShip(main, battleController.getOpponent(), stage, this, tileStage);
         }
+    }
+
+    /**
+     * create next round button
+     */
+    private void createRoundButton() { //TODO remove from the stage when battle over
+        nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), 248, 50, this);
+        stage.addActor(nextRoundButton);
+    }
+
+    /**
+     * move on to the next fight round
+     * called by next round button
+     * calling the battle controller
+     */
+    public void nextFightRound() {
+        boolean success = battleController.playMoves();
     }
 
     /**
