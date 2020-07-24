@@ -671,25 +671,29 @@ public class BattleService implements Serializable {
             int energyInWeaponSystem = 0;
             for (Room r : ship.getSystems()) {
                 if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)) {
-                    if (((System) r).getShipWeapons().contains(weapon)) {
-                        weaponEquipped = true;
-                        energyInWeaponSystem = ((System) r).getEnergy();
-                        if (r.getCrew().size() > 0) {
-                            manned = true;
-                            mannedCrew.addAll(r.getCrew());
+                    for (Weapon w : ((System) r).getShipWeapons()){
+                        java.lang.System.out.println("[Weapon]:[Name]:" + w.getWeaponName());
+                        if (w.getId() == weapon.getId()){
+                            weaponEquipped = true;
+                            energyInWeaponSystem = ((System) r).getEnergy();
+                            if (r.getCrew().size() > 0) {
+                                manned = true;
+                                mannedCrew.addAll(r.getCrew());
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
             for (Room r : opponent.getSystems()) {
-                if (r.equals(room)) {
+                if (r.getId() == room.getId()) {
                     existsInShip = true;
                 }
             }
             java.lang.System.out.println("[Exists-In-Ship]:" + existsInShip + ":[Weapon-Equipped]:" + weaponEquipped +
                     ":[Energy-In-System]:" + energyInWeaponSystem + ":[Weapon-Cooldown]:" + weapon.getCurrentCooldown());
             if (existsInShip && weaponEquipped && energyInWeaponSystem > 0) {
+                // todo check for weapon equipped
                 // ===== Check for cooldown =====
                 if (weapon.getCurrentCooldown() <= 0) {
                     // ===== Check for rocket cost =====
@@ -892,6 +896,7 @@ public class BattleService implements Serializable {
                         if (w.getCurrentCooldown() < 0) {
                             w.setCurrentCooldown(0);
                         }
+                        weaponDAO.update(w);
                         java.lang.System.out.println("[WEAPON]:" + w.getWeaponName() + ":[WEAPON-COOLDOWN]:" + w.getCurrentCooldown());
                     }
                     break;

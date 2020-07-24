@@ -90,7 +90,7 @@ public class WeaponUI extends SubsystemUI {
             stage.addActor(buttons.get(w.getId()));
             bwx += 110;
             if(createGlyphs) {
-                glyphs.put(w.getId(), new GlyphLayout(font, Integer.toString(w.getCooldown())));
+                glyphs.put(w.getId(), new GlyphLayout(font, Integer.toString(w.getCurrentCooldown())));
             }
         }
 
