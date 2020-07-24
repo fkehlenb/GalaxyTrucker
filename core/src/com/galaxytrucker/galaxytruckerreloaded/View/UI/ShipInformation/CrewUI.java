@@ -17,20 +17,13 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CrewSelectButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 /**
  * shows the crew on board
  */
-public class CrewUI {
-
-    /** image of the crew member for the side bar **/
-    private Texture crewImage;
-
-    /**
-     * the crew texture that is used to display the crew member in the ship
-     */
-    private Texture crewInShip;
+public class CrewUI extends EnemyCrewUI{
 
     /**
      * texture for the status of the crew member
@@ -59,21 +52,6 @@ public class CrewUI {
     private Texture background;
 
     /**
-     * the crew member displayed with this ui
-     */
-    private Crew crew;
-
-    /**
-     * the main class
-     */
-    private Main main;
-
-    /**
-     * the shipview of this crewui
-     */
-    private ShipView shipView;
-
-    /**
      * the x position of the picture of the crew member in the upper left corner
      */
     private float x;
@@ -82,11 +60,6 @@ public class CrewUI {
      * the y position of the picture of the crew member in the upper left corner
      */
     private float y;
-
-    /**
-     * the position of the room the crew member is in
-     */
-    private float roomX, roomY;
 
     /**
      * the font used to draw the name
@@ -103,24 +76,16 @@ public class CrewUI {
      * @param main the main class
      * @param crew the crew member
      */
-    public CrewUI(Main main, Crew crew, Stage stage, ShipView shipView, float x, float y, BitmapFont font, float rX, float rY, ShipType type) {
-        this.main = main;
-        this.crew = crew;
-        this.shipView = shipView;
+    public CrewUI(Main main, Crew crew, Stage stage, AbstractShip shipView, float x, float y, BitmapFont font, float rX, float rY, ShipType type) {
+        super(main, crew, shipView, rX, rY, type);
         this.x = x;
         this.y = y;
         this.font = font;
-        this.roomX = rX;
-        this.roomY = rY;
 
         glyph.setText(font, crew.getName());
 
-        crewImage = new Texture("crew/"+type.toString().toLowerCase()+".png");
-
         crewButton = new CrewSelectButton(crewImage, x, y, 50, 50, crew.getId(), this);
         stage.addActor(crewButton);
-
-        crewInShip = crewImage;
 
         crewStatus = new Texture("gameuis/energybar.png");
 
@@ -132,11 +97,19 @@ public class CrewUI {
     }
 
     /**
+     * the crew was chosen to be moved
+     * called by button crewSelect
+     * now waiting for the user to choose a room on the ship
+     */
+    public void crewMoving() {
+        ((ShipView) shipView).crewMoving(crew);
+    }
+
+    /**
      * dispose of the crew UI
      */
     public void disposeCrewUI() {
-        crewImage.dispose();
-        crewInShip.dispose();
+        super.disposeEnemyCrewUI();
         box.dispose();
         crewStatus.dispose();
 
@@ -147,11 +120,12 @@ public class CrewUI {
      * render
      * no stage stuff
      */
+    @Override
     public void render() {
+        super.render();
         main.batch.begin();
         main.batch.draw(background, x, y, 200, 55);
         font.draw(main.batch, glyph, x + 55, y + 40);
-        main.batch.draw(crewInShip, roomX, roomY, 50, 50);
         main.batch.draw(box, x + 35, y +5, 140, 20);
         float ex=x+55;
         for(int i=0;i<=currentTexture;i++) {
@@ -165,37 +139,10 @@ public class CrewUI {
      * the crew member is updated
      * @param crew the new crew member
      */
+    @Override
     public void update(Crew crew) {
-        this.crew = crew;
+        super.update(crew);
         statusUpdate(crew.getHealth());
-    }
-
-    /**
-     * the crew member was moved to a new room
-     * called by shipview
-     *
-     * @param roomX the x position of the lower left corner the crew member is in
-     */
-    public void crewMoved(float roomX, float roomY) {
-        this.roomX = roomX;
-        this.roomY = roomY;
-    }
-
-    /**
-     * the crew was chosen to be moved
-     * called by button crewSelect
-     * now waiting for the user to choose a room on the ship
-     */
-    public void crewMoving() {
-        shipView.crewMoving(crew);
-    }
-
-    /**
-     * the crew member died
-     * called by controller
-     */
-    public void crewDied() {
-        this.disposeCrewUI();
     }
 
     /**
@@ -215,25 +162,5 @@ public class CrewUI {
         int percent = status/crew.getMaxhealth();
         currentTexture = percent * 10;
         //adapt currentTexture according to amount of textures we end up having
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the Crew ui
-     */
-    public void showCrewUI() {
-
-    }
-
-    /**
-     * hide the Crew ui
-     */
-    public void hideCrewUI() {
-
     }
 }
