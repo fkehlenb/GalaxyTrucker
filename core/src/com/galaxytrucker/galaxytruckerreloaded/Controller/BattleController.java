@@ -136,7 +136,7 @@ public class BattleController extends Controller {
 
     /** Flee the fight
      * @param planet - the planet to flee to */
-    private boolean fleeFight(Planet planet){
+    public boolean fleeFight(Planet planet){
         RequestObject requestObject = new RequestObject();
         requestObject.setRequestType(RequestType.HYPERJUMP);
         requestObject.setShip(clientControllerCommunicator.getClientShip());
