@@ -72,6 +72,7 @@ public class WeaponUI extends SubsystemUI {
      * @param ws the list of weapons
      */
     private void createButtons(List<Weapon> ws) {
+        buttons = new HashMap<>();
         float bwx = wx+15;
         for(Weapon w : ws) {
             String name = w.getWeaponType().toString().toLowerCase();
@@ -88,7 +89,6 @@ public class WeaponUI extends SubsystemUI {
     private void deleteButtons() {
         for(int i : buttons.keySet()) {
             buttons.get(i).remove();
-            buttons.remove(i);
         }
     }
 

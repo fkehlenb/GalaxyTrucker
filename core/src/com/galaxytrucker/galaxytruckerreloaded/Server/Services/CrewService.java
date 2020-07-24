@@ -89,9 +89,11 @@ public class CrewService implements Serializable {
                 List<Tile> roomTiles = currentRoom.getTiles();
                 // Remove crew from tile
                 for (Tile t : roomTiles) {
-                    if (t.getStandingOnMe().getId() == crew.getId()) {
-                        t.setStandingOnMe(null);
-                        roomTiles.set(roomTiles.indexOf(t), t);
+                    if(t.getStandingOnMe() != null) {
+                        if (t.getStandingOnMe().getId() == crew.getId()) {
+                            t.setStandingOnMe(null);
+                            roomTiles.set(roomTiles.indexOf(t), t);
+                        }
                     }
                 }
                 // Remove crew from room

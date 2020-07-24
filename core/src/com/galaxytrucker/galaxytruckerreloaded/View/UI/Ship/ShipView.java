@@ -14,7 +14,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.AutofireButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MoveButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShipButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
@@ -408,6 +407,10 @@ public class ShipView extends AbstractShip {
         }
     }
 
+    /**
+     * updating the amount of unallocated energy
+     * @param status the new total status
+     */
     public void energyStatusUpdate(int status) {
         energy.energyUpdate(status);
     }

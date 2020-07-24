@@ -4,14 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemyHullUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemySystemUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.CrewUI;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.EnemyCrewUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.RoomUI;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,23 +69,17 @@ public class EnemyShip extends AbstractShip {
     private HashMap<Integer, RoomUI> roomUIHashMap;
 
     /**
+     * the hashmap of the crew members and their uis
+     */
+    private HashMap<Integer, EnemyCrewUI> crewUIHashMap = new HashMap<>();
+
+    /**
      * the hull status ui of the enemy ship
      */
     private EnemyHullUI hull;
 
-   /* public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Texture enemyBackground, List<EnemySystemUI> systems, EnemyHullUI hull) {
-        super(main, ship, stage, game);
-        this.enemyBackground = new Texture("battle/battle_overlay.png");
-        // Systeme des Schiffes in SystemUI umwandeln
-        this.systems = systems;
-        this.hull = hull;
-        x = main.WIDTH - enemyBackground.getWidth() - main.WIDTH/6;
-        y = main.HEIGHT/2 - enemyBackground.getHeight()/2;
-    }*/
-
     /**
      * Constructor
-     * TODO methods to access all shipinfo stuff
      * @param main - the main class for SpriteBatch
      */
     public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
@@ -109,6 +107,7 @@ public class EnemyShip extends AbstractShip {
 
         roomUIHashMap = new HashMap<>();
         List<Room> existingRooms = ship.getSystems();
+        List<Crew> crews = new ArrayList<>();
         for(Room r : existingRooms) {
             if(r.isSystem()) {
                 roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), tileX), getRoomX(ship.getShipType(), r.getInteriorID(), tileY), (System) r));
@@ -116,6 +115,11 @@ public class EnemyShip extends AbstractShip {
             else {
                 roomUIHashMap.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), tileX), getRoomX(ship.getShipType(), r.getInteriorID(), tileY)));
             }
+            crews.addAll(r.getCrew());
+        }
+
+        for(Crew c : crews) {
+            crewUIHashMap.put(c.getId(), new EnemyCrewUI(main, c, this, getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), tileX), getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), tileY), ship.getShipType()));
         }
     }
 
@@ -158,6 +162,9 @@ public class EnemyShip extends AbstractShip {
         for(RoomUI r : roomUIHashMap.values()) {
             r.render();
         }
+        for(EnemyCrewUI c : crewUIHashMap.values()) {
+            c.render();
+        }
     }
 
     /**
@@ -182,7 +189,12 @@ public class EnemyShip extends AbstractShip {
     @Override
     public void disposeShipView() {
         enemyBackground.dispose();
-        
+        for(RoomUI r : roomUIHashMap.values()) {
+            r.disposeRoomUI();
+        }
+        for(EnemyCrewUI c : crewUIHashMap.values()) {
+            c.disposeEnemyCrewUI();
+        }
     }
 
     /**

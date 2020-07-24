@@ -3,7 +3,6 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -173,11 +172,6 @@ public class GamePlay implements Screen {
     private BitmapFont font25;
 
     /**
-     * whether the player is currently in combat
-     */
-    private boolean isInCombat = false;
-
-    /**
      * the battle controller
      */
     private BattleController battleController = BattleController.getInstance(null);
@@ -333,7 +327,7 @@ public class GamePlay implements Screen {
      */
     public boolean travel(Planet planet) {
         boolean success;
-        if(isInCombat) {
+        if(ClientControllerCommunicator.getInstance(null).getClientShip().isInCombat()) {
             success = BattleController.getInstance(null).fleeFight(planet);
         }
         else {
@@ -347,7 +341,6 @@ public class GamePlay implements Screen {
                 createShop(planet.getTrader());
             }
             else if(planet.getEvent().equals(PlanetEvent.COMBAT)) {
-                isInCombat = true;
                 if (planet.getShips().size() > 1){
                     background = new Texture("1080p.png");
                     battleController.setOpponent(planet.getShips().get(0));
@@ -388,7 +381,7 @@ public class GamePlay implements Screen {
     /**
      * create next round button
      */
-    private void createRoundButton() { //TODO remove from the stage when battle over
+    private void createRoundButton() {
         nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), 248, 50, this);
         stage.addActor(nextRoundButton);
     }
@@ -410,6 +403,7 @@ public class GamePlay implements Screen {
         boolean success = battleController.playMoves();
         if (success){
             boolean combatOver = battleController.fetchUpdatedData();
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
             if (combatOver){
                 if (battleController.combatOver()){
                     if (battleController.combatWon()){
@@ -420,17 +414,9 @@ public class GamePlay implements Screen {
                     }
                     removeEnemy();
                     removeRoundButton();
-                    isInCombat = false;
                 }
             }
         }
-    }
-
-    /**
-     * remove the enemy ui again
-     */
-    public void deleteEnemy() {
-        enemy = null;
     }
 
     /**
@@ -790,6 +776,11 @@ public class GamePlay implements Screen {
         }
     }
 
+    /**
+     * get the new total system energy amount from the ship saved in the clientcontrollercommunicator
+     * @param room the system whose energy status is queried
+     * @return the total energy currently allocated to this system
+     */
     private int getNewSystemEnergyAmount(Room room) {
         for(Room r : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()) {
             if(r.getId() == room.getId()) {
@@ -817,6 +808,7 @@ public class GamePlay implements Screen {
      */
     private void roomSystemEnergyUpdate(Room room, int amount) {
         player.roomSystemEnergyUpdate(room, amount);
+        energyStatusUpdate(ClientControllerCommunicator.getInstance(null).getClientShip().getEnergy());
     }
 
     /**
@@ -842,7 +834,7 @@ public class GamePlay implements Screen {
      */
     public List<Crew> loadCrew() {
         List<Crew> crew = new LinkedList<>();
-        List<Room> rs = main.getClient().getMyShip().getSystems();
+        List<Room> rs = ClientControllerCommunicator.getInstance(null).getClientShip().getSystems();
         for(Room r : rs) {
             crew.addAll(r.getCrew());
         }
@@ -854,7 +846,7 @@ public class GamePlay implements Screen {
      * @return the weapons of the ship in a list
      */
     public List<Weapon> loadWeapons() {
-        List<Weapon> weapons = new LinkedList<>(main.getClient().getMyShip().getInventory());
+        List<Weapon> weapons = new LinkedList<>(ClientControllerCommunicator.getInstance(null).getClientShip().getInventory());
         for(Room r : main.getClient().getMyShip().getSystems()) {
             if(r instanceof System) {
                 if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
@@ -871,7 +863,7 @@ public class GamePlay implements Screen {
      * @return the amount of missiles
      */
     public int loadMissiles() {
-        return main.getClient().getMyShip().getMissiles();
+        return ClientControllerCommunicator.getInstance(null).getClientShip().getMissiles();
     }
 
     /**
@@ -879,7 +871,7 @@ public class GamePlay implements Screen {
      * @return the amount of fuel
      */
     public int loadFuel() {
-        return main.getClient().getMyShip().getFuel();
+        return ClientControllerCommunicator.getInstance(null).getClientShip().getFuel();
     }
 
     @Override
