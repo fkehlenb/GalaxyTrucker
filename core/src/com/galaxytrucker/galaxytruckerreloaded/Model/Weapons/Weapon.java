@@ -2,6 +2,8 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.Weapons;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -97,6 +99,7 @@ public class Weapon implements Serializable {
      * Weapon price, sorted by Weapon-level 1-6
      */
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Integer> price;
 
     /** Weapon system this weapon belongs to */

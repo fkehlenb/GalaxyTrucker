@@ -3,6 +3,8 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -50,6 +52,7 @@ public class Crew implements Serializable {
      */
     @NonNull
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Integer> stats;
 
     /**

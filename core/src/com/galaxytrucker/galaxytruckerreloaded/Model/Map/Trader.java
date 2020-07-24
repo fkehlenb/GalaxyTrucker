@@ -4,6 +4,8 @@ import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,6 +32,7 @@ public class Trader implements Serializable {
     /** Weapons for sale */
     @NonNull
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Weapon> weaponStock;
 
     /** Rockets for sale */
@@ -46,6 +49,7 @@ public class Trader implements Serializable {
 
     /** Crew for sale */
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @NonNull
     private List<Crew> crewStock;
 

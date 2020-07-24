@@ -2,6 +2,8 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -43,6 +45,7 @@ public class Overworld implements Serializable {
 
     /** Stores planet and their location on the map */
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Planet> planetMap;
 
     /** The start planet */

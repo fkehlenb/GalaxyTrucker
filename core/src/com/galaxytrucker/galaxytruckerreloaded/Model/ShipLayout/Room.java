@@ -3,6 +3,8 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -52,6 +54,7 @@ public class Room implements Serializable {
      */
     @NonNull
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Crew> crew;
 
     /**
@@ -59,6 +62,7 @@ public class Room implements Serializable {
      */
     @NonNull
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Tile> tiles;
 
     /**

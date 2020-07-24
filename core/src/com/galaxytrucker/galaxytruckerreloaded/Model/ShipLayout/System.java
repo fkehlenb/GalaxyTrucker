@@ -3,6 +3,8 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -52,6 +54,7 @@ public class System extends Room implements Serializable {
 
     /** List of weapons this ship has */
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Weapon> shipWeapons;
 
     /** Whether or not the system is unlocked */

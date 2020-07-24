@@ -8,6 +8,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -104,11 +106,13 @@ public class Ship implements Serializable {
     /** This ship's systems */
     @NonNull
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Room> systems;
 
     /** Inventory */
     @NonNull
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Weapon> inventory;
 
     /** Whether or not the ship is in combat */
