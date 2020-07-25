@@ -827,13 +827,6 @@ public class BattleService implements Serializable {
                                     for (Crew c : r.getCrew()) {
                                         c.setHealth(c.getHealth() - weapon.getCrewDamage());
                                         java.lang.System.out.println("[CREW]:" + c.getId() + ":[DAMAGE]:" + weapon.getCrewDamage() + ":[HP]:" + c.getHealth());
-                                        if (c.getHealth() <= 0) {
-                                            Tile t = c.getTile();
-                                            t.setStandingOnMe(null);
-                                            c.setTile(null);
-                                            tileDAO.update(t);
-                                            crewDAO.update(c);
-                                        }
                                     }
                                     List<Crew> crewInRoom = new ArrayList<>(r.getCrew());
                                     for (Crew c : r.getCrew()){
@@ -954,6 +947,7 @@ public class BattleService implements Serializable {
                     List<Crew> crewInRoom = new ArrayList<>(r.getCrew());
                     for (Crew c : r.getCrew()) {
                         c.setHealth(c.getHealth() - 1);
+                        crewDAO.update(c);
                         if (c.getHealth() <= 0) {
                             crewInRoom.remove(c);
                         }
