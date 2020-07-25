@@ -96,11 +96,14 @@ public class ServerServiceCommunicator {
         }
         switch (request.getRequestType()) {
             case MoveCrew:
-                // TODO combat
+                if (request.getShip().isInCombat()){
+                    for (BattleService b : battleServices){
+                        if (b.getCombatants().contains(request.getShip())){
+                            return b.addToQueue(request);
+                        }
+                    }
+                }
                 return crewService.moveCrewToRoom(request.getShip(), request.getCrew(), request.getRoom());
-            case HealCrew:
-                // TODO combat
-                return crewService.healCrewMember(request.getShip(), request.getCrew(), request.getHealAmount());
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
             case ADD_ENERGY_SYSTEM:
@@ -165,8 +168,6 @@ public class ServerServiceCommunicator {
                 return pvpService.getPVPClients(request.getShip());
             case GET_PLANET_REWARDS:
                 return planetRewardService.getRewards(request.getShip(),request.getPlanet());
-            case HealCrewInRoom:
-                return crewService.healCrewInRoom(request.getShip(),request.getRoom(),request.getIntAmount());
             case INSTALL_SYSTEM:
                 return systemService.installSystem(request.getShip(),request.getSystemType());
         }

@@ -239,8 +239,17 @@ public class BattleService implements Serializable {
             if (ship.getId() == currentRound) {
                 java.lang.System.out.println("[PRE]:[Play-Moves]:[Ship]:" + ship.getId() + "[Current-Round]:" + currentRound);
                 // ===== Clear old data =====
+                boolean fled = false;
+                if (previousRoundActions.contains(PreviousRoundAction.FLEE_FIGHT)){
+                     fled = true;
+                }
+
                 previousRoundActions.clear();
                 previousWeaponsUsed.clear();
+
+                if (fled){
+                    previousRoundActions.add(PreviousRoundAction.FLEE_FIGHT);
+                }
                 // ===== Get world difficulty =====
                 int difficulty = 1;
                 if (ship.getAssociatedUser().equals("[ENEMY]")) {
@@ -263,6 +272,12 @@ public class BattleService implements Serializable {
                             if (success) {
                                 previousRoundActions.add(PreviousRoundAction.ATTACK_SHIP);
                                 previousWeaponsUsed.add(move.getWeapon().getWeaponType());
+                            }
+                        }
+                        else if (move.getRequestType().equals(RequestType.MoveCrew) && !combatOver){
+                            boolean success = moveCrew(move.getShip(),move.getCrew(),move.getRoom());
+                            if (success){
+                                previousRoundActions.add(PreviousRoundAction.CREW_MOVED);
                             }
                         } // todo else add actions
                     }
@@ -546,6 +561,26 @@ public class BattleService implements Serializable {
             e.printStackTrace();
         }
         return responseObject;
+    }
+
+    /** Move crew during combat
+     * @param ship - the client's ship
+     * @param crew - the crew to move
+     * @param room - the room to move the crew to */
+    private boolean moveCrew(Ship ship,Crew crew,Room room){
+        try {
+            ResponseObject responseObject = crewService.moveCrewToRoom(ship,crew,room);
+            if (responseObject.isValidRequest()){
+                crew = crewDAO.getById(crew.getId());
+                crew.setJustMoved(true);
+                crewDAO.update(crew);
+                return true;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
