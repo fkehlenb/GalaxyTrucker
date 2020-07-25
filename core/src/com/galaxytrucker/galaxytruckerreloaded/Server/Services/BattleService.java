@@ -271,7 +271,7 @@ public class BattleService implements Serializable {
                 roundActions.clear();
                 // ===== Passive Changes =====
                 if (!combatOver) {
-                    for (Ship s : combatants) { // todo refetch data
+                    for (Ship s : combatants) {
                         passiveChanges(s);
                     }
                 } else {
@@ -367,7 +367,7 @@ public class BattleService implements Serializable {
                         Planet p = winner.getPlanet();
                         p.getShips().remove(loser);
                         planetDAO.update(p);
-                    } // todo else
+                    }
                     // Possible weapon loot
                     List<Weapon> weaponLoot = new ArrayList<>();
                     weaponLoot.addAll(loser.getInventory());
@@ -568,12 +568,18 @@ public class BattleService implements Serializable {
                 if (coward.getEvasionChance() == 0f) {
                     coward.setEvasionChance(0.33f);
                 }
-                int successfulAttempt = (int) (coward.getEvasionChance() * (float) random.nextInt(100));
-                java.lang.System.out.println("[SHIP-EVASION]" + coward.getEvasionChance() + "[EVASION]:" + successfulAttempt);
+                // ===== Check energy in engine - adds evasion chance =====
+                int energyInEngine = 0;
+                for (Room r : coward.getSystems()){
+                    if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.ENGINE)){
+                        energyInEngine = ((System) r).getEnergy();
+                    }
+                }
+                // ===== Compute evasion chance =====
+                int successfulAttempt = (int) (coward.getEvasionChance() * (float) random.nextInt(100 + energyInEngine));
                 // ===== Successful evasion =====
                 if (successfulAttempt >= 15) {
                     // Attempt the hyperJump
-                    coward.setInCombat(false);
                     ResponseObject responseObject1 = travelService.jump(coward, planet);
                     // ===== Valid hyperJump =====
                     if (responseObject1.isValidRequest()) {
@@ -632,8 +638,6 @@ public class BattleService implements Serializable {
                         winner = combatants.get(0).getId();
                         this.setWinner(this.winner);
                         battleServiceDAO.update(this);
-                        java.lang.System.out.println("[REMOVED-BATTLE-SERVICE]:[BattleServices]:"
-                                + ServerServiceCommunicator.getInstance().getBattleServices().size());
                         // Next round
                         playMoves(coward);
                         return responseObject1;
@@ -721,7 +725,7 @@ public class BattleService implements Serializable {
                                 damage = random.nextInt(difficulty*2)+1;
                             }
                             else{
-                                damage = random.nextInt(12)+1;
+                                damage = random.nextInt(10)+weapon.getDamage();
                             }
                             // ===== Add crew damage =====
                             if (manned) {
@@ -729,12 +733,19 @@ public class BattleService implements Serializable {
                                     damage += c.getStats().get(0);
                                 }
                             }
+                            // ===== Energy adds piercing =====
+                            int weaponEnergy = 0;
+                            for (Room r : ship.getSystems()){
+                                if (r.isSystem()&&((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
+                                    weaponEnergy = ((System) r).getEnergy();
+                                }
+                            }
                             // ===== Pierce =====
-                            if (weapon.getShieldPiercing() < opponent.getShields()) {
-                                damage -= (opponent.getShields() - weapon.getShieldPiercing());
+                            if (weapon.getShieldPiercing() + weaponEnergy < opponent.getShields()) {
+                                damage -= (opponent.getShields() - weapon.getShieldPiercing() - weaponEnergy);
                             }
                             // Remove pierce
-                            int shieldLevel = opponent.getShields() - weapon.getShieldPiercing();
+                            int shieldLevel = opponent.getShields() - weapon.getShieldPiercing() - weaponEnergy;
                             if (shieldLevel < 0) {
                                 shieldLevel = 0;
                             }
@@ -846,11 +857,16 @@ public class BattleService implements Serializable {
                 if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.ENGINE) && !((System) r).isDisabled()) {
                     if (ship.getFTLCharge() < 100) {
                         ship.setFTLCharge(ship.getFTLCharge() + 10);
+                        for (Crew c : r.getCrew()){
+                            ship.setFTLCharge(ship.getFTLCharge() + c.getStats().get(2));
+                        }
+                    }
+                    if (ship.getFTLCharge()>100){
+                        ship.setFTLCharge(100);
                     }
                 }
             }
             // ===== Replenish shields =====
-            // todo correct amount
             if (ship.getShields() < ship.getShieldCharge() / 2) {
                 for (Room r : ship.getSystems()) {
                     if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.SHIELDS)
@@ -868,22 +884,27 @@ public class BattleService implements Serializable {
                         }
                     }
                 }
+                shipDAO.update(ship);
             }
             // ====== Remove 02 from rooms with breach =====
             for (Room r : ship.getSystems()) {
                 if (r.getBreach() > 0 && r.getOxygen() > 0) {
                     r.setOxygen(r.getOxygen() - 25);
                 }
+                roomDAO.update(r);
             }
             // ===== Damage crew in rooms without o2 ======
             for (Room r : ship.getSystems()) {
                 if (r.getBreach() > 0 && r.getOxygen() <= 0) {
+                    List<Crew> crewInRoom = r.getCrew();
                     for (Crew c : r.getCrew()) {
                         c.setHealth(c.getHealth() - 1);
                         if (c.getHealth() <= 0) {
-                            r.getCrew().remove(c);
+                            crewInRoom.remove(c);
                         }
                     }
+                    r.setCrew(crewInRoom);
+                    roomDAO.update(r);
                 }
             }
             // ===== Repair rooms with breach and crew =====
@@ -899,7 +920,9 @@ public class BattleService implements Serializable {
                         } else {
                             c.setJustMoved(false);
                         }
+                        crewDAO.update(c);
                     }
+                    roomDAO.update(r);
                 }
             }
             // ===== Repair systems =====
@@ -913,6 +936,7 @@ public class BattleService implements Serializable {
                     if (((System) r).getDamage() == 0) {
                         ((System) r).setDisabled(false);
                     }
+                    roomDAO.update(r);
                 }
             }
             // ===== Weapon coolDown replenishment =====

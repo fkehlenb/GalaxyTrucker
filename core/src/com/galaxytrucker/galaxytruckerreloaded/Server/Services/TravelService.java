@@ -118,6 +118,8 @@ public class TravelService implements Serializable {
             boolean allowedToJump = crewInCockpit && engineActive;
             // Check for fuel and ftlCharge
             if (s.getFuel() > 0 && s.getFTLCharge() == 100 && dest.getId() != s.getPlanet().getId() && allowedToJump) {
+                // todo check me - just in case
+                s.setInCombat(false);
                 // User
                 User user = UserService.getInstance().getUser(s.getAssociatedUser());
                 // Overworld
