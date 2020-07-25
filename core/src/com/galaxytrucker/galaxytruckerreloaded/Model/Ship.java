@@ -90,7 +90,7 @@ public class Ship implements Serializable {
      * The planet the ship is currently at
      */
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Planet planet;
 
     /** Shields */

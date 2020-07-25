@@ -117,7 +117,7 @@ public class WeaponUI extends SubsystemUI {
         deleteButtons();
         createButtons(sys.getShipWeapons());
         for(Weapon w : sys.getShipWeapons()) {
-            glyphs.get(w.getId()).setText(font, Integer.toString(w.getCooldown()));
+            glyphs.get(w.getId()).setText(font, Integer.toString(w.getCurrentCooldown()));
         }
     }
 

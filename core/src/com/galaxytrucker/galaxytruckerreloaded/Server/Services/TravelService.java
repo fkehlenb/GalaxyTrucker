@@ -86,8 +86,8 @@ public class TravelService implements Serializable {
         System.out.println("\n==================== ACTION HYPERJUMP ====================");
         try {
             // Fetch data from database - client cannot be trusted
-            s = shipDAO.getById(s.getId());
-            dest = planetDAO.getById(dest.getId());
+//            s = shipDAO.getById(s.getId());
+//            dest = planetDAO.getById(dest.getId());
             Planet currentPlanet = s.getPlanet();
 
             // Manual verification
@@ -226,21 +226,21 @@ public class TravelService implements Serializable {
                     planetDAO.update(dest);
                     planetDAO.update(currentPlanet);
                     shipDAO.update(s);
-                    // ===== Update overworld =====
-                    List<Planet> planets = overworld.getPlanetMap();
-                    for (Planet p : planets) {
-                        if (p.getId() == currentPlanet.getId()) {
-                            planets.set(planets.indexOf(p), planetDAO.getById(currentPlanet.getId()));
-                        } else if (p.getId() == dest.getId()) {
-                            planets.set(planets.indexOf(p), planetDAO.getById(dest.getId()));
-                        }
-                    }
-                    overworld.setPlanetMap(new ArrayList<Planet>(planets));
-                    for (Planet p : planets) {
-                        planetDAO.update(p);
-                    }
-                    overworldDAO.update(overworld);
-                    user.setOverworld(overworld);
+//                    ===== Update overworld =====
+//                    List<Planet> planets = overworld.getPlanetMap();
+//                    for (Planet p : planets) {
+//                        if (p.getId() == currentPlanet.getId()) {
+//                            planets.set(planets.indexOf(p), currentPlanet);
+//                        } else if (p.getId() == dest.getId()) {
+//                            planets.set(planets.indexOf(p), dest);
+//                        }
+//                    }
+//                    overworld.setPlanetMap(new ArrayList<Planet>(planets));
+//                    for (Planet p : planets) {
+//                        planetDAO.update(p);
+//                    }
+//                    overworldDAO.update(overworld);
+//                    user.setOverworld(overworld);
                     userDAO.update(user);
                     // ===== Set valid =====
                     responseObject.setValidRequest(true);

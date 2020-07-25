@@ -10,6 +10,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.PlanetDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,9 @@ public class ClientHandler implements Runnable {
 
     /** ShipDAO */
     private ShipDAO shipDAO = ShipDAO.getInstance();
+
+    /** Planet DAO */
+    private PlanetDAO planetDAO = PlanetDAO.getInstance();
 
     /**
      * The server
@@ -150,7 +154,14 @@ public class ClientHandler implements Runnable {
                             user.setOverworld(overworld);
                             //====================== Ship Creation ==================
                             ShipType shipType = (ShipType) receiveObject.readObject();
-                            user.setUserShip(generateShip(shipType, username, overworld.getStartPlanet()));
+                            Ship ship = generateShip(shipType, username, overworld.getStartPlanet());
+                            try {
+                                shipDAO.persist(ship);
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            user.setUserShip(ship);
                             Ship userShip = user.getUserShip();
                             Planet startPlanet = overworld.getStartPlanet();
                             List<Ship> startPlanetShips = startPlanet.getShips();
@@ -285,6 +296,7 @@ public class ClientHandler implements Runnable {
             List<Ship> ships = planet.getShips();
             Ship opponent = generateShip(shipTypes.get(random.nextInt(shipTypes.size()-1)),"[ENEMY]",planet);
             try {
+                planetDAO.persist(planet);
                 shipDAO.persist(opponent);
             }
             catch (Exception e){
@@ -362,6 +374,14 @@ public class ClientHandler implements Runnable {
                 30,30,PlanetEvent.BOSS,new ArrayList<Ship>(), "map/planet_sun1.png");
         // Todo Add boss ship
         finalMap.add(boss);
+        for (Planet p : finalMap){
+            try{
+                planetDAO.persist(p);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         return new Overworld(UUID.randomUUID().hashCode(),seed,difficulty,username,finalMap,startPlanet,boss);
     }
 

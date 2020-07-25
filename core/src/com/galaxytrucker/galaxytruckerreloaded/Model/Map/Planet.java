@@ -60,7 +60,7 @@ public class Planet implements Serializable {
 
     /** Ships at this planet */
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Ship> ships;
 

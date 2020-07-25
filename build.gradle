@@ -89,13 +89,10 @@ project(":core") {
         testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
 
         // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
-        compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.17.Final'
+        compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.18.Final'
 
         // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
-        compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.17.Final'
-
-        // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-        compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+        compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.18.Final'
 
         // https://mvnrepository.com/artifact/org.mockito/mockito-core
         testCompile group: 'org.mockito', name: 'mockito-core', version: '3.3.3'

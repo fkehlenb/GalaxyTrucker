@@ -25,7 +25,7 @@ public class Trader implements Serializable {
     private int id;
 
     /** Planet the trader is located at */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @NonNull
     private Planet planet;
 
