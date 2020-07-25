@@ -362,6 +362,7 @@ public class TraderService extends PlanetEventService {
                 // Remove weapon from inventory
                 inventory.remove(weapon);
                 ship.setInventory(inventory);
+                weapon.setWeaponSystem(null);
                 // Add coins to ship
                 ship.setCoins(ship.getCoins()+weapon.getWeaponPrice());
                 // Add weapon to trader stock
