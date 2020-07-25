@@ -750,7 +750,7 @@ public class BattleService implements Serializable {
                             }
                             shipDAO.update(opponent);
                             // ===== Damage system and disable it =====
-                            int systemDamage = weapon.getCrewDamage() - weapon.getShieldPiercing() + random.nextInt(weapon.getDamage());
+                            int systemDamage = weapon.getCrewDamage() - weapon.getShieldPiercing() + random.nextInt(weapon.getDamage()+1);
                             if (systemDamage<0){
                                 systemDamage = 0;
                             }

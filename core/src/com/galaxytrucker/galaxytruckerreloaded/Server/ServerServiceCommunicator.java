@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
@@ -213,10 +214,21 @@ public class ServerServiceCommunicator {
         try {
             User u = userService.getUser(username);
             if (u.isLoggedIn()) {
-                if (!u.getUserShip().isInCombat()) {
+                if (!u.getUserShip().isInCombat()){
                     u.setLoggedIn(false);
                     userService.updateUser(u);
                     responseObject.setValidRequest(true);
+                }
+                else if (u.getUserShip().isInCombat()&&!u.getUserShip().getPlanet().getEvent().equals(PlanetEvent.PVP)){
+                    for (BattleService b : this.getBattleServices()){
+                        battleServiceDAO.update(b);
+                    }
+                    u.setLoggedIn(false);
+                    userService.updateUser(u);
+                    responseObject.setValidRequest(true);
+                }
+                else{
+                    //todo
                 }
             }
         } catch (Exception e) {
