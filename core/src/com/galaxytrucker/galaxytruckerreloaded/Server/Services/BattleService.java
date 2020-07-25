@@ -621,10 +621,10 @@ public class BattleService implements Serializable {
                     // ===== Valid hyperJump =====
                     if (responseObject1.isValidRequest()) {
                         // ===== Repair systems, heal crew, restore shields, replenish cooldowns, repair breaches =====
+                        for (Ship s : combatants){
+                            combatants.set(combatants.indexOf(s),shipDAO.getById(s.getId()));
+                        }
                         for (Ship s : combatants) {
-                            if (s.getId() == coward.getId()){
-                                s = responseObject1.getResponseShip();
-                            }
                             for (Room r : s.getSystems()) {
                                 if (r.getBreach() > 0) {
                                     r.setBreach(0);
@@ -657,6 +657,7 @@ public class BattleService implements Serializable {
                             }
                             shipDAO.update(s);
                         }
+                        coward = shipDAO.getById(coward.getId());
                         // ===== Set valid data =====
                         responseObject1.setCombatWon(false);
                         responseObject1.setResponseShip(coward);
@@ -670,10 +671,8 @@ public class BattleService implements Serializable {
                         battleOver();
                         // Remove yourself
                         this.combatants.remove(coward);
-                        this.setCombatants(this.combatants);
                         // Set opponent as winner
                         winner = combatants.get(0).getId();
-                        this.setWinner(this.winner);
                         battleServiceDAO.update(this);
                         // Next round
                         playMoves(coward);
