@@ -78,12 +78,15 @@ public class EnemyShip extends AbstractShip {
      */
     private EnemyHullUI hull;
 
+    private Ship eShip;
+
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
      */
     public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
         super(main, ship, stage, game, tileStage);
+        this.eShip = ship;
         enemyBackground = new Texture("battle/battle_overlay.png");
         Texture enemyShipTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "base.png");
         Texture enemyRoomBackgroundTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "floor.png");
@@ -100,6 +103,8 @@ public class EnemyShip extends AbstractShip {
         boxHeight = Main.HEIGHT - 20;
         x = Main.WIDTH - boxWidth - 20;
         y = Main.HEIGHT/2f - boxHeight/2f;
+
+        hull = new EnemyHullUI(main, eShip.getHp());
 
         //the base x and y for the rooms, meaning the middle of the ship
         float tileX = x + width/2;
@@ -176,6 +181,7 @@ public class EnemyShip extends AbstractShip {
      * rendering everything after the tile stage
      */
     public void render2() {
+        hull.render();
         for(RoomUI r : roomUIHashMap.values()) {
             r.render();
         }
@@ -206,6 +212,7 @@ public class EnemyShip extends AbstractShip {
     @Override
     public void disposeShipView() {
         enemyBackground.dispose();
+        hull.disposeEnemyHullUI();
         for(RoomUI r : roomUIHashMap.values()) {
             r.disposeRoomUI();
         }

@@ -13,6 +13,10 @@ public class EnemyHullUI {
      */
     private Texture hullBackground;
 
+    private Texture hullTexture;
+
+    private int amount;
+
     /**
      * the main class extending game
      */
@@ -22,10 +26,12 @@ public class EnemyHullUI {
      * constructor
      * @param main the main class
      */
-    public EnemyHullUI(Main main) {
+    public EnemyHullUI(Main main, int amount) {
         this.main = main;
+        this.amount = amount;
 
-        //hullBackground = new Texture();
+        hullTexture = new Texture("gameuis/hull.png");
+        hullBackground = new Texture("gameuis/enemyHull.png");
     }
 
     /**
@@ -33,7 +39,12 @@ public class EnemyHullUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(hullBackground, 0, 0, hullBackground.getWidth(), hullBackground.getHeight());
+        float x = 25;
+        for(int i=0; i<=amount; i++) {
+            main.batch.draw(hullTexture, 14*Main.WIDTH/(20) + x, Main.HEIGHT - Main.HEIGHT/(10f), 25, 25);
+            x+=12;
+        }
+        main.batch.draw(hullBackground, 14*Main.WIDTH/(20), Main.HEIGHT - Main.HEIGHT/(10f), Main.WIDTH/hullBackground.getWidth(), Main.HEIGHT/hullBackground.getHeight());
         main.batch.end();
     }
 
@@ -42,7 +53,7 @@ public class EnemyHullUI {
      * @param status the new status
      */
     public void hullStatusUpdate(int status) {
-
+        amount = status;
     }
 
     /**
@@ -69,6 +80,7 @@ public class EnemyHullUI {
      * dispose of the enemy hull UI
      */
     public void disposeEnemyHullUI() {
-
+        hullBackground.dispose();
+        hullTexture.dispose();
     }
 }
