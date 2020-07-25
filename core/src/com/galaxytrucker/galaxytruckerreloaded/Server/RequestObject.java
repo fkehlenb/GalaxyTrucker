@@ -81,4 +81,7 @@ public class RequestObject implements Serializable {
 
     /** Is player currently in a pvp situation? */
     private boolean pvp = false;
+
+    /** PVP Opponent */
+    private String pvpOpponent;
 }

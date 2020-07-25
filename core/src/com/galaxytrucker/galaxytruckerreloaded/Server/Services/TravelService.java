@@ -86,8 +86,8 @@ public class TravelService implements Serializable {
         System.out.println("\n==================== ACTION HYPERJUMP ====================");
         try {
             // Fetch data from database - client cannot be trusted
-//            s = shipDAO.getById(s.getId());
-//            dest = planetDAO.getById(dest.getId());
+            s = shipDAO.getById(s.getId());
+            dest = planetDAO.getById(dest.getId());
             Planet currentPlanet = s.getPlanet();
 
             // Manual verification

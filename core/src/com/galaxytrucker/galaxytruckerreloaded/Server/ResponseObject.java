@@ -11,6 +11,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /** Response sent from the server to the client */
@@ -79,7 +80,11 @@ public class ResponseObject implements Serializable {
     /** Reward fuel */
     private int rewardFuel = 0;
 
-
     /** Successful flee fight */
     private boolean fledFight = false;
+
+    /** PVP Clients */
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> pvpClients = new ArrayList<>();
 }

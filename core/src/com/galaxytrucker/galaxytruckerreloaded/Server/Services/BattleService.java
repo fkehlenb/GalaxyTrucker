@@ -431,6 +431,7 @@ public class BattleService implements Serializable {
                     // ===== Repair systems, heal crew, restore shields, replenish cooldowns, repair breaches =====
                     for (Ship s : combatants) {
                         if (s.getId() == this.winner) {
+                            s.setHp(s.getHp()+random.nextInt(25));
                             for (Room r : s.getSystems()) {
                                 if (r.getBreach() > 0) {
                                     r.setBreach(0);
@@ -715,7 +716,13 @@ public class BattleService implements Serializable {
                         // ===== Weapon burst =====
                         for (int i = 0; i < weapon.getBurst(); i++) {
                             // ===== Compute weapon damage =====
-                            int damage = (int) (((float) weapon.getDamage() / weapon.getAccuracy()) * ((float) weapon.getWeaponLevel()) / (float) energyInWeaponSystem);
+                            int damage;
+                            if (ship.getAssociatedUser().equals("[ENEMY]")){
+                                damage = random.nextInt(difficulty*2)+1;
+                            }
+                            else{
+                                damage = random.nextInt(12)+1;
+                            }
                             // ===== Add crew damage =====
                             if (manned) {
                                 for (Crew c : mannedCrew) {
