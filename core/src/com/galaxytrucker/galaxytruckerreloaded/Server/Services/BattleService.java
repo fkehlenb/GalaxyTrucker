@@ -548,6 +548,8 @@ public class BattleService implements Serializable {
                             combatants.set(combatants.indexOf(ship), ship);
                         }
                         if (s.getId() != ship.getId()) {
+                            combatants.set(combatants.indexOf(s),shipDAO.getById(s.getId()));
+                            s = combatants.get(combatants.indexOf(s));
                             responseObject.setOpponent(s);
                         }
                     }
@@ -810,7 +812,7 @@ public class BattleService implements Serializable {
                             if (systemDamage>10){
                                 systemDamage = 10;
                             }
-                            for (Room r : ship.getSystems()){
+                            for (Room r : opponent.getSystems()){
                                 if (r.getId() == room.getId()&&r.isSystem()){
                                     ((System) r).setDamage(damage);
                                     if (systemDamage > 5) {
@@ -820,10 +822,11 @@ public class BattleService implements Serializable {
                                 }
                             }
                             // ===== Damage crew in room =====
-                            for (Room r : ship.getSystems()){
+                            for (Room r : opponent.getSystems()){
                                 if (r.getId() == room.getId()){
                                     for (Crew c : r.getCrew()) {
                                         c.setHealth(c.getHealth() - weapon.getCrewDamage());
+                                        java.lang.System.out.println("[CREW]:" + c.getId() + ":[DAMAGE]:" + weapon.getCrewDamage() + ":[HP]:" + c.getHealth());
                                         if (c.getHealth() <= 0) {
                                             Tile t = c.getTile();
                                             t.setStandingOnMe(null);
@@ -832,14 +835,26 @@ public class BattleService implements Serializable {
                                             crewDAO.update(c);
                                         }
                                     }
-                                    List<Crew> crewInRoom = r.getCrew();
+                                    List<Crew> crewInRoom = new ArrayList<>(r.getCrew());
                                     for (Crew c : r.getCrew()){
                                         if (c.getHealth()<=0){
+                                            try {
+                                                Tile t = c.getTile();
+                                                t.setStandingOnMe(null);
+                                                tileDAO.update(t);
+                                            }
+                                            catch (Exception f){
+                                                f.printStackTrace();
+                                            }
+                                            c.setTile(null);
+                                            c.setCurrentRoom(null);
+                                            crewDAO.update(c);
                                             crewInRoom.remove(c);
                                         }
                                     }
                                     r.setCrew(crewInRoom);
                                     roomDAO.update(r);
+                                    break;
                                 }
                             }
                             // ===== Attempt to cause a breach =====
@@ -849,7 +864,7 @@ public class BattleService implements Serializable {
                             }
                             int randomInt = random.nextInt(breachChance);
                             if (randomInt == 0) {
-                                for (Room r : ship.getSystems()){
+                                for (Room r : opponent.getSystems()){
                                     if (r.getId() == room.getId()){
                                         r.setBreach(5);
                                         roomDAO.update(r);
@@ -862,6 +877,7 @@ public class BattleService implements Serializable {
                             for (Room r : opponent.getSystems()) {
                                 crewOnBoard.addAll(r.getCrew());
                             }
+                            java.lang.System.out.println("[AMOUNT OF CREW LEFT]:" + crewOnBoard.size());
                             if (opponent.getHp() <= 0 || crewOnBoard.isEmpty()) {
                                 this.combatOver = true;
                                 this.winner = ship.getId();
@@ -931,7 +947,7 @@ public class BattleService implements Serializable {
             // ===== Damage crew in rooms without o2 ======
             for (Room r : ship.getSystems()) {
                 if (r.getBreach() > 0 && r.getOxygen() <= 0) {
-                    List<Crew> crewInRoom = r.getCrew();
+                    List<Crew> crewInRoom = new ArrayList<>(r.getCrew());
                     for (Crew c : r.getCrew()) {
                         c.setHealth(c.getHealth() - 1);
                         if (c.getHealth() <= 0) {
