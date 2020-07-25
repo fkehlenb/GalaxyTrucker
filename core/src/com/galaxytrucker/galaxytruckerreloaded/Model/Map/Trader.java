@@ -31,7 +31,7 @@ public class Trader implements Serializable {
 
     /** Weapons for sale */
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Weapon> weaponStock;
 
@@ -48,7 +48,7 @@ public class Trader implements Serializable {
     private int hpStock;
 
     /** Crew for sale */
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @NonNull
     private List<Crew> crewStock;

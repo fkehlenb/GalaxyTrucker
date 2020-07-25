@@ -10,6 +10,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.OverworldDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.PlanetDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import lombok.Getter;
@@ -35,6 +36,9 @@ public class ClientHandler implements Runnable {
 
     /** Planet DAO */
     private PlanetDAO planetDAO = PlanetDAO.getInstance();
+
+    /** Overworld DAO */
+    private OverworldDAO overworldDAO = OverworldDAO.getInstance();
 
     /**
      * The server
@@ -151,16 +155,12 @@ public class ClientHandler implements Runnable {
                             int difficulty = Integer.parseInt(receive.readLine());
                             this.seed = UUID.randomUUID().hashCode();
                             Overworld overworld = generateOverworld(this.seed, username, difficulty);
+                            overworldDAO.persist(overworld);
                             user.setOverworld(overworld);
                             //====================== Ship Creation ==================
                             ShipType shipType = (ShipType) receiveObject.readObject();
                             Ship ship = generateShip(shipType, username, overworld.getStartPlanet());
-                            try {
-                                shipDAO.persist(ship);
-                            }
-                            catch (Exception e){
-                                e.printStackTrace();
-                            }
+                            shipDAO.persist(ship);
                             user.setUserShip(ship);
                             Ship userShip = user.getUserShip();
                             Planet startPlanet = overworld.getStartPlanet();
