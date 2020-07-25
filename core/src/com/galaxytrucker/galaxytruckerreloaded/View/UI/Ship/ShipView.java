@@ -20,6 +20,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
+import sun.text.resources.cldr.ext.FormatData_ta_LK;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,11 @@ public class ShipView extends AbstractShip {
      * the hull ui of this ship
      */
     private HullUI hull;
+
+    /**
+     * the ftlChargeUI
+     */
+    private FtlChargeUI ftlChargeUI;
 
     /**
      * the ui displaying the amount of money the player has
@@ -186,6 +192,7 @@ public class ShipView extends AbstractShip {
         missiles = new MissileUI(main, ship.getMissiles(), font25);
         hull = new HullUI(main, ship.getHp());
         fuel = new FuelUI(main, ship.getFuel(), font25);
+        ftlChargeUI = new FtlChargeUI(main, ship.getFTLCharge());
 
         //Um eine List aller Systems (existingSystems2) an EnergyUI zu übergeben.
         List<System> existingSystems2 = new ArrayList<>();
@@ -227,6 +234,7 @@ public class ShipView extends AbstractShip {
         fuel.render();
         hull.render();
         energy.render();
+        ftlChargeUI.render();
     }
 
     /**
@@ -265,6 +273,7 @@ public class ShipView extends AbstractShip {
         game.deleteShip();
         inventory.remove();
         moveButton.remove();
+        ftlChargeUI.disposeFtlChargeUI();
         for(RoomUI r : rooms.values()) {
             r.disposeRoomUI();
         }
@@ -298,6 +307,8 @@ public class ShipView extends AbstractShip {
         missiles.changeOverallAmount(ship.getMissiles());
         //Fuel
         fuel.changeOverallAmount(ship.getFuel());
+        //FTLCharge
+        ftlChargeUI.changeOverallAmount(ship.getFTLCharge());
     }
 
     /**
@@ -461,6 +472,12 @@ public class ShipView extends AbstractShip {
      * @param amount by how much the amount is changed
      */
     public void changeAmountFuel(int amount) {fuel.changeAmount(amount);}
+
+    /**
+     * changes amount of ftlcharge
+     * @param amount by how much the amount is changed
+     */
+    public void changeAmountFTLCharge(int amount) {ftlChargeUI.changeAmount(amount); }
 
     /**
      * a weapon is chosen for an attack
