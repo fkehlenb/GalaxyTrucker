@@ -41,10 +41,10 @@ public class EnemyHullUI {
         main.batch.begin();
         float x = 25;
         for(int i=0; i<=amount; i++) {
-            main.batch.draw(hullTexture, 14*Main.WIDTH/(20) + x, Main.HEIGHT - Main.HEIGHT/(10f), 25, 25);
-            x+=12;
+            main.batch.draw(hullTexture, 138*Main.WIDTH/(200) + x, Main.HEIGHT - Main.HEIGHT/(11f), 15, 15);
+            x+=12*0.6f;
         }
-        main.batch.draw(hullBackground, 14*Main.WIDTH/(20), Main.HEIGHT - Main.HEIGHT/(10f), Main.WIDTH/hullBackground.getWidth(), Main.HEIGHT/hullBackground.getHeight());
+        main.batch.draw(hullBackground, 14*Main.WIDTH/(20), Main.HEIGHT - Main.HEIGHT/(9f), Main.WIDTH/9.74f, Main.HEIGHT/16.61f);
         main.batch.end();
     }
 
