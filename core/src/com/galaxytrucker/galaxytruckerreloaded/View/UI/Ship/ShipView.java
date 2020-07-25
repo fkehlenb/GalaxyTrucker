@@ -192,7 +192,7 @@ public class ShipView extends AbstractShip {
         missiles = new MissileUI(main, ship.getMissiles(), font25);
         hull = new HullUI(main, ship.getHp());
         fuel = new FuelUI(main, ship.getFuel(), font25);
-        ftlChargeUI = new FtlChargeUI(main, ship.getFTLCharge(), font25);
+        ftlChargeUI = new FtlChargeUI(main, ship.getFTLCharge());
 
         //Um eine List aller Systems (existingSystems2) an EnergyUI zu übergeben.
         List<System> existingSystems2 = new ArrayList<>();

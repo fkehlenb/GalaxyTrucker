@@ -23,22 +23,15 @@ public class FtlChargeUI {
          */
         private Main main;
 
-        private BitmapFont font;
-
-        private GlyphLayout glyph = new GlyphLayout();
-
         /**
          * Constructor
          *
          * @param main - main class used for sprite batch and camera
          * @param ftlCharge the amount of ftlCharge
          */
-        public FtlChargeUI(Main main, int ftlCharge, BitmapFont font) {
+        public FtlChargeUI(Main main, int ftlCharge) {
             this.main = main;
             this.amount = ftlCharge;
-            this.font = font;
-
-            //ftlChargeBackground = new Texture("gameuis/top_fuel2.png");
 
             if(amount <= 10){
                 ftlChargeBackground = new Texture("buttons/balken/0_balken.png");
@@ -63,8 +56,6 @@ public class FtlChargeUI {
             } else {
                 ftlChargeBackground = new Texture("buttons/balken/100_balken.png");
             }
-
-            //glyph.setText(font, Integer.toString(amount));
         }
 
         /**
@@ -73,8 +64,7 @@ public class FtlChargeUI {
          */
         public void render() {
             main.batch.begin();
-            main.batch.draw(ftlChargeBackground, 600, Main.HEIGHT - 338, 147, 60);
-            font.draw(main.batch, glyph, 600 + (147f/2) - glyph.width/2, (Main.HEIGHT - 288) - glyph.height/2);
+            main.batch.draw(ftlChargeBackground, Main.WIDTH/(2.259f), Main.HEIGHT - Main.HEIGHT/(10f), Main.WIDTH/(19f), Main.HEIGHT/(25.12f));
             main.batch.end();
         }
 
@@ -101,7 +91,6 @@ public class FtlChargeUI {
          */
         public void disposeFtlChargeUI() {
             ftlChargeBackground.dispose();
-            font.dispose();
         }
 
         /**
@@ -109,7 +98,6 @@ public class FtlChargeUI {
          * @param amount by how much the amount is changed
          */
         public void changeAmount(int amount) {
-            //TODO: Muss noch aufgerufen werden. FTLCharge ändert sich im Spielverlauf nicht!
             this.amount += amount;
             if(amount <= 10){
                 ftlChargeBackground = new Texture("buttons/balken/0_balken.png");
