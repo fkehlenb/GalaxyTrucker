@@ -119,8 +119,14 @@ public class Ship implements Serializable {
     @NonNull
     private boolean inCombat = false;
 
+    /** First combat (display guide) */
+    private boolean firstCombat = false;
+
+    /** Playing in pvp mode */
+    private boolean playingPVP = false;
+
     /** Invited to pvp? */
-    private boolean pvp = false;
+    private boolean invitedToPVP = false;
 
     @Override
     public boolean equals(Object o){

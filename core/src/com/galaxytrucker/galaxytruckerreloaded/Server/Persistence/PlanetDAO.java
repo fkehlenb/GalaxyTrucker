@@ -5,6 +5,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicatePlanetE
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Manages the planet objects in the database */
 public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
@@ -71,6 +73,27 @@ public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
                 throw new NullPointerException();
             }
             return p;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw new PlanetNotFoundException();
+        }
+    }
+
+    /** Get a planet using its name
+     * @param name - the planet name
+     * @return the planet with a matching name
+     * @throws PlanetNotFoundException if the planet cannot be found in the database */
+    public List<Planet> getByName(String name) throws PlanetNotFoundException{
+        try {
+            List<Planet> planets = new ArrayList<>();
+            entityManager.getTransaction().begin();
+            planets = entityManager.createNamedQuery("Planet.getByName",Planet.class).setParameter("name",name).getResultList();
+            entityManager.getTransaction().commit();
+            if (planets.isEmpty()){
+                throw new NullPointerException();
+            }
+            return planets;
         }
         catch (Exception e){
             e.printStackTrace();

@@ -60,7 +60,7 @@ public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
      *
      * @param user - the ship's associated user
      */
-    private Ship getShipByUser(String user) throws ShipNotFoundException {
+    public Ship getShipByUser(String user) throws ShipNotFoundException {
         try {
             entityManager.getTransaction().begin();
             @NonNull Ship s = entityManager.createNamedQuery("Ship.getByUsername",Ship.class).setParameter("username",user).getSingleResult();

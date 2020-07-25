@@ -72,9 +72,6 @@ public class TravelService implements Serializable {
      */
     private PlanetDAO planetDAO = PlanetDAO.getInstance();
 
-    // TODO DONT USE THIS WHEN IN COMBAT, USE FLEEFIGHT INSTEAD
-    // TODO DONT USE THIS FOR PVP
-
     /**
      * Jump ship from one star to another
      *
@@ -154,6 +151,9 @@ public class TravelService implements Serializable {
                 if (overworld.getBossPlanet().getId() == dest.getId()) {
                     bossPlanet = true;
                 }
+                // Check for pvp planet
+                boolean pvp = s.getPlanet().getEvent().equals(PlanetEvent.PVP);
+
                 // Distance between current planet and next planet
                 int distanceX = Math.round(dest.getPosX() - currentPlanet.getPosX());
                 int distanceY = Math.round(dest.getPosY() - currentPlanet.getPosY());
@@ -164,7 +164,7 @@ public class TravelService implements Serializable {
                 // Distance verification
                 // Boss Planet / Start planet / planet in same or next matrix column / CANT RETURN TO START PLANET!
                 if (((startPlanet && dest.getPosX() == 0f) || (bossPlanet && currentPlanet.getPosX() == maxX)
-                        || (Math.abs(distanceX) <= 1 && Math.abs(distanceY) <= 1)) && dest.getPosX() != -1f) {
+                        || (Math.abs(distanceX) <= 1 && Math.abs(distanceY) <= 1) || pvp) && dest.getPosX() != -1f) {
                     // Reduce fuel
                     s.setFuel(s.getFuel() - 1);
                     // ===== Ships at current planet =====
@@ -177,14 +177,33 @@ public class TravelService implements Serializable {
                         }
                     }
                     // ===== Combat planet =====
-                    // todo pvp
+                    if (s.isInvitedToPVP()){
+                        List<Planet> planets = planetDAO.getByName("PVP");
+                        for (Planet p : planets){
+                            if (p.getShips().contains(s)){
+                                dest = p;
+                                s.setInvitedToPVP(true);
+                                break;
+                            }
+                        }
+                    }
                     if (!(dest.getEvent().equals(PlanetEvent.VOID) || dest.getEvent().equals(PlanetEvent.METEORSHOWER)
                             || dest.getEvent().equals(PlanetEvent.SHOP) || dest.getEvent().equals(PlanetEvent.NEBULA))) {
                         System.out.println("[DESTINATION]:[COMBAT]");
                         s.setFTLCharge(0);
                         Ship enemyShip = null;
                         try {
-                            enemyShip = dest.getShips().get(0);
+                            if (dest.getEvent().equals(PlanetEvent.PVP)){
+                                for (Ship shipp : dest.getShips()){
+                                    if (shipp.getId()!=s.getId()){
+                                        enemyShip = shipp;
+                                        break;
+                                    }
+                                }
+                            }
+                            else {
+                                enemyShip = dest.getShips().get(0);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

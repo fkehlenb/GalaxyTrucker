@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Controller;
 
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
@@ -58,6 +59,20 @@ public class PVPController {
         if (responseObject.isValidRequest()){
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
             BattleController.getInstance(null).setOpponent(responseObject.getOpponent());
+            return true;
+        }
+        return false;
+    }
+
+    /** Set yourself as a pvp client
+     * @param ship - your ship */
+    public boolean activatePVP(Ship ship){
+        RequestObject requestObject = new RequestObject();
+        requestObject.setRequestType(RequestType.ACTIVATE_PVP);
+        requestObject.setShip(ship);
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()){
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
             return true;
         }
         return false;

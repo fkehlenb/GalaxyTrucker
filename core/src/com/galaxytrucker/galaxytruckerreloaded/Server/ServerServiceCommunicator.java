@@ -67,10 +67,16 @@ public class ServerServiceCommunicator {
      */
     private SystemService systemService = new SystemService();
 
+    /** PVP Service */
+    private PVPService pvpService = PVPService.getInstance();
+
     /**
      * Crew Service
      */
     private CrewService crewService = CrewService.getInstance();
+
+    /** List of connected clients */
+    private List<String> pvpClients = new ArrayList<>();
 
     /**
      * Take a request from the client side, pass it through the services
@@ -93,7 +99,6 @@ public class ServerServiceCommunicator {
                 // TODO combat
                 return crewService.healCrewMember(request.getShip(), request.getCrew(), request.getHealAmount());
             case LOGOUT:
-                // TODO combat
                 return logout(request.getShip().getAssociatedUser());
             case ADD_ENERGY_SYSTEM:
                 return systemService.addEnergy(request.getShip(), request.getSystem(), request.getIntAmount());
@@ -149,6 +154,8 @@ public class ServerServiceCommunicator {
                 return weaponService.equipWeapon(request.getShip(), request.getWeapon());
             case UNEQIP_WEAPON:
                 return weaponService.unequipWeapon(request.getShip(), request.getWeapon());
+            case ACTIVATE_PVP:
+
         }
         // Returning null is VORBIDDEN!
         ResponseObject defaultResponse = new ResponseObject();
@@ -218,6 +225,7 @@ public class ServerServiceCommunicator {
                     u.setLoggedIn(false);
                     userService.updateUser(u);
                     responseObject.setValidRequest(true);
+                    this.pvpClients.remove(u.getUsername());
                 }
                 else if (u.getUserShip().isInCombat()&&!u.getUserShip().getPlanet().getEvent().equals(PlanetEvent.PVP)){
                     for (BattleService b : this.getBattleServices()){
@@ -226,9 +234,10 @@ public class ServerServiceCommunicator {
                     u.setLoggedIn(false);
                     userService.updateUser(u);
                     responseObject.setValidRequest(true);
+                    this.pvpClients.remove(u.getUsername());
                 }
-                else{
-                    //todo
+                else{ // pvp
+                    responseObject.setValidRequest(false);
                 }
             }
         } catch (Exception e) {

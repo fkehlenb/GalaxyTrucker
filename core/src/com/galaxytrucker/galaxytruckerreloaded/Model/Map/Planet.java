@@ -19,7 +19,8 @@ import java.util.List;
 @Setter
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Planet.getById",query = "select p from Planet p where p.id =: id")
+        @NamedQuery(name = "Planet.getById",query = "select p from Planet p where p.id =: id"),
+        @NamedQuery(name = "Planet.getByName",query = "select p from Planet p where p.name =: name")
 })
 public class Planet implements Serializable {
 
