@@ -75,12 +75,4 @@ public class UserService {
         entityManager.remove(getUser(username));
         entityManager.getTransaction().commit();
     }
-
-    /**
-     * Save game
-     *
-     * @param username - the username of the user
-     */
-    public void saveGame(String username) throws UserNotFoundException {
-    }
 }
