@@ -689,30 +689,26 @@ public class BattleService implements Serializable {
             for (Room r : opponent.getSystems()) {
                 if (r.getId() == room.getId()) {
                     existsInShip = true;
+                    break;
                 }
             }
-            java.lang.System.out.println("[NAME]:" + weapon.getWeaponName() + ":[Exists-In-Ship]:" + existsInShip + ":[Weapon-Equipped]:" + weaponEquipped +
-                    ":[Energy-In-System]:" + energyInWeaponSystem + ":[Weapon-Cooldown]:" + weapon.getCurrentCooldown());
             if (existsInShip && weaponEquipped && energyInWeaponSystem > 0) {
-                // todo check for weapon equipped
                 // ===== Check for cooldown =====
                 if (weapon.getCurrentCooldown() <= 0) {
                     // ===== Check for rocket cost =====
                     if (ship.getMissiles() >= weapon.getMissileCost()) {
                         // ===== Set cooldown =====
-//                        weapon.setCurrentCooldown(weapon.getCooldown());
-//                        weaponDAO.update(weapon);
                         for (Room r : ship.getSystems()){
                             if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
                                 for (Weapon w : ((System) r).getShipWeapons()){
                                     if (w.getId() == weapon.getId()){
                                         w.setCurrentCooldown(w.getCooldown());
                                         weaponDAO.update(w);
+                                        break;
                                     }
                                 }
                             }
                         }
-                        ship = shipDAO.getById(ship.getId());
                         // ===== Remove rockets =====
                         ship.setMissiles(ship.getMissiles() - weapon.getMissileCost());
                         shipDAO.update(ship);
@@ -746,51 +742,68 @@ public class BattleService implements Serializable {
                                 }
                             }
                             opponent.setShields(weapon.getShieldPiercing());
-                            // todo remove me
-//                            damage = 1000;
                             java.lang.System.out.println("[DAMAGE]:" + damage);
-                            // Damage ship hull
+                            // ===== Damage ship hull =====
                             while (damage > 0) {
                                 opponent.setHp(opponent.getHp() - 1);
                                 damage -= 1;
                             }
                             shipDAO.update(opponent);
-                            // Damage system and disable it
-//                            if (damage > 0 && room.isSystem()) {
-//                                System s = (System) room;
-//                                s.setDamage(damage);
-//                                if (damage > 5) {
-//                                    s.setDisabled(true);
-//                                } todo
-//                            }
-                            // Damage crew in room
-                            List<Crew> crewInRoom = room.getCrew();
-                            // todo concurrent modification exception
-                            for (Crew c : crewInRoom) {
-                                c.setHealth(c.getHealth() - weapon.getCrewDamage());
-                                if (c.getHealth() <= 0) {
-                                    crewInRoom.remove(c); // <------
-                                    Tile t = c.getTile();
-                                    t.setStandingOnMe(null);
-                                    c.setTile(null);
-                                    tileDAO.update(t);
-                                    crewDAO.update(c);
+                            // ===== Damage system and disable it =====
+                            int systemDamage = weapon.getCrewDamage() - weapon.getShieldPiercing() + random.nextInt(weapon.getDamage()+1);
+                            if (systemDamage<0){
+                                systemDamage = 0;
+                            }
+                            if (systemDamage>10){
+                                systemDamage = 10;
+                            }
+                            for (Room r : ship.getSystems()){
+                                if (r.getId() == room.getId()&&r.isSystem()){
+                                    ((System) r).setDamage(damage);
+                                    if (systemDamage > 5) {
+                                        ((System) r).setDisabled(true);
+                                    }
+                                    roomDAO.update(r);
                                 }
                             }
-                            room.setCrew(crewInRoom);
-                            // Attempt to cause a breach
-                            if (difficulty <= 0) {
-                                difficulty = 1;
-                            } // todo negative bound exception
+                            // ===== Damage crew in room =====
+                            for (Room r : ship.getSystems()){
+                                if (r.getId() == room.getId()){
+                                    for (Crew c : r.getCrew()) {
+                                        c.setHealth(c.getHealth() - weapon.getCrewDamage());
+                                        if (c.getHealth() <= 0) {
+                                            Tile t = c.getTile();
+                                            t.setStandingOnMe(null);
+                                            c.setTile(null);
+                                            tileDAO.update(t);
+                                            crewDAO.update(c);
+                                        }
+                                    }
+                                    List<Crew> crewInRoom = r.getCrew();
+                                    for (Crew c : r.getCrew()){
+                                        if (c.getHealth()<=0){
+                                            crewInRoom.remove(c);
+                                        }
+                                    }
+                                    r.setCrew(crewInRoom);
+                                    roomDAO.update(r);
+                                }
+                            }
+                            // ===== Attempt to cause a breach =====
                             int breachChance = (int) (weapon.getBreachChance() * (float) difficulty * 10f);
-                            if (breachChance == 0) {
+                            if (breachChance <= 0) {
                                 breachChance = random.nextInt(20);
                             }
                             int randomInt = random.nextInt(breachChance);
                             if (randomInt == 0) {
-                                room.setBreach(5);
+                                for (Room r : ship.getSystems()){
+                                    if (r.getId() == room.getId()){
+                                        r.setBreach(5);
+                                        roomDAO.update(r);
+                                        break;
+                                    }
+                                }
                             }
-                            roomDAO.update(room);
                             shipDAO.update(opponent);
                             List<Crew> crewOnBoard = new ArrayList<>();
                             for (Room r : opponent.getSystems()) {

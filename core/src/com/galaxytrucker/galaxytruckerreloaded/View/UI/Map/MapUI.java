@@ -194,6 +194,7 @@ public class MapUI {
     public void moveToPlanet(Planet planet) {
         boolean success = shipView.travel(planet);
         if(success) {
+            
             shipView.changeAmountFuel(-1);
             disposeMapUI();
             closeButton.remove();

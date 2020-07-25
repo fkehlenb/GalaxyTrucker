@@ -65,7 +65,7 @@ public class Planet implements Serializable {
     private List<Ship> ships;
 
     /** Trader */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Trader trader;
 
     @NonNull

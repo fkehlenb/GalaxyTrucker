@@ -226,21 +226,20 @@ public class TravelService implements Serializable {
                     planetDAO.update(dest);
                     planetDAO.update(currentPlanet);
                     shipDAO.update(s);
-//                    ===== Update overworld =====
-//                    List<Planet> planets = overworld.getPlanetMap();
-//                    for (Planet p : planets) {
-//                        if (p.getId() == currentPlanet.getId()) {
-//                            planets.set(planets.indexOf(p), currentPlanet);
-//                        } else if (p.getId() == dest.getId()) {
-//                            planets.set(planets.indexOf(p), dest);
-//                        }
-//                    }
-//                    overworld.setPlanetMap(new ArrayList<Planet>(planets));
-//                    for (Planet p : planets) {
-//                        planetDAO.update(p);
-//                    }
-//                    overworldDAO.update(overworld);
-//                    user.setOverworld(overworld);
+                    // ===== Update overworld =====
+                    List<Planet> planets = overworld.getPlanetMap();
+                    for (Planet p : planets) {
+                        if (p.getId() == currentPlanet.getId()) {
+                            planets.set(planets.indexOf(p), currentPlanet);
+                        } else if (p.getId() == dest.getId()) {
+                            planets.set(planets.indexOf(p), dest);
+                        }
+                    }
+                    overworld.setPlanetMap(new ArrayList<Planet>(planets));
+                    for (Planet p : planets) {
+                        planetDAO.update(p);
+                    }
+                    user.setUserShip(s);
                     userDAO.update(user);
                     // ===== Set valid =====
                     responseObject.setValidRequest(true);
