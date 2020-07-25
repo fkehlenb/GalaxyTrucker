@@ -20,7 +20,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
-import sun.text.resources.cldr.ext.FormatData_ta_LK;
 
 import java.util.ArrayList;
 import java.util.HashMap;

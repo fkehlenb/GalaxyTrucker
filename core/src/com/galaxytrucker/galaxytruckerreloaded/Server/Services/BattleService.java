@@ -562,7 +562,7 @@ public class BattleService implements Serializable {
             coward = shipDAO.getById(coward.getId());
             planet = planetDAO.getById(planet.getId());
             // Check for round and ftl charge
-            if (currentRound == coward.getId() && coward.getFTLCharge() == 100) {
+            if (currentRound == coward.getId() && coward.getFTLCharge() == 100 && !combatOver) {
                 // ===== Compute Evasion chance =====
                 if (coward.getEvasionChance() == 0f) {
                     coward.setEvasionChance(0.33f);
