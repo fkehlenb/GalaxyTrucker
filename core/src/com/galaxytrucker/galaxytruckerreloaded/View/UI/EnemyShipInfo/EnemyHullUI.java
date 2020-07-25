@@ -1,9 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
 public class EnemyHullUI {
@@ -69,6 +66,6 @@ public class EnemyHullUI {
      * dispose of the enemy hull UI
      */
     public void disposeEnemyHullUI() {
-
+        hullBackground.dispose();
     }
 }
