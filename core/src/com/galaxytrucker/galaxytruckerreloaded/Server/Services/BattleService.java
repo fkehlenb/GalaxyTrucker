@@ -846,8 +846,6 @@ public class BattleService implements Serializable {
                                                         break;
                                                     }
                                                 }
-                                                t.setStandingOnMe(null);
-                                                tileDAO.update(t);
                                             }
                                             catch (Exception f){
                                                 f.printStackTrace();
