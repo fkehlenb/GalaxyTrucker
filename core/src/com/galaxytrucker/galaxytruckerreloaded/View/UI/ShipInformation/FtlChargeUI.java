@@ -38,9 +38,33 @@ public class FtlChargeUI {
             this.amount = ftlCharge;
             this.font = font;
 
-            ftlChargeBackground = new Texture("gameuis/top_fuel2.png");
+            //ftlChargeBackground = new Texture("gameuis/top_fuel2.png");
 
-            glyph.setText(font, Integer.toString(amount));
+            if(amount <= 10){
+                ftlChargeBackground = new Texture("buttons/balken/0_balken.png");
+            } else if(amount <20){
+                ftlChargeBackground = new Texture("buttons/balken/10_balken.png");
+            } else if(amount <30){
+                ftlChargeBackground = new Texture("buttons/balken/20_balken.png");
+            } else if(amount <40){
+                ftlChargeBackground = new Texture("buttons/balken/30_balken.png");
+            } else if(amount <50){
+                ftlChargeBackground = new Texture("buttons/balken/40_balken.png");
+            } else if(amount <60){
+                ftlChargeBackground = new Texture("buttons/balken/50_balken.png");
+            } else if(amount <70){
+                ftlChargeBackground = new Texture("buttons/balken/60_balken.png");
+            } else if(amount <80){
+                ftlChargeBackground = new Texture("buttons/balken/70_balken.png");
+            } else if(amount <90){
+                ftlChargeBackground = new Texture("buttons/balken/80_balken.png");
+            } else if(amount <100){
+                ftlChargeBackground = new Texture("buttons/balken/90_balken.png");
+            } else {
+                ftlChargeBackground = new Texture("buttons/balken/100_balken.png");
+            }
+
+            //glyph.setText(font, Integer.toString(amount));
         }
 
         /**
@@ -87,7 +111,29 @@ public class FtlChargeUI {
         public void changeAmount(int amount) {
             //TODO: Muss noch aufgerufen werden. FTLCharge ändert sich im Spielverlauf nicht!
             this.amount += amount;
-            glyph.setText(font, Integer.toString(this.amount));
+            if(amount <= 10){
+                ftlChargeBackground = new Texture("buttons/balken/0_balken.png");
+            } else if(amount <20){
+                ftlChargeBackground = new Texture("buttons/balken/10_balken.png");
+            } else if(amount <30){
+                ftlChargeBackground = new Texture("buttons/balken/20_balken.png");
+            } else if(amount <40){
+                ftlChargeBackground = new Texture("buttons/balken/30_balken.png");
+            } else if(amount <50){
+                ftlChargeBackground = new Texture("buttons/balken/40_balken.png");
+            } else if(amount <60){
+                ftlChargeBackground = new Texture("buttons/balken/50_balken.png");
+            } else if(amount <70){
+                ftlChargeBackground = new Texture("buttons/balken/60_balken.png");
+            } else if(amount <80){
+                ftlChargeBackground = new Texture("buttons/balken/70_balken.png");
+            } else if(amount <90){
+                ftlChargeBackground = new Texture("buttons/balken/80_balken.png");
+            } else if(amount <100){
+                ftlChargeBackground = new Texture("buttons/balken/90_balken.png");
+            } else {
+                ftlChargeBackground = new Texture("buttons/balken/100_balken.png");
+            }
         }
 
         /**
@@ -96,7 +142,29 @@ public class FtlChargeUI {
          */
         public void changeOverallAmount(int amount) {
             this.amount = amount;
-            glyph.setText(font, Integer.toString(this.amount));
+            if(amount <= 10){
+                ftlChargeBackground = new Texture("buttons/balken/0_balken.png");
+            } else if(amount <20){
+                ftlChargeBackground = new Texture("buttons/balken/10_balken.png");
+            } else if(amount <30){
+                ftlChargeBackground = new Texture("buttons/balken/20_balken.png");
+            } else if(amount <40){
+                ftlChargeBackground = new Texture("buttons/balken/30_balken.png");
+            } else if(amount <50){
+                ftlChargeBackground = new Texture("buttons/balken/40_balken.png");
+            } else if(amount <60){
+                ftlChargeBackground = new Texture("buttons/balken/50_balken.png");
+            } else if(amount <70){
+                ftlChargeBackground = new Texture("buttons/balken/60_balken.png");
+            } else if(amount <80){
+                ftlChargeBackground = new Texture("buttons/balken/70_balken.png");
+            } else if(amount <90){
+                ftlChargeBackground = new Texture("buttons/balken/80_balken.png");
+            } else if(amount <100){
+                ftlChargeBackground = new Texture("buttons/balken/90_balken.png");
+            } else {
+                ftlChargeBackground = new Texture("buttons/balken/100_balken.png");
+            }
         }
 
 }
