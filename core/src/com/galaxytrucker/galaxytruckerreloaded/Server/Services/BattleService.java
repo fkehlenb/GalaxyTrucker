@@ -839,7 +839,13 @@ public class BattleService implements Serializable {
                                     for (Crew c : r.getCrew()){
                                         if (c.getHealth()<=0){
                                             try {
-                                                Tile t = c.getTile();
+                                                for (Tile t : r.getTiles()){
+                                                    if(t.getStandingOnMe().equals(c)){
+                                                        t.setStandingOnMe(null);
+                                                        tileDAO.update(t);
+                                                        break;
+                                                    }
+                                                }
                                                 t.setStandingOnMe(null);
                                                 tileDAO.update(t);
                                             }
