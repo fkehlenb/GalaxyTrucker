@@ -90,6 +90,8 @@ public class ClientControllerCommunicator {
         TravelController.getInstance(singleton);
         PlanetEventController.getInstance(singleton);
         SystemController.getInstance(singleton);
+        PlanetRewardController.getInstance(singleton);
+        PVPController.getInstance(singleton);
         AudioController.getInstance();
         // TODO CREATE ALL CONTROLLERS HERE, all controllers should be singletons
         return singleton;

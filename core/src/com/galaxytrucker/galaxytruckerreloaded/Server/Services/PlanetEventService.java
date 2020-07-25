@@ -27,9 +27,9 @@ public class PlanetEventService {
     private ShipDAO shipDAO;
 
     /**
-     * RewardService
+     * PlanetRewardService
      */
-    private RewardService rewardService;
+    private PlanetRewardService planetRewardService;
 
     /**
      * Round counter (meteorShower/Nebula)

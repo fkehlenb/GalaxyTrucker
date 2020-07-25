@@ -70,6 +70,9 @@ public class ServerServiceCommunicator {
     /** PVP Service */
     private PVPService pvpService = PVPService.getInstance();
 
+    /** Planet reward service */
+    private PlanetRewardService planetRewardService = PlanetRewardService.getInstance();
+
     /**
      * Crew Service
      */
@@ -155,7 +158,17 @@ public class ServerServiceCommunicator {
             case UNEQIP_WEAPON:
                 return weaponService.unequipWeapon(request.getShip(), request.getWeapon());
             case ACTIVATE_PVP:
-
+                return pvpService.activatePVP(request.getShip());
+            case INITIATE_PVP:
+                return pvpService.initiatePVP(request.getShip(),request.getPvpOpponent());
+            case PVP_GET_CLIENTS:
+                return pvpService.getPVPClients(request.getShip());
+            case GET_PLANET_REWARDS:
+                return planetRewardService.getRewards(request.getShip(),request.getPlanet());
+            case HealCrewInRoom:
+                return crewService.healCrewInRoom(request.getShip(),request.getRoom(),request.getIntAmount());
+            case INSTALL_SYSTEM:
+                return systemService.installSystem(request.getShip(),request.getSystemType());
         }
         // Returning null is VORBIDDEN!
         ResponseObject defaultResponse = new ResponseObject();
