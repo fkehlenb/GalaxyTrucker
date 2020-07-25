@@ -691,8 +691,6 @@ public class BattleService implements Serializable {
                     existsInShip = true;
                 }
             }
-            java.lang.System.out.println("[NAME]:" + weapon.getWeaponName() + ":[Exists-In-Ship]:" + existsInShip + ":[Weapon-Equipped]:" + weaponEquipped +
-                    ":[Energy-In-System]:" + energyInWeaponSystem + ":[Weapon-Cooldown]:" + weapon.getCurrentCooldown());
             if (existsInShip && weaponEquipped && energyInWeaponSystem > 0) {
                 // todo check for weapon equipped
                 // ===== Check for cooldown =====
@@ -700,8 +698,6 @@ public class BattleService implements Serializable {
                     // ===== Check for rocket cost =====
                     if (ship.getMissiles() >= weapon.getMissileCost()) {
                         // ===== Set cooldown =====
-//                        weapon.setCurrentCooldown(weapon.getCooldown());
-//                        weaponDAO.update(weapon);
                         for (Room r : ship.getSystems()){
                             if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
                                 for (Weapon w : ((System) r).getShipWeapons()){
@@ -712,7 +708,6 @@ public class BattleService implements Serializable {
                                 }
                             }
                         }
-                        ship = shipDAO.getById(ship.getId());
                         // ===== Remove rockets =====
                         ship.setMissiles(ship.getMissiles() - weapon.getMissileCost());
                         shipDAO.update(ship);
