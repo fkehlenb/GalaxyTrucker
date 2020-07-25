@@ -367,6 +367,7 @@ public class GamePlay implements Screen {
         if(enemy == null) {
             java.lang.System.out.println("--- Rendering ship ---");
             enemy = new EnemyShip(main, battleController.getOpponent(), stage, this, tileStage);
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
     }
 
