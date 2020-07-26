@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
@@ -10,6 +11,9 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.TileBu
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoomUI {
 
@@ -29,6 +33,12 @@ public class RoomUI {
      */
     protected float y;
 
+    protected Stage stage;
+
+    protected List<Actor> enemyTiles = new ArrayList();
+
+    protected List<Actor> shipList = new ArrayList();
+
     /**
      * Constructor
      *
@@ -39,18 +49,24 @@ public class RoomUI {
         this.main = main;
         this.room = room;
         this.ship = ship;
+        this.stage = stage;
         this.x = x;
         this.y = y;
 
 
+
         if(ship instanceof ShipView) {
             for (Tile t : room.getTiles()) {
-                stage.addActor(new TileButton(x + (t.getPosX() * 48), y + (t.getPosY() * 48), 48, 48, this));
+                TileButton tileButton = new TileButton(x + (t.getPosX() * 48), y + (t.getPosY() * 48), 48, 48, this);
+                this.stage.addActor(tileButton);
+                shipList.add(tileButton);
             }
         }
         else if(ship instanceof EnemyShip) {
             for(Tile t : room.getTiles()) {
-                stage.addActor(new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this));
+                TileButton tileButton = new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this);
+                this.stage.addActor(tileButton);
+                enemyTiles.add(tileButton);
             }
         }
     }
@@ -73,7 +89,9 @@ public class RoomUI {
      * Dispose of room ui
      */
     public void disposeRoomUI() {
-
+            for (Actor a : enemyTiles) {
+                a.remove();
+            }
     }
 
     /**

@@ -221,6 +221,7 @@ public class EnemyShip extends AbstractShip {
         hull.disposeEnemyHullUI();
         for(RoomUI r : roomUIHashMap.values()) {
             r.disposeRoomUI();
+            
         }
         for(EnemyCrewUI c : crewUIHashMap.values()) {
             c.disposeEnemyCrewUI();
