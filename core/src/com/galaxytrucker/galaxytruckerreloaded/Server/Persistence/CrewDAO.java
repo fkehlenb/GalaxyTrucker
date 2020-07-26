@@ -49,6 +49,7 @@ public class CrewDAO extends ObjectDAO<Crew> implements Serializable {
         try {
             Crew c = null;
             entityManager.getTransaction().begin();
+            entityManager.clear();
             c = entityManager.createNamedQuery("Crew.getById",Crew.class).setParameter("id",id).getSingleResult();
             entityManager.getTransaction().commit();
             if (c==null){

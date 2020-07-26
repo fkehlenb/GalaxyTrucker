@@ -69,6 +69,7 @@ public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
         try {
             Planet p = null;
             entityManager.getTransaction().begin();
+            entityManager.clear();
             p = entityManager.createNamedQuery("Planet.getById",Planet.class).setParameter("id",id).getSingleResult();
             entityManager.getTransaction().commit();
             if (p==null){
@@ -91,6 +92,7 @@ public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
         try {
             List<Planet> planets = new ArrayList<>();
             entityManager.getTransaction().begin();
+            entityManager.clear();
             planets = entityManager.createNamedQuery("Planet.getByName",Planet.class).setParameter("name",name).getResultList();
             entityManager.getTransaction().commit();
             if (planets.isEmpty()){

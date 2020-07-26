@@ -51,6 +51,7 @@ public class WeaponDAO extends ObjectDAO<Weapon> implements Serializable {
         try {
             Weapon w = null;
             entityManager.getTransaction().begin();
+            entityManager.clear();
             w = entityManager.createNamedQuery("Weapon.getById",Weapon.class).setParameter("id",id).getSingleResult();
             entityManager.getTransaction().commit();
             if (w==null){

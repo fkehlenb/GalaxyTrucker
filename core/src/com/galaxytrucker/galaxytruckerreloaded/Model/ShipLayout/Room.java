@@ -53,7 +53,7 @@ public class Room implements Serializable {
      * Crew in this system
      */
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Crew> crew;
 
@@ -61,7 +61,7 @@ public class Room implements Serializable {
      * Tiles the room is made out of
      */
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Tile> tiles;
 

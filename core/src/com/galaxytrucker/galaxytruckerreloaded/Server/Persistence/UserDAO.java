@@ -65,6 +65,7 @@ public class UserDAO extends ObjectDAO<User> implements Serializable {
     private User getUserByUsername(String username) throws UserNotFoundException {
         try {
             entityManager.getTransaction().begin();
+            entityManager.clear();
             @NonNull User u = entityManager.createNamedQuery("User.getByUsername",User.class).setParameter("username",username).getSingleResult();
             entityManager.getTransaction().commit();
             return u;

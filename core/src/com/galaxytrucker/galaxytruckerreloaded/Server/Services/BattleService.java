@@ -292,6 +292,9 @@ public class BattleService implements Serializable {
                         if (s.getId()!=ship.getId()){
                             responseObject.setOpponent(shipDAO.getById(s.getId()));
                         }
+                        if (combatOver){
+                            break;
+                        }
                     }
                 } if (combatOver){ // todo check if battle over due to passive changes
                     responseObject.setCombatOver(true);
@@ -389,6 +392,7 @@ public class BattleService implements Serializable {
                     for (Room r : loser.getSystems()) {
                         if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)) {
                             weaponLoot.addAll(((System) r).getShipWeapons());
+                            break;
                         }
                     }
                     if (winner.getInventory().size() < 4 && weaponLoot.size() > 1) {
@@ -675,6 +679,7 @@ public class BattleService implements Serializable {
                 for (Room r : coward.getSystems()){
                     if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.ENGINE)){
                         energyInEngine = ((System) r).getEnergy();
+                        break;
                     }
                 }
                 // ===== Compute evasion chance =====
