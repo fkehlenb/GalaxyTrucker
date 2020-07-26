@@ -410,8 +410,20 @@ public class GamePlay implements Screen {
         boolean success = battleController.playMoves();
         if (success){
             boolean combatOver = battleController.fetchUpdatedData();
-            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
-            enemy.update(BattleController.getInstance(null).getOpponent());
+            try {
+                player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+            } catch (Exception e){
+                java.lang.System.out.println("--- Du bist tot! ---");
+            }
+
+            try {
+                enemy.update(BattleController.getInstance(null).getOpponent());
+            } catch (Exception e) {
+                java.lang.System.out.println("--- Der Gegner ist schon tot! ---");
+                removeEnemy();
+                removeRoundButton();
+            }
+
             if (combatOver){
                 if (battleController.combatOver()){
                     if (battleController.combatWon()){
