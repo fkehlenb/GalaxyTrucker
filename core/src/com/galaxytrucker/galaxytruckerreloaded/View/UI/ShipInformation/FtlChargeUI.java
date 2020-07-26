@@ -34,27 +34,27 @@ public class FtlChargeUI {
             this.amount = ftlCharge;
 
             if(amount <= 10){
-                ftlChargeBackground = new Texture("buttons/balken/0_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/0_balken.png");
             } else if(amount <20){
-                ftlChargeBackground = new Texture("buttons/balken/10_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/10_balken.png");
             } else if(amount <30){
-                ftlChargeBackground = new Texture("buttons/balken/20_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/20_balken.png");
             } else if(amount <40){
-                ftlChargeBackground = new Texture("buttons/balken/30_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/30_balken.png");
             } else if(amount <50){
-                ftlChargeBackground = new Texture("buttons/balken/40_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/40_balken.png");
             } else if(amount <60){
-                ftlChargeBackground = new Texture("buttons/balken/50_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/50_balken.png");
             } else if(amount <70){
-                ftlChargeBackground = new Texture("buttons/balken/60_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/60_balken.png");
             } else if(amount <80){
-                ftlChargeBackground = new Texture("buttons/balken/70_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/70_balken.png");
             } else if(amount <90){
-                ftlChargeBackground = new Texture("buttons/balken/80_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/80_balken.png");
             } else if(amount <100){
-                ftlChargeBackground = new Texture("buttons/balken/90_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/90_balken.png");
             } else {
-                ftlChargeBackground = new Texture("buttons/balken/100_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/100_balken.png");
             }
         }
 
@@ -100,27 +100,27 @@ public class FtlChargeUI {
         public void changeAmount(int amount) {
             this.amount += amount;
             if(amount <= 10){
-                ftlChargeBackground = new Texture("buttons/balken/0_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/0_balken.png");
             } else if(amount <20){
-                ftlChargeBackground = new Texture("buttons/balken/10_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/10_balken.png");
             } else if(amount <30){
-                ftlChargeBackground = new Texture("buttons/balken/20_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/20_balken.png");
             } else if(amount <40){
-                ftlChargeBackground = new Texture("buttons/balken/30_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/30_balken.png");
             } else if(amount <50){
-                ftlChargeBackground = new Texture("buttons/balken/40_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/40_balken.png");
             } else if(amount <60){
-                ftlChargeBackground = new Texture("buttons/balken/50_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/50_balken.png");
             } else if(amount <70){
-                ftlChargeBackground = new Texture("buttons/balken/60_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/60_balken.png");
             } else if(amount <80){
-                ftlChargeBackground = new Texture("buttons/balken/70_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/70_balken.png");
             } else if(amount <90){
-                ftlChargeBackground = new Texture("buttons/balken/80_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/80_balken.png");
             } else if(amount <100){
-                ftlChargeBackground = new Texture("buttons/balken/90_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/90_balken.png");
             } else {
-                ftlChargeBackground = new Texture("buttons/balken/100_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/100_balken.png");
             }
         }
 
@@ -131,27 +131,27 @@ public class FtlChargeUI {
         public void changeOverallAmount(int amount) {
             this.amount = amount;
             if(amount <= 10){
-                ftlChargeBackground = new Texture("buttons/balken/0_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/0_balken.png");
             } else if(amount <20){
-                ftlChargeBackground = new Texture("buttons/balken/10_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/10_balken.png");
             } else if(amount <30){
-                ftlChargeBackground = new Texture("buttons/balken/20_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/20_balken.png");
             } else if(amount <40){
-                ftlChargeBackground = new Texture("buttons/balken/30_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/30_balken.png");
             } else if(amount <50){
-                ftlChargeBackground = new Texture("buttons/balken/40_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/40_balken.png");
             } else if(amount <60){
-                ftlChargeBackground = new Texture("buttons/balken/50_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/50_balken.png");
             } else if(amount <70){
-                ftlChargeBackground = new Texture("buttons/balken/60_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/60_balken.png");
             } else if(amount <80){
-                ftlChargeBackground = new Texture("buttons/balken/70_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/70_balken.png");
             } else if(amount <90){
-                ftlChargeBackground = new Texture("buttons/balken/80_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/80_balken.png");
             } else if(amount <100){
-                ftlChargeBackground = new Texture("buttons/balken/90_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/90_balken.png");
             } else {
-                ftlChargeBackground = new Texture("buttons/balken/100_balken.png");
+                ftlChargeBackground = new Texture("buttons/Balken/100_balken.png");
             }
         }
 
