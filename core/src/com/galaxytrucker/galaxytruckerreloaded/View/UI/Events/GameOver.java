@@ -64,7 +64,7 @@ public class GameOver {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(gameOverTexture, 0, 0, 10, 10); //TODO whxy
+        main.batch.draw(gameOverTexture, main.WIDTH/2, main.HEIGHT/2, 100, 100); //TODO whxy
         main.batch.end();
     }
 
