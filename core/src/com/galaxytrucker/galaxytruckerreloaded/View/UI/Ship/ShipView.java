@@ -295,8 +295,14 @@ public class ShipView extends AbstractShip {
             crews.addAll(r.getCrew());
             rooms.get(r.getId()).update(r);
         }
+        List<Integer> deadOnes = new ArrayList<>(crew.keySet());
         for(Crew c : crews) {
             crew.get(c.getId()).update(c);
+            deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)", otherwise it will use wrong remove method
+        }
+        for(Integer i : deadOnes) {
+            crew.get(i).crewDied();
+            crew.remove(i);
         }
         //Energy
         energy.energyUpdate(ship.getEnergy());
@@ -417,12 +423,7 @@ public class ShipView extends AbstractShip {
      * @param health the new health
      */
     public void crewHealth(Crew crew, int health) {
-        if(health == 0) {
-            this.crew.get(crew.getId()).crewDied();
-        }
-        else {
-            this.crew.get(crew.getId()).statusUpdate(health);
-        }
+        this.crew.get(crew.getId()).statusUpdate(health);
     }
 
     /**
