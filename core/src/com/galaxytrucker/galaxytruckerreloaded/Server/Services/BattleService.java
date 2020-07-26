@@ -292,6 +292,9 @@ public class BattleService implements Serializable {
                         if (s.getId()!=ship.getId()){
                             responseObject.setOpponent(shipDAO.getById(s.getId()));
                         }
+                        if (combatOver){
+                            break;
+                        }
                     }
                 } if (combatOver){ // todo check if battle over due to passive changes
                     responseObject.setCombatOver(true);

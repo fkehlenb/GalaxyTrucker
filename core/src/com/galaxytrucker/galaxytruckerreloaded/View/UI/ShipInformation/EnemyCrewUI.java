@@ -64,8 +64,9 @@ public class EnemyCrewUI {
      * the crew member is updated
      * @param crew the new crew member
      */
-    public void update(Crew crew) {
+    public void update(Crew crew, float roomX, float roomY) {
         this.crew = crew;
+        crewMoved(roomX, roomY);
     }
 
     /**
@@ -75,8 +76,8 @@ public class EnemyCrewUI {
      * @param roomX the x position of the lower left corner the crew member is in
      */
     public void crewMoved(float roomX, float roomY) {
-        this.roomX = roomX;
-        this.roomY = roomY;
+        this.roomX = roomX + crew.getTile().getPosX()*48;
+        this.roomY = roomY + crew.getTile().getPosY()*48;
     }
 
     /**
