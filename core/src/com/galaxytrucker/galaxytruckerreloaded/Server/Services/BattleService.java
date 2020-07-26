@@ -288,8 +288,12 @@ public class BattleService implements Serializable {
                 if (!combatOver) {
                     for (Ship s : combatants) {
                         passiveChanges(s);
+                        if (s.getId()!=ship.getId()){
+                            responseObject.setOpponent(shipDAO.getById(s.getId()));
+                        }
                     }
                 } else {
+                    responseObject.setCombatOver(this.combatOver);
                     // Check if combat won
                     if (ship.getId() == winner) {
                         responseObject.setCombatWon(true);
@@ -472,6 +476,7 @@ public class BattleService implements Serializable {
                             s.setShields(s.getShieldCharge() / 2);
                             s.setFTLCharge(100);
                             java.lang.System.out.println("[COMBAT-OVER-WON]");
+                            this.combatOver = true;
                         }
                         shipDAO.update(s);
                     }
