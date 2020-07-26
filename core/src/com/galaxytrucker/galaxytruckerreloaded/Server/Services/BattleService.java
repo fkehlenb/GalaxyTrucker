@@ -498,6 +498,9 @@ public class BattleService implements Serializable {
         try {
             if (combatOver){
                 ship = shipDAO.getById(ship.getId());
+                responseObject.setValidRequest(true);
+                responseObject.setCombatOver(true);
+                responseObject.setResponseShip(ship);
                 // Check if combat won
                 if (ship.getId() == winner) {
                     responseObject.setCombatWon(true);
@@ -509,6 +512,7 @@ public class BattleService implements Serializable {
                     responseObject.setRewardCash(rewardCash);
                     responseObject.setRewardFuel(rewardFuel);
                     responseObject.setRewardRockets(rewardRockets);
+                    responseObject.setOpponent(null);
                 } else {
                     responseObject.setCombatWon(false);
                     responseObject.setDead(true);
