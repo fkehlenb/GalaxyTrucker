@@ -713,9 +713,10 @@ public class GamePlay implements Screen {
      */
     private void crewMoved(Crew crew, Room room) {
         boolean success = CrewController.getInstance(null).moveCrewToRoom(crew, room);
-        if(success) {
-            player.crewMoved(crew, room);
+        if(success && !ClientControllerCommunicator.getInstance(null).getClientShip().isInCombat()) {
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
+        player.undoCrewButton(crew);
     }
 
     /**

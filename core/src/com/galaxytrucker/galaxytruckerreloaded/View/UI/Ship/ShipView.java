@@ -290,15 +290,13 @@ public class ShipView extends AbstractShip {
         hullStatusUpdate(ship.getHp());
         //Rooms
         //Crew
-        List<Crew> crews = new ArrayList<>();
-        for(Room r : ship.getSystems()) {
-            crews.addAll(r.getCrew());
-            rooms.get(r.getId()).update(r);
-        }
         List<Integer> deadOnes = new ArrayList<>(crew.keySet());
-        for(Crew c : crews) {
-            crew.get(c.getId()).update(c);
-            deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)", otherwise it will use wrong remove method
+        for(Room r : ship.getSystems()) {
+            for(Crew c : r.getCrew()) {
+                crew.get(c.getId()).update(c, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY));
+                deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)", otherwise it will use wrong remove method
+            }
+            rooms.get(r.getId()).update(r);
         }
         for(Integer i : deadOnes) {
             crew.get(i).crewDied();
@@ -378,17 +376,6 @@ public class ShipView extends AbstractShip {
 
     public void deleteMap() {
         mapUI = null;
-    }
-
-
-
-    /**
-     * a crew member is moved to a new room
-     * called by crew ui after player attempts to move a crew
-     * @param crew the crew member
-     */
-    public void crewMoved(Crew crew, Room room) {
-        this.crew.get(crew.getId()).crewMoved(getRoomX(shipType, room.getInteriorID(), baseX), getRoomY(shipType, room.getInteriorID(), baseY));
     }
 
     /**

@@ -128,6 +128,7 @@ public class CrewService implements Serializable {
                                 t.setStandingOnMe(crew);
                                 crew.setTile(t);
                                 crew.setCurrentRoom(r);
+                                break;
                             }
                         }
                         crewInRoom.add(crew);
