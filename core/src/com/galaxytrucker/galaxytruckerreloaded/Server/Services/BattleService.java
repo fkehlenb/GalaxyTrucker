@@ -212,6 +212,7 @@ public class BattleService implements Serializable {
             if (requestObject.getShip().getId() == currentRound) {
                 roundActions.add(requestObject);
                 responseObject.setValidRequest(true);
+                responseObject.setResponseShip(requestObject.getShip());
                 java.lang.System.out.println("[Ship]:" + requestObject.getShip().getId() +
                         "[Added-Action]:" + requestObject.getRequestType() + ":[To Queue]");
             }
