@@ -433,14 +433,19 @@ public class BattleService implements Serializable {
                         try {
                             crewDAO.persist(tempCrew);
                             for (Room r : winner.getSystems()) {
+                                boolean found = false;
                                 for (Tile t : r.getTiles()) {
                                     if (t.isEmpty()) {
                                         t.setStandingOnMe(tempCrew);
                                         tempCrew.setTile(t);
                                         r.getCrew().add(tempCrew);
                                         shipDAO.update(winner);
+                                        found = true;
                                         break;
                                     }
+                                }
+                                if (found){
+                                    break;
                                 }
                             }
                             this.rewardCrew = tempCrew;
@@ -950,6 +955,55 @@ public class BattleService implements Serializable {
                     }
                 }
             }
+            shipDAO.update(ship);
+            // ===== Remove oxygen if no energy in o2 system =====
+            for (Room r : ship.getSystems()){
+                if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.O2)
+                        && (((System) r).getEnergy()==0 || ((System) r).isDisabled())){
+                    for (Room a : ship.getSystems()){
+                        if (a.getBreach() <= 0){
+                            a.setOxygen(r.getOxygen()-10);
+                            if (a.getOxygen()<0){
+                                a.setOxygen(0);
+                            }
+                            roomDAO.update(a);
+                        }
+                    }
+                    break;
+                }
+            }
+            // ===== Relenish oxygen if energy in o2 =====
+            for (Room r : ship.getSystems()){
+                if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.O2) && ((System) r).getEnergy()>0
+                    && !((System) r).isDisabled()){
+                    for (Room a : ship.getSystems()){
+                        if (a.getBreach()<=0&&a.getOxygen()<100){
+                            a.setOxygen(a.getOxygen() + 10 * (((System) r).getEnergy()));
+                            if (a.getOxygen()>100){
+                                a.setOxygen(100);
+                            }
+                            roomDAO.update(a);
+                        }
+                    }
+                    break;
+                }
+            }
+            // ===== Heal crew in medbay =====
+            for (Room r : ship.getSystems()){
+                if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.MEDBAY) && !((System) r).isDisabled()){
+                    for (Crew c : r.getCrew()){
+                        if (c.getHealth()<c.getMaxhealth()){
+                            c.setHealth(c.getHealth() + ((System) r).getEnergy());
+                            if (c.getHealth()>c.getMaxhealth()){
+                                c.setHealth(c.getMaxhealth());
+                            }
+                            crewDAO.update(c);
+                        }
+                    }
+                    break;
+                }
+            }
+            ship = shipDAO.getById(ship.getId());
             // ===== Replenish shields =====
             if (ship.getShields() < ship.getShieldCharge() / 2) {
                 for (Room r : ship.getSystems()) {
@@ -966,6 +1020,7 @@ public class BattleService implements Serializable {
                         } else {
                             ship.setShields(ship.getShields() + 1);
                         }
+                        break;
                     }
                 }
                 shipDAO.update(ship);
@@ -974,6 +1029,9 @@ public class BattleService implements Serializable {
             for (Room r : ship.getSystems()) {
                 if (r.getBreach() > 0 && r.getOxygen() > 0) {
                     r.setOxygen(r.getOxygen() - 25);
+                    if (r.getOxygen()<0){
+                        r.setOxygen(0);
+                    }
                 }
                 roomDAO.update(r);
             }
@@ -997,7 +1055,7 @@ public class BattleService implements Serializable {
                 if (r.getBreach() > 0 && r.getCrew().size() > 0) {
                     for (Crew c : r.getCrew()) {
                         if (!c.isJustMoved()) {
-                            r.setBreach(r.getBreach() - 1);
+                            r.setBreach(r.getBreach() - c.getStats().get(3));
                             if (r.getBreach() <= 0) {
                                 r.setBreach(0);
                                 break;
@@ -1037,6 +1095,7 @@ public class BattleService implements Serializable {
                     break;
                 }
             }
+            ship = shipDAO.getById(ship.getId());
             // ===== Check for all crew dead, if yes, game end =====
             List<Crew> shipCrew = new ArrayList<>();
             for (Room r : ship.getSystems()) {
