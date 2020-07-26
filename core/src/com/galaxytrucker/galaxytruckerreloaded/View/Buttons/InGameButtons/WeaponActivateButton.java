@@ -42,8 +42,7 @@ public class WeaponActivateButton extends ImButton {
     @Override
     public void leftClick() {
         ui.weaponactivated(weapon);
-        chosen = !chosen;
-        this.setChecked(chosen);
+        shot();
     }
 
     public void shot() {

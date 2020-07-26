@@ -386,6 +386,14 @@ public class ShipView extends AbstractShip {
     }
 
     /**
+     * reverse the texture of the crew button
+     * @param crew the crew member
+     */
+    public void undoCrewButton(Crew crew) {
+        this.crew.get(crew.getId()).undoCrewButton();
+    }
+
+    /**
      * a crew member is moving to a new room
      * called by button
      * @param crew the crew member that was chosen

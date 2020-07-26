@@ -299,6 +299,9 @@ public class GamePlay implements Screen {
             if(takingAim && chosenWeapon!= null) {
                 player.weaponFired(chosenWeapon); //Not really, just to undo button change
             }
+            if(crewMoving && chosenCrew != null) {
+                player.undoCrewButton(chosenCrew);
+            }
             crewMoving = false;
             takingAim = false;
         }
