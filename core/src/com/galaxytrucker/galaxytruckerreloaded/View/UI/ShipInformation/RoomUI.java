@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
@@ -29,6 +30,8 @@ public class RoomUI {
      */
     protected float y;
 
+    protected Stage stage;
+
     /**
      * Constructor
      *
@@ -39,18 +42,19 @@ public class RoomUI {
         this.main = main;
         this.room = room;
         this.ship = ship;
+        this.stage = stage;
         this.x = x;
         this.y = y;
 
 
         if(ship instanceof ShipView) {
             for (Tile t : room.getTiles()) {
-                stage.addActor(new TileButton(x + (t.getPosX() * 48), y + (t.getPosY() * 48), 48, 48, this));
+                this.stage.addActor(new TileButton(x + (t.getPosX() * 48), y + (t.getPosY() * 48), 48, 48, this));
             }
         }
         else if(ship instanceof EnemyShip) {
             for(Tile t : room.getTiles()) {
-                stage.addActor(new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this));
+                this.stage.addActor(new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this));
             }
         }
     }
@@ -73,7 +77,9 @@ public class RoomUI {
      * Dispose of room ui
      */
     public void disposeRoomUI() {
-
+            for (Actor a : stage.getActors()) {
+                a.remove();
+            }
     }
 
     /**

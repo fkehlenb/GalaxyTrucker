@@ -413,7 +413,9 @@ public class GamePlay implements Screen {
             try {
                 player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
             } catch (Exception e){
+
                 java.lang.System.out.println("--- Du bist tot! ---");
+                createGameOver(false);
             }
 
             try {
