@@ -12,6 +12,9 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RoomUI {
 
     protected Room room;
@@ -32,6 +35,10 @@ public class RoomUI {
 
     protected Stage stage;
 
+    protected List<Actor> enemyTiles = new ArrayList();
+
+    protected List<Actor> shipList = new ArrayList();
+
     /**
      * Constructor
      *
@@ -47,14 +54,19 @@ public class RoomUI {
         this.y = y;
 
 
+
         if(ship instanceof ShipView) {
             for (Tile t : room.getTiles()) {
-                this.stage.addActor(new TileButton(x + (t.getPosX() * 48), y + (t.getPosY() * 48), 48, 48, this));
+                TileButton tileButton = new TileButton(x + (t.getPosX() * 48), y + (t.getPosY() * 48), 48, 48, this);
+                this.stage.addActor(tileButton);
+                shipList.add(tileButton);
             }
         }
         else if(ship instanceof EnemyShip) {
             for(Tile t : room.getTiles()) {
-                this.stage.addActor(new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this));
+                TileButton tileButton = new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this);
+                this.stage.addActor(tileButton);
+                enemyTiles.add(tileButton);
             }
         }
     }
@@ -77,7 +89,7 @@ public class RoomUI {
      * Dispose of room ui
      */
     public void disposeRoomUI() {
-            for (Actor a : stage.getActors()) {
+            for (Actor a : enemyTiles) {
                 a.remove();
             }
     }
