@@ -717,11 +717,15 @@ public class GamePlay implements Screen {
         if(crewMoving && chosenCrew != null) {
             crewMoved(chosenCrew, room);
             Gdx.input.setInputProcessor(stage);
+            crewMoving = false;
+            chosenCrew = null;
         }
         else if(takingAim && chosenWeapon != null) {
             weaponShot(chosenWeapon, room);
             player.weaponFired(chosenWeapon);
             Gdx.input.setInputProcessor(stage);
+            takingAim = false;
+            chosenWeapon = null;
         }
     }
 
