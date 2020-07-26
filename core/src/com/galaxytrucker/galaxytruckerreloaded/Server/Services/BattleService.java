@@ -289,8 +289,12 @@ public class BattleService implements Serializable {
                 if (!combatOver) {
                     for (Ship s : combatants) {
                         passiveChanges(s);
+                        if (s.getId()!=ship.getId()){
+                            responseObject.setOpponent(shipDAO.getById(s.getId()));
+                        }
                     }
-                } else {
+                } if (combatOver){
+                    responseObject.setCombatOver(this.combatOver);
                     // Check if combat won
                     if (ship.getId() == winner) {
                         responseObject.setCombatWon(true);
@@ -473,6 +477,7 @@ public class BattleService implements Serializable {
                             s.setShields(s.getShieldCharge() / 2);
                             s.setFTLCharge(100);
                             java.lang.System.out.println("[COMBAT-OVER-WON]");
+                            this.combatOver = true;
                         }
                         shipDAO.update(s);
                     }
@@ -492,8 +497,39 @@ public class BattleService implements Serializable {
     public ResponseObject getUpdatedData(Ship ship) {
         ResponseObject responseObject = new ResponseObject();
         try {
+            if (combatOver){
+                ship = shipDAO.getById(ship.getId());
+                responseObject.setValidRequest(true);
+                responseObject.setCombatOver(true);
+                responseObject.setResponseShip(ship);
+                // Check if combat won
+                if (ship.getId() == winner) {
+                    responseObject.setCombatWon(true);
+                    responseObject.setDead(false);
+                    responseObject.setRewardWeapons(rewardWeapons);
+                    if (rewardCrew != null) {
+                        responseObject.setRewardCrew(rewardCrew);
+                    }
+                    responseObject.setRewardCash(rewardCash);
+                    responseObject.setRewardFuel(rewardFuel);
+                    responseObject.setRewardRockets(rewardRockets);
+                    responseObject.setOpponent(null);
+                } else {
+                    responseObject.setCombatWon(false);
+                    responseObject.setDead(true);
+                }
+                // Remove yourself
+                for (Ship s : combatants) {
+                    if (s.getId() == ship.getId()) {
+                        combatants.remove(s);
+                        break;
+                    }
+                }
+                // Update data
+                battleServiceDAO.update(this);
+            }
             // Wait your round
-            if (myRound(ship)) {
+            else if (myRound(ship)) {
                 // Fetch new data
                 ship = shipDAO.getById(ship.getId());
                 // Set valid

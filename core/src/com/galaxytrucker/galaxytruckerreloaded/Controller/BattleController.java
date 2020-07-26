@@ -18,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@SuppressWarnings("Duplicates")
 public class BattleController extends Controller {
 
     /**
@@ -100,6 +101,13 @@ public class BattleController extends Controller {
         if (responseObject.isValidRequest()) {
             clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            if (responseObject.getOpponent()==null){
+                opponent = null;
+            }
+            else {
+                opponent = responseObject.getOpponent();
+            }
+            previousResponse = responseObject;
             return true;
         }
         return false;
@@ -116,7 +124,12 @@ public class BattleController extends Controller {
         if (responseObject.isValidRequest()) {
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
             clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
-            opponent = responseObject.getOpponent();
+            if (responseObject.getOpponent()==null){
+                opponent = null;
+            }
+            else {
+                opponent = responseObject.getOpponent();
+            }
             previousResponse = responseObject;
             if (responseObject.getPreviousRoundAction()!=null&&!responseObject.getPreviousRoundAction().isEmpty()){
                 previousRoundActions = responseObject.getPreviousRoundAction();
