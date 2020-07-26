@@ -410,10 +410,10 @@ public class GamePlay implements Screen {
         enemy.render();
         if (success){
             boolean combatOver = battleController.fetchUpdatedData();
+            boolean combatOver2 = battleController.combatOver();
 
-
-            if (combatOver){
-                if (battleController.combatOver()){
+            //if (combatOver){
+                if (combatOver2){
                     if(battleController.isDead()){
                         //Todo
                     } else {
@@ -425,7 +425,7 @@ public class GamePlay implements Screen {
                     removeEnemy();
                     removeRoundButton();
                 }
-            }
+           // }
         }
 
     }
