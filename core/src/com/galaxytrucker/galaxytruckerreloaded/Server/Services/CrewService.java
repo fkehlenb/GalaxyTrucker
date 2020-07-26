@@ -87,6 +87,7 @@ public class CrewService implements Serializable {
             for (Room r : ship.getSystems()) {
                 if (r.getCrew().contains(crew)) {
                     existsInShip = true;
+                    break;
                 }
             }
             // Check for enough space in taget room
@@ -95,6 +96,7 @@ public class CrewService implements Serializable {
                 if (r.getId() == room.getId()) {
                     if (r.getTiles().size() > r.getCrew().size()) {
                         enoughRoom = true;
+                        break;
                     }
                 }
             }
@@ -103,35 +105,49 @@ public class CrewService implements Serializable {
                 // Remove crew from current room
                 for (Room r : ship.getSystems()) {
                     if (r.getId() == crew.getCurrentRoom().getId()) {
-                        List<Crew> crewInRoom = r.getCrew();
                         for (Tile t : r.getTiles()) {
                             if (t.getStandingOnMe() != null) {
                                 if (t.getStandingOnMe().getId() == crew.getId()) {
-                                    crew = t.getStandingOnMe();
-                                    t.getStandingOnMe().setTile(null);
                                     t.setStandingOnMe(null);
+                                    tileDAO.update(t);
+                                    crew.setTile(null);
+                                    crew.setCurrentRoom(null);
+                                    crewDAO.update(crew);
                                     break;
                                 }
                             }
                         }
-                        crewInRoom.remove(crew);
+                        r = roomDAO.getById(r.getId());
+                        List<Crew> crewInRoom = r.getCrew();
+                        for (Crew c : crewInRoom){
+                            if (c.getId() == crew.getId()){
+                                crewInRoom.remove(c);
+                                break;
+                            }
+                        }
                         r.setCrew(crewInRoom);
+                        roomDAO.update(r);
                         break;
                     }
                 }
                 // Add crew to target room
                 for (Room r : ship.getSystems()) {
                     if (r.getId() == room.getId()) {
-                        List<Crew> crewInRoom = r.getCrew();
                         for (Tile t : r.getTiles()) {
                             if (t.isEmpty()) {
                                 t.setStandingOnMe(crew);
+                                tileDAO.update(t);
                                 crew.setTile(t);
                                 crew.setCurrentRoom(r);
+                                crewDAO.update(crew);
+                                break;
                             }
                         }
+                        r = roomDAO.getById(r.getId());
+                        List<Crew> crewInRoom = r.getCrew();
                         crewInRoom.add(crew);
                         r.setCrew(crewInRoom);
+                        roomDAO.update(r);
                         break;
                     }
                 }
@@ -139,18 +155,10 @@ public class CrewService implements Serializable {
                         && !ship.isInCombat() && ((System) crew.getCurrentRoom()).getEnergy() > 0) {
                     for (Crew c : crew.getCurrentRoom().getCrew()) {
                         c.setHealth(c.getMaxhealth());
-                    }
-                }
-                for (Room r : ship.getSystems()) {
-                    for (Tile t : r.getTiles()) {
-                        tileDAO.update(t);
-                    }
-                    for (Crew c : r.getCrew()) {
                         crewDAO.update(c);
                     }
-                    roomDAO.update(r);
                 }
-                shipDAO.update(ship);
+                ship = shipDAO.getById(ship.getId());
                 // Manual verification
                 java.lang.System.out.println("[POST]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[ROOM]:"
                         + crew.getCurrentRoom().getId());

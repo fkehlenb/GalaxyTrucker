@@ -50,6 +50,7 @@ public class TraderDAO extends ObjectDAO<Trader> implements Serializable {
         try {
             Trader t = null;
             entityManager.getTransaction().begin();
+            entityManager.clear();
             t = entityManager.createNamedQuery("Trader.getById",Trader.class).setParameter("id",id).getSingleResult();
             entityManager.getTransaction().commit();
             if (t==null){

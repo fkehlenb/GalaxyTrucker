@@ -49,6 +49,7 @@ public class RoomDAO extends ObjectDAO<Room> implements Serializable {
         try {
             Room r = null;
             entityManager.getTransaction().begin();
+            entityManager.clear();
             r = entityManager.createNamedQuery("Room.getById",Room.class).setParameter("id",id).getSingleResult();
             entityManager.getTransaction().commit();
             if (r==null){

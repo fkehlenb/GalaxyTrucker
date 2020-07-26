@@ -84,6 +84,7 @@ public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
         try {
             Ship s = null;
             entityManager.getTransaction().begin();
+            entityManager.clear();
             s = entityManager.createNamedQuery("Ship.getById",Ship.class).setParameter("id",id).getSingleResult();
             entityManager.getTransaction().commit();
             if (s == null){

@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
@@ -67,6 +68,12 @@ public class SystemService {
                             ((System) r).setDisabled(false);
                             // Set new energy levels
                             ((System) r).setEnergy(system.getEnergy() + amount);
+                            // Heal crew in Medbay
+                            if (((System) r).getSystemType().equals(SystemType.MEDBAY) && !ship.isInCombat()){
+                                for (Crew c : r.getCrew()){
+                                    c.setHealth(c.getMaxhealth());
+                                }
+                            }
                             ship.setEnergy(ship.getEnergy() - amount);
                             rooms.set(rooms.indexOf(r), ((System) r));
                             java.lang.System.out.println("[System]:[Added-Energy]");
@@ -134,6 +141,13 @@ public class SystemService {
                             if (((System) r).getEnergy() - amount == 0) {
                                 // Disable system if no energy
                                 ((System) r).setDisabled(true);
+                            }
+                            // Heal crew in Medbay
+                            if (((System) r).getSystemType().equals(SystemType.MEDBAY)
+                                    && !ship.isInCombat() && ((System) r).getEnergy()>0){
+                                for (Crew c : r.getCrew()){
+                                    c.setHealth(c.getMaxhealth());
+                                }
                             }
                             // Set new energy levels
                             ((System) r).setEnergy(((System) r).getEnergy() - amount);

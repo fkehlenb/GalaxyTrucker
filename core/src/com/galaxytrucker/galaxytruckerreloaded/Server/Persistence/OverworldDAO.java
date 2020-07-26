@@ -85,6 +85,7 @@ public class OverworldDAO extends ObjectDAO<Overworld> implements Serializable {
     public Overworld getOverworldByUser(String username) throws OverworldNotFoundException{
         try {
             entityManager.getTransaction().begin();
+            entityManager.clear();
             @NonNull Overworld o = entityManager.createNamedQuery("Overworld.getByUsername",Overworld.class).setParameter("name",username).getSingleResult();
             entityManager.getTransaction().commit();
             return o;

@@ -24,7 +24,6 @@
             <property name="javax.persistence.jdbc.password" value="root" />
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
-            <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
         </properties>
     </persistence-unit>
 </persistence>
