@@ -132,8 +132,8 @@ public class CrewUI extends EnemyCrewUI{
         super.disposeEnemyCrewUI();
         box.dispose();
         crewStatus.dispose();
-
         crewButton.remove();
+        background.dispose();
     }
 
     /**
