@@ -493,7 +493,11 @@ public class ShipView extends AbstractShip {
      * @param weapon the weapon that was fired
      */
     public void weaponFired(Weapon weapon) {
-
+        for(RoomUI r : rooms.values()) {
+            if(r instanceof WeaponUI) {
+                ((WeaponUI) r).weaponShot(weapon);
+            }
+        }
     }
 
     /**

@@ -296,6 +296,9 @@ public class GamePlay implements Screen {
         }
         if(crewMoving && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || takingAim && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             Gdx.input.setInputProcessor(stage);
+            if(takingAim && chosenWeapon!= null) {
+                player.weaponFired(chosenWeapon); //Not really, just to undo button change
+            }
             crewMoving = false;
             takingAim = false;
         }
@@ -717,6 +720,7 @@ public class GamePlay implements Screen {
         }
         else if(takingAim && chosenWeapon != null) {
             weaponShot(chosenWeapon, room);
+            player.weaponFired(chosenWeapon);
             Gdx.input.setInputProcessor(stage);
         }
     }

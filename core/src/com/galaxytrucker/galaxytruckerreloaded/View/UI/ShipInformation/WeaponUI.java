@@ -86,7 +86,7 @@ public class WeaponUI extends SubsystemUI {
         }
         for(Weapon w : ws) {
             String name = w.getWeaponType().toString().toLowerCase();
-            buttons.put(w.getId(), new WeaponActivateButton(new Texture("shipsys/weapon/"+name+"button.png"), bwx, wy, 100, 100, this, w));
+            buttons.put(w.getId(), new WeaponActivateButton(new Texture("shipsys/weapon/"+name+"button.png"), new Texture("shipsys/weapon/minibox.png"), bwx, wy, 100, 100, this, w));
             stage.addActor(buttons.get(w.getId()));
             bwx += 110;
             if(createGlyphs) {
@@ -159,5 +159,13 @@ public class WeaponUI extends SubsystemUI {
      */
     public void weaponactivated(Weapon weapon) {
         ((ShipView) ship).weaponChosen(weapon);
+    }
+
+    /**
+     * a weapon was shot. the button needs to be updated
+     * @param weapon the weapon that was shot
+     */
+    public void weaponShot(Weapon weapon) {
+        buttons.get(weapon.getId()).shot();
     }
 }

@@ -34,20 +34,29 @@ public class WeaponActivateButton extends ImButton {
      */
     private Weapon weapon;
 
+    private boolean chosen = false;
+
     /**
      * Left-Click action of the Button.
      */
     @Override
     public void leftClick() {
         ui.weaponactivated(weapon);
+        chosen = !chosen;
+        this.setChecked(chosen);
+    }
+
+    public void shot() {
+        chosen = !chosen;
+        this.setChecked(chosen);
     }
 
     /**
      * constructor
      * @param ui the ui this button belongs to
      */
-    public WeaponActivateButton(Texture texture, float x, float y, float width, float height, WeaponUI ui, Weapon weapon) {
-        super(texture, x, y, width, height);
+    public WeaponActivateButton(Texture texture, Texture texture2,  float x, float y, float width, float height, WeaponUI ui, Weapon weapon) {
+        super(texture, texture, texture2, x, y, width, height);
         this.ui = ui;
         this.weapon = weapon;
         this.addListener(new ClickListener() {
