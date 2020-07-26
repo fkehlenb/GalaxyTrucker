@@ -708,6 +708,7 @@ public class GamePlay implements Screen {
         if(success && !ClientControllerCommunicator.getInstance(null).getClientShip().isInCombat()) {
             player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
+        player.undoCrewButton(crew);
     }
 
     /**

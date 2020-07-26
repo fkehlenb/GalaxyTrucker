@@ -115,7 +115,7 @@ public class CrewUI extends EnemyCrewUI{
     @Override
     public void crewMoved(float roomX, float roomY) {
         super.crewMoved(roomX, roomY);
-        crewButton.moved();
+        undoCrewButton();
     }
 
     /**

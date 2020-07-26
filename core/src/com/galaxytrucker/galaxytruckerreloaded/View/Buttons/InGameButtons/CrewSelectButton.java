@@ -31,8 +31,6 @@ public class CrewSelectButton extends ImButton
      */
     private CrewUI ui;
 
-    private boolean chosen = false;
-
     /**
      * Constructor
      *
@@ -50,12 +48,11 @@ public class CrewSelectButton extends ImButton
     public void leftClick()
     {
         ui.crewMoving();
-        moved();
+        this.setChecked(true);
     }
 
     public void moved() {
-        chosen = !chosen;
-        this.setChecked(chosen);
+        this.setChecked(false);
     }
 }
 
