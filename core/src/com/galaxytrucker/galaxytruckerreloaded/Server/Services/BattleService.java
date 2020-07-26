@@ -898,7 +898,7 @@ public class BattleService implements Serializable {
                             // ===== Attempt to cause a breach =====
                             int breachChance = (int) (weapon.getBreachChance() * (float) difficulty * 10f);
                             if (breachChance <= 0) {
-                                breachChance = random.nextInt(20);
+                                breachChance = random.nextInt(20) + 1;
                             }
                             int randomInt = random.nextInt(breachChance);
                             if (randomInt == 0) {
