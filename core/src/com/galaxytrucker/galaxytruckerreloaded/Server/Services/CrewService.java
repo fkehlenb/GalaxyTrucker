@@ -102,9 +102,11 @@ public class CrewService implements Serializable {
                     if (r.getId() == crew.getCurrentRoom().getId()){
                         List<Crew> crewInRoom = r.getCrew();
                         for (Tile t : r.getTiles()){
-                            if (t.getStandingOnMe().getId() == crew.getId()){
-                                t.setStandingOnMe(null);
-                                tileDAO.update(t);
+                            if(t.getStandingOnMe() != null) {
+                                if (t.getStandingOnMe().getId() == crew.getId()) {
+                                    t.setStandingOnMe(null);
+                                    tileDAO.update(t);
+                                }
                             }
                         }
                         crewInRoom.remove(crew);

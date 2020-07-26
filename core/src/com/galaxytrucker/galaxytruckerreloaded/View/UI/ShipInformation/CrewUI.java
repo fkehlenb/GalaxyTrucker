@@ -84,7 +84,7 @@ public class CrewUI extends EnemyCrewUI{
 
         glyph.setText(font, crew.getName());
 
-        crewButton = new CrewSelectButton(crewImage, x, y, 50, 50, crew.getId(), this);
+        crewButton = new CrewSelectButton(crewImage, new Texture("crew/"+type.toString().toLowerCase()+"on.png"), x, y, 50, 50, this);
         stage.addActor(crewButton);
 
         crewStatus = new Texture("gameuis/energybar.png");
@@ -103,6 +103,26 @@ public class CrewUI extends EnemyCrewUI{
      */
     public void crewMoving() {
         ((ShipView) shipView).crewMoving(crew);
+    }
+
+    /**
+     * the crew member was moved to a new room
+     * called by shipview
+     *
+     * @param roomX the x position of the lower left corner the crew member is in
+     * @param roomY
+     */
+    @Override
+    public void crewMoved(float roomX, float roomY) {
+        super.crewMoved(roomX, roomY);
+        crewButton.moved();
+    }
+
+    /**
+     * change texture of crew button
+     */
+    public void undoCrewButton() {
+        crewButton.moved();
     }
 
     /**
