@@ -103,7 +103,9 @@ public class ServerServiceCommunicator {
                         }
                     }
                 }
-                return crewService.moveCrewToRoom(request.getShip(), request.getCrew(), request.getRoom());
+                else {
+                    return crewService.moveCrewToRoom(request.getShip(), request.getCrew(), request.getRoom());
+                }
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
             case ADD_ENERGY_SYSTEM:
@@ -120,7 +122,9 @@ public class ServerServiceCommunicator {
                         }
                     }
                 }
-                return travelService.jump(request.getShip(), request.getPlanet());
+                else {
+                    return travelService.jump(request.getShip(), request.getPlanet());
+                }
             case ROUND_UPDATE_DATA:
                 for (BattleService b : battleServices){
                     if (b.getCombatants().contains(request.getShip())){

@@ -36,6 +36,7 @@ public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateShipException();
         }
     }
@@ -51,6 +52,7 @@ public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new ShipNotFoundException();
         }
     }
@@ -69,6 +71,7 @@ public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new ShipNotFoundException();
         }
     }
@@ -90,6 +93,7 @@ public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new ShipNotFoundException();
         }
     }
@@ -108,6 +112,7 @@ public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new ShipNotFoundException();
         }
     }

@@ -32,6 +32,7 @@ public class ResponseObjectDAO extends ObjectDAO<ResponseObject> implements Seri
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateResponseObjectException();
         }
     }
@@ -48,6 +49,7 @@ public class ResponseObjectDAO extends ObjectDAO<ResponseObject> implements Seri
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new ResponseObjectNotFoundException();
         }
     }

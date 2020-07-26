@@ -64,18 +64,20 @@ public class SystemService {
                     for (Room r : rooms) {
                         if (r.getId() == system.getId()) {
                             // Re-enable system if disabled
-                            system.setDisabled(false);
+                            ((System) r).setDisabled(false);
                             // Set new energy levels
-                            system.setEnergy(system.getEnergy() + amount);
+                            ((System) r).setEnergy(system.getEnergy() + amount);
                             ship.setEnergy(ship.getEnergy() - amount);
-                            rooms.set(rooms.indexOf(r), system);
+                            rooms.set(rooms.indexOf(r), ((System) r));
                             java.lang.System.out.println("[System]:[Added-Energy]");
                             break;
                         }
                     }
                     // Update data
+                    for (Room r : ship.getSystems()){
+                        roomDAO.update(r);
+                    }
                     ship.setSystems(rooms);
-                    roomDAO.update(system);
                     shipDAO.update(ship);
                     // Verification
                     java.lang.System.out.println("[POST]:[System]:" + system.getSystemType() + ":[CurrentEnergy]:" + system.getEnergy()
@@ -129,21 +131,23 @@ public class SystemService {
                     List<Room> rooms = ship.getSystems();
                     for (Room r : rooms) {
                         if (r.getId() == system.getId()) {
-                            if (system.getEnergy() - amount == 0) {
+                            if (((System) r).getEnergy() - amount == 0) {
                                 // Disable system if no energy
-                                system.setDisabled(true);
+                                ((System) r).setDisabled(true);
                             }
                             // Set new energy levels
-                            system.setEnergy(system.getEnergy() - amount);
+                            ((System) r).setEnergy(((System) r).getEnergy() - amount);
                             ship.setEnergy(ship.getEnergy() + amount);
-                            rooms.set(rooms.indexOf(r), system);
+                            rooms.set(rooms.indexOf(r), ((System) r));
                             java.lang.System.out.println("[System]:[Removed-Energy]");
                             break;
                         }
                     }
                     // Update data
+                    for (Room r : ship.getSystems()){
+                        roomDAO.update(r);
+                    }
                     ship.setSystems(rooms);
-                    roomDAO.update(system);
                     shipDAO.update(ship);
                     // Verification
                     java.lang.System.out.println("[POST]:[System]:" + system.getSystemType() + ":[CurrentEnergy]:" + system.getEnergy()
@@ -177,11 +181,11 @@ public class SystemService {
             java.lang.System.out.println("[PRE]:[System]:"+system.getSystemType().toString()+":[Level]:"+system.getMaxEnergy());
             java.lang.System.out.println("[PRE]:[Ship]:" + ship.getId() + ":[Coins]:" + ship.getCoins());
             // Check if the system exists oboard the ship
-            List<Room> rooms = ship.getSystems();
             boolean systemExists = false;
-            for (Room r : rooms) {
+            for (Room r : ship.getSystems()) {
                 if (r.isSystem() && r.getId() == system.getId()) {
                     systemExists = true;
+                    system = ((System) r);
                 }
             }
             java.lang.System.out.println("[Exists]:"+systemExists);
@@ -450,14 +454,10 @@ public class SystemService {
                                 return responseObject;
                         }
                 }
-                for (Room r : rooms) {
-                    if (r.getId() == system.getId()) {
-                        rooms.set(rooms.indexOf(r), system);
-                    }
+                for (Room r : ship.getSystems()){
+                    roomDAO.update(r);
                 }
                 // Update data
-                ship.setSystems(rooms);
-                roomDAO.update(system);
                 shipDAO.update(ship);
                 // Verification
                 java.lang.System.out.println("[POST]:[System]:"+system.getSystemType().toString()+":[Level]:"+system.getMaxEnergy());
@@ -494,6 +494,9 @@ public class SystemService {
                 } else if (r.isSystem() && ((System) r).getSystemType().equals(systemType) && ((System) r).isUnlocked()) {
                     return responseObject;
                 }
+            }
+            for (Room r : ship.getSystems()){
+                roomDAO.update(r);
             }
             ship.setSystems(rooms);
             shipDAO.update(ship);

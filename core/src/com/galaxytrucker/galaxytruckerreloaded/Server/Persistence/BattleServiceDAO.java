@@ -34,6 +34,7 @@ public class BattleServiceDAO extends ObjectDAO<BattleService> implements Serial
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateBattleServiceException();
         }
     }
@@ -49,6 +50,7 @@ public class BattleServiceDAO extends ObjectDAO<BattleService> implements Serial
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new BattleServiceNotFoundException();
         }
     }
@@ -65,6 +67,7 @@ public class BattleServiceDAO extends ObjectDAO<BattleService> implements Serial
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new BattleServiceNotFoundException();
         }
     }
@@ -84,6 +87,7 @@ public class BattleServiceDAO extends ObjectDAO<BattleService> implements Serial
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             return new ArrayList<>();
         }
     }

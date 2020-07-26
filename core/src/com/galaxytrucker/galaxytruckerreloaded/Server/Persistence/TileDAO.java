@@ -32,6 +32,7 @@ public class TileDAO extends ObjectDAO<Tile> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateTileException();
         }
     }
@@ -47,6 +48,7 @@ public class TileDAO extends ObjectDAO<Tile> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new TileNotFoundException();
         }
     }
@@ -63,6 +65,7 @@ public class TileDAO extends ObjectDAO<Tile> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new TileNotFoundException();
         }
     }

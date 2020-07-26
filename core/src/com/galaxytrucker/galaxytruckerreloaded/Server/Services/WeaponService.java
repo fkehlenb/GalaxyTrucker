@@ -37,10 +37,11 @@ public class WeaponService {
     /** Equip a weapon
      * @param s - the user's ship
      * @param w - the weapon to equip */
-    //todo check inv space
     public ResponseObject equipWeapon(Ship s,Weapon w){
         ResponseObject responseObject = new ResponseObject();
         try {
+            s = shipDAO.getById(s.getId());
+            w = weaponDAO.getById(w.getId());
             if (s.getInventory().contains(w)){
                 List<System> shipSystems = new ArrayList<>();
                 for (Room r : s.getSystems()){

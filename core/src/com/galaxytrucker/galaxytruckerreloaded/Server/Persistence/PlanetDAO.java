@@ -37,6 +37,7 @@ public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicatePlanetException();
         }
     }
@@ -55,6 +56,7 @@ public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new PlanetNotFoundException();
         }
     }
@@ -76,6 +78,7 @@ public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new PlanetNotFoundException();
         }
     }
@@ -97,6 +100,7 @@ public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new PlanetNotFoundException();
         }
     }
@@ -116,6 +120,7 @@ public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new PlanetNotFoundException();
         }
     }

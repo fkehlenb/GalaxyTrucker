@@ -32,6 +32,7 @@ public class RequestObjectDAO extends ObjectDAO<RequestObject> implements Serial
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateRequestObjectException();
         }
     }
@@ -48,6 +49,7 @@ public class RequestObjectDAO extends ObjectDAO<RequestObject> implements Serial
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new RequestObjectNotFoundException();
         }
     }

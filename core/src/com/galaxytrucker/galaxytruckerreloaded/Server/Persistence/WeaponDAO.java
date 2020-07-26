@@ -38,6 +38,7 @@ public class WeaponDAO extends ObjectDAO<Weapon> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateWeaponException();
         }
     }
@@ -59,6 +60,7 @@ public class WeaponDAO extends ObjectDAO<Weapon> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new WeaponNotFoundException();
         }
     }
@@ -77,6 +79,7 @@ public class WeaponDAO extends ObjectDAO<Weapon> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new WeaponNotFoundException();
         }
     }
@@ -96,6 +99,7 @@ public class WeaponDAO extends ObjectDAO<Weapon> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new WeaponNotFoundException();
         }
     }

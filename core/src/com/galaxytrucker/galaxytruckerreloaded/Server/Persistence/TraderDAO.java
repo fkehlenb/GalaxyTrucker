@@ -37,6 +37,7 @@ public class TraderDAO extends ObjectDAO<Trader> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateTraderException();
         }
     }
@@ -58,6 +59,7 @@ public class TraderDAO extends ObjectDAO<Trader> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new TraderNotFoundException();
         }
     }

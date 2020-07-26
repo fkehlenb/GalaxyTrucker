@@ -36,6 +36,7 @@ public class RoomDAO extends ObjectDAO<Room> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateRoomException();
         }
     }
@@ -57,6 +58,7 @@ public class RoomDAO extends ObjectDAO<Room> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new RoomNotFoundException();
         }
     }
@@ -75,6 +77,7 @@ public class RoomDAO extends ObjectDAO<Room> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new RoomNotFoundException();
         }
     }
@@ -94,6 +97,7 @@ public class RoomDAO extends ObjectDAO<Room> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new RoomNotFoundException();
         }
     }

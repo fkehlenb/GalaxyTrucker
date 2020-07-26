@@ -4,6 +4,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.CrewDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
@@ -42,7 +43,9 @@ public class CrewService implements Serializable {
      */
     private RoomDAO roomDAO = RoomDAO.getInstance();
 
-    /** Tile dao */
+    /**
+     * Tile dao
+     */
     private TileDAO tileDAO = TileDAO.getInstance();
 
     /**
@@ -81,28 +84,28 @@ public class CrewService implements Serializable {
                     + crew.getCurrentRoom().getId());
             // Check if the crew exists in the ship
             boolean existsInShip = false;
-            for (Room r : ship.getSystems()){
-                if (r.getCrew().contains(crew)){
+            for (Room r : ship.getSystems()) {
+                if (r.getCrew().contains(crew)) {
                     existsInShip = true;
                 }
             }
             // Check for enough space in taget room
             boolean enoughRoom = false;
-            for (Room r : ship.getSystems()){
-                if (r.getId() == room.getId()){
-                    if (r.getTiles().size()>r.getCrew().size()){
-                        enoughRoom=true;
+            for (Room r : ship.getSystems()) {
+                if (r.getId() == room.getId()) {
+                    if (r.getTiles().size() > r.getCrew().size()) {
+                        enoughRoom = true;
                     }
                 }
             }
             // Crew must not move to same room it is already in
             if (existsInShip && room.getId() != crew.getCurrentRoom().getId() && enoughRoom) {
                 // Remove crew from current room
-                for (Room r : ship.getSystems()){
-                    if (r.getId() == crew.getCurrentRoom().getId()){
+                for (Room r : ship.getSystems()) {
+                    if (r.getId() == crew.getCurrentRoom().getId()) {
                         List<Crew> crewInRoom = r.getCrew();
-                        for (Tile t : r.getTiles()){
-                            if(t.getStandingOnMe() != null) {
+                        for (Tile t : r.getTiles()) {
+                            if (t.getStandingOnMe() != null) {
                                 if (t.getStandingOnMe().getId() == crew.getId()) {
                                     crew = t.getStandingOnMe();
                                     t.getStandingOnMe().setTile(null);
@@ -117,11 +120,11 @@ public class CrewService implements Serializable {
                     }
                 }
                 // Add crew to target room
-                for (Room r : ship.getSystems()){
-                    if (r.getId() == room.getId()){
+                for (Room r : ship.getSystems()) {
+                    if (r.getId() == room.getId()) {
                         List<Crew> crewInRoom = r.getCrew();
-                        for (Tile t : r.getTiles()){
-                            if (t.isEmpty()){
+                        for (Tile t : r.getTiles()) {
+                            if (t.isEmpty()) {
                                 t.setStandingOnMe(crew);
                                 crew.setTile(t);
                                 crew.setCurrentRoom(r);
@@ -132,22 +135,29 @@ public class CrewService implements Serializable {
                         break;
                     }
                 }
-                for (Room r : ship.getSystems()){
-                    for (Tile t : r.getTiles()){
+                if (crew.getCurrentRoom().isSystem() && ((System) crew.getCurrentRoom()).getSystemType().equals(SystemType.MEDBAY)
+                        && !ship.isInCombat() && ((System) crew.getCurrentRoom()).getEnergy() > 0) {
+                    for (Crew c : crew.getCurrentRoom().getCrew()) {
+                        c.setHealth(c.getMaxhealth());
+                    }
+                }
+                for (Room r : ship.getSystems()) {
+                    for (Tile t : r.getTiles()) {
                         tileDAO.update(t);
                     }
-                    for (Crew c : r.getCrew()){
+                    for (Crew c : r.getCrew()) {
                         crewDAO.update(c);
                     }
                     roomDAO.update(r);
                 }
+                shipDAO.update(ship);
                 // Manual verification
                 java.lang.System.out.println("[POST]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[ROOM]:"
                         + crew.getCurrentRoom().getId());
                 java.lang.System.out.println("==========================================================");
                 // Set valid data
                 responseObject.setValidRequest(true);
-                responseObject.setResponseShip(shipDAO.getById(ship.getId()));
+                responseObject.setResponseShip(ship);
             }
         } catch (Exception e) {
             e.printStackTrace();

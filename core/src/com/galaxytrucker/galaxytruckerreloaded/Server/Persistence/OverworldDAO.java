@@ -37,6 +37,7 @@ public class OverworldDAO extends ObjectDAO<Overworld> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateOverworldException();
         }
     }
@@ -52,6 +53,7 @@ public class OverworldDAO extends ObjectDAO<Overworld> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new OverworldNotFoundException();
         }
     }
@@ -71,6 +73,7 @@ public class OverworldDAO extends ObjectDAO<Overworld> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new OverworldNotFoundException();
         }
     }
@@ -88,6 +91,7 @@ public class OverworldDAO extends ObjectDAO<Overworld> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new OverworldNotFoundException();
         }
     }

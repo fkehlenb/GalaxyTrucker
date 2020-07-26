@@ -77,6 +77,7 @@ public class TraderService {
                 for (Weapon w : stock){
                     if (w.getId() == weapon.getId()){
                         exists = true;
+                        weapon = w;
                         System.out.println("[Weapon-In-Stock]");
                         break;
                     }
@@ -91,8 +92,9 @@ public class TraderService {
                     inventory.add(weapon);
                     ship.setInventory(inventory);
                     // Update data
-                    shipDAO.update(ship);
+                    weaponDAO.update(weapon);
                     traderDAO.update(trader);
+                    shipDAO.update(ship);
                     // Verification
                     System.out.println("[POST]:[Ship-Inventory-Size]:" + inventory.size() + ":[Coins]:" + ship.getCoins());
                     System.out.println("[POST]:[Trader-Stock-Size]:" + stock.size());
@@ -134,6 +136,7 @@ public class TraderService {
             for (Crew c : stock){
                 if (c.getId()==crew.getId()){
                     exists = true;
+                    crew = c;
                     break;
                 }
             }
@@ -169,10 +172,13 @@ public class TraderService {
                             crewInRoom.add(crew);
                             r.setCrew(crewInRoom);
                             crew.setCurrentRoom(r);
+                            crew.setAssociatedUser(ship.getAssociatedUser());
                             // Update data
                             tileDAO.update(t);
-                            roomDAO.update(r);
                             crewDAO.update(crew);
+                            for (Room a : ship.getSystems()){
+                                roomDAO.update(a);
+                            }
                             shipDAO.update(ship);
                             traderDAO.update(trader);
                             // Manual verification
@@ -354,6 +360,7 @@ public class TraderService {
             for (Weapon w : inventory){
                 if (w.getId() == weapon.getId()){
                     exists = true;
+                    weapon = w;
                     System.out.println("[Weapon-Exists]");
                     break;
                 }
@@ -369,8 +376,8 @@ public class TraderService {
                 stock.add(weapon);
                 trader.setWeaponStock(stock);
                 // Update data
-                traderDAO.update(trader);
                 weaponDAO.update(weapon);
+                traderDAO.update(trader);
                 shipDAO.update(ship);
                 // Manual verification
                 System.out.println("[POST]:[Trader-Stock-Size]:" + stock.size());

@@ -34,6 +34,7 @@ public class UserDAO extends ObjectDAO<User> implements Serializable {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateUserException();
         }
     }
@@ -51,6 +52,7 @@ public class UserDAO extends ObjectDAO<User> implements Serializable {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new UserNotFoundException();
         }
     }
@@ -68,6 +70,7 @@ public class UserDAO extends ObjectDAO<User> implements Serializable {
             return u;
         } catch (Exception e) {
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new UserNotFoundException();
         }
     }
@@ -85,6 +88,7 @@ public class UserDAO extends ObjectDAO<User> implements Serializable {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new UserNotFoundException();
         }
     }

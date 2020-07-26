@@ -36,6 +36,7 @@ public class CrewDAO extends ObjectDAO<Crew> implements Serializable {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new DuplicateCrewException();
         }
     }
@@ -57,6 +58,7 @@ public class CrewDAO extends ObjectDAO<Crew> implements Serializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new CrewNotFoundException();
         }
     }
@@ -74,6 +76,7 @@ public class CrewDAO extends ObjectDAO<Crew> implements Serializable {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new CrewNotFoundException();
         }
     }
@@ -92,6 +95,7 @@ public class CrewDAO extends ObjectDAO<Crew> implements Serializable {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            entityManager.getTransaction().rollback();
             throw new CrewNotFoundException();
         }
     }
