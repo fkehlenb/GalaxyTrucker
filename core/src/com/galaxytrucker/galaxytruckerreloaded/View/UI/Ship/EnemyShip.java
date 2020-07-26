@@ -261,6 +261,7 @@ public class EnemyShip extends AbstractShip {
         hull.hullStatusUpdate(hpvalue);
     }
 
+
     /**
      * shield status update
      *

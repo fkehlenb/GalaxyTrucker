@@ -492,7 +492,7 @@ public class BattleService implements Serializable {
         ResponseObject responseObject = new ResponseObject();
         try {
             // Wait your round
-            if (myRound(ship)) {
+            //if (myRound(ship)) {
                 // Fetch new data
                 ship = shipDAO.getById(ship.getId());
                 // Set valid
@@ -558,7 +558,7 @@ public class BattleService implements Serializable {
                 if (combatants.isEmpty()) {
                     ServerServiceCommunicator.getInstance().getBattleServices().remove(this);
                 }
-            }
+           // }
         } catch (Exception e) {
             e.printStackTrace();
         }

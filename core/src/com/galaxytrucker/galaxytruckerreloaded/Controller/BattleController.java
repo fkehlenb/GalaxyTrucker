@@ -71,6 +71,17 @@ public class BattleController extends Controller {
         return false;
     }
 
+    /**
+     * check if player is dead
+     * @return Players dead
+     */
+    public boolean isDead(){
+        if(previousResponse == null){
+            return false;
+        }
+        return previousResponse.isDead();
+    }
+
     /** Get the opponent's previous round actions
      * @return previous round actions */
     public List<PreviousRoundAction> getPreviousRoundActions(){
@@ -101,6 +112,14 @@ public class BattleController extends Controller {
             clientControllerCommunicator.setMap(responseObject.getResponseOverworld());
             clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
             return true;
+        }
+        opponent = responseObject.getOpponent();
+        previousResponse = responseObject;
+        if (responseObject.getPreviousRoundAction()!=null&&!responseObject.getPreviousRoundAction().isEmpty()){
+            previousRoundActions = responseObject.getPreviousRoundAction();
+        }
+        else{
+            previousRoundActions = new ArrayList<>();
         }
         return false;
     }

@@ -19,6 +19,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
@@ -402,23 +403,31 @@ public class GamePlay implements Screen {
      */
     public void nextFightRound() {
         boolean success = battleController.playMoves();
+        player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+        Ship updatedEnemyShip = BattleController.getInstance(null).getOpponent();
+        enemy.hullStatusUpdate(updatedEnemyShip.getHp());
+        enemy.update(updatedEnemyShip);
+        enemy.render();
         if (success){
             boolean combatOver = battleController.fetchUpdatedData();
-            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
-            enemy.update(BattleController.getInstance(null).getOpponent());
+
+
             if (combatOver){
                 if (battleController.combatOver()){
-                    if (battleController.combatWon()){
-                        // todo
-                    }
-                    else{
-                        // todo
+                    if(battleController.isDead()){
+                        //Todo
+                    } else {
+                        if (battleController.combatWon()){
+                            // todo
+                            removeEnemy();
+                        }
                     }
                     removeEnemy();
                     removeRoundButton();
                 }
             }
         }
+
     }
 
     /**
