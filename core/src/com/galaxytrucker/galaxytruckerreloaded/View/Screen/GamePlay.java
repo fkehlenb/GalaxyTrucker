@@ -417,7 +417,10 @@ public class GamePlay implements Screen {
                 java.lang.System.out.println("--- Du bist tot! ---");
                 createGameOver(false);
             }
-
+            // todo replace above with below
+//            if (battleController.combatOver() && battleController.youDead()){
+//                createGameOver(false);
+//            }
             try {
                 enemy.update(BattleController.getInstance(null).getOpponent());
             } catch (Exception e) {

@@ -7,6 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.UserNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.BattleServiceDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RequestObjectDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -81,6 +82,9 @@ public class ServerServiceCommunicator {
     /** List of connected clients */
     private List<String> pvpClients = new ArrayList<>();
 
+    /** Ship DAO */
+    private ShipDAO shipDAO = ShipDAO.getInstance();
+
     /**
      * Take a request from the client side, pass it through the services
      * and return a response
@@ -92,6 +96,12 @@ public class ServerServiceCommunicator {
             request.setId(UUID.randomUUID().hashCode());
             requestObjectDAO.persist(request);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try{
+            request.setShip(shipDAO.getById(request.getShip().getId()));
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
         switch (request.getRequestType()) {
@@ -108,6 +118,13 @@ public class ServerServiceCommunicator {
                 }
             case LOGOUT:
                 return logout(request.getShip().getAssociatedUser());
+            case FETCH_OPPONENT_AFTER_RELOG:
+                for (BattleService b : battleServices){
+                    if (b.getCombatants().contains(request.getShip())){
+                        return b.fetchOpponentAfterRelog(request.getShip());
+                    }
+                }
+                break;
             case ADD_ENERGY_SYSTEM:
                 return systemService.addEnergy(request.getShip(), request.getSystem(), request.getIntAmount());
             case REMOVE_ENERGY_SYSTEM:

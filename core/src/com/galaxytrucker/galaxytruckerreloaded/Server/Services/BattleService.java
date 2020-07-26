@@ -293,8 +293,8 @@ public class BattleService implements Serializable {
                             responseObject.setOpponent(shipDAO.getById(s.getId()));
                         }
                     }
-                } if (combatOver){
-                    responseObject.setCombatOver(this.combatOver);
+                } if (combatOver){ // todo check if battle over due to passive changes
+                    responseObject.setCombatOver(true);
                     // Check if combat won
                     if (ship.getId() == winner) {
                         responseObject.setCombatWon(true);
@@ -350,11 +350,6 @@ public class BattleService implements Serializable {
                         }
 
                     }
-                }
-                // Fight over
-                else {
-                    combatants.clear();
-                    ServerServiceCommunicator.getInstance().getBattleServices().remove(this);
                 }
                 battleServiceDAO.update(this);
             }
@@ -455,6 +450,8 @@ public class BattleService implements Serializable {
                     }
                     // ===== Repair systems, heal crew, restore shields, replenish cooldowns, repair breaches =====
                     for (Ship s : combatants) {
+                        s.setInCombat(false);
+                        s.setInvitedToPVP(false);
                         if (s.getId() == this.winner) {
                             s.setHp(s.getHp()+random.nextInt(25));
                             for (Room r : s.getSystems()) {
@@ -530,6 +527,9 @@ public class BattleService implements Serializable {
                         break;
                     }
                 }
+                if (combatants.size()==0){
+                    ServerServiceCommunicator.getInstance().getBattleServices().remove(this);
+                }
                 // Update data
                 battleServiceDAO.update(this);
             }
@@ -602,6 +602,29 @@ public class BattleService implements Serializable {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responseObject;
+    }
+
+    /** Fetch opponent after client relog
+     * @param ship - the client's ship */
+    public ResponseObject fetchOpponentAfterRelog(Ship ship){
+        ResponseObject responseObject = new ResponseObject();
+        try {
+            ship = shipDAO.getById(ship.getId());
+            Planet p = ship.getPlanet();
+            List<Ship> ships = p.getShips();
+            for (Ship s : ships){
+                if (s.getId()!=ship.getId()){
+                    responseObject.setValidRequest(true);
+                    responseObject.setResponseShip(ship);
+                    responseObject.setOpponent(s);
+                    break;
+                }
+            }
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
         return responseObject;

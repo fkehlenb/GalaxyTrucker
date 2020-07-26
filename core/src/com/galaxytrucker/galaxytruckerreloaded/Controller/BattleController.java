@@ -165,6 +165,29 @@ public class BattleController extends Controller {
         return false;
     }
 
+    /** Fetch opponent after relog */
+    public boolean fetchOpponentAfterRelog(){
+        RequestObject requestObject = new RequestObject();
+        requestObject.setRequestType(RequestType.FETCH_OPPONENT_AFTER_RELOG);
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()){
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            opponent = responseObject.getOpponent();
+            previousResponse = responseObject;
+            return true;
+        }
+        return false;
+    }
+
+    /** Are you dead? */
+    public boolean youDead(){
+        if (previousResponse == null){
+            return false;
+        }
+        return previousResponse.isDead();
+    }
+
     /**
      * Attack opponent
      *
