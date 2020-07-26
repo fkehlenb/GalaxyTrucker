@@ -292,7 +292,7 @@ public class BattleService implements Serializable {
                             responseObject.setOpponent(shipDAO.getById(s.getId()));
                         }
                     }
-                } else {
+                } if (combatOver){
                     responseObject.setCombatOver(this.combatOver);
                     // Check if combat won
                     if (ship.getId() == winner) {
@@ -496,8 +496,35 @@ public class BattleService implements Serializable {
     public ResponseObject getUpdatedData(Ship ship) {
         ResponseObject responseObject = new ResponseObject();
         try {
+            if (combatOver){
+                ship = shipDAO.getById(ship.getId());
+                // Check if combat won
+                if (ship.getId() == winner) {
+                    responseObject.setCombatWon(true);
+                    responseObject.setDead(false);
+                    responseObject.setRewardWeapons(rewardWeapons);
+                    if (rewardCrew != null) {
+                        responseObject.setRewardCrew(rewardCrew);
+                    }
+                    responseObject.setRewardCash(rewardCash);
+                    responseObject.setRewardFuel(rewardFuel);
+                    responseObject.setRewardRockets(rewardRockets);
+                } else {
+                    responseObject.setCombatWon(false);
+                    responseObject.setDead(true);
+                }
+                // Remove yourself
+                for (Ship s : combatants) {
+                    if (s.getId() == ship.getId()) {
+                        combatants.remove(s);
+                        break;
+                    }
+                }
+                // Update data
+                battleServiceDAO.update(this);
+            }
             // Wait your round
-            if (myRound(ship)) {
+            else if (myRound(ship)) {
                 // Fetch new data
                 ship = shipDAO.getById(ship.getId());
                 // Set valid
