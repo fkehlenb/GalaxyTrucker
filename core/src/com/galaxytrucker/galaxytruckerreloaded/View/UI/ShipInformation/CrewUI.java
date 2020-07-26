@@ -160,8 +160,8 @@ public class CrewUI extends EnemyCrewUI{
      * @param crew the new crew member
      */
     @Override
-    public void update(Crew crew) {
-        super.update(crew);
+    public void update(Crew crew, float roomX, float roomY) {
+        super.update(crew, roomX, roomY);
         statusUpdate(crew.getHealth());
     }
 

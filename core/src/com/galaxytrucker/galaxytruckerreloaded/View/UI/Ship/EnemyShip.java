@@ -80,6 +80,8 @@ public class EnemyShip extends AbstractShip {
 
     private Ship eShip;
 
+    private float baseX, baseY;
+
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
@@ -107,24 +109,24 @@ public class EnemyShip extends AbstractShip {
         hull = new EnemyHullUI(main, eShip.getHp());
 
         //the base x and y for the rooms, meaning the middle of the ship
-        float tileX = x + width/2;
-        float tileY = Main.HEIGHT/2f;
+        baseX = x + width/2;
+        baseY = Main.HEIGHT/2f;
 
         roomUIHashMap = new HashMap<>();
         List<Room> existingRooms = ship.getSystems();
         List<Crew> crews = new ArrayList<>();
         for(Room r : existingRooms) {
             if(r.isSystem()) {
-                roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), tileX), getRoomX(ship.getShipType(), r.getInteriorID(), tileY), (System) r));
+                roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), baseX), getRoomX(ship.getShipType(), r.getInteriorID(), baseY), (System) r));
             }
             else {
-                roomUIHashMap.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), tileX), getRoomX(ship.getShipType(), r.getInteriorID(), tileY)));
+                roomUIHashMap.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), baseX), getRoomX(ship.getShipType(), r.getInteriorID(), baseY)));
             }
             crews.addAll(r.getCrew());
         }
 
         for(Crew c : crews) {
-            crewUIHashMap.put(c.getId(), new EnemyCrewUI(main, c, this, getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), tileX), getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), tileY), ship.getShipType()));
+            crewUIHashMap.put(c.getId(), new EnemyCrewUI(main, c, this, getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY), ship.getShipType()));
         }
     }
 
@@ -142,7 +144,7 @@ public class EnemyShip extends AbstractShip {
         //Crew
         List<Integer> deadOnes = new ArrayList<>(crewUIHashMap.keySet());
         for(Crew c : crews) {
-            crewUIHashMap.get(c.getId()).update(c);
+            crewUIHashMap.get(c.getId()).update(c, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY));
             deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)" bc it will use the wrong remove method
         }
         for(Integer i : deadOnes) {
