@@ -144,7 +144,7 @@ public class EnemyShip extends AbstractShip {
         //Crew
         List<Integer> deadOnes = new ArrayList<>(crewUIHashMap.keySet());
         for(Crew c : crews) {
-            crewUIHashMap.get(c.getId()).update(c, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY));
+            crewUIHashMap.get(c.getId()).update(c, getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY));
             deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)" bc it will use the wrong remove method
         }
         for(Integer i : deadOnes) {
