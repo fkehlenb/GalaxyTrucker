@@ -883,6 +883,17 @@ public class GamePlay implements Screen {
     }
 
     /**
+     * equip a weapon
+     * @param weapon the weapon
+     */
+    public void equipWeapon(Weapon weapon) {
+        boolean success = WeaponController.getInstance(null).equipWeapon(weapon);
+        if(success) {
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+        }
+    }
+
+    /**
      * load the missiles of a ship
      * @return the amount of missiles
      */

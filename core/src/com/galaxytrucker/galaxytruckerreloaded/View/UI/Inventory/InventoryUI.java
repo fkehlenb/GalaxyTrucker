@@ -33,8 +33,6 @@ public class InventoryUI {
 
     private Main main;
 
-    private Stage stage;
-
     private ShipView shipView;
 
     private float x, y;
@@ -48,15 +46,14 @@ public class InventoryUI {
      */
     public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font, ShipType type) {
         this.main = main;
-        this.stage = stage;
         this.shipView = shipView;
 
         inventoryBackground = new Texture("inventory/inventory.png");
 
-        x = main.WIDTH/2 - inventoryBackground.getWidth()/2;
-        y = main.HEIGHT/2 - inventoryBackground.getHeight()/2;
+        x = Main.WIDTH/2f - inventoryBackground.getWidth()/2f;
+        y = Main.HEIGHT/2f - inventoryBackground.getHeight()/2f;
 
-        closeButton = new InventoryCloseButton(x+Main.WIDTH/2.743f, y+Main.HEIGHT/72, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, null, this, null);
+        closeButton = new InventoryCloseButton(x+Main.WIDTH/2.743f, y+Main.HEIGHT/72f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, null, this, null);
         stage.addActor(closeButton);
 
         slots = new LinkedList<>();
@@ -70,7 +67,7 @@ public class InventoryUI {
         float wy = y + Main.HEIGHT/2.057f;
         float wx = cx + Main.WIDTH/4.8f;
         for(Weapon w : weapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font));
+            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this));
             wy -=Main.HEIGHT/10.8f;
         }
         slots.add(new InventoryIntSlotUI(main, fuel, x+Main.WIDTH/38.4f, y+Main.HEIGHT/21.6f, "fuel", font));
@@ -111,8 +108,13 @@ public class InventoryUI {
     private void setup() {
     }
 
+    /**
+     * equip a weapon
+     * (move from ship inventory to weapon system inventory)
+     * @param weapon the weapon
+     */
     public void equipWeapon(Weapon weapon){
-        //TODO: equipWeapon Controllermethode in Systemcontroller oder eigenem Controllermodul
+        shipView.equipWeapon(weapon);
     }
 
     /**

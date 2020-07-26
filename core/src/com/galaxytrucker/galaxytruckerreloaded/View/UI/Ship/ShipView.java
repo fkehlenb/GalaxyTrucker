@@ -483,6 +483,15 @@ public class ShipView extends AbstractShip {
     }
 
     /**
+     * equip a weapon
+     * (move from ship inventory to weapon system inventory)
+     * @param weapon the weapon
+     */
+    public void equipWeapon(Weapon weapon) {
+        game.equipWeapon(weapon);
+    }
+
+    /**
      * a weapon was fired
      * called by gameplay screen after communication with controller
      * @param weapon the weapon that was fired
