@@ -19,6 +19,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
@@ -413,13 +414,17 @@ public class GamePlay implements Screen {
             try {
                 player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
             } catch (Exception e){
-
                 java.lang.System.out.println("--- Du bist tot! ---");
+                removeRoundButton();
                 createGameOver(false);
             }
 
             try {
-                enemy.update(BattleController.getInstance(null).getOpponent());
+                Ship updatedEnemyShip = BattleController.getInstance(null).getOpponent();
+                enemy.hullStatusUpdate(updatedEnemyShip.getHp());
+                enemy.update(updatedEnemyShip);
+                enemy.render();
+
             } catch (Exception e) {
                 java.lang.System.out.println("--- Der Gegner ist schon tot! ---");
                 removeEnemy();
