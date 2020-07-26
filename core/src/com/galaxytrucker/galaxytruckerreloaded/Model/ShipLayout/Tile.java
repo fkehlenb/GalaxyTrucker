@@ -32,6 +32,6 @@ public class Tile implements Serializable {
 
     /** If the tile is empty */
     public boolean isEmpty(){
-        return standingOnMe != null;
+        return standingOnMe == null;
     }
 }

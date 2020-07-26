@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @SuppressWarnings("Duplicates")
-public class TraderService extends PlanetEventService {
+public class TraderService {
 
     /**
      * Trader DAO

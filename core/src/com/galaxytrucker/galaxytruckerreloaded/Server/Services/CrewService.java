@@ -104,13 +104,15 @@ public class CrewService implements Serializable {
                         for (Tile t : r.getTiles()){
                             if(t.getStandingOnMe() != null) {
                                 if (t.getStandingOnMe().getId() == crew.getId()) {
+                                    crew = t.getStandingOnMe();
+                                    t.getStandingOnMe().setTile(null);
                                     t.setStandingOnMe(null);
-                                    tileDAO.update(t);
+                                    break;
                                 }
                             }
                         }
                         crewInRoom.remove(crew);
-                        roomDAO.update(r);
+                        r.setCrew(crewInRoom);
                         break;
                     }
                 }
@@ -123,26 +125,29 @@ public class CrewService implements Serializable {
                                 t.setStandingOnMe(crew);
                                 crew.setTile(t);
                                 crew.setCurrentRoom(r);
-                                tileDAO.update(t);
-                                crewDAO.update(crew);
                             }
                         }
                         crewInRoom.add(crew);
                         r.setCrew(crewInRoom);
-                        roomDAO.update(r);
                         break;
                     }
                 }
-                ship = shipDAO.getById(ship.getId());
-                // Update data
-                shipDAO.update(ship);
+                for (Room r : ship.getSystems()){
+                    for (Tile t : r.getTiles()){
+                        tileDAO.update(t);
+                    }
+                    for (Crew c : r.getCrew()){
+                        crewDAO.update(c);
+                    }
+                    roomDAO.update(r);
+                }
                 // Manual verification
                 java.lang.System.out.println("[POST]:[SHIP]:" + ship.getId() + ":[CREW]:" + crew.getId() + ":[ROOM]:"
                         + crew.getCurrentRoom().getId());
                 java.lang.System.out.println("==========================================================");
                 // Set valid data
                 responseObject.setValidRequest(true);
-                responseObject.setResponseShip(ship);
+                responseObject.setResponseShip(shipDAO.getById(ship.getId()));
             }
         } catch (Exception e) {
             e.printStackTrace();
