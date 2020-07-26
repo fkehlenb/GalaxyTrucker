@@ -30,22 +30,37 @@ public class ShieldUI extends SubsystemUI {
      */
     private int currentTexture;
 
+    private float shipX, shipY;
+
+    private float shieldWidth, shieldHeight;
+
+    private float upperX, upperY;
+
     /**
      * Constructor
      *
      * @param main - the main class
      * @param shield the shield
      */
-    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, System shield, float sx, Stage normalStage) {
+    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, System shield, float sx, Stage normalStage, float shipX, float upperX, float upperY) {
         super(main, stage, ship, x, y, shield, sx, normalStage);
+        this.shipX = shipX;
+        this.upperX = upperX;
+        this.upperY = upperY;
 
-        onShip = new Texture("ship/killer/shields.png");
+        onShip = new Texture("ship/"+ship.getShipType()+"/shield.png");
+        shieldTexture = new Texture("gameuis/shield_top.png");
+        upperBackground = new Texture("gameuis/shields.png");
 
-        //shieldTexture = new Texture("gameuis/shield_top.png");
-        //upperBackground = new Texture("gameuis/shield_topbackground.png");
+        shieldWidth = onShip.getWidth()*1.5f;
+        shieldHeight = onShip.getHeight()*1.5f;
 
-        currentTexture = 4;
-    } //TODO display in upper left corner
+        this.shipY = Main.HEIGHT/2f - shieldHeight/2f;
+
+
+
+        currentTexture = 3;
+    }
 
     /**
      * the status of the system was updated either by damage or by repair
@@ -64,8 +79,8 @@ public class ShieldUI extends SubsystemUI {
     public void disposeRoomUI() {
         super.disposeRoomUI();
 
-        //shieldTexture.dispose();
-        //upperBackground.dispose();
+        shieldTexture.dispose();
+        upperBackground.dispose();
 
         onShip.dispose();
 
@@ -79,13 +94,13 @@ public class ShieldUI extends SubsystemUI {
         super.render();
 
         main.batch.begin();
-        main.batch.draw(onShip, 0, 0, 0 ,0); //TODO whxy
-        //main.batch.draw(upperBackground, 0, 0, 10, 10);
-        float x = 0; //TODO
-        /*for(int i = 0; i <= currentTexture; i++) {
-            main.batch.draw(shieldTexture, x, 0, 10, 10); //TODO whxy
-            x +=10; //TODO
-        }*/
+        main.batch.draw(onShip, shipX, shipY, shieldWidth,shieldHeight);
+        main.batch.draw(upperBackground, upperX, upperY, upperBackground.getWidth()*1.25f, upperBackground.getHeight()*1.25f);
+        float x = upperX+18;
+        for(int i = 0; i <= currentTexture; i++) {
+            main.batch.draw(shieldTexture, x, upperY+17, shieldTexture.getWidth(), shieldTexture.getHeight());
+            x += shieldTexture.getWidth();
+        }
         main.batch.end();
     }
 

@@ -24,7 +24,7 @@ public class TileButton extends ImButton {
     }
 
     public TileButton(float x, float y, float width, float height, RoomUI ui) {
-        super(new Texture("ship/tile.png"), x, y, width, height);
+        super(new Texture("ship/tile.png"), new Texture("ship/tile.png"), new Texture("ship/tilebreach.png"), x, y, width, height);
         this.ui = ui;
 
         this.addListener(new ClickListener() {
@@ -34,5 +34,13 @@ public class TileButton extends ImButton {
         });
 
         this.getImage().setFillParent(true);
+    }
+
+    public void breach() {
+        this.setChecked(true);
+    }
+
+    public void breachGone() {
+        this.setChecked(false);
     }
 }

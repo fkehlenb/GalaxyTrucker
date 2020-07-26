@@ -1,10 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
@@ -20,6 +17,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,6 +109,7 @@ public class ShipView extends AbstractShip {
 
     private BitmapFont font25;
 
+    @Getter
     private ShipType shipType;
 
     /**
@@ -167,7 +166,7 @@ public class ShipView extends AbstractShip {
         for(Room r : existingRooms) {
             if(r instanceof System) {
                 if(((System) r).getSystemType() == SystemType.SHIELDS) {
-                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage));
+                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage, 70, 235, Main.HEIGHT - 170));
                 }
                 else if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
                     weaponroomid = r.getId();

@@ -808,22 +808,9 @@ public class GamePlay implements Screen {
     public void roomSystemEnergyAdded(Room room, int amount) {
         boolean success = SystemController.getInstance(null).addEnergy((System) room, amount);
         if(success) {
-            roomSystemEnergyUpdate(room, getNewSystemEnergyAmount(room));
+            //roomSystemEnergyUpdate(room, getNewSystemEnergyAmount(room));
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
-    }
-
-    /**
-     * get the new total system energy amount from the ship saved in the clientcontrollercommunicator
-     * @param room the system whose energy status is queried
-     * @return the total energy currently allocated to this system
-     */
-    private int getNewSystemEnergyAmount(Room room) {
-        for(Room r : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()) {
-            if(r.getId() == room.getId()) {
-                return ((System) r).getEnergy();
-            }
-        }
-        return 0;
     }
 
     /**
@@ -834,7 +821,8 @@ public class GamePlay implements Screen {
     public void roomSystemEnergyRemoved(Room room, int amount) {
         boolean success = SystemController.getInstance(null).removeEnergy((System) room, amount);
         if(success) {
-            roomSystemEnergyUpdate(room, getNewSystemEnergyAmount(room));
+            //roomSystemEnergyUpdate(room, getNewSystemEnergyAmount(room));
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
     }
 

@@ -35,9 +35,7 @@ public class RoomUI {
 
     protected Stage stage;
 
-    protected List<Actor> enemyTiles = new ArrayList();
-
-    protected List<Actor> shipList = new ArrayList();
+    private List<TileButton> enemyTiles = new ArrayList();
 
     /**
      * Constructor
@@ -59,7 +57,7 @@ public class RoomUI {
             for (Tile t : room.getTiles()) {
                 TileButton tileButton = new TileButton(x + (t.getPosX() * 48), y + (t.getPosY() * 48), 48, 48, this);
                 this.stage.addActor(tileButton);
-                shipList.add(tileButton);
+                enemyTiles.add(tileButton);
             }
         }
         else if(ship instanceof EnemyShip) {
@@ -83,6 +81,16 @@ public class RoomUI {
      */
     public void update(Room room) {
         this.room = room;
+        if(room.getBreach() > 0) {
+            for(TileButton b : enemyTiles) {
+                b.breach();
+            }
+        }
+        else {
+            for(TileButton b : enemyTiles) {
+                b.breachGone();
+            }
+        }
     }
 
     /**
