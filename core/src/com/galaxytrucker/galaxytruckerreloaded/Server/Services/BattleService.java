@@ -1055,7 +1055,7 @@ public class BattleService implements Serializable {
             }
             // ===== Damage crew in rooms without o2 ======
             for (Room r : ship.getSystems()) {
-                if (r.getBreach() > 0 && r.getOxygen() <= 0) {
+                if (r.getBreach() > 0 && r.getOxygen() <= 50) {
                     List<Crew> crewInRoom = new ArrayList<>(r.getCrew());
                     for (Crew c : r.getCrew()) {
                         c.setHealth(c.getHealth() - 1);

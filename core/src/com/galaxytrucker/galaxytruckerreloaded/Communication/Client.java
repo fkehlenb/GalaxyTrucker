@@ -84,8 +84,6 @@ public class Client {
      */
     public boolean login(String username, ShipType shipType, int difficulty) throws IllegalArgumentException {
         try {
-            // Clear any previous stuck data
-            sendObject.reset();
             // ==================== LOG-IN ====================
             send.println("[LOGIN]:" + username);
             String received = receive.readLine();

@@ -91,3 +91,45 @@ org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (
 	at com.galaxytrucker.galaxytruckerreloaded.Server.ServerServiceCommunicator.getResponse(ServerServiceCommunicator.java:117)
 	at com.galaxytrucker.galaxytruckerreloaded.Server.ClientHandler.run(ClientHandler.java:213)
 	at java.base/java.lang.Thread.run(Thread.java:835)
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('xp\u0000\ufffdq\ufffd\ufffd\u0000?\ufffd\u0000\u0000@\u0000\u0000\u0000~r\u0000=com.galaxytrucker.galaxytruckerrel... (388)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('systemTypeq\u0000~\u0000\txq\u0000~\u00002\u0000\u0000\u0000\u0000J\ufffdB\u0006\u0000\u0000\u0000\u0001\u0001\u00... (642)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('I\u0000\u0006healthI\u0000\u0002idZ\u0000\tjustMovedI\u0000\tmaxhealthI\u0000\u0005priceL\u0000\u000eassociatedUse... (1776)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('WEAPON_SYSTEMsq\u0000~\u00002\u0000\u0000\u0000\u0000\ufffd@\ufffd\ufffd\u0000\u0000\u0000\u0006\u0000\u0000\u0000... (642)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000psq\u0000~\u0000<Q3\ufffdg\u0000\u0000\u0000\u0000\u0000\u0000\u00... (379)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\u0000\u0000\u0000\u0000dsq\u0000~\u0000\u0016\u0001\ufffd\ufffd\ufffd\ufffd\u0000\u0000\u0001\u0000sq\u0000~\u000... (974)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\u0000\u0000\u0000\u0000dsq\u0000~\u0000\u0016\u0001\ufffd\ufffd\ufffd\ufffd\u0000\u0000\u0001\u0000sq\u0000~\u000... (1650)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\ufffdT\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000psq\u0000~\u0000<\u001d\ufffd\ufffd\ufffd\u0000\u0000\u0000... (292)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0000psq\u0000~\u0000<n<0w\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0... (1067)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\u0000\u0000\u0000\u0000dsq\u0000~\u0000\u0016\u0000\ufffd\ufffd\ufffd\ufffd\u0000\u0000\u0001\u0000sq\u0000~\u000... (998)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('q\u0000~\u0002\u0017q\u0000~\u0002!xpxsq\u0000~\u0000!\u0000\u0000\u0000\u0001w\u0004\u0000\u0000\u0000\u0001q\u00... (1300)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\ufffdT\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000psq\u0000~\u0000<\u001d\ufffd\ufffd\ufffd\u0000\u0000\u0000... (304)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\u0002\ufffd<\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000psq\u0000~\u0000<\ufffd\u0014\ufffd\u0014\u0000\u0000... (262)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
+2020-07-27 15:17:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column """USERNAME"" VARCHAR(255) NOT NULL": "STRINGDECODE('\u0000\u0000\u0000\u0000dsq\u0000~\u0000\u0016\u0001\ufffd\ufffd\ufffd\ufffd\u0000\u0000\u0001\u0000sq\u0000~\u000... (1286)"; SQL statement:
+insert into User (firstGame, loggedIn, overworld_id, userShip_id, username) values (?, ?, ?, ?, ?) [22001-199]
