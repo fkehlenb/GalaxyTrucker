@@ -150,24 +150,49 @@ public class PlanetRewardService {
                     }
                     responseObject.setRewardCrew(c);
                 }
+                int cash = 0;
+                int rockets = 0;
+                int fuel = 0;
                 switch (planet.getEvent()) {
                     case VOID:
-                        responseObject.setRewardCash(random.nextInt(100));
-                        responseObject.setRewardRockets(random.nextInt(10));
-                        responseObject.setRewardFuel(random.nextInt(10));
+                        cash = random.nextInt(100);
+                        rockets = random.nextInt(10);
+                        fuel = random.nextInt(10);
+                        ship.setCoins(ship.getCoins()+cash);
+                        ship.setMissiles(ship.getMissiles()+rockets);
+                        ship.setFuel(ship.getFuel()+fuel);
+                        shipDAO.update(ship);
+                        responseObject.setRewardCash(cash);
+                        responseObject.setRewardRockets(rockets);
+                        responseObject.setRewardFuel(fuel);
                         responseObject.setResponseShip(ship);
                         break;
                     case NEBULA:
-                        responseObject.setRewardCash(random.nextInt(40));
-                        responseObject.setRewardRockets(random.nextInt(15));
-                        responseObject.setRewardFuel(random.nextInt(12));
+                        cash = random.nextInt(40);
+                        rockets =  random.nextInt(15);
+                        fuel = random.nextInt(12);
+                        ship.setCoins(ship.getCoins()+cash);
+                        ship.setMissiles(ship.getMissiles()+rockets);
+                        ship.setFuel(ship.getFuel()+fuel);
+                        shipDAO.update(ship);
+                        responseObject.setRewardCash(cash);
+                        responseObject.setRewardRockets(rockets);
+                        responseObject.setRewardFuel(fuel);
                         break;
                     case METEORSHOWER:
-                        responseObject.setRewardCash(random.nextInt(20) - random.nextInt(30));
-                        responseObject.setRewardFuel(-1 * random.nextInt(5) + random.nextInt(5));
+                        cash = random.nextInt(20) - random.nextInt(30);
+                        fuel = -1 * random.nextInt(5) + random.nextInt(5);
+                        ship.setFuel(ship.getFuel()+fuel);
+                        ship.setCoins(ship.getCoins()+cash);
+                        shipDAO.update(ship);
+                        responseObject.setRewardCash(cash);
+                        responseObject.setRewardFuel(fuel);
+                        break;
                     default:
                         break;
                 }
+                ship = shipDAO.getById(ship.getId());
+                responseObject.setResponseShip(ship);
             }
         } catch (Exception e) {
             e.printStackTrace();

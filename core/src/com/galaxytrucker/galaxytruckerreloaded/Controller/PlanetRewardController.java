@@ -69,6 +69,7 @@ public class PlanetRewardController {
             if (responseObject.getRewardCrew()!=null){
                 this.crewReward = responseObject.getRewardCrew();
             }
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
             return true;
         }
         return false;

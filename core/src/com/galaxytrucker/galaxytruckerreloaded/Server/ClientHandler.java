@@ -160,6 +160,11 @@ public class ClientHandler implements Runnable {
                             //====================== Ship Creation ==================
                             ShipType shipType = (ShipType) receiveObject.readObject();
                             Ship ship = generateShip(shipType, username, overworld.getStartPlanet());
+                            for (Room r : ship.getSystems()){
+                                if (r.isSystem() && ((System) r).getEnergy()==0){
+                                    ((System) r).setDisabled(true);
+                                }
+                            }
                             shipDAO.persist(ship);
                             user.setUserShip(ship);
                             Ship userShip = user.getUserShip();
@@ -937,9 +942,11 @@ public class ClientHandler implements Runnable {
                     }
                     //Shields
                     else if(i==3) {
-                        Room shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
+                        System shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
                                 new ArrayList<Tile>(), 0, 0, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
+                        shields.setDisabled(true);
+                        shields.setUnlocked(false);
                         rooms.add(shields);
                     }
                     //Cameras
