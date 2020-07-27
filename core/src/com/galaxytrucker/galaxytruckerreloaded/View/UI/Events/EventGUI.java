@@ -3,12 +3,18 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EventPageButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,22 +64,16 @@ public class EventGUI {
     private GamePlay game;
 
     /**
-     * the font used to draw text on the pages
-     */
-    private BitmapFont font15;
-
-    /**
      * Constructor
      *
      * @param main - main class object for SpriteBatch
      * @param event what kind of event it is
      *
      */
-    public EventGUI(Main main, PlanetEvent event, Stage stage, GamePlay game, BitmapFont font15) {
+    public EventGUI(Main main, PlanetEvent event, Stage stage, GamePlay game, BitmapFont font15, int rocket, int fuel, int money, Crew crew, List<Weapon> weapons, ShipType shipType) {
         this.main = main;
         this.event = event;
         this.game = game;
-        this.font15 = font15;
 
         backgroundTexture = new Texture("event/eventbackground.png");
 
@@ -82,31 +82,81 @@ public class EventGUI {
 
         eventPages = new LinkedList<>();
 
-        List<Texture> drawables = new LinkedList<>();
+        HashMap<Texture, GlyphLayout> drawables = new HashMap<>();
+        if(rocket != 0) {
+            GlyphLayout g = new GlyphLayout();
+            g.setText(font15, Integer.toString(rocket));
+            drawables.put(new Texture("gameuis/top_missile.png"), g);
+        }
+        if(fuel != 0) {
+            GlyphLayout g = new GlyphLayout();
+            g.setText(font15, Integer.toString(fuel));
+            drawables.put(new Texture("gameuis/top_fuel.png"), g);
+        }
+        if(money != 0) {
+            GlyphLayout g = new GlyphLayout();
+            g.setText(font15, Integer.toString(money));
+            drawables.put(new Texture("gameuis/top_scrap.png"), g);
+        }
+        if(crew != null) {
+            GlyphLayout g = new GlyphLayout();
+            g.setText(font15, crew.getName());
+            drawables.put(new Texture("crew/"+shipType.toString().toLowerCase()+".png"), g);
+        }
+        if(weapons != null) {
+            for(Weapon w : weapons) {
+                GlyphLayout g = new GlyphLayout();
+                g.setText(font15, w.getWeaponName());
+                drawables.put(new Texture("shipsys/weapon_system/"+w.getWeaponType()+".png"), g);
+            }
+        }
 
-        float px = Main.WIDTH/2f;
-        float py = Main.HEIGHT/2f;
+        float px = Main.WIDTH/2f - backgroundTexture.getWidth()/2f;
+        float py = Main.HEIGHT/2f - backgroundTexture.getHeight()/2f;
+        float width = backgroundTexture.getWidth();
+        float height = backgroundTexture.getHeight();
 
         if(event == PlanetEvent.SHOP) {
-            currentPage = new EventPage(main, drawables, "There is a trader at this planet", px, py, font15);
-        }
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "There is a trader at this planet", px, py, font15, width, height);
+            if(drawables.size() > 0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
+    }
         else if(event == PlanetEvent.COMBAT) {
-            currentPage = new EventPage(main, drawables, "There is a hostile ship at this planet", px, py, font15);
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "There is a hostile ship at this planet", px, py, font15, width, height);
+            if(drawables.size() > 0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
         }
         else if(event == PlanetEvent.BOSS) {
-            currentPage = new EventPage(main, drawables, "The boss is waiting on this planet", px, py, font15);
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "The boss is waiting on this planet", px, py, font15, width, height);
+            if(drawables.size()>0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
         }
         else if(event == PlanetEvent.METEORSHOWER) {
-            currentPage = new EventPage(main, drawables, "Seems like you have gotten into a meteor shower!", px, py, font15);
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "Seems like you have gotten into a meteor shower!", px, py, font15, width, height);
+            if(drawables.size()>0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
         }
         else if(event == PlanetEvent.NEBULA) {
-            currentPage = new EventPage(main, drawables, "You can barely see through the thick nebula", px, py, font15);
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "You can barely see through the thick nebula", px, py, font15, width, height);
+            if(drawables.size() > 0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
         }
         else if(event == PlanetEvent.PVP) {
-            currentPage = new EventPage(main, drawables, "You have been intercepted! Wherever you are now, there seems to be a hostile ship here", px, py, font15);
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "You have been intercepted! Wherever you are now, there seems to be a hostile ship here", px, py, font15, width, height);
+            if(drawables.size() > 0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
         }
         else { //VOID
-            currentPage = new EventPage(main, drawables, "There is nothing here", px, py, font15);
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "There is nothing here", px, py, font15, width, height);
+            if(drawables.size() > 0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
         }
     }
 

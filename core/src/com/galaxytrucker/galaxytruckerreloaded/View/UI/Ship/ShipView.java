@@ -142,7 +142,7 @@ public class ShipView extends AbstractShip {
         roomHeight = shipRoomBackground.getHeight()*1.5f;
 
         baseX = (70 + width/2);
-        baseY = main.HEIGHT/2;
+        baseY = Main.HEIGHT/2f;
 
         List<Crew> crews = new ArrayList<>();
         for(Room r : ship.getSystems()) {
@@ -166,7 +166,7 @@ public class ShipView extends AbstractShip {
         for(Room r : existingRooms) {
             if(r instanceof System) {
                 if(((System) r).getSystemType() == SystemType.SHIELDS) {
-                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage, 70, 235, Main.HEIGHT - 170));
+                    rooms.put(r.getId(), new ShieldUI(main, tileStage, this, getRoomX(ship.getShipType(), r.getInteriorID(), baseX), getRoomY(ship.getShipType(), r.getInteriorID(), baseY), (System) r, sx, stage, 70, 235, Main.HEIGHT - 170, ship.getShields()));
                 }
                 else if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
                     weaponroomid = r.getId();
@@ -296,9 +296,14 @@ public class ShipView extends AbstractShip {
                 crew.get(c.getId()).update(c, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY));
                 deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)", otherwise it will use wrong remove method
             }
-            rooms.get(r.getId()).update(r);
-            if(r.isSystem() && ((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
-                equippedWeapons.addAll(((System) r).getShipWeapons());
+            if(r.isSystem() && ((System) r).getSystemType() != SystemType.SHIELDS) {
+                rooms.get(r.getId()).update(r);
+                if (((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
+                    equippedWeapons.addAll(((System) r).getShipWeapons());
+                }
+            }
+            else if(r.isSystem()) { //shields has an extra update method
+                ((ShieldUI) rooms.get(r.getId())).update(r, ship.getShields());
             }
         }
         for(Integer i : deadOnes) {

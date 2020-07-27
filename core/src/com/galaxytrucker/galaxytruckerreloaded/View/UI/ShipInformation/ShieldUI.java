@@ -36,13 +36,15 @@ public class ShieldUI extends SubsystemUI {
 
     private float upperX, upperY;
 
+    private boolean disabled = false;
+
     /**
      * Constructor
      *
      * @param main - the main class
      * @param shield the shield
      */
-    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, System shield, float sx, Stage normalStage, float shipX, float upperX, float upperY) {
+    public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, System shield, float sx, Stage normalStage, float shipX, float upperX, float upperY, int shields) {
         super(main, stage, ship, x, y, shield, sx, normalStage);
         this.shipX = shipX;
         this.upperX = upperX;
@@ -57,9 +59,7 @@ public class ShieldUI extends SubsystemUI {
 
         this.shipY = Main.HEIGHT/2f - shieldHeight/2f;
 
-
-
-        currentTexture = 3;
+        currentTexture = shields;
     }
 
     /**
@@ -94,7 +94,9 @@ public class ShieldUI extends SubsystemUI {
         super.render();
 
         main.batch.begin();
-        main.batch.draw(onShip, shipX, shipY, shieldWidth,shieldHeight);
+        if(!disabled) {
+            main.batch.draw(onShip, shipX, shipY, shieldWidth, shieldHeight);
+        }
         main.batch.draw(upperBackground, upperX, upperY, upperBackground.getWidth()*1.25f, upperBackground.getHeight()*1.25f);
         float x = upperX+18;
         for(int i = 0; i <= currentTexture; i++) {
@@ -109,8 +111,10 @@ public class ShieldUI extends SubsystemUI {
      *
      * @param room the room with updated stats
      */
-    @Override
-    public void update(Room room) {
+    public void update(Room room, int shields) {
         super.update(room);
+
+        disabled = ((System) room).isDisabled();
+        currentTexture = shields;
     }
 }

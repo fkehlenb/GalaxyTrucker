@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
-import java.util.List;
+import java.util.HashMap;
 
 /** Includes all content shown on a single event page */
 public class EventPage {
@@ -14,7 +14,7 @@ public class EventPage {
     /**
      * Icons to draw (such as rewards)
      */
-    private List<Texture> drawables;
+    private HashMap<Texture, GlyphLayout> drawables;
 
     /**
      * the text to display on this event page
@@ -42,19 +42,26 @@ public class EventPage {
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
+     * the width and height of the background texture, for better positioning
+     */
+    private float width, height;
+
+    /**
      * Constructor
      *
      * @param main - the main class object
      * @param draw the drawables on this page
      * @param text the text displayed on this page
      */
-    public EventPage(Main main, List<Texture> draw, String text, float x, float y, BitmapFont font15) {
+    public EventPage(Main main, HashMap<Texture, GlyphLayout> draw, String text, float x, float y, BitmapFont font15, float width, float height) {
         drawables = draw;
         this.text = text;
         this.main = main;
         this.x = x;
         this.y = y;
         this.font15 = font15;
+        this.width = width;
+        this.height = height;
 
         glyph.setText(font15, text);
     }
@@ -65,13 +72,23 @@ public class EventPage {
     public void render() {
         main.batch.begin();
         int i = 0;
-        for(Texture t : drawables) {
-            if (t!=null) {
-                main.batch.draw(t, x + i, y + i, 10, 10);
-                i += 15;
+        float iy = y + height - 40 - glyph.height/2 - 80; //40 under the rewards text
+        float ix = x + width/2 - 210; //middle minus the stuff
+        for(Texture t : drawables.keySet()) {
+            main.batch.draw(t, ix + (i*140), iy, t.getWidth(), t.getHeight());
+            font15.draw(main.batch, drawables.get(t), ix + (i*140) + (147f/2) - drawables.get(t).width/2, iy + 40 - drawables.get(t).height/2);
+            i++;
+            i = i % 3;
+            if(i == 0) {
+                iy -= 80;
             }
         }
-        font15.draw(main.batch, glyph, x - glyph.width/2, y - glyph.height/2);
+        if(text.equals("Rewards")) {
+            font15.draw(main.batch, glyph, x + (width / 2) - glyph.width / 2, y + height - 40 - glyph.height / 2);
+        }
+        else {
+            font15.draw(main.batch, glyph, x + (width/2) - glyph.width/2, y + height/2 - glyph.height/2);
+        }
         main.batch.end();
     }
 
@@ -79,7 +96,7 @@ public class EventPage {
      * Dispose of page
      */
     public void disposePage() {
-        for(Texture t : drawables) {
+        for(Texture t : drawables.keySet()) {
             t.dispose();
         }
     }
