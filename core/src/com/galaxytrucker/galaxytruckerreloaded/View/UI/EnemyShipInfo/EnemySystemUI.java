@@ -8,12 +8,14 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.RoomUI;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EnemySystemUI extends RoomUI {
 
-    /***
-     * the texture for displaying the system in the ship
-     */
-    private Texture systemTexture;
+    private List<Texture> systemTextures;
+
+    private int currentTexture;
 
     /**
      * the constructor
@@ -23,7 +25,12 @@ public class EnemySystemUI extends RoomUI {
         super(main, room, stage, ship, x, y);
 
         String sysType = system.getSystemType().toString().toLowerCase();
-        systemTexture = new Texture("shipsys/"+sysType+"/"+sysType+"overlay.png");
+
+        systemTextures = new ArrayList<>();
+        systemTextures.add(new Texture("shipsys/"+sysType+"/"+sysType+"overlay.png"));
+        systemTextures.add(new Texture("shipsys/"+sysType+"/"+sysType+"red.png"));
+
+        currentTexture = system.isDisabled() ? 1: 0;
     }
 
     /**
@@ -33,7 +40,7 @@ public class EnemySystemUI extends RoomUI {
     public void render() {
         super.render();
         main.batch.begin();
-        main.batch.draw(systemTexture, (x + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosX()))-16, (y + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosY()))-16, 32, 32);
+        main.batch.draw(systemTextures.get(currentTexture), (x + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosX()))-16, (y + 24 + (24*room.getTiles().get(room.getTiles().size()-1).getPosY()))-16, 32, 32);
         main.batch.end();
     }
 
@@ -43,14 +50,19 @@ public class EnemySystemUI extends RoomUI {
     @Override
     public void disposeRoomUI() {
         super.disposeRoomUI();
-        systemTexture.dispose();
+        for(Texture t : systemTextures) {
+            t.dispose();
+        }
     }
 
     /**
-     * the status of the system changed
-     * @param damage the current amount of damage to the system
+     * the room was updated in the backend and the display needs to be updated
+     *
+     * @param room the room with updated stats
      */
-    public void statusChange(int damage) {
-
+    @Override
+    public void update(Room room) {
+        super.update(room);
+        currentTexture = ((System) room).isDisabled() ? 1 : 0;
     }
 }
