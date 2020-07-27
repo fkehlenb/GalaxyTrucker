@@ -107,7 +107,7 @@ public class EventGUI {
             for(Weapon w : weapons) {
                 GlyphLayout g = new GlyphLayout();
                 g.setText(font15, w.getWeaponName());
-                drawables.put(new Texture("shipsys/weapon_system/"+w.getWeaponType()+".png"), g);
+                drawables.put(new Texture("shipsys/weapon_system/"+w.getWeaponType().toString().toLowerCase()+".png"), g);
             }
         }
 

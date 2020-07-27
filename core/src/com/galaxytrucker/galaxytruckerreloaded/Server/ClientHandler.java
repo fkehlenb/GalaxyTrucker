@@ -160,6 +160,7 @@ public class ClientHandler implements Runnable {
                         this.user = serverServiceCommunicator.getUserService().getUser(username);
                         if (user.isFirstGame()) {
                             send.println("[NEW-GAME]");
+                            send.flush();
                             // ==================== Overworld Creation ====================
                             int difficulty = Integer.parseInt(receive.readLine());
                             this.seed = UUID.randomUUID().hashCode();
@@ -191,33 +192,41 @@ public class ClientHandler implements Runnable {
                         // ==================== FETCH SHIP ====================
                         try {
                             send.println("[FETCH-SHIP]");
-                            sendObject.writeObject(this.serverServiceCommunicator.getClientShip(username));
+                            send.flush();
+                            Ship s = this.serverServiceCommunicator.getClientShip(username);
+                            sendObject.writeObject(s);
+                            sendObject.flush();
                         } catch (Exception f) {
                             f.printStackTrace();
                             send.println("[EXCEPTION]:[FETCH-SHIP]:[USERNAME]:" + username);
-                            Server.getInstance().killServer();
+                            send.flush();
                             throw new IllegalArgumentException(f.getMessage());
                         }
                         // ==================== FETCH MAP ====================
                         try {
+                            Thread.sleep(4000);
                             send.println("[FETCH-MAP]");
-                            sendObject.writeObject(this.serverServiceCommunicator.getClientMap(username));
+                            send.flush();
+                            Overworld o = this.serverServiceCommunicator.getClientMap(username);
+                            sendObject.writeObject(o);
+                            sendObject.flush();
                         } catch (Exception f) {
                             f.printStackTrace();
                             send.println("[EXCEPTION]:[FETCH-MAP]:[USERNAME]:" + username);
-                            Server.getInstance().killServer();
+                            send.flush();
                             throw new IllegalArgumentException(f.getMessage());
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                         send.println("[EXCEPTION]:[NEW-GAME]:[USERNAME]:" + username);
+                        send.flush();
                     }
                     gameActive = true;
                     // ===== Add to connected clients =====
                     this.serverServiceCommunicator.getPvpClients().add(username);
                     // ==================== RUNNING ====================
                     while (gameActive) {
-                        if (!clientSocket.getInetAddress().isReachable(2000)) {
+                        if (!clientSocket.getInetAddress().isReachable(10000)) {
                             RequestObject requestObject = new RequestObject();
                             requestObject.setRequestType(RequestType.LOGOUT);
                             requestObject.setUsername(username);
@@ -228,6 +237,7 @@ public class ClientHandler implements Runnable {
                             sendObject.flush();
                             ResponseObject responseObject = this.serverServiceCommunicator.getResponse(request);
                             sendObject.writeObject(responseObject);
+                            sendObject.flush();
                             if (request.getRequestType() == RequestType.LOGOUT) {
                                 gameActive = false;
                             }

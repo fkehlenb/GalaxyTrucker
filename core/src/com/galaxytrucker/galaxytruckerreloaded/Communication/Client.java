@@ -65,6 +65,7 @@ public class Client {
     public ResponseObject sendAndReceive(RequestObject requestObject) throws IllegalArgumentException {
         try {
             sendObject.writeObject(requestObject);
+            sendObject.flush();
             return (ResponseObject) receiveObject.readObject();
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,6 +87,7 @@ public class Client {
         try {
             // ==================== LOG-IN ====================
             send.println("[LOGIN]:" + username);
+            send.flush();
             String received = receive.readLine();
             // ==================== EXCEPTION ====================
             if (received.contains("[EXCEPTION]:[LOGIN]")){
@@ -100,7 +102,9 @@ public class Client {
                 if (received.equals("[NEW-GAME]")){
                     System.out.println("<CLIENT>:[NEW-GAME]:[USERNAME]:"+username+":[SHIP-TYPE]:"+shipType+":[DIFFICULTY]:"+difficulty);
                     send.println(difficulty);
+                    send.flush();
                     sendObject.writeObject(shipType);
+                    sendObject.flush();
                     received = receive.readLine();
                 }
                 // ==================== FETCH SHIP ====================

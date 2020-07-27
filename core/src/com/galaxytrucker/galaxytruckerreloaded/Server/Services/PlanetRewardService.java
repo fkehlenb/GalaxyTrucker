@@ -134,6 +134,7 @@ public class PlanetRewardService {
                     Crew c = new Crew(UUID.randomUUID().hashCode(),crewNameGenerator(),8,8,crewStats,random.nextInt(40)+5,ship.getAssociatedUser());
                     crewDAO.persist(c);
                     for (Room r : ship.getSystems()){
+                        boolean done = false;
                         for (Tile t : r.getTiles()){
                             if (t.isEmpty()){
                                 t.setStandingOnMe(c);
@@ -144,8 +145,12 @@ public class PlanetRewardService {
                                 crewDAO.update(c);
                                 roomDAO.update(r);
                                 shipDAO.update(ship);
+                                done = true;
                                 break;
                             }
+                        }
+                        if (done){
+                            break;
                         }
                     }
                     responseObject.setRewardCrew(c);
