@@ -828,7 +828,9 @@ public class BattleService implements Serializable {
                             // ===== Add crew damage =====
                             if (manned) {
                                 for (Crew c : mannedCrew) {
-                                    damage += c.getStats().get(0);
+                                    if (!mannedCrew.isEmpty()) {
+                                        damage += c.getStats().get(0);
+                                    }
                                 }
                             }
                             // ===== Energy adds piercing =====

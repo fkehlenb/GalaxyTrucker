@@ -293,8 +293,13 @@ public class ShipView extends AbstractShip {
         List<Integer> deadOnes = new ArrayList<>(crew.keySet());
         for(Room r : ship.getSystems()) {
             for(Crew c : r.getCrew()) {
-                crew.get(c.getId()).update(c, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY));
-                deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)", otherwise it will use wrong remove method
+                try {
+                    crew.get(c.getId()).update(c, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY));
+                    deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)", otherwise it will use wrong remove method
+                }
+                catch (Exception f){
+                    f.printStackTrace();
+                }
             }
             if(r.isSystem() && ((System) r).getSystemType() != SystemType.SHIELDS) {
                 rooms.get(r.getId()).update(r);
