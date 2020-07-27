@@ -26,7 +26,7 @@ public class PauseButton extends ImButton {
      *
      */
     public PauseButton(float x, float y, float width, float height, ShipView shipView) {
-        super(new Texture("escape_options_on.png"), x, y, width, height);
+        super(new Texture("buttons/pause_button.png"), x, y, width, height);
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
