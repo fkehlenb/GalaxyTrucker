@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 public class PauseButton extends ImButton {
