@@ -50,7 +50,7 @@ public class ShieldUI extends SubsystemUI {
         this.upperX = upperX;
         this.upperY = upperY;
 
-        onShip = new Texture("ship/"+ship.getShipType()+"/shield.png");
+        onShip = new Texture("ship/"+ship.getShipType().toString().toLowerCase()+"/shield.png");
         shieldTexture = new Texture("gameuis/shield_top.png");
         upperBackground = new Texture("gameuis/shields.png");
 

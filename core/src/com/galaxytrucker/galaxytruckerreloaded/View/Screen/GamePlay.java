@@ -27,6 +27,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.RewardsPage;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
@@ -312,7 +313,9 @@ public class GamePlay implements Screen {
      * new event ui
      */
     public void createEvent(PlanetEvent event) {
-        eventGUI = new EventGUI(main, event, stage, this, font15);
+        PlanetRewardController controller = PlanetRewardController.getInstance(null);
+        controller.getRewards();
+        eventGUI = new EventGUI(main, event, stage, this, font15, controller.getRocketReward(), controller.getFuelReward(), controller.getMoneyReward(), controller.getCrewReward(), controller.getWeaponRewards(), ClientControllerCommunicator.getInstance(null).getClientShip().getShipType());
     }
 
     /**
