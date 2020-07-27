@@ -230,6 +230,7 @@ public abstract class AbstractShip {
                         return bx + 168;
                     case 14: return bx + 264;
                 }
+            case DEATH_STAR: return bx+150;
             default: return 0;
         }
     }
@@ -389,6 +390,7 @@ public abstract class AbstractShip {
                     case 6:
                         return by - 144;
                 }
+            case DEATH_STAR: return by+140;
             default: return 0;
         }
     }

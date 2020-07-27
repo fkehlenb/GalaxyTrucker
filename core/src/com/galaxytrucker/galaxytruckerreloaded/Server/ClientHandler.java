@@ -1132,15 +1132,21 @@ public class ClientHandler implements Runnable {
                 Tile t = new Tile(UUID.randomUUID().hashCode(),0,0);
                 List<Tile> tiles = new ArrayList<>();
                 tiles.add(t);
+                System r = new System(UUID.randomUUID().hashCode(),0,0,0,new ArrayList<Crew>(),tiles,10,10,0,SystemType.WEAPON_SYSTEM,new ArrayList<Weapon>());
                 rooms = new ArrayList<>();
+                //crew member
                 Crew crew = new Crew(UUID.randomUUID().hashCode(), "crew2", 1000, 1000, crewStats, 30, "[ENEMY]");
+                crew.setTile(t);
+                crew.setCurrentRoom(r);
+                List<Crew> crewList = new ArrayList<>();
+                crewList.add(crew);
+                r.setCrew(crewList);
+                //weapons
                 List<Weapon> weapons = new ArrayList<>();
                 weapons.add(new Weapon(UUID.randomUUID().hashCode(), WeaponType.LASER, 1, 1, 0, 1, 0,
                         (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30));
                 weapons.add(new Weapon(UUID.randomUUID().hashCode(), WeaponType.BOMB, 2, 6, 0, 1, 1,
                         (float) 1.5, (float) 0.18, 4, (float) 1.5, 3, 1, "Bomb", 35));
-                List<Crew> crewList = new ArrayList<>();
-                crewList.add(crew);
                 System s = new System(UUID.randomUUID().hashCode(),0,0,0,crewList,tiles,10,10,0,SystemType.WEAPON_SYSTEM,weapons);
                 rooms.add(s);
                 crew.setCurrentRoom(s);
