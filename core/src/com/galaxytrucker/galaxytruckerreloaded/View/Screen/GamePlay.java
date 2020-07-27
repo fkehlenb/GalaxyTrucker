@@ -340,12 +340,15 @@ public class GamePlay implements Screen {
         boolean success;
         if(ClientControllerCommunicator.getInstance(null).getClientShip().isInCombat()) {
             success = BattleController.getInstance(null).fleeFight(planet);
+            removeEnemy();
+            removeRoundButton();
         }
         else {
             success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
         }
             planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
+
             createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 background = new Texture("1080p.png");
@@ -417,6 +420,17 @@ public class GamePlay implements Screen {
             boolean combatOver = battleController.fetchUpdatedData();
             try {
                 player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+                try {
+                    Ship updatedEnemyShip = BattleController.getInstance(null).getOpponent();
+                    enemy.hullStatusUpdate(updatedEnemyShip.getHp());
+                    enemy.update(updatedEnemyShip);
+                    enemy.render();
+
+                } catch (Exception e) {
+                    java.lang.System.out.println("--- Der Gegner ist schon tot! ---");
+                    removeEnemy();
+                    removeRoundButton();
+                }
             } catch (Exception e){
                 java.lang.System.out.println("--- Du bist tot! ---");
                 removeRoundButton();
@@ -426,17 +440,7 @@ public class GamePlay implements Screen {
 //            if (battleController.combatOver() && battleController.youDead()){
 //                createGameOver(false);
 //            }
-            try {
-                Ship updatedEnemyShip = BattleController.getInstance(null).getOpponent();
-                enemy.hullStatusUpdate(updatedEnemyShip.getHp());
-                enemy.update(updatedEnemyShip);
-                enemy.render();
 
-            } catch (Exception e) {
-                java.lang.System.out.println("--- Der Gegner ist schon tot! ---");
-                removeEnemy();
-                removeRoundButton();
-            }
 
             if (combatOver){
                 if (battleController.combatOver()){
@@ -446,8 +450,6 @@ public class GamePlay implements Screen {
                     else{
                         // todo
                     }
-                    removeEnemy();
-                    removeRoundButton();
                 }
             }
         }
