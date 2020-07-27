@@ -186,9 +186,19 @@ public class PlanetRewardService {
                         break;
                     case METEORSHOWER:
                         cash = random.nextInt(20) - random.nextInt(30);
+                        if (ship.getCoins()-cash<0){
+                            ship.setCoins(0);
+                        }
+                        else{
+                            ship.setCoins(ship.getCoins()+cash);
+                        }
                         fuel = -1 * random.nextInt(5) + random.nextInt(5);
-                        ship.setFuel(ship.getFuel()+fuel);
-                        ship.setCoins(ship.getCoins()+cash);
+                        if (ship.getFuel()+fuel<0){
+                            ship.setFuel(0);
+                        }
+                        else {
+                            ship.setFuel(ship.getFuel() + fuel);
+                        }
                         shipDAO.update(ship);
                         responseObject.setRewardCash(cash);
                         responseObject.setRewardFuel(fuel);
