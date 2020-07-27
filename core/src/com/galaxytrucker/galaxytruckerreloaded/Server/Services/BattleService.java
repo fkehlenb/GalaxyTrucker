@@ -455,7 +455,7 @@ public class BattleService implements Serializable {
                                 if (r.getBreach() > 0) {
                                     r.setBreach(0);
                                 }
-                                if (r.isSystem() && ((System) r).isDisabled()) {
+                                if (r.isSystem() && ((System) r).isDisabled() && ((System) r).isUnlocked()) {
                                     ((System) r).setDisabled(false);
                                 }
                                 if (r.isSystem() && ((System) r).getDamage() > 0) {
@@ -1026,7 +1026,7 @@ public class BattleService implements Serializable {
             if (ship.getShields() < ship.getShieldCharge() / 2) {
                 for (Room r : ship.getSystems()) {
                     if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.SHIELDS)
-                            && !((System) r).isDisabled() && ((System) r).isUnlocked()) {
+                            && !((System) r).isDisabled() && ((System) r).isUnlocked()  && ((System) r).getEnergy()>0) {
                         // todo system energy effect
                         // Crew effect: more shields
                         if (r.getCrew().size() > 0) {
@@ -1088,7 +1088,7 @@ public class BattleService implements Serializable {
             }
             // ===== Repair systems =====
             for (Room r : ship.getSystems()) {
-                if (r.isSystem() && ((System) r).getDamage() > 0 && !r.getCrew().isEmpty()) {
+                if (r.isSystem() && ((System) r).getDamage() > 0 && !r.getCrew().isEmpty() && ((System) r).isUnlocked()) {
                     ((System) r).setDamage(((System) r).getDamage() - r.getCrew().size());
                     if (((System) r).getDamage() < 0) {
                         ((System) r).setDamage(0);
