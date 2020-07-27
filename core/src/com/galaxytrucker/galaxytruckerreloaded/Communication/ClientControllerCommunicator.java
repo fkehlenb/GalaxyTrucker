@@ -93,6 +93,7 @@ public class ClientControllerCommunicator {
         PlanetRewardController.getInstance(singleton);
         PVPController.getInstance(singleton);
         AudioController.getInstance();
+        WeaponController.getInstance(singleton);
         // TODO CREATE ALL CONTROLLERS HERE, all controllers should be singletons
         return singleton;
     }

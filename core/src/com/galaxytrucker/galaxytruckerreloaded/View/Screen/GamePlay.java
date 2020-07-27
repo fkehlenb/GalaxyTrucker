@@ -870,16 +870,38 @@ public class GamePlay implements Screen {
      * @return the weapons of the ship in a list
      */
     public List<Weapon> loadWeapons() {
-        List<Weapon> weapons = new LinkedList<>(ClientControllerCommunicator.getInstance(null).getClientShip().getInventory());
-        for(Room r : main.getClient().getMyShip().getSystems()) {
+        return new LinkedList<>(ClientControllerCommunicator.getInstance(null).getClientShip().getInventory());
+    }
+
+    public List<Weapon> loadEquippedWeapons() {
+        List<Weapon> weapons = new LinkedList<>();
+        for(Room r : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()) {
             if(r instanceof System) {
                 if(((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
                     weapons.addAll(((System) r).getShipWeapons());
+                    return weapons; //more than 1 weapon system?
                 }
             }
         }
-        //BIS HIER LÖSCHEN
         return weapons;
+    }
+
+    /**
+     * equip a weapon
+     * @param weapon the weapon
+     */
+    public void equipWeapon(Weapon weapon) {
+        boolean success = WeaponController.getInstance(null).equipWeapon(weapon);
+        if(success) {
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+        }
+    }
+
+    public void unequipWeapon(Weapon weapon) {
+        boolean success = WeaponController.getInstance(null).unequipWeapon(weapon);
+        if(success) {
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+        }
     }
 
     /**

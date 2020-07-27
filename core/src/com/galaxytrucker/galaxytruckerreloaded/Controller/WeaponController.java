@@ -20,6 +20,15 @@ public class WeaponController extends Controller {
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
 
+    private static WeaponController singleton;
+
+    public static WeaponController getInstance(ClientControllerCommunicator clientControllerCommunicator) {
+        if(singleton == null) {
+            singleton = new WeaponController(clientControllerCommunicator);
+        }
+        return singleton;
+    }
+
     /** Equip a weapon
      * @param w - the weapon to equip
      * @return valid request */
