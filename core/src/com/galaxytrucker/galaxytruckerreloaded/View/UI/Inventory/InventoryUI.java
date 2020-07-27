@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -27,13 +28,16 @@ public class InventoryUI {
     private List<InventorySlotUI> slots;
 
     /**
+     * the hash map for the inventory slots of the weapons, needed for easy access for updates
+     */
+    private HashMap<Integer, InventoryWeaponSlotUI> weaponSlots;
+
+    /**
      * button to close inventory
      */
     private InventoryCloseButton closeButton;
 
     private Main main;
-
-    private Stage stage;
 
     private ShipView shipView;
 
@@ -46,20 +50,20 @@ public class InventoryUI {
      * @param crew the crew members
      * @param weapons the weapons
      */
-    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font, ShipType type) {
+    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, List<Weapon> equippedWeapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font, ShipType type) {
         this.main = main;
-        this.stage = stage;
         this.shipView = shipView;
 
         inventoryBackground = new Texture("inventory/inventory.png");
 
-        x = main.WIDTH/2 - inventoryBackground.getWidth()/2;
-        y = main.HEIGHT/2 - inventoryBackground.getHeight()/2;
+        x = Main.WIDTH/2f - inventoryBackground.getWidth()/2f;
+        y = Main.HEIGHT/2f - inventoryBackground.getHeight()/2f;
 
-        closeButton = new InventoryCloseButton(x+Main.WIDTH/2.743f, y+Main.HEIGHT/72, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, null, this, null);
+        closeButton = new InventoryCloseButton(x+Main.WIDTH/2.743f, y+Main.HEIGHT/72f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, null, this, null);
         stage.addActor(closeButton);
 
         slots = new LinkedList<>();
+        weaponSlots = new HashMap<>();
         float cx = x + Main.WIDTH/76.8f;
         float cy = y + Main.HEIGHT/1.929f;
         for(Crew c : crew) {
@@ -70,8 +74,12 @@ public class InventoryUI {
         float wy = y + Main.HEIGHT/2.057f;
         float wx = cx + Main.WIDTH/4.8f;
         for(Weapon w : weapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font));
+            weaponSlots.put(w.getId(), new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this, false));
             wy -=Main.HEIGHT/10.8f;
+        }
+        for(Weapon w : equippedWeapons) {
+            weaponSlots.put(w.getId(), new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this, true));
+            wy -= Main.HEIGHT/10.8f;
         }
         slots.add(new InventoryIntSlotUI(main, fuel, x+Main.WIDTH/38.4f, y+Main.HEIGHT/21.6f, "fuel", font));
         slots.add(new InventoryIntSlotUI(main, missiles, x+Main.WIDTH/12.8f, y+Main.HEIGHT/21.6f, "missiles", font));
@@ -89,6 +97,9 @@ public class InventoryUI {
         for(InventorySlotUI u : slots) {
             u.render();
         }
+        for(InventoryWeaponSlotUI w : weaponSlots.values()) {
+            w.render();
+        }
     }
 
     /**
@@ -99,8 +110,27 @@ public class InventoryUI {
         for(InventorySlotUI u : slots) {
             u.disposeInventorySlotUI();
         }
+        for(InventoryWeaponSlotUI w : weaponSlots.values()) {
+            w.disposeInventorySlotUI();
+        }
         shipView.deleteInventory();
         closeButton.remove();
+    }
+
+    /**
+     * update the inventory view (unequip/equip weapons)
+     */
+    public void update(List<Weapon> weapons, List<Weapon> equipped) {
+        for(Weapon w : weapons) {
+            if(weaponSlots.get(w.getId()) != null) {
+                weaponSlots.get(w.getId()).update(w, false);
+            }
+        }
+        for(Weapon w : equipped) {
+            if(weaponSlots.get(w.getId()) != null) {
+                weaponSlots.get(w.getId()).update(w, true);
+            }
+        }
     }
 
     /**
@@ -111,8 +141,21 @@ public class InventoryUI {
     private void setup() {
     }
 
-    public void equipWeapon(Weapon weapon){
-        //TODO: equipWeapon Controllermethode in Systemcontroller oder eigenem Controllermodul
+    /**
+     * equip a weapon
+     * (move from ship inventory to weapon system inventory)
+     * @param weapon the weapon
+     */
+    void equipWeapon(Weapon weapon){
+        shipView.equipWeapon(weapon);
+    }
+
+    /**
+     * unequip a weapon
+     * @param weapon the weapon
+     */
+    void unequipWeapon(Weapon weapon) {
+        shipView.unequipWeapon(weapon);
     }
 
     /**
