@@ -58,7 +58,8 @@ public class SystemService {
                 }
             }
             // Check for wrong systems
-            if (!system.getSystemType().equals(SystemType.COCKPIT) && !system.getSystemType().equals(SystemType.CAMERAS) && roomExists && system.isUnlocked()) {
+            if (!system.getSystemType().equals(SystemType.COCKPIT) && !system.getSystemType().equals(SystemType.CAMERAS) && roomExists && system.isUnlocked()
+                    && system.getDamage() <= 0) {
                 // Check for energy
                 if (ship.getEnergy() >= amount && (system.getEnergy() + amount) <= system.getMaxEnergy()) {
                     List<Room> rooms = ship.getSystems();
@@ -132,7 +133,8 @@ public class SystemService {
                 }
             }
             // Check for wrong systems
-            if (!system.getSystemType().equals(SystemType.COCKPIT) && !system.getSystemType().equals(SystemType.CAMERAS) && roomExists && system.isUnlocked()) {
+            if (!system.getSystemType().equals(SystemType.COCKPIT) && !system.getSystemType().equals(SystemType.CAMERAS) && roomExists && system.isUnlocked()
+                    && system.getDamage()<=0) {
                 // Check for energy
                 if ((system.getEnergy() - amount) >= 0) {
                     List<Room> rooms = ship.getSystems();

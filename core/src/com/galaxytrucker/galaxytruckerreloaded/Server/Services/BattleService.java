@@ -923,6 +923,7 @@ public class BattleService implements Serializable {
                                 for (Room r : opponent.getSystems()){
                                     if (r.getId() == room.getId()){
                                         r.setBreach(5);
+                                        r.setOxygen(0);
                                         roomDAO.update(r);
                                         break;
                                     }
