@@ -74,6 +74,8 @@ public class ShopUI {
     public ShopUI(Main main, Stage stage, GamePlay game, Trader trader, List<Weapon> shipWeapons, int shipMissiles) {
         this.main = main;
         this.game = game;
+        this.stage=stage;
+        this.trader=trader;
 
         background = new Texture("shop/storeback.png");
         x = main.WIDTH/2 - background.getWidth()/2;
@@ -97,7 +99,8 @@ public class ShopUI {
         ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),xb, yb+4*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.UPGRADES);;
         ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SELL);
 
-        closeButton = new InventoryCloseButton(x+Main.WIDTH/6.4f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
+        //closeButton = new InventoryCloseButton(x+Main.WIDTH/6.4f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
+        closeButton = new InventoryCloseButton(x+Main.WIDTH/7f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
         stage.addActor(closeButton);
         stage.addActor(shopWeaponButton);
         stage.addActor(shopResourceButton);
@@ -118,6 +121,16 @@ public class ShopUI {
         /*for(ShopElement e : elements) {
             e.render();
         }*/
+    }
+
+    /**
+     * Dispose shop ui
+     */
+    public void disposeShopUI() {
+        current.dispose();
+        closeButton.remove();
+        background.dispose();
+        game.deleteShop();
     }
 
     /**
@@ -169,16 +182,6 @@ public class ShopUI {
     boolean buyHP(int amount){return game.buyHp(amount);}
 
     /**
-     * Dispose shop ui
-     */
-    public void disposeShopUI() {
-        current.dispose();
-        closeButton.remove();
-        background.dispose();
-        game.deleteShop();
-    }
-
-    /**
      * remove a buyable element
      */
     public void removeBuyElement(ShopElement e) {
@@ -186,7 +189,7 @@ public class ShopUI {
     }
 
     //TODO woher wissen wir was wir verkaufen?
-    public void openSellUI(){
+    public void openShopSellUI(){
         new ShopSell(main, stage, game, trader, this);
     }
 
@@ -202,11 +205,11 @@ public class ShopUI {
         new ShopSystem(main, stage, game, trader, this);
     }
 
-    public void openShopUpgrade(){
+    public void openShopUpgradeUI(){
         new ShopUpgrade(main, stage, game, trader, this);
     }
 
-    public void openShopWeapon(){
+    public void openShopWeaponUI(){
         new ShopWeapon(main, stage, game, trader, this);
     }
 

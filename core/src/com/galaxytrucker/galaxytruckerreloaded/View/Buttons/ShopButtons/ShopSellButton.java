@@ -45,7 +45,7 @@ public class ShopSellButton extends ImButton {
 
     public void leftClick(){
         shop.getCurrent().dispose();
-        shop.openSellUI();
+        shop.openShopSellUI();
 
     }
 }
