@@ -103,19 +103,26 @@ public class PVPOpponents {
      * called by button
      */
     public void chooseOpponent() {
-
+        screen.pvpOpponentChosen(field.getText());
     }
 
+    /**
+     * render
+     */
     public void render() {
         main.batch.begin();
         main.batch.draw(background, x, y, background.getWidth(), background.getHeight());
         main.batch.end();
     }
 
+    /**
+     * dispose everything
+     */
     public void disposePVPOpponents() {
         background.dispose();
         field.remove();
         startButton.remove();
         closeButton.remove();
+        screen.deletePVPUI();
     }
 }

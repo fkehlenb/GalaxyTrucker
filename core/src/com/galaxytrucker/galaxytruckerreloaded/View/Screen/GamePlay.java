@@ -452,9 +452,36 @@ public class GamePlay implements Screen {
      */
     public void getPVPOpponents() {
         List<String> names = PVPController.getInstance(null).getPvpOpponents();
+        createPVPUI(names);
+    }
+
+    /**
+     * a pvp opponent was chosen
+     * @param name the name
+     */
+    public void pvpOpponentChosen(String name) {
+        boolean success = PVPController.getInstance(null).sendPVPRequest(name);
+        if(success) {
+            pvpUI.disposePVPOpponents();
+            deletePVPUI();
+        }
+    }
+
+    /**
+     * create a pvp ui
+     */
+    public void createPVPUI(List<String> names) {
         if(pvpUI != null) {
             pvpUI = new PVPOpponents(main, stage, font15, names, this);
         }
+    }
+
+    /**
+     * delete the pvp ui
+     * called by that ui in the dispose method
+     */
+    public void deletePVPUI() {
+        pvpUI = null;
     }
 
     /**
