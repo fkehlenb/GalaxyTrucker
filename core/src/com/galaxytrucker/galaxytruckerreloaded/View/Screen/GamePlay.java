@@ -315,6 +315,7 @@ public class GamePlay implements Screen {
     public void createEvent(PlanetEvent event) {
         PlanetRewardController controller = PlanetRewardController.getInstance(null);
         controller.getRewards();
+        player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         eventGUI = new EventGUI(main, event, stage, this, font15, controller.getRocketReward(), controller.getFuelReward(), controller.getMoneyReward(), controller.getCrewReward(), controller.getWeaponRewards(), ClientControllerCommunicator.getInstance(null).getClientShip().getShipType());
     }
 
