@@ -12,6 +12,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.OverworldDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.PlanetDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ResponseObjectDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import lombok.Getter;
 import lombok.Setter;
@@ -74,6 +75,9 @@ public class ClientHandler implements Runnable {
      * ObjectInputStream for receiving objects
      */
     private ObjectInputStream receiveObject;
+
+    /** Response object dao */
+    private ResponseObjectDAO responseObjectDAO = ResponseObjectDAO.getInstance();
 
     /**
      * Username
@@ -222,7 +226,8 @@ public class ClientHandler implements Runnable {
                         } else {
                             RequestObject request = (RequestObject) receiveObject.readObject();
                             sendObject.flush();
-                            sendObject.writeObject(this.serverServiceCommunicator.getResponse(request));
+                            ResponseObject responseObject = this.serverServiceCommunicator.getResponse(request);
+                            sendObject.writeObject(responseObject);
                             if (request.getRequestType() == RequestType.LOGOUT) {
                                 gameActive = false;
                             }
@@ -1136,7 +1141,10 @@ public class ClientHandler implements Runnable {
                         (float) 1.5, (float) 0.18, 4, (float) 1.5, 3, 1, "Bomb", 35));
                 List<Crew> crewList = new ArrayList<>();
                 crewList.add(crew);
-                rooms.add(new System(UUID.randomUUID().hashCode(),0,0,0,crewList,tiles,10,10,0,SystemType.WEAPON_SYSTEM,weapons));
+                System s = new System(UUID.randomUUID().hashCode(),0,0,0,crewList,tiles,10,10,0,SystemType.WEAPON_SYSTEM,weapons);
+                rooms.add(s);
+                crew.setCurrentRoom(s);
+                crew.setTile(t);
                 return new Ship(UUID.randomUUID().hashCode(),"[ENEMY]",ShipType.DEATH_STAR,100,1000,1000,1000,4,4,10,
                         0,planet,10,100,rooms,new ArrayList<Weapon>(),false,false,false,false);
             default:

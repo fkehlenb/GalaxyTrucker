@@ -191,6 +191,8 @@ public class ServerServiceCommunicator {
                 return planetRewardService.getRewards(request.getShip(),request.getPlanet());
             case INSTALL_SYSTEM:
                 return systemService.installSystem(request.getShip(),request.getSystemType());
+            case UPGRADE_CREW:
+                return traderService.upgradeCrew(request.getShip(),request.getCrew(),request.getStat());
         }
         // Returning null is VORBIDDEN!
         ResponseObject defaultResponse = new ResponseObject();
