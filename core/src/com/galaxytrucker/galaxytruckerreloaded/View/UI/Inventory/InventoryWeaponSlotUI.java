@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EquipmentAndUpgradesMenu.EquipButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EquipmentAndUpgradesMenu.UnequipButton;
 
 public class InventoryWeaponSlotUI extends InventorySlotUI {
 
@@ -26,6 +27,8 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
 
     private EquipButton equipButton;
 
+    private UnequipButton unequipButton;
+
     private InventoryUI ui;
 
     /**
@@ -33,8 +36,10 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
      * @param main the main class
      * @param weapon the weapon to be displayed
      */
-    public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y, Stage stage, BitmapFont font, InventoryUI ui) {
+    public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y, Stage stage, BitmapFont font, InventoryUI ui, boolean equipped) {
         super(main, x, y, font);
+        this.ui = ui;
+
         glyphDamage.setText(font, "Damage: "+weapon.getDamage());
         glyphCooldown.setText(font, "Cooldown: "+weapon.getCooldown());
         glyphMissile.setText(font, "Missile Cost: "+weapon.getMissileCost());
@@ -46,8 +51,15 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
         weaponTexture = new Texture("shipsys/weapon_system/"+name.toLowerCase()+".png");
         glyphName.setText(font, weapon.getWeaponName());
 
-        equipButton = new EquipButton(posX+Main.WIDTH/20.67f, posY+Main.HEIGHT/25f, Main.WIDTH/24f, Main.HEIGHT/45f, weapon, this);
-        stage.addActor(equipButton);
+        if(equipped) {
+            unequipButton = new UnequipButton(posX+Main.WIDTH/20.67f, posY+Main.HEIGHT/25f, Main.WIDTH/24f, Main.HEIGHT/45f, weapon, this);
+            stage.addActor(unequipButton);
+        }
+        else {
+            equipButton = new EquipButton(posX + Main.WIDTH / 20.67f, posY + Main.HEIGHT / 25f, Main.WIDTH / 24f, Main.HEIGHT / 45f, weapon, this);
+            stage.addActor(equipButton);
+        }
+
     }
 
     /**
@@ -57,8 +69,14 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     public void disposeInventorySlotUI() {
         super.disposeInventorySlotUI();
         weaponTexture.dispose();
-        equipButton.remove();
+        if(equipButton != null) {
+            equipButton.remove();
+        }
+        if(unequipButton != null) {
+            unequipButton.remove();
+        }
     }
+
 
     public void render() {
         super.render();
@@ -100,5 +118,9 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
 
     public void equipWeapon(Weapon weapon){
         ui.equipWeapon(weapon);
+    }
+
+    public void unequipWeapon(Weapon weapon) {
+        ui.unequipWeapon(weapon);
     }
 }

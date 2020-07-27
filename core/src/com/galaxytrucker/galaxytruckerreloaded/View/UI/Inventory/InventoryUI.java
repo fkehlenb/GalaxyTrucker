@@ -44,7 +44,7 @@ public class InventoryUI {
      * @param crew the crew members
      * @param weapons the weapons
      */
-    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font, ShipType type) {
+    public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, List<Weapon> equippedWeapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font, ShipType type) {
         this.main = main;
         this.shipView = shipView;
 
@@ -67,8 +67,12 @@ public class InventoryUI {
         float wy = y + Main.HEIGHT/2.057f;
         float wx = cx + Main.WIDTH/4.8f;
         for(Weapon w : weapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this));
+            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this, false));
             wy -=Main.HEIGHT/10.8f;
+        }
+        for(Weapon w : equippedWeapons) {
+            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this, true));
+            wy -= Main.HEIGHT/10.8f;
         }
         slots.add(new InventoryIntSlotUI(main, fuel, x+Main.WIDTH/38.4f, y+Main.HEIGHT/21.6f, "fuel", font));
         slots.add(new InventoryIntSlotUI(main, missiles, x+Main.WIDTH/12.8f, y+Main.HEIGHT/21.6f, "missiles", font));
@@ -101,6 +105,13 @@ public class InventoryUI {
     }
 
     /**
+     * update the inventory view (unequip/equip weapons)
+     */
+    public void update(List<Weapon> weapons, List<Weapon> equipped) {
+        
+    }
+
+    /**
      * setup called after initialisation
      *
      * here the inventory slots are initialised for fuel, missiles, crew, weapons, and money
@@ -113,8 +124,16 @@ public class InventoryUI {
      * (move from ship inventory to weapon system inventory)
      * @param weapon the weapon
      */
-    public void equipWeapon(Weapon weapon){
+    void equipWeapon(Weapon weapon){
         shipView.equipWeapon(weapon);
+    }
+
+    /**
+     * unequip a weapon
+     * @param weapon the weapon
+     */
+    void unequipWeapon(Weapon weapon) {
+        shipView.unequipWeapon(weapon);
     }
 
     /**

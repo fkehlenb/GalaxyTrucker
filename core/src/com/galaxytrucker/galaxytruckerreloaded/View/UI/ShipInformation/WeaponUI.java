@@ -102,6 +102,7 @@ public class WeaponUI extends SubsystemUI {
     private void deleteButtons() {
         for(int i : buttons.keySet()) {
             buttons.get(i).remove();
+            glyphs.remove(i);
         }
     }
 
@@ -117,7 +118,9 @@ public class WeaponUI extends SubsystemUI {
         deleteButtons();
         createButtons(sys.getShipWeapons());
         for(Weapon w : sys.getShipWeapons()) {
-            glyphs.get(w.getId()).setText(font, Integer.toString(w.getCurrentCooldown()));
+            if(glyphs.containsKey(w.getId())) {
+                glyphs.get(w.getId()).setText(font, Integer.toString(w.getCurrentCooldown()));
+            }
         }
     }
 

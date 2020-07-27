@@ -339,7 +339,7 @@ public class ShipView extends AbstractShip {
      */
     public void openInventory() {
         if(inventoryUI == null){
-            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadFuel(), game.loadMissiles(), stage, this, font15, shipType);
+            inventoryUI = new InventoryUI(main, game.loadCrew(), game.loadWeapons(), game.loadEquippedWeapons(), game.loadFuel(), game.loadMissiles(), stage, this, font15, shipType);
         }
     }
 
@@ -490,6 +490,8 @@ public class ShipView extends AbstractShip {
     public void equipWeapon(Weapon weapon) {
         game.equipWeapon(weapon);
     }
+
+    public void unequipWeapon(Weapon weapon) {game.unequipWeapon(weapon);}
 
     /**
      * a weapon was fired
