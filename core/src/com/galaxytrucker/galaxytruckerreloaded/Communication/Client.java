@@ -124,6 +124,8 @@ public class Client {
                 // ==================== FETCH MAP ====================
                 if (received.equals("[FETCH-MAP]")){
                     try {
+                        send.println("[GIVE ME MAP]");
+                        send.flush();
                         this.overworld = (Overworld) receiveObject.readObject();
                         System.out.println("<CLIENT>:[RECEIVED-MAP]:[USERNAME]:"+username+":[MAP-ID]:"+overworld.getId());
                     }

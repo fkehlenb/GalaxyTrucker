@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
@@ -88,8 +89,19 @@ public class EnemyShip extends AbstractShip {
     public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
         super(main, ship, stage, game, tileStage);
 
+        Texture enemyShipTexture;
         enemyBackground = new Texture("battle/battle_overlay.png");
-        Texture enemyShipTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "base.png");
+        if (ship.getPlanet().getEvent().equals(PlanetEvent.MINIBOSS)) {
+            if (ship.getShipType().equals(ShipType.BOARDER)){
+                enemyShipTexture = new Texture("ship/boarder/circle_cruiser_2_base.png");
+            }
+            else{
+                enemyShipTexture = new Texture("ship/barrage/fed_cruiser_2_base.png");
+            }
+        }
+        else {
+            enemyShipTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "base.png");
+        }
         enemyShipTextureRegion = new TextureRegion(enemyShipTexture);
 
         if(ship.getShipType() != ShipType.DEATH_STAR) {

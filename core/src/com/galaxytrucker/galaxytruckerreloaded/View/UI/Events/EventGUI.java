@@ -134,6 +134,12 @@ public class EventGUI {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }
         }
+        else if(event == PlanetEvent.MINIBOSS) {
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "A mini boss is waiting on this planet", px, py, font15, width, height);
+            if(drawables.size()>0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
+        }
         else if(event == PlanetEvent.METEORSHOWER) {
             currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "Seems like you have gotten into a meteor shower!", px, py, font15, width, height);
             if(drawables.size()>0) {
@@ -147,10 +153,13 @@ public class EventGUI {
             }
         }
         else if(event == PlanetEvent.PVP) {
-            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "You have been intercepted! Wherever you are now, there seems to be a hostile ship here", px, py, font15, width, height);
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "You have been intercepted!\n Wherever you are now, there seems to be\na hostile ship here", px, py, font15, width, height);
             if(drawables.size() > 0) {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }
+        }
+        else if(event == PlanetEvent.MINIBOSS) {
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "As you approach the planet, \nan odd enemy ship approaches you...", px, py, font15, width, height);
         }
         else { //VOID
             currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "There is nothing here", px, py, font15, width, height);

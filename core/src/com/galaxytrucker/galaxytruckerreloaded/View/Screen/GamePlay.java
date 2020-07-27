@@ -254,8 +254,8 @@ public class GamePlay implements Screen {
             player.render1();
             enemy.render1();
             tileStage.draw();
-            player.render2();
             enemy.render2();
+            player.render2();
         }
 
         if(eventGUI != null) { eventGUI.render(); }
@@ -357,7 +357,7 @@ public class GamePlay implements Screen {
                 background = new Texture("1080p.png");
                 createShop(planet.getTrader());
             }
-            else if(planet.getEvent().equals(PlanetEvent.COMBAT) || planet.getEvent().equals(PlanetEvent.BOSS)) {
+            else if(planet.getEvent().equals(PlanetEvent.COMBAT) || planet.getEvent().equals(PlanetEvent.BOSS) || planet.getEvent().equals(PlanetEvent.MINIBOSS)) {
                 if (planet.getShips().size() > 1){
                     background = new Texture("1080p.png");
                     battleController.setOpponent(planet.getShips().get(0));
