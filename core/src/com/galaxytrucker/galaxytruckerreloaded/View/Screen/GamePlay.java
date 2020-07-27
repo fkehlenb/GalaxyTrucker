@@ -26,8 +26,11 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PVPActivateButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PVPGetOpponentsButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.PVPOpponents;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.RewardsPage;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
@@ -168,10 +171,28 @@ public class GamePlay implements Screen {
     private NextRoundButton nextRoundButton;
 
     /**
+     * button to activate pvp, if multiplayer
+     */
+    private PVPActivateButton pvpActivateButton;
+
+    /**
+     * button to get the other pvp opponents, to display and choose one (if multiplayer and activated)
+     */
+    private PVPGetOpponentsButton pvpGetOpponentsButton;
+
+    /**
+     * the ui to display all the names of pvp opponents
+     */
+    private PVPOpponents pvpUI;
+
+    /**
      * a font used to draw text
      */
     private BitmapFont font15;
 
+    /**
+     * a font used to draw text in size 25
+     */
     private BitmapFont font25;
 
     /**
@@ -265,6 +286,7 @@ public class GamePlay implements Screen {
         else if(generalUI != null) { generalUI.render(); }
         else if(optionUI != null) { optionUI.render(); }
         else if(pauseMenuUI != null) { pauseMenuUI.render(); }
+        else if(pvpUI != null) { pvpUI.render(); }
 
 
         stage.draw();
@@ -284,6 +306,7 @@ public class GamePlay implements Screen {
         if(optionUI != null) { optionUI.disposeOptionsUI(); }
         if(pauseMenuUI != null) { pauseMenuUI.disposePauseMenuUI(); }
         if(enemy != null) { enemy.disposeShipView(); }
+        if(pvpUI != null) { pvpUI.disposePVPOpponents(); }
         stage.dispose();
     }
 
@@ -410,6 +433,28 @@ public class GamePlay implements Screen {
     private void removeRoundButton() {
         nextRoundButton.remove();
         nextRoundButton = null;
+    }
+
+    /**
+     * activate pvp for this client
+     * if multiplayer
+     */
+    public void activatePVP() {
+        boolean success = PVPController.getInstance(null).activatePVP(ClientControllerCommunicator.getInstance(null).getClientShip());
+        if(success) {
+            pvpGetOpponentsButton = new PVPGetOpponentsButton(0, 0, 248, 50, this); //TODO xy
+        }
+    }
+
+    /**
+     * get the pvp opponents
+     * display them, for the player to choose one
+     */
+    public void getPVPOpponents() {
+        List<String> names = PVPController.getInstance(null).getPvpOpponents();
+        if(pvpUI != null) {
+            pvpUI = new PVPOpponents(main, stage, font15, names, this);
+        }
     }
 
     /**
