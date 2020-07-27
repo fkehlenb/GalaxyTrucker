@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -25,6 +26,11 @@ public class InventoryUI {
      * Inventory slots
      */
     private List<InventorySlotUI> slots;
+
+    /**
+     * the hash map for the inventory slots of the weapons, needed for easy access for updates
+     */
+    private HashMap<Integer, InventoryWeaponSlotUI> weaponSlots;
 
     /**
      * button to close inventory
@@ -57,6 +63,7 @@ public class InventoryUI {
         stage.addActor(closeButton);
 
         slots = new LinkedList<>();
+        weaponSlots = new HashMap<>();
         float cx = x + Main.WIDTH/76.8f;
         float cy = y + Main.HEIGHT/1.929f;
         for(Crew c : crew) {
@@ -67,11 +74,11 @@ public class InventoryUI {
         float wy = y + Main.HEIGHT/2.057f;
         float wx = cx + Main.WIDTH/4.8f;
         for(Weapon w : weapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this, false));
+            weaponSlots.put(w.getId(), new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this, false));
             wy -=Main.HEIGHT/10.8f;
         }
         for(Weapon w : equippedWeapons) {
-            slots.add(new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this, true));
+            weaponSlots.put(w.getId(), new InventoryWeaponSlotUI(main, w, wx, wy, stage, font, this, true));
             wy -= Main.HEIGHT/10.8f;
         }
         slots.add(new InventoryIntSlotUI(main, fuel, x+Main.WIDTH/38.4f, y+Main.HEIGHT/21.6f, "fuel", font));
@@ -90,6 +97,9 @@ public class InventoryUI {
         for(InventorySlotUI u : slots) {
             u.render();
         }
+        for(InventoryWeaponSlotUI w : weaponSlots.values()) {
+            w.render();
+        }
     }
 
     /**
@@ -100,6 +110,9 @@ public class InventoryUI {
         for(InventorySlotUI u : slots) {
             u.disposeInventorySlotUI();
         }
+        for(InventoryWeaponSlotUI w : weaponSlots.values()) {
+            w.disposeInventorySlotUI();
+        }
         shipView.deleteInventory();
         closeButton.remove();
     }
@@ -108,7 +121,16 @@ public class InventoryUI {
      * update the inventory view (unequip/equip weapons)
      */
     public void update(List<Weapon> weapons, List<Weapon> equipped) {
-        
+        for(Weapon w : weapons) {
+            if(weaponSlots.get(w.getId()) != null) {
+                weaponSlots.get(w.getId()).update(w, false);
+            }
+        }
+        for(Weapon w : equipped) {
+            if(weaponSlots.get(w.getId()) != null) {
+                weaponSlots.get(w.getId()).update(w, true);
+            }
+        }
     }
 
     /**

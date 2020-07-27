@@ -31,6 +31,8 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
 
     private InventoryUI ui;
 
+    private Stage stage;
+
     /**
      * constructor
      * @param main the main class
@@ -39,6 +41,7 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y, Stage stage, BitmapFont font, InventoryUI ui, boolean equipped) {
         super(main, x, y, font);
         this.ui = ui;
+        this.stage = stage;
 
         glyphDamage.setText(font, "Damage: "+weapon.getDamage());
         glyphCooldown.setText(font, "Cooldown: "+weapon.getCooldown());
@@ -90,6 +93,30 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
         font.draw(main.batch, glyphPrecision, posX+Main.WIDTH/8.727f, posY+Main.HEIGHT/96f);
         main.batch.draw(weaponTexture, posX, posY, weaponTexture.getWidth(), weaponTexture.getHeight());
         main.batch.end();
+    }
+
+    /**
+     *
+     * @param weapon
+     */
+    public void update(Weapon weapon, boolean equipped) {
+        if(equipped && unequipButton == null) {
+            if(equipButton != null) {
+                equipButton.remove();
+                equipButton = null;
+            }
+            unequipButton = new UnequipButton(posX + Main.WIDTH / 20.67f, posY + Main.HEIGHT / 25f, Main.WIDTH / 24f, Main.HEIGHT / 45f, weapon, this);
+            stage.addActor(unequipButton);
+        }
+        if(!equipped && equipButton == null) {
+            if(unequipButton != null) {
+                unequipButton.remove();
+                unequipButton = null;
+            }
+            equipButton = new EquipButton(posX+Main.WIDTH/20.67f, posY+Main.HEIGHT/25f, Main.WIDTH/24f, Main.HEIGHT/45f, weapon, this);
+            stage.addActor(equipButton);
+        }
+        //TODO werte, falls man im kampf ist?
     }
 
     /**

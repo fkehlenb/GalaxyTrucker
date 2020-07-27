@@ -289,6 +289,7 @@ public class ShipView extends AbstractShip {
         hullStatusUpdate(ship.getHp());
         //Rooms
         //Crew
+        List<Weapon> equippedWeapons = new ArrayList<>();
         List<Integer> deadOnes = new ArrayList<>(crew.keySet());
         for(Room r : ship.getSystems()) {
             for(Crew c : r.getCrew()) {
@@ -296,10 +297,17 @@ public class ShipView extends AbstractShip {
                 deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)", otherwise it will use wrong remove method
             }
             rooms.get(r.getId()).update(r);
+            if(r.isSystem() && ((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
+                equippedWeapons.addAll(((System) r).getShipWeapons());
+            }
         }
         for(Integer i : deadOnes) {
             crew.get(i).crewDied();
             crew.remove(i);
+        }
+        //Inventory, if existing
+        if(inventoryUI != null) {
+            inventoryUI.update(ship.getInventory(), equippedWeapons);
         }
         //Energy
         energy.energyUpdate(ship.getEnergy());
