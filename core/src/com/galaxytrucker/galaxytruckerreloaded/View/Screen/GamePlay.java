@@ -341,8 +341,10 @@ public class GamePlay implements Screen {
         boolean success;
         if(ClientControllerCommunicator.getInstance(null).getClientShip().isInCombat()) {
             success = BattleController.getInstance(null).fleeFight(planet);
-            removeEnemy();
-            removeRoundButton();
+            if(success) {
+                removeEnemy();
+                removeRoundButton();
+            }
         }
         else {
             success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
