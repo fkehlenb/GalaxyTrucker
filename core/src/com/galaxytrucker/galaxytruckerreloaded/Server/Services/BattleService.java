@@ -190,13 +190,11 @@ public class BattleService implements Serializable {
      */
     private boolean myRound(Ship ship) {
         int id = ship.getId();
-        java.lang.System.out.println("[Waiting-In-Queue]:[Ship]:" + ship.getId());
         while (true) {
             if (currentRound == id) {
                 break;
             }
         }
-        java.lang.System.out.println("[Done-Waiting]:[Ship]:" + ship.getId());
         return true;
     }
 
@@ -213,8 +211,6 @@ public class BattleService implements Serializable {
                 roundActions.add(requestObject);
                 responseObject.setValidRequest(true);
                 responseObject.setResponseShip(requestObject.getShip());
-                java.lang.System.out.println("[Ship]:" + requestObject.getShip().getId() +
-                        "[Added-Action]:" + requestObject.getRequestType() + ":[To Queue]");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -238,7 +234,6 @@ public class BattleService implements Serializable {
             }
             // ===== If your round =====
             if (ship.getId() == currentRound) {
-                java.lang.System.out.println("[PRE]:[Play-Moves]:[Ship]:" + ship.getId() + "[Current-Round]:" + currentRound);
                 // ===== Clear old data =====
                 boolean fled = false;
                 if (previousRoundActions.contains(PreviousRoundAction.FLEE_FIGHT)){
@@ -296,7 +291,7 @@ public class BattleService implements Serializable {
                             break;
                         }
                     }
-                } if (combatOver){ // todo check if battle over due to passive changes
+                } if (combatOver){
                     responseObject.setCombatOver(true);
                     // Check if combat won
                     if (ship.getId() == winner) {
@@ -338,8 +333,6 @@ public class BattleService implements Serializable {
                 if (!ship.getAssociatedUser().equals("[ENEMY]")) {
                     responseObject.setResponseOverworld(UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld());
                 }
-                // Verification
-                java.lang.System.out.println("[POST]:[Play-Moves]:[Ship]:" + ship.getId() + "[Current-Round]:" + currentRound);
                 // ===== AI Playing =====
                 if (!combatants.isEmpty() && !combatOver) {
                     if (shipDAO.getById(currentRound).getAssociatedUser().equals("[ENEMY]")) {
@@ -482,7 +475,6 @@ public class BattleService implements Serializable {
                             }
                             s.setShields(s.getShieldCharge() / 2);
                             s.setFTLCharge(100);
-                            java.lang.System.out.println("[COMBAT-OVER-WON]");
                             this.combatOver = true;
                         }
                         shipDAO.update(s);
@@ -866,7 +858,6 @@ public class BattleService implements Serializable {
                                 }
                             }
                             opponent.setShields(weapon.getShieldPiercing());
-                            java.lang.System.out.println("[DAMAGE]:" + damage);
                             // ===== Damage ship hull =====
                             while (damage > 0) {
                                 opponent.setHp(opponent.getHp() - 1);
@@ -878,13 +869,13 @@ public class BattleService implements Serializable {
                             if (systemDamage<0){
                                 systemDamage = 0;
                             }
-                            if (systemDamage>10){
-                                systemDamage = 10;
+                            if (systemDamage>5){
+                                systemDamage = 5;
                             }
                             for (Room r : opponent.getSystems()){
                                 if (r.getId() == room.getId()&&r.isSystem()){
-                                    ((System) r).setDamage(damage);
-                                    if (systemDamage > 5) {
+                                    ((System) r).setDamage(((System) r).getDamage() + systemDamage);
+                                    if (((System) r).getDamage() >= 3) {
                                         ((System) r).setDisabled(true);
                                     }
                                     roomDAO.update(r);
@@ -895,7 +886,6 @@ public class BattleService implements Serializable {
                                 if (r.getId() == room.getId()){
                                     for (Crew c : r.getCrew()) {
                                         c.setHealth(c.getHealth() - weapon.getCrewDamage());
-                                        java.lang.System.out.println("[CREW]:" + c.getId() + ":[DAMAGE]:" + weapon.getCrewDamage() + ":[HP]:" + c.getHealth());
                                     }
                                     List<Crew> crewInRoom = new ArrayList<>(r.getCrew());
                                     for (Crew c : r.getCrew()){
@@ -943,7 +933,6 @@ public class BattleService implements Serializable {
                             for (Room r : opponent.getSystems()) {
                                 crewOnBoard.addAll(r.getCrew());
                             }
-                            java.lang.System.out.println("[AMOUNT OF CREW LEFT]:" + crewOnBoard.size());
                             if (opponent.getHp() <= 0 || crewOnBoard.isEmpty()) {
                                 this.combatOver = true;
                                 this.winner = ship.getId();
