@@ -80,18 +80,11 @@ public class TravelService implements Serializable {
      */
     public ResponseObject jump(Ship s, Planet dest) {
         ResponseObject responseObject = new ResponseObject();
-        System.out.println("\n==================== ACTION HYPERJUMP ====================");
         try {
             // Fetch data from database - client cannot be trusted
             s = shipDAO.getById(s.getId());
             dest = planetDAO.getById(dest.getId());
             Planet currentPlanet = s.getPlanet();
-
-            // Manual verification
-            System.out.println("[Client]:" + s.getId() + ":[Planet]:" + s.getPlanet().getName() + ":[Fuel]:" + s.getFuel()
-                    + ":[FTL-Charge]:" + s.getFTLCharge() + ":[Destination]:" + dest.getName());
-            System.out.println("[PlanetX]:" + s.getPlanet().getPosX() + ":[PlanetY]:" + s.getPlanet().getPosY() +
-                    ":[DestinationX]:" + dest.getPosX() + ":[DestinationY]:" + dest.getPosY());
 
             // 1 Crew in cockpit with cockpit level 1, 1 energy in engine
             // or no crew in cockpit with level 2 and 1 energy in engine
@@ -102,14 +95,11 @@ public class TravelService implements Serializable {
                     if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getSystemType().equals(SystemType.ENGINE)) {
                         engineActive = ((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getEnergy() > 0
                                 && !((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).isDisabled();
-                        System.out.println("[Engine-Has-Energy]:true");
                     } else if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getSystemType().equals(SystemType.COCKPIT)
                             && !((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).isDisabled()) {
                         if (((com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System) r).getMaxEnergy() >= 2) {
-                            System.out.println("[Cockpit-Level]:<=2");
                             crewInCockpit = true;
                         } else if (r.getCrew().size() >= 1) {
-                            System.out.println("[Cockpit-Level]:1:[Crew-In-Cockpit]:[Yes]");
                             crewInCockpit = true;
                         }
                     }
@@ -142,7 +132,6 @@ public class TravelService implements Serializable {
                         maxX = f;
                     }
                 }
-                System.out.println("[Maximum-X-Value]:" + maxX);
                 // Check for start planet
                 boolean startPlanet = false;
                 if (overworld.getStartPlanet().getId() == s.getPlanet().getId()) {
@@ -159,9 +148,6 @@ public class TravelService implements Serializable {
                 // Distance between current planet and next planet
                 int distanceX = Math.round(dest.getPosX() - currentPlanet.getPosX());
                 int distanceY = Math.round(dest.getPosY() - currentPlanet.getPosY());
-
-                // Manual verification
-                System.out.println("[DistanceX]:" + distanceX + ":[DistanceY]:" + distanceY);
 
                 // Distance verification
                 // Boss Planet / Start planet / planet in same or next matrix column / CANT RETURN TO START PLANET!
@@ -191,7 +177,6 @@ public class TravelService implements Serializable {
                     }
                     if (!(dest.getEvent().equals(PlanetEvent.VOID) || dest.getEvent().equals(PlanetEvent.METEORSHOWER)
                             || dest.getEvent().equals(PlanetEvent.SHOP) || dest.getEvent().equals(PlanetEvent.NEBULA))) {
-                        System.out.println("[DESTINATION]:[COMBAT]");
                         s.setFTLCharge(0);
                         Ship enemyShip = null;
                         try {
@@ -230,7 +215,6 @@ public class TravelService implements Serializable {
                             }
                         } else {
                             s.setFTLCharge(100);
-                            System.out.println("[ENEMY-NOT-FOUND]:[FTL-Charge]:" + s.getFTLCharge());
                         }
                     }
                     // ===== Remove ship from planet =====
@@ -265,18 +249,12 @@ public class TravelService implements Serializable {
                     // ===== Set valid =====
                     responseObject.setValidRequest(true);
                     responseObject.setResponseShip(s);
-                    System.out.println("[RESPONSE-OBJECT]:[SHIP-LOCATION]:" + s.getPlanet().getName() + ":[Planet-Event]:" + s.getPlanet().getEvent().toString());
                     responseObject.setResponseOverworld(overworld);
-                    // Manual verification
-                    System.out.println("[Client]:" + s.getId() + "[PROCESSED]:[Planet]:" + s.getPlanet().getName() + ":[Fuel]:" + s.getFuel()
-                            + ":[FTL-Charge]:" + s.getFTLCharge() + ":[IN-COMBAT]:" + s.isInCombat());
-                    System.out.println("[Ships-at-previous]:" + currentPlanet.getShips().toString() + ":[Ships-at-destination]:" + dest.getShips().toString());
                 }
             }
         } catch (Exception f) {
             f.printStackTrace();
         }
-        System.out.println("==========================================================\n");
         return responseObject;
     }
 }

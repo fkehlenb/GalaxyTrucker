@@ -4,16 +4,14 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.OverworldDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.PlanetDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ResponseObjectDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,6 +43,15 @@ public class ClientHandler implements Runnable {
      * Overworld DAO
      */
     private OverworldDAO overworldDAO = OverworldDAO.getInstance();
+
+    /** Weapon DAO */
+    private WeaponDAO weaponDAO = WeaponDAO.getInstance();
+
+    /** Crew DAO */
+    private CrewDAO crewDAO = CrewDAO.getInstance();
+
+    /** Trader DAO */
+    private TraderDAO traderDAO = TraderDAO.getInstance();
 
     /**
      * The server
@@ -204,9 +211,10 @@ public class ClientHandler implements Runnable {
                         }
                         // ==================== FETCH MAP ====================
                         try {
-                            Thread.sleep(4000);
+//                            Thread.sleep(4000);
                             send.println("[FETCH-MAP]");
                             send.flush();
+                            receive.readLine();
                             Overworld o = this.serverServiceCommunicator.getClientMap(username);
                             sendObject.writeObject(o);
                             sendObject.flush();
@@ -275,21 +283,34 @@ public class ClientHandler implements Runnable {
         return newName;
     }
 
+    /** Crew name generator
+     * @return a random name */
+    private String crewNameGenerator(){
+        String[] names = {"Trumpinator","Arnold Schwarzenegger", "Katie","Peter","Brian","Anakin","General Grievous",
+                "Bob","Noob","Steve"};
+        Random random = new Random();
+        return names[random.nextInt(names.length-1)];
+    }
+
+    /** Name generator
+     * @return a random name */
+    private String weaponNameGenerator(){
+        String[] names = {"BLASTER 9000","DESTRUCTION","Bombs Away","YO MOMMA", "U are DEAD", "GAME OVER", "Silly Billy"};
+        Random random = new Random();
+        return names[random.nextInt(names.length-1)];
+    }
+
     /**
      * Generate a new overworld
      *
      * @param seed - the world seed
      * @return the generated overworld
      */
+    @SuppressWarnings("Duplicates")
     private Overworld generateOverworld(int seed, String username, int difficulty) {
         Random random = new Random(seed);
         List<Planet> planetMap = new ArrayList<>();
         List<Planet> finalMap = new ArrayList<>();
-
-        // ======================= add textures to map =======================
-        //int randomPlanetTextureInt = random.nextInt(7)+1;
-        //String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
-
         // ======================= Add traders to map =======================
         int traders = random.nextInt(4) + 1;
         List<WeaponType> weaponTypes = new ArrayList<>();
@@ -311,7 +332,37 @@ public class ClientHandler implements Runnable {
             String randomPlanetTexture = "map/planets/" + Integer.toString(randomPlanetTextureInt) + ".png";
             Planet planet = new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, random),
                     0, 0, PlanetEvent.SHOP, new ArrayList<Ship>(), randomPlanetTexture);
-            // TODO add trader stock and traders
+            List<Weapon> weaponStock = new ArrayList<>();
+            List<Crew> crewStock = new ArrayList<>();
+            for (int g=0;g<4;g++){
+                weaponStock.add(new Weapon(UUID.randomUUID().hashCode(),weaponTypes.get(random.nextInt(weaponTypes.size()-1)),
+                        random.nextInt(5)+1,random.nextInt(4)+1,random.nextInt(5),random.nextInt(4),random.nextInt(1),
+                        random.nextFloat(),random.nextFloat(),random.nextInt(5),random.nextFloat(),random.nextInt(5),random.nextInt(3)+1,
+                        weaponNameGenerator(),random.nextInt(100)+20));
+                List<Integer> crewStats = new ArrayList<>();
+                for (int a=0;a<5;a++){
+                    crewStats.add(random.nextInt(5)+1);
+                }
+                crewStock.add(new Crew(UUID.randomUUID().hashCode(),crewNameGenerator(),8,8,crewStats,random.nextInt(200)+30,"None"));
+            }
+            Trader t = new Trader(UUID.randomUUID().hashCode(),planet,weaponStock,random.nextInt(10)+10,
+                    random.nextInt(20)+10,random.nextInt(10)+10,crewStock);
+            try {
+                planetDAO.persist(planet);
+                for (Weapon w : weaponStock){
+                    weaponDAO.persist(w);
+                }
+                for (Crew c : crewStock){
+                    crewDAO.persist(c);
+                }
+                traderDAO.persist(t);
+                planet = planetDAO.getById(planet.getId());
+                planetDAO.update(planet);
+            }
+            catch (Exception f){
+                f.printStackTrace();
+            }
+            planet.setTrader(t);
             planetMap.add(planet);
         }
         // ======================= Add combat =======================
@@ -344,7 +395,20 @@ public class ClientHandler implements Runnable {
 
             Planet planet = new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, random),
                     0, 0, PlanetEvent.MINIBOSS, new ArrayList<Ship>(), randomPlanetTexture);
-            // TODO add miniboss oponents
+            List<Ship> ships = planet.getShips();
+            List<ShipType> minibossTypes = new ArrayList<>();
+            minibossTypes.add(ShipType.BOARDER);
+            minibossTypes.add(ShipType.BARRAGE);
+            Ship opponent = generateShip(minibossTypes.get(random.nextInt(minibossTypes.size() - 1)), "[ENEMY]", planet);
+            try {
+                opponent.setHp(20 + random.nextInt(20));
+                planetDAO.persist(planet);
+                shipDAO.persist(opponent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            ships.add(opponent);
+            planet.setShips(ships);
             planetMap.add(planet);
         }
         // ======================= Add void =======================
@@ -413,7 +477,7 @@ public class ClientHandler implements Runnable {
         finalMap.add(boss);
         for (Planet p : finalMap) {
             try {
-                planetDAO.persist(p);
+                planetDAO.update(p);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -539,7 +603,7 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 1, 1, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
-                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Larry", 8, 8, crewStats, 3 * crewStats.size() * 2, username);
                         crew.setTile(cockpit.getTiles().get(0));
                         crew.setCurrentRoom(cockpit);
                         List<Crew> crewInRoom = cockpit.getCrew();
@@ -651,7 +715,7 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 1, 2, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
-                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 3 * 3 + 3 * 4 + 3 * 3, username);
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Larry", 8, 8, crewStats, 3 * 3 + 3 * 4 + 3 * 3, username);
                         crew.setTile(cockpit.getTiles().get(0));
                         crew.setCurrentRoom(cockpit);
                         List<Crew> crewInRoom = cockpit.getCrew();
@@ -736,7 +800,7 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 1, 2, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
-                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 30, username);
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Larry", 8, 8, crewStats, 30, username);
                         crew.setTile(cockpit.getTiles().get(0));
                         crew.setCurrentRoom(cockpit);
                         List<Crew> crewInRoom = cockpit.getCrew();
@@ -843,7 +907,7 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 1, 1, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
-                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 30, username);
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Larry", 8, 8, crewStats, 30, username);
                         crew.setTile(cockpit.getTiles().get(0));
                         crew.setCurrentRoom(cockpit);
                         List<Crew> crewInRoom = cockpit.getCrew();
@@ -991,7 +1055,7 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 1, 3, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
-                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 30, username);
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Larry", 8, 8, crewStats, 30, username);
                         crew.setTile(cockpit.getTiles().get(0));
                         crew.setCurrentRoom(cockpit);
                         List<Crew> crewInRoom = cockpit.getCrew();
@@ -1120,7 +1184,7 @@ public class ClientHandler implements Runnable {
                                 new ArrayList<Tile>(), 1, 3, 0, SystemType.COCKPIT, new ArrayList<Weapon>());
                         cockpit.setTiles(tiles);
                         // Add crew
-                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Ahmad", 8, 8, crewStats, 30, username);
+                        Crew crew = new Crew(UUID.randomUUID().hashCode(), "Larry", 8, 8, crewStats, 30, username);
                         crew.setTile(cockpit.getTiles().get(0));
                         crew.setCurrentRoom(cockpit);
                         List<Crew> crewInRoom = cockpit.getCrew();
@@ -1157,7 +1221,8 @@ public class ClientHandler implements Runnable {
                         (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30));
                 weapons.add(new Weapon(UUID.randomUUID().hashCode(), WeaponType.BOMB, 2, 6, 0, 1, 1,
                         (float) 1.5, (float) 0.18, 4, (float) 1.5, 3, 1, "Bomb", 35));
-                System s = new System(UUID.randomUUID().hashCode(),0,0,0,crewList,tiles,10,10,0,SystemType.WEAPON_SYSTEM,weapons);
+                System s = new System(UUID.randomUUID().hashCode(),0,0,0,crewList,tiles,10,10000,0,SystemType.WEAPON_SYSTEM,weapons);
+                s.setEnergy(10000);
                 rooms.add(s);
                 crew.setCurrentRoom(s);
                 crew.setTile(t);

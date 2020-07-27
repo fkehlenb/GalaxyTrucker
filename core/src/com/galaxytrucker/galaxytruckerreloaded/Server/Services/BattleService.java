@@ -934,7 +934,11 @@ public class BattleService implements Serializable {
                             shipDAO.update(opponent);
                             List<Crew> crewOnBoard = new ArrayList<>();
                             for (Room r : opponent.getSystems()) {
-                                crewOnBoard.addAll(r.getCrew());
+                                for (Crew c : r.getCrew()){
+                                    if (c.getHealth()>0){
+                                        crewOnBoard.add(c);
+                                    }
+                                }
                             }
                             if (opponent.getHp() <= 0 || crewOnBoard.isEmpty()) {
                                 this.combatOver = true;
@@ -1119,7 +1123,11 @@ public class BattleService implements Serializable {
             // ===== Check for all crew dead, if yes, game end =====
             List<Crew> shipCrew = new ArrayList<>();
             for (Room r : ship.getSystems()) {
-                shipCrew.addAll(r.getCrew());
+                for (Crew c : r.getCrew()){
+                    if (c.getHealth()>0){
+                        shipCrew.add(c);
+                    }
+                }
             }
             if (shipCrew.isEmpty()) {
                 this.combatOver = true;
