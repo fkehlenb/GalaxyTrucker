@@ -1,5 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,6 +13,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MoveButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PauseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.ShipButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
@@ -87,6 +89,11 @@ public class ShipView extends AbstractShip {
     private Texture shipRoomBackground;
 
     /**
+     * pausemenubutton to call pausemenu
+     */
+    private PauseButton pauseButton;
+
+    /**
      * the map (needed for the mapui)
      */
     private Overworld map;
@@ -141,6 +148,7 @@ public class ShipView extends AbstractShip {
         roomWidth = shipRoomBackground.getWidth()*1.5f;
         roomHeight = shipRoomBackground.getHeight()*1.5f;
 
+
         baseX = (70 + width/2);
         baseY = Main.HEIGHT/2f;
 
@@ -185,6 +193,7 @@ public class ShipView extends AbstractShip {
 
         moveButton = new MoveButton(Main.WIDTH/(2.259f), Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
         inventory = new ShipButton(Main.WIDTH/(2.5f),Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
+        pauseButton = new PauseButton(95*main.WIDTH/100, 95*main.HEIGHT/100, Main.WIDTH/(21.8f),Main.HEIGHT/(25.12f),this);
 
         money = new ScrapUI(main, ship.getCoins(), font25);
         missiles = new MissileUI(main, ship.getMissiles(), font25);
@@ -204,6 +213,7 @@ public class ShipView extends AbstractShip {
 
         stage.addActor(inventory);
         stage.addActor(moveButton);
+        stage.addActor(pauseButton);
     }
 
     /**
@@ -552,6 +562,10 @@ public class ShipView extends AbstractShip {
      * Hide the ship
      */
     public void hideShipView() {
+    }
+
+    public void createPauseMenu() {
+        game.createPauseMenu();
     }
 
 }
