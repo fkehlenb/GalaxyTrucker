@@ -14,6 +14,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.OverworldDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.PlanetDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.TraderDAO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,6 +37,8 @@ public class ClientHandler implements Runnable {
 
     /** Planet DAO */
     private PlanetDAO planetDAO = PlanetDAO.getInstance();
+
+    private TraderDAO traderDao = TraderDAO.getInstance();
 
     /** Overworld DAO */
     private OverworldDAO overworldDAO = OverworldDAO.getInstance();
@@ -298,6 +301,16 @@ public class ClientHandler implements Runnable {
 
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, random),
                     0, 0, PlanetEvent.SHOP, new ArrayList<Ship>(), randomPlanetTexture);
+            try{
+                planetDAO.persist(planet);
+                traderDao.persist(testTrader);
+                planet.setTrader(testTrader);
+            }
+                catch(Exception f){
+                    f.printStackTrace();
+                }
+
+
             // TODO add trader stock and traders
 
             //planet.setTrader(testTrader);
