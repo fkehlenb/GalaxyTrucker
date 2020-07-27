@@ -2,7 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout;
 
 
 public enum ShipType {
-    DEFAULT,TANK,KILLER,BARRAGE,STEALTH,BOARDER;
+    DEFAULT,TANK,KILLER,BARRAGE,STEALTH,BOARDER,DEATH_STAR;
 
     public ShipType next() {
         switch(this) {
