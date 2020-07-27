@@ -4,6 +4,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
@@ -17,7 +18,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.*;
 
@@ -281,12 +281,29 @@ public class ClientHandler implements Runnable {
         for (int i=0;i<traders;i++){
             int randomPlanetTextureInt = random.nextInt(7)+1;
             String randomPlanetTexture = "map/planets/"+Integer.toString(randomPlanetTextureInt)+".png";
+            Weapon laser = new Weapon(UUID.randomUUID().hashCode(),WeaponType.LASER, 2, 1, 1, 1, 0,
+                    (float) 1.0, (float) 0.3, 0, (float) 0.3, 1, 1, "Laser", 30);
+            ArrayList<Weapon> waffenList = new ArrayList<Weapon>();
+            waffenList.add(laser);
+            ArrayList<Crew> crewList = new ArrayList<Crew>();
+            List<Integer> crewStats = new ArrayList<>();
+            crewStats.add(0);
+            crewStats.add(3);
+            crewStats.add(4);
+            crewStats.add(3);
+            crewStats.add(0);
+            Crew crewTest = new Crew(UUID.randomUUID().hashCode(), "Newton", 8, 8,crewStats , 3, username);
+            crewList.add(crewTest);
+            Trader testTrader = new Trader(UUID.randomUUID().hashCode(), waffenList, 3,4,5, crewList);
+
             Planet planet = new Planet(UUID.randomUUID().hashCode(),getPlanetName(planetNames, usedPlanetNames, random),
-                    0, 0, PlanetEvent.SHOP, new ArrayList<Ship>(),randomPlanetTexture);
+                    0, 0, PlanetEvent.SHOP, new ArrayList<Ship>(), randomPlanetTexture);
             // TODO add trader stock and traders
+
+            //planet.setTrader(testTrader);
             planetMap.add(planet);
         }
-        // ======================= Add combat =======================
+        /*// ======================= Add combat =======================
         int battles = random.nextInt(4) + 5;
         for (int i=0;i<battles;i++){
             //Random planet texture
@@ -307,7 +324,7 @@ public class ClientHandler implements Runnable {
             ships.add(opponent);
             planet.setShips(ships);
             planetMap.add(planet);
-        }
+        }*/
         // ======================= Add minibosses =======================
         int minibosses = random.nextInt(2) + 1;
         for (int i=0;i<minibosses;i++){

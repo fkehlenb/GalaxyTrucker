@@ -342,9 +342,9 @@ public class GamePlay implements Screen {
             planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
             createEvent(planet.getEvent());
-            if(planet.getEvent() == PlanetEvent.SHOP) {
+            if(planet.getEvent().equals(PlanetEvent.SHOP)) {
                 background = new Texture("1080p.png");
-                createShop(planet.getTrader());
+
             }
             else if(planet.getEvent().equals(PlanetEvent.COMBAT)) {
                 if (planet.getShips().size() > 1){
@@ -454,7 +454,7 @@ public class GamePlay implements Screen {
     /**
      * shop ui pops up
      */
-    private void createShop(Trader trader) {
+    public void createShop(Trader trader) {
         if(shopUI == null) {
             shopUI = new ShopUI(main, stage, this, trader, null, 0);
         }

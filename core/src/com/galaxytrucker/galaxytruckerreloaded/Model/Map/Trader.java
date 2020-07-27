@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
-import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.*;
@@ -9,6 +8,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,11 +23,6 @@ public class Trader implements Serializable {
     /** ID */
     @NonNull @Id
     private int id;
-
-    /** Planet the trader is located at */
-    @ManyToOne
-    @NonNull
-    private Planet planet;
 
     /** Weapons for sale */
     @NonNull

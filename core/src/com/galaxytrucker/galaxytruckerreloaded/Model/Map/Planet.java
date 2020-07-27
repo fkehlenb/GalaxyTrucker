@@ -1,13 +1,10 @@
 package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.io.Serializable;
