@@ -4,6 +4,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Controller;
 import com.badlogic.gdx.Screen;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.CrewStat;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
@@ -197,6 +198,23 @@ public class TraderController extends Controller{
         }
         catch(Exception e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    /** Upgrade crew
+     * @param crew - the crew to upgrade
+     * @param stat - the stat to upgrade */
+    public boolean upgradeCrew(Crew crew, CrewStat stat){
+        RequestObject requestObject = new RequestObject();
+        requestObject.setRequestType(RequestType.UPGRADE_CREW);
+        requestObject.setShip(clientControllerCommunicator.getClientShip());
+        requestObject.setCrew(crew);
+        requestObject.setStat(stat);
+        ResponseObject responseObject = clientControllerCommunicator.sendRequest(requestObject);
+        if (responseObject.isValidRequest()){
+            clientControllerCommunicator.setClientShip(responseObject.getResponseShip());
+            return true;
         }
         return false;
     }

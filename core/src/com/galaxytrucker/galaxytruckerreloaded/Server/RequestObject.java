@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.CrewStat;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
@@ -84,4 +85,7 @@ public class RequestObject implements Serializable {
 
     /** PVP Opponent */
     private String pvpOpponent;
+
+    /** Stat to upgrade */
+    private CrewStat stat;
 }
