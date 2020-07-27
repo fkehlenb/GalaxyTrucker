@@ -55,7 +55,7 @@ public class PauseMenuUI {
         this.game = game;
         this.pauseStage = pauseStage;
 
-        optionsBackgroundTexture = new Texture("options/pause.PNG");
+        optionsBackgroundTexture = new Texture("options/pause.png");
 
         x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
         y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;

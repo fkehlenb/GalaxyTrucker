@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.*;
 
@@ -122,8 +121,8 @@ public class ClientHandler implements Runnable {
         this.server = server;
         try {
             sendObject = new ObjectOutputStream(clientSocket.getOutputStream());
-            receiveObject = new ObjectInputStream(clientSocket.getInputStream());
             send = new PrintWriter(clientSocket.getOutputStream(), true);
+            receiveObject = new ObjectInputStream(clientSocket.getInputStream());
             receive = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             serverServiceCommunicator = ServerServiceCommunicator.getInstance();
         } catch (Exception e) {
@@ -186,6 +185,7 @@ public class ClientHandler implements Runnable {
                         } catch (Exception f) {
                             f.printStackTrace();
                             send.println("[EXCEPTION]:[FETCH-SHIP]:[USERNAME]:" + username);
+                            Server.getInstance().killServer();
                             throw new IllegalArgumentException(f.getMessage());
                         }
                         // ==================== FETCH MAP ====================
@@ -195,6 +195,7 @@ public class ClientHandler implements Runnable {
                         } catch (Exception f) {
                             f.printStackTrace();
                             send.println("[EXCEPTION]:[FETCH-MAP]:[USERNAME]:" + username);
+                            Server.getInstance().killServer();
                             throw new IllegalArgumentException(f.getMessage());
                         }
                     } catch (Exception e) {
@@ -214,7 +215,7 @@ public class ClientHandler implements Runnable {
                             java.lang.System.out.println("[Client-Disconnected]:[Auto-Logout]");
                         } else {
                             RequestObject request = (RequestObject) receiveObject.readObject();
-                            sendObject.reset();
+                            sendObject.flush();
                             sendObject.writeObject(this.serverServiceCommunicator.getResponse(request));
                             if (request.getRequestType() == RequestType.LOGOUT) {
                                 gameActive = false;
@@ -228,7 +229,8 @@ public class ClientHandler implements Runnable {
                 // Thread will terminate with socket exception
                 try {
                     serverServiceCommunicator.logoutAfterException(username);
-                    send.println("[EXCEPTION]:[LOGIN]:[USERNAME]:" + username);
+                    clientSocket.close();
+                    Server.getInstance().killServer();
                 } catch (Exception f) {
                     f.printStackTrace();
                 }

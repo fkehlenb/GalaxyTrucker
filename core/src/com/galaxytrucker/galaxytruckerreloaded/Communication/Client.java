@@ -138,6 +138,12 @@ public class Client {
         }
         catch (Exception e){
             e.printStackTrace();
+            try {
+                socket.close();
+            }
+            catch (Exception f){
+                f.printStackTrace();
+            }
             throw new IllegalArgumentException();
         }
     }
@@ -156,8 +162,8 @@ public class Client {
             socket = new Socket();
             socket.connect(new InetSocketAddress(ipAddress,port),0);
             send = new PrintWriter(socket.getOutputStream(), true);
-            receive = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             sendObject = new ObjectOutputStream(socket.getOutputStream());
+            receive = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             receiveObject = new ObjectInputStream(socket.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
