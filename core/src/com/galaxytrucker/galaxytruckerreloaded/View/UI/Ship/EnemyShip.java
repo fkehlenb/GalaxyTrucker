@@ -7,6 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemyHullUI;
@@ -78,8 +79,6 @@ public class EnemyShip extends AbstractShip {
      */
     private EnemyHullUI hull;
 
-    private Ship eShip;
-
     private float baseX, baseY;
 
     /**
@@ -88,25 +87,28 @@ public class EnemyShip extends AbstractShip {
      */
     public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
         super(main, ship, stage, game, tileStage);
-        this.eShip = ship;
+
         enemyBackground = new Texture("battle/battle_overlay.png");
         Texture enemyShipTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "base.png");
-        Texture enemyRoomBackgroundTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "floor.png");
         enemyShipTextureRegion = new TextureRegion(enemyShipTexture);
-        enemyRoomBackgroundTextureRegion = new TextureRegion(enemyRoomBackgroundTexture);
-        enemyShipTextureRegion.flip(false, true);
-        enemyRoomBackgroundTextureRegion.flip(false, true);
+
+        if(ship.getShipType() != ShipType.DEATH_STAR) {
+            enemyShipTextureRegion.flip(false, true);
+            Texture enemyRoomBackgroundTexture = new Texture("ship/" + ship.getShipType().toString().toLowerCase() + "floor.png");
+            enemyRoomBackgroundTextureRegion = new TextureRegion(enemyRoomBackgroundTexture);
+            enemyRoomBackgroundTextureRegion.flip(false, true);
+            roomWidth = enemyRoomBackgroundTexture.getWidth()*1.5f;
+            roomHeight = enemyRoomBackgroundTexture.getHeight()*1.5f;
+        }
 
         width = enemyShipTexture.getWidth()*1.5f;
         height = enemyShipTexture.getHeight()*1.5f;
-        roomWidth = enemyRoomBackgroundTexture.getWidth()*1.5f;
-        roomHeight = enemyRoomBackgroundTexture.getHeight()*1.5f;
         boxWidth = enemyBackground.getWidth()*1.5f;
         boxHeight = Main.HEIGHT - 20;
         x = Main.WIDTH - boxWidth - 20;
         y = Main.HEIGHT/2f - boxHeight/2f;
 
-        hull = new EnemyHullUI(main, eShip.getHp());
+        hull = new EnemyHullUI(main, ship.getHp());
 
         //the base x and y for the rooms, meaning the middle of the ship
         baseX = x + width/2;
@@ -180,8 +182,13 @@ public class EnemyShip extends AbstractShip {
     public void render1() {
         main.batch.begin();
         main.batch.draw(enemyBackground, x, y, boxWidth, boxHeight);
-        main.batch.draw(enemyShipTextureRegion, x, Main.HEIGHT/2f - height/2f, width/2, height/2, width, height, 1, 1, 90);
-        main.batch.draw(enemyRoomBackgroundTextureRegion, (x+width/2) - roomWidth/2, Main.HEIGHT/2f - roomHeight/2f, roomWidth/2, roomHeight/2, roomWidth, roomHeight, 1, 1, 90);
+        if(enemyRoomBackgroundTextureRegion != null) {
+            main.batch.draw(enemyShipTextureRegion, x, Main.HEIGHT/2f - height/2f, width/2, height/2, width, height, 1, 1, 90);
+            main.batch.draw(enemyRoomBackgroundTextureRegion, (x + width / 2) - roomWidth / 2, Main.HEIGHT / 2f - roomHeight / 2f, roomWidth / 2, roomHeight / 2, roomWidth, roomHeight, 1, 1, 90);
+        }
+        else {
+            main.batch.draw(enemyShipTextureRegion, x+50, Main.HEIGHT/2f - height/2f, width, height);
+        }
         main.batch.end();
     }
 

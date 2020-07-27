@@ -24,6 +24,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
@@ -340,18 +341,23 @@ public class GamePlay implements Screen {
         boolean success;
         if(ClientControllerCommunicator.getInstance(null).getClientShip().isInCombat()) {
             success = BattleController.getInstance(null).fleeFight(planet);
+            if(success) {
+                removeEnemy();
+                removeRoundButton();
+            }
         }
         else {
             success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
         }
             planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
+
             createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 background = new Texture("1080p.png");
                 createShop(planet.getTrader());
             }
-            else if(planet.getEvent().equals(PlanetEvent.COMBAT)) {
+            else if(planet.getEvent().equals(PlanetEvent.COMBAT) || planet.getEvent().equals(PlanetEvent.BOSS)) {
                 if (planet.getShips().size() > 1){
                     background = new Texture("1080p.png");
                     battleController.setOpponent(planet.getShips().get(0));
@@ -417,6 +423,17 @@ public class GamePlay implements Screen {
             boolean combatOver = battleController.fetchUpdatedData();
             try {
                 player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+                try {
+                    Ship updatedEnemyShip = BattleController.getInstance(null).getOpponent();
+                    enemy.hullStatusUpdate(updatedEnemyShip.getHp());
+                    enemy.update(updatedEnemyShip);
+                    enemy.render();
+
+                } catch (Exception e) {
+                    java.lang.System.out.println("--- Der Gegner ist schon tot! ---");
+                    removeEnemy();
+                    removeRoundButton();
+                }
             } catch (Exception e){
                 java.lang.System.out.println("--- Du bist tot! ---");
                 removeRoundButton();
@@ -426,17 +443,7 @@ public class GamePlay implements Screen {
 //            if (battleController.combatOver() && battleController.youDead()){
 //                createGameOver(false);
 //            }
-            try {
-                Ship updatedEnemyShip = BattleController.getInstance(null).getOpponent();
-                enemy.hullStatusUpdate(updatedEnemyShip.getHp());
-                enemy.update(updatedEnemyShip);
-                enemy.render();
 
-            } catch (Exception e) {
-                java.lang.System.out.println("--- Der Gegner ist schon tot! ---");
-                removeEnemy();
-                removeRoundButton();
-            }
 
             if (combatOver){
                 if (battleController.combatOver()){
@@ -446,8 +453,6 @@ public class GamePlay implements Screen {
                     else{
                         // todo
                     }
-                    removeEnemy();
-                    removeRoundButton();
                 }
             }
         }
