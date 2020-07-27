@@ -254,8 +254,8 @@ public class GamePlay implements Screen {
             player.render1();
             enemy.render1();
             tileStage.draw();
-            player.render2();
             enemy.render2();
+            player.render2();
         }
 
         if(eventGUI != null) { eventGUI.render(); }

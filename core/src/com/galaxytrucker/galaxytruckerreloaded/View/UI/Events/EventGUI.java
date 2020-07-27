@@ -134,6 +134,12 @@ public class EventGUI {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }
         }
+        else if(event == PlanetEvent.MINIBOSS) {
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "A mini boss is waiting on this planet", px, py, font15, width, height);
+            if(drawables.size()>0) {
+                eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
+            }
+        }
         else if(event == PlanetEvent.METEORSHOWER) {
             currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "Seems like you have gotten into a meteor shower!", px, py, font15, width, height);
             if(drawables.size()>0) {
