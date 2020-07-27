@@ -64,6 +64,9 @@ public class ShopUI {
 
     private Trader trader;
 
+    private float x, y;
+
+
     /**
      * constructor
      * @param main the main class
@@ -72,6 +75,10 @@ public class ShopUI {
         this.main = main;
         this.game = game;
 
+        background = new Texture("shop/storeback.png");
+        x = main.WIDTH/2 - background.getWidth()/2;
+        y = main.HEIGHT/2 - background.getHeight()/2;
+
         //shopCrew = new ShopCrew(main, stage, game, trader, this);
         //shopSell = new ShopSell(main, stage, game, trader, this);
         //shopSystem = new ShopSystem(main, stage, game, trader, this);
@@ -79,14 +86,18 @@ public class ShopUI {
         //shopWeapon = new ShopWeapon(main, stage, game, trader, this);
         //shopResource = new ShopResource(main, stage, game, trader, this);
 
-        ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),0, 0, 10, 10, this, ShopButtonType.WEAPON);
-        ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab.png"),0, 0, 10, 10, this, ShopButtonType.RESOURCE);
-        ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),0, 0, 10, 10, this, ShopButtonType.CREW);
-        ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),0, 0, 10, 10, this,  ShopButtonType.SYSTEM);
-        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),0, 0, 10, 10, this,  ShopButtonType.UPGRADES);;
-        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), 0, 0, 10, 10, this,  ShopButtonType.SELL);
+        float xb = x+main.WIDTH/128f;
+        float yb = y+main.HEIGHT/90f;
+        float ydist = main.HEIGHT/15.652f;
 
-        closeButton = new InventoryCloseButton(0, 0, 10, 10, this, null, null);
+        ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),xb, yb, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.WEAPON);
+        ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab.png"),xb, yb+ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.RESOURCE);
+        ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),xb, yb+2*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.CREW);
+        ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),xb, yb+3*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SYSTEM);
+        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),xb, yb+4*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.UPGRADES);;
+        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SELL);
+
+        closeButton = new InventoryCloseButton(x+Main.WIDTH/6.4f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
         stage.addActor(closeButton);
         stage.addActor(shopWeaponButton);
         stage.addActor(shopResourceButton);
@@ -95,7 +106,18 @@ public class ShopUI {
         stage.addActor(shopUpgradeButton);
         stage.addActor(shopSellButton);
 
-        background = new Texture("shop/storeback.png");
+    }
+
+    /**
+     * render without stage stuff
+     */
+    public void render(){
+        main.batch.begin();
+        main.batch.draw(background, x, y,Main.WIDTH/3.195f, Main.HEIGHT/2.293f); //TODO whxy
+        main.batch.end();
+        /*for(ShopElement e : elements) {
+            e.render();
+        }*/
     }
 
     /**
@@ -150,9 +172,6 @@ public class ShopUI {
      * Dispose shop ui
      */
     public void disposeShopUI() {
-        for(ShopElement e : elements) {
-            e.disposeShopElement();
-        }
         current.dispose();
         closeButton.remove();
         background.dispose();
@@ -164,18 +183,6 @@ public class ShopUI {
      */
     public void removeBuyElement(ShopElement e) {
         elements.remove(e); //TODO add to the list of sellable, if weapon/missiles
-    }
-
-    /**
-     * render without stage stuff
-     */
-    public void render(){
-        main.batch.begin();
-        main.batch.draw(background, 0, 0, 10, 10); //TODO whxy
-        main.batch.end();
-        /*for(ShopElement e : elements) {
-            e.render();
-        }*/
     }
 
     //TODO woher wissen wir was wir verkaufen?
