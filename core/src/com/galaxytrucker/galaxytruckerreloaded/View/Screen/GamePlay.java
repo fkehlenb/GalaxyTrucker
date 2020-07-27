@@ -179,6 +179,8 @@ public class GamePlay implements Screen {
      */
     private BattleController battleController = BattleController.getInstance(null);
 
+    private Stage gameOverStage;
+
 
     /**
      * Constructor
@@ -436,22 +438,21 @@ public class GamePlay implements Screen {
                 }
             } catch (Exception e){
                 java.lang.System.out.println("--- Du bist tot! ---");
-                removeRoundButton();
                 createGameOver(false);
             }
-            // todo replace above with below
-//            if (battleController.combatOver() && battleController.youDead()){
-//                createGameOver(false);
-//            }
-
 
             if (combatOver){
                 if (battleController.combatOver()){
-                    if (battleController.combatWon()){
+                    boolean combatWon = battleController.combatWon();
+                    if (combatWon){
                         // todo
+                        java.lang.System.out.println("--- GEWONNEN ---");
                     }
                     else{
                         // todo
+                        java.lang.System.out.println("--- Du bist tot! ---");
+                        java.lang.System.out.println("--- VERLOREN ---");
+                        createGameOver(false);
                     }
                 }
             }
@@ -566,7 +567,7 @@ public class GamePlay implements Screen {
     /**
      * sell weapon to trader
      * @param weapon the weapon
-     * @return successfull? call to controller
+     * @return successfull? call to controllerau
      */
     public boolean sellWeapon(Weapon weapon) {
         boolean success = false; //TODO controller
@@ -581,8 +582,11 @@ public class GamePlay implements Screen {
      * @param won whether the game was won
      */
     public void createGameOver(boolean won) {
+       // gameOverStage = new Stage(viewport);
+        //Gdx.input.setInputProcessor(gameOverStage);
         if(gameOverUI == null) {
             gameOverUI = new GameOver(main, stage, won, this);
+            gameOverUI.render();
         }
     }
 

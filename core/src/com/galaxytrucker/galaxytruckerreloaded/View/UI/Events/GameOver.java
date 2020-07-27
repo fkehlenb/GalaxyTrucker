@@ -19,6 +19,11 @@ public class GameOver {
     private Texture gameOverTexture;
 
     /**
+     * backgroundTexture
+     */
+    private Texture bg;
+
+    /**
      * button to main menu
      */
     private MainMenuButton menuButton;
@@ -40,13 +45,13 @@ public class GameOver {
         this.game = game;
 
         if(won) {
-            gameOverTexture = new Texture("gameover/victory_background.png");
+            gameOverTexture = new Texture("gameover/victory_bg.png");
         }
         else {
-            gameOverTexture = new Texture("gameover/gameover_main.png");
+            gameOverTexture = new Texture("gameover/gameover_bg.png");
         }
 
-        menuButton = new MainMenuButton(0, 0, 10, 10, main); //TODO whxy
+        menuButton = new MainMenuButton(main.WIDTH/2-75, main.HEIGHT/2 - main.HEIGHT/10, 150, 30, main); //TODO whxy
         stage.addActor(menuButton);
 
     }
@@ -64,7 +69,7 @@ public class GameOver {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(gameOverTexture, main.WIDTH/2, main.HEIGHT/2, 100, 100); //TODO whxy
+        main.batch.draw(gameOverTexture, (main.WIDTH/2)-300, (main.HEIGHT/2)-215, 601, 431); //TODO whxy
         main.batch.end();
     }
 
