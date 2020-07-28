@@ -202,6 +202,7 @@ public class ClientHandler implements Runnable {
                         try {
                             send.println("[FETCH-SHIP]");
                             send.flush();
+                            receive.readLine();
                             Ship s = this.serverServiceCommunicator.getClientShip(username);
                             sendObject.writeObject(s);
                             sendObject.flush();

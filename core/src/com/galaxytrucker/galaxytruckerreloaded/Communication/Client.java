@@ -111,6 +111,8 @@ public class Client {
                 // ==================== FETCH SHIP ====================
                 if (received.equals("[FETCH-SHIP]")){
                     System.out.println("<CLIENT>:[FETCH-SHIP]:[USERNAME]:"+username);
+                    send.println("[AKNOWLEDGED]");
+                    send.flush();
                     try {
                         this.myShip = (Ship) receiveObject.readObject();
                         System.out.println("<CLIENT>:[RECEIVED-SHIP]:[USERNAME]:"+username+":[SHIP-ID]:"+myShip.getId());
