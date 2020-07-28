@@ -1,4 +1,4 @@
-package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
+package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
 public class OpenShopButton extends ImButton {
 

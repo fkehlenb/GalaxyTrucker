@@ -11,6 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -74,7 +75,7 @@ public class ShopUI {
      * constructor
      * @param main the main class
      */
-    public ShopUI(Main main, Stage stage, GamePlay game, Trader trader, List<Weapon> shipWeapons, int shipMissiles) {
+    public ShopUI(Main main, Stage stage, GamePlay game, Trader trader) {
         this.main = main;
         this.game = game;
         this.stage=stage;
@@ -96,28 +97,25 @@ public class ShopUI {
         float yb = y+main.HEIGHT/90f;
         float ydist = main.HEIGHT/15.652f;
 
-        ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),xb, yb, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.WEAPON);
+        ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.WEAPON);
         shopTabs.add(shopWeaponButton);
-        ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab.png"),xb, yb+ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.RESOURCE);
+        ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab.png"),xb, yb+4*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.RESOURCE);
         shopTabs.add(shopResourceButton);
-        ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),xb, yb+2*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.CREW);
+        ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),xb, yb+3*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.CREW);
         shopTabs.add(shopCrewButton);
-        ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),xb, yb+3*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SYSTEM);
+        ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),xb, yb+2*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SYSTEM);
         shopTabs.add(shopSystemButton);
-        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),xb, yb+4*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.UPGRADES);;
+        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),xb, yb+ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.UPGRADES);;
         shopTabs.add(shopUpgradeButton);
-        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SELL);
+        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), xb, yb, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SELL);
         shopTabs.add(shopSellButton);
 
         //closeButton = new InventoryCloseButton(x+Main.WIDTH/6.4f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
         closeButton = new InventoryCloseButton(x+Main.WIDTH/7f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
         stage.addActor(closeButton);
-        stage.addActor(shopWeaponButton);
-        stage.addActor(shopResourceButton);
-        stage.addActor(shopCrewButton);
-        stage.addActor(shopSystemButton);
-        stage.addActor(shopUpgradeButton);
-        stage.addActor(shopSellButton);
+        for (ShopUIButton tab : shopTabs) {
+            stage.addActor(tab);
+        }
 
     }
 
@@ -127,13 +125,8 @@ public class ShopUI {
     public void render(){
         main.batch.begin();
         main.batch.draw(background, x, y,Main.WIDTH/3.195f, Main.HEIGHT/2.293f); //TODO whxy
-        for (ShopUIButton tab : shopTabs) {
-            //TODO draw tabs here not wherever
-        }
         main.batch.end();
-        /*for(ShopElement e : elements) {
-            e.render();
-        }*/
+        stage.draw();
     }
 
     /**

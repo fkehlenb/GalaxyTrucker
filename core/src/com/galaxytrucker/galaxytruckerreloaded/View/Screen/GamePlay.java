@@ -24,11 +24,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.OpenShopButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.RewardsPage;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
@@ -491,7 +490,9 @@ public class GamePlay implements Screen {
      */
     public void createShop(Trader trader) {
         if(shopUI == null) {
-            shopUI = new ShopUI(main, stage, this, trader, null, 0);
+            Stage shopStage = new Stage(viewport);
+            Gdx.input.setInputProcessor(shopStage);
+            shopUI = new ShopUI(main, shopStage, this, trader);
         }
     }
 
