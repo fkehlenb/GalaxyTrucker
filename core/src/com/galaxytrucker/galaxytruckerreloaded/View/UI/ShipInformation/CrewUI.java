@@ -19,6 +19,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CrewSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
+import lombok.Getter;
 
 /**
  * shows the crew on board
@@ -59,6 +60,7 @@ public class CrewUI extends EnemyCrewUI{
     /**
      * the y position of the picture of the crew member in the upper left corner
      */
+    @Getter
     private float y;
 
     /**
@@ -128,7 +130,8 @@ public class CrewUI extends EnemyCrewUI{
     /**
      * dispose of the crew UI
      */
-    public void disposeCrewUI() {
+    @Override
+    public void disposeEnemyCrewUI() {
         super.disposeEnemyCrewUI();
         box.dispose();
         crewStatus.dispose();
@@ -163,6 +166,18 @@ public class CrewUI extends EnemyCrewUI{
     public void update(Crew crew, float roomX, float roomY) {
         super.update(crew, roomX, roomY);
         statusUpdate(crew.getHealth());
+    }
+
+    /**
+     * update the position of the ui stuff on the most left side
+     * box, button, everything
+     * @param x the new x
+     * @param y the new y
+     */
+    public void updateLeftPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+        crewButton.setPosition(x, y);
     }
 
     /**
