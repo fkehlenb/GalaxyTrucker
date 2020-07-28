@@ -1,40 +1,34 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.ChooseDifficultyScreen;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.SPNewOrResume;
+import com.galaxytrucker.galaxytruckerreloaded.View.Screen.*;
 
-public class DifficultyBackButton extends ImButton {
+/**
+ * button to go back to last screen in the game creation process
+ */
+public class BackButton extends ImButton {
 
     /**
      * Click sound effect
      */
     private Sound clickSound;
 
-    /**
-     * the screen this button is on
-     */
-    private ChooseDifficultyScreen screen;
+    private MenuScreen screen;
 
     /**
-     * Left-Click action of the Button.
+     * constructor create or join
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
-    @Override
-    public void leftClick() {
-        screen.goBack();
-    }
-
-    /**
-     * constructor
-     *
-     * @param screen  the screen this button is on
-     */
-    public DifficultyBackButton(float x, float y, float width, float height, ChooseDifficultyScreen screen) {
+    public BackButton(float x, float y, float width, float height, MenuScreen screen) {
         super(new Texture("buttons/back_button.png"), x, y, width, height);
         this.screen = screen;
         this.addListener(new ClickListener() {
@@ -42,5 +36,13 @@ public class DifficultyBackButton extends ImButton {
                 leftClick();
             }
         });
+    }
+
+    /**
+     * Left-Click action of the Button.
+     */
+    @Override
+    public void leftClick() {
+        screen.goBack();
     }
 }

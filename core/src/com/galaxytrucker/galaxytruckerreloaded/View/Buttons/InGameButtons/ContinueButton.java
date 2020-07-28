@@ -31,7 +31,7 @@ public class ContinueButton extends ImButton {
     }
 
     /**
-     * constructo
+     * constructor
      * @param x x position
      * @param y y position
      * @param width button width

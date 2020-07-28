@@ -70,8 +70,8 @@ public class VideoUI {
 
 
         backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
-        windowedButton = new WindowedButton(main.WIDTH/2 , main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40, main);
-        fullscreenEnableButton = new FullscreenEnableButton(main.WIDTH/2 - (main.WIDTH/15), main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40, main);
+        windowedButton = new WindowedButton(main.WIDTH/2 , main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40);
+        fullscreenEnableButton = new FullscreenEnableButton(main.WIDTH/2 - (main.WIDTH/15), main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40);
         setResolutionButton = new SetResolutionButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*1, main.WIDTH/15, main.HEIGHT/40, main, 2560, 1440);
 
 
