@@ -681,7 +681,7 @@ public class GamePlay implements Screen {
      */
     private void createGameOver(boolean won) {
         if(gameOverUI == null) {
-            gameOverUI = new GameOver(main, stage, won, this);
+            gameOverUI = new GameOver(main, stage, won);
             gameOverUI.render();
         }
     }

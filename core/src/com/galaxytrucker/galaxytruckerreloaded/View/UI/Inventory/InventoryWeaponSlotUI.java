@@ -9,6 +9,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EquipmentAndUpgradesMenu.EquipButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EquipmentAndUpgradesMenu.UnequipButton;
 
+/**
+ * to display a weapon in the inventory
+ */
 public class InventoryWeaponSlotUI extends InventorySlotUI {
 
     /**
@@ -16,27 +19,71 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
      */
     private Texture weaponTexture;
 
+    /**
+     * the glyph layout for damage
+     */
     private GlyphLayout glyphDamage = new GlyphLayout();
+
+    /**
+     * the glyph layout for cooldown
+     */
     private GlyphLayout glyphCooldown = new GlyphLayout();
+
+    /**
+     * the glyph layout for missile cost
+     */
     private GlyphLayout glyphMissile = new GlyphLayout();
+
+    /**
+     * the glyph layout for crew damage
+     */
     private GlyphLayout glyphCrewDamage = new GlyphLayout();
+
+    /**
+     * the glyph layout for burst
+     */
     private GlyphLayout glyphBurst = new GlyphLayout();
+
+    /**
+     * the glyph layout for precision
+     */
     private GlyphLayout glyphPrecision = new GlyphLayout();
 
+    /**
+     * the glyph layout for the name
+     */
     private GlyphLayout glyphName = new GlyphLayout();
 
+    /***
+     * button for equipping this weapon (or null if equipped)
+     */
     private EquipButton equipButton;
 
+    /**
+     * button for unequipping this weapon (or null if already unequipped)
+     */
     private UnequipButton unequipButton;
 
+    /**
+     * ui this is on
+     */
     private InventoryUI ui;
 
+    /**
+     * stage for buttons
+     */
     private Stage stage;
 
     /**
      * constructor
-     * @param main the main class
-     * @param weapon the weapon to be displayed
+     * @param main main class extending game
+     * @param weapon weapon this should display
+     * @param x x position
+     * @param y y position
+     * @param stage stage for buttons
+     * @param font font for text
+     * @param ui ui this is on
+     * @param equipped whether the weapon is currently equipped
      */
     public InventoryWeaponSlotUI(Main main, Weapon weapon, float x, float y, Stage stage, BitmapFont font, InventoryUI ui, boolean equipped) {
         super(main, x, y, font);
@@ -70,7 +117,6 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
      */
     @Override
     public void disposeInventorySlotUI() {
-        super.disposeInventorySlotUI();
         weaponTexture.dispose();
         if(equipButton != null) {
             equipButton.remove();
@@ -80,9 +126,10 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
         }
     }
 
-
+    /**
+     * render everything to the screen
+     */
     public void render() {
-        super.render();
         main.batch.begin();
         font.draw(main.batch, glyphName, posX, posY + weaponTexture.getHeight() + Main.HEIGHT/76.8f);
         font.draw(main.batch, glyphBurst, posX+Main.WIDTH/26.67f, posY+Main.HEIGHT/32f);
@@ -96,8 +143,10 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     }
 
     /**
-     *
-     * @param weapon
+     * update the view
+     * possibly change from equip to unequip button or the other way around
+     * @param weapon the weapon
+     * @param equipped whether it is currently equipped
      */
     public void update(Weapon weapon, boolean equipped) {
         if(equipped && unequipButton == null) {
@@ -116,37 +165,20 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
             equipButton = new EquipButton(posX+Main.WIDTH/20.67f, posY+Main.HEIGHT/25f, Main.WIDTH/24f, Main.HEIGHT/45f, weapon, this);
             stage.addActor(equipButton);
         }
-        //TODO werte, falls man im kampf ist?
     }
 
     /**
-     * show the ui
+     * equip a weapon
+     * @param weapon the weapon
      */
-    @Override
-    public void showInventorySlotUI() {
-
-    }
-
-    /**
-     * Hide inventory slot ui
-     */
-    @Override
-    public void hideInventorySlotUI() {
-
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup()
-    {
-
-    }
-
     public void equipWeapon(Weapon weapon){
         ui.equipWeapon(weapon);
     }
 
+    /***
+     * unequip a weapon
+     * @param weapon the weapon
+     */
     public void unequipWeapon(Weapon weapon) {
         ui.unequipWeapon(weapon);
     }

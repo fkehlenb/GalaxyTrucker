@@ -13,7 +13,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EventPageButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,14 +30,9 @@ public class EventGUI {
     private List<EventPage> eventPages;
 
     /**
-     * what kind of event it is
-     */
-    private PlanetEvent event;
-
-    /**
      * button to click on for next page
      *
-     * if new page is openend, it is taken out of the list
+     * if new page is opened, it is taken out of the list
      * therefore, the next is always the front of the list
      */
     private EventPageButton nextPage;
@@ -64,15 +58,22 @@ public class EventGUI {
     private GamePlay game;
 
     /**
-     * Constructor
-     *
-     * @param main - main class object for SpriteBatch
-     * @param event what kind of event it is
-     *
+     * constructor
+     * @param main main class extending game
+     * @param event event this should display
+     * @param stage stage for buttons
+     * @param game screen this is on
+     * @param font15 font, size 15
+     * @param rocket amount of rockets, if rewards are at this planet
+     * @param fuel amount of fuel, if rewards are at this planet (else 0)
+     * @param money amount of money, if rewards are at this planet (else 0)
+     * @param crew crew member, if rewards are at this planet
+     * @param weapons list of weapons, if rewards are at this planet
+     * @param shipType shiptype of the own ship, for choosing the correct crew texture
+     * @param opponent for fight events: is there still an opponent or were they already defeated?
      */
     public EventGUI(Main main, PlanetEvent event, Stage stage, GamePlay game, BitmapFont font15, int rocket, int fuel, int money, Crew crew, List<Weapon> weapons, ShipType shipType, boolean opponent) {
         this.main = main;
-        this.event = event;
         this.game = game;
 
         backgroundTexture = new Texture("event/eventbackground.png");
@@ -204,24 +205,5 @@ public class EventGUI {
         else {
             disposeEventGUI();
         }
-    }
-
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * Show the event gui
-     */
-    public void showEventGUI() {
-    }
-
-    /**
-     * Hide the event gui
-     */
-    public void hideEventGUI() {
     }
 }

@@ -131,7 +131,7 @@ public class EnemyShip extends AbstractShip {
         List<Crew> crews = new ArrayList<>();
         for(Room r : existingRooms) {
             if(r.isSystem()) {
-                roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), baseX), getRoomX(ship.getShipType(), r.getInteriorID(), baseY), (System) r));
+                roomUIHashMap.put(r.getId(), new EnemySystemUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), baseX), getRoomX(ship.getShipType(), r.getInteriorID(), baseY)));
             }
             else {
                 roomUIHashMap.put(r.getId(), new RoomUI(main, r, tileStage, this, getRoomY(ship.getShipType(), r.getInteriorID(), baseX), getRoomX(ship.getShipType(), r.getInteriorID(), baseY)));
