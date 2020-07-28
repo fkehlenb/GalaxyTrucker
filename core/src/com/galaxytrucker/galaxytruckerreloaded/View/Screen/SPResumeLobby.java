@@ -41,11 +41,6 @@ public class SPResumeLobby implements Screen {
     private Viewport viewport;
 
     /**
-     * Button which starts the game.
-     */
-    private SPResumeStartGame spResumeStartGame;
-
-    /**
      * the glyph layout for easy centering of text
      */
     private GlyphLayout glyph = new GlyphLayout();
@@ -65,39 +60,20 @@ public class SPResumeLobby implements Screen {
      */
     private BitmapFont font;
 
-
-    //Müssen im Konstruktor durch echte, im Savegame gespeicherte Parameter ersetzt werden.
-    /**
-     * the name of the ship
-     */
-    private String shipName = "TestShip1";
-
-    /**
-     * the difficulty chosen
-     */
-    private String difficultyName = "TestDiff";
-
-    /**
-     * the seed of the map
-     */
-    private String seedName = "TestSeed";
-
-    private SPResumeLobbyBackButton spResumeLobbyBackButton;
-
     /** Constructor  */
     public SPResumeLobby(Main main){
         this.main = main;
         background = new Texture("1080p.png");
 
-        spResumeStartGame = new SPResumeStartGame(7*main.WIDTH/8 - Main.WIDTH/15.484f, main.HEIGHT/8 , Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this);
-        spResumeLobbyBackButton = new SPResumeLobbyBackButton(main.WIDTH/8 - Main.WIDTH/15.484f, main.HEIGHT/8, Main.WIDTH/7.742f, Main.HEIGHT/21.6f,this);
+        SPResumeStartGame spResumeStartGame = new SPResumeStartGame(7*Main.WIDTH/8f - Main.WIDTH/15.484f, Main.HEIGHT/8f , Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this);
+        SPResumeLobbyBackButton spResumeLobbyBackButton = new SPResumeLobbyBackButton(Main.WIDTH/8f - Main.WIDTH/15.484f, Main.HEIGHT/8f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f,this);
 
         font = main.getFont15();
         glyph.setText(font, "Your Ship: " + main.getClient().getMyShip().getShipType());
         glyph2.setText(font, "Your Difficulty: " + main.getClient().getOverworld().getDifficulty());
         glyph3.setText(font, "Your Seed: " + main.getClient().getOverworld().getSeed());
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport);
         stage.addActor(spResumeStartGame);
         stage.addActor(spResumeLobbyBackButton);
@@ -123,10 +99,10 @@ public class SPResumeLobby implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 + Main.HEIGHT/77.143f);
-        font.draw(main.batch, glyph2, 3*main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 + Main.HEIGHT/77.143f);
-        font.draw(main.batch, glyph3, 2*main.WIDTH/4  - glyph.width/2, main.HEIGHT/2 + Main.HEIGHT/77.143f);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
+        font.draw(main.batch, glyph, Main.WIDTH/4f  - glyph.width/2, Main.HEIGHT/2f + Main.HEIGHT/77.143f);
+        font.draw(main.batch, glyph2, 3*Main.WIDTH/4f  - glyph.width/2, Main.HEIGHT/2f + Main.HEIGHT/77.143f);
+        font.draw(main.batch, glyph3, 2*Main.WIDTH/4f  - glyph.width/2, Main.HEIGHT/2f + Main.HEIGHT/77.143f);
         main.batch.end();
         stage.draw();
     }

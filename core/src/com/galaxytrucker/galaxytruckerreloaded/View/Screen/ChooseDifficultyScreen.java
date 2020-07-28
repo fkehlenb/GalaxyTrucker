@@ -2,12 +2,10 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -36,26 +34,6 @@ public class ChooseDifficultyScreen implements Screen {
     private Viewport viewport;
 
     /**
-     * the difficulty button for easy
-     */
-    private DifficultyButton easy;
-
-    /**
-     * the difficulty button for medium
-     */
-    private DifficultyButton middle;
-
-    /**
-     * the difficulty button for hard
-     */
-    private DifficultyButton hard;
-
-    /**
-     * the button to get back to the last screen
-     */
-    private DifficultyBackButton back;
-
-    /**
      * the background texture
      */
     private Texture background;
@@ -79,14 +57,14 @@ public class ChooseDifficultyScreen implements Screen {
 
         background = new Texture("1080p.png");
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport);
 
-        easy = new DifficultyButton(new Texture("buttons/easy_button.png"), main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*0, main.WIDTH/7.74f, main.HEIGHT/21.6f, this, 1);
-        middle = new DifficultyButton(new Texture("buttons/medium_button.png"), main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this, 2);
-        hard = new DifficultyButton(new Texture("buttons/hard_button.png"), main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this, 3);
+        DifficultyButton easy = new DifficultyButton(new Texture("buttons/easy_button.png"), Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*0, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this, 1);
+        DifficultyButton middle = new DifficultyButton(new Texture("buttons/medium_button.png"), Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*1, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this, 2);
+        DifficultyButton hard = new DifficultyButton(new Texture("buttons/hard_button.png"), Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this, 3);
 
-        back = new DifficultyBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*3, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        DifficultyBackButton back = new DifficultyBackButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*3, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
 
         font = main.getFont48();
         glyph.setText(font, "Choose A Difficulty");
@@ -101,7 +79,7 @@ public class ChooseDifficultyScreen implements Screen {
 
     /**
      * set the difficulty and load new screen
-     * @param difficulty
+     * @param difficulty the difficulty that was chosen
      */
     public void setDifficulty(int difficulty) {
         if(!main.isMultiplayer()) {
@@ -141,16 +119,18 @@ public class ChooseDifficultyScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + main.HEIGHT/21.6f*2);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
+        font.draw(main.batch, glyph, Main.WIDTH/2f - glyph.width/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f*2);
         main.batch.end();
 
         stage.draw();
     }
 
     /**
-     * @param width
-     * @param height
+     * apply the changing window size to the viewport for correct display
+     * called if the user resizes the window
+     * @param width the new width
+     * @param height the new height
      */
     @Override
     public void resize(int width, int height) {

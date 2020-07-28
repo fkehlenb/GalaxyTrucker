@@ -55,11 +55,6 @@ public class GamePlay implements Screen {
     private Texture planetTexture;
 
     /**
-     * Click sound effect
-     */
-    private Sound clickSound;
-
-    /**
      * ship of the player
      */
     private ShipView player;
@@ -175,11 +170,6 @@ public class GamePlay implements Screen {
     private PVPActivateButton pvpActivateButton;
 
     /**
-     * button to get the other pvp opponents, to display and choose one (if multiplayer and activated)
-     */
-    private PVPGetOpponentsButton pvpGetOpponentsButton;
-
-    /**
      * the ui to display all the names of pvp opponents
      */
     private PVPOpponents pvpUI;
@@ -204,6 +194,9 @@ public class GamePlay implements Screen {
      */
     private BattleController battleController = BattleController.getInstance(null);
 
+    /**
+     * glyph layout for when the player if host (display lower right corner)
+     */
     private GlyphLayout hostGlyph;
 
 
@@ -248,28 +241,38 @@ public class GamePlay implements Screen {
 
     }
 
+    /**
+     * apply the window size changes to the viewport for correct display
+     * @param width the new width
+     * @param height the new height
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
     }
 
+    /**
+     * render everything to the screen
+     * @param delta the time since the last render call
+     */
     @Override
     public void render(float delta) {
+        //new input?
         updateInput();
 
+        //overpaint old stuff
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //background
         main.batch.begin();
         main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
         if (planetTexture != null){
             main.batch.draw(planetTexture,Main.WIDTH/2f,Main.HEIGHT/2f,planetTexture.getWidth(),planetTexture.getHeight());
         }
-
-
-
         main.batch.end();
 
+        //player, and possibly enemy
         if(enemy == null) {
             player.render();
         }
@@ -281,12 +284,14 @@ public class GamePlay implements Screen {
             player.render2();
         }
 
+        //host?
         if(main.isHost()) {
             main.batch.begin();
             font25red.draw(main.batch, hostGlyph, Main.WIDTH - hostGlyph.width - 30, 30);
             main.batch.end();
         }
 
+        //ui stuff
         if(eventGUI != null) { eventGUI.render(); }
         else if(shopUI != null) { shopUI.render(); }
         else if(gameOverUI != null) { gameOverUI.render(); }
@@ -296,10 +301,12 @@ public class GamePlay implements Screen {
         else if(pauseMenuUI != null) { pauseMenuUI.render(); }
         else if(pvpUI != null) { pvpUI.render(); }
 
-
         stage.draw();
     }
 
+    /**
+     * dispose everything
+     */
     @Override
     public void dispose() {
         background.dispose();
@@ -324,8 +331,7 @@ public class GamePlay implements Screen {
     /**
      * handles input to pause game, open options
      */
-    public void updateInput() {
-        //Gdx.input.setInputProcessor(stage);
+    private void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             // Pause-menu
             Gdx.input.setInputProcessor(pauseStage);
@@ -346,8 +352,10 @@ public class GamePlay implements Screen {
 
     /**
      * new event ui
+     * @param event the event
+     * @param opponent whether there is an opponent (if combat, miniboss, boss)
      */
-    public void createEvent(PlanetEvent event, boolean opponent) {
+    private void createEvent(PlanetEvent event, boolean opponent) {
         PlanetRewardController controller = PlanetRewardController.getInstance(null);
         controller.getRewards();
         player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
@@ -455,7 +463,7 @@ public class GamePlay implements Screen {
         if(success) {
             pvpActivateButton.remove();
             pvpActivateButton = null;
-            pvpGetOpponentsButton = new PVPGetOpponentsButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(12f), 124, 50, this);
+            PVPGetOpponentsButton pvpGetOpponentsButton = new PVPGetOpponentsButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(12f), 124, 50, this);
             stage.addActor(pvpGetOpponentsButton);
         }
     }
@@ -483,8 +491,9 @@ public class GamePlay implements Screen {
 
     /**
      * create a pvp ui
+     * @param names the names of the other players on this server who have pvp activated
      */
-    public void createPVPUI(List<String> names) {
+    private void createPVPUI(List<String> names) {
         if(pvpUI == null) {
             pvpUI = new PVPOpponents(main, stage, font15, names, this);
         }
@@ -551,7 +560,7 @@ public class GamePlay implements Screen {
      * gets the current position of the ship and returns the planet texture
      * @return the new planet texture
      */
-    public Texture getPlanetTexture(){
+    private Texture getPlanetTexture(){
         String planetTextureString = PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture();
         planetTexture = new Texture(planetTextureString);
         return planetTexture;
@@ -559,6 +568,7 @@ public class GamePlay implements Screen {
 
     /**
      * shop ui pops up
+     * @param trader the trader to be displayed
      */
     private void createShop(Trader trader) {
         if(shopUI == null) {
@@ -669,9 +679,7 @@ public class GamePlay implements Screen {
      * create a game over ui if it does not yet exist
      * @param won whether the game was won
      */
-    public void createGameOver(boolean won) {
-       // gameOverStage = new Stage(viewport);
-        //Gdx.input.setInputProcessor(gameOverStage);
+    private void createGameOver(boolean won) {
         if(gameOverUI == null) {
             gameOverUI = new GameOver(main, stage, won, this);
             gameOverUI.render();
@@ -693,7 +701,6 @@ public class GamePlay implements Screen {
         pauseStage = new Stage(viewport);
         Gdx.input.setInputProcessor(pauseStage);
         pauseMenuUI = new PauseMenuUI(main, pauseStage, this);
-        //TODO controller sagen dass spiel "pausiert"?
     }
 
     /**
@@ -875,32 +882,12 @@ public class GamePlay implements Screen {
     /**
      * the player has chosen a weapon and a room
      * call to controller, add id of the enemyship
-     *
      * @param weapon the weapon
      * @param room the room
      */
     private void weaponShot(Weapon weapon, Room room) {
         battleController.attack(weapon, room);
-    } 
-
-    /**
-     * update the health of a crew member
-     * @param crew the crew member
-     * @param health the new health
-     */
-    public void crewHealth(Crew crew, int health) { player.crewHealth(crew, health); }
-
-    /**
-     * update the energy status of the overall energy not yet assigned to a system
-     * @param energy the new energy
-     */
-    public void energyStatusUpdate(int energy) { player.energyStatusUpdate(energy); }
-
-    /**
-     * update the status of the hull
-     * @param status the new status
-     */
-    public void hullStatusUpdate(int status) { player.hullStatusUpdate(status); }
+    }
 
     /**
      * the player has chosen a new amount of energy for a system
@@ -909,7 +896,6 @@ public class GamePlay implements Screen {
     public void roomSystemEnergyAdded(Room room, int amount) {
         boolean success = SystemController.getInstance(null).addEnergy((System) room, amount);
         if(success) {
-            //roomSystemEnergyUpdate(room, getNewSystemEnergyAmount(room));
             player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
     }
@@ -922,35 +908,8 @@ public class GamePlay implements Screen {
     public void roomSystemEnergyRemoved(Room room, int amount) {
         boolean success = SystemController.getInstance(null).removeEnergy((System) room, amount);
         if(success) {
-            //roomSystemEnergyUpdate(room, getNewSystemEnergyAmount(room));
             player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
-    }
-
-    /**
-     * the energy for a system is updated
-     * @param amount the new total amount
-     */
-    private void roomSystemEnergyUpdate(Room room, int amount) {
-        player.roomSystemEnergyUpdate(room, amount);
-        energyStatusUpdate(ClientControllerCommunicator.getInstance(null).getClientShip().getEnergy());
-    }
-
-    /**
-     * update the status of a system
-     * @param room the system
-     * @param amount the new status
-     */
-    public void roomSystemStatusUpdate(Room room, int amount) {
-        player.roomSystemStatusUpdate(room, amount);
-    }
-
-    /**
-     * change the amount of scrap
-     * @param amount the new amount
-     */
-    public void changeAmountScrap(int amount) {
-        player.changeAmountScrap(amount);
     }
 
     /**
@@ -967,13 +926,17 @@ public class GamePlay implements Screen {
     }
 
     /**
-     * load the weapons of a ship
+     * load the weapons of a ship that are not equipped
      * @return the weapons of the ship in a list
      */
     public List<Weapon> loadWeapons() {
         return new LinkedList<>(ClientControllerCommunicator.getInstance(null).getClientShip().getInventory());
     }
 
+    /**
+     * load the weapons of a ship that are equipped
+     * @return the list of weapons
+     */
     public List<Weapon> loadEquippedWeapons() {
         List<Weapon> weapons = new LinkedList<>();
         for(Room r : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()) {
@@ -998,6 +961,10 @@ public class GamePlay implements Screen {
         }
     }
 
+    /**
+     * unequip a weapon
+     * @param weapon the weapon
+     */
     public void unequipWeapon(Weapon weapon) {
         boolean success = WeaponController.getInstance(null).unequipWeapon(weapon);
         if(success) {
@@ -1034,15 +1001,6 @@ public class GamePlay implements Screen {
     @Override
     public void hide() {
 
-    }
-
-    /**
-     * Change the background
-     *
-     * @param background - the new background
-     */
-    public void setBackground(Texture background) {
-        this.background = background;
     }
 
     /**

@@ -55,16 +55,6 @@ public class SelectLobbyScreen implements Screen {
     private TextField port;
 
     /**
-     * the button to return back to the last screen
-     */
-    private SelectLobbyBackButton backButton;
-
-    /**
-     * the button with which to attempt to connect to the server
-     */
-    private SelectLobbyButton selectLobbyButton;
-
-    /**
      * the font to draw text with
      */
     private BitmapFont font;
@@ -111,8 +101,8 @@ public class SelectLobbyScreen implements Screen {
         port.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
         port.setPosition(Main.WIDTH/2f - port.getWidth()/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 - Main.HEIGHT/21.6f*1);
 
-        backButton = new SelectLobbyBackButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*3, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
-        selectLobbyButton = new SelectLobbyButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        SelectLobbyBackButton backButton = new SelectLobbyBackButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*3, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        SelectLobbyButton selectLobbyButton = new SelectLobbyButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
 
         stage.addActor(lobby);
         stage.addActor(port);
@@ -162,8 +152,8 @@ public class SelectLobbyScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + main.HEIGHT/21.6f*2);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
+        font.draw(main.batch, glyph, Main.WIDTH/2f - glyph.width/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f*2);
         main.batch.end();
 
         stage.draw();

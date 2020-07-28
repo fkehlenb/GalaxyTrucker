@@ -31,21 +31,6 @@ public class SPNewOrResume implements Screen {
     private Stage stage;
 
     /**
-     * the button to resume an old game
-     */
-    private ResumeButton resumeButton;
-
-    /**
-     * the button to start a new game
-     */
-    private StartNewGameButton startNewGameButton;
-
-    /**
-     * the button to return to the multi/single player selector
-     */
-    private SPNewOrResumeBackButton backButton;
-
-    /**
      * the viewport
      */
     private Viewport viewport;
@@ -57,11 +42,11 @@ public class SPNewOrResume implements Screen {
         background = new Texture("1080p.png");
 
 
-        startNewGameButton = new StartNewGameButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        resumeButton = new ResumeButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        backButton = new SPNewOrResumeBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this, main);
+        StartNewGameButton startNewGameButton = new StartNewGameButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        ResumeButton resumeButton = new ResumeButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*1, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        SPNewOrResumeBackButton backButton = new SPNewOrResumeBackButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this, main);
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport);
         stage.addActor(startNewGameButton);
         stage.addActor(resumeButton);
@@ -84,7 +69,7 @@ public class SPNewOrResume implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
         main.batch.end();
 
         stage.draw();

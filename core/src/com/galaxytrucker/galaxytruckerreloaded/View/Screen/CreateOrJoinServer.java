@@ -58,21 +58,6 @@ public class CreateOrJoinServer implements Screen {
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
-     * the button to chose to start a server
-     */
-    private StartServerButton start;
-
-    /**
-     * the button to chose to join a server
-     */
-    private JoinServerButton join;
-
-    /**
-     * the button to return to the last screen
-     */
-    private CreateOrJoinBackButton back;
-
-    /**
      * the type of ship selected
      */
     private ShipType ship;
@@ -107,12 +92,12 @@ public class CreateOrJoinServer implements Screen {
         font = main.getFont48();
         glyph.setText(font, "Do you want to start the server or join one?");
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport);
 
-        join = new JoinServerButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*0, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        start = new StartServerButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        back = new CreateOrJoinBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        JoinServerButton join = new JoinServerButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*0, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        StartServerButton start = new StartServerButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*1, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        CreateOrJoinBackButton back = new CreateOrJoinBackButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
 
         stage.addActor(join);
         stage.addActor(start);
@@ -128,7 +113,7 @@ public class CreateOrJoinServer implements Screen {
         main.startClient(address, Integer.parseInt(port));
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
-            main.setScreen(new GamePlay(main)); //TODO ?
+            main.setScreen(new GamePlay(main));
         }
     }
 
@@ -140,7 +125,7 @@ public class CreateOrJoinServer implements Screen {
         main.startClient(address, Integer.parseInt(port));
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
-            main.setScreen(new GamePlay(main)); //TODO ?
+            main.setScreen(new GamePlay(main));
         }
     }
 
@@ -171,16 +156,17 @@ public class CreateOrJoinServer implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2 + main.HEIGHT/21.6f*2);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
+        font.draw(main.batch, glyph, Main.WIDTH/2f - glyph.width/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f*2);
         main.batch.end();
 
         stage.draw();
     }
 
     /**
-     * @param width
-     * @param height
+     * apply the changes of the window size to the viewport for correct display
+     * @param width the new width
+     * @param height the new height
      */
     @Override
     public void resize(int width, int height) {

@@ -37,16 +37,6 @@ public class LoginScreen implements Screen {
     private TextField username;
 
     /**
-     * the login button
-     */
-    private LoginButton loginButton;
-
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
-
-    /**
      * the main game class
      */
     private Main main;
@@ -72,11 +62,6 @@ public class LoginScreen implements Screen {
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
-     * the button to log in with
-     */
-    private LoginBackButton backButton;
-
-    /**
      * the glyphlayout for the server address, if multiplayer
      * */
     private GlyphLayout glyph2 = new GlyphLayout();
@@ -100,18 +85,18 @@ public class LoginScreen implements Screen {
         this.main = main;
 
         background = new Texture("1080p.png");
-        loginButton = new LoginButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*4, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        backButton = new LoginBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*6, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        LoginButton loginButton = new LoginButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*4, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        LoginBackButton backButton = new LoginBackButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*6, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
 
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
-        username.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
-        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2);
+        username.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
+        username.setPosition(Main.WIDTH/2f - username.getWidth()/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*2);
 
 
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport);
 
         font = main.getFont48();
@@ -123,12 +108,12 @@ public class LoginScreen implements Screen {
 
         if(main.isMultiplayer()) {
             address = new TextField("", skin);
-            address.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
-            address.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 +main.HEIGHT/21.6f*3);
+            address.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
+            address.setPosition(Main.WIDTH/2f - username.getWidth()/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 +Main.HEIGHT/21.6f*3);
             stage.addActor(address);
 
             port = new TextField("", skin);
-            port.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
+            port.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
             port.setPosition(Main.WIDTH/2f - username.getWidth()/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 +Main.HEIGHT/21.6f*1);
             stage.addActor(port);
 
@@ -152,21 +137,29 @@ public class LoginScreen implements Screen {
 
     }
 
-
+    /**
+     * render everything to the screen
+     * @param delta time since last render
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2  -main.HEIGHT/21.6f*0);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
+        font.draw(main.batch, glyph, Main.WIDTH/2f - glyph.width/2, Main.HEIGHT/2f  -Main.HEIGHT/21.6f*0);
         if(main.isMultiplayer()) {
-            font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2  +main.HEIGHT/21.6f*5);
+            font.draw(main.batch, glyph2, Main.WIDTH/2f - glyph2.width/2, Main.HEIGHT/2f  +Main.HEIGHT/21.6f*5);
         }
         main.batch.end();
         stage.draw();
     }
 
+    /**
+     * apply window resize to viewport for correct display
+     * @param width the new width
+     * @param height the new height
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
