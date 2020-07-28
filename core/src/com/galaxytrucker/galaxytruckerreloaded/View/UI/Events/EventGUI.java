@@ -120,7 +120,6 @@ public class EventGUI {
 
         if(event == PlanetEvent.SHOP) {
             currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "There is a trader at this planet", px, py, font15, width, height);
-            //TODO es gibt immer mehr drawables weil Shop schon geladen wird
             if(drawables.size() > 0) {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }

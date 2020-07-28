@@ -509,8 +509,9 @@ public class GamePlay implements Screen {
      * call to controller
      * @param weapon the weapon
      */
-    public boolean buyWeapon(Weapon weapon) {
-        boolean success = false; //TODO controller
+    public boolean buyWeapon(Trader trader, Weapon weapon) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseWeapon(trader, weapon);
         if(success) {
             player.changeAmountScrap(-(weapon.getPrice().get(weapon.getWeaponLevel())));
         }
@@ -522,8 +523,9 @@ public class GamePlay implements Screen {
      * call to controller
      * @param crew the crew member
      */
-    public boolean buyCrew(Crew crew) {
-        boolean success = false; //TODO controller
+    public boolean buyCrew(Trader trader, Crew crew) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseCrew(trader, crew);
         if(success) {
             player.changeAmountScrap(-(crew.getPrice()));
         }
@@ -535,10 +537,11 @@ public class GamePlay implements Screen {
      * call to controller
      * @param amount the amount of fuel
      */
-    public boolean buyFuel(int amount) {
-        boolean success = false; //TODO controller
+    public boolean buyFuel(Trader trader, int amount) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseFuel(trader, amount);
         if(success) {
-            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+            player.changeAmountScrap(-(3*amount)); //TODO festpreis
         }
         return success;
     }
@@ -548,10 +551,11 @@ public class GamePlay implements Screen {
      * call to controller
      * @param amount the amount of missiles
      */
-    public boolean buyMissiles(int amount) {
-        boolean success = false; //TODO controller
+    public boolean buyMissiles(Trader trader, int amount) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseFuel(trader, amount); //TODO controller
         if(success) {
-            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+            player.changeAmountScrap(-(6*amount)); //TODO festpreis
         }
         return success;
     }
@@ -561,8 +565,9 @@ public class GamePlay implements Screen {
      * call to controller
      * @param amount the amount of hp
      */
-    public boolean buyHp(int amount) {
-        boolean success = false; //TODO controller
+    public boolean buyHp(Trader trader, int amount) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseHP(trader, amount);
         if(success) {
             player.changeAmountScrap(-(5*amount)); //TODO festpreis
         }
@@ -574,8 +579,9 @@ public class GamePlay implements Screen {
      * @param amount the amount of missiles
      * @return successfull? call to controller
      */
-    public boolean sellMissiles(int amount) {
-        boolean success = false; //TODO controller
+    public boolean sellMissiles(Trader trader, int amount) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.sellRockets(trader, amount);
         if(success) {
             player.changeAmountScrap(5*amount); //TODO festpreis
         }
@@ -587,8 +593,9 @@ public class GamePlay implements Screen {
      * @param weapon the weapon
      * @return successfull? call to controller
      */
-    public boolean sellWeapon(Weapon weapon) {
-        boolean success = false; //TODO controller
+    public boolean sellWeapon(Trader trader, Weapon weapon) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.sellWeapon(trader, weapon);
         if(success) {
             player.changeAmountScrap(weapon.getPrice().get(weapon.getWeaponLevel()));
         }

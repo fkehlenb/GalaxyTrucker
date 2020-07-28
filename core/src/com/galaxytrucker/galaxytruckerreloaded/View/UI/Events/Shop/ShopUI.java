@@ -149,8 +149,7 @@ public class ShopUI {
      * @param weapon the weapon
      */
     boolean buyWeapon(Weapon weapon) {
-        //TODO Controllerklassen verbinden
-        return game.buyWeapon(weapon);
+        return game.buyWeapon(trader, weapon);
     }
 
     /**
@@ -158,7 +157,7 @@ public class ShopUI {
      * @param weapon the weapon
      */
     boolean sellWeapon(Weapon weapon) {
-        return game.sellWeapon(weapon);
+        return game.sellWeapon(trader, weapon);
     }
 
     /**
@@ -166,7 +165,7 @@ public class ShopUI {
      * @param crew the crewmember
      * @return success of transaction
      */
-    boolean buyCrew(Crew crew){return game.buyCrew(crew);}
+    boolean buyCrew(Crew crew){return game.buyCrew(trader, crew);}
 
     //TODO SellCrew???
     boolean sellCrew(Crew crew){
@@ -178,19 +177,19 @@ public class ShopUI {
      * Buy a Unit of Fuel from the Trader
      * @return success of transaction
      */
-    boolean buyFuel(){return game.buyFuel(1);}
+    boolean buyFuel(){return game.buyFuel(trader, 1);}
 
     /**
      * Buy a missile from the Trader
      * @return success of transaction
      */
-    boolean buyMissiles(){return game.buyMissiles(1);}
+    boolean buyMissiles(){return game.buyMissiles(trader, 1);}
 
     /**
      * Buy some repairs from the Trader
      * @return success of transaction
      */
-    boolean buyHP(int amount){return game.buyHp(amount);}
+    boolean buyHP(int amount){return game.buyHp(trader, amount);}
 
     /**TODO put into SubUIs
      * remove a buyable element

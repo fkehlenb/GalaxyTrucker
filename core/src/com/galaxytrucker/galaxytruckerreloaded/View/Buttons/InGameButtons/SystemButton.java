@@ -50,7 +50,7 @@ public class SystemButton extends ImButton
      */
     public void rightClick()
     {
-        ui.removeEnergy(); //TODO how much?
+        ui.removeEnergy();
     }
 
     /**
