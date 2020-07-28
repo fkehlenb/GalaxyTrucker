@@ -49,9 +49,9 @@ public class AudioUI {
 
            
 
-        muteButton = new MuteButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*5, main.WIDTH/15, main.HEIGHT/40,  main);
-        volumeDownButton = new VolumeDownButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*6, main.WIDTH/15, main.HEIGHT/40,  main);
-        volumeUpButton = new VolumeUpButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*7, main.WIDTH/15, main.HEIGHT/40,  main);
+        muteButton = new MuteButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*5, main.WIDTH/15, main.HEIGHT/40);
+        volumeDownButton = new VolumeDownButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*6, main.WIDTH/15, main.HEIGHT/40);
+        volumeUpButton = new VolumeUpButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*7, main.WIDTH/15, main.HEIGHT/40);
 
         stage.addActor(backButton);
         stage.addActor(muteButton);

@@ -4,20 +4,28 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.audio.*;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.AudioController;
-import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 
-
+/**
+ * button for muting the audio
+ */
 public class MuteButton extends ImButton {
 
+    /**
+     * click sound
+     */
     private Sound sound;
-    private Main main;
 
-    public MuteButton(float x, float y, float width, float height, Main main){
+    /**
+     * constructor
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     */
+    public MuteButton(float x, float y, float width, float height){
         super(new Texture("options/Audio_mute.png"), x, y, width, height);
-        this.main = main;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
@@ -25,6 +33,9 @@ public class MuteButton extends ImButton {
         });
     }
 
+    /**
+     * left click action
+     */
     @Override
     public void leftClick(){
         if(AudioController.getInstance().getMusic().isPlaying()){
