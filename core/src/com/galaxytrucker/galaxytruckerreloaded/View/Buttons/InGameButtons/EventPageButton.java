@@ -27,6 +27,7 @@ public class EventPageButton extends ImButton {
      * what happens when there is a left click on the button
      */
     public void leftClick() {
+
         eventgui.nextPage();
     }
 

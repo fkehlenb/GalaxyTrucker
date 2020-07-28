@@ -12,6 +12,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EventPageButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class EventGUI {
     /**
      * what kind of event it is
      */
+    @Getter
     private PlanetEvent event;
 
     /**

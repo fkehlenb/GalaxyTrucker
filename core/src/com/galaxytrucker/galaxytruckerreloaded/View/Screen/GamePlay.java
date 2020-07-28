@@ -168,6 +168,11 @@ public class GamePlay implements Screen {
     private NextRoundButton nextRoundButton;
 
     /**
+     * the Button to open the ShopUI on a Shop Planet
+     */
+    private OpenShopButton openShopButton;
+
+    /**
      * a font used to draw text
      */
     private BitmapFont font15;
@@ -277,7 +282,9 @@ public class GamePlay implements Screen {
         player.disposeShipView();
         font15.dispose();
         if(shopUI != null) { shopUI.disposeShopUI(); }
-        if(eventGUI != null) { eventGUI.disposeEventGUI(); }
+        if(eventGUI != null) {
+            eventGUI.disposeEventGUI();
+        }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
         if(videoUI != null) { videoUI.disposeVideoUI(); }
         if(generalUI != null) { generalUI.disposeGeneralUI(); }
@@ -355,7 +362,10 @@ public class GamePlay implements Screen {
             createEvent(planet.getEvent());
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 background = new Texture("1080p.png");
-                createShop(planet.getTrader());
+                createShopButton();
+                //createShop(planet.getTrader());
+
+
             }
             else if(planet.getEvent().equals(PlanetEvent.COMBAT) || planet.getEvent().equals(PlanetEvent.BOSS) || planet.getEvent().equals(PlanetEvent.MINIBOSS)) {
                 if (planet.getShips().size() > 1){
@@ -402,6 +412,14 @@ public class GamePlay implements Screen {
     private void createRoundButton() {
         nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), 248, 50, this);
         stage.addActor(nextRoundButton);
+    }
+
+    /**
+     * create ShopButton
+     */
+    private void createShopButton(){
+        openShopButton = new OpenShopButton(Main.WIDTH/(2.5f), Main.HEIGHT -  (Main.HEIGHT/(8f)), 248, 50, this, PlanetEventController.getInstance(null).getClientShip().getPlanet().getTrader());
+        stage.addActor(openShopButton);
     }
 
     /**
@@ -471,11 +489,11 @@ public class GamePlay implements Screen {
     /**
      * shop ui pops up
      */
-    private void createShop(Trader trader) {
+    public void createShop(Trader trader) {
         if(shopUI == null) {
             shopUI = new ShopUI(main, stage, this, trader, null, 0);
         }
-    } //TODO
+    }
 
     /**
      * remove the shop
