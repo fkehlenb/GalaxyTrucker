@@ -27,8 +27,11 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PVPActivateButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PVPGetOpponentsButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.PVPOpponents;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.RewardsPage;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
@@ -169,10 +172,28 @@ public class GamePlay implements Screen {
     private NextRoundButton nextRoundButton;
 
     /**
+     * button to activate pvp, if multiplayer
+     */
+    private PVPActivateButton pvpActivateButton;
+
+    /**
+     * button to get the other pvp opponents, to display and choose one (if multiplayer and activated)
+     */
+    private PVPGetOpponentsButton pvpGetOpponentsButton;
+
+    /**
+     * the ui to display all the names of pvp opponents
+     */
+    private PVPOpponents pvpUI;
+
+    /**
      * a font used to draw text
      */
     private BitmapFont font15;
 
+    /**
+     * a font used to draw text in size 25
+     */
     private BitmapFont font25;
 
     /**
@@ -216,6 +237,9 @@ public class GamePlay implements Screen {
         pauseStage = new Stage(viewport, main.batch);
         tileStage = new Stage(viewport, main.batch);
 
+        pvpActivateButton = new PVPActivateButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(12f), 124, 50, this);
+
+        stage.addActor(pvpActivateButton);
 
         player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this, font15, font25);
 
@@ -268,6 +292,7 @@ public class GamePlay implements Screen {
         else if(generalUI != null) { generalUI.render(); }
         else if(optionUI != null) { optionUI.render(); }
         else if(pauseMenuUI != null) { pauseMenuUI.render(); }
+        else if(pvpUI != null) { pvpUI.render(); }
 
 
         stage.draw();
@@ -287,6 +312,7 @@ public class GamePlay implements Screen {
         if(optionUI != null) { optionUI.disposeOptionsUI(); }
         if(pauseMenuUI != null) { pauseMenuUI.disposePauseMenuUI(); }
         if(enemy != null) { enemy.disposeShipView(); }
+        if(pvpUI != null) { pvpUI.disposePVPOpponents(); }
         stage.dispose();
     }
 
@@ -413,6 +439,58 @@ public class GamePlay implements Screen {
     private void removeRoundButton() {
         nextRoundButton.remove();
         nextRoundButton = null;
+    }
+
+    /**
+     * activate pvp for this client
+     * if multiplayer
+     */
+    public void activatePVP() {
+        boolean success = PVPController.getInstance(null).activatePVP(ClientControllerCommunicator.getInstance(null).getClientShip());
+        if(success) {
+            pvpActivateButton.remove();
+            pvpActivateButton = null;
+            pvpGetOpponentsButton = new PVPGetOpponentsButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(12f), 124, 50, this);
+            stage.addActor(pvpGetOpponentsButton);
+        }
+    }
+
+    /**
+     * get the pvp opponents
+     * display them, for the player to choose one
+     */
+    public void getPVPOpponents() {
+        List<String> names = PVPController.getInstance(null).getPvpOpponents();
+        createPVPUI(names);
+    }
+
+    /**
+     * a pvp opponent was chosen
+     * @param name the name
+     */
+    public void pvpOpponentChosen(String name) {
+        boolean success = PVPController.getInstance(null).sendPVPRequest(name);
+        if(success) {
+            pvpUI.disposePVPOpponents();
+            deletePVPUI();
+        }
+    }
+
+    /**
+     * create a pvp ui
+     */
+    public void createPVPUI(List<String> names) {
+        if(pvpUI == null) {
+            pvpUI = new PVPOpponents(main, stage, font15, names, this);
+        }
+    }
+
+    /**
+     * delete the pvp ui
+     * called by that ui in the dispose method
+     */
+    public void deletePVPUI() {
+        pvpUI = null;
     }
 
     /**
