@@ -104,19 +104,7 @@ public class CreateOrJoinServer implements Screen {
 
         background = new Texture("1080p.png");
 
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = main.HEIGHT/48;
-
-        font = generator.generateFont(params);
+        font = main.getFont48();
         glyph.setText(font, "Do you want to start the server or join one?");
 
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);

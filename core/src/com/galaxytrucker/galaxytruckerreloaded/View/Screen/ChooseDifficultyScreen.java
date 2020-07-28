@@ -71,18 +71,11 @@ public class ChooseDifficultyScreen implements Screen {
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
-     * whether or not singleplayer was chosen earlier
-     */
-    private boolean singleplayer;
-
-    /**
      * constructor
      * @param main the main class extending game
-     * @param singleplayer whether the game will be singleplayer
      */
-    public  ChooseDifficultyScreen(Main main, boolean singleplayer) {
+    public  ChooseDifficultyScreen(Main main) {
         this.main = main;
-        this.singleplayer = singleplayer;
 
         background = new Texture("1080p.png");
 
@@ -95,19 +88,7 @@ public class ChooseDifficultyScreen implements Screen {
 
         back = new DifficultyBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*3, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
 
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = main.HEIGHT/48;
-
-        font = generator.generateFont(params);
+        font = main.getFont48();
         glyph.setText(font, "Choose A Difficulty");
 
         stage.addActor(easy);
@@ -123,11 +104,11 @@ public class ChooseDifficultyScreen implements Screen {
      * @param difficulty
      */
     public void setDifficulty(int difficulty) {
-        if(singleplayer) {
-            main.setScreen(new ShipSelector(main, true, difficulty));
+        if(!main.isMultiplayer()) {
+            main.setScreen(new ShipSelector(main, difficulty));
         }
         else {
-            main.setScreen(new ShipSelector(main, false, difficulty));
+            main.setScreen(new ShipSelector(main, difficulty));
         }
         dispose();
     }
@@ -136,7 +117,7 @@ public class ChooseDifficultyScreen implements Screen {
      * return to last screen
      */
     public void goBack() {
-        main.setScreen(new SPNewOrResume(main, singleplayer));
+        main.setScreen(new SPNewOrResume(main));
         dispose();
     }
 

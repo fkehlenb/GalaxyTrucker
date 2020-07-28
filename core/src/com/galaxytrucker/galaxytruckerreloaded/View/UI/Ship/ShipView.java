@@ -115,8 +115,6 @@ public class ShipView extends AbstractShip {
 
     private BitmapFont font15;
 
-    private BitmapFont font25;
-
     @Getter
     private ShipType shipType;
 
@@ -148,7 +146,6 @@ public class ShipView extends AbstractShip {
     public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game, BitmapFont font15, BitmapFont font25) {
         super(main, ship, stage, game, tileStage);
         this.font15 = font15;
-        this.font25 = font25;
 
         shipType = ship.getShipType();
 

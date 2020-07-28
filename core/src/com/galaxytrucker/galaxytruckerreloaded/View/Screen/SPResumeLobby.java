@@ -92,19 +92,7 @@ public class SPResumeLobby implements Screen {
         spResumeStartGame = new SPResumeStartGame(7*main.WIDTH/8 - Main.WIDTH/15.484f, main.HEIGHT/8 , Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this);
         spResumeLobbyBackButton = new SPResumeLobbyBackButton(main.WIDTH/8 - Main.WIDTH/15.484f, main.HEIGHT/8, Main.WIDTH/7.742f, Main.HEIGHT/21.6f,this);
 
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = 15;
-
-        font = generator.generateFont(params);
+        font = main.getFont15();
         glyph.setText(font, "Your Ship: " + main.getClient().getMyShip().getShipType());
         glyph2.setText(font, "Your Difficulty: " + main.getClient().getOverworld().getDifficulty());
         glyph3.setText(font, "Your Seed: " + main.getClient().getOverworld().getSeed());
@@ -197,7 +185,7 @@ public class SPResumeLobby implements Screen {
      * go back to previous screen
      */
     public void goBack() {
-        main.setScreen(new LoginScreen(main, true));
+        main.setScreen(new LoginScreen(main));
         dispose();
     }
 

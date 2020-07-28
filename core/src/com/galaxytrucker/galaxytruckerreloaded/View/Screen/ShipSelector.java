@@ -60,11 +60,6 @@ public class ShipSelector implements Screen {
     private TextField username;
 
     /**
-     * whether or not the game will be singleplayer
-     */
-    private boolean singleplayer;
-
-    /**
      * the difficulty that was chosen
      */
     private int difficulty;
@@ -110,9 +105,8 @@ public class ShipSelector implements Screen {
 
     /** Constructor
      * @param main - main class */
-    public ShipSelector(Main main, boolean singleplayer, int difficulty){
+    public ShipSelector(Main main, int difficulty){
         this.main = main;
-        this.singleplayer = singleplayer;
         this.difficulty = difficulty;
 
         bildScale = (float)main.WIDTH/1920;
@@ -127,19 +121,7 @@ public class ShipSelector implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = main.HEIGHT/72;
-
-        font = generator.generateFont(params);
+        font = main.getFont72();
         glyph.setText(font, "Please enter your username");
         glyph2.setText(font, "Please select your ship");
 
@@ -176,19 +158,7 @@ public class ShipSelector implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = main.HEIGHT/72;
-
-        font = generator.generateFont(params);
+        font = main.getFont72();
         glyph.setText(font, "Please enter your username");
         glyph2.setText(font, "Please select your ship");
 
@@ -217,7 +187,7 @@ public class ShipSelector implements Screen {
      * go back to last screen
      */
     public void goBack() {
-        main.setScreen(new ChooseDifficultyScreen(main, singleplayer));
+        main.setScreen(new ChooseDifficultyScreen(main));
         dispose();
     }
 
@@ -269,12 +239,12 @@ public class ShipSelector implements Screen {
      * start the game
      */
     public void startGame() {
-        if(singleplayer) {
+        if(!main.isMultiplayer()) {
             main.startServer();
             main.startClient("localhost",5050);
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText(), ship, difficulty);
             if(success) {
-                main.setScreen(new GamePlay(main)); //TODO ?
+                main.setScreen(new GamePlay(main));
             }
         }
         else {

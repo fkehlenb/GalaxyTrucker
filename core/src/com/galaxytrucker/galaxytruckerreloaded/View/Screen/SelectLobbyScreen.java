@@ -119,19 +119,7 @@ public class SelectLobbyScreen implements Screen {
         stage.addActor(backButton);
         stage.addActor(selectLobbyButton);
 
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = Main.HEIGHT/48;
-
-        font = generator.generateFont(params);
+        font = main.getFont48();
         glyph.setText(font, "Please enter a server address and port");
 
         background = new Texture("1080p.png");
@@ -151,7 +139,7 @@ public class SelectLobbyScreen implements Screen {
      * return to previous screen
      */
     public void goBack() {
-        main.setScreen(new ShipSelector(main, false, difficulty));
+        main.setScreen(new ShipSelector(main, difficulty));
         dispose();
     }
 

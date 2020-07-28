@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -194,11 +195,16 @@ public class GamePlay implements Screen {
     private BitmapFont font25;
 
     /**
+     * a font used to draw text in size 25 in red
+     */
+    private BitmapFont font25red;
+
+    /**
      * the battle controller
      */
     private BattleController battleController = BattleController.getInstance(null);
 
-    private Stage gameOverStage;
+    private GlyphLayout hostGlyph;
 
 
     /**
@@ -211,32 +217,25 @@ public class GamePlay implements Screen {
         //initialising the textures at the beginning
         background = new Texture("1080p.png");
         planetTexture = getPlanetTexture();
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = 15;
 
-        font15 = generator.generateFont(params);
+        font15 = main.getFont15();
+        font25 = main.getFont25();
 
-        params.size = 25;
-
-        font25 = generator.generateFont(params);
+        if(main.isHost()) {
+            font25red = main.getFont25Red();
+            hostGlyph = new GlyphLayout();
+            hostGlyph.setText(font25red, "HOST");
+        }
 
         viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport, main.batch);
         pauseStage = new Stage(viewport, main.batch);
         tileStage = new Stage(viewport, main.batch);
 
-        pvpActivateButton = new PVPActivateButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(12f), 124, 50, this);
-
-        stage.addActor(pvpActivateButton);
+        if(main.isMultiplayer()) {
+            pvpActivateButton = new PVPActivateButton(Main.WIDTH / 2f, Main.HEIGHT - Main.HEIGHT / (12f), 124, 50, this);
+            stage.addActor(pvpActivateButton);
+        }
 
         player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this, font15, font25);
 
@@ -282,6 +281,12 @@ public class GamePlay implements Screen {
             player.render2();
         }
 
+        if(main.isHost()) {
+            main.batch.begin();
+            font25red.draw(main.batch, hostGlyph, Main.WIDTH - hostGlyph.width - 30, 30);
+            main.batch.end();
+        }
+
         if(eventGUI != null) { eventGUI.render(); }
         else if(shopUI != null) { shopUI.render(); }
         else if(gameOverUI != null) { gameOverUI.render(); }
@@ -301,6 +306,9 @@ public class GamePlay implements Screen {
         planetTexture.dispose();
         player.disposeShipView();
         font15.dispose();
+        if(font25 != null) {
+            font25.dispose();
+        }
         if(shopUI != null) { shopUI.disposeShopUI(); }
         if(eventGUI != null) { eventGUI.disposeEventGUI(); }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }

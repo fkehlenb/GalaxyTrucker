@@ -72,11 +72,6 @@ public class LoginScreen implements Screen {
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
-     * whether or not the game will be single player, chosen on an earlier screen
-     */
-    private boolean singleplayer;
-
-    /**
      * the button to log in with
      */
     private LoginBackButton backButton;
@@ -101,9 +96,8 @@ public class LoginScreen implements Screen {
      *
      * @param main - main class
      */
-    public LoginScreen(Main main, boolean singleplayer) {
+    public LoginScreen(Main main) {
         this.main = main;
-        this.singleplayer = singleplayer;
 
         background = new Texture("1080p.png");
         loginButton = new LoginButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*4, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
@@ -120,26 +114,14 @@ public class LoginScreen implements Screen {
         viewport = new FitViewport(main.WIDTH, main.HEIGHT);
         stage = new Stage(viewport);
 
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = main.HEIGHT/48;
-
-        font = generator.generateFont(params);
+        font = main.getFont48();
         glyph.setText(font, "Please enter your username");
 
         stage.addActor(loginButton);
         stage.addActor(username);
         stage.addActor(backButton);
 
-        if(!singleplayer) {
+        if(main.isMultiplayer()) {
             address = new TextField("", skin);
             address.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
             address.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 +main.HEIGHT/21.6f*3);
@@ -161,7 +143,7 @@ public class LoginScreen implements Screen {
      * go back to previous screen
      */
     public void goBack() {
-        main.setScreen(new SPNewOrResume(main, singleplayer));
+        main.setScreen(new SPNewOrResume(main));
         dispose();
     }
 
@@ -178,7 +160,7 @@ public class LoginScreen implements Screen {
         main.batch.begin();
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
         font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2  -main.HEIGHT/21.6f*0);
-        if(!singleplayer) {
+        if(main.isMultiplayer()) {
             font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2  +main.HEIGHT/21.6f*5);
         }
         main.batch.end();
@@ -218,7 +200,7 @@ public class LoginScreen implements Screen {
     public void login() {
         String name = username.getText();
 
-        if(singleplayer) {
+        if(!main.isMultiplayer()) {
             main.startServer();
             main.startClient("localhost", 5050);
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0); //ShipType sowieso irrelevant, da kein neues schiff erstellt wird

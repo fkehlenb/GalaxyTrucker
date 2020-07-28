@@ -301,8 +301,8 @@ public class MainMenu implements Screen {
      * start/continue a multi player game
      */
     public void setMultiplayer() {
-        //controller call
-        main.setScreen(new SPNewOrResume(main, false));
+        main.setMultiplayer(true);
+        main.setScreen(new SPNewOrResume(main));
         dispose();
     }
 
@@ -310,8 +310,8 @@ public class MainMenu implements Screen {
      * start/continue a single player game
      */
     public void setSingleplayer() {
-        //controller call
-        main.setScreen(new SPNewOrResume(main, true));
+        main.setMultiplayer(false);
+        main.setScreen(new SPNewOrResume(main));
         dispose();
     }
 
