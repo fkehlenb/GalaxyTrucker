@@ -31,7 +31,7 @@ public class MainMenuButton extends ImButton {
     public void leftClick() {
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).logout();
         if(success) {
-            main.setScreen(new MainMenu(main));
+            main.logout();
         }
     }
 

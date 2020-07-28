@@ -63,6 +63,7 @@ public class Main extends Game {
         if(host) {
             Server.getInstance().killServer();
         }
+        setScreen(new MainMenu(this));
     }
 
     @Override
