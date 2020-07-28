@@ -826,7 +826,7 @@ public class BattleService implements Serializable {
                                 damage = random.nextInt(10)+weapon.getDamage();
                             }
                             // ===== Add crew damage =====
-                            if (manned) {
+                            if (manned && !ship.getAssociatedUser().equals("[ENEMY]")) {
                                 for (Crew c : mannedCrew) {
                                     if (!mannedCrew.isEmpty()) {
                                         damage += c.getStats().get(0);
