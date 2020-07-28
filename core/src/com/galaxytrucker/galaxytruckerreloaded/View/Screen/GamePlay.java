@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -435,6 +436,9 @@ public class GamePlay implements Screen {
                     java.lang.System.out.println("--- Der Gegner ist schon tot! ---");
                     removeEnemy();
                     removeRoundButton();
+                    if(ClientControllerCommunicator.getInstance(null).getClientShip().getPlanet().getEvent().equals(PlanetEvent.BOSS)){
+                        createGameOver(true);
+                    }
                 }
             } catch (Exception e){
                 java.lang.System.out.println("--- Du bist tot! ---");
@@ -447,6 +451,7 @@ public class GamePlay implements Screen {
                     if (combatWon){
                         // todo
                         java.lang.System.out.println("--- GEWONNEN ---");
+                        
                     }
                     else{
                         // todo
