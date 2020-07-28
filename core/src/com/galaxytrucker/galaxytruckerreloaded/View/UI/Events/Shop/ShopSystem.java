@@ -5,10 +5,19 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShopSystem extends CurrentShopUI {
+
+    /**
+     * the items that can be sold
+     */
+    private List<ShopElement> elements;
 
     public ShopSystem(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
         super(main, stage, game,trader,shopUI);
+        elements = new ArrayList<>();
 
     }
 

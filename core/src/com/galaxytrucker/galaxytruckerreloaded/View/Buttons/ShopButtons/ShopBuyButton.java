@@ -27,8 +27,8 @@ public class ShopBuyButton extends ImButton {
      *
      * @param ui the ui this button is on
      */
-    public ShopBuyButton(float x, float y, float width, float height, ShopElement ui) {
-        super(new Texture("sell_buy_on.png"), x, y, width, height);
+    public ShopBuyButton(Texture tex, float x, float y, float width, float height, ShopElement ui) {
+        super(tex, x, y, width, height);
         shop = ui;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

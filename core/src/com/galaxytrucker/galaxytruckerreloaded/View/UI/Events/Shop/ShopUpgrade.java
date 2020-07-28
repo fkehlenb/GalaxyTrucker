@@ -9,6 +9,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.ShopBuyButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShopUpgrade extends CurrentShopUI {
 
     /**
@@ -51,8 +54,14 @@ public class ShopUpgrade extends CurrentShopUI {
      */
     private String type;
 
+    /**
+     * the items that can be sold
+     */
+    private List<ShopElement> elements;
+
     public ShopUpgrade(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
         super(main, stage, game,trader,shopUI);
+        elements = new ArrayList<>();
 
     }
 

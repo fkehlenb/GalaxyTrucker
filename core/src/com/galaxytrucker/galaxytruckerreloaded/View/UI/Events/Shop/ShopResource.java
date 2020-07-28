@@ -7,11 +7,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import lombok.Builder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShopResource extends CurrentShopUI {
-
-    private Main main;
 
     /**
      * the items that can be sold
@@ -21,13 +20,14 @@ public class ShopResource extends CurrentShopUI {
     @Builder
     public ShopResource(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
         super(main, stage, game,trader,shopUI);
-
+        elements = new ArrayList<>();
+        //TODO add icons
         //fuel
-        elements.add(new ShopElement(main, stage, new Texture("fuel.png"), main.WIDTH/2, main.HEIGHT/2, shopUI, null, null, trader.getFuelStock(), "fuel"));
+        elements.add(new ShopElement(main, stage, new Texture("icon_fuel.png"), main.WIDTH/2, main.HEIGHT/2, shopUI, null, null, null, trader.getFuelStock(), ShopElementType.FUEL));
         //hp
-        elements.add(new ShopElement(main, stage, new Texture("hp.png"), main.WIDTH/2, main.HEIGHT/2-30, shopUI, null, null, trader.getHpStock(), "hp"));
+        elements.add(new ShopElement(main, stage, new Texture("icon_fuel.png"), main.WIDTH/2, main.HEIGHT/2-30, shopUI, null, null, null, trader.getHpStock(), ShopElementType.HP));
         //missiles/rockets
-        elements.add(new ShopElement(main, stage, new Texture("missiles.png"), main.WIDTH/2, main.HEIGHT-30, shopUI, null, null, trader.getMissileStock(), "missiles"));
+        elements.add(new ShopElement(main, stage, new Texture("icon_fuel.png"), main.WIDTH/2, main.HEIGHT-30, shopUI, null, null, null, trader.getMissileStock(), ShopElementType.MISSILES));
     }
 
     @Override

@@ -29,24 +29,28 @@ public class ShopUIButton extends ImButton {
         @Override
         public void leftClick()
         {
+            if (shop.getCurrent()!=null){
+            shop.getCurrent().dispose();
+        }
             switch (type){
                 case UPGRADES:
                     shop.openShopUpgradeUI();
-
+                    break;
                 case CREW:
                     shop.openShopCrewUI();
-
+                    break;
                 case SELL:
                     shop.openShopSellUI();
-
+                    break;
                 case SYSTEM:
                     shop.openShopSystemUI();
-
+                    break;
                 case WEAPON:
                     shop.openShopWeaponUI();
-
+                    break;
                 case RESOURCE:
                     shop.openShopResourceUI();
+                    break;
             }
         }
 

@@ -127,7 +127,9 @@ public class ShopUI {
      * Dispose shop ui
      */
     public void disposeShopUI() {
-        current.dispose();
+        if (current != null) {
+            current.dispose();
+        }
         closeButton.remove();
         background.dispose();
         game.deleteShop();
@@ -188,29 +190,28 @@ public class ShopUI {
         elements.remove(e); //TODO add to the list of sellable, if weapon/missiles
     }
 
-    //TODO woher wissen wir was wir verkaufen?
     public void openShopSellUI(){
-        new ShopSell(main, stage, game, trader, this);
+        current = new ShopSell(main, stage, game, trader, this);
     }
 
     public void openShopCrewUI(){
-        new ShopCrew(main, stage, game, trader, this);
+        current = new ShopCrew(main, stage, game, trader, this);
     }
 
     public void openShopResourceUI(){
-        new ShopResource(main, stage, game, trader, this);
+        current = new ShopResource(main, stage, game, trader, this);
     }
 
     public void openShopSystemUI(){
-        new ShopSystem(main, stage, game, trader, this);
+        current = new ShopSystem(main, stage, game, trader, this);
     }
 
     public void openShopUpgradeUI(){
-        new ShopUpgrade(main, stage, game, trader, this);
+        current = new ShopUpgrade(main, stage, game, trader, this);
     }
 
     public void openShopWeaponUI(){
-        new ShopWeapon(main, stage, game, trader, this);
+        current = new ShopWeapon(main, stage, game, trader, this);
     }
 
     /**
