@@ -1,6 +1,10 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Opponent.NormalAI;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.*;
 import lombok.Setter;
 
 import java.net.InetAddress;
@@ -48,6 +52,27 @@ public class Server implements Runnable{
         new Thread(instance).start();
         try {
             Thread.sleep(1000);
+            BattleServiceDAO.getInstance();
+            CrewDAO.getInstance();
+            OverworldDAO.getInstance();
+            PlanetDAO.getInstance();
+            RequestObjectDAO.getInstance();
+            ResponseObjectDAO.getInstance();
+            RoomDAO.getInstance();
+            ShipDAO.getInstance();
+            TileDAO.getInstance();
+            TraderDAO.getInstance();
+            UserDAO.getInstance();
+            WeaponDAO.getInstance();
+            CrewService.getInstance();
+            PlanetRewardService.getInstance();
+            PVPService.getInstance();
+            SystemService.getInstance();
+            TraderService.getInstance();
+            TraderService.getInstance();
+            UserService.getInstance();
+            WeaponService.getInstance();
+            NormalAI.getInstance();
         }
         catch (Exception f){
             f.printStackTrace();

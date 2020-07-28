@@ -19,6 +19,17 @@ import java.util.List;
 @SuppressWarnings("Duplicates")
 public class SystemService {
 
+    /** Instance */
+    private static SystemService instance;
+
+    /** Get instance */
+    public static SystemService getInstance(){
+        if (instance == null){
+            instance = new SystemService();
+        }
+        return instance;
+    }
+
     /**
      * ShipDAO
      */

@@ -7,7 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import java.io.Serializable;
 
 /** Used for retracing game steps */
-public class RequestObjectDAO extends ObjectDAO<RequestObject> implements Serializable {
+public class RequestObjectDAO extends ObjectDAO<RequestObject> {
 
     /** Instance */
     private static RequestObjectDAO instance = null;

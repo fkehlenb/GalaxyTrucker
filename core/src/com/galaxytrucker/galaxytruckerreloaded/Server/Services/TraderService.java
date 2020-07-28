@@ -22,6 +22,17 @@ import java.util.List;
 @SuppressWarnings("Duplicates")
 public class TraderService {
 
+    /** Instance */
+    private static TraderService instance;
+
+    /** Get instance */
+    public static TraderService getInstance(){
+        if (instance == null){
+            instance = new TraderService();
+        }
+        return instance;
+    }
+
     /**
      * Trader DAO
      */

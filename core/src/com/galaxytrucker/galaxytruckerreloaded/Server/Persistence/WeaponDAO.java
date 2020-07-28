@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * This class manages weapons in the database
  */
-public class WeaponDAO extends ObjectDAO<Weapon> implements Serializable {
+public class WeaponDAO extends ObjectDAO<Weapon> {
 
     /** Instance */
     private static WeaponDAO instance = null;

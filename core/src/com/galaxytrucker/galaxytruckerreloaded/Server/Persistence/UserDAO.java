@@ -8,7 +8,7 @@ import lombok.NonNull;
 import java.io.Serializable;
 
 /** Manages the user objects in the database */
-public class UserDAO extends ObjectDAO<User> implements Serializable {
+public class UserDAO extends ObjectDAO<User> {
 
     /** Instance */
     private static UserDAO instance = null;

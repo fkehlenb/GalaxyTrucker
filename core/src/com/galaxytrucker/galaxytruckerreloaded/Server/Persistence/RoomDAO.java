@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 /** This class manages room objects in the database */
-public class RoomDAO extends ObjectDAO<Room> implements Serializable {
+public class RoomDAO extends ObjectDAO<Room> {
 
     /** Instance */
     private static RoomDAO instance = null;

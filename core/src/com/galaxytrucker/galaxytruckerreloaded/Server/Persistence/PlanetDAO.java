@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Manages the planet objects in the database */
-public class PlanetDAO extends ObjectDAO<Planet> implements Serializable {
+public class PlanetDAO extends ObjectDAO<Planet> {
 
     /** Instance */
     private static PlanetDAO instance = null;

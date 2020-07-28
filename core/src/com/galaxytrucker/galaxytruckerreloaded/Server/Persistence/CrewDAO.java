@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import java.io.Serializable;
 
 /** Manages the crew objects in the database */
-public class CrewDAO extends ObjectDAO<Crew> implements Serializable {
+public class CrewDAO extends ObjectDAO<Crew> {
 
     /** Instance */
     private static CrewDAO instance = null;

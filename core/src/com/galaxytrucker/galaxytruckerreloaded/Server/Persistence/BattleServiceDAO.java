@@ -7,9 +7,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /** Manages battle service objects in the database */
-public class BattleServiceDAO extends ObjectDAO<BattleService> implements Serializable {
+public class BattleServiceDAO extends ObjectDAO<BattleService> {
 
     /** Instance */
     private static BattleServiceDAO instance = null;
@@ -64,6 +65,28 @@ public class BattleServiceDAO extends ObjectDAO<BattleService> implements Serial
             entityManager.getTransaction().begin();
             entityManager.remove(o);
             entityManager.getTransaction().commit();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+            throw new BattleServiceNotFoundException();
+        }
+    }
+
+    /** Get a battle service by id
+     * @param id - the battle service id
+     * @return the battle service
+     * @throws BattleServiceNotFoundException if the battle service cannot be found */
+    public BattleService getById(UUID id) throws BattleServiceNotFoundException{
+        try {
+            BattleService b;
+            entityManager.getTransaction().begin();
+            b = entityManager.createNamedQuery("BattleService.getById",BattleService.class).setParameter("id",id).getSingleResult();
+            entityManager.getTransaction().commit();
+            if (b==null){
+                throw new NullPointerException();
+            }
+            return b;
         }
         catch (Exception e){
             e.printStackTrace();

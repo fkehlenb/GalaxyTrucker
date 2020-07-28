@@ -46,27 +46,27 @@ public class ServerServiceCommunicator {
     /**
      * User service
      */
-    private UserService userService = new UserService();
+    private UserService userService = UserService.getInstance();
 
     /**
      * TravelService
      */
-    private TravelService travelService = new TravelService();
+    private TravelService travelService = TravelService.getInstance();
 
     /**
      * TraderService
      */
-    private TraderService traderService = new TraderService();
+    private TraderService traderService = TraderService.getInstance();
 
     /**
      * Weapon service
      */
-    private WeaponService weaponService = new WeaponService();
+    private WeaponService weaponService = WeaponService.getInstance();
 
     /**
      * System Service
      */
-    private SystemService systemService = new SystemService();
+    private SystemService systemService = SystemService.getInstance();
 
     /** PVP Service */
     private PVPService pvpService = PVPService.getInstance();

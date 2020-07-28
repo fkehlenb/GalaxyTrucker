@@ -7,7 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.TileNotFoundExce
 import java.io.Serializable;
 
 /** Handles tile objects in the database */
-public class TileDAO extends ObjectDAO<Tile> implements Serializable {
+public class TileDAO extends ObjectDAO<Tile> {
 
     /** Instance */
     private static TileDAO instance = null;

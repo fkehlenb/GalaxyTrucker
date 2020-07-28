@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * This class handles trader objects in the database
  */
-public class TraderDAO extends ObjectDAO<Trader> implements Serializable {
+public class TraderDAO extends ObjectDAO<Trader> {
 
     /** Instance */
     private static TraderDAO instance = null;

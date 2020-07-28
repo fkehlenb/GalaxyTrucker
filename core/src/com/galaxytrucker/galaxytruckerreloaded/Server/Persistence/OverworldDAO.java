@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 
 /** Manages the overworld objects in the database */
-public class OverworldDAO extends ObjectDAO<Overworld> implements Serializable {
+public class OverworldDAO extends ObjectDAO<Overworld> {
 
     /** Instance */
     private static OverworldDAO instance = null;

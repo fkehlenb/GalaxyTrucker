@@ -9,7 +9,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
-import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.*;
@@ -32,7 +31,8 @@ import java.util.*;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @NamedQueries({
-        @NamedQuery(name = "BattleService.fetchAll", query = "select b from BattleService b")
+        @NamedQuery(name = "BattleService.fetchAll", query = "select b from BattleService b"),
+        @NamedQuery(name = "BattleService.getById", query = "select b from BattleService b where b.id =: id")
 })
 @SuppressWarnings("Duplicates")
 public class BattleService implements Serializable {
@@ -48,61 +48,61 @@ public class BattleService implements Serializable {
      * ShipDAO
      */
     @Transient
-    private ShipDAO shipDAO = ShipDAO.getInstance();
+    private transient ShipDAO shipDAO = ShipDAO.getInstance();
 
     /**
      * Battle service dao
      */
     @Transient
-    private BattleServiceDAO battleServiceDAO = BattleServiceDAO.getInstance();
+    private transient BattleServiceDAO battleServiceDAO = BattleServiceDAO.getInstance();
 
     /**
      * Overworld DAO
      */
     @Transient
-    private OverworldDAO overworldDAO = OverworldDAO.getInstance();
+    private transient OverworldDAO overworldDAO = OverworldDAO.getInstance();
 
     /**
      * CrewDAO
      */
     @Transient
-    private CrewDAO crewDAO = CrewDAO.getInstance();
+    private transient CrewDAO crewDAO = CrewDAO.getInstance();
 
     /**
      * Room DAO
      */
     @Transient
-    private RoomDAO roomDAO = RoomDAO.getInstance();
+    private transient RoomDAO roomDAO = RoomDAO.getInstance();
 
     /**
      * Tile DAO
      */
     @Transient
-    private TileDAO tileDAO = TileDAO.getInstance();
+    private transient TileDAO tileDAO = TileDAO.getInstance();
 
     /**
      * Weapon DAO
      */
     @Transient
-    private WeaponDAO weaponDAO = WeaponDAO.getInstance();
+    private transient WeaponDAO weaponDAO = WeaponDAO.getInstance();
 
     /**
      * Crew service
      */
     @Transient
-    private CrewService crewService = CrewService.getInstance();
+    private transient CrewService crewService = CrewService.getInstance();
 
     /**
      * Planet DAO
      */
     @Transient
-    private PlanetDAO planetDAO = PlanetDAO.getInstance();
+    private transient PlanetDAO planetDAO = PlanetDAO.getInstance();
 
     /**
      * Travel service
      */
     @Transient
-    private TravelService travelService = TravelService.getInstance();
+    private transient TravelService travelService = TravelService.getInstance();
 
     /**
      * ID of current round ship
@@ -131,7 +131,7 @@ public class BattleService implements Serializable {
      * AI simulating enemy
      */
     @Transient
-    private NormalAI ai = NormalAI.getInstance();
+    private transient NormalAI ai = NormalAI.getInstance();
 
     /**
      * Last action carried out

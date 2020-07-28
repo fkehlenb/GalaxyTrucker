@@ -22,6 +22,17 @@ import java.util.UUID;
 @Setter
 public class WeaponService {
 
+    /** Instance */
+    private static WeaponService instace;
+
+    /** Get instance */
+    public static WeaponService getInstance(){
+        if (instace == null){
+            instace = new WeaponService();
+        }
+        return instace;
+    }
+
     /** ShipDAO */
     @NonNull
     private ShipDAO shipDAO = ShipDAO.getInstance();

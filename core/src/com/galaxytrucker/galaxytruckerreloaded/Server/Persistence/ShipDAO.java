@@ -9,7 +9,7 @@ import lombok.NonNull;
 import java.io.Serializable;
 
 /** Manages the ship objects in the database */
-public class ShipDAO extends ObjectDAO<Ship> implements Serializable {
+public class ShipDAO extends ObjectDAO<Ship> {
 
     /** Instance */
     private static ShipDAO instance = null;
