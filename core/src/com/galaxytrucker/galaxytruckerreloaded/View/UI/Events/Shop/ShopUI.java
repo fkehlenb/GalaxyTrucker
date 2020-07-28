@@ -127,7 +127,7 @@ public class ShopUI {
         main.batch.begin();
         main.batch.draw(background, x, y,Main.WIDTH/3.195f, Main.HEIGHT/2.293f); //TODO whxy
         for (ShopUIButton tab : shopTabs) {
-            //TODO fraw tabs here not wherever
+            //TODO draw tabs here not wherever
         }
         main.batch.end();
         /*for(ShopElement e : elements) {
