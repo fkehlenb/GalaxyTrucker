@@ -92,6 +92,11 @@ public class LoginScreen implements Screen {
     private TextField address;
 
     /**
+     * the server port field, if multiplayer
+     */
+    private TextField port;
+
+    /**
      * Constructor
      *
      * @param main - main class
@@ -101,8 +106,8 @@ public class LoginScreen implements Screen {
         this.singleplayer = singleplayer;
 
         background = new Texture("1080p.png");
-        loginButton = new LoginButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*3, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        backButton = new LoginBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*4, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        loginButton = new LoginButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*4, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        backButton = new LoginBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*6, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
 
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -137,10 +142,15 @@ public class LoginScreen implements Screen {
         if(!singleplayer) {
             address = new TextField("", skin);
             address.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
-            address.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 +main.HEIGHT/21.6f*1);
+            address.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 +main.HEIGHT/21.6f*3);
             stage.addActor(address);
 
-            glyph2.setText(font, "Please enter the server address"); //localhost if you are host
+            port = new TextField("", skin);
+            port.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
+            port.setPosition(Main.WIDTH/2f - username.getWidth()/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 +Main.HEIGHT/21.6f*1);
+            stage.addActor(port);
+
+            glyph2.setText(font, "Please enter the server address and port"); //localhost if you are host
 
         }
 
@@ -169,7 +179,7 @@ public class LoginScreen implements Screen {
         main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
         font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/2  -main.HEIGHT/21.6f*0);
         if(!singleplayer) {
-            font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2  +main.HEIGHT/21.6f*3);
+            font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2  +main.HEIGHT/21.6f*5);
         }
         main.batch.end();
         stage.draw();
@@ -218,20 +228,11 @@ public class LoginScreen implements Screen {
             }
         }
         else {
-            if(address.getText().equals("localhost") || address.getText().equals("127.0.0.1"))
-            {
-                main.startClient("localhost", 5050); //TODO
-                boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
-                if(success) {
-                    dispose();
-                }
-            }
-            else {
-                main.startClient("localhost", 5050); //TODO
-                boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
-                if(success) {
-                    dispose();
-                }
+            main.startClient(address.getText(), Integer.parseInt(port.getText()));
+            boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
+            if(success) {
+                main.setScreen(new GamePlay(main));
+                dispose();
             }
         }
     }
