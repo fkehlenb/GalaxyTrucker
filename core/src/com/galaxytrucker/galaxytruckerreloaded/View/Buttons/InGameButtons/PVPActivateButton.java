@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
+/**
+ * button for activating pvp
+ */
 public class PVPActivateButton extends ImButton {
 
     /**

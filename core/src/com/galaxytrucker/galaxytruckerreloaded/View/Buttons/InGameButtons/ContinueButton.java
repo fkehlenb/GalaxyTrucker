@@ -31,8 +31,12 @@ public class ContinueButton extends ImButton {
     }
 
     /**
-     * constructor
-     * @param ui the ui this is on
+     * constructo
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param ui ui this button is on
      */
     public ContinueButton(float x, float y, float width, float height, PauseMenuUI ui) {
         super(new Texture("ingame_continue.png"), x, y, width, height);

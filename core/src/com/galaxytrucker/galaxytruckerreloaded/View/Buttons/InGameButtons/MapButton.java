@@ -35,6 +35,8 @@ public class MapButton extends ImButton {
      * @param y y pos of button
      * @param width width of button
      * @param height height of button
+     * @param ui ui this button is on
+     * @param planet planet this button is associated with
      */
     public MapButton(Texture texture, float x, float y, float width, float height, MapUI ui, Planet planet) {
         super(texture, x, y, width, height);

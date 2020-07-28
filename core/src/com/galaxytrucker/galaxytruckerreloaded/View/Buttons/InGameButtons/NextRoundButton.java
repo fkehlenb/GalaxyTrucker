@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
+/**
+ * button for moving onto the next round in a fight
+ */
 public class NextRoundButton extends ImButton {
 
     /**
@@ -19,6 +22,14 @@ public class NextRoundButton extends ImButton {
      */
     private GamePlay screen;
 
+    /**
+     * constructor
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen ui this button is on
+     */
     public NextRoundButton(float x, float y, float width, float height, GamePlay screen) {
         super(new Texture("ingame_continue.png"), x, y, width, height);
         this.screen = screen;

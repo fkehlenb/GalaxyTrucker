@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
+/**
+ * button for requesting the list of other pvp players currrently on the server
+ */
 public class PVPGetOpponentsButton extends ImButton {
 
     /**

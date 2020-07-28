@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.PVPOpponents;
 
+/**
+ * button for starting a pvp fight
+ */
 public class PVPStartButton extends ImButton {
 
     /**
@@ -37,6 +40,9 @@ public class PVPStartButton extends ImButton {
         });
     }
 
+    /**
+     * left click action
+     */
     @Override
     public void leftClick() {
         screen.chooseOpponent();
