@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -25,14 +24,12 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.PlanetNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PVPActivateButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PVPGetOpponentsButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.PVPOpponents;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.RewardsPage;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
@@ -342,11 +339,11 @@ public class GamePlay implements Screen {
     /**
      * new event ui
      */
-    public void createEvent(PlanetEvent event) {
+    public void createEvent(PlanetEvent event, boolean opponent) {
         PlanetRewardController controller = PlanetRewardController.getInstance(null);
         controller.getRewards();
         player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
-        eventGUI = new EventGUI(main, event, stage, this, font15, controller.getRocketReward(), controller.getFuelReward(), controller.getMoneyReward(), controller.getCrewReward(), controller.getWeaponRewards(), ClientControllerCommunicator.getInstance(null).getClientShip().getShipType());
+        eventGUI = new EventGUI(main, event, stage, this, font15, controller.getRocketReward(), controller.getFuelReward(), controller.getMoneyReward(), controller.getCrewReward(), controller.getWeaponRewards(), ClientControllerCommunicator.getInstance(null).getClientShip().getShipType(), opponent);
     }
 
     /**
@@ -380,19 +377,19 @@ public class GamePlay implements Screen {
         }
             planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
-
-            createEvent(planet.getEvent());
+            boolean opponent = (planet.getEvent().equals(PlanetEvent.BOSS)
+                    || planet.getEvent().equals(PlanetEvent.COMBAT)
+                    || planet.getEvent().equals(PlanetEvent.MINIBOSS) ) && planet.getShips().size() > 1;
+            createEvent(planet.getEvent(), opponent);
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 background = new Texture("1080p.png");
                 createShop(planet.getTrader());
             }
-            else if(planet.getEvent().equals(PlanetEvent.COMBAT) || planet.getEvent().equals(PlanetEvent.BOSS) || planet.getEvent().equals(PlanetEvent.MINIBOSS)) {
-                if (planet.getShips().size() > 1){
-                    background = new Texture("1080p.png");
-                    battleController.setOpponent(planet.getShips().get(0));
-                    createEnemy();
-                    createRoundButton();
-                }
+            else if(opponent) {
+                background = new Texture("1080p.png");
+                battleController.setOpponent(planet.getShips().get(0));
+                createEnemy();
+                createRoundButton();
             }
             else if(PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.NEBULA || PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.METEORSHOWER){
                 background = new Texture(PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture());
