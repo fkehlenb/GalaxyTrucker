@@ -33,19 +33,17 @@ public class Main extends Game {
     @Getter
     private Client client;
 
-    /**
-     * the server
-     */
-    @Getter
-    @Setter
-    private boolean server;
-
     private Music music;
+
+    @Getter
+    private boolean host;
+
     /**
      * start a server, if there isnt one
      */
     public void startServer() {
         Server.getInstance();
+        host = true;
     }
 
     /**
@@ -54,6 +52,16 @@ public class Main extends Game {
     public void startClient(String address, int port) {
         if (client == null) {
             client = new Client(address, port);
+        }
+    }
+
+    /**
+     * logout
+     * after official logout from server through clientControllerCommunicator
+     */
+    public void logout() {
+        if(host) {
+            Server.getInstance().killServer();
         }
     }
 
