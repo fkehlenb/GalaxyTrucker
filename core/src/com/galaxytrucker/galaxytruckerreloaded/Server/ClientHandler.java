@@ -170,6 +170,8 @@ public class ClientHandler implements Runnable {
                             send.flush();
                             // ==================== Overworld Creation ====================
                             int difficulty = Integer.parseInt(receive.readLine());
+                            send.println("[RECEIVED-DIFFICULTY]");
+                            send.flush();
                             this.seed = UUID.randomUUID().hashCode();
                             Overworld overworld = generateOverworld(this.seed, username, difficulty);
                             overworldDAO.persist(overworld);

@@ -103,6 +103,7 @@ public class Client {
                     System.out.println("<CLIENT>:[NEW-GAME]:[USERNAME]:"+username+":[SHIP-TYPE]:"+shipType+":[DIFFICULTY]:"+difficulty);
                     send.println(difficulty);
                     send.flush();
+                    receive.readLine();
                     sendObject.writeObject(shipType);
                     sendObject.flush();
                     received = receive.readLine();

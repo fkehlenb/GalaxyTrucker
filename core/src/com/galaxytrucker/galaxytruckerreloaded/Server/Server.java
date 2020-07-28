@@ -3,6 +3,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Server;
 
 import lombok.Setter;
 
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -57,7 +58,7 @@ public class Server implements Runnable{
      * @param port - the port to bind */
     private void bindPort(int port) {
         try {
-            this.serverSocket = new ServerSocket(port);
+            this.serverSocket = new ServerSocket(port, 0, InetAddress.getLoopbackAddress());
         }
         catch (Exception e){
             e.printStackTrace();
