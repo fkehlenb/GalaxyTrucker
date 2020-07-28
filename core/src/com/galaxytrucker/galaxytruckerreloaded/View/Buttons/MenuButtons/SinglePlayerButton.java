@@ -11,6 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
  * button to choose single player in the ship selector
  */
 public class SinglePlayerButton extends ImButton {
+
     /**
      * Click sound effect
      */
@@ -32,8 +33,11 @@ public class SinglePlayerButton extends ImButton {
 
     /**
      * constructor
-     *
-     * @param screen  the screen this button is on
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
     public SinglePlayerButton(float x, float y, float width, float height, MainMenu screen) {
         super(new Texture("buttons/singleplayer_button.png"), x, y, width, height);

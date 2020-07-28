@@ -20,9 +20,12 @@ public class JoinServerButton extends ImButton {
     private CreateOrJoinServer screen;
 
     /**
-     * Constructor
-     *
-     * @param screen the screen this button is on
+     * constructor
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
     public JoinServerButton (float x, float y, float width, float height, CreateOrJoinServer screen) {
         super(new Texture("buttons/join_button.png"), x, y, width, height);
@@ -35,7 +38,7 @@ public class JoinServerButton extends ImButton {
     }
 
     /**
-     * Sets difficutly to a specific level
+     * choose to join a server
      */
     @Override
     public void leftClick()

@@ -31,8 +31,11 @@ public class MultiPlayerButton extends ImButton {
 
     /**
      * constructor
-     *
-     * @param screen  the screen this button is on
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
     public MultiPlayerButton(float x, float y, float width, float height, MainMenu screen) {
         super(new Texture("buttons/multiplayer_button.png"), x, y, width, height);

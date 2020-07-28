@@ -20,9 +20,12 @@ public class StartServerButton extends ImButton {
     private CreateOrJoinServer screen;
 
     /**
-     * Constructor
-     *
-     * @param screen the screen this button is on
+     * constructor
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
     public StartServerButton (float x, float y, float width, float height, CreateOrJoinServer screen) {
         super(new Texture("buttons/start_server_button.png"), x, y, width, height);
@@ -35,7 +38,7 @@ public class StartServerButton extends ImButton {
     }
 
     /**
-     * Sets difficutly to a specific level
+     * choose to start the server (be the host)
      */
     @Override
     public void leftClick()

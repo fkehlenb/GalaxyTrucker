@@ -6,8 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.PauseMenuUI;
 
 /**
  * creates a new OptionButton
@@ -23,8 +21,12 @@ public class OptionButton extends ImButton{
     private MainMenu mainMenu;
 
     /**
-     * Constructor
-     *
+     * constructor
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param mainMenu screen the button is on
      */
     public OptionButton(float x, float y, float width, float height, MainMenu mainMenu) {
         super(new Texture("buttons/options_button.png"), x, y, width, height);
@@ -37,11 +39,10 @@ public class OptionButton extends ImButton{
     }
 
     /**
-     * Creats new Game
+     * create options
      */
     public void leftClick()
     {
-        //ui.render();
         if(mainMenu != null){
             mainMenu.createOptions();
         }

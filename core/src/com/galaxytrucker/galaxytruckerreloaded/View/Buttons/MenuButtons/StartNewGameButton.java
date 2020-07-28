@@ -31,8 +31,11 @@ public class StartNewGameButton extends ImButton {
 
     /**
      * constructor
-     *
-     * @param screen  the screen this button is on
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
     public StartNewGameButton(float x, float y, float width, float height, SPNewOrResume screen) {
         super(new Texture("buttons/new_game_button.png"), x, y, width, height);

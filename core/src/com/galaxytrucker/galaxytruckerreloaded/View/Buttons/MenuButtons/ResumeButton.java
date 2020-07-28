@@ -11,6 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.SPNewOrResume;
  * button to choose single player in the ship selector
  */
 public class ResumeButton extends ImButton {
+
     /**
      * Click sound effect
      */
@@ -31,8 +32,11 @@ public class ResumeButton extends ImButton {
 
     /**
      * constructor
-     *
-     * @param screen  the screen this button is on
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
     public ResumeButton(float x, float y, float width, float height, SPNewOrResume screen) {
         super(new Texture("buttons/resume_button.png"), x, y, width, height);
