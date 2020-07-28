@@ -9,7 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopSell;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopSellElement;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 
 public class ShopSellButton extends ImButton {
@@ -21,7 +21,7 @@ public class ShopSellButton extends ImButton {
     /**
      * the ui this button is on
      */
-    private ShopSell shopSell;
+    private ShopSellElement shopSellElement;
 
     private ShopUI shop;
     private Main main;
@@ -32,10 +32,11 @@ public class ShopSellButton extends ImButton {
     /**
      * Constructor
      *
-     * @param ui the ui this button is on
+     * @param shopSellElement the ui this button is on
      */
-    public ShopSellButton(float x, float y, float width, float height, ShopUI shopUI, Trader trader, ShopSell shopSell) {
+    public ShopSellButton(float x, float y, float width, float height, ShopUI shopUI, Trader trader, ShopSellElement shopSellElement) {
         super(new Texture("ändern"), x, y, width, height);
+        this.shopSellElement = shopSellElement;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 leftClick();
@@ -45,7 +46,7 @@ public class ShopSellButton extends ImButton {
 
     public void leftClick(){
         shop.getCurrent().dispose();
-        shop.openShopSellUI();
+        shopSellElement.sell();
 
     }
 }

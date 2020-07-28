@@ -198,7 +198,7 @@ public class ShopUI {
      */
     boolean buyHP(int amount){return game.buyHp(amount);}
 
-    /**
+    /**TODO put into SubUIs
      * remove a buyable element
      */
     public void removeBuyElement(ShopElement e) {
@@ -209,24 +209,30 @@ public class ShopUI {
         current = new ShopSell(main, stage, game, trader, this);
     }
 
-    public void openShopCrewUI(){
-        current = new ShopCrew(main, stage, game, trader, this);
-    }
-
-    public void openShopResourceUI(){
-        current = new ShopResource(main, stage, game, trader, this);
-    }
-
-    public void openShopSystemUI(){
-        current = new ShopSystem(main, stage, game, trader, this);
-    }
-
-    public void openShopUpgradeUI(){
-        current = new ShopUpgrade(main, stage, game, trader, this);
-    }
-
-    public void openShopWeaponUI(){
-        current = new ShopWeapon(main, stage, game, trader, this);
+    public void openUI(ShopButtonType type){
+        if (current!=null){
+            current.dispose();
+        }
+        switch (type){
+            case UPGRADES:
+                current = new ShopUpgrade(main, stage, game, trader, this);
+                break;
+            case CREW:
+                current = new ShopCrew(main, stage, game, trader, this);
+                break;
+            case SELL:
+                current = new ShopSell(main, stage, game, trader, this);
+                break;
+            case SYSTEM:
+                current = new ShopSystem(main, stage, game, trader, this);
+                break;
+            case WEAPON:
+                current = new ShopWeapon(main, stage, game, trader, this);
+                break;
+            case RESOURCE:
+                current = new ShopResource(main, stage, game, trader, this);
+                break;
+        }
     }
 
     /**

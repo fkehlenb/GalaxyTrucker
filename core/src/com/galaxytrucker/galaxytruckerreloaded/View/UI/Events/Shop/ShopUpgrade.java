@@ -15,11 +15,6 @@ import java.util.List;
 public class ShopUpgrade extends CurrentShopUI {
 
     /**
-     * the main class extending game
-     */
-    private Main main;
-
-    /**
      * the button with which to buy something
      */
     private ShopBuyButton button;
@@ -60,7 +55,7 @@ public class ShopUpgrade extends CurrentShopUI {
     private List<ShopElement> elements;
 
     public ShopUpgrade(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
-        super(main, stage, game,trader,shopUI);
+        super(main, stage, game, trader, shopUI);
         elements = new ArrayList<>();
 
     }
@@ -77,7 +72,4 @@ public class ShopUpgrade extends CurrentShopUI {
         }
     }
 
-    /**
-     * the shop ui this element is on
-     */
 }
