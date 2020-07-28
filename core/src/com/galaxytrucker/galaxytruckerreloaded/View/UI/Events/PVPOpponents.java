@@ -79,22 +79,30 @@ public class PVPOpponents {
         x = Main.WIDTH/2f - background.getWidth()/2f;
         y = Main.HEIGHT/2f - background.getHeight()/2f;
 
-        closeButton = new PVPCloseButton(x + 20, y + 20, 248, 50, this);
+        closeButton = new PVPCloseButton(x, y + 20, 248, 50, this);
         stage.addActor(closeButton);
-        startButton = new PVPStartButton(x + background.getWidth() - 20, y+20, 248, 50, this);
+        startButton = new PVPStartButton(x + background.getWidth() - 248, y+20, 248, 50, this);
         stage.addActor(startButton);
 
         glyphs = new ArrayList<>();
-        for(String s : names) {
+        if(names.size() > 0) {
+            for (String s : names) {
+                GlyphLayout g = new GlyphLayout();
+                g.setText(font, s);
+                glyphs.add(g);
+            }
+        }
+        else {
             GlyphLayout g = new GlyphLayout();
-            g.setText(font, s);
+            g.setText(font, "No enemies were found");
             glyphs.add(g);
         }
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         field = new TextField("", skin);
         field.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
-        field.setPosition(x+20, Main.WIDTH/2f - field.getWidth()/2);
+        field.setPosition(Main.WIDTH/2f - field.getWidth()/2, y+20);
+
         stage.addActor(field);
     }
 
@@ -112,7 +120,13 @@ public class PVPOpponents {
     public void render() {
         main.batch.begin();
         main.batch.draw(background, x, y, background.getWidth(), background.getHeight());
+        float gy = y + background.getHeight() - 20;
+        for(GlyphLayout g : glyphs) {
+            font.draw(main.batch, g, main.WIDTH/2 - g.width/2, gy);
+            gy -= g.height + 5;
+        }
         main.batch.end();
+
     }
 
     /**

@@ -234,6 +234,9 @@ public class GamePlay implements Screen {
         pauseStage = new Stage(viewport, main.batch);
         tileStage = new Stage(viewport, main.batch);
 
+        pvpActivateButton = new PVPActivateButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(12f), 124, 50, this);
+
+        stage.addActor(pvpActivateButton);
 
         player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this, font15, font25);
 
@@ -442,7 +445,10 @@ public class GamePlay implements Screen {
     public void activatePVP() {
         boolean success = PVPController.getInstance(null).activatePVP(ClientControllerCommunicator.getInstance(null).getClientShip());
         if(success) {
-            pvpGetOpponentsButton = new PVPGetOpponentsButton(0, 0, 248, 50, this); //TODO xy
+            pvpActivateButton.remove();
+            pvpActivateButton = null;
+            pvpGetOpponentsButton = new PVPGetOpponentsButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(12f), 124, 50, this);
+            stage.addActor(pvpGetOpponentsButton);
         }
     }
 
@@ -471,7 +477,7 @@ public class GamePlay implements Screen {
      * create a pvp ui
      */
     public void createPVPUI(List<String> names) {
-        if(pvpUI != null) {
+        if(pvpUI == null) {
             pvpUI = new PVPOpponents(main, stage, font15, names, this);
         }
     }
