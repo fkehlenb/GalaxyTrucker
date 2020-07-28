@@ -40,6 +40,11 @@ public class ShopElement {
     private Crew crew;
 
     /**
+     * the system, if this is a system
+     */
+    private System system;
+
+    /**
      * the amount, if this is fuel, hp or missiles
      */
     private int amount;
@@ -47,7 +52,12 @@ public class ShopElement {
     /**
      * the name (fuel, hp, or missiles) if this is one of those
      */
-    private String type;
+    private ShopElementType type;
+
+    /**
+     * the price of the object
+     */
+    private int price;
 
     /**
      * the shop ui this element is on
@@ -59,7 +69,7 @@ public class ShopElement {
      * @param main the main game class
      * @param texture the texture for this element
      */
-    public ShopElement(Main main, Stage stage, Texture texture, float x, float y, ShopUI shop, Weapon weapon, Crew crew, int amount, String type) {
+    public ShopElement(Main main, Stage stage, Texture texture, float x, float y, ShopUI shop, Weapon weapon, Crew crew, System system, int amount, ShopElementType type) {
         this.main = main;
         this.texture = texture;
         this.x = x;
@@ -70,8 +80,32 @@ public class ShopElement {
         this.amount = amount;
         this.type = type;
 
-        button = new ShopBuyButton(0, 0, 10, 10, this); //TODO whxy
+
+        button = new ShopBuyButton(texture, main.WIDTH/2, main.HEIGHT/2, main.WIDTH/6.4f, main.WIDTH/38.4f, this); //TODO whxy
         stage.addActor(button);
+        switch (type){
+            case HP:
+                price = 2;
+                break;
+            case FUEL:
+                price = 3;
+                break;
+            case MISSILES:
+                price = 6;
+                break;
+            case WEAPON:
+                price = weapon.getWeaponPrice();
+                break;
+            case CREW:
+                price = crew.getPrice();
+                break;
+            case SYSTEM:
+                //TODO System.getPrice
+                break;
+            case UPGRADES:
+                //TODO lololol idk
+                break;
+        }
     }
 
     /**
@@ -86,10 +120,9 @@ public class ShopElement {
     /**
      * dispose of this ui
      */
-    public void disposeShopElement() {
+    public void dispose() {
         texture.dispose();
         button.remove();
-        shop.removeBuyElement(this);
     }
 
     /**
@@ -105,19 +138,19 @@ public class ShopElement {
         }
         else if(type != null) {
             switch (type) {
-                case "missiles":
+                case MISSILES:
                     success = shop.buyMissiles();
                     break;
-                case "fuel":
+                case FUEL:
                     success = shop.buyFuel();
                     break;
-                case "hp":
+                case HP:
                     success = shop.buyHP(amount);
                     break;
             }
         }
         if(success) {
-            disposeShopElement();
+            dispose();
         }
     }
 }

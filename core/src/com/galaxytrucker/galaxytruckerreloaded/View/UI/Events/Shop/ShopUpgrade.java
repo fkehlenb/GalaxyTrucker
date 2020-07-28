@@ -9,12 +9,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.ShopBuyButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 
-public class ShopUpgrade extends CurrentShopUI {
+import java.util.ArrayList;
+import java.util.List;
 
-    /**
-     * the main class extending game
-     */
-    private Main main;
+public class ShopUpgrade extends CurrentShopUI {
 
     /**
      * the button with which to buy something
@@ -51,8 +49,14 @@ public class ShopUpgrade extends CurrentShopUI {
      */
     private String type;
 
+    /**
+     * the items that can be sold
+     */
+    private List<ShopElement> elements;
+
     public ShopUpgrade(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
-        super(main, stage, game,trader,shopUI);
+        super(main, stage, game, trader, shopUI);
+        elements = new ArrayList<>();
 
     }
 
@@ -63,10 +67,9 @@ public class ShopUpgrade extends CurrentShopUI {
 
     @Override
     public void dispose() {
-
+        for (ShopElement e: elements) {
+            e.dispose();
+        }
     }
 
-    /**
-     * the shop ui this element is on
-     */
 }

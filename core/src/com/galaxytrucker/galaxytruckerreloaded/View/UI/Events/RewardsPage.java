@@ -32,7 +32,8 @@ public class RewardsPage {
         GlyphLayout g = new GlyphLayout();
         g.setText(font, Integer.toString(2));
 
-        hash.put(new Texture("gameuis/top_missile.png"), g);
+        //TODO icon for health
+        hash.put(new Texture("icon_fuel.png"), g);
         hash.put(new Texture("gameuis/top_fuel.png"), g);
         hash.put(new Texture("gameuis/top_missile.png"), g);
 

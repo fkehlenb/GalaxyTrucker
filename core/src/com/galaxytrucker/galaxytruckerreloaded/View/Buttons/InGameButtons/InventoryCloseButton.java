@@ -44,7 +44,7 @@ public class InventoryCloseButton extends ImButton {
     @Override
     public void leftClick() {
         if(shop != null) {
-
+            shop.disposeShopUI();
         }
         else if(inventory != null) {
             inventory.disposeInventoryUI();
@@ -57,13 +57,13 @@ public class InventoryCloseButton extends ImButton {
 
     /**
      * constructor
-     * @param ui the shop ui this is on, or null
+     * @param shop the shop ui this is on, or null
      * @param inventory the inventory ui this is on, or null
      * @param map the map ui this is on, or null
      */
-    public InventoryCloseButton(float x, float y, float width, float height, ShopUI ui, InventoryUI inventory, MapUI map) {
+    public InventoryCloseButton(float x, float y, float width, float height, ShopUI shop, InventoryUI inventory, MapUI map) {
         super(new Texture("close_on.png"), x, y, width, height);
-        shop = ui;
+        this.shop = shop;
         this.inventory = inventory;
         this.map = map;
         this.addListener(new ClickListener() {
