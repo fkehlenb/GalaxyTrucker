@@ -70,7 +70,7 @@ public class EventGUI {
      * @param event what kind of event it is
      *
      */
-    public EventGUI(Main main, PlanetEvent event, Stage stage, GamePlay game, BitmapFont font15, int rocket, int fuel, int money, Crew crew, List<Weapon> weapons, ShipType shipType) {
+    public EventGUI(Main main, PlanetEvent event, Stage stage, GamePlay game, BitmapFont font15, int rocket, int fuel, int money, Crew crew, List<Weapon> weapons, ShipType shipType, boolean opponent) {
         this.main = main;
         this.event = event;
         this.game = game;
@@ -122,20 +122,20 @@ public class EventGUI {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }
     }
-        else if(event == PlanetEvent.COMBAT) {
+        else if(event == PlanetEvent.COMBAT && opponent) {
             currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "There is a hostile ship at this planet", px, py, font15, width, height);
             if(drawables.size() > 0) {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }
         }
-        else if(event == PlanetEvent.BOSS) {
+        else if(event == PlanetEvent.BOSS && opponent) {
             currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "The boss is waiting on this planet", px, py, font15, width, height);
             if(drawables.size()>0) {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }
         }
-        else if(event == PlanetEvent.MINIBOSS) {
-            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "A mini boss is waiting on this planet", px, py, font15, width, height);
+        else if(event == PlanetEvent.MINIBOSS && opponent) {
+            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "As you approach the planet, \nan odd enemy ship approaches you...", px, py, font15, width, height);
             if(drawables.size()>0) {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }
@@ -158,10 +158,7 @@ public class EventGUI {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));
             }
         }
-        else if(event == PlanetEvent.MINIBOSS) {
-            currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "As you approach the planet, \nan odd enemy ship approaches you...", px, py, font15, width, height);
-        }
-        else { //VOID
+        else { //VOID or opponent beaten
             currentPage = new EventPage(main, new HashMap<Texture, GlyphLayout>(), "There is nothing here", px, py, font15, width, height);
             if(drawables.size() > 0) {
                 eventPages.add(new EventPage(main, drawables, "Rewards", px, py, font15, width, height));

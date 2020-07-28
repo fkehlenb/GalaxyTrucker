@@ -22,6 +22,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.*;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -130,6 +131,17 @@ public class ShipView extends AbstractShip {
     private float wx;
 
     /**
+     * the y position for the crew stuff on the most left side (with name etc)
+     */
+    private float cy;
+
+    /**
+     * the list of y positions of removed crew member uis
+     * used to position the crew uis on the left side without holes etc
+     */
+    private List<Float> freeYPositions = new ArrayList<>();
+
+    /**
      * Constructor
      * @param main - the main class for SpriteBatch
      */
@@ -157,7 +169,7 @@ public class ShipView extends AbstractShip {
             crews.addAll(r.getCrew());
         }
         crew = new HashMap<>();
-        float cy = Main.HEIGHT - 150;
+        cy = Main.HEIGHT - 150;
         for(Crew c : crews) {
             crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY), ship.getShipType()));
             cy -= 60;
@@ -286,7 +298,7 @@ public class ShipView extends AbstractShip {
             r.disposeRoomUI();
         }
         for(CrewUI c : crew.values()) {
-            c.disposeCrewUI();
+            c.disposeEnemyCrewUI();
         }
     }
 
@@ -307,8 +319,9 @@ public class ShipView extends AbstractShip {
                     crew.get(c.getId()).update(c, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY));
                     deadOnes.remove(new Integer(c.getId())); //do not remove "new Integer(...)", otherwise it will use wrong remove method
                 }
-                catch (Exception f){
-                    f.printStackTrace();
+                catch (NullPointerException f){
+                    crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY), shipType));
+                    cy -= 60;
                 }
             }
             if(r.isSystem() && ((System) r).getSystemType() != SystemType.SHIELDS) {
@@ -321,9 +334,28 @@ public class ShipView extends AbstractShip {
                 ((ShieldUI) rooms.get(r.getId())).update(r, ship.getShields());
             }
         }
+        //remove the crew uis of dead crew members
         for(Integer i : deadOnes) {
             crew.get(i).crewDied();
+            freeYPositions.add(crew.get(i).getY());
             crew.remove(i);
+        }
+        //see if the crew uis that are left need to be repositioned
+        if(freeYPositions.size() > 0) {
+            Collections.sort(freeYPositions);
+            for (CrewUI c : crew.values()) {
+                if(freeYPositions.size() > 0) {
+                    if (c.getY() < freeYPositions.get(freeYPositions.size()-1)) {
+                        float newone = c.getY();
+                        c.updateLeftPosition(30, freeYPositions.remove(freeYPositions.size()-1));
+                        freeYPositions.add(newone);
+                        Collections.sort(freeYPositions);
+                    }
+                }
+                else {
+                    break;
+                }
+            }
         }
         //Inventory, if existing
         if(inventoryUI != null) {
