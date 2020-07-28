@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -11,11 +10,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.RoomUI;
  * button for representing one tile
  */
 public class TileButton extends ImButton {
-
-    /**
-     * the click sound
-     */
-    private Sound clickSound;
 
     /**
      * ui this button is on

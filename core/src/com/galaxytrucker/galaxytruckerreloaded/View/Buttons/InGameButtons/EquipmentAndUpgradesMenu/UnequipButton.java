@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.EquipmentAndUpgradesMenu;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,11 +11,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryWeapon
  * button for unequipping a weapon
  */
 public class UnequipButton extends ImButton {
-
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
 
     /**
      * weapon to be equipped

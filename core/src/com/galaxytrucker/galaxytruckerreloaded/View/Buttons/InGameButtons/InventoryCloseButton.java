@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -13,11 +12,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
  * used to close the inventory
  */
 public class InventoryCloseButton extends ImButton {
-
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
 
     /**
      * shop ui, if button on shop

@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.Video;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -11,11 +10,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
  * button for opening the video options
  */
 public class VideoButton extends ImButton {
-
-    /**
-     * click sound
-     */
-    private Sound clickSound;
 
     /**
      * ui this is in

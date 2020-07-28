@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -11,11 +10,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.ShipSelector;
  * button for creating a game in the ship selector
  */
 public class CreateGameButton extends ImButton {
-
-    /**
-     * click sound
-     */
-    private Sound clickSound;
 
     /**
      * screen this button is on

@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.OptionButtons.General;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -11,11 +10,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Options.OptionUI;
  * button for opening the general options
  */
 public class GeneralButton extends ImButton {
-
-    /**
-     * click sound
-     */
-    private Sound clickSound;
 
     /**
      * ui this is on

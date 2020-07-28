@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -11,11 +10,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
  * creates a new OptionButton
  */
 public class OptionButton extends ImButton{
-
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
 
     /** Menu object */
     private MainMenu mainMenu;

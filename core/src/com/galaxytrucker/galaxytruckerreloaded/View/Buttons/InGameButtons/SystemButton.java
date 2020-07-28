@@ -1,7 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -13,10 +12,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.Subsystem
  */
 public class SystemButton extends ImButton
 {
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
 
     /**
      * the ui this button belongs to

@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -11,11 +10,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
  * button for moving onto the next round in a fight
  */
 public class NextRoundButton extends ImButton {
-
-    /**
-     * the sound that the button makes when it is clicked
-     */
-    private Sound clickSound;
 
     /**
      * the screen this button is on
