@@ -87,15 +87,20 @@ public class CreateOrJoinServer implements Screen {
      */
     private String username;
 
+
+    private String port, address;
+
     /**
      * the constructor
      * @param main the class extending game
      */
-    public CreateOrJoinServer(Main main, ShipType ship, int diff, String username) {
+    public CreateOrJoinServer(Main main, ShipType ship, int diff, String username, String port, String address) {
         this.main = main;
         this.ship = ship;
         this.difficulty = diff;
         this.username = username;
+        this.port = port;
+        this.address = address;
 
         background = new Texture("1080p.png");
 
@@ -132,8 +137,11 @@ public class CreateOrJoinServer implements Screen {
      * join a server
      */
     public void joinServer() {
-        main.setScreen(new SelectLobbyScreen(main, ship, difficulty, username));
-        dispose();
+        main.startClient(address, Integer.parseInt(port));
+        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
+        if(success) {
+            main.setScreen(new GamePlay(main)); //TODO ?
+        }
     }
 
     /**
@@ -141,19 +149,18 @@ public class CreateOrJoinServer implements Screen {
      */
     public void startServer() {
         main.startServer();
-        main.startClient();
+        main.startClient(address, Integer.parseInt(port));
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
-            main.setScreen(new LobbyScreenHost(main, ship, false, difficulty, username));
+            main.setScreen(new GamePlay(main)); //TODO ?
         }
-        dispose();
     }
 
     /**
      * go back to last screen
      */
     public void goBack() {
-        main.setScreen(new ShipSelector(main, false, difficulty));
+        main.setScreen(new SelectLobbyScreen(main, ship, difficulty, username));
         dispose();
     }
 

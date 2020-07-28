@@ -45,18 +45,15 @@ public class Main extends Game {
      * start a server, if there isnt one
      */
     public void startServer() {
-        if (!server) {
-            Server.runServer();
-            server = true;
-        }
+        Server.getInstance();
     }
 
     /**
      * start a client, if there isnt already one
      */
-    public void startClient() {
+    public void startClient(String address, int port) {
         if (client == null) {
-            client = new Client("localhost", 5050);
+            client = new Client(address, port);
         }
     }
 

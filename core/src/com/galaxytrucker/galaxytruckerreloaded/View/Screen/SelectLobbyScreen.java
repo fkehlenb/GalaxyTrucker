@@ -11,17 +11,13 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.Select;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SelectLobbyBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.SelectLobbyButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.LobbyScreenHost;
 
 /**
  * the screen to enter a server port on to continue an existing game
@@ -52,6 +48,11 @@ public class SelectLobbyScreen implements Screen {
      * the textfield for user input
      */
     private TextField lobby;
+
+    /**
+     * the textfield for entering port number
+     */
+    private TextField port;
 
     /**
      * the button to return back to the last screen
@@ -98,18 +99,23 @@ public class SelectLobbyScreen implements Screen {
         this.difficulty = diff;
         this.username = username;
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport);
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         lobby = new TextField("", skin);
-        lobby.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
-        lobby.setPosition(main.WIDTH/2 - lobby.getWidth()/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*0);
+        lobby.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
+        lobby.setPosition(Main.WIDTH/2f - lobby.getWidth()/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*0);
 
-        backButton = new SelectLobbyBackButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        selectLobbyButton = new SelectLobbyButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        port = new TextField("", skin);
+        port.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
+        port.setPosition(Main.WIDTH/2f - port.getWidth()/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 - Main.HEIGHT/21.6f*1);
+
+        backButton = new SelectLobbyBackButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*3, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        selectLobbyButton = new SelectLobbyButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
 
         stage.addActor(lobby);
+        stage.addActor(port);
         stage.addActor(backButton);
         stage.addActor(selectLobbyButton);
 
@@ -123,10 +129,10 @@ public class SelectLobbyScreen implements Screen {
         params.magFilter = Texture.TextureFilter.Nearest;
         params.minFilter = Texture.TextureFilter.Nearest;
         params.genMipMaps = true;
-        params.size = main.HEIGHT/48;
+        params.size = Main.HEIGHT/48;
 
         font = generator.generateFont(params);
-        glyph.setText(font, "Please enter a server address");
+        glyph.setText(font, "Please enter a server address and port");
 
         background = new Texture("1080p.png");
 
@@ -137,11 +143,7 @@ public class SelectLobbyScreen implements Screen {
      * join a lobby by taking the text from the text field
      */
     public void joinLobby() {
-        main.startClient();
-        boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
-        if(success) {
-            main.setScreen(new LobbyScreenNormal(main, ship, false, difficulty, username));
-        }
+        main.setScreen(new CreateOrJoinServer(main, ship, difficulty, username, port.getText(), lobby.getText()));
         dispose();
     }
 
@@ -149,7 +151,7 @@ public class SelectLobbyScreen implements Screen {
      * return to previous screen
      */
     public void goBack() {
-        main.setScreen(new CreateOrJoinServer(main, ship, difficulty, username));
+        main.setScreen(new ShipSelector(main, false, difficulty));
         dispose();
     }
 

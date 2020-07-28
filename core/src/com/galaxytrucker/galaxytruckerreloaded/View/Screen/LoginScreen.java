@@ -209,8 +209,8 @@ public class LoginScreen implements Screen {
         String name = username.getText();
 
         if(singleplayer) {
-            Server.getInstance();
-            main.startClient();
+            main.startServer();
+            main.startClient("localhost", 5050);
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0); //ShipType sowieso irrelevant, da kein neues schiff erstellt wird
             if(success) {
                 main.setScreen(new SPResumeLobby(main));
@@ -220,18 +220,16 @@ public class LoginScreen implements Screen {
         else {
             if(address.getText().equals("localhost") || address.getText().equals("127.0.0.1"))
             {
-                main.startClient();
+                main.startClient("localhost", 5050); //TODO
                 boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
                 if(success) {
-                    main.setScreen(new LobbyScreenHost(main, main.getClient().getMyShip().getShipType(), true, 0, name)); //TODO diff von server laden
                     dispose();
                 }
             }
             else {
-                main.startClient();
+                main.startClient("localhost", 5050); //TODO
                 boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
                 if(success) {
-                    main.setScreen(new LobbyScreenHost(main, main.getClient().getMyShip().getShipType(), true, 0, name));
                     dispose();
                 }
             }
