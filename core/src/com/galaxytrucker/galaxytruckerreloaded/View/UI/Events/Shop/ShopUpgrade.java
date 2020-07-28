@@ -72,7 +72,9 @@ public class ShopUpgrade extends CurrentShopUI {
 
     @Override
     public void dispose() {
-
+        for (ShopElement e: elements) {
+            e.dispose();
+        }
     }
 
     /**

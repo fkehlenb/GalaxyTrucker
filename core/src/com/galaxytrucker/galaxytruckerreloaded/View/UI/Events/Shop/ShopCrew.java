@@ -40,6 +40,8 @@ public class ShopCrew extends CurrentShopUI {
 
     @Override
     public void dispose() {
-
+        for (ShopElement e: elements) {
+            e.dispose();
+        }
     }
 }

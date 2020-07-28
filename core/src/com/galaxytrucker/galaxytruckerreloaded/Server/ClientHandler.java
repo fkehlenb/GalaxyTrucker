@@ -366,7 +366,7 @@ public class ClientHandler implements Runnable {
             planetMap.add(planet);
         }
         // ======================= Add combat =======================
-        /*int battles = random.nextInt(4) + 5;
+        int battles = random.nextInt(4) + 5;
         for (int i = 0; i < battles; i++) {
             //Random planet texture
             int randomPlanetTextureInt = random.nextInt(7) + 1;
@@ -385,7 +385,7 @@ public class ClientHandler implements Runnable {
             ships.add(opponent);
             planet.setShips(ships);
             planetMap.add(planet);
-        }*/
+        }
         // ======================= Add minibosses =======================
         int minibosses = random.nextInt(2) + 1;
         for (int i = 0; i < minibosses; i++) {

@@ -39,6 +39,8 @@ public class ShopResource extends CurrentShopUI {
 
     @Override
     public void dispose() {
-
+        for (ShopElement e: elements) {
+            e.dispose();
+        }
     }
 }

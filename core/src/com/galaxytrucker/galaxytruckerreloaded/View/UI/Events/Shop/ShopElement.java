@@ -1,7 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
@@ -121,10 +120,9 @@ public class ShopElement {
     /**
      * dispose of this ui
      */
-    public void disposeShopElement() {
+    public void dispose() {
         texture.dispose();
         button.remove();
-        shop.removeBuyElement(this);
     }
 
     /**
@@ -152,7 +150,7 @@ public class ShopElement {
             }
         }
         if(success) {
-            disposeShopElement();
+            dispose();
         }
     }
 }

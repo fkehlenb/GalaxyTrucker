@@ -13,6 +13,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,6 +67,7 @@ public class ShopUI {
 
     private float x, y;
 
+    private List<ShopUIButton> shopTabs;
 
     /**
      * constructor
@@ -76,6 +78,7 @@ public class ShopUI {
         this.game = game;
         this.stage=stage;
         this.trader=trader;
+        shopTabs = new ArrayList<>();
 
         background = new Texture("shop/storeback.png");
         x = main.WIDTH/2 - background.getWidth()/2;
@@ -93,11 +96,17 @@ public class ShopUI {
         float ydist = main.HEIGHT/15.652f;
 
         ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),xb, yb, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.WEAPON);
+        shopTabs.add(shopWeaponButton);
         ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab.png"),xb, yb+ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.RESOURCE);
+        shopTabs.add(shopResourceButton);
         ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),xb, yb+2*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.CREW);
+        shopTabs.add(shopCrewButton);
         ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),xb, yb+3*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SYSTEM);
+        shopTabs.add(shopSystemButton);
         ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),xb, yb+4*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.UPGRADES);;
+        shopTabs.add(shopUpgradeButton);
         ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SELL);
+        shopTabs.add(shopSellButton);
 
         //closeButton = new InventoryCloseButton(x+Main.WIDTH/6.4f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
         closeButton = new InventoryCloseButton(x+Main.WIDTH/7f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
@@ -117,6 +126,9 @@ public class ShopUI {
     public void render(){
         main.batch.begin();
         main.batch.draw(background, x, y,Main.WIDTH/3.195f, Main.HEIGHT/2.293f); //TODO whxy
+        for (ShopUIButton tab : shopTabs) {
+            //TODO fraw tabs here not wherever
+        }
         main.batch.end();
         /*for(ShopElement e : elements) {
             e.render();
@@ -129,6 +141,9 @@ public class ShopUI {
     public void disposeShopUI() {
         if (current != null) {
             current.dispose();
+        }
+        for (ShopUIButton tab : shopTabs) {
+            tab.remove();
         }
         closeButton.remove();
         background.dispose();
