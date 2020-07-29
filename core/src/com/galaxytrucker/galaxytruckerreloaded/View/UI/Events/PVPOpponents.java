@@ -84,7 +84,7 @@ public class PVPOpponents {
 
         closeButton = new PVPCloseButton(x, y + 20, 248, 50, this);
         stage.addActor(closeButton);
-        startButton = new PVPStartButton(x + background.getWidth() - 248, y+20, 248, 50, this);
+        startButton = new PVPStartButton(x + background.getWidth() - background.getWidth()/3f, y+20, background.getWidth()/3f, 50, this);
         stage.addActor(startButton);
 
         glyphs = new ArrayList<>();
@@ -103,7 +103,7 @@ public class PVPOpponents {
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         field = new TextField("", skin);
-        field.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
+        field.setSize(background.getWidth()/3f, Main.HEIGHT/21.6f);
         field.setPosition(Main.WIDTH/2f - field.getWidth()/2, y+20);
 
         stage.addActor(field);

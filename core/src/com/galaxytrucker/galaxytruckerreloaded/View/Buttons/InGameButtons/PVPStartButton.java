@@ -25,7 +25,7 @@ public class PVPStartButton extends ImButton {
      * @param screen the screen
      */
     public PVPStartButton(float x, float y, float width, float height, PVPOpponents screen) {
-        super(new Texture("close_on.png"), x, y, width, height);
+        super(new Texture("buttons/start_game_button.png"), x, y, width, height);
         this.screen = screen;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
