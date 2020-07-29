@@ -406,7 +406,7 @@ public class ShipView extends AbstractShip {
      */
     public void openMap() {
         if(mapUI == null){
-            mapUI = new MapUI(main, stage, map, this);
+            mapUI = new MapUI(main, stage, this);
         }
 
     }

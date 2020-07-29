@@ -9,27 +9,57 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Option
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
+/**
+ * ui for control optinos
+ */
 public class ControlUI {
 
+    /**
+     * background texture
+     */
     private Texture controleBackgroundTextuere;
+
+    /**
+     * main class extending game
+     */
     private Main main;
+
+    /**
+     * screen this is on, if during game
+     */
     private GamePlay gamePlay;
-    private OptionUI optionUI;
-    private BackButton backButton;
-    private Stage stage;
+
+    /**
+     * screen this is on, if on main menu
+     */
     private MainMenu mainMenu;
 
     /**
+     * previous option ui
+     */
+    private OptionUI optionUI;
+
+    /**
+     * button for returning to previous option ui
+     */
+    private BackButton backButton;
+
+    /**
+     * stage for buttons
+     */
+    private Stage stage;
+
+    /**
      * Constructor
-     * @param main
-     * @param stage
-     * @param gamePlay
+     * @param main main class extending game
+     * @param stage stage for buttons
+     * @param gamePlay screen, if during game
+     * @param mainMenu screen, if during main menu
      */
     public ControlUI(Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
         this.gamePlay = gamePlay;
         this.stage = stage;
-        //this.optionUI = gamePlay.getOptionUI();
         this.mainMenu = mainMenu;
 
         if(gamePlay!=null) {
@@ -41,7 +71,7 @@ public class ControlUI {
         controleBackgroundTextuere = new Texture("options/control.png");
 
 
-        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
+        backButton = new BackButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*4, Main.WIDTH/15f, Main.HEIGHT/40f, optionUI, this);
 
         stage.addActor(backButton);
     }
@@ -53,7 +83,7 @@ public class ControlUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(controleBackgroundTextuere, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
+        main.batch.draw(controleBackgroundTextuere, Main.WIDTH/2f - (Main.WIDTH/3.1946f)/2, Main.HEIGHT/2f - (Main.HEIGHT/2.293f)/2, Main.WIDTH/3.1946f, Main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();
@@ -74,27 +104,13 @@ public class ControlUI {
     }
 
     /**
-     * Open the options menu
-     */
-    public void showGeneralUI() {
-        backButton.setVisible(true);
-    }
-    /**
-     * Close the options menu
-     */
-    public void hideGeneralUI() {
-        backButton.setVisible(false);
-    }
-
-    /**
      * handles input to pause game, open options
      */
-    public void updateInput() {
+    private void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             disposeControlUI();
             optionUI.showOptionsUI();
         }
     }
-
 
 }

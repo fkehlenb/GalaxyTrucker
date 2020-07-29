@@ -30,6 +30,9 @@ public class GeneralUI {
      */
     private GamePlay gamePlay;
 
+    /**
+     * screen this is on, if during main menu
+     */
     private MainMenu mainMenu;
 
     /**
@@ -37,12 +40,14 @@ public class GeneralUI {
      */
     private OptionUI optionUI;
 
-
     /**
      * Back Button
      */
     private BackButton backButton;
 
+    /**
+     * stage for buttons
+     */
     private Stage stage;
 
     /**
@@ -50,6 +55,7 @@ public class GeneralUI {
      * @param main current Main instance
      * @param stage current stage instance
      * @param gamePlay current gameplay instance
+     * @param mainMenu screen, if during main menu
      */
     public GeneralUI (Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
@@ -64,7 +70,7 @@ public class GeneralUI {
         }
         generalBackgroundTexture = new Texture("options/general.png");
 
-        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
+        backButton = new BackButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*4, Main.WIDTH/15f, Main.HEIGHT/40f, optionUI, this);
 
         stage.addActor(backButton);
     }
@@ -76,7 +82,7 @@ public class GeneralUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(generalBackgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
+        main.batch.draw(generalBackgroundTexture, Main.WIDTH/2f - (Main.WIDTH/3.1946f)/2, Main.HEIGHT/2f - (Main.HEIGHT/2.293f)/2, Main.WIDTH/3.1946f, Main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();
@@ -97,35 +103,12 @@ public class GeneralUI {
     }
 
     /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * Open the options menu
-     */
-    public void showGeneralUI() {
-        backButton.setVisible(true);
-    }
-
-    /**
-     * Close the options menu
-     */
-    public void hideGeneralUI() {
-        backButton.setVisible(false);
-    }
-
-    /**
      * handles input to pause game, open options
      */
-    public void updateInput() {
+    private void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             disposeGeneralUI();
             optionUI.showOptionsUI();
         }
     }
-
-
-
 }

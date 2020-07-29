@@ -9,26 +9,57 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Option
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
+/**
+ * option ui for credits
+ */
 public class CreditsUI {
+
+    /**
+     * background texture
+     */
     private Texture CreditBackgroundTexture;
+
+    /**
+     * main class extending game
+     */
     private Main main;
+
+    /**
+     * screen this is on, if during game
+     */
     private GamePlay gamePlay;
-    private OptionUI optionUI;
-    private BackButton backButton;
-    private Stage stage;
+
+    /**
+     * screen this is on, if during main menu
+     */
     private MainMenu mainMenu;
 
     /**
+     * previous option ui
+     */
+    private OptionUI optionUI;
+
+    /**
+     * back button for returning to previous ui
+     */
+    private BackButton backButton;
+
+    /**
+     * stage for buttons
+     */
+    private Stage stage;
+
+    /**
      * Constructor
-     * @param main
-     * @param stage
-     * @param gamePlay
+     * @param main main class extending game
+     * @param stage stage for buttons
+     * @param gamePlay screen, if during game
+     * @param mainMenu screen, if during main menu
      */
     public CreditsUI(Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
         this.gamePlay = gamePlay;
         this.stage = stage;
-        //this.optionUI = gamePlay.getOptionUI();
         this.mainMenu = mainMenu;
         if(gamePlay!=null) {
             this.optionUI = gamePlay.getOptionUI();
@@ -39,7 +70,7 @@ public class CreditsUI {
 
         CreditBackgroundTexture = new Texture("options/credits.png");
 
-        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
+        backButton = new BackButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*4, Main.WIDTH/15f, Main.HEIGHT/40f, optionUI, this);
 
         stage.addActor(backButton);
     }
@@ -51,7 +82,7 @@ public class CreditsUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(CreditBackgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
+        main.batch.draw(CreditBackgroundTexture, Main.WIDTH/2f - (Main.WIDTH/3.1946f)/2, Main.HEIGHT/2f - (Main.HEIGHT/2.293f)/2, Main.WIDTH/3.1946f, Main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();
@@ -72,22 +103,9 @@ public class CreditsUI {
     }
 
     /**
-     * Open the options menu
-     */
-    public void showCreditUI() {
-        backButton.setVisible(true);
-    }
-    /**
-     * Close the options menu
-     */
-    public void hideCreditUI() {
-        backButton.setVisible(false);
-    }
-
-    /**
      * handles input to pause game, open options
      */
-    public void updateInput() {
+    private void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             disposeCreditUI();;
             optionUI.showOptionsUI();
