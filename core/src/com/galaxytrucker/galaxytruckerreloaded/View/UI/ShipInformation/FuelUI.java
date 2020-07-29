@@ -68,7 +68,6 @@ public class FuelUI {
      */
     public void disposeFuelUI() {
         fuelBackground.dispose();
-        font.dispose();
     }
 
     /**

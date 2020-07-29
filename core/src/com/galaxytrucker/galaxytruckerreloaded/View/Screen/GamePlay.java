@@ -5,8 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -196,6 +198,13 @@ public class GamePlay implements Screen {
      */
     private GlyphLayout hostGlyph;
 
+    private Texture explosionSheet;
+    private Animation<TextureRegion> explosion;
+    private TextureRegion[] explosionFrames;
+    private float stateTime;
+
+    private float explosionX, explosionY;
+    private boolean exploding;
 
     /**
      * Constructor
@@ -229,7 +238,27 @@ public class GamePlay implements Screen {
 
         player = new ShipView(main, ClientControllerCommunicator.getInstance(null).getClientShip(), stage, tileStage, this, font15, font25);
 
+
+        explosionSheet = new Texture("effects/explosionbig.png");
+        TextureRegion[][] tmp = TextureRegion.split(explosionSheet, explosionSheet.getWidth()/10, explosionSheet.getHeight());
+        explosionFrames = new TextureRegion[10];
+        int index = 0;
+        for(int i =0; i<10; i++) {
+            explosionFrames[index++] = tmp[0][i];
+        }
+
+        createExplosion();
+
         Gdx.input.setInputProcessor(stage);
+    }
+
+    /**
+     * create the explosion animation
+     * needed each time new because otherwise it can be seen only once
+     */
+    private void createExplosion() {
+        explosion = new Animation<TextureRegion>(1/16f, explosionFrames);
+        stateTime = 0f;
     }
 
 
@@ -271,14 +300,27 @@ public class GamePlay implements Screen {
 
         //player, and possibly enemy
         if(enemy == null) {
-            player.render();
+            if(player!=null) {
+                player.render();
+            }
         }
-        else {
+        else if(player != null){
             player.render1();
             enemy.render1();
             tileStage.draw();
             enemy.render2();
             player.render2();
+        }
+
+        if(exploding) {
+            stateTime += delta;
+            TextureRegion currentFrame = explosion.getKeyFrame(stateTime, false);
+            main.batch.begin();
+            main.batch.draw(currentFrame, explosionX, explosionY);
+            main.batch.end();
+            if(explosion.isAnimationFinished(stateTime)) {
+                exploding = false;
+            }
         }
 
         //host?
@@ -308,7 +350,9 @@ public class GamePlay implements Screen {
     public void dispose() {
         background.dispose();
         planetTexture.dispose();
-        player.disposeShipView();
+        if(player != null) {
+            player.disposeShipView();
+        }
         font15.dispose();
         if(font25 != null) {
             font25.dispose();
@@ -323,6 +367,8 @@ public class GamePlay implements Screen {
         if(enemy != null) { enemy.disposeShipView(); }
         if(pvpUI != null) { pvpUI.disposePVPOpponents(); }
         stage.dispose();
+
+        explosionSheet.dispose();
     }
 
     /**
@@ -345,6 +391,18 @@ public class GamePlay implements Screen {
             crewMoving = false;
             takingAim = false;
         }
+    }
+
+    /**
+     * start the animation of an explosion
+     * @param x the lower left x position the explosion should be at
+     * @param y the lower left corner y position the explosion should be at
+     */
+    private void explodeShipAnimation(float x, float y) {
+        createExplosion();
+        explosionX = x-explosionSheet.getWidth()/10f/2;
+        explosionY = y-explosionSheet.getHeight()/2f;
+        exploding = true;
     }
 
     /**
@@ -435,6 +493,11 @@ public class GamePlay implements Screen {
         enemy = null;
     }
 
+    private void removePlayer() {
+        player.disposeShipView();
+        player = null;
+    }
+
     /**
      * create next round button
      */
@@ -522,6 +585,7 @@ public class GamePlay implements Screen {
 
                 } catch (Exception e) {
                     java.lang.System.out.println("--- Der Gegner ist schon tot! ---");
+                    explodeShipAnimation(enemy.getBaseX(), enemy.getBaseY());
                     removeEnemy();
                     removeRoundButton();
                     if(ClientControllerCommunicator.getInstance(null).getClientShip().getPlanet().getEvent().equals(PlanetEvent.BOSS)){
@@ -530,6 +594,8 @@ public class GamePlay implements Screen {
                 }
             } catch (Exception e){
                 java.lang.System.out.println("--- Du bist tot! ---");
+                explodeShipAnimation(player.getBaseX(), player.getBaseY());
+                removePlayer();
                 createGameOver(false);
             }
 
@@ -538,11 +604,14 @@ public class GamePlay implements Screen {
                     boolean combatWon = battleController.combatWon();
                     if (combatWon){
                         // todo
+                        explodeShipAnimation(enemy.getBaseX(), enemy.getBaseY());
                         java.lang.System.out.println("--- GEWONNEN ---");
                         
                     }
                     else{
                         // todo
+                        explodeShipAnimation(player.getBaseX(), player.getBaseY());
+                        removePlayer();
                         java.lang.System.out.println("--- Du bist tot! ---");
                         java.lang.System.out.println("--- VERLOREN ---");
                         createGameOver(false);

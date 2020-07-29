@@ -115,6 +115,7 @@ public class ShipView extends AbstractShip {
     /**
      * the x and y position the ship starts at on the screen
      */
+    @Getter
     private float baseX, baseY;
 
     /**
