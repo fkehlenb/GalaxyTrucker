@@ -446,11 +446,12 @@ public class GamePlay implements Screen {
         else {
             success = TravelController.getInstance(null).travel(planet); //Communicator can be null since already created, so never used
         }
-            planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
+        planet = PlanetEventController.getInstance(null).getClientShip().getPlanet();
         if(success) {
             boolean opponent = (planet.getEvent().equals(PlanetEvent.BOSS)
                     || planet.getEvent().equals(PlanetEvent.COMBAT)
-                    || planet.getEvent().equals(PlanetEvent.MINIBOSS) ) && planet.getShips().size() > 1;
+                    || planet.getEvent().equals(PlanetEvent.MINIBOSS)
+                    || planet.getEvent().equals(PlanetEvent.PVP) ) && planet.getShips().size() > 1;
             createEvent(planet.getEvent(), opponent);
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 background = new Texture("1080p.png");
@@ -546,7 +547,13 @@ public class GamePlay implements Screen {
         if(success) {
             pvpUI.disposePVPOpponents();
             deletePVPUI();
+
+            background = new Texture("1080p.png");
+            createEnemy();
+            createRoundButton();
         }
+
+        //todo travel to planet
     }
 
     /**
