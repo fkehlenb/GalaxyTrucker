@@ -1,17 +1,15 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
-
-import java.util.LinkedList;
-import java.util.List;
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.RoomUI;
 
+/**
+ * ui for displaying a ship, both your own and enemy
+ */
 public abstract class AbstractShip {
 
     /**
@@ -47,14 +45,18 @@ public abstract class AbstractShip {
     /**
      * the stage for the tiles of the rooms
      */
-    protected Stage tileStage;
+    Stage tileStage;
 
     /**
      * Constructor
      *
      * @param main - the main class for SpriteBatch
+     * @param game screen this is on
+     * @param stage stage for buttons
+     * @param ship ship to display
+     * @param tileStage stage for tile buttons
      */
-    public AbstractShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
+    AbstractShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
         this.main = main;
         this.stage = stage;
         this.game = game;
@@ -73,7 +75,7 @@ public abstract class AbstractShip {
      * @param bx the x position of the start (the middle of the ship)
      * @return the total x position (lower right corner of the room)
      */
-    protected float getRoomX(ShipType type, int id, float bx) {
+    float getRoomX(ShipType type, int id, float bx) {
         switch(type) {
             case DEFAULT:
                 switch(id) {
@@ -242,7 +244,7 @@ public abstract class AbstractShip {
      * @param by the base y position (in the middle of the ship)
      * @return total y position (lower right corner of room)
      */
-    protected float getRoomY(ShipType type, int id, float by) {
+    float getRoomY(ShipType type, int id, float by) {
         switch(type) {
             case DEFAULT:
                 switch(id) {
@@ -407,30 +409,8 @@ public abstract class AbstractShip {
     public abstract void render();
 
     /**
-     * show the ship
-     */
-    public abstract void showShipView();
-
-    /**
-     * hide the ship
-     */
-    public abstract void hideShipView();
-
-    /**
      * dispose of ship
      */
     public abstract void disposeShipView();
-
-    /**
-     * update of the hull status (hp)
-     * @param hpvalue new status
-     */
-    public abstract void hullStatusUpdate(int hpvalue);
-
-    /**
-     * shield status update
-     * @param shieldvalue new status
-     */
-    public abstract void shieldStatusUpdate(int shieldvalue);
 
 }

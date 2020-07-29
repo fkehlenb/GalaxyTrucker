@@ -1,15 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.galaxytrucker.galaxytruckerreloaded.Controller.SystemController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
@@ -33,6 +26,9 @@ public class SubsystemUI extends RoomUI {
      */
     private Texture energyTexture;
 
+    /**
+     * the type of system
+     */
     private SystemType systemType;
 
     /**
@@ -51,6 +47,9 @@ public class SubsystemUI extends RoomUI {
      */
     protected int id;
 
+    /**
+     * the amount of energy bars to be displayed
+     */
     private int currentStatus;
 
     /**
@@ -60,8 +59,14 @@ public class SubsystemUI extends RoomUI {
 
     /**
      * constructor
-     * @param main the main class
-     * @param system the system
+     * @param main main class extending game
+     * @param tileStage the stage for tile buttons
+     * @param ship the ship ui this belongs to
+     * @param x x position of the room
+     * @param y y position of the room
+     * @param system the system to be displayed
+     * @param sx the position of the energy button in the lower left corner
+     * @param normalStage the normal stage for buttons
      */
     public SubsystemUI(Main main, Stage tileStage, ShipView ship, float x, float y, System system, float sx, Stage normalStage) {
         super(main, system, tileStage, ship, x, y);
@@ -87,6 +92,9 @@ public class SubsystemUI extends RoomUI {
         normalStage.addActor(energyButton);
     }
 
+    /**
+     * render everything to the screen
+     */
     public void render() {
         super.render();
         main.batch.begin();
@@ -124,27 +132,6 @@ public class SubsystemUI extends RoomUI {
         System sys = (System) room;
         currentStatus = sys.isDisabled() ? 2 : 3;
         this.energy = sys.getEnergy();
-    }
-
-    /**
-     * the amount of energy given to a system (if this room is a system) is changed
-     *
-     * @param amount the new amount
-     */
-    @Override
-    public void systemEnergyUpdate(int amount) {
-        this.energy = amount;
-    }
-
-    /**
-     * the status of the system was updated either by damage or by repair
-     * called by controller
-     * @param damage the current status, with 0 being completely functional
-     */
-    public void systemStatusUpdate(int damage) {
-        if(!(currentStatus == systemTexture.size())) {
-            currentStatus++;
-        }
     }
 
     /**

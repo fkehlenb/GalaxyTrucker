@@ -1,14 +1,13 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
+/**
+ * ui for displaying scrap
+ */
 public class ScrapUI {
 
     /**
@@ -19,15 +18,21 @@ public class ScrapUI {
     /**
      * the amount of money
      */
-    private int amount = 0;
+    private int amount;
 
     /**
      * the main class with the sprite batch
      */
     private Main main;
 
+    /**
+     * font for displaying text
+     */
     private BitmapFont font;
 
+    /**
+     * glyph layout for positioning text
+     */
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
@@ -35,6 +40,7 @@ public class ScrapUI {
      *
      * @param main - main class used for sprite batch and camera
      * @param money the amount of money
+     * @param font font for text
      */
     public ScrapUI(Main main, int money, BitmapFont font) {
         this.main = main;
@@ -55,24 +61,6 @@ public class ScrapUI {
         main.batch.draw(scrapBackground, 600, Main.HEIGHT - 93, 147, 60);
         font.draw(main.batch, glyph, 600 + (147f/2) - glyph.width/2, (Main.HEIGHT - 43) - glyph.height/2);
         main.batch.end();
-    }
-
-    /**
-     * setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the ui
-     */
-    public void showScrapUI() {
-    }
-
-    /**
-     * hide the ui
-     */
-    public void hideScrapUI() {
     }
 
     /**

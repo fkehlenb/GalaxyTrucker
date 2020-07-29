@@ -25,8 +25,10 @@ public class HullUI {
      */
     private int status;
 
+    /**
+     * main class extending game
+     */
     private Main main;
-
 
     /**
      * Constructor
@@ -59,29 +61,11 @@ public class HullUI {
         main.batch.begin();
         float x = 25;
         for(int i=0; i<=status; i++) {
-            main.batch.draw(hullTexture, x, main.HEIGHT - 83, 25, 25);
+            main.batch.draw(hullTexture, x, Main.HEIGHT - 83, 25, 25);
             x+=12;
         }
-        main.batch.draw(hullBackgroundTexture, 25, main.HEIGHT - 112, 577, 97);
+        main.batch.draw(hullBackgroundTexture, 25, Main.HEIGHT - 112, 577, 97);
         main.batch.end();
-    }
-
-    /**
-     * setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show ui
-     */
-    public void showHullUI() {
-    }
-
-    /**
-     * hide ui
-     */
-    public void hideHullUI() {
     }
 
     /**

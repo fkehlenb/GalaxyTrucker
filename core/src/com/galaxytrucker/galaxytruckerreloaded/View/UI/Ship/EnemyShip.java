@@ -9,11 +9,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemyHullUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemySystemUI;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.CrewUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.EnemyCrewUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.RoomUI;
 
@@ -21,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * for displaying an enemy ship
+ */
 public class EnemyShip extends AbstractShip {
 
     /**
@@ -80,11 +81,18 @@ public class EnemyShip extends AbstractShip {
      */
     private EnemyHullUI hull;
 
+    /**
+     * base position for the rooms
+     */
     private float baseX, baseY;
 
     /**
      * Constructor
      * @param main - the main class for SpriteBatch
+     * @param tileStage stage for tile buttons
+     * @param ship ship to display
+     * @param stage stage for normal buttons
+     * @param game screen this is on
      */
     public EnemyShip(Main main, Ship ship, Stage stage, GamePlay game, Stage tileStage) {
         super(main, ship, stage, game, tileStage);
@@ -149,6 +157,7 @@ public class EnemyShip extends AbstractShip {
      * @param ship the new ship
      */
     public void update(Ship ship) {
+        hull.hullStatusUpdate(ship.getHp());
         List<Crew> crews = new ArrayList<>();
         //Room
         for(Room r : ship.getSystems()) {
@@ -218,22 +227,6 @@ public class EnemyShip extends AbstractShip {
     }
 
     /**
-     * show the ship
-     */
-    @Override
-    public void showShipView() {
-
-    }
-
-    /**
-     * hide the ship
-     */
-    @Override
-    public void hideShipView() {
-
-    }
-
-    /**
      * dispose of ship
      */
     @Override
@@ -247,56 +240,6 @@ public class EnemyShip extends AbstractShip {
         for(EnemyCrewUI c : crewUIHashMap.values()) {
             c.disposeEnemyCrewUI();
         }
-    }
-
-    /**
-     * a status of a system was updated and needs to be properly displayed
-     * eg system hit
-     * @param damage the damage to the system
-     */
-    public void systemStatusUpdate(int damage) {
-
-    }
-
-    /**
-     * the hull was hit and the status of it needs to be updated
-     */
-    public void hullHit() {
-
-    }
-
-    /**
-     * animation of the ship being destroyed
-     */
-    public void shipDestroyedAnimation() {
-
-    }
-
-    /**
-     * animation of the ship fleeing
-     */
-    public void shipFleeingAnimation() {
-
-    }
-
-    /**
-     * update of the hull status (hp)
-     *
-     * @param hpvalue new status
-     */
-    @Override
-    public void hullStatusUpdate(int hpvalue) {
-        hull.hullStatusUpdate(hpvalue);
-    }
-
-    /**
-     * shield status update
-     *
-     * @param shieldvalue new status
-     */
-    @Override
-    public void shieldStatusUpdate(int shieldvalue) {
-
     }
 
 }

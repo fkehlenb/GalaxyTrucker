@@ -1,14 +1,14 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
+/**
+ * ui for displaying a crew member on the enemy ship
+ */
 public class EnemyCrewUI {
 
     /** image of the crew member for the side bar **/
@@ -32,7 +32,7 @@ public class EnemyCrewUI {
     /**
      * the position of the room the crew member is in
      */
-    float roomX, roomY;
+    private float roomX, roomY;
 
     /**
      * constructor
@@ -50,10 +50,16 @@ public class EnemyCrewUI {
         crewImage = new Texture("crew/"+type.toString().toLowerCase()+".png");
     }
 
+    /**
+     * dispose the ui
+     */
     public void disposeEnemyCrewUI() {
         crewImage.dispose();
     }
 
+    /**
+     * render everything to the screen
+     */
     public void render() {
         main.batch.begin();
         main.batch.draw(crewImage, roomX, roomY, 50, 50);
@@ -86,25 +92,5 @@ public class EnemyCrewUI {
      */
     public void crewDied() {
         this.disposeEnemyCrewUI();
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the Crew ui
-     */
-    public void showCrewUI() {
-
-    }
-
-    /**
-     * hide the Crew ui
-     */
-    public void hideCrewUI() {
-
     }
 }

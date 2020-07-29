@@ -230,7 +230,7 @@ public class GamePlay implements Screen {
             stage.addActor(pvpActivateButton);
         }
 
-        player = new ShipView(main, main.getClient().getMyShip(), stage, tileStage, main.getClient().getOverworld(), this, font15, font25);
+        player = new ShipView(main, ClientControllerCommunicator.getInstance(null).getClientShip(), stage, tileStage, this, font15, font25);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -520,7 +520,6 @@ public class GamePlay implements Screen {
                 player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
                 try {
                     Ship updatedEnemyShip = BattleController.getInstance(null).getOpponent();
-                    enemy.hullStatusUpdate(updatedEnemyShip.getHp());
                     enemy.update(updatedEnemyShip);
                     enemy.render();
 

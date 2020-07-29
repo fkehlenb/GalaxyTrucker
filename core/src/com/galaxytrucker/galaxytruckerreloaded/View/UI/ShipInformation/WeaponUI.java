@@ -3,11 +3,9 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
@@ -36,18 +34,37 @@ public class WeaponUI extends SubsystemUI {
      */
     private float wx, wy;
 
+    /**
+     * the weapons belonging to the system
+     */
     private List<Weapon> weapons;
 
+    /**
+     * the stage for buttons
+     */
     private Stage stage;
 
+    /**
+     * the font for text
+     */
     private BitmapFont font;
 
+    /**
+     * the hashmap saving the texts for cooldown with the ids of the weapons
+     */
     private HashMap<Integer, GlyphLayout> glyphs = new HashMap<>();
 
     /**
      * constructor
-     * @param main the main class
-     * @param weapon the weapon
+     * @param main main class extending game
+     * @param stage stage for tile buttons
+     * @param ship ship ui this belongs to
+     * @param x x position of the room
+     * @param y y position of the room
+     * @param weapon the weapon system
+     * @param sx the position of the energy button in the lower left corner
+     * @param normalStage the stage for normal buttons
+     * @param font the fonts for text
      */
     public WeaponUI(Main main, Stage stage, ShipView ship, float x, float y, System weapon, float sx, Stage normalStage, BitmapFont font) {
         super(main, stage, ship, x, y, weapon, sx, normalStage);
@@ -58,7 +75,7 @@ public class WeaponUI extends SubsystemUI {
         wy = 100;
 
         weapons = weapon.getShipWeapons();
-    } //TODO: equip/unequip + what ever needs to be done to make the firing of weapons possible
+    }
 
     /**
      * sets the position of the box
@@ -146,13 +163,6 @@ public class WeaponUI extends SubsystemUI {
         for(WeaponActivateButton b : buttons.values()) {
             b.remove();
         }
-    }
-
-    /**
-     * animation for when the weapon was shot
-     */
-    public void weaponShotAnimation() {
-
     }
 
     /**
