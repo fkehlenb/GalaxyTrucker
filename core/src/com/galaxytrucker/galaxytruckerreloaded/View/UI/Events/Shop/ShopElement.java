@@ -1,6 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
@@ -23,6 +25,8 @@ public class ShopElement {
      * the texture of this element
      */
     private Texture texture;
+
+    private Stage stage;
 
     /**
      * the position on the screen
@@ -59,6 +63,9 @@ public class ShopElement {
      */
     private int price;
 
+    private GlyphLayout priceTag = new GlyphLayout();
+
+    private BitmapFont font;
     /**
      * the shop ui this element is on
      */
@@ -72,6 +79,7 @@ public class ShopElement {
     public ShopElement(Main main, Stage stage, Texture texture, float x, float y, ShopUI shop, Weapon weapon, Crew crew, System system, int amount, ShopElementType type) {
         this.main = main;
         this.texture = texture;
+        this.stage = stage;
         this.x = x;
         this.y = y;
         this.shop = shop;
@@ -79,9 +87,10 @@ public class ShopElement {
         this.crew = crew;
         this.amount = amount;
         this.type = type;
+        this.font = shop.getFont();
 
 
-        button = new ShopBuyButton(texture, main.WIDTH/2, main.HEIGHT/2, main.WIDTH/6.4f, main.WIDTH/38.4f, this); //TODO whxy
+        button = new ShopBuyButton(texture, x, y-texture.getHeight()/2, main.WIDTH/6.4f, main.WIDTH/38.4f, this); //TODO whxy
         stage.addActor(button);
         switch (type){
             case HP:
@@ -95,6 +104,10 @@ public class ShopElement {
                 break;
             case WEAPON:
                 price = weapon.getWeaponPrice();
+                for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
+                {
+                    price += weapon.getPrice().get(lvl);
+                }
                 break;
             case CREW:
                 price = crew.getPrice();
@@ -106,6 +119,8 @@ public class ShopElement {
                 //TODO lololol idk
                 break;
         }
+        priceTag.setText(font, Integer.toString(price));
+
     }
 
     /**
@@ -113,15 +128,18 @@ public class ShopElement {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(texture, x, y, 10, 10); //TODO whxy
+        //main.batch.draw(texture, x, y, 300, 300); //TODO whxy
+        font.draw(main.batch, priceTag, x + main.WIDTH/32 , y - priceTag.height/2);
         main.batch.end();
+        stage.draw();
     }
 
     /**
      * dispose of this ui
      */
     public void dispose() {
-        texture.dispose();
+        //texture.dispose();
+        priceTag.setText(font, "");
         button.remove();
     }
 
@@ -130,14 +148,13 @@ public class ShopElement {
      */
     public void buy() {
         boolean success = false;
-        if(weapon != null) {
-            success = shop.buyWeapon(weapon);
-        }
-        else if(crew != null) {
-            success = shop.buyCrew(crew);
-        }
-        else if(type != null) {
             switch (type) {
+                case WEAPON:
+                    success = shop.buyWeapon(weapon);
+                    break;
+                case CREW:
+                    success = shop.buyCrew(crew);
+                    break;
                 case MISSILES:
                     success = shop.buyMissiles();
                     break;
@@ -148,7 +165,6 @@ public class ShopElement {
                     success = shop.buyHP(amount);
                     break;
             }
-        }
         if(success) {
             dispose();
         }

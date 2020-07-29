@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.TraderController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -67,6 +68,9 @@ public class ShopUI {
 
     private Trader trader;
 
+    @Getter
+    private BitmapFont font;
+
     private float x, y;
 
     private List<ShopUIButton> shopTabs;
@@ -75,11 +79,12 @@ public class ShopUI {
      * constructor
      * @param main the main class
      */
-    public ShopUI(Main main, Stage stage, GamePlay game, Trader trader) {
+    public ShopUI(Main main, Stage stage, GamePlay game, Trader trader, BitmapFont font) {
         this.main = main;
         this.game = game;
         this.stage=stage;
         this.trader=trader;
+        this.font=font;
         shopTabs = new ArrayList<>();
 
         background = new Texture("shop/storeback.png");
@@ -111,7 +116,7 @@ public class ShopUI {
         shopTabs.add(shopSellButton);
 
         //closeButton = new InventoryCloseButton(x+Main.WIDTH/6.4f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
-        closeButton = new InventoryCloseButton(x+Main.WIDTH/7f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
+        closeButton = new InventoryCloseButton(x+Main.WIDTH/5f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
         stage.addActor(closeButton);
         for (ShopUIButton tab : shopTabs) {
             stage.addActor(tab);
@@ -127,6 +132,9 @@ public class ShopUI {
         main.batch.draw(background, x, y,Main.WIDTH/3.195f, Main.HEIGHT/2.293f); //TODO whxy
         main.batch.end();
         stage.draw();
+        if (current != null) {
+            current.render();
+        }
     }
 
     /**
@@ -226,6 +234,8 @@ public class ShopUI {
                 current = new ShopResource(main, stage, game, trader, this);
                 break;
         }
+
+        current.render();
     }
 
     /**

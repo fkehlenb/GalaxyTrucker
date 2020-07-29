@@ -23,7 +23,9 @@ public class ShopSystem extends CurrentShopUI {
 
     @Override
     public void render() {
-
+        for (ShopElement e: elements) {
+            e.render();
+        }
     }
 
     @Override
