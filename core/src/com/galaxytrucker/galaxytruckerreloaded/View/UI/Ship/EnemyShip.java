@@ -14,6 +14,7 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemyHullUI
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo.EnemySystemUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.EnemyCrewUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.RoomUI;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,6 +85,7 @@ public class EnemyShip extends AbstractShip {
     /**
      * base position for the rooms
      */
+    @Getter
     private float baseX, baseY;
 
     /**

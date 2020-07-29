@@ -68,7 +68,6 @@ public class MissileUI {
      */
     public void disposeMissileUI() {
         missileBackground.dispose();
-        font.dispose();
     }
 
     /**

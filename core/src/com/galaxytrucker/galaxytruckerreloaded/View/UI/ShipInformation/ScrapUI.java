@@ -68,7 +68,6 @@ public class ScrapUI {
      */
     public void disposeScrapUI() {
         scrapBackground.dispose();
-        font.dispose();
     }
 
     /**
