@@ -1,9 +1,19 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Server.ClientHandler;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +23,8 @@ public class ShopSell extends CurrentShopUI {
      * the items that can be sold
      */
     private List<ShopSellElement> sellElements;
+    private List<Crew> crewList;
+    private List<Room> r;
 
 
     public ShopSell(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
@@ -20,15 +32,19 @@ public class ShopSell extends CurrentShopUI {
 
         //add all the items that can be sold TODO geldanzeige immer ändern
         sellElements = new LinkedList<>();
+
         //Crew
-        /*
-        for(Crew c : shipCrew) {
-            sellElements.add(new ShopSellElement(main, stage, new Texture("crew.png"), 0, 0, this, null, shipCrew));
+
+        /*for(Room r  : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()) {
+            crewList.addAll(r.getCrew());
         }
-        //weapons
-        for(Weapon w : shipWeapons) {
-            sellElements.add(new ShopSellElement(main, stage, new Texture("laser.png"), 0, 0, this, w, 0));
+        for(Crew c : crewList) {
+            sellElements.add(new ShopSellElement(main, stage, new Texture("crew.png"), 0, 0, shopUI, null, c));
         }*/
+        //weapons
+        for(Weapon w : ClientControllerCommunicator.getInstance(null).getClientShip().getInventory()) {
+            sellElements.add(new ShopSellElement(main, stage, new Texture("shop/openShop.png"), 0, 0, shopUI, w, null));
+        }
     }
     /**
      * remove a sellable element

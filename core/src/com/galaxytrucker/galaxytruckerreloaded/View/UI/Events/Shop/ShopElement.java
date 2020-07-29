@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.ShopBuyButton;
 
