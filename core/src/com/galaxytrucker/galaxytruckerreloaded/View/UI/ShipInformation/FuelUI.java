@@ -1,16 +1,14 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
+/**
+ * ui for displaying the amount of fuel
+ */
 public class FuelUI {
-
-
 
     /**
      * fuel UI background
@@ -27,8 +25,14 @@ public class FuelUI {
      */
     private Main main;
 
+    /**
+     * font for displaying text
+     */
     private BitmapFont font;
 
+    /**
+     * glyph for correctly centering text
+     */
     private GlyphLayout glyph = new GlyphLayout();
 
     /**
@@ -36,6 +40,7 @@ public class FuelUI {
      *
      * @param main - main class used for sprite batch and camera
      * @param fuel the amount of fuel
+     * @param font font for text
      */
     public FuelUI(Main main, int fuel, BitmapFont font) {
         this.main = main;
@@ -56,24 +61,6 @@ public class FuelUI {
         main.batch.draw(fuelBackground, 600, Main.HEIGHT - 183, 147, 60); //238
         font.draw(main.batch, glyph, 600 + (147f/2) - glyph.width/2, (Main.HEIGHT - 133) - glyph.height/2);
         main.batch.end();
-    }
-
-    /**
-     * setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the ui
-     */
-    public void showFuelUI() {
-    }
-
-    /**
-     * hide the ui
-     */
-    public void hideFuelUI() {
     }
 
     /**

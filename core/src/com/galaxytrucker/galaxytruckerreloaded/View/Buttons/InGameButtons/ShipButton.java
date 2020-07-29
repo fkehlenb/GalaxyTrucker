@@ -1,14 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
@@ -17,10 +11,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
  * */
 public class ShipButton extends ImButton
 {
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
 
     /**
      * the ui this button is on
@@ -28,9 +18,12 @@ public class ShipButton extends ImButton
     private ShipView ui;
 
     /**
-     * Constructor
-     *
-     * @param ui the ui this button is on
+     * constructor
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param ui ui this button is on
      */
     public ShipButton(float x, float y, float width, float height, ShipView ui) {
         super(new Texture("top_ship_on.png"), x, y, width, height);
@@ -44,7 +37,7 @@ public class ShipButton extends ImButton
 
 
     /**
-     * opens the Ship-Screen of the cureent Ship
+     * opens the Ship-Screen of the current Ship
      */
     public void leftClick()
     {

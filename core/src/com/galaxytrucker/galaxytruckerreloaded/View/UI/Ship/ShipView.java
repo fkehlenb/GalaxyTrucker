@@ -95,12 +95,6 @@ public class ShipView extends AbstractShip {
     private PauseButton pauseButton;
 
     /**
-     * the map (needed for the mapui)
-     */
-    private Overworld map;
-
-
-    /**
      * the inventory, if existing
      */
     private InventoryUI inventoryUI;
@@ -114,8 +108,6 @@ public class ShipView extends AbstractShip {
     private float roomWidth, roomHeight;
 
     private BitmapFont font15;
-
-    private BitmapFont font25;
 
     @Getter
     private ShipType shipType;
@@ -145,10 +137,9 @@ public class ShipView extends AbstractShip {
      * Constructor
      * @param main - the main class for SpriteBatch
      */
-    public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, Overworld map, GamePlay game, BitmapFont font15, BitmapFont font25) {
+    public ShipView(Main main, Ship ship, Stage stage, Stage tileStage, GamePlay game, BitmapFont font15, BitmapFont font25) {
         super(main, ship, stage, game, tileStage);
         this.font15 = font15;
-        this.font25 = font25;
 
         shipType = ship.getShipType();
 
@@ -174,8 +165,6 @@ public class ShipView extends AbstractShip {
             crew.put(c.getId(), new CrewUI(main, c, stage, this, 30, cy, font15, getRoomX(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseX), getRoomY(ship.getShipType(), c.getCurrentRoom().getInteriorID(), baseY), ship.getShipType()));
             cy -= 60;
         }
-
-        this.map = map;
 
         //uis for all the systems/rooms
         rooms = new HashMap<>();
@@ -205,7 +194,7 @@ public class ShipView extends AbstractShip {
 
         moveButton = new MoveButton(Main.WIDTH/(2.259f), Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
         inventory = new ShipButton(Main.WIDTH/(2.5f),Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
-        pauseButton = new PauseButton(95*main.WIDTH/100, 95*main.HEIGHT/100, Main.WIDTH/(21.8f),Main.HEIGHT/(25.12f),this);
+        pauseButton = new PauseButton(95*Main.WIDTH/100f, 95*Main.HEIGHT/100f, Main.WIDTH/(21.8f),Main.HEIGHT/(25.12f),this);
 
         money = new ScrapUI(main, ship.getCoins(), font25);
         missiles = new MissileUI(main, ship.getMissiles(), font25);
@@ -245,8 +234,8 @@ public class ShipView extends AbstractShip {
      */
     public void render1() {
         main.batch.begin();
-        main.batch.draw(shipBackground, 70, main.HEIGHT/2 - height/2, width, height);
-        main.batch.draw(shipRoomBackground, (70 + width/2) - roomWidth/2, main.HEIGHT/2 - roomHeight/2, roomWidth, roomHeight);
+        main.batch.draw(shipBackground, 70, Main.HEIGHT/2f - height/2, width, height);
+        main.batch.draw(shipRoomBackground, (70 + width/2) - roomWidth/2, Main.HEIGHT/2f - roomHeight/2, roomWidth, roomHeight);
         main.batch.end();
 
         money.render();
@@ -293,6 +282,7 @@ public class ShipView extends AbstractShip {
         game.deleteShip();
         inventory.remove();
         moveButton.remove();
+        pauseButton.remove();
         ftlChargeUI.disposeFtlChargeUI();
         for(RoomUI r : rooms.values()) {
             r.disposeRoomUI();
@@ -308,7 +298,7 @@ public class ShipView extends AbstractShip {
      */
     public void update(Ship ship) {
         //Hull
-        hullStatusUpdate(ship.getHp());
+        hull.updateStatus(ship.getHp());
         //Rooms
         //Crew
         List<Weapon> equippedWeapons = new ArrayList<>();
@@ -374,26 +364,6 @@ public class ShipView extends AbstractShip {
     }
 
     /**
-     * update of the hull status (hp)
-     *
-     * @param hpvalue new status
-     */
-    @Override
-    public void hullStatusUpdate(int hpvalue) {
-        hull.updateStatus(hpvalue);
-    }
-
-    /**
-     * shield status update
-     *
-     * @param shieldvalue new status
-     */
-    @Override
-    public void shieldStatusUpdate(int shieldvalue) {
-        shields = shieldvalue;
-    }
-
-    /**
      * open the inventory of this ship
      * called by ship button
      */
@@ -409,9 +379,29 @@ public class ShipView extends AbstractShip {
      */
     public void openMap() {
         if(mapUI == null){
-            mapUI = new MapUI(main, stage, map, this);
+            mapUI = new MapUI(main, stage, this);
         }
+    }
 
+    /**
+     * remove the inventory ui
+     */
+    public void deleteInventory() {
+        inventoryUI = null;
+    }
+
+    /**
+     * remove the map ui
+     */
+    public void deleteMap() {
+        mapUI = null;
+    }
+
+    /**
+     * create a pause menu
+     */
+    public void createPauseMenu() {
+        game.createPauseMenu();
     }
 
     /**
@@ -420,21 +410,12 @@ public class ShipView extends AbstractShip {
      * send to gameplay, through that to travelcontroller, which declares whether this jump is possible
      *
      * if possible, travel to new planet (with execution of event etc)
-     * if not, error message??
      *
      * @param planet the target planet
      * @return whether travel valid
      */
     public boolean travel(Planet planet) {
         return game.travel(planet);
-    }
-
-    public void deleteInventory() {
-        inventoryUI = null;
-    }
-
-    public void deleteMap() {
-        mapUI = null;
     }
 
     /**
@@ -464,47 +445,19 @@ public class ShipView extends AbstractShip {
     }
 
     /**
-     * crew member health update. called by game
-     * @param crew the crew member
-     * @param health the new health
-     */
-    public void crewHealth(Crew crew, int health) {
-        this.crew.get(crew.getId()).statusUpdate(health);
-    }
-
-    /**
-     * updating the amount of unallocated energy
-     * @param status the new total status
-     */
-    public void energyStatusUpdate(int status) {
-        energy.energyUpdate(status);
-    }
-
-    /**
-     * update the energy of a system in a room
-     * @param amount the new total amount
-     */
-    public void roomSystemEnergyUpdate(Room room, int amount) {
-        rooms.get(room.getId()).systemEnergyUpdate(amount);
-    }
-
-    /**
-     * update the status of a system in a room
-     * @param room the system
-     * @param amount the new status
-     */
-    public void roomSystemStatusUpdate(Room room, int amount) {
-        rooms.get(room.getId()).systemStatusUpdate(amount);
-    }
-
-    /**
      * the player has chosen a new amount of energy
-     * @param amount how much should be subtracted/added
+     * @param amount how much should be added
+     * @param room the room/system to which to add energy
      */
     public void roomSystemEnergyAdded(Room room, int amount) {
         game.roomSystemEnergyAdded(room, amount);
     }
 
+    /**
+     * the player has chosen a new amount of energy
+     * @param room the room/system from which to subtract energy
+     * @param amount the amount ot be removed
+     */
     public void roomSystemEnergyRemoved(Room room, int amount) {
         game.roomSystemEnergyRemoved(room, amount);
     }
@@ -516,22 +469,10 @@ public class ShipView extends AbstractShip {
     public void changeAmountScrap(int amount) { money.changeAmount(amount);}
 
     /**
-     * change the amount of missiles displayed
-     * @param amount by how much the amount is changed
-     */
-    public void changeAmountMissile(int amount) { missiles.changeAmount(amount);}
-
-    /**
      * changes amount of fuel displayed
      * @param amount by how much the amount is changed
      */
     public void changeAmountFuel(int amount) {fuel.changeAmount(amount);}
-
-    /**
-     * changes amount of ftlcharge
-     * @param amount by how much the amount is changed
-     */
-    public void changeAmountFTLCharge(int amount) {ftlChargeUI.changeAmount(amount); }
 
     /**
      * a weapon is chosen for an attack
@@ -551,6 +492,11 @@ public class ShipView extends AbstractShip {
         game.equipWeapon(weapon);
     }
 
+    /**
+     * unequip a weapon
+     * (move from weapon system inventory to ship inventory)
+     * @param weapon the weapon
+     */
     public void unequipWeapon(Weapon weapon) {game.unequipWeapon(weapon);}
 
     /**
@@ -564,40 +510,6 @@ public class ShipView extends AbstractShip {
                 ((WeaponUI) r).weaponShot(weapon);
             }
         }
-    }
-
-    /**
-     * Ship hop animation
-     */
-    private void hyperspeedHopAnimation() {
-    }
-
-    /**
-     * Shield destroyed animation
-     */
-    private void shipDestroyedAnimation() {
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * Show the ship
-     */
-    public void showShipView() {
-    }
-
-    /**
-     * Hide the ship
-     */
-    public void hideShipView() {
-    }
-
-    public void createPauseMenu() {
-        game.createPauseMenu();
     }
 
 }

@@ -1,68 +1,29 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.BackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.CreateGameButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.ShipSelectorBackButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShipSelectorButtons.LeftArrowButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShipSelectorButtons.RightArrowButton;
 
 /**
  * Ship selector screen when creating new game
  */
-public class ShipSelector implements Screen {
-
-    /**
-     * the main class extending game
-     */
-    private Main main;
-
-    /**
-     * the background texture
-     */
-    private Texture background;
-
-    /**
-     * the stage for the buttons
-     */
-    private Stage stage;
-
-    /**
-     * button to create game
-     */
-    private CreateGameButton createGameButton;
-
-    /**
-     * the viewport
-     */
-    private Viewport viewport;
+public class ShipSelector extends MenuScreen {
 
     /**
      * Username input text field
      */
     private TextField username;
-
-    /**
-     * whether or not the game will be singleplayer
-     */
-    private boolean singleplayer;
 
     /**
      * the difficulty that was chosen
@@ -89,118 +50,37 @@ public class ShipSelector implements Screen {
      */
     private ShipType ship;
 
-    /**
-     * the button to return to the last screen
-     */
-    private ShipSelectorBackButton backButton;
-
-    /**
-     * rightArrowButton to select the ship
-     */
-    private RightArrowButton rightArrowButton;
-
-    /**
-     * leftArrowButto to select the ship
-     */
-    private LeftArrowButton leftArrowButton;
-
     private Image shipImage;
 
     private float bildScale;
 
     /** Constructor
      * @param main - main class */
-    public ShipSelector(Main main, boolean singleplayer, int difficulty){
-        this.main = main;
-        this.singleplayer = singleplayer;
+    public ShipSelector(Main main, int difficulty){
+        super(main);
         this.difficulty = difficulty;
 
-        bildScale = (float)main.WIDTH/1920;
-
-        background = new Texture("1080p.png");
+        bildScale = (float)Main.WIDTH/1920;
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
-        username.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
-        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/8);
+        username.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
+        username.setPosition(Main.WIDTH/2f - username.getWidth()/2, Main.HEIGHT/8f);
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
-        stage = new Stage(viewport);
-
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = main.HEIGHT/72;
-
-        font = generator.generateFont(params);
+        font = main.getFont72();
         glyph.setText(font, "Please enter your username");
         glyph2.setText(font, "Please select your ship");
 
-        createGameButton = new CreateGameButton(7*main.WIDTH/8 -main.WIDTH/7.74f/2, main.HEIGHT/8, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        backButton = new ShipSelectorBackButton(main.WIDTH/8 -main.WIDTH/7.74f/2, main.HEIGHT/8,  main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        leftArrowButton = new LeftArrowButton(main.WIDTH/4 -main.HEIGHT/18/2 , main.HEIGHT/2-main.HEIGHT/21.6f/2+main.HEIGHT/10.8f, main.HEIGHT/18, main.HEIGHT/21.6f, this);
-        rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -main.HEIGHT/18/2 , main.HEIGHT/2-main.HEIGHT/21.6f/2+main.HEIGHT/10.8f, main.HEIGHT/18, main.HEIGHT/21.6f, this);
+        CreateGameButton createGameButton = new CreateGameButton(7*Main.WIDTH/8f -Main.WIDTH/7.74f/2, Main.HEIGHT/8f, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        BackButton backButton = new BackButton(Main.WIDTH/8f -Main.WIDTH/7.74f/2, Main.HEIGHT/8f,  Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        LeftArrowButton leftArrowButton = new LeftArrowButton(Main.WIDTH/4f -Main.HEIGHT/18f/2 , Main.HEIGHT/2f-Main.HEIGHT/21.6f/2+Main.HEIGHT/10.8f, Main.HEIGHT/18f, Main.HEIGHT/21.6f, this);
+        RightArrowButton rightArrowButton = new RightArrowButton(3*Main.WIDTH/4f -Main.HEIGHT/18f/2 , Main.HEIGHT/2f-Main.HEIGHT/21.6f/2+Main.HEIGHT/10.8f, Main.HEIGHT/18f, Main.HEIGHT/21.6f, this);
 
 
         ship = ShipType.DEFAULT;
         shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
         shipImage.setScale(bildScale);
-        shipImage.setPosition(main.WIDTH/2 - (shipImage.getWidth()*bildScale)/2, main.HEIGHT/2 - (shipImage.getHeight()*bildScale)/2+main.HEIGHT/10.8f);
-
-        stage.addActor(shipImage);
-        stage.addActor(createGameButton);
-        stage.addActor(username);
-        stage.addActor(backButton);
-        stage.addActor(leftArrowButton);
-        stage.addActor(rightArrowButton);
-
-
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    public void prepareUI() {
-        background = new Texture("1080p.png");
-
-        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        username = new TextField("", skin);
-        username.setSize(main.WIDTH/7.74f, main.HEIGHT/21.6f);
-        username.setPosition(main.WIDTH/2 - username.getWidth()/2, main.HEIGHT/8);
-
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
-        stage = new Stage(viewport);
-
-        //font generator to get bitmapfont from .ttf file
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("fonts/JustinFont11Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //setting parameters of font
-        params.borderWidth = 1;
-        params.borderColor = Color.BLACK;
-        params.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
-        params.magFilter = Texture.TextureFilter.Nearest;
-        params.minFilter = Texture.TextureFilter.Nearest;
-        params.genMipMaps = true;
-        params.size = main.HEIGHT/72;
-
-        font = generator.generateFont(params);
-        glyph.setText(font, "Please enter your username");
-        glyph2.setText(font, "Please select your ship");
-
-        createGameButton = new CreateGameButton(7*main.WIDTH/8 -main.WIDTH/7.74f/2, main.HEIGHT/8, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        backButton = new ShipSelectorBackButton(main.WIDTH/8 -main.WIDTH/7.74f/2, main.HEIGHT/8,  main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        leftArrowButton = new LeftArrowButton(main.WIDTH/4 -main.HEIGHT/18/2 , main.HEIGHT/2-main.HEIGHT/21.6f/2+main.HEIGHT/10.8f, main.HEIGHT/18, main.HEIGHT/21.6f, this);
-        rightArrowButton = new RightArrowButton(3*main.WIDTH/4 -main.HEIGHT/18/2 , main.HEIGHT/2-main.HEIGHT/21.6f/2+main.HEIGHT/10.8f, main.HEIGHT/18, main.HEIGHT/21.6f, this);
-
-        
-        shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
-        shipImage.setScale(bildScale, bildScale);
-        shipImage.setPosition(main.WIDTH/2 - (shipImage.getWidth()*bildScale)/2, main.HEIGHT/2 - (shipImage.getHeight()*bildScale)/2+main.HEIGHT/10.8f);
+        shipImage.setPosition(Main.WIDTH/2f - (shipImage.getWidth()*bildScale)/2, Main.HEIGHT/2f - (shipImage.getHeight()*bildScale)/2+Main.HEIGHT/10.8f);
 
         stage.addActor(shipImage);
         stage.addActor(createGameButton);
@@ -214,67 +94,46 @@ public class ShipSelector implements Screen {
     }
 
     /**
+     * update image
+     */
+    private void prepareUI() {
+        shipImage.remove();
+
+        shipImage = new Image(new Texture("ship/" + ship.toString().toLowerCase() + "base.png"));
+        shipImage.setPosition(Main.WIDTH/2f - (shipImage.getWidth()*bildScale)/2, Main.HEIGHT/2f - (shipImage.getHeight()*bildScale)/2+Main.HEIGHT/10.8f);
+
+        stage.addActor(shipImage);
+    }
+
+    /**
      * go back to last screen
      */
+    @Override
     public void goBack() {
-        main.setScreen(new ChooseDifficultyScreen(main, singleplayer));
+        main.setScreen(new ChooseDifficultyScreen(main));
         dispose();
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render(delta);
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
-        font.draw(main.batch, glyph, main.WIDTH/2 - glyph.width/2, main.HEIGHT/8 + main.HEIGHT/16.6154f);
-        font.draw(main.batch, glyph2, main.WIDTH/2 - glyph2.width/2, main.HEIGHT/2 + main.HEIGHT/2.7f);
+        font.draw(main.batch, glyph, Main.WIDTH/2f - glyph.width/2, Main.HEIGHT/8f + Main.HEIGHT/16.6154f);
+        font.draw(main.batch, glyph2, Main.WIDTH/2f - glyph2.width/2, Main.HEIGHT/2f + Main.HEIGHT/2.7f);
         main.batch.end();
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        background.dispose();
-        stage.dispose();
-        font.dispose();
     }
 
     /**
      * start the game
      */
     public void startGame() {
-        if(singleplayer) {
+        if(!main.isMultiplayer()) {
             main.startServer();
             main.startClient("localhost",5050);
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText(), ship, difficulty);
             if(success) {
-                main.setScreen(new GamePlay(main)); //TODO ?
+                main.setScreen(new GamePlay(main));
             }
         }
         else {
@@ -288,7 +147,6 @@ public class ShipSelector implements Screen {
      */
     public void nextShip() {
         ship = ship.next();
-        dispose();
         prepareUI();
     }
 
@@ -297,7 +155,6 @@ public class ShipSelector implements Screen {
      */
     public void prevShip() {
         ship = ship.previous();
-        dispose();
         prepareUI();
     }
 }

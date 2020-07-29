@@ -1,10 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop.ShopUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Inventory.InventoryUI;
@@ -14,11 +12,6 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Map.MapUI;
  * used to close the inventory
  */
 public class InventoryCloseButton extends ImButton {
-
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
 
     /**
      * shop ui, if button on shop
@@ -57,9 +50,13 @@ public class InventoryCloseButton extends ImButton {
 
     /**
      * constructor
-     * @param shop the shop ui this is on, or null
-     * @param inventory the inventory ui this is on, or null
-     * @param map the map ui this is on, or null
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param shop ui this button could be on
+     * @param map ui this button could be on
+     * @param inventory ui this button could be on
      */
     public InventoryCloseButton(float x, float y, float width, float height, ShopUI shop, InventoryUI inventory, MapUI map) {
         super(new Texture("close_on.png"), x, y, width, height);

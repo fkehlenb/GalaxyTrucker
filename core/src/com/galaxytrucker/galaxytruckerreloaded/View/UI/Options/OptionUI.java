@@ -24,34 +24,68 @@ public class OptionUI {
      */
     private Texture optionsBackgroundTexture;
 
+    /**
+     *  button for opening video options
+     */
     private VideoButton videoButton;
 
+    /**
+     * button for opening general options
+     */
     private GeneralButton generalButton;
 
+    /**
+     * button for opening control options
+     */
     private ControlButton controlButton;
 
+    /**
+     * button for opening credits
+     */
     private CreditsButton creditsButton;
 
+    /**
+     * button for opening audio options
+     */
     private AudioButton audioButton;
 
+    /**
+     * main class extending game
+     */
     private Main main;
 
+    /**
+     * screen this is on, if during game
+     */
     private GamePlay game;
 
-    private PauseMenuUI pauseMenuUI;
-
-    private Stage stage;
-
+    /**
+     * screen this is on, if during main menu
+     */
     private MainMenu mainMenu;
 
-    private float scale;
+    /**
+     * pause menu ui, if during game
+     */
+    private PauseMenuUI pauseMenuUI;
 
+    /**
+     * stage for buttons
+     */
+    private Stage stage;
+
+    /**
+     * back button
+     */
     private OptionenBackButton optionenBackButton;
 
     /**
      * Constructor
      *
      * @param main - main class
+     * @param mainMenu screen this is on, if during main menu
+     * @param game screen this is on, if during game
+     * @param stage stage for buttons
      */
     public OptionUI(Main main, Stage stage, GamePlay game, MainMenu mainMenu) {
         this.main = main;
@@ -63,16 +97,12 @@ public class OptionUI {
         }
         optionsBackgroundTexture = new Texture("options/options.png");
 
-        scale = main.WIDTH/1920;
-
-        //main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f
-
-        optionenBackButton =    new OptionenBackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, this, pauseMenuUI);
-        videoButton =           new VideoButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*3, main.WIDTH/15, main.HEIGHT/40, this);
-        generalButton =         new GeneralButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40, this);
-        controlButton =         new ControlButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*1, main.WIDTH/15, main.HEIGHT/40, this );
-        creditsButton =         new CreditsButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*0, main.WIDTH/15, main.HEIGHT/40, this);
-        audioButton =           new AudioButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 +main.HEIGHT/40*1, main.WIDTH/15, main.HEIGHT/40, this);
+        optionenBackButton =    new OptionenBackButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*4, Main.WIDTH/15f, Main.HEIGHT/40f, this, pauseMenuUI);
+        videoButton =           new VideoButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*3, Main.WIDTH/15f, Main.HEIGHT/40f, this);
+        generalButton =         new GeneralButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*2, Main.WIDTH/15f, Main.HEIGHT/40f, this);
+        controlButton =         new ControlButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*1, Main.WIDTH/15f, Main.HEIGHT/40f, this );
+        creditsButton =         new CreditsButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*0, Main.WIDTH/15f, Main.HEIGHT/40f, this);
+        audioButton =           new AudioButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 +Main.HEIGHT/40f*1, Main.WIDTH/15f, Main.HEIGHT/40f, this);
 
         stage.addActor(optionenBackButton);
         stage.addActor(generalButton);
@@ -89,7 +119,7 @@ public class OptionUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(optionsBackgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
+        main.batch.draw(optionsBackgroundTexture, Main.WIDTH/2f - (Main.WIDTH/3.1946f)/2, Main.HEIGHT/2f - (Main.HEIGHT/2.293f)/2, Main.WIDTH/3.1946f, Main.HEIGHT/2.293f);
         main.batch.end();
         stage.draw();
     }
@@ -114,12 +144,6 @@ public class OptionUI {
     }
 
     /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
      * Open the options menu
      */
     public void showOptionsUI() {
@@ -135,7 +159,7 @@ public class OptionUI {
     /**
      * Close the options menu
      */
-    public void hideOptionsUI() {
+    private void hideOptionsUI() {
         generalButton.setVisible(false);
         optionenBackButton.setVisible(false);
         videoButton.setVisible(false);
@@ -147,12 +171,15 @@ public class OptionUI {
     /**
      * handles input to pause game, open options
      */
-    public void updateInput() {
+    private void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             optionenBackButton.leftClick();
         }
     }
 
+    /**
+     * open general options
+     */
     public void openGeneral() {
         this.hideOptionsUI();
         if(game!=null) {
@@ -163,6 +190,9 @@ public class OptionUI {
         }
     }
 
+    /**
+     * open video options
+     */
     public void openVideo() {
         this.hideOptionsUI();
         if(game!=null) {
@@ -173,6 +203,9 @@ public class OptionUI {
         }
     }
 
+    /**
+     * open credits
+     */
     public void openCredits(){
         this.hideOptionsUI();
         if(game !=null){
@@ -183,6 +216,9 @@ public class OptionUI {
         }
     }
 
+    /**
+     * open audio options
+     */
     public void openAudio(){
         this.hideOptionsUI();
         if(game != null){
@@ -193,6 +229,9 @@ public class OptionUI {
         }
     }
 
+    /**
+     * open control options
+     */
     public void openControl(){
         this.hideOptionsUI();
         if(game != null){

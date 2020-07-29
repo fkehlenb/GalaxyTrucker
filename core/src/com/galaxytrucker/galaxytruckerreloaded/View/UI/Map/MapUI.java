@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Map;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.PlanetEventController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
@@ -42,11 +43,6 @@ public class MapUI {
     private ShipView shipView;
 
     /**
-     * the map this ui displays
-     */
-    private Overworld map;
-
-    /**
      * the x position
      */
     private float x;
@@ -57,43 +53,27 @@ public class MapUI {
     private float y;
 
     /**
-     * Horizontal distance between stars
-     */
-    private float xDist;
-
-    /**
-     * Vertical Distance between stars
-     */
-    private float yDist;
-
-    /**
-     * players ship
-     */
-    private Ship ship;
-
-    /**
      * Constructor
      * @param main - main class
      */
-    public MapUI(Main main, Stage stage, Overworld map, ShipView shipView) {
+    public MapUI(Main main, Stage stage, ShipView shipView) {
         this.main = main;
         this.shipView = shipView;
-        this.map = main.getClient().getOverworld();
 
-        this.ship = PlanetEventController.getInstance(null).getClientShip();
+        Overworld map = ClientControllerCommunicator.getInstance(null).getMap();
+        Ship ship = PlanetEventController.getInstance(null).getClientShip();
 
         mapTexture = new Texture("map/map_overlay.png");
 
         x = Main.WIDTH/2f - mapTexture.getWidth()/2f;
         y = Main.HEIGHT/2f - mapTexture.getHeight()/2f;
-        xDist = Main.WIDTH/(1920/150);
-        yDist = Main.HEIGHT/(1080/75);
+        float xDist = Main.WIDTH/(1920/150f);
+        float yDist = Main.HEIGHT/(1080/75f);
 
         closeButton = new InventoryCloseButton(x+(Main.WIDTH/2.01f), y-(Main.HEIGHT/13.5f), Main.WIDTH/7.742f, Main.HEIGHT/21.6f, null, null, this);
         stage.addActor(closeButton);
 
         locations = new LinkedList<>();
-        //TODO
         for(Planet f : map.getPlanetMap()) {
             float fx = f.getPosX();
             float fy = f.getPosY();
@@ -104,9 +84,9 @@ public class MapUI {
                  //Start
                 MapButton mb;
                 if (ship.getPlanet().getPosX() == fx && ship.getPlanet().getPosY() == fy){
-                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+Main.WIDTH/(1920/100)), (y+2*yDist), Main.WIDTH/(1920/30), Main.HEIGHT/(1080/30), this, f);
+                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+Main.WIDTH/(1920/100f)), (y+2*yDist), Main.WIDTH/(1920/30f), Main.HEIGHT/(1080/30f), this, f);
                 } else {
-                    mb = new MapButton(new Texture("map/map_button.png"), (x + Main.WIDTH / (1920 / 100)), (y + 2 * yDist), Main.WIDTH / (1920 / 20), Main.HEIGHT / (1080 / 20), this, f);
+                    mb = new MapButton(new Texture("map/map_button.png"), (x + Main.WIDTH / (1920 / 100f)), (y + 2 * yDist), Main.WIDTH / (1920 / 20f), Main.HEIGHT / (1080 / 20f), this, f);
                 }
                 locations.add(mb);
                 stage.addActor(mb);
@@ -115,9 +95,9 @@ public class MapUI {
                 //Boss
                 MapButton mb;
                 if (ship.getPlanet().getPosX() == fx && ship.getPlanet().getPosY() == fy){
-                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+5*xDist+Main.WIDTH/(1920/120)), (y+2*Main.HEIGHT/(1080/50)), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+5*xDist+Main.WIDTH/(1920/120f)), (y+2*Main.HEIGHT/(1080/50f)), Main.WIDTH/(1920/20f), Main.HEIGHT/(1080/20f), this, f);
                 } else {
-                    mb = new MapButton(new Texture("map/map_icon_boss.png"), (x+5*xDist+Main.WIDTH/(1920/120)), (y+2*Main.HEIGHT/(1080/50)), Main.WIDTH/(1920/70), Main.HEIGHT/(1080/70), this, f);
+                    mb = new MapButton(new Texture("map/map_icon_boss.png"), (x+5*xDist+Main.WIDTH/(1920/120f)), (y+2*Main.HEIGHT/(1080/50f)), Main.WIDTH/(1920/70f), Main.HEIGHT/(1080/70f), this, f);
                 }
                 locations.add(mb);
                 stage.addActor(mb);
@@ -126,41 +106,13 @@ public class MapUI {
                 //Alle anderen
                 MapButton mb;
                 if (ship.getPlanet().getPosX() == fx && ship.getPlanet().getPosY() == fy){
-                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+fx*xDist+Main.WIDTH/(1920/150)), (y+fy*yDist), Main.WIDTH/(1920/30), Main.HEIGHT/(1080/30), this, f);
+                    mb = new MapButton(new Texture("map/map_icon_ship_2.png"), (x+fx*xDist+Main.WIDTH/(1920/150f)), (y+fy*yDist), Main.WIDTH/(1920/30f), Main.HEIGHT/(1080/30f), this, f);
                 } else {
-                    mb = new MapButton(new Texture("map/map_button.png"), (x+fx*xDist+Main.WIDTH/(1920/150)), (y+fy*yDist), Main.WIDTH/(1920/20), Main.HEIGHT/(1080/20), this, f);
+                    mb = new MapButton(new Texture("map/map_button.png"), (x+fx*xDist+Main.WIDTH/(1920/150f)), (y+fy*yDist), Main.WIDTH/(1920/20f), Main.HEIGHT/(1080/20f), this, f);
                 }
                 locations.add(mb);
                 stage.addActor(mb);
             }
-
-
-          //Main.HEIGHT/22 ... Main.WIDTH/40
-          //Switch-Case für die PlanetEvents (Map Texturen)
-            /*  switch(f.getEvent()){
-
-                case VOID:
-
-                case COMBAT:
-
-                case SHOP:
-
-                case NEBULA:
-
-                case MINIBOSS:
-
-                case METEORSHOWER:
-
-                case PVP:
-
-                case BOSS:
-
-            }*/
-
-
-
-           //locations.add(mb);
-            //stage.addActor(mb);
         }
     }
 
@@ -199,23 +151,5 @@ public class MapUI {
             disposeMapUI();
             closeButton.remove();
         }
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the ui
-     */
-    public void showMapUI() {
-    }
-
-    /**
-     * hide the ui
-     */
-    public void hideMapUI() {
     }
 }

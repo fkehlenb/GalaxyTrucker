@@ -12,30 +12,72 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Option
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
+/**
+ * ui for the audio options
+ */
 public class AudioUI {
 
+    /**
+     * background texture
+     */
     private Texture audioBackgroundTexture;
+
+    /**
+     * main class extending game
+     */
     private Main main;
+
+    /**
+     * screen this ui is on, if on gameplay
+     */
     private GamePlay gamePlay;
-    private OptionUI optionUI;
-    private BackButton backButton;
-    private Stage stage;
+
+    /**
+     * screen this ui is on, if on the menu screen
+     */
     private MainMenu mainMenu;
+
+    /**
+     * previous ui element
+     */
+    private OptionUI optionUI;
+
+    /**
+     * button for returning to last ui element (options)
+     */
+    private BackButton backButton;
+
+    /**
+     * stage for buttons
+     */
+    private Stage stage;
+
+    /**
+     * button for muting audio
+     */
     private MuteButton muteButton;
+
+    /**
+     * button for raising the volume
+     */
     private VolumeUpButton volumeUpButton;
+
+    /**
+     * button for lowering volume
+     */
     private VolumeDownButton volumeDownButton;
 
     /**
-     * Constructor
-     * @param main
-     * @param stage
-     * @param gamePlay
+     * constructor
+     * @param main main class extending game
+     * @param stage stage for buttons
+     * @param gamePlay screen, if during game
+     * @param mainMenu screen, if on main menu
      */
     public AudioUI(Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
         this.gamePlay = gamePlay;
         this.mainMenu = mainMenu;
-        //this.optionUI = gamePlay.getOptionUI();
         if(gamePlay!=null) {
             this.optionUI = gamePlay.getOptionUI();
         }
@@ -45,13 +87,13 @@ public class AudioUI {
         this.stage = stage;
         audioBackgroundTexture = new Texture("options/audio.png");
 
-        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
+        backButton = new BackButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*4, Main.WIDTH/15f, Main.HEIGHT/40f, optionUI, this);
 
            
 
-        muteButton = new MuteButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*5, main.WIDTH/15, main.HEIGHT/40,  main);
-        volumeDownButton = new VolumeDownButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*6, main.WIDTH/15, main.HEIGHT/40,  main);
-        volumeUpButton = new VolumeUpButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*7, main.WIDTH/15, main.HEIGHT/40,  main);
+        muteButton = new MuteButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*5, Main.WIDTH/15f, Main.HEIGHT/40f);
+        volumeDownButton = new VolumeDownButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*6, Main.WIDTH/15f, Main.HEIGHT/40f);
+        volumeUpButton = new VolumeUpButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*7, Main.WIDTH/15f, Main.HEIGHT/40f);
 
         stage.addActor(backButton);
         stage.addActor(muteButton);
@@ -66,7 +108,7 @@ public class AudioUI {
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(audioBackgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
+        main.batch.draw(audioBackgroundTexture, Main.WIDTH/2f - (Main.WIDTH/3.1946f)/2, Main.HEIGHT/2f - (Main.HEIGHT/2.293f)/2, Main.WIDTH/3.1946f, Main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();
@@ -90,29 +132,9 @@ public class AudioUI {
     }
 
     /**
-     * Open the options menu
-     */
-    public void showAudioUI() {
-        backButton.setVisible(true);
-        volumeDownButton.setVisible(true);
-        volumeUpButton.setVisible(true);
-        muteButton.setVisible(true);
-
-    }
-    /**
-     * Close the options menu
-     */
-    public void hideAudioUI() {
-        backButton.setVisible(false);
-        volumeDownButton.setVisible(false);
-        volumeUpButton.setVisible(false);
-        muteButton.setVisible(false);
-    }
-
-    /**
      * handles input to pause game, open options
      */
-    public void updateInput() {
+    private void updateInput() {
          if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             disposeAudioUI();
             optionUI.showOptionsUI();

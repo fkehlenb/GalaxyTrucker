@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,21 +31,22 @@ public class EnergyUI {
      */
     private int maxEnergy;
 
+    /**
+     * main class extending game
+     */
     private Main main;
-
-    private List<System> existingSystems;
 
     /**
      * constructor
      * @param main the main class
      * @param energy the amount of energy unallocated to systems
+     * @param existingSystems the systems that the ship has
      */
     public EnergyUI(Main main, int energy, List<System> existingSystems) {
         this.main = main;
         this.energy = energy;
         this.maxEnergy = energy;
 
-        this.existingSystems = existingSystems;
         for (System sys: existingSystems) {
             maxEnergy += sys.getEnergy();
         }
@@ -63,6 +63,9 @@ public class EnergyUI {
         energy = energyStatus;
     }
 
+    /**
+     * render everything to the screen
+     */
     public void render() {
 
         main.batch.begin();
@@ -85,27 +88,6 @@ public class EnergyUI {
      */
     public void disposeEnergyUI() {
         energyTexture.dispose();
-
-    }
-
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the energy ui
-     */
-    public void showEnergyUI() {
-
-    }
-
-    /**
-     * hide the energy ui
-     */
-    public void hideEnergyUI() {
 
     }
 }

@@ -1,19 +1,15 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.ChooseDifficultyScreen;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.SPResumeLobby;
 
+/**
+ * button for continuing an old single player game
+ */
 public class SPResumeStartGame extends ImButton {
-
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
 
     /**
      * the screen this button is on
@@ -21,9 +17,12 @@ public class SPResumeStartGame extends ImButton {
     private SPResumeLobby screen;
 
     /**
-     * Constructor
-     *
-     * @param screen the screen this button is on
+     * constructor
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
     public SPResumeStartGame(float x, float y, float width, float height, SPResumeLobby screen) {
         super(new Texture("buttons/start_game_button.png"), x, y, width, height);
@@ -36,7 +35,7 @@ public class SPResumeStartGame extends ImButton {
     }
 
     /**
-     * Sets difficutly to a specific level
+     * continue the game
      */
     @Override
     public void leftClick()

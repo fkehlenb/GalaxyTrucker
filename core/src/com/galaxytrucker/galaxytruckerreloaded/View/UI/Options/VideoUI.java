@@ -12,6 +12,9 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.Option
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
 
+/**
+ * video options ui
+ */
 public class VideoUI {
 
     /**
@@ -29,6 +32,9 @@ public class VideoUI {
      */
     private GamePlay gamePlay;
 
+    /**
+     * screen this is on, if during main menu
+     */
     private MainMenu mainMenu;
 
     /**
@@ -41,12 +47,24 @@ public class VideoUI {
      */
     private BackButton backButton;
 
+    /**
+     * button for enabling full screen
+     */
     private FullscreenEnableButton fullscreenEnableButton;
 
+    /**
+     * button for disabling full screen
+     */
     private WindowedButton windowedButton;
 
+    /**
+     * button for changing the resolution
+     */
     private SetResolutionButton setResolutionButton;
 
+    /**
+     * stage for buttons
+     */
     private Stage stage;
 
     /**
@@ -54,6 +72,7 @@ public class VideoUI {
      * @param main current Main instance
      * @param stage current stage instance
      * @param gamePlay current gameplay instance
+     * @param mainMenu screen this is on, if during main menu
      */
     public VideoUI (Main main, Stage stage, GamePlay gamePlay, MainMenu mainMenu) {
         this.main = main;
@@ -69,10 +88,10 @@ public class VideoUI {
         backgroundTexture = new Texture("options/video.png");
 
 
-        backButton = new BackButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*4, main.WIDTH/15, main.HEIGHT/40, optionUI, this);
-        windowedButton = new WindowedButton(main.WIDTH/2 , main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40, main);
-        fullscreenEnableButton = new FullscreenEnableButton(main.WIDTH/2 - (main.WIDTH/15), main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*2, main.WIDTH/15, main.HEIGHT/40, main);
-        setResolutionButton = new SetResolutionButton(main.WIDTH/2 - (main.WIDTH/15)/2, main.HEIGHT/2 + (main.HEIGHT/40)/2 -main.HEIGHT/40*1, main.WIDTH/15, main.HEIGHT/40, main, 2560, 1440);
+        backButton = new BackButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*4, Main.WIDTH/15f, Main.HEIGHT/40f, optionUI, this);
+        windowedButton = new WindowedButton(Main.WIDTH/2f , Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*2, Main.WIDTH/15f, Main.HEIGHT/40f);
+        fullscreenEnableButton = new FullscreenEnableButton(Main.WIDTH/2f - (Main.WIDTH/15f), Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*2, Main.WIDTH/15f, Main.HEIGHT/40f);
+        setResolutionButton = new SetResolutionButton(Main.WIDTH/2f - (Main.WIDTH/15f)/2, Main.HEIGHT/2f + (Main.HEIGHT/40f)/2 -Main.HEIGHT/40f*1, Main.WIDTH/15f, Main.HEIGHT/40f, main, 2560, 1440);
 
 
         stage.addActor(backButton);
@@ -84,12 +103,11 @@ public class VideoUI {
     /**
      * render
      * no stage stuff
-     * TODO: Absolutwerte durch Realtive Position ersetzen.
      */
     public void render() {
         updateInput();
         main.batch.begin();
-        main.batch.draw(backgroundTexture, main.WIDTH/2 - (main.WIDTH/3.1946f)/2, main.HEIGHT/2 - (main.HEIGHT/2.293f)/2, main.WIDTH/3.1946f, main.HEIGHT/2.293f);
+        main.batch.draw(backgroundTexture, Main.WIDTH/2f - (Main.WIDTH/3.1946f)/2, Main.HEIGHT/2f - (Main.HEIGHT/2.293f)/2, Main.WIDTH/3.1946f, Main.HEIGHT/2.293f);
         main.batch.end();
 
         stage.draw();
@@ -112,36 +130,12 @@ public class VideoUI {
         }
     }
 
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * Open the options menu
-     */
-    public void showVideoUI() {
-        backButton.setVisible(true);
-        windowedButton.setVisible(true);
-        fullscreenEnableButton.setVisible(true);
-    }
-
-    /**
-     * Close the options menu
-     */
-    public void hideVideoUI() {
-        backButton.setVisible(false);
-        windowedButton.setVisible(false);
-        fullscreenEnableButton.setVisible(false);
-    }
 
     /**
      * handles input to pause game, open options
      * TODO: funktioniert nicht, ist auch nicht zwingend Nötig
      */
-    public void updateInput() {
-        //macht nicht was es soll. im Kern ein Bastard diese Methode
+    private void updateInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
            backButton.leftClick();
         }

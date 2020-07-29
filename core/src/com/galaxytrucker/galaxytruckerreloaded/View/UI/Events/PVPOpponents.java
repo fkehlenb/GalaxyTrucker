@@ -15,7 +15,9 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * to display pvp opponents, and choose one
+ */
 public class PVPOpponents {
 
     /**
@@ -69,6 +71,7 @@ public class PVPOpponents {
      * @param stage the stage for text field
      * @param font the font
      * @param names the names of the other clients
+     * @param screen screen this is on
      */
     public PVPOpponents(Main main, Stage stage, BitmapFont font, List<String> names, GamePlay screen) {
         this.font = font;

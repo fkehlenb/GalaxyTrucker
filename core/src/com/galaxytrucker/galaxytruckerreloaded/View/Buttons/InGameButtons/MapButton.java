@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -24,17 +23,14 @@ public class MapButton extends ImButton {
     private MapUI ui;
 
     /**
-     * the sound when clicked
-     */
-    private Sound clickSound;
-
-    /**
      * constructor
      * @param texture texture of button
      * @param x x pos of button
      * @param y y pos of button
      * @param width width of button
      * @param height height of button
+     * @param ui ui this button is on
+     * @param planet planet this button is associated with
      */
     public MapButton(Texture texture, float x, float y, float width, float height, MapUI ui, Planet planet) {
         super(texture, x, y, width, height);

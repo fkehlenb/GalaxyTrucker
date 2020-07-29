@@ -1,7 +1,6 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -15,12 +14,24 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ui for displaying a room
+ */
 public class RoomUI {
 
+    /**
+     * the room represented by this ui
+     */
     protected Room room;
 
+    /**
+     * main class extending game
+     */
     protected Main main;
 
+    /**
+     * ship this room belongs to
+     */
     protected AbstractShip ship;
 
     /**
@@ -33,15 +44,25 @@ public class RoomUI {
      */
     protected float y;
 
+    /**
+     * stage for buttons
+     */
     protected Stage stage;
 
-    private List<TileButton> enemyTiles = new ArrayList();
+    /**
+     * list of tile buttons belonging to this room
+     */
+    private List<TileButton> enemyTiles = new ArrayList<>();
 
     /**
      * Constructor
      *
      * @param main - the main class for SpriteBatch
      * @param room the room
+     * @param stage stage for buttons
+     * @param ship ship this room belongs to
+     * @param x x position
+     * @param y y position
      */
     public RoomUI(Main main, Room room, Stage stage, AbstractShip ship, float x, float y) {
         this.main = main;
@@ -97,24 +118,9 @@ public class RoomUI {
      * Dispose of room ui
      */
     public void disposeRoomUI() {
-            for (Actor a : enemyTiles) {
-                a.remove();
-            }
-    }
-
-    /**
-     * the amount of energy given to a system (if this room is a system) is changed
-     * @param amount the new amount
-     */
-    public void systemEnergyUpdate(int amount) {
-
-    }
-
-    /**
-     * the status of the system (if this room is a system) is changed
-     * @param amount the new amount
-     */
-    public void systemStatusUpdate(int amount) {
+        for (Actor a : enemyTiles) {
+            a.remove();
+        }
     }
 
     /**
@@ -122,25 +128,5 @@ public class RoomUI {
      */
     public void chosen() {
         ship.roomChosen(room);
-    }
-
-    /**
-     * setup called after initialisation
-     *
-     *
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the room ui
-     */
-    public void showRoomUI() {
-    }
-
-    /**
-     * hide the room ui
-     */
-    public void hideRoomUI() {
     }
 }

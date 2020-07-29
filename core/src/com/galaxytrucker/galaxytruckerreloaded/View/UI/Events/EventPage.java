@@ -47,11 +47,15 @@ public class EventPage {
     private float width, height;
 
     /**
-     * Constructor
-     *
-     * @param main - the main class object
-     * @param draw the drawables on this page
-     * @param text the text displayed on this page
+     * constructor
+     * @param main main class extending game
+     * @param draw hashmap of drawables and the glyphlayouts with the accompanying text, if this page displays rewards
+     * @param text the text explaining the planet event
+     * @param x x position (lower left corner)
+     * @param y y position (lower left corner)
+     * @param font15 font, size 15
+     * @param width width of the event window
+     * @param height height of the event window
      */
     public EventPage(Main main, HashMap<Texture, GlyphLayout> draw, String text, float x, float y, BitmapFont font15, float width, float height) {
         drawables = draw;
@@ -67,13 +71,13 @@ public class EventPage {
     }
 
     /**
-     * render
+     * render everything
      */
     public void render() {
         main.batch.begin();
         int i = 0;
-        float iy = y + height - 40 - glyph.height/2 - 80; //40 under the rewards text
-        float ix = x + width/2 - 210; //middle minus the stuff
+        float iy = y + height - 40 - glyph.height/2 - 80;
+        float ix = x + width/2 - 210;
         for(Texture t : drawables.keySet()) {
             main.batch.draw(t, ix + (i*140), iy, t.getWidth(), t.getHeight());
             font15.draw(main.batch, drawables.get(t), ix + (i*140) + (147f/2) - drawables.get(t).width/2, iy + 40 - drawables.get(t).height/2);
@@ -99,24 +103,5 @@ public class EventPage {
         for(Texture t : drawables.keySet()) {
             t.dispose();
         }
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-
-    /**
-     * Draw on top of event gui
-     */
-    public void showPage() {
-    }
-
-    /**
-     * Hide the page
-     */
-    public void hidePage() {
     }
 }

@@ -1,27 +1,20 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
-import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.Button;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
-import com.galaxytrucker.galaxytruckerreloaded.View.Screen.MainMenu;
-import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 
 /***
  * button used to return to the main menu
  */
 public class MainMenuButton extends ImButton {
-    /**
-     * Click sound effect
-     */
-    private Sound clickSound;
 
+    /**
+     * main class for returning to main menu screen
+     */
     private Main main;
 
     /**
@@ -36,7 +29,12 @@ public class MainMenuButton extends ImButton {
     }
 
     /**
-     * constructor
+     * constructo
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param main main class for switching screens
      */
     public MainMenuButton(float x, float y, float width, float height, Main main) {
         super(new Texture("control/mainmenu.png"), x, y, width, height);

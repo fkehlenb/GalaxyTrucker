@@ -8,6 +8,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
+/**
+ * ui for displaying the shields of a ship
+ */
 public class ShieldUI extends SubsystemUI {
 
     /**
@@ -30,19 +33,40 @@ public class ShieldUI extends SubsystemUI {
      */
     private int currentTexture;
 
+    /**
+     * x and y position of the ship
+     */
     private float shipX, shipY;
 
+    /**
+     * the width and height of the shield on the ship
+     */
     private float shieldWidth, shieldHeight;
 
+    /**
+     * the x and y position of the ui at the upper left corner
+     */
     private float upperX, upperY;
 
+    /**
+     * whether or not the shields are disabled
+     */
     private boolean disabled = false;
 
     /**
-     * Constructor
-     *
-     * @param main - the main class
-     * @param shield the shield
+     * constructor
+     * @param main main class extending game
+     * @param stage stage for tile buttons
+     * @param ship ship the shield ui belongs to
+     * @param x x position of the room
+     * @param y y position of the room
+     * @param shield the shield system displayed by this ui
+     * @param sx the position of the system button in the lower left corner
+     * @param normalStage the stage for normal buttons
+     * @param shipX the x position of the ship
+     * @param upperX the x position for the upper left corner display
+     * @param upperY the y position for the upper left corner display
+     * @param shields the amount of shields
      */
     public ShieldUI(Main main, Stage stage, ShipView ship, float x, float y, System shield, float sx, Stage normalStage, float shipX, float upperX, float upperY, int shields) {
         super(main, stage, ship, x, y, shield, sx, normalStage);
@@ -60,17 +84,6 @@ public class ShieldUI extends SubsystemUI {
         this.shipY = Main.HEIGHT/2f - shieldHeight/2f;
 
         currentTexture = shields;
-    }
-
-    /**
-     * the status of the system was updated either by damage or by repair
-     * here
-     *
-     * @param damage the current status, with 0 being completely functional
-     */
-    @Override
-    public void systemStatusUpdate(int damage) {
-        //TODO what in ship is this?
     }
 
     /**

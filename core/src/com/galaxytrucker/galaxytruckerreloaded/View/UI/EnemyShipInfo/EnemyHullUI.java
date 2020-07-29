@@ -3,6 +3,9 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.EnemyShipInfo;
 import com.badlogic.gdx.graphics.Texture;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 
+/**
+ * to display the enemy hull status
+ */
 public class EnemyHullUI {
 
     /**
@@ -10,8 +13,14 @@ public class EnemyHullUI {
      */
     private Texture hullBackground;
 
+    /**
+     * texture for one single status bar
+     */
     private Texture hullTexture;
 
+    /**
+     * amount of status bars/hull status
+     */
     private int amount;
 
     /**
@@ -22,6 +31,7 @@ public class EnemyHullUI {
     /**
      * constructor
      * @param main the main class
+     * @param amount amount of hull currently remaining
      */
     public EnemyHullUI(Main main, int amount) {
         this.main = main;
@@ -39,11 +49,11 @@ public class EnemyHullUI {
         float x = 25;
         for(int i=0; i<=amount; i++) {
             //main.batch.draw(hullTexture, 138*Main.WIDTH/(200) + x, Main.HEIGHT - Main.HEIGHT/(11f), 15, 15);
-            main.batch.draw(hullTexture, 118*Main.WIDTH/(200) + x, Main.HEIGHT - Main.HEIGHT/(11f), 15, 15);
+            main.batch.draw(hullTexture, 118*Main.WIDTH/(200f) + x, Main.HEIGHT - Main.HEIGHT/(11f), 15, 15);
             x+=12*0.6f;
         }
         //main.batch.draw(hullBackground, 14*Main.WIDTH/(20), Main.HEIGHT - Main.HEIGHT/(9f), Main.WIDTH/9.74f, Main.HEIGHT/16.61f);
-        main.batch.draw(hullBackground, 12*Main.WIDTH/(20), Main.HEIGHT - Main.HEIGHT/(9f), Main.WIDTH/9.74f, Main.HEIGHT/16.61f);
+        main.batch.draw(hullBackground, 12*Main.WIDTH/(20f), Main.HEIGHT - Main.HEIGHT/(9f), Main.WIDTH/9.74f, Main.HEIGHT/16.61f);
         main.batch.end();
     }
 
@@ -53,26 +63,6 @@ public class EnemyHullUI {
      */
     public void hullStatusUpdate(int status) {
         amount = status;
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
-    }
-
-    /**
-     * show the enemy hull ui
-     */
-    public void showEnemyHullUI() {
-
-    }
-
-    /**
-     * hide the enemy hull ui
-     */
-    public void hideEnemyHullUI() {
-
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -10,19 +9,17 @@ import com.galaxytrucker.galaxytruckerreloaded.View.Screen.CreateOrJoinServer;
 public class StartServerButton extends ImButton {
 
     /**
-     * Click sound effect
-     */
-    private Sound clickSound;
-
-    /**
      * the screen this button is on
      */
     private CreateOrJoinServer screen;
 
     /**
-     * Constructor
-     *
-     * @param screen the screen this button is on
+     * constructor
+     * @param x x position
+     * @param y y position
+     * @param width button width
+     * @param height button height
+     * @param screen screen the button is on
      */
     public StartServerButton (float x, float y, float width, float height, CreateOrJoinServer screen) {
         super(new Texture("buttons/start_server_button.png"), x, y, width, height);
@@ -35,7 +32,7 @@ public class StartServerButton extends ImButton {
     }
 
     /**
-     * Sets difficutly to a specific level
+     * choose to start the server (be the host)
      */
     @Override
     public void leftClick()

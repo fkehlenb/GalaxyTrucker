@@ -1,20 +1,11 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation;
 
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
-
-import java.util.List;
-
-import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.CrewSelectButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
@@ -75,8 +66,16 @@ public class CrewUI extends EnemyCrewUI{
 
     /**
      * constructor
-     * @param main the main class
-     * @param crew the crew member
+     * @param main main class extending game
+     * @param crew crew to be displayed
+     * @param stage stage for buttons
+     * @param shipView shipview this crew ui belongs to
+     * @param x x position for ui on the left
+     * @param y y position for ui on the left
+     * @param font font for name text
+     * @param rX x position of room
+     * @param rY y position of room
+     * @param type type of ship this crew member belongs to
      */
     public CrewUI(Main main, Crew crew, Stage stage, AbstractShip shipView, float x, float y, BitmapFont font, float rX, float rY, ShipType type) {
         super(main, crew, shipView, rX, rY, type);
@@ -112,7 +111,7 @@ public class CrewUI extends EnemyCrewUI{
      * called by shipview
      *
      * @param roomX the x position of the lower left corner the crew member is in
-     * @param roomY
+     * @param roomY the y position of the lower left corner the crew member is in
      */
     @Override
     public void crewMoved(float roomX, float roomY) {
@@ -181,21 +180,12 @@ public class CrewUI extends EnemyCrewUI{
     }
 
     /**
-     * animation showing the crew member is currently repairing something
-     * called by controller?
-     */
-    public void crewRepairAnimation() {
-
-    }
-
-    /**
      * the crew member was hit and the status needs to be updated
      * called by controller
      * @param status the new status
      */
-    public void statusUpdate(int status) {
+    private void statusUpdate(int status) {
         int percent = status/crew.getMaxhealth();
         currentTexture = percent * 10;
-        //adapt currentTexture according to amount of textures we end up having
     }
 }

@@ -15,6 +15,9 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
+/**
+ * to display the inventory of a ship
+ */
 public class InventoryUI {
 
     /**
@@ -37,18 +40,33 @@ public class InventoryUI {
      */
     private InventoryCloseButton closeButton;
 
+    /**
+     * main class extending game
+     */
     private Main main;
 
+    /**
+     * ui this belongs to
+     */
     private ShipView shipView;
 
+    /**
+     * x and y position
+     */
     private float x, y;
 
     /**
-     * Constructor
-     *
-     * @param main - main class
+     * constructor
+     * @param main main class extending game
      * @param crew the crew members
-     * @param weapons the weapons
+     * @param weapons the weapons in the inventory
+     * @param equippedWeapons the weapons that are equipped
+     * @param fuel the amount of fuel
+     * @param missiles the amount of missiles
+     * @param stage the stage for buttons
+     * @param shipView ui this belongs to
+     * @param font font for text
+     * @param type the type of ship, for loading correct crew textures
      */
     public InventoryUI(Main main, List<Crew> crew, List<Weapon> weapons, List<Weapon> equippedWeapons, int fuel, int missiles, Stage stage, ShipView shipView, BitmapFont font, ShipType type) {
         this.main = main;
@@ -134,14 +152,6 @@ public class InventoryUI {
     }
 
     /**
-     * setup called after initialisation
-     *
-     * here the inventory slots are initialised for fuel, missiles, crew, weapons, and money
-     */
-    private void setup() {
-    }
-
-    /**
      * equip a weapon
      * (move from ship inventory to weapon system inventory)
      * @param weapon the weapon
@@ -156,17 +166,5 @@ public class InventoryUI {
      */
     void unequipWeapon(Weapon weapon) {
         shipView.unequipWeapon(weapon);
-    }
-
-    /**
-     * show the inventory
-     */
-    public void showInventoryUI() {
-    }
-
-    /**
-     * hide the inventory
-     */
-    public void hideInventoryUI() {
     }
 }

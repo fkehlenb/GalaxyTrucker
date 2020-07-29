@@ -11,26 +11,41 @@ import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.RoomUI;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * to display the enemy systems
+ */
 public class EnemySystemUI extends RoomUI {
 
+    /**
+     * the textures used (normal and disabled)
+     */
     private List<Texture> systemTextures;
 
+    /**
+     * which of the textures from the list is currently in use
+     */
     private int currentTexture;
 
     /**
-     * the constructor
-     * @param main the main class
-     */
-    public EnemySystemUI(Main main, Room room, Stage stage, AbstractShip ship, float x, float y, System system) {
+     * constructor
+     * @param main main class extending game
+     * @param room room this represents (always a system)
+     * @param stage stage for buttons
+     * @param ship ship ui this belongs to
+     * @param x x position (lower left corner)
+     * @param y y position (lower left corner)
+     *
+     * */
+    public EnemySystemUI(Main main, Room room, Stage stage, AbstractShip ship, float x, float y) {
         super(main, room, stage, ship, x, y);
 
-        String sysType = system.getSystemType().toString().toLowerCase();
+        String sysType = ((System) room).getSystemType().toString().toLowerCase();
 
         systemTextures = new ArrayList<>();
         systemTextures.add(new Texture("shipsys/"+sysType+"/"+sysType+"overlay.png"));
         systemTextures.add(new Texture("shipsys/"+sysType+"/"+sysType+"red.png"));
 
-        currentTexture = system.isDisabled() ? 1: 0;
+        currentTexture = ((System) room).isDisabled() ? 1: 0;
     }
 
     /**

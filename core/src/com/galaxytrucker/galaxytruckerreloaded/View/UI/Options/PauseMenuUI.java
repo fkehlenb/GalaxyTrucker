@@ -1,7 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Options;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -30,12 +28,19 @@ public class PauseMenuUI {
      */
     private MainMenuButton mainMenuButton;
 
+    /**
+     * main class extending game
+     */
     private Main main;
 
+    /**
+     * game screen is on
+     */
     private GamePlay game;
 
-    private OptionUI optionUI;
-
+    /**
+     * stage for buttons
+     */
     private Stage pauseStage;
 
     /**
@@ -49,6 +54,8 @@ public class PauseMenuUI {
      * Constructor
      *
      * @param main - main class
+     * @param game screen this is on
+     * @param pauseStage stage for buttons
      */
     public PauseMenuUI(Main main, Stage pauseStage, GamePlay game) {
         this.main = main;
@@ -57,8 +64,8 @@ public class PauseMenuUI {
 
         optionsBackgroundTexture = new Texture("options/pause.png");
 
-        x = main.WIDTH/2 - optionsBackgroundTexture.getWidth()/2;
-        y = main.HEIGHT/2 - optionsBackgroundTexture.getHeight()/2;
+        x = Main.WIDTH/2f - optionsBackgroundTexture.getWidth()/2f;
+        y = Main.HEIGHT/2f - optionsBackgroundTexture.getHeight()/2f;
 
         continueButton = new ContinueButton(x+220, y+220, 128, 24, this);
         mainMenuButton = new MainMenuButton(x+220, y+270, 128, 24, main);
@@ -86,20 +93,10 @@ public class PauseMenuUI {
      * Dispose of options ui
      */
     public void disposePauseMenuUI() {
-        //optionsBackgroundTexture.dispose();
-        //continueButton.remove();
-        //mainMenuButton.remove();
-        //optionButton.remove();
         optionsBackgroundTexture.dispose();
         pauseStage.dispose();
         game.deletePauseMenu();
 
-    }
-
-    /**
-     * Setup called after initialisation
-     */
-    private void setup() {
     }
 
     /**
@@ -114,12 +111,15 @@ public class PauseMenuUI {
     /**
      * Close the options menu
      */
-    public void hidePauseMenuUI() {
+    private void hidePauseMenuUI() {
         continueButton.setVisible(false);
         mainMenuButton.setVisible(false);
         optionButton.setVisible(false);
     }
 
+    /**
+     * open options
+     */
     public void openOptions () {
         this.hidePauseMenuUI();
         game.createOptions();

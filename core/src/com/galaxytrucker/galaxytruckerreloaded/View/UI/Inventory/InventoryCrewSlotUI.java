@@ -31,27 +31,38 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
     private Texture healthBox;
 
     /**
-     * the health of the crew member
+     * how many of the health status bars need to be rendered
      */
-    private int health;
-
-    /**
-     * the maximum health of the crew member
-     */
-    private int maxhealth;
-
     private int currTexture;
 
+    /**
+     * the glyph layout for the name of the crew member
+     */
     private GlyphLayout glyphName = new GlyphLayout();
 
+    /**
+     * the glyph layout for the engine stat of the crew member
+     */
     private GlyphLayout glyphEngine = new GlyphLayout();
 
+    /**
+     * the glyph layout for the weapon stat of the crew member
+     */
     private GlyphLayout glyphWeapon = new GlyphLayout();
 
+    /**
+     * the glyph layout for the shield stat of the crew member
+     */
     private GlyphLayout glyphShield = new GlyphLayout();
 
+    /**
+     * the glyph layout for the repair stat of the crew member
+     */
     private GlyphLayout glyphRepair = new GlyphLayout();
 
+    /**
+     * the glyph layout for the combat stat of the crew member
+     */
     private GlyphLayout glyphCombat = new GlyphLayout();
 
     /**
@@ -70,8 +81,8 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
         glyphRepair.setText(font, "Repair: "+stats.get(3));
         glyphCombat.setText(font, "Combat: "+stats.get(4));
 
-        health = crew.getHealth();
-        maxhealth = crew.getMaxhealth();
+        int health = crew.getHealth();
+        int maxhealth = crew.getMaxhealth();
         currTexture = (int) (((float) health/maxhealth) * 10);
 
         healthStatus = new Texture("gameuis/energybar.png");
@@ -85,7 +96,6 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
      * without stage stuff
      */
     public void render() {
-        super.render();
         main.batch.begin();
         font.draw(main.batch, glyphName, posX+Main.WIDTH/(1920/72), posY + Main.HEIGHT/(1080/50));
         font.draw(main.batch, glyphEngine, posX+Main.WIDTH/(1920/72), posY + Main.HEIGHT/(1080/30));
@@ -108,24 +118,9 @@ public class InventoryCrewSlotUI extends InventorySlotUI {
      */
     @Override
     public void disposeInventorySlotUI() {
-        super.disposeInventorySlotUI();
         crewTexture.dispose();
 
         healthStatus.dispose();
         healthBox.dispose();
-    }
-
-    /**
-     * show the ui
-     */
-    public void showInventorySlotUI() {
-
-    }
-
-    /**
-     * Hide inventory slot ui
-     */
-    public void hideInventorySlotUI() {
-
     }
 }

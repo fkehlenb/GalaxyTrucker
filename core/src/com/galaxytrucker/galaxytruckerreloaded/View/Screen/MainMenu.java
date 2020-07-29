@@ -92,12 +92,12 @@ public class MainMenu implements Screen {
     public MainMenu(Main main){
         this.main = main;
         background = new Texture("1080p.png");
-        singlePlayerButton = new SinglePlayerButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        multiPlayerButton = new MultiPlayerButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*1, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
-        optionButton = new OptionButton(main.WIDTH/2 - main.WIDTH/7.74f/2, main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*2, main.WIDTH/7.74f, main.HEIGHT/21.6f,this);
-        quit = new QuitButton(main.WIDTH/2 - main.WIDTH/7.74f/2 , main.HEIGHT/2 + main.HEIGHT/21.6f/2 -main.HEIGHT/21.6f*3, main.WIDTH/7.74f, main.HEIGHT/21.6f, this);
+        singlePlayerButton = new SinglePlayerButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        multiPlayerButton = new MultiPlayerButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*1, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+        optionButton = new OptionButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*2, Main.WIDTH/7.74f, Main.HEIGHT/21.6f,this);
+        quit = new QuitButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2 , Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*3, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
 
-        viewport = new FitViewport(main.WIDTH, main.HEIGHT);
+        viewport = new FitViewport(Main.WIDTH, Main.HEIGHT);
         stage = new Stage(viewport);
         stage.addActor(quit);
         stage.addActor(optionButton);
@@ -128,7 +128,7 @@ public class MainMenu implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         main.batch.begin();
-        main.batch.draw(background, 0, 0, main.WIDTH, main.HEIGHT);
+        main.batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
         main.batch.end();
         if(optionUI!=null) {
             optionUI.render();
@@ -290,19 +290,11 @@ public class MainMenu implements Screen {
     }
 
     /**
-     * resumes the existing game.
-     * called by button
-     */
-    public void resumeGame() {
-
-    }
-
-    /**
      * start/continue a multi player game
      */
     public void setMultiplayer() {
-        //controller call
-        main.setScreen(new SPNewOrResume(main, false));
+        main.setMultiplayer(true);
+        main.setScreen(new SPNewOrResume(main));
         dispose();
     }
 
@@ -310,8 +302,8 @@ public class MainMenu implements Screen {
      * start/continue a single player game
      */
     public void setSingleplayer() {
-        //controller call
-        main.setScreen(new SPNewOrResume(main, true));
+        main.setMultiplayer(false);
+        main.setScreen(new SPNewOrResume(main));
         dispose();
     }
 
