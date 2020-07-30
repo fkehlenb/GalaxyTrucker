@@ -366,7 +366,7 @@ public class ClientHandler implements Runnable {
             }
             planet.setTrader(t);
             planetMap.add(planet);
-        }
+        }/*
         // ======================= Add combat =======================
         int battles = random.nextInt(4) + 5;
         for (int i = 0; i < battles; i++) {
@@ -434,7 +434,7 @@ public class ClientHandler implements Runnable {
         for (int i = 0; i < meteors; i++) {
             planetMap.add(new Planet(UUID.randomUUID().hashCode(), getPlanetName(planetNames, usedPlanetNames, random),
                     0, 0, PlanetEvent.METEORSHOWER, new ArrayList<Ship>(), "map/asteroid.png"));
-        }
+        }*/
         // ======================= Add start planet =======================
         //Random planet texture
         int randomPlanetTextureInt = random.nextInt(7) + 1;

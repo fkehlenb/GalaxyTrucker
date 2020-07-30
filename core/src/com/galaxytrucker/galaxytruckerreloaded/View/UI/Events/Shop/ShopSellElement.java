@@ -66,7 +66,7 @@ public class ShopSellElement {
         this.weapon = weapon;
         this.crew = crew;
 
-        //button = new ShopSellButton(0, 0, 10, 10, this);
+        button = new ShopSellButton(x, y, 248, 50, shop, this);
         stage.addActor(button);
     }
 
