@@ -503,7 +503,7 @@ public class GamePlay implements Screen {
      * create next round button
      */
     private void createRoundButton() {
-        nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), 248, 50, this);
+        nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), main.WIDTH/15.4f, main.HEIGHT/43.2f, this);
         stage.addActor(nextRoundButton);
     }
 
