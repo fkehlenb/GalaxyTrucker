@@ -25,7 +25,7 @@ public class NextRoundButton extends ImButton {
      * @param screen ui this button is on
      */
     public NextRoundButton(float x, float y, float width, float height, GamePlay screen) {
-        super(new Texture("ingame_continue.png"), x, y, width, height);
+        super(new Texture("buttons/next_round_button.png"), x, y, width, height);
         this.screen = screen;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
