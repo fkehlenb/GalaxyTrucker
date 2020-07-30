@@ -97,7 +97,6 @@ public class PlanetRewardService {
                 }
                 List<WeaponType> weaponTypes = new ArrayList<>();
                 weaponTypes.add(WeaponType.BOMB);
-                weaponTypes.add(WeaponType.HEAL_BOMB);
                 weaponTypes.add(WeaponType.LASER);
                 weaponTypes.add(WeaponType.RADIO);
                 weaponTypes.add(WeaponType.RADIO_BOMB);

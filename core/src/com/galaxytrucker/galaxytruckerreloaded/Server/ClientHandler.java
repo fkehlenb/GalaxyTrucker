@@ -320,7 +320,6 @@ public class ClientHandler implements Runnable {
         weaponTypes.add(WeaponType.LASER);
         weaponTypes.add(WeaponType.ROCKET);
         weaponTypes.add(WeaponType.BOMB);
-        weaponTypes.add(WeaponType.HEAL_BOMB);
         weaponTypes.add(WeaponType.RADIO);
         weaponTypes.add(WeaponType.RADIO_BOMB);
         List<ShipType> shipTypes = new ArrayList<>();
@@ -1147,8 +1146,8 @@ public class ClientHandler implements Runnable {
                         // Add Weapons
                         Weapon radioBomb = new Weapon(UUID.randomUUID().hashCode(), WeaponType.RADIO_BOMB, 2, 2, 5, 1, 0,
                                 (float) 1.5, (float) 0.05, 4, (float) 1.5, 5, 1, "RadioBomb", 75);
-                        Weapon healBomb = new Weapon(UUID.randomUUID().hashCode(), WeaponType.HEAL_BOMB, 2, 0, 6, 1, 1,
-                                (float) 1.5, (float) 0.1, 4, (float) 0, -4, 1, "HealBomb", 60);
+                        Weapon healBomb = new Weapon(UUID.randomUUID().hashCode(), WeaponType.LASER, 2, 0, 6, 1, 1,
+                                (float) 1.5, (float) 0.1, 4, (float) 0, 4, 1, "HealBomb", 60);
                         radioBomb.setPrice(weaponPrices);
                         healBomb.setPrice(weaponPrices);
                         radioBomb.setWeaponSystem(weapons);

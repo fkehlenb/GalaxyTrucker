@@ -97,9 +97,9 @@ public class Main extends Game {
      * after official logout from server through clientControllerCommunicator
      */
     public void logout() {
-        if(host) {
-            Server.getInstance().killServer();
-        }
+//        if(host) {
+//            Server.getInstance().killServer();
+//        }
         setScreen(new MainMenu(this));
     }
 
