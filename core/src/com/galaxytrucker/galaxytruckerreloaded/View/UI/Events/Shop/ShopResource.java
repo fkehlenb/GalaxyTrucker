@@ -21,13 +21,14 @@ public class ShopResource extends CurrentShopUI {
     public ShopResource(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI, float x, float y){
         super(main, stage, game,trader,shopUI, x, y);
         elements = new ArrayList<>();
+        float dist = main.HEIGHT/27;
         //TODO add icons
         //fuel
-        elements.add(new ShopElement(main, stage, new Texture("gameuis/top_fuel.png"), main.WIDTH/2, main.HEIGHT/2, shopUI, null, null, null, trader.getFuelStock(), ShopElementType.FUEL));
+        elements.add(new ShopElement(main, stage, new Texture("gameuis/top_fuel.png"), baseX, baseY+dist, shopUI, null, null, null, trader.getFuelStock(), ShopElementType.FUEL));
         //hp
-        elements.add(new ShopElement(main, stage, new Texture("icon_fuel.png"), main.WIDTH/2, main.HEIGHT/2-30, shopUI, null, null, null, trader.getHpStock(), ShopElementType.HP));
+        elements.add(new ShopElement(main, stage, new Texture("icon_fuel.png"), baseX, baseY+dist*2, shopUI, null, null, null, trader.getHpStock(), ShopElementType.HP));
         //missiles/rockets
-        elements.add(new ShopElement(main, stage, new Texture("gameuis/top_missile.png"), main.WIDTH/2, main.HEIGHT-30, shopUI, null, null, null, trader.getMissileStock(), ShopElementType.MISSILES));
+        elements.add(new ShopElement(main, stage, new Texture("gameuis/top_missile.png"), baseX, baseY, shopUI, null, null, null, trader.getMissileStock(), ShopElementType.MISSILES));
     }
 
     @Override

@@ -105,8 +105,8 @@ public class ShopUI {
         float yb = y+main.HEIGHT/90f;
         float ydist = main.HEIGHT/15.652f;
 
-        baseX = xb + main.WIDTH/30.476f + 5; //base x for rendering
-        baseY = yb + 10;
+        baseX = xb + main.WIDTH/15 ; //base x for rendering
+        baseY = yb + main.HEIGHT/108;
 
         ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.WEAPON);
         shopTabs.add(shopWeaponButton);
