@@ -130,7 +130,7 @@ public class ShopElement {
     public void render() {
         main.batch.begin();
         //main.batch.draw(texture, x, y, 300, 300); //TODO whxy
-        font.draw(main.batch, priceTag, x + main.WIDTH/32 , y - priceTag.height/2);
+        font.draw(main.batch, priceTag, x + main.WIDTH/32 , y + texture.getHeight()- priceTag.height/2);
         main.batch.end();
         stage.draw();
     }

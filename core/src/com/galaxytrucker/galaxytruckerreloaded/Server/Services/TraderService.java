@@ -182,12 +182,12 @@ public class TraderService {
                             tiles.set(tiles.indexOf(t), t);
                             r.setTiles(tiles);
                             crew.setTile(t);
+                            crew.setCurrentRoom(r);
+                            crew.setAssociatedUser(ship.getAssociatedUser());
                             // Room
                             List<Crew> crewInRoom = r.getCrew();
                             crewInRoom.add(crew);
                             r.setCrew(crewInRoom);
-                            crew.setCurrentRoom(r);
-                            crew.setAssociatedUser(ship.getAssociatedUser());
                             // Update data
                             tileDAO.update(t);
                             crewDAO.update(crew);

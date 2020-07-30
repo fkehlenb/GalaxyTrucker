@@ -704,7 +704,8 @@ public class GamePlay implements Screen {
         TraderController tc = TraderController.getInstance(null);
         boolean success = tc.purchaseCrew(trader, crew);
         if(success) {
-            player.changeAmountScrap(-(crew.getPrice()));
+            //player.changeAmountScrap(-(crew.getPrice()));
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }

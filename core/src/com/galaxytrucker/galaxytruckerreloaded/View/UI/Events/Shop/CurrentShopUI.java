@@ -44,7 +44,7 @@ public abstract class CurrentShopUI {
      * base positions for rendering
      */
     @NonNull
-    private float baseX, baseY;
+    float baseX, baseY;
     
 
     public abstract void render();

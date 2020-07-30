@@ -17,7 +17,9 @@ public class ShopCrew extends CurrentShopUI {
     public ShopCrew(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI, float x, float y){
         super(main, stage, game,trader,shopUI, x, y);
         elements = new ArrayList<>();
+        float dist = 40;
         //crew stock
+        int i = 0;
         for(Crew c : trader.getCrewStock()) {
             Texture t;
             if(c.getName().equals("ana")) {
@@ -29,7 +31,8 @@ public class ShopCrew extends CurrentShopUI {
             else {
                 t = new Texture("crew/stealth.png"); //TODO wie sieht das mit namen aus?
             }
-            elements.add(new ShopElement(main, stage, t, 0, 0, shopUI, null, c, null, 0, ShopElementType.CREW));
+            elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null, c, null, 0, ShopElementType.CREW));
+            i++;
         }
     }
 
