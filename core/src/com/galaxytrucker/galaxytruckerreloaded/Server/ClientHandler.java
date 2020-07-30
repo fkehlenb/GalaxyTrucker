@@ -329,6 +329,12 @@ public class ClientHandler implements Runnable {
         shipTypes.add(ShipType.BOARDER);
         shipTypes.add(ShipType.STEALTH);
         shipTypes.add(ShipType.TANK);
+        List<Integer> weaponPrices = new ArrayList<>();
+        weaponPrices.add(15);
+        weaponPrices.add(25);
+        weaponPrices.add(40);
+        weaponPrices.add(60);
+        weaponPrices.add(80);
         for (int i = 0; i < traders; i++) {
             int randomPlanetTextureInt = random.nextInt(7) + 1;
             String randomPlanetTexture = "map/planets/" + Integer.toString(randomPlanetTextureInt) + ".png";
@@ -337,10 +343,12 @@ public class ClientHandler implements Runnable {
             List<Weapon> weaponStock = new ArrayList<>();
             List<Crew> crewStock = new ArrayList<>();
             for (int g=0;g<4;g++){
-                weaponStock.add(new Weapon(UUID.randomUUID().hashCode(),weaponTypes.get(random.nextInt(weaponTypes.size()-1)),
+                Weapon w = new Weapon(UUID.randomUUID().hashCode(),weaponTypes.get(random.nextInt(weaponTypes.size()-1)),
                         random.nextInt(5)+1,random.nextInt(4)+1,random.nextInt(5),random.nextInt(4),random.nextInt(1),
                         random.nextFloat(),random.nextFloat(),random.nextInt(5),random.nextFloat(),random.nextInt(5),random.nextInt(3)+1,
-                        weaponNameGenerator(),random.nextInt(100)+20));
+                        weaponNameGenerator(),random.nextInt(100)+20);
+                w.setPrice(weaponPrices);
+                weaponStock.add(w);
                 List<Integer> crewStats = new ArrayList<>();
                 for (int a=0;a<5;a++){
                     crewStats.add(random.nextInt(5)+1);
