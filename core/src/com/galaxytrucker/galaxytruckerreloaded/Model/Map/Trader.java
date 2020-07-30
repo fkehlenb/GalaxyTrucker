@@ -2,6 +2,7 @@ package com.galaxytrucker.galaxytruckerreloaded.Model.Map;
 
 import java.util.List;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -52,5 +53,7 @@ public class Trader implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @NonNull
     private List<Crew> crewStock;
+
+
 
 }

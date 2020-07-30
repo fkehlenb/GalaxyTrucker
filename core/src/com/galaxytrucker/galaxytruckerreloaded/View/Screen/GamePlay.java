@@ -738,6 +738,16 @@ public class GamePlay implements Screen {
         return success;
     }
 
+    public boolean buySystem(Trader trader, SystemType type){
+        //TODO: welcher Controller?!
+        SystemController systemController = SystemController.getInstance(null);
+        boolean succsess = systemController.installSystem(type);
+            if(succsess){
+               player.changeAmountScrap(5);
+            }
+        return succsess;
+    }
+
     /**
      * buy hp from the trader
      * call to controller

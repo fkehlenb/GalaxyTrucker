@@ -8,6 +8,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Controller.TraderController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.*;
@@ -203,6 +204,10 @@ public class ShopUI {
      * @return success of transaction
      */
     boolean buyHP(int amount){return game.buyHp(trader, amount);}
+
+    boolean buySystem(SystemType type){
+        return game.buySystem(trader, type);
+    }
 
     /**TODO put into SubUIs
      * remove a buyable element

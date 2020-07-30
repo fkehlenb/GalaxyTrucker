@@ -89,6 +89,7 @@ public class ShopElement {
         this.amount = amount;
         this.type = type;
         this.font = shop.getFont();
+        this.system = system;
 
 
         button = new ShopBuyButton(texture, x, y-texture.getHeight()/2, main.WIDTH/6.4f, main.WIDTH/38.4f, this); //TODO whxy
@@ -115,9 +116,11 @@ public class ShopElement {
                 break;
             case SYSTEM:
                 //TODO System.getPrice
+                price = 5;
                 break;
             case UPGRADES:
                 //TODO lololol idk
+                price = 3;
                 break;
         }
         priceTag.setText(font, Integer.toString(price));
@@ -164,6 +167,9 @@ public class ShopElement {
                     break;
                 case HP:
                     success = shop.buyHP(amount);
+                    break;
+                case SYSTEM:
+                    success = shop.buySystem(system.getSystemType());
                     break;
             }
         if(success) {
