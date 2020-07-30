@@ -179,22 +179,19 @@ public class TraderService {
                         if (t.isEmpty()) {
                             // Tiles
                             t.setStandingOnMe(crew);
-                            tiles.set(tiles.indexOf(t), t);
-                            r.setTiles(tiles);
+                            tileDAO.update(t);
                             crew.setTile(t);
                             crew.setCurrentRoom(r);
                             crew.setAssociatedUser(ship.getAssociatedUser());
+                            crewDAO.update(crew);
+                            tiles.set(tiles.indexOf(t), t);
+                            r.setTiles(tiles);
                             // Room
                             List<Crew> crewInRoom = r.getCrew();
                             crewInRoom.add(crew);
                             r.setCrew(crewInRoom);
                             // Update data
-                            tileDAO.update(t);
-                            crewDAO.update(crew);
-                            for (Room a : ship.getSystems()) {
-                                roomDAO.update(a);
-                            }
-                            shipDAO.update(ship);
+                            roomDAO.update(r);
                             traderDAO.update(trader);
                             // Manual verification
                             System.out.println("[POST]:[Ship]:" + ship.getId() + ":[Crew]:" + crew.getId() + ":[Trader]:" + trader.getId() + ":[Coins]:" + ship.getCoins());
