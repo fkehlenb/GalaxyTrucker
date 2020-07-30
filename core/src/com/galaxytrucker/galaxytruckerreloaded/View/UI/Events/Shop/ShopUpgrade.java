@@ -59,8 +59,8 @@ public class ShopUpgrade extends CurrentShopUI {
      */
     private List<ShopElement> elements;
 
-    public ShopUpgrade(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
-        super(main, stage, game, trader, shopUI);
+    public ShopUpgrade(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI, float x, float y){
+        super(main, stage, game, trader, shopUI, x, y);
         elements = new LinkedList<>();
         for(Room r : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()){
             if(r.isSystem())

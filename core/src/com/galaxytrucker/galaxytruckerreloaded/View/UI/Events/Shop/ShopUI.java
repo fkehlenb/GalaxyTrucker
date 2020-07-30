@@ -75,6 +75,8 @@ public class ShopUI {
 
     private List<ShopUIButton> shopTabs;
 
+    private float baseX, baseY;
+
     /**
      * constructor
      * @param main the main class
@@ -101,6 +103,9 @@ public class ShopUI {
         float xb = x+main.WIDTH/128f;
         float yb = y+main.HEIGHT/90f;
         float ydist = main.HEIGHT/15.652f;
+
+        baseX = xb + main.WIDTH/30.476f + 5; //base x for rendering
+        baseY = yb;
 
         ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.WEAPON);
         shopTabs.add(shopWeaponButton);
@@ -207,7 +212,7 @@ public class ShopUI {
     }
 
     public void openShopSellUI(){
-        current = new ShopSell(main, stage, game, trader, this);
+        current = new ShopSell(main, stage, game, trader, this, baseX, baseY);
     }
 
     public void openUI(ShopButtonType type){
@@ -216,22 +221,22 @@ public class ShopUI {
         }
         switch (type){
             case UPGRADES:
-                current = new ShopUpgrade(main, stage, game, trader, this);
+                current = new ShopUpgrade(main, stage, game, trader, this, baseX, baseY);
                 break;
             case CREW:
-                current = new ShopCrew(main, stage, game, trader, this);
+                current = new ShopCrew(main, stage, game, trader, this, baseX, baseY);
                 break;
             case SELL:
-                current = new ShopSell(main, stage, game, trader, this);
+                current = new ShopSell(main, stage, game, trader, this, baseX, baseY);
                 break;
             case SYSTEM:
-                current = new ShopSystem(main, stage, game, trader, this);
+                current = new ShopSystem(main, stage, game, trader, this, baseX, baseY);
                 break;
             case WEAPON:
-                current = new ShopWeapon(main, stage, game, trader, this);
+                current = new ShopWeapon(main, stage, game, trader, this, baseX, baseY);
                 break;
             case RESOURCE:
-                current = new ShopResource(main, stage, game, trader, this);
+                current = new ShopResource(main, stage, game, trader, this, baseX, baseY);
                 break;
         }
 

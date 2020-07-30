@@ -14,8 +14,8 @@ public class ShopWeapon extends CurrentShopUI {
 
     List<ShopElement> elements;
 
-    public ShopWeapon(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
-        super(main, stage, game,trader,shopUI);
+    public ShopWeapon(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI, float x, float y){
+        super(main, stage, game,trader,shopUI, x, y);
         elements = new ArrayList<>();
         //weapon stock
         for(Weapon w : trader.getWeaponStock()) {

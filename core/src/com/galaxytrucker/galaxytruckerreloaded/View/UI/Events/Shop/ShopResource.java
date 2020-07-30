@@ -18,8 +18,8 @@ public class ShopResource extends CurrentShopUI {
     private List<ShopElement> elements;
 
     @Builder
-    public ShopResource(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
-        super(main, stage, game,trader,shopUI);
+    public ShopResource(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI, float x, float y){
+        super(main, stage, game,trader,shopUI, x, y);
         elements = new ArrayList<>();
         //TODO add icons
         //fuel

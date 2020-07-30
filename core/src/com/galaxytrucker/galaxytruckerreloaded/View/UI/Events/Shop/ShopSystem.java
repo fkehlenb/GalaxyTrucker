@@ -15,8 +15,8 @@ public class ShopSystem extends CurrentShopUI {
      */
     private List<ShopElement> elements;
 
-    public ShopSystem(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
-        super(main, stage, game,trader,shopUI);
+    public ShopSystem(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI, float x, float y){
+        super(main, stage, game,trader,shopUI, x,y);
         elements = new ArrayList<>();
 
     }

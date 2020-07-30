@@ -27,8 +27,8 @@ public class ShopSell extends CurrentShopUI {
     private List<Room> r;
 
 
-    public ShopSell(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI){
-        super(main, stage, game,trader,shopUI);
+    public ShopSell(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI, float x, float y){
+        super(main, stage, game,trader,shopUI, x, y);
 
         //add all the items that can be sold TODO geldanzeige immer ändern
         sellElements = new LinkedList<>();
@@ -56,11 +56,15 @@ public class ShopSell extends CurrentShopUI {
 
     @Override
     public void render() {
-
+        for(ShopSellElement e : sellElements) {
+            e.render();
+        }
     }
 
     @Override
     public void dispose() {
-
+        for(ShopSellElement e : sellElements) {
+            e.disposeShopSellElement();
+        }
     }
 }
