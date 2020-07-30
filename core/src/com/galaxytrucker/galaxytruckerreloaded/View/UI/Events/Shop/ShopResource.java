@@ -25,8 +25,8 @@ public class ShopResource extends CurrentShopUI {
         //TODO add icons
         //fuel
         elements.add(new ShopElement(main, stage, new Texture("gameuis/top_fuel.png"), baseX, baseY+dist, shopUI, null, null, null, trader.getFuelStock(), ShopElementType.FUEL));
-        //hp
-        elements.add(new ShopElement(main, stage, new Texture("icon_fuel.png"), baseX, baseY+dist*2, shopUI, null, null, null, trader.getHpStock(), ShopElementType.HP));
+        //full hp
+        elements.add(new ShopElement(main, stage, new Texture("gameuis/top_hp.png"), baseX, baseY+dist*2, shopUI, null, null, null, trader.getHpStock(), ShopElementType.HP));
         //missiles/rockets
         elements.add(new ShopElement(main, stage, new Texture("gameuis/top_missile.png"), baseX, baseY, shopUI, null, null, null, trader.getMissileStock(), ShopElementType.MISSILES));
     }

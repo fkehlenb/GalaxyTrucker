@@ -734,7 +734,7 @@ public class GamePlay implements Screen {
      */
     public boolean buyMissiles(Trader trader, int amount) {
         TraderController tc = TraderController.getInstance(null);
-        boolean success = tc.purchaseFuel(trader, amount); //TODO controller
+        boolean success = tc.purchaseRockets(trader, amount); //TODO controller
         if(success) {
             player.changeAmountScrap(-(6*amount)); //TODO festpreis
             player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
@@ -777,7 +777,7 @@ public class GamePlay implements Screen {
         TraderController tc = TraderController.getInstance(null);
         boolean success = tc.purchaseHP(trader, amount);
         if(success) {
-            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+            player.changeAmountScrap(-2*amount); //TODO festpreis
             player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;

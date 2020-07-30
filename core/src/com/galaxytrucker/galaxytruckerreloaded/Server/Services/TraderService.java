@@ -98,9 +98,14 @@ public class TraderService {
                         break;
                     }
                 }
-                if (exists && ship.getCoins() >= weapon.getWeaponPrice()) {
+                int price = weapon.getWeaponPrice();
+                for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
+                {
+                    price += weapon.getPrice().get(lvl);
+                }
+                if (exists && ship.getCoins() >= price) {
                     // Subtract price from ship coins
-                    ship.setCoins(ship.getCoins() - weapon.getWeaponPrice());
+                    ship.setCoins(ship.getCoins() - price);
                     // Remove weapon from stock
                     stock.remove(weapon);
                     trader.setWeaponStock(stock);
