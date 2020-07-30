@@ -261,7 +261,7 @@ public class ClientHandler implements Runnable {
                 // Thread will terminate with socket exception
                 try {
                     serverServiceCommunicator.logoutAfterException(username);
-                    clientSocket.close();
+//                    clientSocket.close();
                 } catch (Exception f) {
                     f.printStackTrace();
                 }
