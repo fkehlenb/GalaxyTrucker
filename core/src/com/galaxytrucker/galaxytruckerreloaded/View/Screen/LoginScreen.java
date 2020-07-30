@@ -129,6 +129,7 @@ public class LoginScreen extends MenuScreen {
             }
         }
         else {
+            main.startServer(address.getText(), Integer.parseInt(port.getText()));
             main.startClient(address.getText(), Integer.parseInt(port.getText()));
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
             if(success) {

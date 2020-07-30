@@ -85,7 +85,7 @@ public class CreateOrJoinServer extends MenuScreen {
      * start a game on a new server
      */
     public void startServer() {
-        main.startServer("localhost",5050);
+        main.startServer(address,Integer.parseInt(port));
         main.startClient(address, Integer.parseInt(port));
         boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username, ship, difficulty);
         if(success) {
