@@ -70,43 +70,43 @@ public class ShopUpgrade extends CurrentShopUI {
             if(r.isSystem() && ((System) r).getSystemType()  == SystemType.SHIELDS && ((System) r).isUnlocked()){
                 t = new Texture("shipsys/shields/shieldsoverlay.png");
                 s = (System) r;
-                elements.add(new ShopElement(main, stage, new Texture("shop/openShop.png"), x, y, shopUI, null, null, (System) r, 0, ShopElementType.UPGRADES ));
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.UPGRADES));
                 i++;
             }
             else if(r.isSystem() && ((System) r).getSystemType() == SystemType.CAMERAS && ((System) r).isUnlocked()){
                 t = new Texture("shipsys/cameras/camerasoverlay.png");
                 s = (System) r;
-                elements.add(new ShopElement(main, stage, new Texture("shop/openShop.png"), x, y, shopUI, null, null, (System) r, 0, ShopElementType.UPGRADES ));
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.UPGRADES));
                 i++;
             }
             else if(r.isSystem() && ((System) r).getSystemType() == SystemType.MEDBAY && ((System) r).isUnlocked()){
                 t = new Texture("shipsys/medbay/medbayoverlay.png");
                 s = (System) r;
-                elements.add(new ShopElement(main, stage, new Texture("shop/openShop.png"), x, y, shopUI, null, null, (System) r, 0, ShopElementType.UPGRADES ));
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.UPGRADES));
                 i++;
             }
             else if(r.isSystem() && ((System) r).getSystemType() == SystemType.WEAPON_SYSTEM && ((System) r).isUnlocked()){
                 t = new Texture("shipsys/weapon_system/weapon_systemoverlay.png");
                 s = (System) r;
-                elements.add(new ShopElement(main, stage, new Texture("shop/openShop.png"), x, y, shopUI, null, null, (System) r, 0, ShopElementType.UPGRADES ));
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.UPGRADES));
                 i++;
             }
             else if(r.isSystem() && ((System) r).getSystemType() == SystemType.COCKPIT && ((System) r).isUnlocked()){
                 t = new Texture("shipsys/cockpit/cockpitoverlay.png");
                 s = (System) r;
-                elements.add(new ShopElement(main, stage, new Texture("shop/openShop.png"), x, y, shopUI, null, null, (System) r, 0, ShopElementType.UPGRADES ));
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.UPGRADES));
                 i++;
             }
             else if(r.isSystem() && ((System) r).getSystemType() == SystemType.ENGINE && ((System) r).isUnlocked()){
                 t = new Texture("shipsys/engine/engineoverlay.png");
                 s = (System) r;
-                elements.add(new ShopElement(main, stage, new Texture("shop/openShop.png"), x, y, shopUI, null, null, (System) r, 0, ShopElementType.UPGRADES ));
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.UPGRADES));
                 i++;
             }
             else if(r.isSystem() && ((System) r).getSystemType() == SystemType.O2 && ((System) r).isUnlocked()){
                 t = new Texture("shipsys/o2/o2overlay.png");
                 s = (System) r;
-                elements.add(new ShopElement(main, stage, new Texture("shop/openShop.png"), x, y, shopUI, null, null, (System) r, 0, ShopElementType.UPGRADES ));
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.UPGRADES));
                 i++;
             }
 

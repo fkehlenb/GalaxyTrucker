@@ -1046,7 +1046,7 @@ public class ClientHandler implements Runnable {
                     //Shields
                     else if (i == 3) {
                         System shields = new System(UUID.randomUUID().hashCode(), 0, 100, i, new ArrayList<Crew>(),
-                                new ArrayList<Tile>(), 0, 0, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
+                                new ArrayList<Tile>(), 0, 4, 0, SystemType.SHIELDS, new ArrayList<Weapon>());
                         shields.setTiles(tiles);
                         shields.setDisabled(true);
                         shields.setUnlocked(false);

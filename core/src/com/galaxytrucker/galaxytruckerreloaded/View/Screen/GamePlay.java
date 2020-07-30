@@ -744,7 +744,8 @@ public class GamePlay implements Screen {
         SystemController systemController = SystemController.getInstance(null);
         boolean succsess = systemController.installSystem(type);
         if(succsess){
-            player.changeAmountScrap(5);
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+            //player.changeAmountScrap(5);
         }
         return succsess;
     }
@@ -755,7 +756,8 @@ public class GamePlay implements Screen {
             if(r.isSystem() && ((System) r).getSystemType() == type){
                 boolean succsess = systemController.upgradeSystem((System) r);
                 if(succsess){
-                    player.changeAmountScrap(3);
+                    player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+                    //player.changeAmountScrap(3);
                     return succsess;
                 }
             }
