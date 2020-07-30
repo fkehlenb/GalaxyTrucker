@@ -259,7 +259,6 @@ public class BattleService implements Serializable {
                     difficulty = UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld().getDifficulty();
                 }
                 // ===== Play round actions =====
-                java.lang.System.out.println("[ACTIONS]:" + roundActions.size());
                 if (!roundActions.isEmpty()) {
                     for (RequestObject move : roundActions) {
                         if (move.getRequestType().equals(RequestType.ATTACK_SHIP) && !combatOver) { // todo check weapon type
@@ -530,7 +529,7 @@ public class BattleService implements Serializable {
                 battleServiceDAO.update(this);
             }
             // Wait your round
-            else if (myRound(ship)) {
+            else if (currentRound==ship.getId()) {
                 // Fetch new data
                 ship = shipDAO.getById(ship.getId());
                 // Set valid

@@ -580,9 +580,8 @@ public class GamePlay implements Screen {
      * calling the battle controller
      */
     public void nextFightRound() {
+        boolean combatOver = battleController.fetchUpdatedData();
         boolean success = battleController.playMoves();
-        if (success){
-            boolean combatOver = battleController.fetchUpdatedData();
             try {
                 player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
                 try {
@@ -611,13 +610,13 @@ public class GamePlay implements Screen {
                     boolean combatWon = battleController.combatWon();
                     if (combatWon){
                         // todo
-                        explodeShipAnimation(enemy.getBaseX(), enemy.getBaseY());
+//                        explodeShipAnimation(enemy.getBaseX(), enemy.getBaseY());
                         java.lang.System.out.println("--- GEWONNEN ---");
                         
                     }
                     else{
                         // todo
-                        explodeShipAnimation(player.getBaseX(), player.getBaseY());
+//                        explodeShipAnimation(player.getBaseX(), player.getBaseY());
                         removePlayer();
                         java.lang.System.out.println("--- Du bist tot! ---");
                         java.lang.System.out.println("--- VERLOREN ---");
@@ -625,7 +624,6 @@ public class GamePlay implements Screen {
                     }
                 }
             }
-        }
     }
 
     /**

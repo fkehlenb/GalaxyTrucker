@@ -82,6 +82,8 @@ public class PVPService {
                 planet.getShips().add(ship);
                 planet.getShips().add(opponentShip);
                 ship.setPlanet(planet);
+                ship.setInCombat(true);
+                ship.setFTLCharge(0);
                 planetDAO.update(planet);
                 shipDAO.update(ship);
                 responseObject.setValidRequest(true);
