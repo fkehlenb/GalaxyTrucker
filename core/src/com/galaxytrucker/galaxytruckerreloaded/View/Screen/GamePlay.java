@@ -691,6 +691,7 @@ public class GamePlay implements Screen {
             }
 
             player.changeAmountScrap(-price);
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -720,6 +721,7 @@ public class GamePlay implements Screen {
         boolean success = tc.purchaseFuel(trader, amount);
         if(success) {
             player.changeAmountScrap(-(3*amount)); //TODO festpreis
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -734,6 +736,7 @@ public class GamePlay implements Screen {
         boolean success = tc.purchaseFuel(trader, amount); //TODO controller
         if(success) {
             player.changeAmountScrap(-(6*amount)); //TODO festpreis
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -748,6 +751,7 @@ public class GamePlay implements Screen {
         boolean success = tc.purchaseHP(trader, amount);
         if(success) {
             player.changeAmountScrap(-(5*amount)); //TODO festpreis
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -762,6 +766,7 @@ public class GamePlay implements Screen {
         boolean success = tc.sellRockets(trader, amount);
         if(success) {
             player.changeAmountScrap(5*amount); //TODO festpreis
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -776,6 +781,7 @@ public class GamePlay implements Screen {
         boolean success = tc.sellWeapon(trader, weapon);
         if(success) {
             player.changeAmountScrap(weapon.getPrice().get(weapon.getWeaponLevel()));
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }

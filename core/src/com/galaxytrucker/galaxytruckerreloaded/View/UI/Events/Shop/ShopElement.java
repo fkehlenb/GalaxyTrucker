@@ -66,6 +66,8 @@ public class ShopElement {
 
     private GlyphLayout priceTag = new GlyphLayout();
 
+    private GlyphLayout stockTag;
+
     private BitmapFont font;
     /**
      * the shop ui this element is on
@@ -91,7 +93,7 @@ public class ShopElement {
         this.font = shop.getFont();
 
 
-        button = new ShopBuyButton(texture, x, y-texture.getHeight()/2, main.WIDTH/6.4f, main.WIDTH/38.4f, this); //TODO whxy
+        button = new ShopBuyButton(texture, x, y+texture.getHeight()/2, texture.getWidth(), texture.getHeight(), this); //TODO whxy
         stage.addActor(button);
         switch (type){
             case HP:
@@ -99,9 +101,13 @@ public class ShopElement {
                 break;
             case FUEL:
                 price = 3;
+                stockTag = new GlyphLayout();
+                stockTag.setText(font, Integer.toString(amount));
                 break;
             case MISSILES:
                 price = 6;
+                stockTag = new GlyphLayout();
+                stockTag.setText(font, Integer.toString(amount));
                 break;
             case WEAPON:
                 price = weapon.getWeaponPrice();
@@ -120,7 +126,7 @@ public class ShopElement {
                 //TODO lololol idk
                 break;
         }
-        priceTag.setText(font, Integer.toString(price));
+        priceTag.setText(font, Integer.toString(price)+" coins");
 
     }
 
@@ -130,7 +136,13 @@ public class ShopElement {
     public void render() {
         main.batch.begin();
         //main.batch.draw(texture, x, y, 300, 300); //TODO whxy
-        font.draw(main.batch, priceTag, x + main.WIDTH/32 , y + texture.getHeight()- priceTag.height/2);
+        font.draw(main.batch, priceTag, x + main.WIDTH/12, y + + texture.getHeight() + priceTag.height/2);
+        if (stockTag!=null)
+        {
+            priceTag.setText(font, Integer.toString(price)+" coins");
+            font.draw(main.batch, stockTag, x + main.WIDTH/32, y  + texture.getHeight() + stockTag.height/2);
+        }
+        //main.batch.draw(new Texture("yes.png"),x,y);
         main.batch.end();
         stage.draw();
     }
@@ -141,6 +153,10 @@ public class ShopElement {
     public void dispose() {
         //texture.dispose();
         priceTag.setText(font, "");
+        if (stockTag!=null)
+        {
+            stockTag.setText(font, "");
+        }
         button.remove();
     }
 
@@ -152,22 +168,33 @@ public class ShopElement {
             switch (type) {
                 case WEAPON:
                     success = shop.buyWeapon(weapon);
+                    if(success) {
+                        dispose();
+                    }
                     break;
                 case CREW:
                     success = shop.buyCrew(crew);
+                    if(success) {
+                        dispose();
+                    }
                     break;
                 case MISSILES:
                     success = shop.buyMissiles();
+                    if(success) {
+                        amount -= 1;
+                        if (amount==0) {dispose();}
+                    }
                     break;
                 case FUEL:
                     success = shop.buyFuel();
+                    if(success) {
+                        amount -= 1;
+                        if (amount==0) {dispose();}
+                    }
                     break;
                 case HP:
                     success = shop.buyHP(amount);
                     break;
             }
-        if(success) {
-            dispose();
-        }
     }
 }

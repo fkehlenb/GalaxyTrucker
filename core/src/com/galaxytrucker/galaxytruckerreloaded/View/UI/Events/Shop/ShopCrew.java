@@ -34,7 +34,7 @@ public class ShopCrew extends CurrentShopUI {
     public ShopCrew(Main main, Stage stage, GamePlay game, Trader trader, ShopUI shopUI, float x, float y){
         super(main, stage, game,trader,shopUI, x, y);
         elements = new ArrayList<>();
-        float dist = 40;
+        float dist = main.HEIGHT/27;
         //crew stock
         int i = 0;
         Texture t = new Texture("crew/"+ ClientControllerCommunicator.getInstance(null).getClientShip().getShipType().toString().toLowerCase()+".png");
