@@ -78,8 +78,8 @@ public class Main extends Game {
     /**
      * start a server, if there isnt one
      */
-    public void startServer() {
-        Server.getInstance();
+    public void startServer(String address,int port) {
+        Server.getInstance(address,port);
         host = true;
     }
 

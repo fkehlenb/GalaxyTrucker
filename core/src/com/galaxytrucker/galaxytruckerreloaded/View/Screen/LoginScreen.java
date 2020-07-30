@@ -120,7 +120,7 @@ public class LoginScreen extends MenuScreen {
         String name = username.getText();
 
         if(!main.isMultiplayer()) {
-            main.startServer();
+            main.startServer("localhost",5050);
             main.startClient("localhost", 5050);
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0); //ShipType sowieso irrelevant, da kein neues schiff erstellt wird
             if(success) {

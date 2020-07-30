@@ -262,7 +262,6 @@ public class ClientHandler implements Runnable {
                 try {
                     serverServiceCommunicator.logoutAfterException(username);
                     clientSocket.close();
-                    Server.getInstance().killServer();
                 } catch (Exception f) {
                     f.printStackTrace();
                 }

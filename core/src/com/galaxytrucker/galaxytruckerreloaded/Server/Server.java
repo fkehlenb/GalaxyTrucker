@@ -21,9 +21,9 @@ public class Server implements Runnable{
     private static Server instance = null;
 
     /** Get the instance */
-    public static Server getInstance(){
+    public static Server getInstance(String address,int port){
         if (instance == null){
-            Server.runServer();
+            Server.runServer(address,port);
         }
         return instance;
     }
@@ -41,13 +41,18 @@ public class Server implements Runnable{
     /** Server port */
     private int port;
 
+    /** Server address */
+    @Setter
+    private String address;
+
     /** Is the server running? */
     private boolean running = true;
 
     /** Run the server (USE THIS) */
-    public static void runServer(){
+    public static void runServer(String address,int port){
         instance = new Server();
-        instance.setPort(5050);
+        instance.setPort(port);
+        instance.setAddress(address);
         instance.serverServiceCommunicator = ServerServiceCommunicator.getInstance();
         new Thread(instance).start();
         try {
@@ -81,9 +86,9 @@ public class Server implements Runnable{
 
     /** Start server on specified port
      * @param port - the port to bind */
-    private void bindPort(int port) {
+    private void bindPort(int port,String address) {
         try {
-            this.serverSocket = new ServerSocket(port, 0, InetAddress.getLoopbackAddress());
+            this.serverSocket = new ServerSocket(port, 0, InetAddress.getByName(address));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -116,7 +121,7 @@ public class Server implements Runnable{
         synchronized (this){
             this.serverThread = Thread.currentThread();
         }
-        bindPort(this.port);
+        bindPort(this.port,this.address);
         System.out.println("Server initialized on " + serverSocket.getInetAddress().getHostAddress() + ":" + this.port + ", listening for connections...");
         while (isRunning()){
             Socket clientSocket = null;

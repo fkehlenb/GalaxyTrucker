@@ -129,7 +129,7 @@ public class ShipSelector extends MenuScreen {
      */
     public void startGame() {
         if(!main.isMultiplayer()) {
-            main.startServer();
+            main.startServer("localhost",5050);
             main.startClient("localhost",5050);
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(username.getText(), ship, difficulty);
             if(success) {
