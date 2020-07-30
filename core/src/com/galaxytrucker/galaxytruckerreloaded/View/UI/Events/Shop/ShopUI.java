@@ -209,6 +209,10 @@ public class ShopUI {
         return game.buySystem(trader, type);
     }
 
+    boolean upgradeSystem(SystemType type){
+        return game.upgradeSystem(trader, type);
+    }
+
     /**TODO put into SubUIs
      * remove a buyable element
      */

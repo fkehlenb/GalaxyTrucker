@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -742,10 +743,24 @@ public class GamePlay implements Screen {
         //TODO: welcher Controller?!
         SystemController systemController = SystemController.getInstance(null);
         boolean succsess = systemController.installSystem(type);
-            if(succsess){
-               player.changeAmountScrap(5);
-            }
+        if(succsess){
+            player.changeAmountScrap(5);
+        }
         return succsess;
+    }
+
+    public boolean upgradeSystem(Trader trader, SystemType type){
+        SystemController systemController = SystemController.getInstance(null);
+        for(Room r: ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()){
+            if(r.isSystem() && ((System) r).getSystemType() == type){
+                boolean succsess = systemController.upgradeSystem((System) r);
+                if(succsess){
+                    player.changeAmountScrap(3);
+                    return succsess;
+                }
+            }
+        }
+        return false;
     }
 
     /**
