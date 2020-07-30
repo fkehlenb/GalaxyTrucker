@@ -315,9 +315,11 @@ public class GamePlay implements Screen {
         if(exploding) {
             stateTime += delta;
             TextureRegion currentFrame = explosion.getKeyFrame(stateTime, false);
+            AudioController.getInstance().playExplosionSound(Gdx.files.internal("Sounds/Sounds/bp_explosion_large_3.ogg"));
             main.batch.begin();
             main.batch.draw(currentFrame, explosionX, explosionY);
             main.batch.end();
+
             if(explosion.isAnimationFinished(stateTime)) {
                 exploding = false;
             }
