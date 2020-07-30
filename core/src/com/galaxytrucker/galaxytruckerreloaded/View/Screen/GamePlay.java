@@ -492,7 +492,7 @@ public class GamePlay implements Screen {
         if(shopUI == null) {
             Stage shopStage = new Stage(viewport);
             Gdx.input.setInputProcessor(shopStage);
-            shopUI = new ShopUI(main, shopStage, this, trader);
+            shopUI = new ShopUI(main, shopStage, this, trader, font25);
         }
     }
 
@@ -513,7 +513,13 @@ public class GamePlay implements Screen {
         TraderController tc = TraderController.getInstance(null);
         boolean success = tc.purchaseWeapon(trader, weapon);
         if(success) {
-            player.changeAmountScrap(-(weapon.getPrice().get(weapon.getWeaponLevel())));
+            int price = weapon.getWeaponPrice();
+            for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
+            {
+                price += weapon.getPrice().get(lvl);
+            }
+
+            player.changeAmountScrap(-price);
         }
         return success;
     }
