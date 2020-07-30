@@ -6,9 +6,13 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.UserService;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.ShopBuyButton;
+import lombok.Getter;
+import lombok.Setter;
 
 public class ShopElement {
 
@@ -52,6 +56,8 @@ public class ShopElement {
     /**
      * the amount, if this is fuel, hp or missiles
      */
+    @Getter
+    @Setter
     private int amount;
 
     /**
@@ -97,7 +103,9 @@ public class ShopElement {
         stage.addActor(button);
         switch (type){
             case HP:
-                price = 2;
+                price = 2*amount;
+                stockTag = new GlyphLayout();
+                stockTag.setText(font, Integer.toString(amount));
                 break;
             case FUEL:
                 price = 3;
@@ -137,9 +145,10 @@ public class ShopElement {
         main.batch.begin();
         //main.batch.draw(texture, x, y, 300, 300); //TODO whxy
         font.draw(main.batch, priceTag, x + main.WIDTH/12, y + + texture.getHeight() + priceTag.height/2);
+
         if (stockTag!=null)
         {
-            priceTag.setText(font, Integer.toString(price)+" coins");
+            stockTag.setText(font, Integer.toString(amount));
             font.draw(main.batch, stockTag, x + main.WIDTH/32, y  + texture.getHeight() + stockTag.height/2);
         }
         //main.batch.draw(new Texture("yes.png"),x,y);
@@ -155,7 +164,8 @@ public class ShopElement {
         priceTag.setText(font, "");
         if (stockTag!=null)
         {
-            stockTag.setText(font, "");
+            //stockTag.setText(font, "");
+            stockTag=null;
         }
         button.remove();
     }
@@ -194,7 +204,11 @@ public class ShopElement {
                     break;
                 case HP:
                     success = shop.buyHP(amount);
+                    if(success) {
+                        dispose();
+                    }
                     break;
             }
+
     }
 }
