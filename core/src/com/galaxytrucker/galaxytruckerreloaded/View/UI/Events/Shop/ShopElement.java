@@ -201,6 +201,8 @@ public class ShopElement {
                 case SYSTEM:
                     success = shop.buySystem(system.getSystemType());
                     break;
+                case UPGRADES:
+                    success = shop.upgradeSystem(system.getSystemType());
             }
     }
 }

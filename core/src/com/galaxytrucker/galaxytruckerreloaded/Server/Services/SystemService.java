@@ -225,6 +225,7 @@ public class SystemService {
                                 if (ship.getCoins() >= 15) {
                                     ship.setCoins(ship.getCoins() - 15);
                                     system.setMaxEnergy(system.getMaxEnergy() + 1);
+                                    system.setEnergy(system.getMaxEnergy());
                                 } else {
                                     return responseObject;
                                 }
@@ -233,12 +234,15 @@ public class SystemService {
                                 if (ship.getCoins() >= 25) {
                                     ship.setCoins(ship.getCoins() - 25);
                                     system.setMaxEnergy(system.getMaxEnergy() + 1);
+                                    system.setEnergy(system.getMaxEnergy());
                                 } else {
                                     return responseObject;
                                 }
+                                break;
                             default:
                                 return responseObject;
                         }
+                        break;
                     case WEAPON_SYSTEM:
                         switch (system.getMaxEnergy()) {
                             case 1: // First upgrade
@@ -300,12 +304,14 @@ public class SystemService {
                             default:
                                 return responseObject;
                         }
+                        break;
                     case CAMERAS:
                         switch (system.getMaxEnergy()) {
                             case 1: // First upgrade
                                 if (ship.getCoins() >= 35) {
                                     ship.setCoins(ship.getCoins() - 35);
                                     system.setMaxEnergy(system.getMaxEnergy() + 1);
+                                    system.setEnergy(system.getMaxEnergy());
                                 } else {
                                     return responseObject;
                                 }
@@ -314,6 +320,7 @@ public class SystemService {
                                 if (ship.getCoins() >= 40) {
                                     ship.setCoins(ship.getCoins() - 40);
                                     system.setMaxEnergy(system.getMaxEnergy() + 1);
+                                    system.setEnergy(system.getMaxEnergy());
                                 } else {
                                     return responseObject;
                                 }
@@ -321,6 +328,7 @@ public class SystemService {
                             default:
                                 return responseObject;
                         }
+                        break;
                     case SHIELDS:
                         switch (system.getMaxEnergy()) {
                             case 1: // First upgrade is free
@@ -377,6 +385,7 @@ public class SystemService {
                             default:
                                 return responseObject;
                         }
+                        break;
                     case ENGINE:
                         switch (system.getMaxEnergy()) {
                             case 1: // First upgrade
@@ -438,6 +447,7 @@ public class SystemService {
                             default:
                                 return responseObject;
                         }
+                        break;
                     case O2:
                         switch (system.getMaxEnergy()) {
                             case 1: // First upgrade
@@ -459,6 +469,7 @@ public class SystemService {
                             default:
                                 return responseObject;
                         }
+                        break;
                     case MEDBAY:
                         switch (system.getMaxEnergy()) {
                             case 1: // First upgrade
@@ -480,6 +491,7 @@ public class SystemService {
                             default:
                                 return responseObject;
                         }
+                        break;
                 }
                 for (Room r : ship.getSystems()){
                     roomDAO.update(r);

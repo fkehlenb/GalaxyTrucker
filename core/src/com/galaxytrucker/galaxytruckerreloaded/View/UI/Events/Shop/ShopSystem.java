@@ -29,27 +29,30 @@ public class ShopSystem extends CurrentShopUI {
         for(Room r: ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()){
             Texture t;
             System s;
-            if(r.isSystem() && ((System) r).getSystemType()  != SystemType.SHIELDS){
+            if(r.isSystem() && ((System) r).getSystemType()  == SystemType.SHIELDS && !((System) r).isUnlocked()){
                 t = new Texture("shipsys/shields/shieldsoverlay.png");
                 s = (System) r;
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.SYSTEM));
+                i++;
             }
-            else if(r.isSystem() && ((System) r).getSystemType() != SystemType.CAMERAS){
+            else if(r.isSystem() && ((System) r).getSystemType() == SystemType.CAMERAS && !((System) r).isUnlocked()){
                 t = new Texture("shipsys/cameras/camerasoverlay.png");
                 s = (System) r;
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.SYSTEM));
+                i++;
             }
-            else if(r.isSystem() && ((System) r).getSystemType() != SystemType.MEDBAY){
+            else if(r.isSystem() && ((System) r).getSystemType() == SystemType.MEDBAY && !((System) r).isUnlocked()){
                 t = new Texture("shipsys/medbay/medbayoverlay.png");
                 s = (System) r;
+                elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.SYSTEM));
+                i++;
             }
-            else{
-                 return;
 
-            }
-            elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.SYSTEM));
-            i++;
         }
 
-}
+    }
+
+
 
     @Override
     public void render() {
