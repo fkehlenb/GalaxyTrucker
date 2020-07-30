@@ -315,7 +315,7 @@ public class GamePlay implements Screen {
         if(exploding) {
             stateTime += delta;
             TextureRegion currentFrame = explosion.getKeyFrame(stateTime, false);
-            AudioController.getInstance().playExplosionSound(Gdx.files.internal("Sounds/Sounds/bp_explosion_large_3.ogg"));
+
             main.batch.begin();
             main.batch.draw(currentFrame, explosionX, explosionY);
             main.batch.end();
@@ -402,6 +402,7 @@ public class GamePlay implements Screen {
      */
     private void explodeShipAnimation(float x, float y) {
         createExplosion();
+        AudioController.getInstance().playExplosionSound(Gdx.files.internal("Sounds/Sounds/bp_explosion_large_3.ogg"));
         explosionX = x-explosionSheet.getWidth()/10f/2;
         explosionY = y-explosionSheet.getHeight()/2f;
         exploding = true;

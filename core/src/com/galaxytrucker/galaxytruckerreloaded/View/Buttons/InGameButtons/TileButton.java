@@ -30,7 +30,7 @@ public class TileButton extends ImButton {
      * @param ui ui this button is on
      */
     public TileButton(float x, float y, float width, float height, RoomUI ui) {
-        super(new Texture("ship/tile.png"), new Texture("ship/tile.png"), new Texture("ship/tilebreach.png"), x, y, width, height);
+        super(new Texture("ship/tile.png"), new Texture("ship/tile.png"), new Texture("ship/tileCross.png"), x, y, width, height);
         this.ui = ui;
 
         this.addListener(new ClickListener() {
