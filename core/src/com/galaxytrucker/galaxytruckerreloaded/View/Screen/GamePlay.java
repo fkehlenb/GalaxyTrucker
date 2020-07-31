@@ -477,17 +477,23 @@ public class GamePlay implements Screen {
                 battleController.setOpponent(planet.getShips().get(0));
                 createEnemy();
                 createRoundButton();
-                disposeShopButton();
+                if(openShopButton != null) {
+                    disposeShopButton();
+                }
             }
             else if(PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.NEBULA || PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.METEORSHOWER){
                 background = new Texture(PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture());
                 planetTexture = null;
-                disposeShopButton();
+                if(openShopButton != null) {
+                    disposeShopButton();
+                }
             }
             else{
                 background = new Texture("1080p.png");
                 planetTexture = getPlanetTexture();
-                disposeShopButton();
+                if(openShopButton != null) {
+                    disposeShopButton();
+                }
             }
         }
         return success;
