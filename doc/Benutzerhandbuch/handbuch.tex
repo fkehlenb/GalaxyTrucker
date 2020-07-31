@@ -1,8 +1,10 @@
-\documentclass{book}
+\documentclass[fontsize=12pt,paper=a4,twoside]{scrartcl}
 
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage[ngerman]{babel}
+
+\input{swp-preamble.tex}
 
 \begin{document}
 
@@ -11,7 +13,7 @@
 \newpage
 
 % ==================== Installation ====================
-\setcounter{chapter}{1}
+%\setcounter{chapter}{1}
 
 \section{Installation}
 
@@ -143,6 +145,96 @@ Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick
 
 % ==================== The Application ==================== 
 
+\section{Menüs}
+
+\subsection{Hauptmenü}
+
+\subsubsection{Multiplayer}
+
+\subsection{Optionen}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Das Spiel}
+
+%allgemeine Erklärung was alles ist
+
+\subsection{Schiff Interface}
+
+%nähere Erklärungen zu allen Punkten
+
+\subsubsection{Energiemanagement}
+
+\subsubsection{Schiffinformationen}
+
+\subsubsection{Waffen}
+
+
+\subsection{Inventar (Ship)}
+
+
+\subsection{Karte (Jump)}
+
+Das Kartenfenster wird im Spiel mit einem Klick auf den Jump-Button geöffnet. 
+{
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Karte/karteübersicht.png}
+}
+-----HIER ZAHLEN EINFÜGEN, Textur der Map verändern-----
+
+Das kleine Schiff (1) Zeigt dem Spieler immer an, auf welchem Planeten er sich gerade Befindet. Hier in dem Beispiel befindet der Spieler sich auf dem Startplaneten. 
+
+Die eingekreisten Punkte (2) sind Planeten, welche das während des Spiels existieren. Bei jedem neu erstellten Spiel wird eine zufällig generierte, einzigartige Karte mit Events auf jedem Planeten erstellt erstellt. 
+
+Das rot hinterlegte Raumschiff (3) ist der Endboss des Spiels. 
+
+\subsubsection{Planeten}
+
+\paragraph{Startplanet: }
+Der Startplanet existiert auf jeder Map nur einmal. Hier gibt es kein Event. Dieser Planet dient dazu, dass man in Ruhe am Anfang des Spiels sich seine Ausrüstung erstmal anschauen kann. 
+
+\paragraph{Normale Planeten: }
+Die normalen Planeten sind eine Zufällig generierte Anzahl an Planeten, auf denen Zufällig eins aus 6 Events auftritt:
+
+\subparagraph{Kein Event} Hier Kann es zu einem Zufälligen Geschenk kommen, welches dem Inventar hinzugefügt wird. 
+\subparagraph{Nebel} Hier kann es zufällige Geschenke geben, die dem Spieler zugeschrieben werden.
+\subparagraph{Meteoritenfeld} Hier kann es zu Schäden am Schiff kommen, welche dem Spieler mit Verlust zufälliger Resourcen kenntlich gemacht wird. Es ist außerdem möglich, Zufällige Resourcen zu finden (Geschenk).
+\subparagraph{Gegnerisches Schiff} Hier kann man ein zufälliges Geschenk erhalten. Hier wird ein gegnerisches Schiff angezeigt, welches im folgenden Bekämpft werden muss (Siehe Kampf). Die normalen Gegner haben immer die gleichen Stats und Waffen, welche der Grundausstattung der Schiffe entspricht, aus denen der Spieler auch auswählen kann. Beim Gewinnen bekommt der Spieler eine zufällige Auswahl an Sachen geschenkt. 
+\subparagraph{Gegnerisches Schiff (Miniboss)} Das Miniboss Planetevent gleicht dem normalen Gegnerischen Schiff Event, nur dass der Gegner an die Stats des Spielers angepasst wird. Er bekommt ähnlich gute Waffen und ein ähnlich hohes leben, sodass das Besiegen schwerer ist. Beim Gewinnen bekommt der Spieler eine zufällige Auswahl an Sachen geschenkt. 
+\subparagraph{Shop} Beim Shop ist es dem Spieler möglich, Ausrüstung zu kaufen oder zu verkaufen. (Siehe Kapitel Shop)
+
+\subsubsection{Symbole}
+
+
+\subsection{Shop}
+
+
+\subsection{Kämpfe}
+
+\subsubsection{Erklärung}
+
+\subsubsection{Mögliche Taktiken}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
