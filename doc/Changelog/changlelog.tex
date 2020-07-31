@@ -321,4 +321,285 @@
 \item Added constructor taking in a variable of type ClientControllerCommunicator
 \end{itemize}
 
+% ========== PACKAGE Model ==========
+
+\section{Package Model}
+
+\textbf{Added:}
+\begin{itemize}
+\item Added enum CrewStat
+\item Added enum ShipType
+\item Added enum SystemType
+\item Added enum WeaponType
+\end{itemize}
+
+\textbf{Removed:}
+\begin{itemize}
+\item Removed class LaserBlaster
+\item Removed class HealBomb
+\item Removed class Bomb
+\item Removed class RadiationBomb
+\item Removed class Radio
+\item Removed class Rocket
+\item Removed class WeaponSystem
+\item Removed class Shield
+\item Removed class Engine
+\item Removed class BlankRoom
+\end{itemize}
+
+% ========== CLASS Crew  ==========
+
+\subsection{Class Crew:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable id of type int
+\item Variable name of type String
+\item Variable health of type int
+\item Variable maxHealth of type int
+\item Variable associatedUser of type String
+\end{itemize}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Changed type of variable stats to List$<$Integer$>$
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable tile of type Tile
+\item Variable price of type int
+\item Variable justMoved of type boolean
+\end{itemize}
+
+% ========== CLASS Overworld  ==========
+
+\subsection{Class Overworld:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable id of type int
+\item Variable associatedUser of type String
+\end{itemize}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Changed type of variable planetMap to List$<$Planet$>$
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable seed of type int
+\item Added variable difficulty of type int
+\item Added variable startPlanet of type Planet
+\item Added variable bossPlanet of type Planet
+\end{itemize}
+
+% ========== CLASS Planet  ==========
+
+\subsection{Class Planet:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable name of type String
+\item Variable posX of type float
+\item Variable posY of type float
+\item Variable discovered of type boolean
+\end{itemize}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Changed type of variable event to PlanetEvent
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable id of type int
+\item Added variable ships of type List$<$Ship$>$
+\item Added variable trader of type Trader
+\item Added variable planetTexture of type String
+\item Added variable looted of type boolean
+\end{itemize}
+
+% ========== CLASS Trader  ==========
+
+\subsection{Class Trader:}
+
+\textbf{Removed extention from Planet}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable planet of type Planet
+\item variable weaponStock of type List$<$Weapon$>$
+\item Variable missleStock of type int
+\item Variable fuelStock of type int
+\item Variable crewStock of type List$<$Crew$>$
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable id of type int
+\item Added variable hpStock of type int
+\end{itemize}
+
+% ========== CLASS Room  ==========
+
+\subsection{Class Room:}
+
+\textbf{Removed abstract attribute}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable breach of type int
+\item Variable oxygen of type int
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Variable height of type int
+\item Variable width of type int
+\item Variable posX of type int
+\item Variable posY of type int
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable id of type int
+\item Added variable interiorID of type int
+\item Added variable crew of type List$<$Crew$>$
+\item Added variable tiles of type List$<$Tile$>$
+\item Added variable isSystem of type boolean 
+\end{itemize}
+
+% ========== CLASS System  ==========
+
+\subsection{Class System:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable energy of type int
+\item Variable maxEnergy of type int
+\item Variable damage of type int
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable disabled of type boolean
+\item Variable manned of type boolean
+\item Variable systemType of type SystemType
+\item Variable shipWeapons of type List$<$Weapon$>$
+\item Variable unlocked of type boolean
+\end{itemize}
+
+% ========== CLASS Tile  ==========
+
+\subsection{Class Tile:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable id of type int
+\item Added variable posX of type int
+\item Added variable posY of type int
+\item Added variable standingOnMe of type Crew
+\item Added method isEmpty of type boolean
+\end{itemize}
+
+% ========== CLASS Weapon  ==========
+
+\subsection{Class Weapon:}
+
+\textbf{Removed abstract attribute}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable id of type int
+\item Variable weaponLevel of type int
+\item Variable damage of type int
+\item Variable cooldown of type int
+\item Variable energy of type int
+\item Variable missleCost of type int
+\item Variable dropChance of type float
+\item Variable shieldPiercing of type int
+\item Variable breachChance of type float
+\item Variable crewDamage of type int
+\item Variable burst of type int
+\end{itemize}
+
+\subsubsection{Renamed:}
+\begin{itemize}
+\item variable precision renamed to accuracy
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable weaponType of type WeaponType
+\item Added variable price of type List$<$Integer$>$
+\item Added variable weaponSystem of type System
+\item Added variable weaponName of type String
+\item Added variable weaponPrice of type int
+\item Added variable currentCooldown of type int
+\end{itemize}
+
+% ========== CLASS Ship  ==========
+
+\subsection{Class Ship:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable associatedUser of type String
+\item Variable hp of type int
+\item Variable coins of type nt
+\item Variable missles of type int
+\item Variable fuel of type int
+\item Variable energy of type int
+\item Variable shieldCharge of type int
+\item Variable maxShieldCharge of type int
+\item Variable evasionChance of type float
+\item Variable shields of type int
+\item Variable FTLCharge of type int
+\item Variable inventory of type List$<$Weapon$>$
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable id of type int
+\item Added variable shipType of type ShipType
+\item Added variable planet of type Planet
+\item Added variable systems of type List$<$Room$>$
+\item Added variable inCombat of type boolean
+\item Added variable firstCombat of type boolean
+\item Added variable playingPVP of type boolean
+\item Added variable invitedToPVP of type boolean
+\end{itemize}
+
+% ========== CLASS User  ==========
+
+\subsection{Class User:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Variable username of type String
+\item Variable userShip of type Ship
+\end{itemize}
+
+\subsubsection{Renamed:}
+\begin{itemize}
+\item Renamed loggedin variable to loggedIn
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable id
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable overworld of type Overworld
+\item Added variable firstGame of type boolean
+\end{itemize}
+
+
+
+
+
 \end{document}
