@@ -22,6 +22,9 @@ public class AudioController extends Controller /**implements Audio*/ {
 
     private static AudioController singleton;
 
+    boolean soundVolume = true;
+
+
 
     /**
      * return the instance of this singleton
@@ -46,16 +49,24 @@ public class AudioController extends Controller /**implements Audio*/ {
     }
 
     public void playExplosionSound(FileHandle file){
-            sound = Gdx.audio.newSound(file);
+        if(soundVolume){
+        sound = Gdx.audio.newSound(file);
             long soundID = sound.play();
-            sound.setVolume(soundID,0.9f);
+            sound.setVolume(soundID,0.4f);
+        }
+        else{
+
+        }
+
     }
 
     public void play(){
         music.play();
+        soundVolume = true;
     }
     public void mute(){
         music.stop();
+        soundVolume = false;
     }
 
     public void volumeUp(){
