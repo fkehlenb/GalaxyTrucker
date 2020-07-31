@@ -7,6 +7,8 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateTraderException;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.TraderNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.TraderDAO;
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,17 +38,50 @@ public class TraderDAOTest {
      */
     @Test
     public void testPersist() {
-        Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>(),"map/planets/1.png"), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
+        Trader trader = new Trader();
+        trader.setId(UUID.randomUUID().hashCode());
+        trader.setHpStock(666);
         try {
             traderDAO.persist(trader);
             entityManager.getTransaction().begin();
             Trader trader1 = entityManager.find(Trader.class, trader.getId());
             entityManager.getTransaction().commit();
-            Assert.assertEquals(trader1.getId(), trader.getId());
+            Assert.assertEquals(trader1.getHpStock(), 666);
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * test persisting already exiting trader
+     */
+    @Test
+    public void testPersistDuplicates() {
+        Trader trader = new Trader();
+        trader.setId(5);
+        trader.setHpStock(42);
+        trader.setFuelStock(42);
+        try {
+            traderDAO.persist(trader);
+        }
+        catch(DuplicateTraderException e) {
+            Assert.fail();
+        }
+
+        Trader trader1 = new Trader();
+        trader1.setId(5);
+        trader1.setFuelStock(666);
+        trader1.setHpStock(666);
+        try {
+            traderDAO.persist(trader1);
+        }
+        catch(DuplicateTraderException e) {
+            entityManager.getTransaction().begin();
+            Trader trader2 = entityManager.find(Trader.class, trader1.getId());
+            entityManager.getTransaction().commit();
+            Assert.assertEquals(42, trader2.getHpStock());
+            Assert.assertEquals(42, trader2.getFuelStock());
         }
     }
 
@@ -55,8 +90,9 @@ public class TraderDAOTest {
      */
     @Test
     public void testEdit() {
-        Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>(),"map/planets/1.png"), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
+        Trader trader = new Trader();
+        trader.setId(UUID.randomUUID().hashCode());
+        trader.setFuelStock(666);
         try {
             traderDAO.persist(trader);
             entityManager.getTransaction().begin();
@@ -72,12 +108,22 @@ public class TraderDAOTest {
     }
 
     /**
+     * Test editing a non existing trader
+     */
+    @Test(expected = TraderNotFoundException.class)
+    public void testEditNonExisting() throws TraderNotFoundException{
+        Trader trader = new Trader();
+        trader.setId(1);
+        traderDAO.update(trader);
+    }
+
+    /**
      * Test removing an existing trader from the database
      */
     @Test
     public void testRemove() {
-        Trader trader = new Trader(UUID.randomUUID().hashCode(), new Planet(UUID.randomUUID().hashCode(),planetNameGenerator(), 10, 10,
-                PlanetEvent.SHOP, new ArrayList<Ship>(),"map/planets/1.png"), new ArrayList<Weapon>(), 0, 0, 0, new ArrayList<Crew>());
+        Trader trader = new Trader();
+        trader.setId(UUID.randomUUID().hashCode());
         try {
             traderDAO.persist(trader);
             traderDAO.remove(trader);
@@ -90,6 +136,16 @@ public class TraderDAOTest {
             e.printStackTrace();
             throw new IllegalArgumentException();
         }
+    }
+
+    /**
+     * test removing a non existing trader
+     */
+    @Test(expected = TraderNotFoundException.class)
+    public void testRemoveNonExisting() throws TraderNotFoundException {
+        Trader trader = new Trader();
+        trader.setId(2);
+        traderDAO.remove(trader);
     }
 
 
