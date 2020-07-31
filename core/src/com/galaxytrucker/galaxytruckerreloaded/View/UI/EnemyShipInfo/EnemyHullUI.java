@@ -69,7 +69,7 @@ public class EnemyHullUI {
      * dispose of the enemy hull UI
      */
     public void disposeEnemyHullUI() {
-        hullBackground.dispose();
+        //hullBackground.dispose();
         hullTexture.dispose();
     }
 }
