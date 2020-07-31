@@ -133,7 +133,7 @@ public class ShopSellElement {
      * sell a weapon
      */
     private boolean sellWeapon() {
-        return shop.sellWeapon(weapon);
+        return shop.sellWeapon(weapon, this);
     }
 
 }

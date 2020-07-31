@@ -170,7 +170,8 @@ public class ShopUI {
      * sell weapon to trader
      * @param weapon the weapon
      */
-    boolean sellWeapon(Weapon weapon) {
+    boolean sellWeapon(Weapon weapon, ShopSellElement element) {
+        ((ShopSell) current).removeSellElement(element);
         return game.sellWeapon(trader, weapon);
     }
 
