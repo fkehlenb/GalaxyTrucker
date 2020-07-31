@@ -181,11 +181,6 @@ public class ShopUI {
      */
     boolean buyCrew(Crew crew){return game.buyCrew(trader, crew);}
 
-    //TODO SellCrew???
-    boolean sellCrew(Crew crew){
-        return false;
-        //return game.sellCrew(crew);
-    }
 
     /**
      * Buy a Unit of Fuel from the Trader
