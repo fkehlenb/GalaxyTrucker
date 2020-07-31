@@ -64,7 +64,7 @@ public class HullUI {
             main.batch.draw(hullTexture, x, Main.HEIGHT - 83, 25, 25);
             x+=12;
         }
-        main.batch.draw(hullBackgroundTexture, 25, Main.HEIGHT - 112, 577, 97);
+        main.batch.draw(hullBackgroundTexture, 25, Main.HEIGHT - 112, 300, 97);
         main.batch.end();
     }
 

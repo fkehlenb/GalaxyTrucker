@@ -38,7 +38,7 @@ public class EnemyHullUI {
         this.amount = amount;
 
         hullTexture = new Texture("gameuis/hull.png");
-        hullBackground = new Texture("gameuis/enemyHull.png");
+        //hullBackground = new Texture("gameuis/enemyHull.png");
     }
 
     /**
@@ -49,11 +49,11 @@ public class EnemyHullUI {
         float x = 25;
         for(int i=0; i<=amount; i++) {
             //main.batch.draw(hullTexture, 138*Main.WIDTH/(200) + x, Main.HEIGHT - Main.HEIGHT/(11f), 15, 15);
-            main.batch.draw(hullTexture, 118*Main.WIDTH/(200f) + x, Main.HEIGHT - Main.HEIGHT/(11f), 15, 15);
+            main.batch.draw(hullTexture, 115*Main.WIDTH/(200f) + x, Main.HEIGHT - Main.HEIGHT/(11f), 15, 15);
             x+=12*0.6f;
         }
         //main.batch.draw(hullBackground, 14*Main.WIDTH/(20), Main.HEIGHT - Main.HEIGHT/(9f), Main.WIDTH/9.74f, Main.HEIGHT/16.61f);
-        main.batch.draw(hullBackground, 12*Main.WIDTH/(20f), Main.HEIGHT - Main.HEIGHT/(9f), Main.WIDTH/9.74f, Main.HEIGHT/16.61f);
+       // main.batch.draw(hullBackground, 12*Main.WIDTH/(20f), Main.HEIGHT - Main.HEIGHT/(9f), Main.WIDTH/9.74f, Main.HEIGHT/16.61f);
         main.batch.end();
     }
 
@@ -69,7 +69,7 @@ public class EnemyHullUI {
      * dispose of the enemy hull UI
      */
     public void disposeEnemyHullUI() {
-        hullBackground.dispose();
+        //hullBackground.dispose();
         hullTexture.dispose();
     }
 }
