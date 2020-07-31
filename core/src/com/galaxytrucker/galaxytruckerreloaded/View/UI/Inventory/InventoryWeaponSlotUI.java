@@ -22,6 +22,11 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
     /**
      * the glyph layout for damage
      */
+    private GlyphLayout glyphLVL = new GlyphLayout();
+
+    /**
+     * the glyph layout for damage
+     */
     private GlyphLayout glyphDamage = new GlyphLayout();
 
     /**
@@ -90,6 +95,7 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
         this.ui = ui;
         this.stage = stage;
 
+        glyphLVL.setText(font, "lvl "+weapon.getWeaponLevel());
         glyphDamage.setText(font, "Damage: "+weapon.getDamage());
         glyphCooldown.setText(font, "Cooldown: "+weapon.getCooldown());
         glyphMissile.setText(font, "Missile Cost: "+weapon.getMissileCost());
@@ -131,6 +137,7 @@ public class InventoryWeaponSlotUI extends InventorySlotUI {
      */
     public void render() {
         main.batch.begin();
+        font.draw(main.batch, glyphLVL, posX+Main.WIDTH/8.727f, posY + glyphLVL.height + Main.HEIGHT / 25f);
         font.draw(main.batch, glyphName, posX, posY + weaponTexture.getHeight() + Main.HEIGHT/76.8f);
         font.draw(main.batch, glyphBurst, posX+Main.WIDTH/26.67f, posY+Main.HEIGHT/32f);
         font.draw(main.batch, glyphCooldown, posX+Main.WIDTH/26.67f, posY+Main.HEIGHT/48f);

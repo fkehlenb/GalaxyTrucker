@@ -124,6 +124,8 @@ public class ShopElement {
                 {
                     price += weapon.getPrice().get(lvl);
                 }
+                stockTag = new GlyphLayout();
+                stockTag.setText(font, "lvl "+amount);
                 break;
             case CREW:
                 price = crew.getPrice();
@@ -147,12 +149,13 @@ public class ShopElement {
     public void render() {
         main.batch.begin();
         //main.batch.draw(texture, x, y, 300, 300); //TODO whxy
-        font.draw(main.batch, priceTag, x + main.WIDTH/12, y + + texture.getHeight() + priceTag.height/2);
+        font.draw(main.batch, priceTag, x + main.WIDTH/12, y + texture.getHeight() + priceTag.height/2);
 
         if (stockTag!=null)
         {
-            stockTag.setText(font, Integer.toString(amount));
-            font.draw(main.batch, stockTag, x + main.WIDTH/32, y  + texture.getHeight() + stockTag.height/2);
+            if (type != ShopElementType.WEAPON)
+            {stockTag.setText(font, Integer.toString(amount));}
+            font.draw(main.batch, stockTag, x - stockTag.width/2 + main.WIDTH/24, y  + texture.getHeight() + stockTag.height/2);
         }
         //main.batch.draw(new Texture("yes.png"),x,y);
         main.batch.end();
@@ -165,7 +168,7 @@ public class ShopElement {
     public void dispose() {
         //texture.dispose();
         priceTag.setText(font, "");
-        if (stockTag!=null)
+        if (stockTag != null)
         {
             //stockTag.setText(font, "");
             stockTag=null;

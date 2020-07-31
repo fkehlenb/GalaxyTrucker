@@ -627,7 +627,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 3,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 60, 11, 7, 2,
                         0, 0, 0, planet, 0, 100, rooms, inventory, false, false, false, false);
             // ========== ROCK A ==========
             case TANK: //-------done
@@ -741,7 +741,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 2,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 50, 10, 30, 4, 1,
                         0, 0, 0, planet, 0, 100, rooms, inventory, false, false, false, false);
             case KILLER: //-------done
                 crewStats = new ArrayList<>();
@@ -840,7 +840,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 25, 40, 0, 10, 5,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 25, 40, 0, 10, 3,
                         0, 0, 0, planet, 0, 100, rooms, inventory, false, false, false, false);
             case BARRAGE:
                 crewStats = new ArrayList<>();
@@ -966,7 +966,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 20, 10, 0, 3, 3,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 20, 10, 0, 3, 2,
                         0, 0, 0, planet, 0, 100, rooms, inventory, false, false, false, false);
             case STEALTH: //------------ done
                 crewStats = new ArrayList<>();
@@ -1081,7 +1081,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 100, 25, 25, 9,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 30, 100, 25, 25, 7,
                         0, 0, 0, planet, 0, 100, rooms, inventory, false, false, false, false);
             case BOARDER:
                 crewStats = new ArrayList<>();
@@ -1210,7 +1210,7 @@ public class ClientHandler implements Runnable {
                         rooms.add(room);
                     }
                 }
-                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 40, 10, 20, 7, 2,
+                return new Ship(UUID.randomUUID().hashCode(), username, shipType, 40, 10, 20, 7, 0,
                         0, 0, 0, planet, 0, 100, rooms, inventory, false, false, false, false);
             case DEATH_STAR:
                 Tile t = new Tile(UUID.randomUUID().hashCode(),0,0);

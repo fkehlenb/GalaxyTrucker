@@ -22,7 +22,7 @@ public class ShopWeapon extends CurrentShopUI {
         int i = 0;
         for(Weapon w : trader.getWeaponStock()) {
             String name = w.getWeaponType().toString();
-            elements.add(new ShopElement(main, stage, new Texture("shipsys/weapon_system/"+name.toLowerCase()+".png"), baseX, baseY+dist*i, shopUI, w, null, null, 0, ShopElementType.WEAPON));
+            elements.add(new ShopElement(main, stage, new Texture("shipsys/weapon_system/"+name.toLowerCase()+".png"), baseX, baseY+dist*i, shopUI, w, null, null, w.getWeaponLevel(), ShopElementType.WEAPON));
             i++;
         }
     }
