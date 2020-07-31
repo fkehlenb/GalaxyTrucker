@@ -91,6 +91,8 @@ public class ShopSellElement {
         price = weapon.getWeaponPrice();
             for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
             {
+
+                price += 1;
                 price += weapon.getPrice().get(lvl);
             }
         priceTag.setText(font, Integer.toString(price)+" coins");

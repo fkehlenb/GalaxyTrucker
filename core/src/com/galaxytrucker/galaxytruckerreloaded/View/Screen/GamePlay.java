@@ -814,7 +814,7 @@ public class GamePlay implements Screen {
         TraderController tc = TraderController.getInstance(null);
         boolean success = tc.sellWeapon(trader, weapon);
         if(success) {
-            player.changeAmountScrap(weapon.getPrice().get(weapon.getWeaponLevel()));
+            //player.changeAmountScrap(weapon.getPrice().get(weapon.getWeaponLevel()));
             player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
