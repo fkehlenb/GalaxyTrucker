@@ -477,14 +477,17 @@ public class GamePlay implements Screen {
                 battleController.setOpponent(planet.getShips().get(0));
                 createEnemy();
                 createRoundButton();
+                disposeShopButton();
             }
             else if(PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.NEBULA || PlanetEventController.getInstance(null).getClientShip().getPlanet().getEvent() == PlanetEvent.METEORSHOWER){
                 background = new Texture(PlanetEventController.getInstance(null).getClientShip().getPlanet().getPlanetTexture());
                 planetTexture = null;
+                disposeShopButton();
             }
             else{
                 background = new Texture("1080p.png");
                 planetTexture = getPlanetTexture();
+                disposeShopButton();
             }
         }
         return success;
@@ -526,8 +529,15 @@ public class GamePlay implements Screen {
      * create ShopButton
      */
     private void createShopButton(){
-        openShopButton = new OpenShopButton(Main.WIDTH/(2.5f), Main.HEIGHT -  (Main.HEIGHT/(8f)), 248, 50, this, PlanetEventController.getInstance(null).getClientShip().getPlanet().getTrader());
+        openShopButton = new OpenShopButton(Main.WIDTH/(2f),Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this, PlanetEventController.getInstance(null).getClientShip().getPlanet().getTrader());
         stage.addActor(openShopButton);
+    }
+
+    /**
+     * disposes shopButton
+     */
+    private void disposeShopButton(){
+        openShopButton.remove();
     }
 
     /**
