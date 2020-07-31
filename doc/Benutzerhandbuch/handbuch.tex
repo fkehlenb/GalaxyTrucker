@@ -76,6 +76,8 @@ Jetzt müssen sie nur noch ihre System PATH Variable bearbeiten um Java als Syst
 \includegraphics[width=\linewidth]{SystemVariables.JPG}
 \end{figure} 
 
+\textbf{(*) Für die Installation auf anderen Betriebssystemen, lesen sie bitte die Dokumentation auf der JDK Oracle Webseite.}
+
 % ==================== LINUX ====================
 % TODO ADD LINUX AND MACOS
 
@@ -95,6 +97,48 @@ Navigieren sie auf die Webseite https://gradle.org/install/ und scrollen sie run
 
 Extrahieren sie die heruntergeladene ZIP datei und kopieren sie den Pfad der bin datei in der Gradle datei, z.B. ''PFAD/gradle-6.4.1/bin'' und erstellen für diesen einen neuen Eintrag in der System Path Variable, siehe (*) bei der JDK Installation. Sie sollten nun die Möglichkeit haben in einem CMD oder Powershell fenster das Kommando ''gradle -version'' ausführen zu können.
 
+\textbf{(*) Für die Installation auf anderen Betriebssystemen, lesen sie bitte die Dokumentation auf der Gradle Webseite.}
+
+% ==================== JRE ====================
+
+\subsection{Java Installation (JRE)}
+
+Um das Programm ausführen zu können, werden sie eine normale Java Installation benötigen. Der Unterschied zwischen der JRE (Java Runtime Edition) und der JDK, ist das die JDK zur Entwicklung von Java Programmen gedacht ist, die JRE aber zur Ausführung dieser Programme benutzt wird. Um die neuste JRE zu installieren, navigieren sie einfach in ihrem Browser auf die Webseite https://www.java.com/download und laden sie sich Java herunter.(Clicken sie einfach immer auf weiter in der Installation)
+
+(*) Wenn sie möchten dass das Programm schneller läuft, so können sie dem mehr Arbeitsspeicher zur Verfügung stellen. Hierbei ist die 32 bit JRE allerdings auf 2GB beschränkt, also könnten sie sich gleich eine 64 bit JRE herunterladen.
+
 % ==================== Application Installation ==================== 
+
+\subsection{Installation der Software}
+
+Nachdem sie nun alle obigen Programme installiert haben, können sie nun endlich die Applikation selbst installieren. Navigieren sie hierzu bitte in den Ordner der Software (galaxytrucker in der Regel), öffnen sie eine Konsole ihrer Wahl und führen sie das Kommando ''gradle clean desktop:dist'' aus. Sollte ihre Gradle Version hiermit Probleme haben, so können sie auch den Projekt begleitendem gradlew File benutzen, indem sie stattdessen das Kommando ''.\textbackslash gradlew clean desktop:dist'' ausführen. (Unter Windows funktioniert letzteres nur in Powershell und nicht in CMD)  
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{command.JPG}
+\end{figure} 
+\textbf{Der Gradle Build wird zwar ganz viele Warnungen geben, dieses liegt allerdings da dran das Gradle nicht versteht wozu die @NonNull tags gedacht sind, also ignorieren sie diese.}
+
+Nachdem sie die Nachricht ''BUILD SUCCESSFUL'' bekommen, können sie die Programmdatei im Unterordner ''desktop$\rightarrow$build$\rightarrow$libs'' finden. Es wird eine Datei vom Format JAR sein und wahrscheinlich den Namen ''desktop-1.0.jar'' haben.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{gradle_build.JPG}
+\end{figure} 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{application.JPG}
+\end{figure} 
+
+% ==================== Running Application ==================== 
+
+\subsection{Programmausführung}
+
+Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick direkt ausführen, oder, wenn sie dem Programm mehr Arbeitsspeicher zur Verfügung stellen wollen (damit es schneller läuft), dieses mit dem Kommando ''java -Xms1G -Xmx4G -jar .\textbackslash desktop-1.0,jar'' starten. Letzteres wird dem Programm mindestens 1 GB Arbeitsspeicher  (Xms steht für Minimum) und bis zu maximal 4 GB Arbeitsspeicher yur Verfügung stellen (Xmx steht für Maximum).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\linewidth]{run_application.JPG}
+\end{figure} 
 
 \end{document}
