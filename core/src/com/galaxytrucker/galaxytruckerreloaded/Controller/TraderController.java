@@ -25,8 +25,10 @@ public class TraderController extends Controller{
     @NonNull
     private ClientControllerCommunicator clientControllerCommunicator;
 
+    /** Instance */
     private static TraderController singleton;
 
+    /** Get instance */
     public static TraderController getInstance(ClientControllerCommunicator communicator) {
         if(singleton == null) {
             singleton = new TraderController(communicator);

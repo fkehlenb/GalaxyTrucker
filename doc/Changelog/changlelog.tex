@@ -1,0 +1,324 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[ngerman]{babel}
+
+\begin{document}
+
+\textbf{Changelog}
+
+% ========== PACKAGE COMMUNICATION ==========
+
+\section{Package Communication}
+
+% ========== CLASS CLIENT ==========
+
+\subsection{Class Client}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Method sendAndReceive signature changed to take in a variable of type RequestObject and return ResponseObject
+\item Constructor changed to take in a String ipAddress and an int port
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Variable clientControllerCummunicator of type ClientControllerCommunicator
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable send of type PrintWriter
+\item Variable receive of type BufferedReader
+\item Variable sendObject of type ObjectOutputStream
+\item Variable receiveObject of type ObjectInputStream
+\item Variable myShip of type Ship
+\item Variable overworld of type Overworld
+\item Variable shipType of type Enum$<$ShipType$>$
+\item Method login with signature taking in variables String username, ShipType shipType and int difficulty and returning a boolean
+\end{itemize}
+
+\subsection{Unchanged:}
+\begin{itemize}
+\item variable socket of type Socket
+\end{itemize}
+
+% ========== CLASS CLIENT_CONTROLLER_COMMUNICATOR ==========
+
+\subsection{Class ClientControllerCommunicator}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Changed signature of method sendRequest to take in a RequestObject and return a ResponseObject
+\item Changed signature of method login to take additional variables ship of type Ship and difficulty of type int
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable currentPlanet of type Planet
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Method logout of tyoe boolean
+\item Static method getInstance taking in a variable of type Client and returning type ClientControllerCommunicator
+\item Added static variable singleton of type ClientControllerCommunicator 
+\end{itemize}
+
+% ========== PACKAGE CONTROLLER ==========
+
+\section{Package Controller}
+
+\textbf{Added Classes:}
+\begin{itemize}
+\item Class AudioController
+\item Class PlanetEventController
+\item Class PlanetRewardController
+\item Class PVPController
+\item VideoController
+\item WeaponController
+\end{itemize}
+
+\textbf{Removed Classes:}
+\begin{itemize}
+\item Class HangarController
+\end{itemize}
+
+% ========== CLASS AudioController  ==========
+
+\subsection{Class AudioController:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable sound of type com.badlogic.gdx.audio.Sound
+\item Variable music of type com.badlogic.gdx.audio.Music
+\item Static variable instance of type AudioController
+\item Static method getInstance of type AudioController
+\item Method setMusic taking in a variable of type FileHandle and returning a void type
+\item Method playExplosionSound taking in a variable of type FileHandle and returning void
+\item Method play of type void
+\item Method mute of type void
+\item Method volumeUp of type void
+\item Method volumeDown of type void
+\end{itemize}
+
+% ========== CLASS AudioController  ==========
+
+\subsection{Class BattleController:}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Signature of method attack changed to take in variable of type Weapon and variable of type Room
+\item Signature of method fleeFight changed to take in variable of type Planet
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Method heal removed
+\item Variable myself removed
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable opponent of type Ship added
+\item Static variable battleController of type BattleController added
+\item Variable clientControllerCommunicator of type ClientControllerCommunicator added
+\item Variable previousResponse of type ResponseObject added
+\item Variable previousRoundActions of type List$<$PreviousRoundAction$>$ added
+\item Variable previousWeaponsUsed of type List$<$WeaponType$>$ added
+\item Method combatOver of type boolean added
+\item Method combatWon of type boolean added
+\item Method getPreviousRoundActions of type List$<$PreviousRoundActions$>$ added
+\item Method getPreviousRoundWeapons of type List$<$WeaponType$>$ added
+\item Method playMoves of type boolean added
+\item Method fetchUpdatedData of type boolean added
+\item Method fetchOpponentAfterRelog of type boolean added
+\item Method youDead of type boolean added
+\item Constructor added taking in a variable of type ClientControllerCommunicator
+\end{itemize}
+
+% ========== CLASS CrewController  ==========
+
+\subsection{Class CrewController:}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Signature of method moveCrewToRoom changed to return a boolean
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Variable myself of type Ship
+\item Method healCrewMember
+\item Method healCrewInRoom
+\item Method damageCrew
+\item Method fixSystem
+\item Method repairSystem
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Static variable singleton of type clientControllerCommunicator
+\item Static method getInstance taking in a variable of type ClientControllerCommunicator and returning type CrewController
+\item Contructor taking in a variable of type ClientControllerCommunicator
+\end{itemize}
+
+% ========== CLASS PlanetEventController  ==========
+
+\subsection{Class PlanetEventController:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable clientControllerCommunicator of type ClientControllerCommunicator
+\item Static variable instance of type PlanetEventController
+\item Static method getInstance taking in a variable of type ClientControllerCommunicator and returning type PlanetEventController
+\item Method getPlanetEvent of type PlanetEvent
+\item Method getClientShip of type Ship
+\item Constructor taking in a variable of type ClientControllerCommunicator
+\end{itemize}
+
+% ========== CLASS PlanetRewardController  ==========
+
+\subsection{Class PlanetRewardController:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable clientControllerCommunicator of type ClientControllerCommunicator
+\item Variable rocketReward of type int
+\item Variable fuelReward of type int
+\item Variable moneyReward of type int
+\item Variable weaponRewards of type List$<$Weapon$>$
+\item Variable crewReward of type Crew
+\item Static variable instance of type PlanetRewardController
+\item Static method getInstance taking in a variable of type ClientControllerCommunicator and returning ClientControllerCommunicator
+\item Method getRewards of type boolean
+\item Constructor taking in a variable of type ClientControllerCommunicator
+\end{itemize}
+
+% ========== CLASS PVPController  ==========
+
+\subsection{Class PVPController:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable clientControllerCommunicator of type ClientControllerCommunicator
+\item Variable pvpClient of type List$<$String$>$
+\item Static variable instance of type PVPController
+\item Static method getInstance taking in a variable of type ClientControllerCommunicator and returning PVPController
+\item Method getPVPOpponents of type List$<$String$>$
+\item Method sendPVPRequests taking in a variable of type String and returning a boolean
+\item Method activatePVP taking in a variable of type Ship and returning a boolean
+\item Constructor taking in a variable of type ClientControllerCommunicator
+\end{itemize}
+
+% ========== CLASS SystemController  ==========
+
+\subsection{Class SystemController:}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Changed signature of method installSystem to return a boolean and take in a variable of type SystemType
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable myself of type Ship
+\item Removed method uninstallSystem
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Variable clientControllerCommunicator of type ClientControllerCommunicator
+\item Static variable instance of type SystemController
+\item Static method getInstance taking in a variable of type ClientControllerCommunicator and returning SystemController
+\item Method removeEnergy taking in a variable of type System and a variable of type int and returning a boolean
+\item Method addEnergy taking in a variable of type System and a variable of type int and returning a boolean
+\item Method upgradeSystem taking in a variable of type System and returning a boolean
+\item Method installSystem taking in a variable of type SystemType and returning a boolean
+\item Constructor taking in a variable of type ClientControllerCommunicator 
+\end{itemize}
+
+% ========== CLASS TraderController  ==========
+
+\subsection{Class TraderController:}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Changed signature of method purchaseWeapon to take in a variable of type Weapon and a variable of type Trader and return a boolean
+\item Changed sigature of method purchaseCrew to take in a variable of type Trader and a variable of type Crew and return a boolean
+\item Changed signature of method purchaseRockets to take in a variable of type Trader and a variable of type int and return a boolean
+\item Changed signature of method purchaseFuel to take in a variable of type Trader and a variable of type int and return a boolean
+\item Changed signature of method purchaseHP to take in a variable of type Trader and a variable of type int and return a boolean
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable clientControllerCommunicator of type ClientControllerCommunicator
+\item Added static variable singeton of type TraderController
+\item Added static method getInstance taking in a variable of type ClientControllerCommunicator and returning TraderController
+\item Added method sellWeapon taking in a variable of type Trader and a variable of type Weapon and returning a boolean
+\item Added method sellRockets taking in a variable of type Trader and a variable of type int and returning a boolean
+\item Added method upgradeCrew taking in a variable of type Crew and a variable of type CrewStat and returning a boolean
+\item Added constructor taking in a variable of type ClientControllerCommunicator
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable myself of type Ship
+\item Removed variable trader of type Trader
+\end{itemize}
+
+% ========== CLASS TravelController  ==========
+
+\subsection{Class TravelController:}
+
+\subsubsection{Modified:}
+\begin{itemize}
+\item Changed signature of method travel to return a boolean
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable clientControllerCommunicator of type ClientControllerCommunicator
+\item Added static variable singleton of type TravelController
+\item Added static method getInstance taking in a variable of type ClientControllerCommunicator and returning TravelController
+\item Added Constructor taking in a variable of type ClientControllerCommunicator
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable myself of type Ship
+\end{itemize}
+
+% ========== CLASS VideoController  ==========
+
+\subsection{Class VideoController:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable singleton of type VideoController
+\item Added variable main of type Main
+\item Added static method getInstance of type VideoController
+\item Added method getHight taking in a variable of type Main and returning int
+\item Added method getWidth taking in a variable of type Main and returning int
+\item Added method setResolution taking in two variables of type int and a variable of type Main and returning void
+\item Added method setFullscreen of type void
+\item Added method setWindowed of type void
+\end{itemize}
+
+% ========== CLASS WeaponController  ==========
+
+\subsection{Class WeaponController:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable clientControllerCommunicator of type ClientControllerCommunicator
+\item Added static variable singleton of type WeaponController
+\item Added static method getInstance taking in a variable of type ClientControllerCommunicator and returning WeaponController
+\item Added method equipWeapon taking in a variable of type Weapon and returning a boolean
+\item Added method unequipWeapon taking in a variable of type Weapon and returning a boolean
+\item Added constructor taking in a variable of type ClientControllerCommunicator
+\end{itemize}
+
+\end{document}
