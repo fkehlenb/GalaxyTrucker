@@ -89,11 +89,11 @@ public class ShopSellElement {
         button = new ShopSellButton(texture, x, y+texture.getHeight()/2, texture.getWidth(), texture.getHeight(), shop, this);
         stage.addActor(button);
         price = weapon.getWeaponPrice();
-            for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
+            for (int lvl=0;  lvl < weapon.getWeaponLevel(); lvl++)
             {
 
                 price += 1;
-                price += weapon.getPrice().get(lvl);
+                //price += weapon.getPrice().get(lvl);
             }
         priceTag.setText(font, Integer.toString(price)+" coins");
     }
