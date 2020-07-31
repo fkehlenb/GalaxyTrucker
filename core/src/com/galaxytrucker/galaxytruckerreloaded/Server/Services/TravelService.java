@@ -191,8 +191,7 @@ public class TravelService implements Serializable {
                             else {
                                 enemyShip = dest.getShips().get(0);
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } catch (Exception e) { // Throws index out of bounds, but can be ignored
                         }
                         if (enemyShip != null) {
                             try {

@@ -205,7 +205,6 @@ public class PlanetRewardService {
                     default:
                         break;
                 }
-                ship = shipDAO.getById(ship.getId());
                 responseObject.setResponseShip(ship);
             }
         } catch (Exception e) {
