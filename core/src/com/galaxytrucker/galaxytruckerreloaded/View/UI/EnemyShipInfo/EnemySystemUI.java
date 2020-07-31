@@ -64,7 +64,7 @@ public class EnemySystemUI extends RoomUI {
      */
     @Override
     public void disposeRoomUI() {
-        super.disposeRoomUI();
+        super.disposeRoomUIEnemy();
         for(Texture t : systemTextures) {
             t.dispose();
         }
@@ -76,8 +76,8 @@ public class EnemySystemUI extends RoomUI {
      * @param room the room with updated stats
      */
     @Override
-    public void update(Room room) {
-        super.update(room);
+    public void updateEnemy(Room room) {
+        super.updateEnemy(room);
         currentTexture = ((System) room).isDisabled() ? 1 : 0;
     }
 }

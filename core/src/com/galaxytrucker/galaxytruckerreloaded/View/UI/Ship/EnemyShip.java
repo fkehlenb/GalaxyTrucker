@@ -163,7 +163,7 @@ public class EnemyShip extends AbstractShip {
         List<Crew> crews = new ArrayList<>();
         //Room
         for(Room r : ship.getSystems()) {
-            roomUIHashMap.get(r.getId()).update(r);
+            roomUIHashMap.get(r.getId()).updateEnemy(r);
             crews.addAll(r.getCrew());
         }
         //Crew
@@ -184,8 +184,8 @@ public class EnemyShip extends AbstractShip {
      * @param room the room that was chosen
      */
     @Override
-    public void roomChosen(Room room) {
-        game.roomChosen(room);
+    public Room roomChosen(Room room) {
+        return game.roomChosen(room);
     }
 
     /**
@@ -236,7 +236,7 @@ public class EnemyShip extends AbstractShip {
         enemyBackground.dispose();
         hull.disposeEnemyHullUI();
         for(RoomUI r : roomUIHashMap.values()) {
-            r.disposeRoomUI();
+            r.disposeRoomUIEnemy();
             
         }
         for(EnemyCrewUI c : crewUIHashMap.values()) {

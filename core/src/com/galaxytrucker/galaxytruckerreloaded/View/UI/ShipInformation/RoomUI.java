@@ -7,6 +7,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.TileButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.TileButtonEnemy;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.AbstractShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.EnemyShip;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
@@ -54,6 +55,8 @@ public class RoomUI {
      */
     private List<TileButton> enemyTiles = new ArrayList<>();
 
+    private List<TileButtonEnemy> enemyList = new ArrayList<>();
+
     /**
      * Constructor
      *
@@ -83,9 +86,9 @@ public class RoomUI {
         }
         else if(ship instanceof EnemyShip) {
             for(Tile t : room.getTiles()) {
-                TileButton tileButton = new TileButton(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this);
-                this.stage.addActor(tileButton);
-                enemyTiles.add(tileButton);
+                TileButtonEnemy tileButtonEnemy = new TileButtonEnemy(x + (t.getPosY() * 48), y + (t.getPosX() * 48), 48, 48, this);
+                this.stage.addActor(tileButtonEnemy);
+                enemyList.add(tileButtonEnemy);
             }
         }
     }
@@ -114,6 +117,20 @@ public class RoomUI {
         }
     }
 
+    public void updateEnemy(Room room) {
+        this.room = room;
+        if(room.getBreach() > 0) {
+            for(TileButtonEnemy b : enemyList) {
+                b.breach();
+            }
+        }
+        else {
+            for(TileButtonEnemy b : enemyList) {
+                b.breachGone();
+            }
+        }
+    }
+
     /**
      * Dispose of room ui
      */
@@ -124,9 +141,18 @@ public class RoomUI {
     }
 
     /**
+     * Dispose of room ui
+     */
+    public void disposeRoomUIEnemy() {
+        for (Actor a : enemyList) {
+            a.remove();
+        }
+    }
+
+    /**
      * the room was chosen with a tile button
      */
-    public void chosen() {
-        ship.roomChosen(room);
+    public Room chosen() {
+       return ship.roomChosen(room);
     }
 }

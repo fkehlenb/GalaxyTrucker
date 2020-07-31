@@ -1,16 +1,16 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.MoveButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PauseButton;
@@ -316,7 +316,7 @@ public class ShipView extends AbstractShip {
                 }
             }
             if(r.isSystem() && ((System) r).getSystemType() != SystemType.SHIELDS) {
-                rooms.get(r.getId()).update(r);
+                rooms.get(r.getId()).updateEnemy(r);
                 if (((System) r).getSystemType() == SystemType.WEAPON_SYSTEM) {
                     equippedWeapons.addAll(((System) r).getShipWeapons());
                 }
@@ -441,8 +441,8 @@ public class ShipView extends AbstractShip {
      * @param room the room
      */
     @Override
-    public void roomChosen(Room room) {
-        game.roomChosen(room);
+    public Room roomChosen(Room room) {
+     return game.roomChosen(room);
     }
 
     /**

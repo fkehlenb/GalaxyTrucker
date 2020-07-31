@@ -921,8 +921,9 @@ public class GamePlay implements Screen {
     /**
      * a room was chosen with the tile buttons
      * @param room the room that was chosen
+     * @return
      */
-    public void roomChosen(Room room) {
+    public Room roomChosen(Room room) {
         if(crewMoving && chosenCrew != null) {
             crewMoved(chosenCrew, room);
             Gdx.input.setInputProcessor(stage);
@@ -936,6 +937,7 @@ public class GamePlay implements Screen {
             takingAim = false;
             chosenWeapon = null;
         }
+        return room;
     }
 
     /**

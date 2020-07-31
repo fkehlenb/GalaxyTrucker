@@ -3,24 +3,22 @@ package com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ImButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.ShipInformation.RoomUI;
 
-/**
- * button for representing one tile
- */
-public class TileButton extends ImButton {
+public class TileButtonEnemy extends ImButton {
 
     /**
      * ui this button is on
      */
     private RoomUI ui;
+    private Room room;
 
     @Override
     public void leftClick() {
         ui.chosen();
-        ui.update(ui.chosen());
-        ui.updateEnemy(ui.chosen());
+
     }
 
     /**
@@ -31,10 +29,11 @@ public class TileButton extends ImButton {
      * @param height button height
      * @param ui ui this button is on
      */
-    public TileButton(float x, float y, float width, float height, RoomUI ui) {
-        super(new Texture("ship/tile.png"), new Texture("ship/tilebreach.png"), new Texture("ship/tilebreachEnemy.png"), x, y, width, height);
-
+    public TileButtonEnemy(float x, float y, float width, float height, RoomUI ui) {
+        super(new Texture("ship/tile.png"), new Texture("ship/tileCross.png"), new Texture("ship/tilebreachEnemy.png"), x, y, width, height);
         this.ui = ui;
+
+        //this.setChecked(false);
 
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

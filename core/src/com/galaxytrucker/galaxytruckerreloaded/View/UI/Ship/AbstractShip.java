@@ -401,7 +401,7 @@ public abstract class AbstractShip {
      * the room was chosen by the player using a tile button
      * @param room the room that was chosen
      */
-    public abstract void roomChosen(Room room);
+    public abstract Room roomChosen(Room room);
 
     /**
      * to render the ui
