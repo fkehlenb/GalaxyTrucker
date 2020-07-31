@@ -39,6 +39,12 @@ public abstract class CurrentShopUI {
      */
     @NonNull
     private ShopUI shop;
+
+    /**
+     * base positions for rendering
+     */
+    @NonNull
+    float baseX, baseY;
     
 
     public abstract void render();

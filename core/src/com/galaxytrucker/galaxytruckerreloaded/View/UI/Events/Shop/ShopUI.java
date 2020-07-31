@@ -2,14 +2,18 @@ package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.galaxytrucker.galaxytruckerreloaded.Controller.TraderController;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.InventoryCloseButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.*;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
+import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,19 +69,25 @@ public class ShopUI {
 
     private Trader trader;
 
+    @Getter
+    private BitmapFont font;
+
     private float x, y;
 
     private List<ShopUIButton> shopTabs;
+
+    private float baseX, baseY;
 
     /**
      * constructor
      * @param main the main class
      */
-    public ShopUI(Main main, Stage stage, GamePlay game, Trader trader, List<Weapon> shipWeapons, int shipMissiles) {
+    public ShopUI(Main main, Stage stage, GamePlay game, Trader trader, BitmapFont font) {
         this.main = main;
         this.game = game;
         this.stage=stage;
         this.trader=trader;
+        this.font=font;
         shopTabs = new ArrayList<>();
 
         background = new Texture("shop/storeback.png");
@@ -95,28 +105,28 @@ public class ShopUI {
         float yb = y+main.HEIGHT/90f;
         float ydist = main.HEIGHT/15.652f;
 
-        ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),xb, yb, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.WEAPON);
+        baseX = xb + main.WIDTH/15 ; //base x for rendering
+        baseY = yb + main.HEIGHT/108;
+
+        ShopUIButton shopWeaponButton = new ShopUIButton(new Texture("shop/weaponTab.png"),xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.WEAPON);
         shopTabs.add(shopWeaponButton);
-        ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab.png"),xb, yb+ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.RESOURCE);
+        ShopUIButton shopResourceButton = new ShopUIButton(new Texture("shop/resourcesTab.png"),xb, yb+4*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.RESOURCE);
         shopTabs.add(shopResourceButton);
-        ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),xb, yb+2*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.CREW);
+        ShopUIButton shopCrewButton =new ShopUIButton(new Texture("shop/crewTab.png"),xb, yb+3*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this, ShopButtonType.CREW);
         shopTabs.add(shopCrewButton);
-        ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),xb, yb+3*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SYSTEM);
+        ShopUIButton shopSystemButton = new ShopUIButton(new Texture("shop/systemTab.png"),xb, yb+2*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SYSTEM);
         shopTabs.add(shopSystemButton);
-        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),xb, yb+4*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.UPGRADES);;
+        ShopUIButton shopUpgradeButton = new ShopUIButton(new Texture("shop/lvlTab.png"),xb, yb+ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.UPGRADES);;
         shopTabs.add(shopUpgradeButton);
-        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), xb, yb+5*ydist, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SELL);
+        ShopUIButton shopSellButton = new ShopUIButton(new Texture("shop/sellTab.png"), xb, yb, main.WIDTH/30.476f, main.HEIGHT/16.875f, this,  ShopButtonType.SELL);
         shopTabs.add(shopSellButton);
 
         //closeButton = new InventoryCloseButton(x+Main.WIDTH/6.4f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
-        closeButton = new InventoryCloseButton(x+Main.WIDTH/7f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
+        closeButton = new InventoryCloseButton(x+Main.WIDTH/5f, y+Main.HEIGHT/67.5f, Main.WIDTH/7.742f, Main.HEIGHT/21.6f, this, null, null);
         stage.addActor(closeButton);
-        stage.addActor(shopWeaponButton);
-        stage.addActor(shopResourceButton);
-        stage.addActor(shopCrewButton);
-        stage.addActor(shopSystemButton);
-        stage.addActor(shopUpgradeButton);
-        stage.addActor(shopSellButton);
+        for (ShopUIButton tab : shopTabs) {
+            stage.addActor(tab);
+        }
 
     }
 
@@ -126,13 +136,11 @@ public class ShopUI {
     public void render(){
         main.batch.begin();
         main.batch.draw(background, x, y,Main.WIDTH/3.195f, Main.HEIGHT/2.293f); //TODO whxy
-        for (ShopUIButton tab : shopTabs) {
-            //TODO draw tabs here not wherever
-        }
         main.batch.end();
-        /*for(ShopElement e : elements) {
-            e.render();
-        }*/
+        stage.draw();
+        if (current != null) {
+            current.render();
+        }
     }
 
     /**
@@ -155,8 +163,7 @@ public class ShopUI {
      * @param weapon the weapon
      */
     boolean buyWeapon(Weapon weapon) {
-        //TODO Controllerklassen verbinden
-        return game.buyWeapon(weapon);
+        return game.buyWeapon(trader, weapon);
     }
 
     /**
@@ -164,7 +171,7 @@ public class ShopUI {
      * @param weapon the weapon
      */
     boolean sellWeapon(Weapon weapon) {
-        return game.sellWeapon(weapon);
+        return game.sellWeapon(trader, weapon);
     }
 
     /**
@@ -172,7 +179,7 @@ public class ShopUI {
      * @param crew the crewmember
      * @return success of transaction
      */
-    boolean buyCrew(Crew crew){return game.buyCrew(crew);}
+    boolean buyCrew(Crew crew){return game.buyCrew(trader, crew);}
 
     //TODO SellCrew???
     boolean sellCrew(Crew crew){
@@ -184,19 +191,27 @@ public class ShopUI {
      * Buy a Unit of Fuel from the Trader
      * @return success of transaction
      */
-    boolean buyFuel(){return game.buyFuel(1);}
+    boolean buyFuel(){return game.buyFuel(trader, 1);}
 
     /**
      * Buy a missile from the Trader
      * @return success of transaction
      */
-    boolean buyMissiles(){return game.buyMissiles(1);}
+    boolean buyMissiles(){return game.buyMissiles(trader, 1);}
 
     /**
      * Buy some repairs from the Trader
      * @return success of transaction
      */
-    boolean buyHP(int amount){return game.buyHp(amount);}
+    boolean buyHP(int amount){return game.buyHp(trader, amount);}
+
+    boolean buySystem(SystemType type){
+        return game.buySystem(trader, type);
+    }
+
+    boolean upgradeSystem(SystemType type){
+        return game.upgradeSystem(trader, type);
+    }
 
     /**TODO put into SubUIs
      * remove a buyable element
@@ -206,7 +221,7 @@ public class ShopUI {
     }
 
     public void openShopSellUI(){
-        current = new ShopSell(main, stage, game, trader, this);
+        current = new ShopSell(main, stage, game, trader, this, baseX, baseY);
     }
 
     public void openUI(ShopButtonType type){
@@ -215,24 +230,26 @@ public class ShopUI {
         }
         switch (type){
             case UPGRADES:
-                current = new ShopUpgrade(main, stage, game, trader, this);
+                current = new ShopUpgrade(main, stage, game, trader, this, baseX, baseY);
                 break;
             case CREW:
-                current = new ShopCrew(main, stage, game, trader, this);
+                current = new ShopCrew(main, stage, game, trader, this, baseX, baseY);
                 break;
             case SELL:
-                current = new ShopSell(main, stage, game, trader, this);
+                current = new ShopSell(main, stage, game, trader, this, baseX, baseY);
                 break;
             case SYSTEM:
-                current = new ShopSystem(main, stage, game, trader, this);
+                current = new ShopSystem(main, stage, game, trader, this, baseX, baseY);
                 break;
             case WEAPON:
-                current = new ShopWeapon(main, stage, game, trader, this);
+                current = new ShopWeapon(main, stage, game, trader, this, baseX, baseY);
                 break;
             case RESOURCE:
-                current = new ShopResource(main, stage, game, trader, this);
+                current = new ShopResource(main, stage, game, trader, this, baseX, baseY);
                 break;
         }
+
+        current.render();
     }
 
     /**

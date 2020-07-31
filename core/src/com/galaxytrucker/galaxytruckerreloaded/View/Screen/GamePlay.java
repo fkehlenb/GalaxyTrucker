@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.*;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
@@ -27,6 +28,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.NextRoundButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PVPActivateButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.InGameButtons.PVPGetOpponentsButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.ShopButtons.OpenShopButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.EventGUI;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.GameOver;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.PVPOpponents;
@@ -162,6 +164,11 @@ public class GamePlay implements Screen {
      * the button to move on to the next round in a combat
      */
     private NextRoundButton nextRoundButton;
+
+    /**
+     * the Button to open the ShopUI on a Shop Planet
+     */
+    private OpenShopButton openShopButton;
 
     /**
      * button to activate pvp, if multiplayer
@@ -358,7 +365,9 @@ public class GamePlay implements Screen {
             font25.dispose();
         }
         if(shopUI != null) { shopUI.disposeShopUI(); }
-        if(eventGUI != null) { eventGUI.disposeEventGUI(); }
+        if(eventGUI != null) {
+            eventGUI.disposeEventGUI();
+        }
         if(gameOverUI != null) { gameOverUI.disposeGameoverUI(); }
         if(videoUI != null) { videoUI.disposeVideoUI(); }
         if(generalUI != null) { generalUI.disposeGeneralUI(); }
@@ -455,7 +464,10 @@ public class GamePlay implements Screen {
             createEvent(planet.getEvent(), opponent);
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 background = new Texture("1080p.png");
-                createShop(planet.getTrader());
+                createShopButton();
+                //createShop(planet.getTrader());
+
+
             }
             else if(opponent) {
                 background = new Texture("1080p.png");
@@ -505,6 +517,14 @@ public class GamePlay implements Screen {
     private void createRoundButton() {
         nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), main.WIDTH/15.4f, main.HEIGHT/43.2f, this);
         stage.addActor(nextRoundButton);
+    }
+
+    /**
+     * create ShopButton
+     */
+    private void createShopButton(){
+        openShopButton = new OpenShopButton(Main.WIDTH/(2.5f), Main.HEIGHT -  (Main.HEIGHT/(8f)), 248, 50, this, PlanetEventController.getInstance(null).getClientShip().getPlanet().getTrader());
+        stage.addActor(openShopButton);
     }
 
     /**
@@ -640,11 +660,13 @@ public class GamePlay implements Screen {
      * shop ui pops up
      * @param trader the trader to be displayed
      */
-    private void createShop(Trader trader) {
+    public void createShop(Trader trader) {
         if(shopUI == null) {
-            shopUI = new ShopUI(main, stage, this, trader, null, 0);
+            Stage shopStage = new Stage(viewport);
+            Gdx.input.setInputProcessor(shopStage);
+            shopUI = new ShopUI(main, shopStage, this, trader, font25);
         }
-    } //TODO
+    }
 
     /**
      * remove the shop
@@ -659,10 +681,18 @@ public class GamePlay implements Screen {
      * call to controller
      * @param weapon the weapon
      */
-    public boolean buyWeapon(Weapon weapon) {
-        boolean success = false; //TODO controller
+    public boolean buyWeapon(Trader trader, Weapon weapon) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseWeapon(trader, weapon);
         if(success) {
-            player.changeAmountScrap(-(weapon.getPrice().get(weapon.getWeaponLevel())));
+            int price = weapon.getWeaponPrice();
+            for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
+            {
+                price += weapon.getPrice().get(lvl);
+            }
+
+            player.changeAmountScrap(-price);
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -672,10 +702,12 @@ public class GamePlay implements Screen {
      * call to controller
      * @param crew the crew member
      */
-    public boolean buyCrew(Crew crew) {
-        boolean success = false; //TODO controller
+    public boolean buyCrew(Trader trader, Crew crew) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseCrew(trader, crew);
         if(success) {
-            player.changeAmountScrap(-(crew.getPrice()));
+            //player.changeAmountScrap(-(crew.getPrice()));
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -685,10 +717,12 @@ public class GamePlay implements Screen {
      * call to controller
      * @param amount the amount of fuel
      */
-    public boolean buyFuel(int amount) {
-        boolean success = false; //TODO controller
+    public boolean buyFuel(Trader trader, int amount) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseFuel(trader, amount);
         if(success) {
-            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+            player.changeAmountScrap(-(3*amount)); //TODO festpreis
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -698,12 +732,40 @@ public class GamePlay implements Screen {
      * call to controller
      * @param amount the amount of missiles
      */
-    public boolean buyMissiles(int amount) {
-        boolean success = false; //TODO controller
+    public boolean buyMissiles(Trader trader, int amount) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseRockets(trader, amount); //TODO controller
         if(success) {
-            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+            player.changeAmountScrap(-(6*amount)); //TODO festpreis
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
+    }
+
+    public boolean buySystem(Trader trader, SystemType type){
+        //TODO: welcher Controller?!
+        SystemController systemController = SystemController.getInstance(null);
+        boolean succsess = systemController.installSystem(type);
+        if(succsess){
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+            //player.changeAmountScrap(5);
+        }
+        return succsess;
+    }
+
+    public boolean upgradeSystem(Trader trader, SystemType type){
+        SystemController systemController = SystemController.getInstance(null);
+        for(Room r: ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()){
+            if(r.isSystem() && ((System) r).getSystemType() == type){
+                boolean succsess = systemController.upgradeSystem((System) r);
+                if(succsess){
+                    player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+                    //player.changeAmountScrap(3);
+                    return succsess;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -711,10 +773,12 @@ public class GamePlay implements Screen {
      * call to controller
      * @param amount the amount of hp
      */
-    public boolean buyHp(int amount) {
-        boolean success = false; //TODO controller
+    public boolean buyHp(Trader trader, int amount) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.purchaseHP(trader, amount);
         if(success) {
-            player.changeAmountScrap(-(5*amount)); //TODO festpreis
+            player.changeAmountScrap(-2*amount); //TODO festpreis
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -724,10 +788,12 @@ public class GamePlay implements Screen {
      * @param amount the amount of missiles
      * @return successfull? call to controller
      */
-    public boolean sellMissiles(int amount) {
-        boolean success = false; //TODO controller
+    public boolean sellMissiles(Trader trader, int amount) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.sellRockets(trader, amount);
         if(success) {
             player.changeAmountScrap(5*amount); //TODO festpreis
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }
@@ -737,10 +803,12 @@ public class GamePlay implements Screen {
      * @param weapon the weapon
      * @return successfull? call to controllerau
      */
-    public boolean sellWeapon(Weapon weapon) {
-        boolean success = false; //TODO controller
+    public boolean sellWeapon(Trader trader, Weapon weapon) {
+        TraderController tc = TraderController.getInstance(null);
+        boolean success = tc.sellWeapon(trader, weapon);
         if(success) {
             player.changeAmountScrap(weapon.getPrice().get(weapon.getWeaponLevel()));
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
     }

@@ -34,8 +34,8 @@ public class ShopSellButton extends ImButton {
      *
      * @param shopSellElement the ui this button is on
      */
-    public ShopSellButton(float x, float y, float width, float height, ShopUI shopUI, Trader trader, ShopSellElement shopSellElement) {
-        super(new Texture("ändern"), x, y, width, height);
+    public ShopSellButton(float x, float y, float width, float height, ShopUI shopUI,  ShopSellElement shopSellElement) {
+        super(new Texture("shop/openShop.png"), x, y, width, height);
         this.shopSellElement = shopSellElement;
         this.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

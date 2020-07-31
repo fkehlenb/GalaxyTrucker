@@ -98,9 +98,14 @@ public class TraderService {
                         break;
                     }
                 }
-                if (exists && ship.getCoins() >= weapon.getWeaponPrice()) {
+                int price = weapon.getWeaponPrice();
+                for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
+                {
+                    price += weapon.getPrice().get(lvl);
+                }
+                if (exists && ship.getCoins() >= price) {
                     // Subtract price from ship coins
-                    ship.setCoins(ship.getCoins() - weapon.getWeaponPrice());
+                    ship.setCoins(ship.getCoins() - price);
                     // Remove weapon from stock
                     stock.remove(weapon);
                     trader.setWeaponStock(stock);
@@ -179,22 +184,19 @@ public class TraderService {
                         if (t.isEmpty()) {
                             // Tiles
                             t.setStandingOnMe(crew);
+                            tileDAO.update(t);
+                            crew.setTile(t);
+                            crew.setCurrentRoom(r);
+                            crew.setAssociatedUser(ship.getAssociatedUser());
+                            crewDAO.update(crew);
                             tiles.set(tiles.indexOf(t), t);
                             r.setTiles(tiles);
-                            crew.setTile(t);
                             // Room
                             List<Crew> crewInRoom = r.getCrew();
                             crewInRoom.add(crew);
                             r.setCrew(crewInRoom);
-                            crew.setCurrentRoom(r);
-                            crew.setAssociatedUser(ship.getAssociatedUser());
                             // Update data
-                            tileDAO.update(t);
-                            crewDAO.update(crew);
-                            for (Room a : ship.getSystems()) {
-                                roomDAO.update(a);
-                            }
-                            shipDAO.update(ship);
+                            roomDAO.update(r);
                             traderDAO.update(trader);
                             // Manual verification
                             System.out.println("[POST]:[Ship]:" + ship.getId() + ":[Crew]:" + crew.getId() + ":[Trader]:" + trader.getId() + ":[Coins]:" + ship.getCoins());
