@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
-import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
@@ -41,6 +43,12 @@ public class AudioController extends Controller /**implements Audio*/ {
             music.play();
         }
 
+    }
+
+    public void playExplosionSound(FileHandle file){
+            sound = Gdx.audio.newSound(file);
+            long soundID = sound.play();
+            sound.setVolume(soundID,0.9f);
     }
 
     public void play(){
