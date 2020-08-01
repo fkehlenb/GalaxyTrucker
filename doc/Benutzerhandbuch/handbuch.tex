@@ -180,9 +180,13 @@ Das Schiffinterface ist in viele Unterpunkte aufgeteilt, welche im Folgenden die
 
 \subsection{Karte (Jump)}
 
-Das Kartenfenster wird im Spiel mit einem Klick auf den Jump-Button geöffnet. 
-%TODO KARTE EINFÜGEN!!! GECROPPT!
------HIER ZAHLEN EINFÜGEN, Textur der Map verändern-----
+Das Kartenfenster wird im Spiel mit einem Klick auf den Jump-Button geöffnet. Oben im Fenster sieht man den Map-Schriftzug und die Legende der Symbole.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/Karte/karteübersicht.png}
+\end{figure} 
+
 
 Das kleine Schiff (1) Zeigt dem Spieler immer an, auf welchem Planeten er sich gerade Befindet. Hier in dem Beispiel befindet der Spieler sich auf dem Startplaneten. 
 
@@ -190,22 +194,96 @@ Die eingekreisten Punkte (2) sind Planeten, welche das während des Spiels exist
 
 Das rot hinterlegte Raumschiff (3) ist der Endboss des Spiels. 
 
+\subsubsection{Reisen} 
+
+Das Reisen in diesem Spiel funktioniert nach dem Prinzip, dass ein Planetenwechsel eine Tankeinheit (Fuel) kostet. Grundvorraussetzung ist, dass man ein Crewmitglied im Antrieb und eins im Cockpit hat. Von einem Planeten kann man entweder Vertikal, Horizontal oder Diagonal in alle Richtungen zum nächsten Nachbarplaneten reisen (Siehe Bild unten). Wenn man in der letzten Spalte an Planeten der Map ist, hat man die Möglichkeit, zum Bossplaneten zu reisen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/Karte/wohinReisen.png}
+\caption{Die markierten Stellen können von der aktuellen Position angeflogen werden.}
+\end{figure} 
+
+
+
+
 \subsubsection{Planeten}
 
 \paragraph{Startplanet: }
 Der Startplanet existiert auf jeder Map nur einmal. Hier gibt es kein Event. Dieser Planet dient dazu, dass man in Ruhe am Anfang des Spiels sich seine Ausrüstung erstmal anschauen kann. 
 
 \paragraph{Normale Planeten: }
-Die normalen Planeten sind eine Zufällig generierte Anzahl an Planeten, auf denen Zufällig eins aus 6 Events auftritt:
+Die normalen Planeten sind eine Zufällig generierte Anzahl an Planeten, auf denen Zufällig eins aus 6 Events auftritt (Siehe Events).
 
-\subparagraph{Kein Event} Hier Kann es zu einem Zufälligen Geschenk kommen, welches dem Inventar hinzugefügt wird. 
+\paragraph{Bossplanet: }
+Der Bossplanet existiert auf jeder Map nur einmal und ist immer ganz rechts angeordnet. D
+
+
+\subsubsection{Events}
+
+\subparagraph{Kein Event} Hier Kann es zu einem Zufälligen Geschenk kommen, welches dem Inventar hinzugefügt wird.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Karte/nothing.png}
+\caption{Kein Event Ankunftsmessage}
+\end{figure}
+ 
 \subparagraph{Nebel} Hier kann es zufällige Geschenke geben, die dem Spieler zugeschrieben werden.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/Karte/nebular.png}
+\caption{Ankunftsnachricht}
+\end{figure} 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/Karte/nebularPresent.png}
+\caption{Geschenk}
+\end{figure} 
+
 \subparagraph{Meteoritenfeld} Hier kann es zu Schäden am Schiff kommen, welche dem Spieler mit Verlust zufälliger Resourcen kenntlich gemacht wird. Es ist außerdem möglich, Zufällige Resourcen zu finden (Geschenk).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Karte/meteor.png}
+\caption{Meteoritenfeld Ankunftsmessage}
+\end{figure} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Karte/meteorPresent.png}
+\caption{Meteoritenfeld Geschenk}
+\end{figure} 
+
+
+
 \subparagraph{Gegnerisches Schiff} Hier kann man ein zufälliges Geschenk erhalten. Hier wird ein gegnerisches Schiff angezeigt, welches im folgenden Bekämpft werden muss (Siehe Kampf). Die normalen Gegner haben immer die gleichen Stats und Waffen, welche der Grundausstattung der Schiffe entspricht, aus denen der Spieler auch auswählen kann. Beim Gewinnen bekommt der Spieler eine zufällige Auswahl an Sachen geschenkt. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Karte/enemy.png}
+\caption{Eins von mehreren gegnerischen Schiffen}
+\end{figure} 
+
+
 \subparagraph{Gegnerisches Schiff (Miniboss)} Das Miniboss Planetevent gleicht dem normalen Gegnerischen Schiff Event, nur dass der Gegner an die Stats des Spielers angepasst wird. Er bekommt ähnlich gute Waffen und ein ähnlich hohes leben, sodass das Besiegen schwerer ist. Beim Gewinnen bekommt der Spieler eine zufällige Auswahl an Sachen geschenkt. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Karte/miniboss.png}
+\caption{Der Miniboss hat dieses Schiff mit roter Außenhülle.}
+\end{figure} 
+
 \subparagraph{Shop} Beim Shop ist es dem Spieler möglich, Ausrüstung zu kaufen oder zu verkaufen. (Siehe Kapitel Shop)
 
-\subsubsection{Symbole}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Karte/miniboss.png}
+\caption{Shop Ankunftsmessage}
+\end{figure}
 
 
 \subsection{Shop}
