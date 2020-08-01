@@ -2,10 +2,13 @@ package com.galaxytrucker.galaxytruckerreloaded.Test.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
@@ -16,6 +19,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
+import org.graalvm.compiler.api.replacements.Fold;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,6 +43,8 @@ public class BattleServiceTest {
     private BattleServiceDAO battleServiceDAO = new BattleServiceDAO();
 
     private RequestObjectDAO requestObjectDAO = new RequestObjectDAO();
+
+    private PlanetDAO planetDAO = new PlanetDAO();
 
     /**
      * add a request to the queue
@@ -93,7 +99,7 @@ public class BattleServiceTest {
     @Test
     public void playMovesSuccess() {
         User u = new User();
-        u.setUsername("testuser");
+        u.setUsername("testuser7");
         Overworld o = new Overworld();
         o.setId(UUID.randomUUID().hashCode());
         o.setDifficulty(1);
@@ -108,7 +114,7 @@ public class BattleServiceTest {
 
         Ship s = new Ship();
         s.setId(UUID.randomUUID().hashCode());
-        s.setAssociatedUser("testuser");
+        s.setAssociatedUser("testuser7");
         s.setMissiles(5);
         List<Room> rooms = new ArrayList<>();
         System system = new System();
@@ -146,6 +152,7 @@ public class BattleServiceTest {
         List<RequestObject> rounds = new ArrayList<>();
         RequestObject round1 = new RequestObject();
         round1.setRequestType(RequestType.ATTACK_SHIP);
+        round1.setId(UUID.randomUUID().hashCode());
         Ship opponent = new Ship();
         opponent.setId(UUID.randomUUID().hashCode());
         opponent.setAssociatedUser("[ENEMY]");
@@ -191,7 +198,7 @@ public class BattleServiceTest {
     @Test
     public void playMovesSNotExisting() {
         User u = new User();
-        u.setUsername("testuser1");
+        u.setUsername("testuser6");
         Overworld o = new Overworld();
         o.setId(UUID.randomUUID().hashCode());
         o.setDifficulty(1);
@@ -206,7 +213,7 @@ public class BattleServiceTest {
 
         Ship s = new Ship();
         s.setId(UUID.randomUUID().hashCode());
-        s.setAssociatedUser("testuser1");
+        s.setAssociatedUser("testuser6");
         s.setMissiles(5);
         List<Room> rooms = new ArrayList<>();
         System system = new System();
@@ -274,7 +281,7 @@ public class BattleServiceTest {
     @Test
     public void playMovesNoMissiles() {
         User u = new User();
-        u.setUsername("testuser3");
+        u.setUsername("testuser5");
         Overworld o = new Overworld();
         o.setId(UUID.randomUUID().hashCode());
         o.setDifficulty(1);
@@ -289,7 +296,7 @@ public class BattleServiceTest {
 
         Ship s = new Ship();
         s.setId(UUID.randomUUID().hashCode());
-        s.setAssociatedUser("testuser3");
+        s.setAssociatedUser("testuser5");
         s.setMissiles(0);
         List<Room> rooms = new ArrayList<>();
         System system = new System();
@@ -404,10 +411,517 @@ public class BattleServiceTest {
     }
 
     /**
+     * get updated data for a non existing ship
+     */
+    @Test
+    public void getUpdatedDataSNotExisting() {
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+
+        BattleService service = new BattleService();
+        service.setId(UUID.randomUUID());
+        service.setCombatOver(true);
+        List<Ship> com = new ArrayList<>();
+        service.setCombatants(com);
+        try {
+            battleServiceDAO.persist(service);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.getUpdatedData(s);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
      * flee a fight
      */
     @Test
     public void fleeFightSuccess() {
+        Planet sp = new Planet();
+        sp.setId(UUID.randomUUID().hashCode());
+        sp.setPosX(1);
+        sp.setPosY(1);
+        sp.setEvent(PlanetEvent.METEORSHOWER);
 
+        Planet p = new Planet();
+        p.setId(UUID.randomUUID().hashCode());
+        p.setPosX(2);
+        p.setPosY(2);
+        p.setEvent(PlanetEvent.METEORSHOWER);
+
+        Planet startp = new Planet();
+        startp.setId(UUID.randomUUID().hashCode());
+
+        Planet bossp = new Planet();
+        bossp.setId(UUID.randomUUID().hashCode());
+        try {
+            planetDAO.persist(p);
+            planetDAO.persist(sp);
+            planetDAO.persist(startp);
+            planetDAO.persist(bossp);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        List<Room> rooms = new ArrayList<>();
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        System engine = new System();
+        engine.setId(UUID.randomUUID().hashCode());
+        engine.setTiles(tiles);
+        engine.setEnergy(2);
+        engine.setMaxEnergy(3);
+        engine.setDisabled(false);
+        engine.setSystem(true);
+        engine.setSystemType(SystemType.ENGINE);
+        rooms.add(engine);
+
+        List<Tile> tiles1 = new ArrayList<>();
+        tiles1.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles1.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        System cockpit = new System();
+        cockpit.setId(UUID.randomUUID().hashCode());
+        cockpit.setTiles(tiles1);
+        cockpit.setEnergy(1);
+        cockpit.setMaxEnergy(3);
+        cockpit.setDisabled(false);
+        cockpit.setSystem(true);
+        cockpit.setSystemType(SystemType.COCKPIT);
+        rooms.add(cockpit);
+
+
+        User u = new User();
+        u.setUsername("testuser4");
+        Overworld o = new Overworld();
+        o.setId(UUID.randomUUID().hashCode());
+        o.setStartPlanet(startp);
+        o.setBossPlanet(bossp);
+
+        List<Planet> planets = new ArrayList<>();
+        planets.add(sp);
+        planets.add(p);
+        o.setPlanetMap(planets);
+        u.setOverworld(o);
+        try {
+            overworldDAO.persist(o);
+            userDAO.persist(u);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        s.setAssociatedUser("testuser4");
+        s.setPlanet(sp);
+        s.setFTLCharge(100);
+        s.setEvasionChance(100);
+        s.setFuel(10);
+        s.setSystems(rooms);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        BattleService service = new BattleService();
+        service.setId(UUID.randomUUID());
+        List<Ship> com = new ArrayList<>();
+        com.add(s);
+        service.setCombatants(com);
+        service.setCurrentRound(s.getId());
+        Ship op = new Ship();
+        op.setId(UUID.randomUUID().hashCode());
+        op.setSystems(new ArrayList<Room>());
+        op.setAssociatedUser("[ENEMY]");
+        try {
+            shipDAO.persist(op);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+        com.add(op);
+        try {
+            battleServiceDAO.persist(service);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.fleeFight(s, p);
+        Assert.assertTrue(response.isValidRequest());
+    }
+
+    /**
+     * try fleeing fight without ftl charge
+     */
+    @Test
+    public void fleeFightNoFTL() {
+        Planet sp = new Planet();
+        sp.setId(UUID.randomUUID().hashCode());
+        sp.setPosX(1);
+        sp.setPosY(1);
+        sp.setEvent(PlanetEvent.METEORSHOWER);
+
+        Planet p = new Planet();
+        p.setId(UUID.randomUUID().hashCode());
+        p.setPosX(2);
+        p.setPosY(2);
+        p.setEvent(PlanetEvent.METEORSHOWER);
+
+        Planet startp = new Planet();
+        startp.setId(UUID.randomUUID().hashCode());
+
+        Planet bossp = new Planet();
+        bossp.setId(UUID.randomUUID().hashCode());
+        try {
+            planetDAO.persist(p);
+            planetDAO.persist(sp);
+            planetDAO.persist(startp);
+            planetDAO.persist(bossp);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        List<Room> rooms = new ArrayList<>();
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        System engine = new System();
+        engine.setId(UUID.randomUUID().hashCode());
+        engine.setTiles(tiles);
+        engine.setEnergy(2);
+        engine.setMaxEnergy(3);
+        engine.setDisabled(false);
+        engine.setSystem(true);
+        engine.setSystemType(SystemType.ENGINE);
+        rooms.add(engine);
+
+        List<Tile> tiles1 = new ArrayList<>();
+        tiles1.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles1.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        System cockpit = new System();
+        cockpit.setId(UUID.randomUUID().hashCode());
+        cockpit.setTiles(tiles1);
+        cockpit.setEnergy(1);
+        cockpit.setMaxEnergy(3);
+        cockpit.setDisabled(false);
+        cockpit.setSystem(true);
+        cockpit.setSystemType(SystemType.COCKPIT);
+        rooms.add(cockpit);
+
+
+        User u = new User();
+        u.setUsername("testuser3");
+        Overworld o = new Overworld();
+        o.setId(UUID.randomUUID().hashCode());
+        o.setStartPlanet(startp);
+        o.setBossPlanet(bossp);
+
+        List<Planet> planets = new ArrayList<>();
+        planets.add(sp);
+        planets.add(p);
+        o.setPlanetMap(planets);
+        u.setOverworld(o);
+        try {
+            overworldDAO.persist(o);
+            userDAO.persist(u);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        s.setAssociatedUser("testuser3");
+        s.setPlanet(sp);
+        s.setEvasionChance(100);
+        s.setFuel(10);
+        s.setSystems(rooms);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        BattleService service = new BattleService();
+        service.setId(UUID.randomUUID());
+        List<Ship> com = new ArrayList<>();
+        com.add(s);
+        service.setCombatants(com);
+        service.setCurrentRound(s.getId());
+        Ship op = new Ship();
+        op.setId(UUID.randomUUID().hashCode());
+        op.setSystems(new ArrayList<Room>());
+        op.setAssociatedUser("[ENEMY]");
+        try {
+            shipDAO.persist(op);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+        com.add(op);
+        try {
+            battleServiceDAO.persist(service);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.fleeFight(s, p);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * try fleeing without fuel
+     */
+    @Test
+    public void fleeFightNoFuel() {
+        Planet sp = new Planet();
+        sp.setId(UUID.randomUUID().hashCode());
+        sp.setPosX(1);
+        sp.setPosY(1);
+        sp.setEvent(PlanetEvent.METEORSHOWER);
+
+        Planet p = new Planet();
+        p.setId(UUID.randomUUID().hashCode());
+        p.setPosX(2);
+        p.setPosY(2);
+        p.setEvent(PlanetEvent.METEORSHOWER);
+
+        Planet startp = new Planet();
+        startp.setId(UUID.randomUUID().hashCode());
+
+        Planet bossp = new Planet();
+        bossp.setId(UUID.randomUUID().hashCode());
+        try {
+            planetDAO.persist(p);
+            planetDAO.persist(sp);
+            planetDAO.persist(startp);
+            planetDAO.persist(bossp);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        List<Room> rooms = new ArrayList<>();
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        System engine = new System();
+        engine.setId(UUID.randomUUID().hashCode());
+        engine.setTiles(tiles);
+        engine.setEnergy(2);
+        engine.setMaxEnergy(3);
+        engine.setDisabled(false);
+        engine.setSystem(true);
+        engine.setSystemType(SystemType.ENGINE);
+        rooms.add(engine);
+
+        List<Tile> tiles1 = new ArrayList<>();
+        tiles1.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles1.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        System cockpit = new System();
+        cockpit.setId(UUID.randomUUID().hashCode());
+        cockpit.setTiles(tiles1);
+        cockpit.setEnergy(1);
+        cockpit.setMaxEnergy(3);
+        cockpit.setDisabled(false);
+        cockpit.setSystem(true);
+        cockpit.setSystemType(SystemType.COCKPIT);
+        rooms.add(cockpit);
+
+
+        User u = new User();
+        u.setUsername("testuser2");
+        Overworld o = new Overworld();
+        o.setId(UUID.randomUUID().hashCode());
+        o.setStartPlanet(startp);
+        o.setBossPlanet(bossp);
+
+        List<Planet> planets = new ArrayList<>();
+        planets.add(sp);
+        planets.add(p);
+        o.setPlanetMap(planets);
+        u.setOverworld(o);
+        try {
+            overworldDAO.persist(o);
+            userDAO.persist(u);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        s.setAssociatedUser("testuser2");
+        s.setPlanet(sp);
+        s.setFTLCharge(100);
+        s.setEvasionChance(100);
+        s.setSystems(rooms);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        BattleService service = new BattleService();
+        service.setId(UUID.randomUUID());
+        List<Ship> com = new ArrayList<>();
+        com.add(s);
+        service.setCombatants(com);
+        service.setCurrentRound(s.getId());
+        Ship op = new Ship();
+        op.setId(UUID.randomUUID().hashCode());
+        op.setSystems(new ArrayList<Room>());
+        op.setAssociatedUser("[ENEMY]");
+        try {
+            shipDAO.persist(op);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+        com.add(op);
+        try {
+            battleServiceDAO.persist(service);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.fleeFight(s, p);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * try fleeing with nonexisting ship
+     */
+    @Test
+    public void fleeFightSNotExisting() {
+        Planet sp = new Planet();
+        sp.setId(UUID.randomUUID().hashCode());
+        sp.setPosX(1);
+        sp.setPosY(1);
+        sp.setEvent(PlanetEvent.METEORSHOWER);
+
+        Planet p = new Planet();
+        p.setId(UUID.randomUUID().hashCode());
+        p.setPosX(2);
+        p.setPosY(2);
+        p.setEvent(PlanetEvent.METEORSHOWER);
+
+        Planet startp = new Planet();
+        startp.setId(UUID.randomUUID().hashCode());
+
+        Planet bossp = new Planet();
+        bossp.setId(UUID.randomUUID().hashCode());
+        try {
+            planetDAO.persist(p);
+            planetDAO.persist(sp);
+            planetDAO.persist(startp);
+            planetDAO.persist(bossp);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        List<Room> rooms = new ArrayList<>();
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        System engine = new System();
+        engine.setId(UUID.randomUUID().hashCode());
+        engine.setTiles(tiles);
+        engine.setEnergy(2);
+        engine.setMaxEnergy(3);
+        engine.setDisabled(false);
+        engine.setSystem(true);
+        engine.setSystemType(SystemType.ENGINE);
+        rooms.add(engine);
+
+        List<Tile> tiles1 = new ArrayList<>();
+        tiles1.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles1.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        System cockpit = new System();
+        cockpit.setId(UUID.randomUUID().hashCode());
+        cockpit.setTiles(tiles1);
+        cockpit.setEnergy(1);
+        cockpit.setMaxEnergy(3);
+        cockpit.setDisabled(false);
+        cockpit.setSystem(true);
+        cockpit.setSystemType(SystemType.COCKPIT);
+        rooms.add(cockpit);
+
+
+        User u = new User();
+        u.setUsername("testuser1");
+        Overworld o = new Overworld();
+        o.setId(UUID.randomUUID().hashCode());
+        o.setStartPlanet(startp);
+        o.setBossPlanet(bossp);
+
+        List<Planet> planets = new ArrayList<>();
+        planets.add(sp);
+        planets.add(p);
+        o.setPlanetMap(planets);
+        u.setOverworld(o);
+        try {
+            overworldDAO.persist(o);
+            userDAO.persist(u);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        s.setAssociatedUser("testuser1");
+        s.setPlanet(sp);
+        s.setFTLCharge(100);
+        s.setEvasionChance(100);
+        s.setFuel(10);
+        s.setSystems(rooms);
+
+        BattleService service = new BattleService();
+        service.setId(UUID.randomUUID());
+        List<Ship> com = new ArrayList<>();
+        service.setCombatants(com);
+        service.setCurrentRound(s.getId());
+        Ship op = new Ship();
+        op.setId(UUID.randomUUID().hashCode());
+        op.setSystems(new ArrayList<Room>());
+        op.setAssociatedUser("[ENEMY]");
+        try {
+            shipDAO.persist(op);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+        com.add(op);
+        try {
+            battleServiceDAO.persist(service);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.fleeFight(s, p);
+        Assert.assertFalse(response.isValidRequest());
     }
 }
