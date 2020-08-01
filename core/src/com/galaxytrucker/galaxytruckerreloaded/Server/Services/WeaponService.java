@@ -99,6 +99,8 @@ public class WeaponService {
     public ResponseObject unequipWeapon(Ship s,Weapon w){
         ResponseObject responseObject = new ResponseObject();
         try {
+            s = shipDAO.getById(s.getId());
+            w = weaponDAO.getById(w.getId());
             List<System> shipSystems = new ArrayList<>();
             for (Room r : s.getSystems()){
                 if (r.isSystem()){

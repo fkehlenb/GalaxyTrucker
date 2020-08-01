@@ -168,7 +168,7 @@ public class CrewService implements Serializable {
                 responseObject.setResponseShip(ship);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return responseObject;
     }

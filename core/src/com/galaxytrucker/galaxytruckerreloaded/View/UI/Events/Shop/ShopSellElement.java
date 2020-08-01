@@ -1,6 +1,8 @@
 package com.galaxytrucker.galaxytruckerreloaded.View.UI.Events.Shop;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
@@ -46,6 +48,21 @@ public class ShopSellElement {
      */
     private ShopUI shop;
 
+    private GlyphLayout priceTag = new GlyphLayout();
+
+    private GlyphLayout stockTag;
+
+    private BitmapFont font;
+
+    private Stage stage;
+
+    /**
+     * the price of the object
+     */
+    private int price;
+
+
+
     /**
      * the constructor
      * @param main the main class
@@ -65,9 +82,18 @@ public class ShopSellElement {
         this.shop = shop;
         this.weapon = weapon;
         this.crew = crew;
+        this.texture = texture;
+        this.stage = stage;
+        this.font = shop.getFont();
 
-        button = new ShopSellButton(x, y, 248, 50, shop, this);
+        button = new ShopSellButton(texture, x, y+texture.getHeight()/2, texture.getWidth(), texture.getHeight(), shop, this);
         stage.addActor(button);
+        price = weapon.getWeaponPrice();
+        for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
+        {
+            price += weapon.getPrice().get(lvl);
+        }
+        priceTag.setText(font, Integer.toString(price)+" coins");
     }
 
     /**
@@ -75,14 +101,19 @@ public class ShopSellElement {
      */
     public void disposeShopSellElement() {
         //shop.removeSellElement(this);
-        texture.dispose();
+        //texture.dispose();
+        priceTag.setText(font,"");
         button.remove();
     }
 
     public void render() {
         main.batch.begin();
-        main.batch.draw(texture, 0, 0, 10, 10);
+        //main.batch.draw(texture, x, y, 300, 300); //TODO whxy
+        font.draw(main.batch, priceTag, x + main.WIDTH/12 , y + texture.getHeight()- priceTag.height/2);
+        priceTag.setText(font, Integer.toString(price)+" coins");
+        
         main.batch.end();
+        stage.draw();
     }
 
     /**
@@ -93,9 +124,6 @@ public class ShopSellElement {
         if(weapon != null) {
             success = sellWeapon();
         }
-        else {
-            success = sellCrew();
-        }
         if(success) {
             disposeShopSellElement();
         }
@@ -105,12 +133,7 @@ public class ShopSellElement {
      * sell a weapon
      */
     private boolean sellWeapon() {
-        return shop.sellWeapon(weapon);
+        return shop.sellWeapon(weapon, this);
     }
-
-    /**
-     * transfer away a Crewmember but receive compensation for the early end of contract which makes this totally not human trafficking at all, I swear
-     */
-    private boolean sellCrew() {return shop.sellCrew(crew);}
 
 }
