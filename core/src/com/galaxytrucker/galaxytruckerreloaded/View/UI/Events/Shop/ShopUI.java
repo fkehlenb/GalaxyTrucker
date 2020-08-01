@@ -170,7 +170,8 @@ public class ShopUI {
      * sell weapon to trader
      * @param weapon the weapon
      */
-    boolean sellWeapon(Weapon weapon) {
+    boolean sellWeapon(Weapon weapon, ShopSellElement element) {
+        ((ShopSell) current).removeSellElement(element);
         return game.sellWeapon(trader, weapon);
     }
 
@@ -181,11 +182,6 @@ public class ShopUI {
      */
     boolean buyCrew(Crew crew){return game.buyCrew(trader, crew);}
 
-    //TODO SellCrew???
-    boolean sellCrew(Crew crew){
-        return false;
-        //return game.sellCrew(crew);
-    }
 
     /**
      * Buy a Unit of Fuel from the Trader
