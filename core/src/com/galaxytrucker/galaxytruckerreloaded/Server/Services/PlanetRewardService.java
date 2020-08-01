@@ -101,6 +101,12 @@ public class PlanetRewardService {
                 weaponTypes.add(WeaponType.RADIO);
                 weaponTypes.add(WeaponType.RADIO_BOMB);
                 weaponTypes.add(WeaponType.ROCKET);
+                List<Integer> weaponPrices = new ArrayList<>();
+                weaponPrices.add(15);
+                weaponPrices.add(25);
+                weaponPrices.add(40);
+                weaponPrices.add(60);
+                weaponPrices.add(80);
                 if (weaponRandomizer == 0 && ship.getInventory().size() < 4) {
                     WeaponType weaponType = weaponTypes.get(weaponTypes.size()-1);
                     Weapon w = null;
@@ -108,11 +114,13 @@ public class PlanetRewardService {
                         w = new Weapon(UUID.randomUUID().hashCode(), weaponType, random.nextInt(3) + 1, random.nextInt(5) + 1, random.nextInt(2) + 1,
                                 random.nextInt(3) + 1,1,random.nextFloat()+0.3f,random.nextFloat()+0.1f,random.nextInt(4),random.nextFloat()+0.2f,random.nextInt(3)+1,
                                 random.nextInt(2)+1,weaponNameGenerator(),random.nextInt(100)+10);
+                        w.setPrice(weaponPrices);
                     }
                     else{
                         w = new Weapon(UUID.randomUUID().hashCode(), weaponType, random.nextInt(3) + 1, random.nextInt(5) + 1, random.nextInt(2) + 1,
                                 random.nextInt(3) + 1,0,random.nextFloat()+0.3f,random.nextFloat()+0.1f,random.nextInt(4),random.nextFloat()+0.2f,random.nextInt(3)+1,
                                 random.nextInt(2)+1,weaponNameGenerator(),random.nextInt(100)+10);
+                        w.setPrice(weaponPrices);
                     }
                     weaponDAO.persist(w);
                     List<Weapon> inventory = ship.getInventory();
