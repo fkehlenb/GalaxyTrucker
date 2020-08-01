@@ -58,8 +58,8 @@ public class FuelUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(fuelBackground, 600, Main.HEIGHT - 183, 147, 60); //238
-        font.draw(main.batch, glyph, 600 + (147f/2) - glyph.width/2, (Main.HEIGHT - 133) - glyph.height/2);
+        main.batch.draw(fuelBackground, 385, (Main.HEIGHT/2) +450 -50, 147, 60); //238
+        font.draw(main.batch, glyph, 385 + (147f/2) - glyph.width/2, (Main.HEIGHT/2) +450  - glyph.height/2);
         main.batch.end();
     }
 

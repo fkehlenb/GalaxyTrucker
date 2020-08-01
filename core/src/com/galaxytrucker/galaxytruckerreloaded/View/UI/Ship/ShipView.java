@@ -193,8 +193,8 @@ public class ShipView extends AbstractShip {
         }
         ((WeaponUI) rooms.get(weaponroomid)).setBoxPosition(sx + 10, 80);
 
-        moveButton = new MoveButton(Main.WIDTH/(2.259f), Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
-        inventory = new ShipButton(Main.WIDTH/(2.5f),Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
+        moveButton = new MoveButton(Main.WIDTH/(2.6f), Main.HEIGHT - Main.HEIGHT/(8f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
+        inventory = new ShipButton(Main.WIDTH/(2.9f),Main.HEIGHT - Main.HEIGHT/(8f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this);
         pauseButton = new PauseButton(95*Main.WIDTH/100f, 95*Main.HEIGHT/100f, Main.WIDTH/(21.8f),Main.HEIGHT/(25.12f),this);
 
         money = new ScrapUI(main, ship.getCoins(), font25);

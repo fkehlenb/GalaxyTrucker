@@ -64,7 +64,7 @@ public class FtlChargeUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(ftlChargeBackground, Main.WIDTH/(2.259f), Main.HEIGHT - Main.HEIGHT/(10f), Main.WIDTH/(19f), Main.HEIGHT/(25.12f));
+        main.batch.draw(ftlChargeBackground, Main.WIDTH/(2.6f), Main.HEIGHT - Main.HEIGHT/(8f)-20, Main.WIDTH/(19f), Main.HEIGHT/(25.12f));
         main.batch.end();
     }
 
