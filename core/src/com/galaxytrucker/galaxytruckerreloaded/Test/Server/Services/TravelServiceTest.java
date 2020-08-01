@@ -1,6 +1,5 @@
 package com.galaxytrucker.galaxytruckerreloaded.Test.Server.Services;
 
-import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
@@ -19,7 +18,6 @@ import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,8 +30,6 @@ public class TravelServiceTest {
     private ShipDAO shipDAO = new ShipDAO();
 
     private PlanetDAO planetDAO = new PlanetDAO();
-
-    private CrewDAO crewDAO = new CrewDAO();
 
     private UserDAO userDAO = new UserDAO();
 
