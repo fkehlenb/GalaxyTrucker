@@ -19,7 +19,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
-import org.graalvm.compiler.api.replacements.Fold;
 import org.junit.Assert;
 import org.junit.Test;
 
