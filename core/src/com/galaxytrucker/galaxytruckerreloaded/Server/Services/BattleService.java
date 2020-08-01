@@ -392,6 +392,7 @@ public class BattleService implements Serializable {
                         Weapon loot = new Weapon(UUID.randomUUID().hashCode(), temp.getWeaponType(), temp.getWeaponLevel(), temp.getDamage(), temp.getCooldown(),
                                 temp.getEnergy(), temp.getMissileCost(), temp.getAccuracy(), temp.getDropChance(), temp.getShieldPiercing(), temp.getBreachChance(),
                                 temp.getCrewDamage(), temp.getBurst(), temp.getWeaponName(), temp.getWeaponPrice());
+                        loot.setPrice(temp.getPrice());
                         try {
                             weaponDAO.persist(loot);
                             winner.getInventory().add(loot);
