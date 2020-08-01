@@ -203,10 +203,7 @@ Für jedes Crew Mitglied gibt es ein Anzeigefeld, indem der Name und die Level d
 \includegraphics[width=0.8\linewidth]{DasSpiel/Inventar/waffe.png}
 \end{figure} 
 
-Für jede Waffe gibt es einen Block, in dem die Informationen der Waffe angezeigt werden. 
-
-
-
+Für jede Waffe gibt es einen Block, in dem die Informationen der Waffe angezeigt werden. Anhand des Bildes kann man die Klasse der Waffe erkennen. In diesem Beispiel ist das eine Laser Waffe. Außerdem gibt es Raketen, Bomben, Radio und Radiobomben. Jede Waffe hat unterschiedliche Eigenschaften und kann von Lvl 1 bis Lvl 6 gelevelt sein. Über den Equip/Unequip Button kann man die Waffe ausrüsten, oder aus der Ausrüstung herausnehmen. Wenn der Button auf Unequip steht, ist die Waffe ausgerüstet. 
 
 
 
@@ -322,6 +319,72 @@ Der Bossplanet existiert auf jeder Map nur einmal und ist immer ganz rechts ange
 
 \subsection{Shop}
 
+Wenn man den Shop öffnet, kommt man auf eine leere Seite. Links sieht man die Tabs Waffen, Resourcen, Crew, Systeme, Upgrades, Verkaufen. Rechts sieht man den Schließen Button. Nun drückt man auf den gewählten Tab und dann öffnet sich der jeweilige Tab. Wenn sich ein leerer Tab öffnet, existiert hier nichts zum Kaufen/Verkaufen. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Shop/shop.png}
+\caption{Shop Startfenster}
+\end{figure}
+
+\subsubsection{Waffen}
+
+Hier sieht man einmal links den Waffentyp anhand des Bildes, In der Mitte steht das jeweilige Waffenlevel und rechts steht der Preis, den der Spieler für die jeweilige Waffe ausgeben muss. Um eine Waffe zu kaufen, drückt man einfach auf das Bild der Waffe. Wenn genug Geld vorhanden ist, verschwindet die Waffe aus dem Shop und ist dann im Inventar. Wenn nicht genügend Geld vorhanden ist, passiert nichts. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Shop/waffen.png}
+\caption{Shop Waffenfenster}
+\end{figure}
+
+Sobald man eine Waffe aus dem Shop gekauft hat, wird der Shop nicht mehr restockt. Man kann die selbe Waffe nicht zweimal kaufen. 
+
+\subsubsection{Resourcen}
+
+In Resourcen kann man die drei Hauptresourcen kaufen, Leben (Hull), Raketen (Missiles) und Tank (Fuel). Um eine Resource zu kaufen, muss man auf den grünen Rahmen der Resource klicken. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Shop/resourcen.png}
+\caption{Shop Resourcenfenster}
+\end{figure}
+
+Oben kann man sich Leben (Hull) kaufen. Hier wird eine Anzahl angeboten (In dem Beispiel 13) Und man kann für die 26 Coins direkt alle kaufen. Darunter befindet sich der Tank. In dem Tankschild befindet sich die Anzahl, die der Shop zu verkaufen hat. Für 3 Coins kann man dann eine Tankeinheit kaufen, solange bis die Resource ausverkauft ist. Unten kann man Raketen kaufen. Dies funktioniert analog zu Fuel. 
+
+\subsubsection{Crew}
+
+Im Crewfenster kann man sich neue Crewmitglieder kaufen, welche dann im Schiff auftauchen. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Shop/crew.png}
+\caption{Shop Crewfenster}
+\end{figure}
+
+Die Crew wird in dem Raumanzug des eigenen Schiffs angezeigt und um diese zu kaufen, muss man auf das Bild klicken. Links neben den Crew Bildern befindet sich jeweils der Preis des Crewmitgliedes. 
+
+\subsubsection{Systeme}
+
+Bei den meisten Schiffen wird hier nichts zu kaufen sein, da die meisten Schiffe schon alle Systeme besitzen. Wenn man ein Schiff mit fehlendem System ausgewählt hat, kann man es hier mit ein wenig Glück nachkaufen. 
+
+\subsubsection{Upgrades}
+
+Hier sieht man die vorhandenen Systeme und kann diese aufrüsten. Das System steht links und rechts steht der Preis. Um es zu kaufen, muss man das Systemlogo anklicken. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Shop/upgrades.png}
+\caption{Shop Upgrades}
+\end{figure}
+
+Die Systeme können alle bis zu einem für jedes System festgelegten Wert verbessert werden. 
+
+\subsubsection{Verkaufen}
+
+Das Verkaufen Fenster dient zum Verkaufen der ungenutzten Waffen. Um eine Waffe zu verkaufen, muss man sie im Inventar zunächst unequipen, anschließend taucht die jeweilige Waffe mit ihrem Preis im Verkaufen Fenster auf. Wenn man die Waffe verkaufen will, muss man einfach nur das Bild der jeweiligen Waffe anklicken und erhält das Geld. 
+
+HIER BILD EINFÜGEN AUS NEUEREM BRANCH!!!!!!!!!!
 
 \subsection{Kämpfe}
 
