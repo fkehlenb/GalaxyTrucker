@@ -118,7 +118,7 @@ Nachdem sie nun alle obigen Programme installiert haben, können sie nun endlich
 \centering
 \includegraphics[width=0.5\linewidth]{command.JPG}
 \end{figure} 
-\textbf{Der Gradle Build wird zwar ganz viele Warnungen geben, dieses liegt allerdings da dran das Gradle nicht versteht wozu die @NonNull tags gedacht sind, also ignorieren sie diese.}
+\textbf{Der Gradle Build wird zwar viele Warnungen geben, dieses liegt allerdings daran das Gradle nicht versteht wozu die @NonNull tags gedacht sind, also ignorieren sie diese.}
 
 Nachdem sie die Nachricht ''BUILD SUCCESSFUL'' bekommen, können sie die Programmdatei im Unterordner ''desktop$\rightarrow$build$\rightarrow$libs'' finden. Es wird eine Datei vom Format JAR sein und wahrscheinlich den Namen ''desktop-1.0.jar'' haben.
 
@@ -136,7 +136,7 @@ Nachdem sie die Nachricht ''BUILD SUCCESSFUL'' bekommen, können sie die Program
 
 \subsection{Programmausführung}
 
-Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick direkt ausführen, oder, wenn sie dem Programm mehr Arbeitsspeicher zur Verfügung stellen wollen (damit es schneller läuft), dieses mit dem Kommando ''java -Xms1G -Xmx4G -jar .\textbackslash desktop-1.0,jar'' starten. Letzteres wird dem Programm mindestens 1 GB Arbeitsspeicher  (Xms steht für Minimum) und bis zu maximal 4 GB Arbeitsspeicher yur Verfügung stellen (Xmx steht für Maximum).
+Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick direkt ausführen, oder, wenn sie dem Programm mehr Arbeitsspeicher zur Verfügung stellen wollen (damit es schneller läuft), dieses mit dem Kommando ''java -Xms1G -Xmx4G -jar .\textbackslash desktop-1.0,jar'' starten. Letzteres wird dem Programm mindestens 1 GB Arbeitsspeicher  (Xms steht für Minimum) und bis zu maximal 4 GB Arbeitsspeicher zur Verfügung stellen (Xmx steht für Maximum).
 
 \begin{figure}[h!]
 \centering
@@ -146,12 +146,28 @@ Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick
 % ==================== The Application ==================== 
 
 \section{Menüs}
+Das Menü ist der Ausgangspunkt des Programmes. Hier werden Entscheidungen getroffen die verschiedene Auswirkungen auf die Spielerfahrung haben können.
+Das Menü ist in verschiedene Untermenüs aufgeteilt. Durch das Klicken von den entsprechenden Buttons kann man zwischen diesen navigieren.
 
 \subsection{Hauptmenü}
+Im Hauptmenü kann man das Spiel starten oder Einstellungen verändern. Die Singleplayer und Multiplayer Buttons führen beide zur Fortsetzen-Auswahl
+Sollte bereits ein Spiel im Single- bzw. Multiplayermodus gestartet worden sein, können allerdings nur noch Spiele in demselben Modus gestartet werden, bis das Spiel neu gestartet wird.
+Mit Optionen wird das Einstellungsmenü geöffnet.
+Quit schließt die Anwendung.
 
-\subsubsection{Multiplayer}
+\subsubsection{Fortsetzen}
+Auf diesem Bildschirm wird entschieden, ob ein neues Spiel angefangen oder eine begonnene Partie weitergeführt werden soll. New Game leitet direkt zur Schwierigkeitsauswahl weiter. Continue führt zum Lade-Bildschirm für entweder Single- oder Multiplayer, je nach vorheriger Auswahl.
+Mit Back kann zurück ins Hauptmenü gelangt werden.
 
+\subsubsection(Schwierigkeitsauswahl)
+Easy: Die Leichteste Einstellung für Anfänger oder Spielejournalisten. Gegner machen wenig Schaden.
+Medium: Normale Einstellung. 
+Hard: Schwierigste Einstellung. Gegner sind signifikant stärker.
+Nach der Schwierigkeitsauswahl wird die Schiffauswahl aufgerufen.
+Mit Back kann zurück in die Fortsetzen-Auswahl gelangt werden. 
 \subsection{Optionen}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
