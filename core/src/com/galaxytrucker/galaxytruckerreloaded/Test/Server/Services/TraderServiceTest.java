@@ -1,6 +1,7 @@
 package com.galaxytrucker.galaxytruckerreloaded.Test.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.CrewStat;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
@@ -1201,6 +1202,173 @@ public class TraderServiceTest {
     @Test
     public void sellWeaponSuccess() {
 
+        Weapon w = new Weapon();
+        w.setId(UUID.randomUUID().hashCode());
+        w.setWeaponPrice(1);
+        w.setWeaponLevel(4);
+        List<Integer> prices = new ArrayList<>();
+        prices.add(2);
+        prices.add(4);
+        prices.add(6);
+        prices.add(8);
+        prices.add(10);
+        prices.add(12);
+        w.setPrice(prices);
+
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        List<Weapon> inventory = new ArrayList<>();
+        inventory.add(w);
+        s.setInventory(inventory);
+        s.setCoins(199);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setWeaponStock(new ArrayList<Weapon>());
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.sellWeapon(s, t, w);
+        Assert.assertTrue(response.isValidRequest());
+        entityManager.getTransaction().begin();
+        Ship s1 = entityManager.find(Ship.class, s.getId());
+        Trader t1 = entityManager.find(Trader.class, t.getId());
+        entityManager.getTransaction().commit();
+        Assert.assertEquals(200, s1.getCoins());
+        Assert.assertTrue(t1.getWeaponStock().contains(w));
+        Assert.assertFalse(s1.getInventory().contains(w));
+    }
+
+    /**
+     * try selling non existing weapon
+     */
+    @Test
+    public void sellWeaponWNotExisting() {
+        Weapon w = new Weapon();
+        w.setId(UUID.randomUUID().hashCode());
+        w.setWeaponPrice(1);
+        w.setWeaponLevel(4);
+        List<Integer> prices = new ArrayList<>();
+        prices.add(2);
+        prices.add(4);
+        prices.add(6);
+        prices.add(8);
+        prices.add(10);
+        prices.add(12);
+        w.setPrice(prices);
+
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        List<Weapon> inventory = new ArrayList<>();
+        s.setInventory(inventory);
+        s.setCoins(199);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setWeaponStock(new ArrayList<Weapon>());
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.sellWeapon(s, t, w);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * try selling from non existing ship
+     */
+    @Test
+    public void sellWeaponSNotExising() {
+        Weapon w = new Weapon();
+        w.setId(UUID.randomUUID().hashCode());
+        w.setWeaponPrice(1);
+        w.setWeaponLevel(4);
+        List<Integer> prices = new ArrayList<>();
+        prices.add(2);
+        prices.add(4);
+        prices.add(6);
+        prices.add(8);
+        prices.add(10);
+        prices.add(12);
+        w.setPrice(prices);
+
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        List<Weapon> inventory = new ArrayList<>();
+        inventory.add(w);
+        s.setInventory(inventory);
+        s.setCoins(199);
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setWeaponStock(new ArrayList<Weapon>());
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.sellWeapon(s, t, w);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * try selling to non existing trader
+     */
+    @Test
+    public void sellWeaponTNotExisting() {
+        Weapon w = new Weapon();
+        w.setId(UUID.randomUUID().hashCode());
+        w.setWeaponPrice(1);
+        w.setWeaponLevel(4);
+        List<Integer> prices = new ArrayList<>();
+        prices.add(2);
+        prices.add(4);
+        prices.add(6);
+        prices.add(8);
+        prices.add(10);
+        prices.add(12);
+        w.setPrice(prices);
+
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        List<Weapon> inventory = new ArrayList<>();
+        inventory.add(w);
+        s.setInventory(inventory);
+        s.setCoins(199);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setWeaponStock(new ArrayList<Weapon>());
+
+        ResponseObject response = service.sellWeapon(s, t, w);
+        Assert.assertFalse(response.isValidRequest());
     }
 
     /**
@@ -1208,7 +1376,118 @@ public class TraderServiceTest {
      */
     @Test
     public void sellRocketsSuccess() {
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        s.setCoins(199);
+        s.setAssociatedUser("testuser");
+        s.setMissiles(10);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
 
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setMissileStock(100);
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.sellRockets(s, t, 2);
+        Assert.assertTrue(response.isValidRequest());
+        entityManager.getTransaction().begin();
+        Ship s1 = entityManager.find(Ship.class, s.getId());
+        Trader t1 = entityManager.find(Trader.class, t.getId());
+        entityManager.getTransaction().commit();
+        Assert.assertEquals(102, t1.getMissileStock());
+        Assert.assertEquals(8, s1.getMissiles());
+        Assert.assertEquals(199+12, s1.getCoins());
+    }
+
+    /**
+     * try selling rockets from non existing ship
+     */
+    @Test
+    public void sellRocketsSNotExisting() {
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        s.setCoins(199);
+        s.setAssociatedUser("testuser");
+        s.setMissiles(10);
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setMissileStock(100);
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.sellRockets(s, t, 2);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * sell rockets to non existing trader
+     */
+    @Test
+    public void sellRocketsTNotExisting() {
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        s.setCoins(199);
+        s.setAssociatedUser("testuser");
+        s.setMissiles(10);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setMissileStock(100);
+
+        ResponseObject response = service.sellRockets(s, t, 2);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * sell more rockets than existing
+     */
+    @Test
+    public void sellRocketsNotEnough() {
+        Ship s = new Ship();
+        s.setId(UUID.randomUUID().hashCode());
+        s.setCoins(199);
+        s.setAssociatedUser("testuser");
+        s.setMissiles(10);
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setMissileStock(100);
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.sellRockets(s, t,  100);
+        Assert.assertFalse(response.isValidRequest());
     }
 
     /**
@@ -1216,6 +1495,231 @@ public class TraderServiceTest {
      */
     @Test
     public void upgradeCrewSuccess() {
+        Ship s = new Ship();
+        List<Room> rooms = new ArrayList<>();
 
+        Crew shipCrew = new Crew();
+        shipCrew.setId(UUID.randomUUID().hashCode());
+        List<Integer> stats = new ArrayList<>();
+        for(int i=0; i<5;i++) {
+            stats.add(2);
+        }
+        shipCrew.setStats(stats);
+        try {
+            crewDAO.persist(shipCrew);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        tiles.get(0).setStandingOnMe(shipCrew);
+        Room room = new Room();
+        room.setId(UUID.randomUUID().hashCode());
+        room.setTiles(tiles);
+        rooms.add(room);
+
+        s.setSystems(rooms);
+        s.setId(UUID.randomUUID().hashCode());
+        s.setInventory(new ArrayList<Weapon>());
+        s.setCoins(199);
+        s.setAssociatedUser("testuser");
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.upgradeCrew(s, shipCrew, CrewStat.WEAPON);
+        Assert.assertTrue(response.isValidRequest());
+        entityManager.getTransaction().begin();
+        Ship s1 = entityManager.find(Ship.class, s.getId());
+        Crew c1 = entityManager.find(Crew.class, shipCrew.getId());
+        entityManager.getTransaction().commit();
+        Assert.assertEquals(179, s1.getCoins());
+        Assert.assertEquals(3, (int) c1.getStats().get(0));
+    }
+
+    /**
+     * try upgrading crew of non existing ship
+     */
+    @Test
+    public void upgradeCrewSNOtExisting() {
+        Ship s = new Ship();
+        List<Room> rooms = new ArrayList<>();
+
+        Crew shipCrew = new Crew();
+        shipCrew.setId(UUID.randomUUID().hashCode());
+        List<Integer> stats = new ArrayList<>();
+        for(int i=0; i<5;i++) {
+            stats.add(2);
+        }
+        shipCrew.setStats(stats);
+        try {
+            crewDAO.persist(shipCrew);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        tiles.get(0).setStandingOnMe(shipCrew);
+        Room room = new Room();
+        room.setId(UUID.randomUUID().hashCode());
+        room.setTiles(tiles);
+        rooms.add(room);
+
+        s.setSystems(rooms);
+        s.setId(UUID.randomUUID().hashCode());
+        s.setInventory(new ArrayList<Weapon>());
+        s.setCoins(199);
+        s.setAssociatedUser("testuser");
+
+        ResponseObject response = service.upgradeCrew(s, shipCrew, CrewStat.WEAPON);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * try upgrading crew that does not exist
+     */
+    @Test
+    public void upgradeCrewCNotExisting() {
+        Ship s = new Ship();
+        List<Room> rooms = new ArrayList<>();
+
+        Crew shipCrew = new Crew();
+        shipCrew.setId(UUID.randomUUID().hashCode());
+        List<Integer> stats = new ArrayList<>();
+        for(int i=0; i<5;i++) {
+            stats.add(2);
+        }
+        shipCrew.setStats(stats);
+
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        Room room = new Room();
+        room.setId(UUID.randomUUID().hashCode());
+        room.setTiles(tiles);
+        rooms.add(room);
+
+        s.setSystems(rooms);
+        s.setId(UUID.randomUUID().hashCode());
+        s.setInventory(new ArrayList<Weapon>());
+        s.setCoins(199);
+        s.setAssociatedUser("testuser");
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.upgradeCrew(s, shipCrew, CrewStat.WEAPON);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * try upgrading crew thats already highest level
+     */
+    @Test
+    public void upgradeCrewAlreadyFull() {
+        Ship s = new Ship();
+        List<Room> rooms = new ArrayList<>();
+
+        Crew shipCrew = new Crew();
+        shipCrew.setId(UUID.randomUUID().hashCode());
+        List<Integer> stats = new ArrayList<>();
+        for(int i=0; i<5;i++) {
+            stats.add(10);
+        }
+        shipCrew.setStats(stats);
+        try {
+            crewDAO.persist(shipCrew);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        tiles.get(0).setStandingOnMe(shipCrew);
+        Room room = new Room();
+        room.setId(UUID.randomUUID().hashCode());
+        room.setTiles(tiles);
+        rooms.add(room);
+
+        s.setSystems(rooms);
+        s.setId(UUID.randomUUID().hashCode());
+        s.setInventory(new ArrayList<Weapon>());
+        s.setCoins(199);
+        s.setAssociatedUser("testuser");
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.upgradeCrew(s, shipCrew, CrewStat.WEAPON);
+        Assert.assertFalse(response.isValidRequest());
+    }
+
+    /**
+     * try upgrading crew without money
+     */
+    @Test
+    public void upgradeCrewNoMoney() {
+        Ship s = new Ship();
+        List<Room> rooms = new ArrayList<>();
+
+        Crew shipCrew = new Crew();
+        shipCrew.setId(UUID.randomUUID().hashCode());
+        List<Integer> stats = new ArrayList<>();
+        for(int i=0; i<5;i++) {
+            stats.add(2);
+        }
+        shipCrew.setStats(stats);
+        try {
+            crewDAO.persist(shipCrew);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        List<Tile> tiles = new ArrayList<>();
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 1, 0));
+        tiles.add(new Tile(UUID.randomUUID().hashCode(), 0, 1));
+        tiles.get(0).setStandingOnMe(shipCrew);
+        Room room = new Room();
+        room.setId(UUID.randomUUID().hashCode());
+        room.setTiles(tiles);
+        rooms.add(room);
+
+        s.setSystems(rooms);
+        s.setId(UUID.randomUUID().hashCode());
+        s.setInventory(new ArrayList<Weapon>());
+        s.setCoins(0);
+        s.setAssociatedUser("testuser");
+        try {
+            shipDAO.persist(s);
+        }
+        catch(Exception e ) {
+            Assert.fail();
+        }
+
+        ResponseObject response = service.upgradeCrew(s, shipCrew, CrewStat.WEAPON);
+        Assert.assertFalse(response.isValidRequest());
     }
 }

@@ -5,13 +5,11 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.SystemService;
 import org.junit.Assert;
 import org.junit.Test;
-import sun.jvm.hotspot.memory.SystemDictionary;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;

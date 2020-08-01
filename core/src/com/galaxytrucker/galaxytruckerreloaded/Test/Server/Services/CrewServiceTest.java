@@ -1,19 +1,10 @@
 package com.galaxytrucker.galaxytruckerreloaded.Test.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
-import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.*;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.CrewDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.TileDAO;
-import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.CrewService;
 import org.junit.Assert;

@@ -2,7 +2,6 @@ package com.galaxytrucker.galaxytruckerreloaded.Test.Server.Services;
 
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.ShipNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.PVPService;
