@@ -58,8 +58,8 @@ public class MissileUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(missileBackground, 600, Main.HEIGHT - 138, 147, 60);
-        font.draw(main.batch, glyph, 600 + (147f/2) - glyph.width/2, (Main.HEIGHT - 88) - glyph.height/2);
+        main.batch.draw(missileBackground, 530, (Main.HEIGHT/2) +450 -50, 147, 60);
+        font.draw(main.batch, glyph, 530 + (147f/2) - glyph.width/2, (Main.HEIGHT/2) +450  - glyph.height/2);
         main.batch.end();
     }
 

@@ -239,7 +239,7 @@ public class GamePlay implements Screen {
         tileStage = new Stage(viewport, main.batch);
 
         if(main.isMultiplayer()) {
-            pvpActivateButton = new PVPActivateButton(Main.WIDTH / 2f, Main.HEIGHT - Main.HEIGHT / (12f), 124, 50, this);
+            pvpActivateButton = new PVPActivateButton(Main.WIDTH / 2f, Main.HEIGHT - Main.HEIGHT / (8f), 124, 50, this);
             stage.addActor(pvpActivateButton);
         }
 
@@ -527,7 +527,7 @@ public class GamePlay implements Screen {
      * create next round button
      */
     private void createRoundButton() {
-        nextRoundButton = new NextRoundButton(Main.WIDTH/(2.5f), Main.HEIGHT - (Main.HEIGHT/(8f)), main.WIDTH/15.4f, main.HEIGHT/43.2f, this);
+        nextRoundButton = new NextRoundButton(Main.WIDTH/(2.1f), Main.HEIGHT - (7*Main.HEIGHT/(8f)), main.WIDTH/15.4f, main.HEIGHT/43.2f, this);
         stage.addActor(nextRoundButton);
     }
 
@@ -535,7 +535,7 @@ public class GamePlay implements Screen {
      * create ShopButton
      */
     private void createShopButton(){
-        openShopButton = new OpenShopButton(Main.WIDTH/(2f),Main.HEIGHT - Main.HEIGHT/(12f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this, PlanetEventController.getInstance(null).getClientShip().getPlanet().getTrader());
+        openShopButton = new OpenShopButton(Main.WIDTH/(2.3f),Main.HEIGHT - Main.HEIGHT/(8f), Main.WIDTH/(21.8f), Main.HEIGHT/(25.12f), this, PlanetEventController.getInstance(null).getClientShip().getPlanet().getTrader());
         stage.addActor(openShopButton);
     }
 
@@ -563,7 +563,7 @@ public class GamePlay implements Screen {
         if(success) {
             pvpActivateButton.remove();
             pvpActivateButton = null;
-            PVPGetOpponentsButton pvpGetOpponentsButton = new PVPGetOpponentsButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(12f), 124, 50, this);
+            PVPGetOpponentsButton pvpGetOpponentsButton = new PVPGetOpponentsButton(Main.WIDTH/2f, Main.HEIGHT - Main.HEIGHT/(8f), 124, 50, this);
             stage.addActor(pvpGetOpponentsButton);
         }
     }

@@ -58,8 +58,8 @@ public class ScrapUI {
      */
     public void render() {
         main.batch.begin();
-        main.batch.draw(scrapBackground, 600, Main.HEIGHT - 93, 147, 60);
-        font.draw(main.batch, glyph, 600 + (147f/2) - glyph.width/2, (Main.HEIGHT - 43) - glyph.height/2);
+        main.batch.draw(scrapBackground, 235, (Main.HEIGHT/2)+420 - 93, 147, 60);
+        font.draw(main.batch, glyph, 235 + (147f/2) - glyph.width/2, (Main.HEIGHT/2)+420 - 43 - glyph.height/2);
         main.batch.end();
     }
 
