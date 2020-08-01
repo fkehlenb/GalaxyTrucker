@@ -264,15 +264,15 @@ public class ServerServiceCommunicator {
                     responseObject.setValidRequest(true);
                     this.pvpClients.remove(u.getUsername());
                 }
-//                else if (u.getUserShip().isInCombat()&&!u.getUserShip().getPlanet().getEvent().equals(PlanetEvent.PVP)){
-//                    for (BattleService b : this.getBattleServices()){
-//                        battleServiceDAO.update(b);
-//                    }
-//                    u.setLoggedIn(false);
-//                    userService.updateUser(u);
-//                    responseObject.setValidRequest(true);
-//                    this.pvpClients.remove(u.getUsername());
-//                }
+                else if (u.getUserShip().isInCombat()&&!u.getUserShip().getPlanet().getEvent().equals(PlanetEvent.PVP)){
+                    for (BattleService b : this.getBattleServices()){
+                        battleServiceDAO.update(b);
+                    }
+                    u.setLoggedIn(false);
+                    userService.updateUser(u);
+                   responseObject.setValidRequest(true);
+                   this.pvpClients.remove(u.getUsername());
+                }
                 else{ // pvp
                     responseObject.setValidRequest(false);
                 }
