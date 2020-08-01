@@ -15,6 +15,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 import com.galaxytrucker.galaxytruckerreloaded.View.Screen.GamePlay;
 import com.galaxytrucker.galaxytruckerreloaded.View.UI.Ship.ShipView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class ShopSell extends CurrentShopUI {
      * the items that can be sold
      */
     private List<ShopSellElement> sellElements;
-    private List<Crew> crewList;
     private List<Room> r;
 
 
@@ -31,19 +31,14 @@ public class ShopSell extends CurrentShopUI {
         super(main, stage, game,trader,shopUI, x, y);
 
         //add all the items that can be sold TODO geldanzeige immer ändern
-        sellElements = new LinkedList<>();
+        sellElements = new ArrayList<>();
+        float dist = 40;
+        int i = 0;
 
-        //Crew
-
-        /*for(Room r  : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()) {
-            crewList.addAll(r.getCrew());
-        }
-        for(Crew c : crewList) {
-            sellElements.add(new ShopSellElement(main, stage, new Texture("crew.png"), 0, 0, shopUI, null, c));
-        }*/
         //weapons
         for(Weapon w : ClientControllerCommunicator.getInstance(null).getClientShip().getInventory()) {
-            sellElements.add(new ShopSellElement(main, stage, new Texture("shop/openShop.png"), 0, 0, shopUI, w, null));
+            sellElements.add(new ShopSellElement(main, stage, new Texture("shipsys/weapon_system/"+w.getWeaponType().toString().toLowerCase()+".png"), baseX, baseY+dist*i, shopUI, w, null));
+            i++;
         }
     }
     /**

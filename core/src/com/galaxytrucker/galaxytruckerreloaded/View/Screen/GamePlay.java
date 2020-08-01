@@ -731,6 +731,7 @@ public class GamePlay implements Screen {
         return success;
     }
 
+
     /**
      * buy fuel from the trader
      * call to controller
@@ -761,8 +762,14 @@ public class GamePlay implements Screen {
         return success;
     }
 
+
+    /**
+     * install a new system
+     * @param trader  current trader
+     * @param type type of the System
+     * @return
+     */
     public boolean buySystem(Trader trader, SystemType type){
-        //TODO: welcher Controller?!
         SystemController systemController = SystemController.getInstance(null);
         boolean succsess = systemController.installSystem(type);
         if(succsess){
@@ -826,7 +833,7 @@ public class GamePlay implements Screen {
         TraderController tc = TraderController.getInstance(null);
         boolean success = tc.sellWeapon(trader, weapon);
         if(success) {
-            player.changeAmountScrap(weapon.getPrice().get(weapon.getWeaponLevel()));
+            //player.changeAmountScrap(weapon.getPrice().get(weapon.getWeaponLevel()));
             player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
         }
         return success;
