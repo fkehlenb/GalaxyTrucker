@@ -39,7 +39,7 @@
 \item Method login with signature taking in variables String username, ShipType shipType and int difficulty and returning a boolean
 \end{itemize}
 
-\subsection{Unchanged:}
+\subsubsection{Unchanged:}
 \begin{itemize}
 \item variable socket of type Socket
 \end{itemize}
@@ -598,7 +598,391 @@
 \item Added variable firstGame of type boolean
 \end{itemize}
 
+% ========== Package database  ==========
 
+\section{(Added-) Package Database}
+
+\textbf{Added:}
+\begin{itemize}
+\item Added class Database
+\end{itemize}
+
+% ========== CLASS Database  ==========
+
+\subsection{Class Database:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable entityManagerFactory of type EntityManagerFactory
+\item Added static variable persistenceUnit of type String
+\item Added static method getEntityManager of type EntityManager 
+\end{itemize}
+
+% ========== Package Exception  ==========
+
+\section{(Added-) Package Exception:}
+
+\textbf{Added:}
+\begin{itemize}
+\item Exception BattleServiceNotFoundException
+\item Exception CrewNotFoundException
+\item Exception DuplicateBattleServiceException
+\item Exception DuplicateCrewException
+\item Exception DuplicateOverworldException
+\item Exception DuplicatePlanetException
+\item Exception DuplicateRequestObjectException
+\item Exception DuplicateResponseObjectException
+\item Exception DuplicateRoomException
+\item Exception DuplicateShipException
+\item Exception DuplicateTileException
+\item Exception DuplicateTraderException
+\item Exception DuplicateUserException
+\item Exception DuplicateWeaponException
+\item Exception OverworldNotFoundException
+\item Exception PlanetNotFoundException
+\item Exception RequestObjectNotFoundException
+\item Exception ResponseObjectNotFoundException
+\item Exception RoomNotFoundException
+\item Exception ShipNotFoundException
+\item Exception TileNotFoundException
+\item Exception TraderNotFoundException
+\item Exception UserNotFoundException
+\item Exception WeaponNotFoundException
+\end{itemize}
+
+% ========== Package Opponent  ==========
+
+\section{(Added-) Package Opponent:}
+
+\textbf{Added:}
+\begin{itemize}
+\item Added class NormalAI
+\item Added enum TargetMode
+\end{itemize}
+
+% ========== CLASS NormalAI  ==========
+
+\subsection{Class NormalAI}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable targets of type List$<$TargetMode$>$
+\item Added variable crewHealth of type int$[\, ]$
+\item Added variable previousCrewHealth of type int$[\, ]$
+\item Added static variable instance of type NormalAI
+\item Added static method getInstance of type NormalAI
+\item Added synchronised method learn of type void, takes in a variable of type ResponseObject and another of type List$<$Weapon$>$
+\item Added method sum of type int, taking in a variable of type int$[\, ]$
+\item Added method nextMove of type void, taking in two variables of type Ship and another of type BattleService.
+\item Added Constructor
+\end{itemize}
+
+% ========== Package Persistence  ==========
+
+\section{Package Persistence}
+
+\textbf{Added:}
+\begin{itemize}
+\item Added class BattleServiceDAO
+\item Added class RequestObjectDAO
+\item Added class ResponseObjectDAO
+\item Added class TileDAO
+\item Added class TraderDAO
+\end{itemize}
+
+% ========== CLASS BattleServiceDAO  ==========
+
+\subsection{Class BattleServiceDAO:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type BattleServiceDAO
+\item Added static method getInstance of type BattleServiceDAO
+\item Added method persist of type void, takes in a variable of type BattleService
+\item Added method update of type void, takes in a variable of type BattleService
+\item Added method remove of type void, takes in a variable of type BattleService
+\item Added method getById of type BattleService, takes in a variable of type UUID
+\item Added method getAll of type List$<$BattleService$>$
+\end{itemize}
+
+% ========== CLASS CrewDAO  ==========
+
+\subsection{Class CrewDAO:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Method persist of type void
+\item Method update of type void
+\item Method remove of type void
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable crewDAO
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type CrewDAO
+\item Added static method getInstance of type CrewDAO
+\item Added method getById of type Crew, takes in a variable of type int
+\end{itemize}
+
+% ========== CLASS ObjectDAO  ==========
+
+\subsection{Class ObjectDAO:}
+
+\textbf{Changed class to be abstract}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable source
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added variable entityManager of type EntityManager
+\end{itemize}
+
+% ========== CLASS OverworldDAO  ==========
+
+\subsection{Class OverworldDAO:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Method persist of type void
+\item Method remove of type void
+\item Method getOverworldByUser of type User
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable overworldDAO
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type OverworldDAO
+\item Added static method of type OverworldDAO
+\item Added method update of type void, takes in a variable of type Overworld
+\end{itemize}
+
+% ========== CLASS PlanetDAO  ==========
+
+\subsection{Class PlanetDAO:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Method persist of type void
+\item Method update of type void
+\item Method remove of type void
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable planetDAO
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type PlanetDAO
+\item Added static method getInstance of type PlanetDAO
+\item Added method getById of type Planet, takes in a variable of type id
+\item Added method getByName of type Planet, takes in a variable of type String
+\end{itemize}
+
+% ========== CLASS RequestObjectDAO  ==========
+
+\subsection{Class RequestObjectDAO:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type RequestObjectDAO
+\item Added static method getInstance of type RequestObjectDAO
+\item Added method persist of type void, takes in a variable of type RequestObject
+\item Added method remove of type void, takes in a variable of type RequestObject
+\end{itemize}
+
+% ========== CLASS ResponseObjectDAO  ==========
+
+\subsection{Class ResponseObjectDAO:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type ResponseObjectDAO
+\item Added static method getInstance of type ResponseObjectDAO
+\item Added method persist of type void, takes in a variable of type ResponseObject
+\item Added method remove of type void, takes in a variable of type ResponseObject
+\end{itemize}
+
+% ========== CLASS RoomDAO  ==========
+
+\subsection{Class RoomDAO:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Method persist of type void
+\item Method update of type void
+\item Method remove of type void
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable roomDAO
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type RoomDAO
+\item Added static method getInstance of type RoomDAO
+\item Added method getById of type Room, takes in a variable of type int
+\end{itemize}
+
+% ========== CLASS ShipDAO  ==========
+
+\subsection{Class ShipDAO:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Method persist of type void
+\item Method update of type void
+\item Method getShipByUser of type Ship
+\item Method remove of type void
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable shipDAO
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type ShipDAO
+\item Added static method getInstance of type ShipDAO
+\item Added method getById of type Ship, takes in a variable of type int
+\end{itemize}
+
+% ========== CLASS TileDAO  ==========
+
+\subsection{Class TileDAO:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type TileDAO
+\item Added static method getInstance of type TileDAO
+\item Added method persist of type void, takes in a variable of type Tile
+\item Added method update, takes in a variable of type Tile
+\item Added method remove, takes in a variable of type Tile
+\end{itemize}
+
+% ========== CLASS TraderDAO  ==========
+
+\subsection{Class TraderDAO:}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type TraderDAO
+\item Added static method getInstance of type TraderDAO
+\item Added method persist of type void, takes in a variable of type Trader
+\item Added method getById of type Trader, takes in a variable of type int
+\item Added method update of type void, takes in a variable of type Trader
+\item Added method remove of type void, takes in a variable of type Trader
+\end{itemize}
+
+% ========== CLASS UserDAO  ==========
+
+\subsection{Class UserDAO:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Method persist of type void
+\item Method update of type void
+\item Method getUserByUsername of type User
+\item Method remove of type void
+\item Method removeUserByUsername of type void
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable userDAO
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type UserDAO
+\item Added static method getInstance of type UserDAO
+\end{itemize}
+
+% ========== CLASS WeaponDAO  ==========
+
+\subsection{Class WeaponDAO:}
+
+\subsubsection{Unchanged:}
+\begin{itemize}
+\item Method persist oif type void
+\item Method update of type void
+\item Method remove of type void
+\end{itemize}
+
+\subsubsection{Removed:}
+\begin{itemize}
+\item Removed variable weaponDAO
+\end{itemize}
+
+\subsubsection{Added:}
+\begin{itemize}
+\item Added static variable instance of type WeaponDAO
+\item Added static method getInstance of type WeaponDAO
+\item Added method getById of type Weapon, takes in a variable of type int
+\end{itemize}
+
+% ========== Package Services ==========
+
+\section{Package Services}
+
+\textbf{Refactored (Complete rewrite):}
+\begin{itemize}
+\item Class BattleService
+\item Class CrewService
+\item Class SystemService
+\item Class TraderService
+\item Class TravelService
+\item Class UserService
+\end{itemize}
+
+\textbf{Removed:}
+\begin{itemize}
+\item Removed class RewardService
+\item Removed class PlanetEventService
+\item Removed class RoomService
+\item Removed class HangarService
+\end{itemize}
+
+\textbf{Added:}
+\begin{itemize}
+\item Added class PlanetRewardService
+\item Added class PVPService
+\item Added class WeaponService
+\end{itemize}
+
+% ========== Package Server ==========
+
+\section{Package Server}
+
+\textbf{Refactored (Complete rewrite):}
+\begin{itemize}
+\item Class Server
+\item Class ServerServiceCommunicator
+\end{itemize}
+
+\textbf{Added:}
+\begin{itemize}
+\item Added class ClientHandler
+\item Added enum PreviousRoundAction
+\item Added class RequestObject
+\item Added enum RequestType
+\item Added class ResponseObject
+\end{itemize}
 
 
 
