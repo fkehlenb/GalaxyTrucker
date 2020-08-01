@@ -6,6 +6,7 @@
 hs_err_pid*
 
 **/database.mv.db
+**/database.trace.db
 **/out
 */out/**
 */out/
