@@ -1212,6 +1212,12 @@ public class ClientHandler implements Runnable {
                 return new Ship(UUID.randomUUID().hashCode(), username, shipType, 40, 10, 20, 7, 0,
                         0, 0, 0, planet, 0, 100, rooms, inventory, false, false, false, false);
             case DEATH_STAR:
+                crewStats = new ArrayList<>();
+                crewStats.add(10);
+                crewStats.add(10);
+                crewStats.add(10);
+                crewStats.add(10);
+                crewStats.add(10);
                 Tile t = new Tile(UUID.randomUUID().hashCode(),0,0);
                 List<Tile> tiles = new ArrayList<>();
                 tiles.add(t);
