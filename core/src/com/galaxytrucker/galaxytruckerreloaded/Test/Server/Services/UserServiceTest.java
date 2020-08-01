@@ -22,13 +22,7 @@ public class UserServiceTest {
 
     private UserService service = new UserService();
 
-    private ShipDAO shipDAO = new ShipDAO();
-
-    private PlanetDAO planetDAO = new PlanetDAO();
-
     private UserDAO userDAO = new UserDAO();
-
-    private OverworldDAO overworldDAO = new OverworldDAO();
 
     /**
      * add a new user
