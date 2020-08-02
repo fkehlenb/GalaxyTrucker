@@ -227,24 +227,29 @@ public class TravelService implements Serializable {
                                             stats.add(random.nextInt(10));
                                         }
                                         Crew crew = new Crew(UUID.randomUUID().hashCode(),"CREW",8,8,stats,random.nextInt(20),"[ENEMY]");
-                                        crewDAO.persist(crew);
-                                        for (Room r : enemyShip.getSystems()){
-                                            boolean found = false;
-                                            if (r.getTiles().size()<r.getCrew().size()){
-                                                for (Tile t : r.getTiles()){
-                                                    if (t.isEmpty()){
-                                                        t.setStandingOnMe(crew);
-                                                        crew.setTile(t);
-                                                        crewDAO.update(crew);
-                                                        tileDAO.update(t);
-                                                        found = true;
-                                                        break;
+                                        try {
+                                            crewDAO.persist(crew);
+                                            for (Room r : enemyShip.getSystems()) {
+                                                boolean found = false;
+                                                if (r.getTiles().size() < r.getCrew().size()) {
+                                                    for (Tile t : r.getTiles()) {
+                                                        if (t.isEmpty()) {
+                                                            t.setStandingOnMe(crew);
+                                                            crew.setTile(t);
+                                                            crewDAO.update(crew);
+                                                            tileDAO.update(t);
+                                                            found = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
+                                                if (found) {
+                                                    break;
+                                                }
                                             }
-                                            if (found){
-                                                break;
-                                            }
+                                        }
+                                        catch (Exception f){
+
                                         }
                                         amountOfCrewOnMiniboss++;
                                     }
@@ -263,11 +268,16 @@ public class TravelService implements Serializable {
                                    while (amountOfWeaponsMiniboss < amountOfWeapons){
                                        Weapon weapon = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,random.nextInt(5)+1,random.nextInt(5)+1,0,0,0,random.nextFloat(),random.nextFloat(),
                                                random.nextInt(5),random.nextFloat(),random.nextInt(3)+1,random.nextInt(2)+1,"KILLER",random.nextInt(40)+10);
-                                       weaponDAO.persist(weapon);
-                                       for (Room r : enemyShip.getSystems()){
-                                           if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
-                                               ((System) r).getShipWeapons().add(weapon);
+                                       try {
+                                           weaponDAO.persist(weapon);
+                                           for (Room r : enemyShip.getSystems()) {
+                                               if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)) {
+                                                   ((System) r).getShipWeapons().add(weapon);
+                                               }
                                            }
+                                       }
+                                       catch (Exception f){
+
                                        }
                                        amountOfWeaponsMiniboss++;
                                     }
