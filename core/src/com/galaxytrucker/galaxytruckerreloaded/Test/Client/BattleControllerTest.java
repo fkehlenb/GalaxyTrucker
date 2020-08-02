@@ -19,6 +19,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.UUID;
+
 public class BattleControllerTest {
 
     private ShipDAO shipDAO = ShipDAO.getInstance();
@@ -178,8 +180,96 @@ public class BattleControllerTest {
 
         boolean success = controller.fleeFight(tp);
         Assert.assertTrue(success);
+    }
 
+    /**
+     * try fleeing without fuel
+     */
+    @Test
+    public void fleeNoFuel() {
+        BattleController controller = BattleController.getInstance(null);
 
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Overworld o = ClientControllerCommunicator.getInstance(null).getMap();
+        Planet tp = new Planet();
+        for(Planet p : o.getPlanetMap()) {
+            if(!p.getShips().contains(s)) {
+                int distanceX = Math.round(p.getPosX() - s.getPlanet().getPosX());
+                int distanceY = Math.round(p.getPosY() - s.getPlanet().getPosY());
+                if((Math.abs(distanceX) <= 1 && Math.abs(distanceY) <= 1)) {
+                    tp = p;
+                }
+            }
+        }
+
+        s.setFuel(0);
+        try {
+            shipDAO.update(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.fleeFight(tp);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try fleeing without ftl charge
+     */
+    @Test
+    public void fleeNoFTL() {
+        BattleController controller = BattleController.getInstance(null);
+
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Overworld o = ClientControllerCommunicator.getInstance(null).getMap();
+        Planet tp = new Planet();
+        for(Planet p : o.getPlanetMap()) {
+            if(!p.getShips().contains(s)) {
+                int distanceX = Math.round(p.getPosX() - s.getPlanet().getPosX());
+                int distanceY = Math.round(p.getPosY() - s.getPlanet().getPosY());
+                if((Math.abs(distanceX) <= 1 && Math.abs(distanceY) <= 1)) {
+                    tp = p;
+                }
+            }
+        }
+
+        s.setFTLCharge(0);
+        try {
+            shipDAO.update(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.fleeFight(tp);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try fleeing to strange planet
+     */
+    @Test
+    public void fleeStrangePlanet() {
+        BattleController controller = BattleController.getInstance(null);
+
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Planet tp = new Planet();
+        tp.setId(UUID.randomUUID().hashCode());
+
+        s.setFTLCharge(100);
+        try {
+            shipDAO.update(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.fleeFight(tp);
+        Assert.assertFalse(success);
     }
 
     /**
