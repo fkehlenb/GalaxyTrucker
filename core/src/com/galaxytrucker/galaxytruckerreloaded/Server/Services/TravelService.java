@@ -220,7 +220,7 @@ public class TravelService implements Serializable {
                                     for (Room r : enemyShip.getSystems()){
                                         amountOfCrewOnMiniboss += r.getCrew().size();
                                     }
-                                    Random random = new Random(UserService.getInstance().getUser(s.getAssociatedUser()).getOverworld().getSeed());
+                                    Random random = UserService.getInstance().getUser(s.getAssociatedUser()).getOverworld().getRandom();
                                     while (amountOfCrewOnMiniboss<amountOfCrew){
                                         List<Integer> stats = new ArrayList<>();
                                         for (int i=0;i<5;i++){

@@ -491,7 +491,7 @@ public class ClientHandler implements Runnable {
                 e.printStackTrace();
             }
         }
-        return new Overworld(UUID.randomUUID().hashCode(), seed, difficulty, username, finalMap, startPlanet, boss);
+        return new Overworld(UUID.randomUUID().hashCode(), seed, difficulty, username, finalMap, startPlanet, boss, new Random(seed));
     }
 
     /**

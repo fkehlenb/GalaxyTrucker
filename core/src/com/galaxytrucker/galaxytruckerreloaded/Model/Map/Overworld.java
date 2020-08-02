@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Entity
 @AllArgsConstructor
@@ -55,4 +56,7 @@ public class Overworld implements Serializable {
     /** The boss planet */
     @ManyToOne
     private Planet bossPlanet;
+
+    /** Randomizer */
+    private Random random = new Random(seed);
 }

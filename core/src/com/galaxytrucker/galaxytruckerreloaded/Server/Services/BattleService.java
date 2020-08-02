@@ -373,7 +373,7 @@ public class BattleService implements Serializable {
                     }
                 }
                 if (!winner.getAssociatedUser().equals("[ENEMY]")) {
-                    Random random = new Random(UserService.getInstance().getUser(winner.getAssociatedUser()).getOverworld().getSeed());
+                    Random random = UserService.getInstance().getUser(winner.getAssociatedUser()).getOverworld().getRandom();
                     if (!winner.getPlanet().getEvent().equals(PlanetEvent.PVP)) {
                         Planet p = winner.getPlanet();
                         p.getShips().remove(loser);
@@ -661,7 +661,7 @@ public class BattleService implements Serializable {
     public ResponseObject fleeFight(Ship coward, Planet planet) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            Random random = new Random(UserService.getInstance().getUser(coward.getAssociatedUser()).getOverworld().getSeed());
+            Random random = UserService.getInstance().getUser(coward.getAssociatedUser()).getOverworld().getRandom();
             // fetch data
             coward = shipDAO.getById(coward.getId());
             planet = planetDAO.getById(planet.getId());
@@ -769,10 +769,10 @@ public class BattleService implements Serializable {
         try {
             Random random;
             if (ship.getAssociatedUser().equals("[ENEMY]")){
-                random = new Random(UserService.getInstance().getUser(opponent.getAssociatedUser()).getOverworld().getSeed());
+                random = UserService.getInstance().getUser(opponent.getAssociatedUser()).getOverworld().getRandom();
             }
             else{
-                random = new Random(UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld().getSeed());
+                random = UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld().getRandom();
             }
             // ===== Fetch data =====
             ship = shipDAO.getById(ship.getId());

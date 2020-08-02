@@ -227,7 +227,7 @@ public class NormalAI implements Serializable {
                 }
             }
             List<RequestObject> nextMoves = new ArrayList<>();
-            Random random = new Random(UserService.getInstance().getUser(opponent.getAssociatedUser()).getOverworld().getSeed());
+            Random random = UserService.getInstance().getUser(opponent.getAssociatedUser()).getOverworld().getRandom();
             // Wait your turn
             ResponseObject responseObject = battleService.getUpdatedData(ship);
             // Battle over?
