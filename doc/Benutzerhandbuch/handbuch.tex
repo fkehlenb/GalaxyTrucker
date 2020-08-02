@@ -32,14 +32,14 @@ Bei unserem Programm können sie eine beliebige JDK mit einer Version von 8+ her
 % ==================== WINDOWS ====================
 \subsubsection{Windows JDK Installation}
 
-Navigieren sie bitte auf die Webseite https://www.ninite.com . Ninite ist eine Webseite mit welcher man mehrere Programme gleichzeitig automatisiert herunterladen kann. Dort werden sie unter ''Developer Tools'' eine JDK Version mit dem Namen ''JDK (AdoptOpenJDK) x64 8'' sehen. Kreuzen sie die box daneben mit einem Mausclick an. Scrollen sie nun ganz herunter und clicken sie auf den Knopt ''Get Your Ninite''. Führen sie die heruntergeladene Datei aus, welche dann automatisch JDK 8 installieren wird.
+Navigieren sie bitte auf die Webseite \url{https://www.ninite.com} . Ninite ist eine Webseite mit welcher man mehrere Programme gleichzeitig automatisiert herunterladen kann. Dort werden sie unter \textit{''Developer Tools''} eine JDK Version mit dem Namen \textit{''JDK (AdoptOpenJDK) x64 8''} sehen. Kreuzen sie die box daneben mit einem Mausklick an. Scrollen sie nun ganz herunter und klicken sie auf den Knopf \textit{''Get Your Ninite''}. Führen sie die heruntergeladene Datei aus, diese wird dann automatisch JDK 8 installieren.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\linewidth]{Windows.JPG}
 \end{figure}
 
-Um zu verifizieren das JDK korrekt installiert wurde, öffnen sie ein CMD oder Powershell Fenster, entweder durch ihre Apps oder mit Strg + R, tippen sie dann CMD oder Powershell und drücken sie Enter. Geben sie im geöffneten Fenster das Kommando Javac ein und drücken sie Enter. Sollte nichts passieren, und sie einen Fehler bekommen, so wurde das JDK nicht korrekt installiert und sie müssen das folgende Subkapitel auch noch durchgehen. Wird das Kommando wie im Bild korrekt ausgeführt, so können sie beim Kapitel ''Gradle Installation'' weiterlesen. 
+Um zu verifizieren das JDK korrekt installiert wurde, öffnen sie ein CMD oder Powershell Fenster, entweder durch ihre Apps oder mit \textit{Strg + R}. Tippen sie dann CMD oder Powershell und drücken sie \textit{Enter}. Geben sie im geöffneten Fenster das Kommando \textit{Javac} ein und drücken sie \textit{Enter}. Sollte nichts passieren, und sie einen Fehler bekommen, so wurde JDK nicht korrekt installiert und sie müssen das folgende Subkapitel auch noch durchgehen. Wird das Kommando wie im Bild korrekt ausgeführt, so können sie beim Kapitel \nameref{Gradle Installation} weiterlesen. 
 
 \begin{figure}[h!]
 \centering
@@ -50,33 +50,33 @@ Um zu verifizieren das JDK korrekt installiert wurde, öffnen sie ein CMD oder P
 \newpage
 \paragraph{PATH und JAVA\textunderscore HOME}
 
-Sollte das Kommando im letzten Schritt ein Fehler angezeigt haben, so ist JDK nicht korrekt konfiguriert. Um dieses zu ändern, navigieren sie bitte zu dem Installationspfad ihrer Jdk, welcher einen Namen wie ''C:/Program Files/Java/jdk-version haben wird''. In diesem Ordner werden sie einen weiteren Ordner ''bin'' finden und erst einmal öffnen. Kopieren sie nun den Pfad dieses Ordners (z.B. ''C:/Program Files/Java/jdk-12.0.2/bin'' für JDK 12.0.2) und öffnen sie unter Windows XP/7 My PC, oder unter Windows 8+/10 This PC. Clicken sie die rechte Maustaste und wählen sie ''Properties'' aus.
+Sollte das Kommando im letzten Schritt ein Fehler angezeigt haben, so ist JDK nicht korrekt konfiguriert. Um dieses zu ändern, navigieren sie bitte zu dem Installationspfad ihrer JDK, welcher einen Namen wie \textit{''C:/Program Files/Java/jdk-version haben wird''}. In diesem Ordner werden sie einen weiteren Ordner \textit{''bin''} finden und erst einmal öffnen. Kopieren sie nun den Pfad dieses Ordners (z.B. \textit{''C:/Program Files/Java/jdk-12.0.2/bin'' für JDK 12.0.2}) und öffnen sie unter Windows XP/7 My PC, oder unter Windows 8+/10 \textit{This PC}. Clicken sie die rechte Maustaste und wählen sie ''Properties'' aus.
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{Properties.JPG}
 \end{figure}
 
-In dem geöffneten Fenster auf der linken Seite werden sie einen Knopf ''Advanced System Settings'' sehen, welchen sie nun anclicken.
+In dem geöffneten Fenster auf der linken Seite werden sie einen Knopf \textit{''Advanced System Settings''} sehen, welchen sie nun anklicken.
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\linewidth]{AdvancedSystemSettings.JPG}
 \end{figure}
 
 \newpage
-In dem nun geöffneten Fenster, ganz unten Rechts, clicken sie auf den Knopf ''Environment Variables''.
+In dem nun geöffneten Fenster, ganz unten Rechts, klicken sie auf den Knopf \textit{''Environment Variables''}.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\linewidth]{EnvironmentVariables.JPG}
 \end{figure}
 
-Hier sind alle Variablen von Programmen die Windows durch die Konsole erkennt vorhanden. Wr müssen nun unsere JDK Installation dazufügen. Um dieses zu tun, clicken sie bei den ''System Variables'' auf den ''New...'' Knopf und geben der Variable den Namen ''JAVA\textunderscore HOME'', beachten sie das der Name korrekt und groß geschrieben ist, und als Pfad geben sie den kopierten Pfad ohne die ''/bin'' endung an, also z.B. '''C:/Program Files/Java/jdk-12.0.2'' und clicken sie dann auf Ok.
+Hier sind alle Variablen von Programmen die Windows durch die Konsole erkennt vorhanden. Sie müssen nun Ihrer JDK Installation hinzufügen. Um dieses zu tun, klicken sie bei den \textit{''System Variables''} auf den \textit{''New...''} Knopf und geben der Variable den Namen \textit{''JAVA\textunderscore HOME''}, beachten sie das der Name korrekt und groß geschrieben ist, und als Pfad geben sie den kopierten Pfad ohne die \textit{''/bin''}-Endung an, also z.B. \textit{''C:/Program Files/Java/jdk-12.0.2''} und klicken sie dann auf \textit{Ok}.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{JAVA_HOME.JPG}
 \end{figure} 
 
 \textbf{(*)}
-Jetzt müssen sie nur noch ihre System PATH Variable bearbeiten um Java als System Variable einzufügen. Um dieses zu tun, scrollen sie unter ''System Variables'' runter bis sie eine Variable mit dem Namen ''Path'' sehen, und dann diese doppelclicken. In dem jetzt angezeigtem Fenster sind sämtliche Programme die von Windows als System Variablen erkannt werden drin. Clicken sie rechts auf ''New'' und fügen sie den gesamten kopierten Pfad ein und drücken sie Enter. Sie können nun alle Fenster schließen. 
+Jetzt müssen sie nur noch ihre System PATH Variable bearbeiten um Java als System Variable einzufügen. Um dieses zu tun, scrollen sie unter \textit{''System Variables''} runter bis sie eine Variable mit dem Namen \textit{''Path''} sehen, und dann diese doppelklicken. In dem jetzt angezeigtem Fenster sind sämtliche Programme die von Windows als Systemvariablen erkannt werden drin. Klicken sie rechts auf \textit{''New''} und fügen sie den gesamten kopierten Pfad ein und drücken sie \textit{Enter}. Sie können nun alle Fenster schließen. 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{SystemVariables.JPG}
@@ -89,19 +89,21 @@ Jetzt müssen sie nur noch ihre System PATH Variable bearbeiten um Java als Syst
 
 % ==================== GRADLE INSTALLATION ====================
 \subsection{Gradle Installation}
+\label{Gradle Installation}
 
-Nun werden wir Gradle installieren. Gradle is ein ein Tool mit welchem man Java Applikationen bauen kann.
+Nun werden wir Gradle installieren. Gradle ist ein ein Tool mit welchem man Java Applikationen bauen kann.
 
 % ==================== WINDOWS ======================
 \subsubsection{Windows Gradle Installation}
 
-Navigieren sie auf die Webseite https://gradle.org/install/ und scrollen sie runter zu ''Installing manually''. Clicken sie dort auf ''Binary-only'' welches Gradle herunterladen sollte.
+
+Navigieren sie auf die Webseite \url{https://gradle.org/install/} und scrollen sie runter zu \textit{''Installing manually''}. Clicken sie dort auf \textit{''Binary-only''} welches Gradle herunterladen sollte.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\linewidth]{GradleDownload.JPG}
 \end{figure} 
 
-Extrahieren sie die heruntergeladene ZIP datei und kopieren sie den Pfad der bin datei in der Gradle datei, z.B. ''PFAD/gradle-6.4.1/bin'' und erstellen für diesen einen neuen Eintrag in der System Path Variable, siehe (*) bei der JDK Installation. Sie sollten nun die Möglichkeit haben in einem CMD oder Powershell fenster das Kommando ''gradle -version'' ausführen zu können.
+Extrahieren sie die heruntergeladene ZIP-Datei und kopieren sie den Pfad der bin Datei in der Gradle-Datei, z.B. \textit{''PFAD/gradle-6.4.1/bin''} und erstellen für diesen einen neuen Eintrag in der \textit{System Path Variable}, siehe (*) bei der JDK Installation. Sie sollten nun die Möglichkeit haben in einem CMD oder Powershell Fenster das Kommando \textit{''gradle -version''} ausführen zu können.
 
 \textbf{(*) Für die Installation auf anderen Betriebssystemen, lesen sie bitte die Dokumentation auf der Gradle Webseite.}
 
@@ -109,7 +111,7 @@ Extrahieren sie die heruntergeladene ZIP datei und kopieren sie den Pfad der bin
 
 \subsection{Java Installation (JRE)}
 
-Um das Programm ausführen zu können, werden sie eine normale Java Installation benötigen. Der Unterschied zwischen der JRE (Java Runtime Environment) und der JDK, ist das die JDK zur Entwicklung von Java Programmen gedacht ist, die JRE aber zur Ausführung dieser Programme benutzt wird. Um die neuste JRE zu installieren, navigieren sie einfach in ihrem Browser auf die Webseite https://www.java.com/download und laden sie sich Java herunter.(Clicken sie einfach immer auf weiter in der Installation)
+Um das Programm ausführen zu können, werden sie eine normale Java Installation benötigen. Der Unterschied zwischen der JRE (Java Runtime Environment) und der JDK, ist das die JDK zur Entwicklung von Java Programmen gedacht ist, die JRE aber zur Ausführung dieser Programme benutzt wird. Um die neuste JRE zu installieren, navigieren sie einfach in ihrem Browser auf die Webseite \url{https://www.java.com/download} und laden sie sich Java herunter.(Clicken sie einfach immer auf weiter in der Installation)
 
 (*) Wenn sie möchten dass das Programm schneller läuft, so können sie dem mehr Arbeitsspeicher zur Verfügung stellen. Hierbei ist die 32 bit JRE allerdings auf 2GB beschränkt, also könnten sie sich gleich eine 64 bit JRE herunterladen.
 
@@ -117,14 +119,14 @@ Um das Programm ausführen zu können, werden sie eine normale Java Installation
 
 \subsection{Installation der Software}
 
-Nachdem sie nun alle obigen Programme installiert haben, können sie nun endlich die Applikation selbst installieren. Navigieren sie hierzu bitte in den Ordner der Software (galaxytrucker in der Regel), öffnen sie eine Konsole ihrer Wahl und führen sie das Kommando ''gradle clean desktop:dist'' aus. Sollte ihre Gradle Version hiermit Probleme haben, so können sie auch den Projekt begleitendem gradlew File benutzen, indem sie stattdessen das Kommando ''.\textbackslash gradlew clean desktop:dist'' ausführen. (Unter Windows funktioniert letzteres nur in Powershell und nicht in CMD)  
+Nachdem sie nun alle obigen Programme installiert haben, können sie nun endlich die Applikation selbst installieren. Navigieren sie hierzu bitte in den Ordner der Software (galaxytrucker in der Regel), öffnen sie eine Konsole ihrer Wahl und führen sie das Kommando \textit{''gradle clean desktop:dist''} aus. Sollte ihre Gradle Version hiermit Probleme haben, so können sie auch den Projekt begleitendem gradlew File benutzen, indem sie stattdessen das Kommando \textit{''.\textbackslash gradlew clean desktop:dist''} ausführen. (Unter Windows funktioniert letzteres nur in Powershell und nicht in CMD)  
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\linewidth]{command.JPG}
 \end{figure} 
 \textbf{Der Gradle Build wird zwar viele Warnungen geben, dieses liegt allerdings daran das Gradle nicht versteht wozu die @NonNull tags gedacht sind, also ignorieren sie diese.}
 
-Nachdem sie die Nachricht ''BUILD SUCCESSFUL'' bekommen, können sie die Programmdatei im Unterordner ''desktop$\rightarrow$build$\rightarrow$libs'' finden. Es wird eine Datei vom Format JAR sein und wahrscheinlich den Namen ''desktop-1.0.jar'' haben.
+Nachdem sie die Nachricht \textit{''BUILD SUCCESSFUL''} bekommen, können sie die Programmdatei im Unterordner \textit{''desktop$\rightarrow$build$\rightarrow$libs''} finden. Es wird eine Datei vom Format JAR sein und wahrscheinlich den Namen \textit{''desktop-1.0.jar''} haben.
 
 \begin{figure}[h!]
 \centering
@@ -140,7 +142,7 @@ Nachdem sie die Nachricht ''BUILD SUCCESSFUL'' bekommen, können sie die Program
 
 \subsection{Programmausführung}
 
-Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick direkt ausführen, oder, wenn sie dem Programm mehr Arbeitsspeicher zur Verfügung stellen wollen (damit es schneller läuft), dieses mit dem Kommando ''java -Xms1G -Xmx4G -jar .\textbackslash desktop-1.0,jar'' starten. Letzteres wird dem Programm mindestens 1 GB Arbeitsspeicher  (Xms steht für Minimum) und bis zu maximal 4 GB Arbeitsspeicher zur Verfügung stellen (Xmx steht für Maximum).
+Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick direkt ausführen, oder, wenn sie dem Programm mehr Arbeitsspeicher zur Verfügung stellen wollen (damit es schneller läuft), dieses mit dem Kommando \textit{''java -Xms1G -Xmx4G -jar''} .\textbackslash desktop-1.0,jar'' starten. Letzteres wird dem Programm mindestens 1 GB Arbeitsspeicher  (Xms steht für Minimum) und bis zu maximal 4 GB Arbeitsspeicher zur Verfügung stellen (Xmx steht für Maximum).
 
 \begin{figure}[h!]
 \centering
@@ -215,10 +217,10 @@ Von hier kann man auf eine Reihe von Untermenüs zugreifen, in denen das Spieler
 
 \subsection{Multiplayer}
 
-Das Spiel verfügt natürlich auch über eine Multiplayer Funktion. Wenn sie gerade vom Singleplayer Modus ins Hauptmenü gegangen sind, dann müssen sie das Spiel leider neustarten, da ihr singleplayer Server erst dann terminiert, wenn das spiel terminiert wird (Um ohne große Zeitverschwendung schnell ein neues singleplayer Spiel starten zu können). Nach dem Neustart können sie, wie im Singleplayer modus auch, erst ihr Schiff auswählen. Sobald sie zum Fenster mit den Server Adressierungsarten kommen, müssen sie je nach dem welche Art von Multiplayer sie wollen, eine der folgenden drei Punkte befolgen.
+Das Spiel verfügt natürlich auch über eine Multiplayer Funktion. Wenn sie gerade vom Singleplayer-Modus ins Hauptmenü gegangen sind, dann müssen sie das Spiel leider neustarten, da ihr Singleplayer-Server erst dann terminiert, wenn das Spiel terminiert wird (Um ohne große Zeitverschwendung schnell ein neues Singleplayer-Spiel starten zu können). Nach dem Neustart können sie, wie im Singleplayer-Modus auch, erst ihr Schiff auswählen. Sobald sie zum Fenster mit den Server Adressierungsarten kommen, müssen sie je nach dem welche Art von Multiplayer sie wollen, eine der folgenden drei Punkte befolgen.
 
 \subsubsection{Gleicher PC Multiplayer}
-Um Multiplayer auf dem gleichen PC zu spielen, benutzen sie als Adresse des Servers eine der folgenden 3 Optionen. Der Port bleibt ihre Entscheidung, allerdings müssen sie beachten das dieser nicht von ihrem Betriebssystem benutzt wird. 
+Um Multiplayer auf dem gleichen PC zu spielen, benutzen Sie als Adresse des Servers eine der folgenden 3 Optionen. Der Port bleibt ihre Entscheidung, allerdings müssen Sie beachten das dieser nicht von Ihrem Betriebssystem benutzt wird. 
 Adressmöglichkeiten:
 \begin{itemize}
 \item 0.0.0.0
@@ -226,22 +228,22 @@ Adressmöglichkeiten:
 \item localhost
 \end{itemize}
 
-Die Adressen sind zwar alle (fast-)identisch, sie können sich allerdings beliebig eine davon auswählen.
+Die Adressen sind zwar alle (fast-)identisch, Sie können davon allerdings eine Beliebige auswählen.
 
 \subsubsection{LAN Multiplayer}
 
 Beim LAN Multiplayer können sie mit anderen Spielern auf dem gleichen Netzwerk spielen (auch über mehrere Router die mit dem gleichen Anschluss verbunden sind) müssen sie als Adresse des Servers ihre IPv4 Adresse benutzen. Um diese herauszufinden, öffnen sie eine Konsole ihrer Wahl und benutzen sie das passende Kommando zu ihrem Betriebssystem aus den folgenden Optionen:
 
 \begin{itemize}
-\item Unter \textbf{Windows}, das Kommando ''ipconfig''
-\item Unter \textbf{Linux/MacOS}, das Kommando ''ifconfig''
+\item Unter \textbf{Windows}, das Kommando \textit{''ipconfig''}
+\item Unter \textbf{Linux/MacOS}, das Kommando \textit{''ifconfig''}
 \end{itemize}
 
 Der Port bleibt auch hier ihre Entscheidung.
 
 \subsubsection{WAN/Online Multiplayer}
 
-Um Online Mulriplayer zu Spielen, müssen sie als Server Adresse ihre Public IP Address benutzen. Um diese herauszufinden ist es am einfachsten wenn sie eine Webseite wie \textbf{https://www.whatsmyip.org} benutzen. Der Port bleibt auch hier ihre Entscheidung.
+Um Online Mulriplayer zu Spielen, müssen sie als Server Adresse ihre Public IP Address benutzen. Um diese herauszufinden ist es am einfachsten wenn sie eine Webseite wie \url{https://www.whatsmyip.org} benutzen. Der Port bleibt auch hier ihre Entscheidung.
 
 \subsubsection{Informationen zu LAN/Online Multiplayer}
 
@@ -262,9 +264,9 @@ Das Spiel beginnt sobald der hier zusehende Bildschirm mit dem vorher ausgewähl
 \includegraphics[width=0.8\linewidth]{DasSpiel/Ui/game.png}
 \end{figure} 
 
-Man selbst startet auf der prozentual generierten Karte immer an einem sogenannten Startplaneten, dieser ist leer und nur deine Crew und dein Schiff befinden sich dort. Von hier aus kannst du deine Reise durch das Sternensystem beginnen!  
+Der Spieler startet auf der prozentual generierten Karte immer an einem sogenannten Startplaneten, dieser ist leer und nur Ihre Crew und Ihr Schiff befinden sich dort. Von hier aus können Sie Ihre Reise durch das Sternensystem beginnen!  
 \\
-Von hier aus werden nun alle UI-Elemente näher erklärt und deren Zusammenhang beschrieben.
+Im Folgenden werden nun alle Elemente des User-Interface näher erklärt und deren Zusammenhang beschrieben.
 
 %allgemeine Erklärung was alles ist
 
@@ -277,57 +279,57 @@ Das Schiffsinterface ist in viele Unterpunkte aufgeteilt, welche nun in Bezug au
 
 \subsubsection{Schiffinformationen}
 \subsubsection{HP}
-Oben links befindet sich die Anzeige für dein Leben, hier unter dem Punkt \textbf{Hull}, wird der Zustand der Hülle angezeigt, dieser ist je nach Schiffstyp unterschiedlich, da alle Schiffstypen verschiedene Stats haben und für verschiedene Spielstyle ausgelegt sind. 
+Oben links befindet sich die Anzeige für Ihre Leben, hier unter dem Punkt \textbf{Hull}, wird der Zustand der Hülle angezeigt, dieser ist je nach Schiffstyp unterschiedlich, da alle Schiffstypen verschiedene Stats haben und für verschiedene Spielstile ausgelegt sind. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\linewidth]{DasSpiel/Ui/HP.png}
 \end{figure} 
 
-Die Gesundheit wird nach jedem Gewonnenen Kampf leicht erhöht und es gibt aus balancing Gründen keine maximale Gesundheit, diese kann und soll auch im laufe des Spiels drastisch erhöht werden, um am Ende gegen den Enboss gewinnen zu können.
-Falls man im Singeplayer spielt, so kann dein Kontrahent genauso Gesundheit leveln und aufbauen und ist auf höheren Schwierigkeitsmodi ein ebenbürtiger, bis leicht überlegender Gegner. Gegnerische Angriffe reduzieren deine HP.
+Die Gesundheit wird nach jedem Gewonnenen Kampf leicht erhöht und es gibt aus Balancing-Gründen keine maximale Gesundheit, diese kann und soll auch im laufe des Spiels drastisch erhöht werden, um am Ende gegen den Enboss gewinnen zu können.
+Falls man im Singeplayer spielt, so kann der Kontrahent genauso Gesundheit leveln und aufbauen und ist auf höheren Schwierigkeitsmodi ein ebenbürtiger, bis leicht überlegender Gegner. Gegnerische Angriffe reduzieren deine HP.
 
 \subsubsection{Treibstoff und FTL Charge}
-Treibstoff wird benötigt um von einem Stern zum anderen springen zu können. Ein Sprung benötigt eine Treibstoff Einheit. Falls dein Treibstoff durch ein zufälliges Planet-Event reduziert oder durch zu viele Sprünge auf null fällt, so ist das Spiel vorbei und du treibst ohne Treibstoff in der leere des Weltraums herum. Falls du dich dann nicht zufällig an einem Planeten mit einem Trader aufhälst und dir Treibstoff kaufen kannst, so gilt die Partie als vorbei.
+Treibstoff wird benötigt um von einem Stern zum anderen springen zu können. Ein Sprung benötigt eine Treibstoff Einheit. Falls Ihr Treibstoff durch ein zufälliges Planet-Event reduziert oder durch zu viele Sprünge auf Null fällt, so ist das Spiel vorbei und Sie treiben ohne Treibstoff in der leere des Weltraums herum. Falls Sie sich dann nicht zufällig an einem Planeten mit einem \nameref{Shop} aufhalten und sich Treibstoff kaufen können, so gilt die Partie als vorbei.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\linewidth]{DasSpiel/Ui/fuel.png}
 \end{figure}
-Ein zusätzlicher Indikator ist der Balken unter dem \textit{JUMP} button, dieser gibt an ob dein FTL-Charge geladen ist oder nicht. 
+Ein zusätzlicher Indikator ist der Balken unter dem \textbf{JUMP}-Button, dieser gibt an ob dein FTL-Charge geladen ist oder nicht. 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\linewidth]{DasSpiel/Ui/ftl_charge.png}
 \end{figure}
-Ist der Balken komplett Rot so ist der Antrieb komplett aufgeladen und das Schiff ist zum Sprung bereit. Um einen Sprung durchzuführen, muss sich außerhalb eines Kampfes ein Crewmitglied im Antrieb und ein weiteres im Cockpit befinden. Die Funktion der Räume werden im weiteren Verlauf erklärt
-%TODO link zu Räumen
-\\
+Ist der Balken komplett Rot so ist der Antrieb komplett aufgeladen und das Schiff ist zum Sprung bereit. Um einen Sprung durchzuführen, muss sich außerhalb eines Kampfes ein Crewmitglied im Antrieb und ein weiteres im Cockpit befinden. Die Funktion der \nameref{sec:Systeme} werden im weiteren Verlauf erklärt.\\
+
+
 Falls man auf einen Gegner stößt, so ist der FTL-Charge nicht sofort wieder aufgeladen. Dies bedeutet man kann nicht ohne weiteres aus dem Kampf fliehen.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\linewidth]{DasSpiel/Ui/ftl_charge_combat.png}
 \end{figure}
-Der Antrieb lädt sich über \textbf{5} volle Kampf-Runden auf und ermöglicht dann bei Unterlegenheit die Flucht in ein anderes System.
-%TODO link zu Kampf fliehen
+Der Antrieb lädt sich über \textbf{5} volle Kampf-Runden auf und ermöglicht dann bei Unterlegenheit die \textbf{Flucht} auf einen anderen Planeten.
+
 
 \subsubsection{Munition}
-In unserem Spiel gibt es lediglich eine Waffenart die nach dem abfeuern eine sich nicht von selbst wiederherstellende Munitionsart benutzt. Waffen die als Raktenwerfer deklariert sind, verbrauchen bei jedem abfeuern eine Rakete.
+In diesem Spiel gibt es lediglich eine Waffenart die nach dem abfeuern eine sich nicht von selbst wiederherstellende Munitionsart benutzt. Waffen die als Raktenwerfer deklariert sind, verbrauchen bei jedem abfeuern eine Rakete.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\linewidth]{DasSpiel/Ui/Rocket.png}
 \end{figure}
 
-Falls nun die Raketen aufgebraucht sind, lassen sich die Waffen nicht mehr abfeuern. Raketen können nach einem gewonnen Kampf als zufällige Belohnung deinem Schiff dazu addiert werden. Genauso kann die Anzahl der Raketen durch zufällige Events erhöht, sowie im Shop mit der Währung erworben werden. Andere Waffenklassen benötigen lediglich Energie im Waffensystem.
+Falls nun die Raketen aufgebraucht sind, lassen sich die Waffen nicht mehr abfeuern. Raketen können nach einem gewonnen Kampf als zufällige Belohnung dem eigenen Schiff addiert werden. Genauso kann die Anzahl der Raketen durch zufällige Events erhöht, sowie im Shop mit der Währung erworben werden. Andere Waffenklassen benötigen lediglich Energie im Waffensystem.
 
 \subsubsection{Währung}
-Die Währung ist ein essentieller Bestandteil des Spiels, die Währung ermöglicht bei einem Händler neue Gegenstände, Upgrades, Treibstoff, Munition, Waffen, sowie neue Crewmitglieder zu erwerben.  
+Die Währung ist ein essentieller Bestandteil des Spiels. Die Währung ermöglicht bei einem Händler neue Gegenstände, Upgrades, Treibstoff, Munition, Waffen, sowie neue Crewmitglieder zu erwerben.  
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\linewidth]{DasSpiel/Ui/Money.png}
 \end{figure}
 
-Jeder Schiffstyp besitzt zu Beginn unterschiedlich viel Startkapital. Dieses kann durch gewonnene Kämpfe, sowie durch zufällige Events erhöht, aber auch verringert werden. Zudem kannst du Geld durch den Verkauf von Waffen erhalten.
+Jeder \textit{Schiffstyp} besitzt zu Beginn unterschiedlich viel Startkapital. Dieses kann durch gewonnene Kämpfe, sowie durch zufällige Events erhöht, aber auch verringert werden. 
 
 \subsubsection{Crewmitglieder}
 Alle Schiffstypen haben zu Beginn unterschiedlich viele Crewmitglieder. Crewmitglieder haben Lebensenergie und können in Kämpfen verletzt und getötet werden. Crewmitglieder haben wie in \nameref{sec:Crew} beschrieben, unterschiedliche Stats, diese wirken sich auf die jeweiligen Systeme und Aktionen aus.
@@ -344,16 +346,17 @@ Die Schilde verhindern, bzw. verringen den Schaden den gegnerische Angriffe auf 
 \centering
 \includegraphics[width=0.4\linewidth]{DasSpiel/Ui/shield.png}
 \end{figure}
-Falls dein Schild beschädigt wird, oder der Raum für die Schilde ausfällt, so verringern sich die Schildbalken und das blaue Schild, welches normalerweise das Schiff umgibt verschwindet, bis ein Crewmitglied den Schaden repariert oder der Kampf vorbei ist.
+Falls die Schild des Schiffs beschädigt werden, oder der Raum in dem sich die Schilde befinden ausfällt, verringern sich die Schildbalken und das blaue Schild, welches normalerweise das Schiff umgibt verschwindet, bis ein Crewmitglied den Schaden repariert oder der Kampf vorbei ist.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\linewidth]{DasSpiel/Ui/shield_off.png}
 \end{figure}
 
-Das Schild ist ausgefallen, weil das Schildsystem beschädigt worden ist(1). Schilde sind \textbf{nicht} bei jedem Schiffstypen vorinstalliert, manche Schiffe müssen dieses Modul erst bei einem Händler erwerben. Zudem können die Schildbalken und stärke bei einem Händler, im Austausch für Geld, erhöht werden.  
+Das Schild ist ausgefallen, weil das Schildsystem beschädigt worden ist\textit{(1)}. Schilde sind \textbf{nicht} bei jedem Schiffstypen vorinstalliert, manche Schiffe müssen dieses Modul erst bei einem Händler erwerben. Zudem können die Schildbalken und stärke bei einem Händler, im Austausch für Geld, erhöht werden.  
 
-\subsubsection{Räume und Systeme} \label{sec:Systeme}
+\subsubsection{Räume und Systeme} 
+\label{sec:Systeme}
 Jeder Schiffstyp ist in sogenannte \textit{tiles}, bzw. Räume aufgeteilt. Räume bestehen aus 2x2 Tiles, dh ein Raum kann maximal 4 Crewmitglieder beherbergen.
 
 \begin{figure}[H]
@@ -361,7 +364,7 @@ Jeder Schiffstyp ist in sogenannte \textit{tiles}, bzw. Räume aufgeteilt. Räum
 \includegraphics[width=1\linewidth]{DasSpiel/Ui/tiles.png}
 \end{figure}
 
-Die hier zusehenden Nummerierungen, ist in der Reihenfolge gewählt wie auch die Systeme in \nameref{sec:Energiemanagement} aufgelistet sind, falls dir also die Funktion der unterschiedlichen Räume klar ist und du nur wissen willst wie die Energieverteilung funktioniert, so kannst du zu dem angegebenen Kapitel springen.
+Die hier zusehenden Nummerierungen, ist in der Reihenfolge gewählt wie auch die Systeme in \nameref{sec:Energiemanagement} aufgelistet sind, falls also die Funktion der unterschiedlichen Räume bekannt sind und Sie nur wissen wollen wie die Energieverteilung funktioniert, so können Sie zu dem angegebenen Kapitel springen.
 
 \textbf{1: Sauerstoff-System}
 \\
@@ -373,12 +376,12 @@ Der Antrieb ist ein sehr essentielles System, dieser ermöglicht dir den Sprung 
 
 \textbf{3: Waffensystem}
 \\
-Das Waffensystem ist essentiell wichtig und für den Schaden den all deine Waffen anrichten zuständig, falls das Waffensystem beschädigt ist, machen Waffen lediglich stark reduzierten Schaden. Falls keine Energie den Waffen zugeteilt ist, so machen alle Waffen keinen Schaden. Wenn du jedoch ein Crewmitglied dem Waffensystem zuweist, übertragen sich die Stats der Crewmitglieder auf das Waffensystem und alle Waffen machen, je nach Stats deutlich erhöhten Schaden.
+Das Waffensystem ist essentiell wichtig und für den Schaden den all deine Waffen anrichten zuständig, falls das Waffensystem beschädigt ist, machen Waffen lediglich stark reduzierten Schaden. Falls den Waffen keine Energie zugeteilt ist, macht keine Waffe mehr Schaden. Wenn Sie dem Waffensystem jedoch ein Crewmitglied zuweisen, übertragen sich die Stats der Crewmitglieder auf das Waffensystem und alle Waffen machen, je nach Stats deutlich erhöhten Schaden.
 
 \textbf{4: Medbay-System} 
 \\
 Das Medbay-System, oder auch Heilungssystem, dient dazu Crewmitglieder wieder auf die volle Lebensenergie zu heilen.
-Falls das System beschädigt ist oder keine Energie zugewiesen bekommt, so funktioniert es nicht. In Kampfrunden benötigt das Heilungssystem eine Runde um ein Crewmitglied zu heilen.
+Falls das System beschädigt ist oder keine Energie zugewiesen bekommt, so funktioniert es nicht. In Kampfrunden benötigt das Heilungssystem eine Runde um ein Crewmitglied zu heilen. Da es außerhalb von Kämpfen keine Runden gibt, erfolgt die Heilung im freien All unverzüglich. 
 
 \textbf{5: Schild-System}
 \\
@@ -451,7 +454,7 @@ Die Waffenleiste zeigt alle ausgerüsteten Waffen an.
 \centering
 \includegraphics[width=0.7\linewidth]{DasSpiel/Ui/weapons.png}
 \end{figure} 
-Die Zahl unter den Waffensystemen gibt innerhalb eines Kampfes an wie hoch der Cooldown aktuell für die Waffe ist, falls die Waffe also abgefeuert wurde und einen \textit{Cooldown} von 2 hat, so ist diese Waffe erst nach 2 Kampfrunden wieder einsatzbereit.
+Die Zahl unterhalb den Waffensystemen gibt innerhalb eines Kampfes an wie hoch der Cooldown aktuell für die Waffe ist, falls die Waffe also abgefeuert wurde und einen \textit{Cooldown} von 2 hat, so ist diese Waffe erst nach 2 Kampfrunden wieder einsatzbereit.
 \\
 
 Im Punkt \nameref{sec:WaffenInventory} sind die Statistiken nochmal genauer erklärt. Grundsätzlich haben Waffen aber immer dieselben Eigenschaftskategorien.
@@ -470,7 +473,7 @@ Im Punkt \nameref{sec:WaffenInventory} sind die Statistiken nochmal genauer erkl
 auf ein Crewmitglied des Gegners anrichtet.
 \\
 
-\textbf{Waffen lvl:} Das Waffenlevel ordnet die Waffenstärke ein, umso größer umso stärker. Max level ist lvl 5.
+\textbf{Waffen lvl:} Das Waffenlevel ordnet die Waffenstärke und ihren Preis ein, je höher das Level desto höher auch der schaden und damit der Wert der Waffe. Max level ist lvl 5.
 \\
 
 \textbf{Damage:} Ist der Schaden die eine Waffe anrichtet.
@@ -490,7 +493,7 @@ Das Inventarfenster kann über den Button Ship geöffnet werden. Über den Close
 \includegraphics[width=0.8\linewidth]{DasSpiel/Inventar/inventar.png}
 \end{figure} 
 
-Auf dem Inventar sieht man unten links (1) die Anzahl an Fuel und die Anzahl der Missiles. Unten Rechts (2) ist der Knopf zum schließen des Fensters. Oben links (3) sieht man seine Crewmitglieder aufgelistet (siehe Crew). Oben rechts sind alle Waffen aufgelistet (siehe Waffen). 
+Auf dem Inventar sieht man unten links (1) die Anzahl an Fuel und die Anzahl der Missiles. Unten Rechts (2) ist der Knopf zum schließen des Fensters. Oben links (3) sieht man seine Crewmitglieder aufgelistet (siehe \nameref{sec:Crew}). Oben rechts sind alle \nameref{sec:Waffen} aufgelistet. 
 
 \subsubsection{Crew}\label{sec:Crew}
 
@@ -499,10 +502,10 @@ Auf dem Inventar sieht man unten links (1) die Anzahl an Fuel und die Anzahl der
 \includegraphics[width=0.8\linewidth]{DasSpiel/Inventar/crew.png}
 \end{figure} 
 
-Für jedes Crew Mitglied gibt es ein Anzeigefeld, indem der Name und die Level der Stats des Crewmitglieds angezeigt werden. Von Schiff zu Schiff und wenn man sich im Shop neue Crewmitglieder kauft, haben die unterschiedliche Stats. Man kann Crew nur verlieren, indem sie stirbt. 
+Für jedes Crew Mitglied gibt es ein Anzeigefeld, indem der Name und die Level der Stats des Crewmitglieds angezeigt werden, diese geben an, wie groß die Auswirkungen auf das entsprechende System sind, wenn sich das Crewmitglied im selben Raum wie das System befindet. Von Schiff zu Schiff und wenn man sich im Shop neue Crewmitglieder kauft, haben sie unterschiedliche Stats. Man kann Crew nur verlieren, indem sie stirbt. 
 
 
-\subsubsection{Waffen} \label{sec:WaffenInventory}
+\subsubsection{Waffen} \label{sec:Waffen}
 
 \begin{figure}[H]
 \centering
@@ -527,7 +530,7 @@ Das Kartenfenster wird im Spiel mit einem Klick auf den Jump-Button geöffnet. �
 
 Das kleine Schiff (1) Zeigt dem Spieler immer an, auf welchem Planeten er sich gerade Befindet. Hier in dem Beispiel befindet der Spieler sich auf dem Startplaneten. 
 
-Die eingekreisten Punkte (2) sind Planeten, welche das während des Spiels existieren. Bei jedem neu erstellten Spiel wird eine zufällig generierte, einzigartige Karte mit Events auf jedem Planeten erstellt erstellt. 
+Die eingekreisten Punkte (2) sind Planeten, welche während des Spiels existieren. Bei jedem neu erstellten Spiel wird eine zufällig generierte, einzigartige Karte mit Events auf jedem Planeten erstellt erstellt. 
 
 Das rot hinterlegte Raumschiff (3) ist der Endboss des Spiels. 
 
@@ -550,13 +553,14 @@ Das Reisen in diesem Spiel funktioniert nach dem Prinzip, dass ein Planetenwechs
 Der Startplanet existiert auf jeder Map nur einmal. Hier gibt es kein Event. Dieser Planet dient dazu, dass man in Ruhe am Anfang des Spiels sich seine Ausrüstung erstmal anschauen kann. 
 
 \paragraph{Normale Planeten: }
-Die normalen Planeten sind eine Zufällig generierte Anzahl an Planeten, auf denen Zufällig eins aus 6 Events auftritt (Siehe Events).
+Die normalen Planeten sind eine Zufällig generierte Anzahl an Planeten, auf denen Zufällig eins aus 6 \nameref{sec:Events} auftritt.
 
 \paragraph{Bossplanet: }
-Der Bossplanet existiert auf jeder Map nur einmal und ist immer ganz rechts angeordnet. D
+Der Bossplanet existiert auf jeder Map nur einmal und ist immer ganz rechts angeordnet. 
 
 
 \subsubsection{Events}
+\label{sec:Events}
 
 \subparagraph{Kein Event} Hier Kann es zu einem Zufälligen Geschenk kommen, welches dem Inventar hinzugefügt wird.
 
@@ -597,7 +601,7 @@ Der Bossplanet existiert auf jeder Map nur einmal und ist immer ganz rechts ange
 
 
 
-\subparagraph{Gegnerisches Schiff} Hier kann man ein zufälliges Geschenk erhalten. Hier wird ein gegnerisches Schiff angezeigt, welches im folgenden Bekämpft werden muss (Siehe Kampf). Die normalen Gegner haben immer die gleichen Stats und Waffen, welche der Grundausstattung der Schiffe entspricht, aus denen der Spieler auch auswählen kann. Beim Gewinnen bekommt der Spieler eine zufällige Auswahl an Sachen geschenkt. 
+\subparagraph{Gegnerisches Schiff} Hier kann man ein zufälliges Geschenk erhalten. Hier wird ein gegnerisches Schiff angezeigt, welches in einem \nameref{sec:Kampf}. Die normalen Gegner haben immer die gleichen Stats und Waffen, welche der Grundausstattung der Schiffe entspricht, aus denen der Spieler auch auswählen kann. Beim Gewinnen bekommt der Spieler eine zufällige Auswahl an Sachen geschenkt. 
 
 \begin{figure}[H]
 \centering
@@ -606,7 +610,7 @@ Der Bossplanet existiert auf jeder Map nur einmal und ist immer ganz rechts ange
 \end{figure} 
 
 
-\subparagraph{Gegnerisches Schiff (Miniboss)} Das Miniboss Planetevent gleicht dem normalen Gegnerischen Schiff Event, nur dass der Gegner an die Stats des Spielers angepasst wird. Er bekommt ähnlich gute Waffen und ein ähnlich hohes leben, sodass das Besiegen schwerer ist. Beim Gewinnen bekommt der Spieler eine zufällige Auswahl an Sachen geschenkt. 
+\subparagraph{Gegnerisches Schiff (Miniboss)} Das Miniboss Planetevent gleicht dem normalen Gegnerischen Schiff Event, nur dass der Gegner an die Stats des Spielers angepasst wird. Er bekommt ähnlich gute Waffen und ein ähnlich hohes leben, sodass das Besiegen schwerer ist. Beim Gewinnen bekommt der Spieler eine zufällige Auswahl an Items geschenkt. 
 
 \begin{figure}[H]
 \centering
@@ -614,7 +618,8 @@ Der Bossplanet existiert auf jeder Map nur einmal und ist immer ganz rechts ange
 \caption{Der Miniboss hat dieses Schiff mit roter Außenhülle.}
 \end{figure} 
 
-\subparagraph{Shop} Beim Shop ist es dem Spieler möglich, Ausrüstung zu kaufen oder zu verkaufen. (Siehe Kapitel Shop)
+\subparagraph{Shop}
+ Beim \nameref{Shop} ist es dem Spieler möglich, Ausrüstung zu kaufen oder zu verkaufen.
 
 \begin{figure}[H]
 \centering
@@ -624,8 +629,9 @@ Der Bossplanet existiert auf jeder Map nur einmal und ist immer ganz rechts ange
 
 
 \subsection{Shop}
+\label{Shop}
 
-Wenn man den Shop öffnet, kommt man auf eine leere Seite. Links sieht man die Tabs Waffen, Resourcen, Crew, Systeme, Upgrades, Verkaufen. Rechts sieht man den Schließen Button. Nun drückt man auf den gewählten Tab und dann öffnet sich der jeweilige Tab. Wenn sich ein leerer Tab öffnet, existiert hier nichts zum Kaufen/Verkaufen. 
+Wenn man den Shop öffnet, kommt man auf eine leere Seite. Links sieht man die Tabs \textit{Waffen}, \textit{Resourcen}, \textit{Crew}, \textit{Systeme}, \textit{Upgrades}, \textit{Verkaufen}. Rechts sieht man den Schließen Button. Nun drückt man auf den gewählten Tab und dann öffnet sich der jeweilige Tab. Wenn sich ein leerer Tab öffnet, existiert hier nichts zum Kaufen/Verkaufen. 
 
 \begin{figure}[H]
 \centering
@@ -635,7 +641,7 @@ Wenn man den Shop öffnet, kommt man auf eine leere Seite. Links sieht man die T
 
 \subsubsection{Waffen}
 
-Hier sieht man einmal links den Waffentyp anhand des Bildes, In der Mitte steht das jeweilige Waffenlevel und rechts steht der Preis, den der Spieler für die jeweilige Waffe ausgeben muss. Um eine Waffe zu kaufen, drückt man einfach auf das Bild der Waffe. Wenn genug Geld vorhanden ist, verschwindet die Waffe aus dem Shop und ist dann im Inventar. Wenn nicht genügend Geld vorhanden ist, passiert nichts. 
+Hier sieht man einmal links den Waffentyp anhand des Bildes, In der Mitte steht das jeweilige Waffenlevel und rechts steht der Preis, den der Spieler für die jeweilige Waffe ausgeben muss. Um eine Waffe zu kaufen, klickt man auf das Bild der Waffe. Wenn genug Geld vorhanden ist, verschwindet die Waffe aus dem Shop und ist dann im Inventar. Wenn nicht genügend Geld vorhanden ist, passiert nichts. 
 
 \begin{figure}[H]
 \centering
@@ -656,7 +662,7 @@ In Resourcen kann man die drei Hauptresourcen kaufen, Leben (Hull), Raketen (Mis
 \caption{Shop Resourcenfenster}
 \end{figure}
 
-Oben kann man sich Leben (Hull) kaufen. Hier wird eine Anzahl angeboten (In dem Beispiel 13) Und man kann für die 26 Coins direkt alle kaufen. Darunter befindet sich der Tank. In dem Tankschild befindet sich die Anzahl, die der Shop zu verkaufen hat. Für 3 Coins kann man dann eine Tankeinheit kaufen, solange bis die Resource ausverkauft ist. Unten kann man Raketen kaufen. Dies funktioniert analog zu Fuel. 
+Oben kann man sich Leben (\textit{Hull}) kaufen. Hier wird eine Anzahl angeboten (In dem Beispiel 13) Und man kann für die 26 Coins direkt alle kaufen. Darunter befindet sich der \textit{Tank}. In dem Tankschild befindet sich die Anzahl, die der Shop zu verkaufen hat. Für 3 Coins kann man dann eine Tankeinheit kaufen, solange bis die Resource ausverkauft ist. Unten kann man \textit{Raketen} kaufen. Dies funktioniert analog zu \textit{Fuel}. 
 
 \subsubsection{Crew}
 
@@ -677,12 +683,12 @@ Bei den meisten Schiffen wird hier nichts zu kaufen sein, da die meisten Schiffe
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{DasSpiel/Shop/sys.png}
-\caption{Hier haben wir zwei nicht ausgerüstete Waffen, die wir verkaufen können}
+\caption{Hier kann das Shield-System nachgerüstet werden}
 \end{figure}
 
 \subsubsection{Upgrades}
 
-Hier sieht man die vorhandenen Systeme und kann diese aufrüsten. Das System steht links und rechts steht der Preis. Um es zu kaufen, muss man das Systemlogo anklicken. 
+Hier sieht man die vorhandenen Systeme und kann diese so wie die Besatzung des Schiffes aufrüsten. Das System steht links und rechts steht der Preis. Um es zu kaufen, muss man das Systemlogo anklicken. Crew wird über den anderen Button geupgradet. Nach dem Klicken des Upgrade-Buttons muss man ein Crewmitglied auswählen 
 
 \begin{figure}[H]
 \centering
