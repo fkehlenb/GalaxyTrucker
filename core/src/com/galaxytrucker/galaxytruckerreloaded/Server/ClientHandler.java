@@ -410,7 +410,7 @@ public class ClientHandler implements Runnable {
             minibossTypes.add(ShipType.BARRAGE);
             Ship opponent = generateShip(minibossTypes.get(random.nextInt(minibossTypes.size() - 1)), "[ENEMY]", planet);
             try {
-                opponent.setHp(20 + random.nextInt(20));
+                opponent.setHp(50 + random.nextInt(20));
                 planetDAO.persist(planet);
                 shipDAO.persist(opponent);
             } catch (Exception e) {

@@ -824,7 +824,12 @@ public class BattleService implements Serializable {
                             // ===== Compute weapon damage =====
                             int damage;
                             if (ship.getAssociatedUser().equals("[ENEMY]")){
-                                damage = random.nextInt(difficulty*2)+1;
+                                if (ship.getPlanet().getEvent().equals(PlanetEvent.MINIBOSS) || ship.getPlanet().getEvent().equals(PlanetEvent.BOSS)){
+                                    damage = random.nextInt(5)+weapon.getDamage() + difficulty*2;
+                                }
+                                else {
+                                    damage = random.nextInt(difficulty * 2 + 1) + 1;
+                                }
                             }
                             else{
                                 damage = random.nextInt(10)+weapon.getDamage();
