@@ -74,4 +74,13 @@ public class PlanetRewardController {
         }
         return false;
     }
+
+    /** reset the rewards after using **/
+    public void resetRewards() {
+        this.fuelReward = 0;
+        this.moneyReward = 0;
+        this.rocketReward = 0;
+        this.weaponRewards = new ArrayList<>();
+        this.crewReward = null;
+    }
 }
