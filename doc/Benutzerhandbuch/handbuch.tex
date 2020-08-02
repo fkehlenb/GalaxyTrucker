@@ -144,7 +144,7 @@ Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick
 \end{figure} 
 
 % ==================== The Application ==================== 
-
+\newpage
 \section{Menüs}
 Das Menü ist der Ausgangspunkt des Programmes. Hier werden Entscheidungen getroffen die verschiedene Auswirkungen auf die Spielerfahrung haben können.
 Das Menü ist in verschiedene Untermenüs aufgeteilt. Durch das Klicken von den entsprechenden Buttons kann man zwischen diesen navigieren.
@@ -170,7 +170,7 @@ Mit Back kann zurück in die Fortsetzen-Auswahl gelangt werden.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\newpage
 \section{Das Spiel}
 Das Spiel beginnt sobald der hier zusehende Bildschirm mit dem vorher ausgewählten Schiff angezeigt wird. 
 \begin{figure}[H]
@@ -438,12 +438,28 @@ Das Verkaufen Fenster dient zum Verkaufen der ungenutzten Waffen. Um eine Waffe 
 
 \subsubsection{Endboss}
 
-
+\newpage
 \section{Known Bugs - Bitte Umbenennen!}
 
 \subsection{Logoutbug während des Kampfes}
 
-\subsection{Man muss sich immer ausloggen, NICHT EINFACH SCHLIEßen}
+Das verlassen des Spieles während eines Kampfes führt bei Wiederaufnahme des Spiels zu einem Fehler. Kämpfe müssen abgeschlossen - das heißt der Gegner besiegt, geflohen oder vom Gegner besiegt - werden bevor der Spieler sich über den \textit{Main Menu} Button im Pausemenü ausloggen und das Spiel verlassen kann.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/known Bugs/Battle-Option-Logout.png}
+\caption{Das geöffnete Pausemenü während eines Kampfes.}
+\end{figure} 
+
+\subsection{Speicherung nur bei Logout}
+
+Ebenfalls ist das Ausloggen aus dem aktuellen Spiel mit dem \textit{Main Menu} Button zwingend erforderlich um den Spielstand ordnungsgemäß zu speichern. Wird das Spiel unsachgemäß beendet, ist eine Wiederaufnahme des Spielstandes nicht möglich.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/known Bugs/Pause-Menu.png}
+\caption{Der das Pausemenü}
+\end{figure}
 
 \subsection{Firewall einstellungen für Multiplayer!}
 
