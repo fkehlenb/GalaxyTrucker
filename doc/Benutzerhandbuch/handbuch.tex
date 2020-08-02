@@ -159,7 +159,7 @@ Quit schließt die Anwendung.
 Auf diesem Bildschirm wird entschieden, ob ein neues Spiel angefangen oder eine begonnene Partie weitergeführt werden soll. New Game leitet direkt zur Schwierigkeitsauswahl weiter. Continue führt zum Lade-Bildschirm für entweder Single- oder Multiplayer, je nach vorheriger Auswahl.
 Mit Back kann zurück ins Hauptmenü gelangt werden.
 
-\subsubsection(Schwierigkeitsauswahl)
+\subsubsection{Schwierigkeitsauswahl}
 Easy: Die Leichteste Einstellung für Anfänger oder Spielejournalisten. Gegner machen wenig Schaden.
 Medium: Normale Einstellung. 
 Hard: Schwierigste Einstellung. Gegner sind signifikant stärker.
@@ -168,6 +168,45 @@ Mit Back kann zurück in die Fortsetzen-Auswahl gelangt werden.
 \subsection{Optionen}
 
 
+\subsection{Multiplayer}
+
+Das Spiel verfügt natürlich auch über eine Multiplayer Funktion. Wenn sie gerade vom Singleplayer Modus ins Hauptmenü gegangen sind, dann müssen sie das Spiel leider neustarten, da ihr singleplayer Server erst dann terminiert, wenn das spiel terminiert wird (Um ohne große Zeitverschwendung schnell ein neues singleplayer Spiel starten zu können). Nach dem Neustart können sie, wie im Singleplayer modus auch, erst ihr Schiff auswählen. Sobald sie zum Fenster mit den Server Adressierungsarten kommen, müssen sie je nach dem welche Art von Multiplayer sie wollen, eine der folgenden drei Punkte befolgen.
+
+\subsubsection{Gleicher PC Multiplayer}
+Um Multiplayer auf dem gleichen PC zu spielen, benutzen sie als Adresse des Servers eine der folgenden 3 Optionen. Der Port bleibt ihre Entscheidung, allerdings müssen sie beachten das dieser nicht von ihrem Betriebssystem benutzt wird. 
+Adressmöglichkeiten:
+\begin{itemize}
+\item 0.0.0.0
+\item 127.0.0.1
+\item localhost
+\end{itemize}
+
+Die Adressen sind zwar alle (fast-)identisch, sie können sich allerdings beliebig eine davon auswählen.
+
+\subsubsection{LAN Multiplayer}
+
+Beim LAN Multiplayer können sie mit anderen Spielern auf dem gleichen Netzwerk spielen (auch über mehrere Router die mit dem gleichen Anschluss verbunden sind) müssen sie als Adresse des Servers ihre IPv4 Adresse benutzen. Um diese herauszufinden, öffnen sie eine Konsole ihrer Wahl und benutzen sie das passende Kommando zu ihrem Betriebssystem aus den folgenden Optionen:
+
+\begin{itemize}
+\item Unter \textbf{Windows}, das Kommando ''ipconfig''
+\item Unter \textbf{Linux/MacOS}, das Kommando ''ifconfig''
+\end{itemize}
+
+Der Port bleibt auch hier ihre Entscheidung.
+
+\subsubsection{WAN/Online Multiplayer}
+
+Um Online Mulriplayer zu Spielen, müssen sie als Server Adresse ihre Public IP Address benutzen. Um diese herauszufinden ist es am einfachsten wenn sie eine Webseite wie \textbf{https://www.whatsmyip.org} benutzen. Der Port bleibt auch hier ihre Entscheidung.
+
+\subsubsection{Informationen zu LAN/Online Multiplayer}
+
+Um LAN/Online Multiplayer nutzen zu können, müssen sie ein paar Sachen beachten beachten:
+
+\textbf{LAN:} Unter Windows muss ihr Netzwerk in ihren Network Settings als ein \textbf{Privates Netzwerk} konfiguriert sein, damit sich andere auf dem gleichen Netzwerk mit ihnen verbinden können.
+
+\textbf{WAN/Online:} Zusätzlich zu dem was sie bei LAN Multiplayer beachten müssen, müssen sie ihre Firewall so konfigurieren, das andere PCs sich mit ihrem PC verbinden können. Außerdem müssen sie sehr wahrscheinlich in ihrem Router die Port Forwarding option für ihren PC nutzen. Da es hier aber viele verschiedene Konfigurationen gibt (für Firewall und Port Forwarding) bei denen auch andere Sachen wie ihr Antivirus Programm eine Rolle spielen können, werden wir hier nicht mehr Informationen zu dem Thema geben.
+
+\textbf{Um zu testen} ob man ihren Port sehen kann, können sie das mit der Software enthaltene Programm testConnection benutzen (Bitte nur vor dem Spielstart, da sonst der Spielserver herunterfahren wird). Um dieses zu Nutzen brauchen sie eine Python Version von 3.5+ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
