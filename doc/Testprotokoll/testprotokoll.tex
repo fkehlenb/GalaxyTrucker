@@ -84,6 +84,9 @@ Man lässt sich durch wiederholtes Drücken auf Next Round ohne ausführen von A
 Es soll weiterhin möglich sein, das Inventar zu öffnen und Waffen zu equippen/unequippen (sie Tests zum Inventar). Die Waffen sollten dann direkt für die Kampfrunde verfügbar sein. Der Test war erfolgreich. \\
 Es soll weiterhin möglich sein, Energie in die Systeme zu machen und Energie zu entfernen (sie Tests zur Energieverwaltung), die dann auch so in der aktuellen Kampfunde zur Verfügung stehen. Der Test war erfolgreich. \\
 
+%%% PVP
+\subsection{PVP}
+
 
 
 %%% SHOP
@@ -188,6 +191,8 @@ Die Tests sind im Unterordner galaxytrucker/core/src/com/galaxytrucker/galaxytru
 \subsection{Vorgehensweise}
 Es wurden für die Service, Controller und die DAO Klassen JUNIT Tests geschrieben. \\
 Die Tests für die DAOS fallen zum Teil nominell durch, da die erwarteten Exceptions, die auch geworfen werden, nicht als erwartet erkannt werden. Hierbei handelt es sich im Methoden zum löschen und updaten nicht existenter Daten. In diesen Fällen ist aber über das Nicht-Bestehen der Tests hinwegzusehen, da sie nur deshalb als nicht bestanden gelten, weil genau die Exceptions geworfen werden, die auch erwartet werden. \\
-Bei den Controllern wurden die Klassen AudioController und VideoController nicht getestet, da diese jeglicherweise als Speicherobjekte für die Audio und Video Einstellungen benutzt werden. Ob sie funktionieren, zeigt sich also direkt durch die manuellen Tests zu den Optionen (siehe oben). \\
+Bei den Controllern wurden die Klassen AudioController und VideoController nicht getestet, da diese jeglicherweise als Speicherobjekte für die Audio und Video Einstellungen benutzt werden. Ob sie funktionieren, zeigt sich also direkt durch die manuellen Tests zu den Optionen (siehe oben). Bei den Controller Testklassen kann es sein, dass ein Test durch die Reihenfolge, in der die Tests ausgeführt werden, fehlschlägt, allerdings erfolgreich durchgeführt werden kann, wenn er alleine ausgeführt wird. Das liegt daran, dass man hier mit einem echtem Schiff, das für alle Tests das gleiche ist, arbeitet, und die Veränderungen von einem Test möglicherweise andere beeinflussen. \\
+Für den Controller PlanetRewardsController wurde für die Methode resetReward kein Test geschrieben, bei dem ein fehlschlagen vorgesehen wird, da es sich bei dieser Methode um einen Setter handelt, dessen fehlschlagen schon in der existierenden Testmethode (resetRewardsSuccess) aufgefallen wäre. Es gibt keinen möglicherweise fehlerhaften Input, und keine Außeneinwirkungen. \\
+Für den PVPController wurden nur begrenzt JUNIT Tests geschrieben, da für weitere Tests zwei (oder mehr) eingeloggte Benutzer benötigt werden würden, was sich schlecht simulieren lässt. Diese Funktionen wurden manuell getestet, wie oben beschrieben. \\
 
 \end{document}

@@ -3,13 +3,18 @@ package com.galaxytrucker.galaxytruckerreloaded.Test.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
 import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Controller.PVPController;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PVPControllerTest {
+
+    private ShipDAO shipDAO = ShipDAO.getInstance();
+
     /**
      * setup
      */
@@ -32,5 +37,23 @@ public class PVPControllerTest {
         boolean success = controller.activatePVP(ClientControllerCommunicator.getInstance(null).getClientShip());
         Assert.assertTrue(success);
         Assert.assertTrue(ClientControllerCommunicator.getInstance(null).getClientShip().isPlayingPVP());
+    }
+
+    /**
+     * try activating pvp again
+     */
+    @Test
+    public void alreadyActivated() {
+        PVPController controller = PVPController.getInstance(null);
+        Ship s  = ClientControllerCommunicator.getInstance(null).getClientShip();
+        s.setPlayingPVP(true);
+        try {
+            shipDAO.update(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+        boolean success = controller.activatePVP(s);
+        Assert.assertFalse(success);
     }
 }
