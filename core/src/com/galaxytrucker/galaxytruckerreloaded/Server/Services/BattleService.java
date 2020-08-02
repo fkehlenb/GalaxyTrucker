@@ -9,6 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
+import com.galaxytrucker.galaxytruckerreloaded.Model.User;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.*;
@@ -362,7 +363,6 @@ public class BattleService implements Serializable {
     private void battleOver() {
         try {
             if (this.combatOver) {
-                Random random = new Random();
                 Ship loser = null;
                 Ship winner = null;
                 for (Ship s : combatants) {
@@ -373,6 +373,7 @@ public class BattleService implements Serializable {
                     }
                 }
                 if (!winner.getAssociatedUser().equals("[ENEMY]")) {
+                    Random random = new Random(UserService.getInstance().getUser(winner.getAssociatedUser()).getOverworld().getSeed());
                     if (!winner.getPlanet().getEvent().equals(PlanetEvent.PVP)) {
                         Planet p = winner.getPlanet();
                         p.getShips().remove(loser);
@@ -660,7 +661,7 @@ public class BattleService implements Serializable {
     public ResponseObject fleeFight(Ship coward, Planet planet) {
         ResponseObject responseObject = new ResponseObject();
         try {
-            Random random = new Random();
+            Random random = new Random(UserService.getInstance().getUser(coward.getAssociatedUser()).getOverworld().getSeed());
             // fetch data
             coward = shipDAO.getById(coward.getId());
             planet = planetDAO.getById(planet.getId());
@@ -766,7 +767,13 @@ public class BattleService implements Serializable {
      */
     private boolean attackOpponent(Ship ship, Ship opponent, Weapon weapon, Room room, int difficulty) {
         try {
-            Random random = new Random();
+            Random random;
+            if (ship.getAssociatedUser().equals("[ENEMY]")){
+                random = new Random(UserService.getInstance().getUser(opponent.getAssociatedUser()).getOverworld().getSeed());
+            }
+            else{
+                random = new Random(UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld().getSeed());
+            }
             // ===== Fetch data =====
             ship = shipDAO.getById(ship.getId());
             opponent = shipDAO.getById(opponent.getId());

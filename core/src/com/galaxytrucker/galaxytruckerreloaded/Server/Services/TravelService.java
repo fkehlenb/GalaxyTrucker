@@ -1,12 +1,17 @@
 package com.galaxytrucker.galaxytruckerreloaded.Server.Services;
 
+import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Overworld;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Tile;
 import com.galaxytrucker.galaxytruckerreloaded.Model.User;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.WeaponType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Database.Database;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.*;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
@@ -17,6 +22,7 @@ import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -46,6 +52,15 @@ public class TravelService implements Serializable {
      * Entity Manager
      */
     private EntityManager entityManager = Database.getEntityManager();
+
+    /** CrewDAO */
+    private CrewDAO crewDAO = CrewDAO.getInstance();
+
+    /** TileDAO */
+    private TileDAO tileDAO = TileDAO.getInstance();
+
+    /** Weapon DAO */
+    private WeaponDAO weaponDAO = WeaponDAO.getInstance();
 
     /**
      * Battle service dao
@@ -196,6 +211,74 @@ public class TravelService implements Serializable {
                         if (enemyShip != null) {
                             try {
                                 s.setInCombat(true);
+                                if (dest.getEvent().equals(PlanetEvent.MINIBOSS)){
+                                    int amountOfCrew = 0;
+                                    for (Room r : s.getSystems()){
+                                        amountOfCrew += r.getCrew().size();
+                                    }
+                                    int amountOfCrewOnMiniboss = 0;
+                                    for (Room r : enemyShip.getSystems()){
+                                        amountOfCrewOnMiniboss += r.getCrew().size();
+                                    }
+                                    Random random = new Random(UserService.getInstance().getUser(s.getAssociatedUser()).getOverworld().getSeed());
+                                    while (amountOfCrewOnMiniboss<amountOfCrew){
+                                        List<Integer> stats = new ArrayList<>();
+                                        for (int i=0;i<5;i++){
+                                            stats.add(random.nextInt(10));
+                                        }
+                                        Crew crew = new Crew(UUID.randomUUID().hashCode(),"CREW",8,8,stats,random.nextInt(20),"[ENEMY]");
+                                        crewDAO.persist(crew);
+                                        for (Room r : enemyShip.getSystems()){
+                                            boolean found = false;
+                                            if (r.getTiles().size()<r.getCrew().size()){
+                                                for (Tile t : r.getTiles()){
+                                                    if (t.isEmpty()){
+                                                        t.setStandingOnMe(crew);
+                                                        crew.setTile(t);
+                                                        crewDAO.update(crew);
+                                                        tileDAO.update(t);
+                                                        found = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            if (found){
+                                                break;
+                                            }
+                                        }
+                                        amountOfCrewOnMiniboss++;
+                                    }
+                                    int amountOfWeapons = 0;
+                                    for (Room r : s.getSystems()){
+                                        if (r.isSystem()&&((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
+                                            amountOfWeapons += ((System) r).getShipWeapons().size();
+                                        }
+                                    }
+                                    int amountOfWeaponsMiniboss = 0;
+                                    for (Room r : enemyShip.getSystems()){
+                                        if (r.isSystem()&&((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
+                                            amountOfWeaponsMiniboss += ((System) r).getShipWeapons().size();
+                                        }
+                                    }
+                                   while (amountOfWeaponsMiniboss < amountOfWeapons){
+                                       Weapon weapon = new Weapon(UUID.randomUUID().hashCode(), WeaponType.ROCKET,random.nextInt(5)+1,random.nextInt(5)+1,0,0,0,random.nextFloat(),random.nextFloat(),
+                                               random.nextInt(5),random.nextFloat(),random.nextInt(3)+1,random.nextInt(2)+1,"KILLER",random.nextInt(40)+10);
+                                       weaponDAO.persist(weapon);
+                                       for (Room r : enemyShip.getSystems()){
+                                           if (r.isSystem() && ((System) r).getSystemType().equals(SystemType.WEAPON_SYSTEM)){
+                                               ((System) r).getShipWeapons().add(weapon);
+                                           }
+                                       }
+                                       amountOfWeaponsMiniboss++;
+                                    }
+                                    if (enemyShip.getHp()<s.getHp()) {
+                                        enemyShip.setHp(s.getHp());
+                                    }
+                                    if (enemyShip.getShields()<s.getShields()) {
+                                        enemyShip.setShields(s.getShields());
+                                    }
+                                    shipDAO.update(enemyShip);
+                                }
                                 // ===== Create new Battle Service =====
                                 BattleService battleService = new BattleService(UUID.randomUUID(), s.getId());
                                 List<Ship> combatants = new ArrayList<>();

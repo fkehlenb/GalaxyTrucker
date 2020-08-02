@@ -11,6 +11,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.BattleService;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.UserService;
 import lombok.NonNull;
 
 import java.io.Serializable;
@@ -226,7 +227,7 @@ public class NormalAI implements Serializable {
                 }
             }
             List<RequestObject> nextMoves = new ArrayList<>();
-            Random random = new Random();
+            Random random = new Random(UserService.getInstance().getUser(opponent.getAssociatedUser()).getOverworld().getSeed());
             // Wait your turn
             ResponseObject responseObject = battleService.getUpdatedData(ship);
             // Battle over?

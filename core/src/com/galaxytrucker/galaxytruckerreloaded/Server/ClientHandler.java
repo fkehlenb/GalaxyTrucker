@@ -396,7 +396,7 @@ public class ClientHandler implements Runnable {
             planetMap.add(planet);
         }
         // ======================= Add minibosses =======================
-        int minibosses = random.nextInt(2) + 1;
+        int minibosses = random.nextInt(4) + 1;
         for (int i = 0; i < minibosses; i++) {
             //Random planet texture
             int randomPlanetTextureInt = random.nextInt(7) + 1;

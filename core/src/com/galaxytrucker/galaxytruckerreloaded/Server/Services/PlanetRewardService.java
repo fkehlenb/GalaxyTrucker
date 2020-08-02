@@ -83,7 +83,7 @@ public class PlanetRewardService {
                 responseObject.setValidRequest(true);
                 planet.setLooted(true);
                 planetDAO.update(planet);
-                Random random = new Random();
+                Random random = new Random(UserService.getInstance().getUser(ship.getAssociatedUser()).getOverworld().getSeed());
                 int weaponRandomizer = random.nextInt(7);
                 int crewRandomizer = random.nextInt(49);
                 boolean spaceForCrew = false;
