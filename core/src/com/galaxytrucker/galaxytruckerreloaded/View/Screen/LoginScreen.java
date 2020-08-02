@@ -9,6 +9,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCom
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.BackButton;
+import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.JoinServerButton;
 import com.galaxytrucker.galaxytruckerreloaded.View.Buttons.MenuButtons.LoginButton;
 
 /**
@@ -47,6 +48,11 @@ public class LoginScreen extends MenuScreen {
     private TextField port;
 
     /**
+     * whether the game should be continued as client
+     */
+    private boolean client;
+
+    /**
      * Constructor
      *
      * @param main - main class
@@ -56,7 +62,6 @@ public class LoginScreen extends MenuScreen {
 
         LoginButton loginButton = new LoginButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*4, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
         BackButton backButton = new BackButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*6, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
-
 
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         username = new TextField("", skin);
@@ -71,6 +76,9 @@ public class LoginScreen extends MenuScreen {
         stage.addActor(backButton);
 
         if(main.isMultiplayer()) {
+            JoinServerButton join = new JoinServerButton(Main.WIDTH/2f - Main.WIDTH/7.74f/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 -Main.HEIGHT/21.6f*8, Main.WIDTH/7.74f, Main.HEIGHT/21.6f, this);
+            stage.addActor(join);
+
             address = new TextField("", skin);
             address.setSize(Main.WIDTH/7.74f, Main.HEIGHT/21.6f);
             address.setPosition(Main.WIDTH/2f - username.getWidth()/2, Main.HEIGHT/2f + Main.HEIGHT/21.6f/2 +Main.HEIGHT/21.6f*3);
@@ -95,6 +103,13 @@ public class LoginScreen extends MenuScreen {
     public void goBack() {
         main.setScreen(new SPNewOrResume(main));
         dispose();
+    }
+
+    /**
+     * choose that you want to resume the game as a client, or undo this choice
+     */
+    public void joinServer() {
+        client = !client;
     }
 
     /**
@@ -129,7 +144,9 @@ public class LoginScreen extends MenuScreen {
             }
         }
         else {
-            main.startServer(address.getText(), Integer.parseInt(port.getText()));
+            if(!client) {
+                main.startServer(address.getText(), Integer.parseInt(port.getText()));
+            }
             main.startClient(address.getText(), Integer.parseInt(port.getText()));
             boolean success = ClientControllerCommunicator.getInstance(main.getClient()).login(name, ShipType.DEFAULT, 0);
             if(success) {
