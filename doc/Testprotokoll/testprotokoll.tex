@@ -61,7 +61,7 @@ Diese Tests werden im GamePlay Optionen Menü erfolgreich wiederholt. \\
 
 %%% KAMPF
 \subsection{Tests zum Kampf}
-Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich der Spieler auf einem Combat/Miniboss Planeten mit einem Gegner befindet. \\
+Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich der Spieler auf einem Combat/Miniboss Planeten mit einem Gegner befindet. Selbige Tests wurden ebenfalls für die Planetevents MINIBOSS, PVP und BOSS durchgeführt, deren Mechanik identisch ist. \\
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\linewidth]{images/battle.png}
@@ -86,8 +86,15 @@ Es soll weiterhin möglich sein, Energie in die Systeme zu machen und Energie zu
 
 %%% PVP
 \subsection{PVP}
-
-
+In diesem Abschnitt werden alle zusätzlich zu den normalen Kampfaktionen zum PVP gehörende Aktionen getestet. \\
+\subsubsection{Activate}
+Man meldet sich im Multiplayer Mode an. Es sollte ein Button am oberen Spielfeldrand zu sehen sein, auf dem Acitvate PVP steht. Dies sollte unabhängig davon, ob man als Host oder Client angemeldet ist, der Fall sein. Der Test war erfolgreich. \\
+Nach Drücken auf diesen Button sollte sich dieser zu einem Get Opponent Button ändern.  Der Test war erfolgreich. \\
+\subsubsection{Get Opponents}
+Nach Drücken auf den Get Opponent Button sollte sich ein Fenster öffnen, auf dem alle anderen Benutzer, die auf dem Server sind und PVP aktiviert haben, angezeigt werden.  Der Test war erfolgreich. \\
+Es soll möglich sein, einen Namen in ein Textfeld einzugeben.  Der Test war erfolgreich. \\
+Nach Drücken auf Start Game sollte man einen Kampfbildschirm mit dem ausgewählten Spieler als Gegner angezeigt bekommen.  Der Test war erfolgreich. \\
+Nach Drücken auf Close sollte sich das Fenster wieder schließen.  Der Test war erfolgreich. \\
 
 %%% SHOP
 \subsection{Tests zum Shop}
