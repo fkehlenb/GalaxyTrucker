@@ -14,17 +14,15 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%	EINFÜHRUNG
 \section{Einführung}
-Dieses Dokument dient zur Dokumentation der durchgeführten Tests für das Spiel Galaxytrucker. Die Gliederung des Dokuments wurde so vorgenommen, dass zunächst manmuelle Tests und anschließend automatische Tests beschrieben werden. Die manuellen Tests wurden so unterteilt, dass zunächst generelle Funktionen getestet werden, und anschließend die Funktionen komplexerer Situation, wie die eines Kampfes. \\
+Dieses Dokument dient zur Dokumentation der durchgeführten Tests für das Spiel Galaxytrucker. Die Gliederung des Dokuments wurde so vorgenommen, dass zunächst manuelle Tests und anschließend automatische Tests beschrieben werden. Die manuellen Tests wurden so unterteilt, dass zunächst generelle Funktionen getestet werden, und anschließend die Funktionen komplexerer Situation, wie die eines Kampfes. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%		 MANUELLE TESTS
 \section{Manuelle Tests}
 
 %%%	EINFÜHRUNG
 \subsection{Einführung}
-Für die View Klassen unseres Projektes bot es eher an, die Funktionsweisen manuell zu testen. 
+Für die View Klassen unseres Projektes bot es sich eher an, die Funktionsweisen manuell zu testen. 
 Dafür wurden in die Backend Klassen, sprich Controller und Services, durch System.out.println die ausgeführten Aktionen geloggt, um diese mit den auf dem Bildschirm angewählten Aktionen und angezeigten Ergebnissen zu vergleichen. \\
-
-
 
 %%% GENERELL
 \subsection{Tests zur generellen Funktion}
@@ -118,8 +116,12 @@ Eine gekaufte Waffe soll nicht nocheinmal erfolgreich gekauft werden können. De
 Es wird auf den System Installieren Knopf auf der linken Seite des Shops gedrückt. Es sollten die Systeme, die das Schiff haben kann, aber noch nicht unlocked hat, angezeigt werden (wie Schilde in Stealth). Wenn man es sich leisten kann, und auf den Knopf des Systems drückt, sollte es möglich werden, Energie in das System zu machen.  Der Test war erfolgreich. \\ 
 Ein installiertes System soll nicht noch einmal installiert werden können.  Der Test war erfolgreich. \\
 \subsubsection{System upgraden}
-Es wird auf den System Upgrade Knopf auf der linken Seite des Shops gedrückt. Es sollten alle Systeme, die das Schiff hat, angezeigt werden.  Der Test war erfolgreich. \\
+Es wird auf den Upgrade Knopf auf der linken Seite des Shops gedrückt. Es sollten alle Systeme, die das Schiff hat, angezeigt werden.  Der Test war erfolgreich. \\
 Wenn auf einen Knopf gedrückt wird, sollte das angezeigte Geld abgezogen werden. Ebenfalls sollten die nötigen Änderungen (maximale Energie) an dem jeweiligen System durchgeführt werden. Der Test war erfolgreich. \\
+Nachdem ein System geupgradet wurde, sollte ein aktualisierter Preis für das nächste Upgrade angezeigt werden, außer es ist bereits das finale Update erreicht.  Der Test war erfolgreich. \\
+\subsubsection{Crew upgrade}
+Es wird auf den Upgrade Knopf auf der linken Seite des Shops gedrückt. Es sollten zusätzlich zu den Systemen die Crewmitglieder, die auf dem Schiff sind, angezeigt werden.  Der Test war erfolgreich. \\
+Wenn auf ein Crew Mitglied gedrückt wird, sollte das angezeigte Geld abgezogen werden. Ebenfalls sollte für das Crewmitglied ein zufälliger Stat um einen Punkt verbessert werden (zu Überprüfen im Inventar).  Der Test war erfolgreich. \\
 \subsubsection{Crew kaufen}
 Es wird auf den Crew Knopf auf der linken Seite gedrückt. Dort sollen alle Crew Mitglieder, die der Trader im Angebot hat, angezeigt werden. Die Crew Mitglieder sollen die gleichen Texturen haben wie die, die schon im Schiff sind. Wenn man sich ein Crew Mitglied leisten kann und auf das Crew Mitglied drückt, sollte es aus dem Shop entfernt, und der eigenen Anzeige hinzugefügt werden. Das Geld sollte angezeigt werden.  Der Test war erfolgreich. \\
 \subsubsection{Waffe verkaufen}
