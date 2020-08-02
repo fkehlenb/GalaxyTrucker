@@ -171,8 +171,6 @@ public class TraderService {
                 }
             }
             if (exists && spaceInShip && ship.getCoins() >= crew.getPrice()) {
-                // Subtract money
-                ship.setCoins(ship.getCoins() - crew.getPrice());
                 // Remove crew from stock
                 stock.remove(crew);
                 trader.setCrewStock(stock);
@@ -195,6 +193,9 @@ public class TraderService {
                             List<Crew> crewInRoom = r.getCrew();
                             crewInRoom.add(crew);
                             r.setCrew(crewInRoom);
+                            Ship ship1 = shipDAO.getById(ship.getId());
+                            ship1.setCoins(ship1.getCoins()-crew.getPrice());
+                            shipDAO.update(ship1);
                             // Update data
                             roomDAO.update(r);
                             traderDAO.update(trader);
