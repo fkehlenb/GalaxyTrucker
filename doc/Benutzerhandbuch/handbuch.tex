@@ -508,9 +508,35 @@ Radiobomben haben einen geringeren Schaden als normale Bomben, jedoch setzen sie
 
 \subsubsection{Erklärung}
 
+Das Prinzip der Kämpfe in unserem Spiel ist rundenbasiert. Sobald man auf ein gegnerisches Schiff trifft, beginnt man mit der ersten Runde. Man wählt unten in dem Waffenfenster (1) eine Waffe aus, dann wird die ausgewählte Waffe angezeigt, dann wählt man im Schiff aus, auf welchen Tile man die Waffe abfeuern möchte. An dieser Stelle wird ein Zielsymbol (2) angezeigt. Das wiederholt man mit allen Waffen, die man abfeuern möchte. Man kann seiner Crew befehlen, sich zu bewegen. Wenn man auf Next Round (3) drückt, dann bewegt sich die Crew und die Waffen werden abgefeuert. Im gleichen Zug macht der gegner auch seinen Zug. Dann ist man wieder dran und wiederholt alles. Dies macht man solange, bis der Gegner oder man selbst tot ist, oder man wartet, bis FtlCharge (4) aufgeladen ist, dann kann man aus dem Kampf entfliehen. Hierzu drückt man auf den Jumpbutton und kann dann zu einem anderen Planeten fliehen. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fight.png}
+\caption{Kampf}
+\end{figure}
+
 \subsubsection{Mögliche Taktiken}
 
 \subsubsection{Normale Gegner}
+
+Der Kampf funktioniert, wie in \textit{Erklärung} erklärt. Die Gegner haben feste Stats, welche bei jedem Gegner dieses Typs gleich sind. Sie haben immer die gleiche Ausrüstung, welche der der Startschiffe des Spielers entsprechen. 
+
+Wenn man sie tötet, kann es passieren, dass man eine der Waffen und ein paar Resourcen bekommt. Diese werden ins Inventar gepackt. Das Schiff des Gegners verschwindet und der Planetevent wird zu \textit{Kein Event} gesetzt. Nach einem Kampf verhält sich alles also wie normal. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fightwin.png}
+\caption{Kampf gewonnen}
+\end{figure}
+
+Wenn man getötet wird, Also die Crew stirbt oder das Schiff zerstört wird, verliert man das gesamte Spiel und kann nur noch zum Hauptmenü zurückkehren. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fightlose.png}
+\caption{Kampf verloren}
+\end{figure}
 
 \subsubsection{Minibosse}
 
