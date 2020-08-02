@@ -186,7 +186,8 @@ Projektklassen wurden unabhängig getestet. Das für die Tests verwendete Framew
 Die Tests sind im Unterordner galaxytrucker/core/src/com/galaxytrucker/galaxytruckerreloaded/Test zu finden. Die Testklassen für ein Modul des Projekts finden sich im passend benannten Unterordner. \\
 %%% VORGEHENSWEISE
 \subsection{Vorgehensweise}
-Es wurden für die Service, sowie die DAO Klassen JUNIT Tests geschrieben. \\
+Es wurden für die Service, Controller und die DAO Klassen JUNIT Tests geschrieben. \\
 Die Tests für die DAOS fallen zum Teil nominell durch, da die erwarteten Exceptions, die auch geworfen werden, nicht als erwartet erkannt werden. Hierbei handelt es sich im Methoden zum löschen und updaten nicht existenter Daten. In diesen Fällen ist aber über das Nicht-Bestehen der Tests hinwegzusehen, da sie nur deshalb als nicht bestanden gelten, weil genau die Exceptions geworfen werden, die auch erwartet werden. \\
+Bei den Controllern wurden die Klassen AudioController und VideoController nicht getestet, da diese jeglicherweise als Speicherobjekte für die Audio und Video Einstellungen benutzt werden. Ob sie funktionieren, zeigt sich also direkt durch die manuellen Tests zu den Optionen (siehe oben). \\
 
 \end{document}
