@@ -157,7 +157,7 @@ Das Menü ist in verschiedene Untermenüs aufgeteilt. Durch das Klicken von den 
 \subsection{Hauptmenü}
 Im Hauptmenü kann man das Spiel starten oder Einstellungen verändern. Die Singleplayer und Multiplayer Buttons führen beide zur Spielauswahl
 Sollte bereits ein Spiel im Single- bzw. Multiplayermodus gestartet worden sein, können allerdings nur noch Spiele in demselben Modus gestartet werden, bis das Spiel neu gestartet wird.
-Mit Optionen wird das Einstellungsmenü geöffnet.
+Mit Optionen wird das Einstellungsmenü "Optionen" geöffnet.
 Quit schließt die Anwendung.
 
 \subsubsection{Spielauswahl}
@@ -211,6 +211,16 @@ Von hier kann man auf eine Reihe von Untermenüs zugreifen, in denen das Spieler
 \item Back: Führt zurück zum vorherigen Bildschirm
 \end{itemize}
 
+\subsection{Pause}
+Über die Pause kann man vom Spiel aus auf die Optionen zugreifen, das Spiel beenden oder Fortsetzen
+\begin{itemize}
+\item Optionen: Öffnet das Einstellungsmenü "Optionen"
+\item Main menu: Loggt den Spieler aus dem Spiel aus, speichert und beendet die Session.
+\item Continue: Kehrt zum vorherigen Bildschirm zurück und setzt das Spiel fort.
+\end{itemize}
+Main menu darf nicht innerhalb eines Kampfes aufgerufen werden. Wenn man Multiplayer spielt müssen alle Clients ins Main menu ausloggen bevor ein einzelner Spieler das Spiel beenden darf. Der Host muss die Verbindung immer als letztes abbrechen.
+
+
 \subsection{Audio}
 \begin{itemize}
 \item volume up: erhöht die Lautstärke von Spielmusik und Soundeffekten
@@ -222,12 +232,11 @@ Von hier kann man auf eine Reihe von Untermenüs zugreifen, in denen das Spieler
 
 \subsection{Video}
 \begin{itemize}
-\item set: setzt die Auflösung auf 1440p (Warnung, einige Objekte könnten sich verschieben)
+\item Set: setzt die Auflösung auf 1440p (Warnung, startet das Spiel neu. Einige Objekte könnten sich verschieben)
 \item Fullscreen: Setzt das Spiel auf Vollbild
 \item Windowed: Setzt das Spiel auf Fenstermodus.
 \item back: zurück zu den Optionen
 \end{itemize}
-
 
 
 \subsection{Multiplayer}
