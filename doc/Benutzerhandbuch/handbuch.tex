@@ -154,28 +154,62 @@ Das Menü ist der Ausgangspunkt des Programmes. Hier werden Entscheidungen getro
 Das Menü ist in verschiedene Untermenüs aufgeteilt. Durch das Klicken von den entsprechenden Buttons kann man zwischen diesen navigieren.
 
 \subsection{Hauptmenü}
-Im Hauptmenü kann man das Spiel starten oder Einstellungen verändern. Die Singleplayer und Multiplayer Buttons führen beide zur Fortsetzen-Auswahl
+Im Hauptmenü kann man das Spiel starten oder Einstellungen verändern. Die Singleplayer und Multiplayer Buttons führen beide zur Spielauswahl
 Sollte bereits ein Spiel im Single- bzw. Multiplayermodus gestartet worden sein, können allerdings nur noch Spiele in demselben Modus gestartet werden, bis das Spiel neu gestartet wird.
 Mit Optionen wird das Einstellungsmenü geöffnet.
 Quit schließt die Anwendung.
 
-\subsubsection{Fortsetzen}
-Auf diesem Bildschirm wird entschieden, ob ein neues Spiel angefangen oder eine begonnene Partie weitergeführt werden soll. New Game leitet direkt zur Schwierigkeitsauswahl weiter. Continue führt zum Lade-Bildschirm für entweder Single- oder Multiplayer, je nach vorheriger Auswahl.
+\subsubsection{Spielauswahl}
+Auf diesem Bildschirm wird entschieden, ob ein neues Spiel angefangen oder eine begonnene Partie weitergeführt werden soll. New Game leitet direkt zur Schwierigkeitsauswahl weiter. Continue führt zum Ladebildschirm für entweder Single- oder Multiplayer, je nach vorheriger Auswahl.
 Mit Back kann zurück ins Hauptmenü gelangt werden.
 
 \subsubsection{Schwierigkeitsauswahl}
-Easy: Die Leichteste Einstellung für Anfänger oder Spielejournalisten. Gegner machen wenig Schaden.
-Medium: Normale Einstellung. 
-Hard: Schwierigste Einstellung. Gegner sind signifikant stärker.
+\begin{itemize}
+\item Easy: Die Leichteste Einstellung für Anfänger oder Spielejournalisten. Gegner machen wenig Schaden.
+\item Medium: Normale Einstellung. 
+\item Hard: Schwierigste Einstellung. Gegner sind signifikant stärker.
+\end {itemize}
 Nach der Schwierigkeitsauswahl wird die Schiffauswahl aufgerufen.
-Mit Back kann zurück in die Fortsetzen-Auswahl gelangt werden. 
-\subsubsection{Schwierigkeitsauswahl}
-Easy: Die Leichteste Einstellung für Anfänger oder Spielejournalisten. Gegner machen wenig Schaden.
-Medium: Normale Einstellung. 
-Hard: Schwierigste Einstellung. Gegner sind signifikant stärker.
-Nach der Schwierigkeitsauswahl wird die Schiffauswahl aufgerufen.
-Mit Back kann zurück in die Fortsetzen-Auswahl gelangt werden. 
+Mit Back kann zurück in die Spielauswahl gelangt werden. 
+
+\subsubsection{Schiffsausswahl}
+Hier wird das Schiff für das nächste Spiel ausgewählt.
+Mit den Pfeilen nach rechts und links kann zwischen den Schiffen hin und her gewechselt werden.
+In dem Textfeld wird der Username eingegeben. Der Username fungiert auch als Name des Spiels, unter dem der Spielstand gespeichert wird. Um das Spiel später fortzuführen ist empfehlenswert, sich diesen zu merken. Ein einmal verwendeter Name kann nicht erneut als Spielname verwendet werden, selbst wenn dessen Partie bereits beendet wurde. Der einzige weg um einen Namen wieder freizugeben ist manuell die Datenbank zu löschen, sie wird dann beim nächsten Spielstart neu erstellt.
+
+Die Schiffe geordnet von links nach rechts sind wie folgt:
+\begin{itemize}
+\item Kestrel: Standardschiff. Ausgeglichene Fähigkeiten. Guter Allrounder.
+\item Tank: Fokus auf Defensive. Starke Schilde und viel Leben, aber wenig Startkapital und langsame Antriebe.
+\item Killer: Fokus auf Sabotage. Langsame Startwaffe die leicht Crew und Systeme ausschaltet. Hat nur ein Crewmitglied, und kein Medbay, also muss das Crewmitglied beschützt werden. Der maximal entwickelte Autopilot erlaubt das Steuern des Schiffes ohne Pilot während dieser anderweitig beschäftigt ist..
+\item Barrage: Fokus auf Offensive. Starkes Waffensystem und drei schnelle Waffen erlauben für stetigen aber kräftigen Beschuss. Nachteile sind wenig Leben, schwache Subsysteme und geringes Startkapital.
+\item Stealth: Fokus auf Mobilität. Schwache Offensive und überhaupt keine Schilde, aber hohe Ausweichchance dank des sehr starken Antriebs. Dazu kommen starke Subsysteme, viel Energie und ein hohes Startkapital.
+\item Boarder: Fokus auf Strategie. Gute Systeme, aber wenig Energie um sie darauf zu verteilen. Die einzigartigen Waffen sind langsam aber stark und können leicht gegnerische Systeme lahmlegen. Große Besatzung und starkes Medbay helfen die Kontrolle über das Schiffinnere zu behalten. Gutes Crew- und Energiemanagement ist vonnöten um das meiste aus den Systemen zu holen und sich den entscheidenden Vorteil zu verschaffen.
+
+\end {itemize}
+Mit continue wählt man das derzeitig angezeigte Schiff. Im Singleplayer-modus beginnt hier das Spiel. Im Multiplayermodus kommt man an dieser Stelle zur Spielersuche.
+
+\subsection{Ladebildschirm}
+\begin{itemize}
+\item (Multiplayer only) Server Address and Port
+Im oberen Textfeld wird die gewünschte IP eingegeben, im unteren der gewünschte Port.
+\item Username Hier wird der Spielname der gewünschten gespeicherten Sitzung eingegeben. Ein verlorenes Spiel führt zu einem schwarzen Bild und ein siegreiches Spiel führt zum Boss, aber kann nicht weitergeführt werden.
+\item continue: Führt die zum Namen passende Partie als weiter.
+\item back: führt zurück zur Spielauswahl.
+\item join: führt die Partie eines anderen Servers weiter.
+
 \subsection{Optionen}
+Von hier kann man auf eine Reihe von Untermenüs zugreifen, in denen das Spielerlebnis angepasst werden kann.
+\begin{itemize}
+\item Audio: Führt zu den Ton-Einstellungen
+\item Credits: Zeigt eine Liste der Leute, die für dieses Projekt Verantwortung übernehmen wollen
+\item Control: Führt zu den Steuerungs-Einstellungen (nicht implementiert)
+\item General: Führt zu den Bildschirm-Einstellungen (nicht implementiert)
+\item Video: Führt zu den Bildschirm-Einstellungen
+\item Back: Führt zurück zum vorherigen Bildschirm
+\end {itemize}
+
+
 
 
 \subsection{Multiplayer}
