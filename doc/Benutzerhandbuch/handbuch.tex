@@ -202,8 +202,13 @@ Mit Optionen wird das Einstellungsmenü "Optionen" geöffnet.
 Quit schließt die Anwendung.
 
 \subsubsection{Spielauswahl}
-Auf diesem Bildschirm wird entschieden, ob ein neues Spiel angefangen oder eine begonnene Partie weitergeführt werden soll. New Game leitet direkt zur Schwierigkeitsauswahl weiter. Continue führt zum Ladebildschirm für entweder Single- oder Multiplayer, je nach vorheriger Auswahl.
-Mit Back kann zurück ins Hauptmenü gelangt werden.
+Auf diesem Bildschirm wird entschieden, ob ein neues Spiel angefangen oder eine begonnene Partie weitergeführt werden soll. 
+\begin{itemize}
+\item New Game: leitet direkt zur Schwierigkeitsauswahl weiter.
+\item Continue: führt zum Ladebildschirm für entweder Single- oder Multiplayer, je nach vorheriger Auswahl.
+\item Back: kann zurück ins Hauptmenü gelangt werden.
+\end {itemize}
+
 
 \subsubsection{Schwierigkeitsauswahl}
 \begin{itemize}
@@ -235,11 +240,19 @@ Mit continue wählt man das derzeitig angezeigte Schiff. Im Singleplayer-modus b
 \begin{itemize}
 \item (Multiplayer only) Server Address and Port
 Im oberen Textfeld wird die gewünschte IP eingegeben, im unteren der gewünschte Port.
-\item Username Hier wird der Spielname der gewünschten gespeicherten Sitzung eingegeben. Ein verlorenes Spiel führt zu einem schwarzen Bild und ein siegreiches Spiel führt zum Boss, aber kann nicht weitergeführt werden.
-\item continue: Führt die zum Namen passende Partie als weiter.
-\item back: führt zurück zur Spielauswahl.
-\item join: führt die Partie eines anderen Servers weiter.
+\item Username: Hier wird der Spielname der gewünschten gespeicherten Sitzung eingegeben. Ein verlorenes Spiel führt zu einem schwarzen Bild und ein siegreiches Spiel führt zum Boss, aber kann nicht weitergeführt werden.
+\item Continue: Führt die zum Namen passende Partie als weiter.
+\item Back: führt zurück zur Spielauswahl.
+\item Join: führt die Partie eines anderen Servers weiter.
 \end{itemize}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{DasSpiel/Menu/ladesingle.png}
+\includegraphics[width=0.5\linewidth]{DasSpiel/Menu/lademulti.png}
+\end{figure} 
+
 
 \subsection{Optionen}
 Von hier kann man auf eine Reihe von Untermenüs zugreifen, in denen das Spielerlebnis angepasst werden kann.
@@ -252,6 +265,8 @@ Von hier kann man auf eine Reihe von Untermenüs zugreifen, in denen das Spieler
 \item Back: Führt zurück zum vorherigen Bildschirm
 \end{itemize}
 
+
+
 \subsection{Pause}
 Über die Pause kann man vom Spiel aus auf die Optionen zugreifen, das Spiel beenden oder Fortsetzen
 \begin{itemize}
@@ -260,7 +275,10 @@ Von hier kann man auf eine Reihe von Untermenüs zugreifen, in denen das Spieler
 \item Continue: Kehrt zum vorherigen Bildschirm zurück und setzt das Spiel fort.
 \end{itemize}
 Main menu darf nicht innerhalb eines Kampfes aufgerufen werden. Wenn man Multiplayer spielt müssen alle Clients ins Main menu ausloggen bevor ein einzelner Spieler das Spiel beenden darf. Der Host muss die Verbindung immer als letztes abbrechen.
-
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{DasSpiel/Menu/pause.png}
+\end{figure} 
 
 \subsection{Audio}
 \begin{itemize}
@@ -279,10 +297,14 @@ Main menu darf nicht innerhalb eines Kampfes aufgerufen werden. Wenn man Multipl
 \item back: zurück zu den Optionen
 \end{itemize}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{DasSpiel/Menu/video.png}
+\end{figure} 
 
 \subsection{Multiplayer}
 
-Das Spiel verfügt natürlich auch über eine Multiplayer Funktion. Wenn sie gerade vom Singleplayer-Modus ins Hauptmenü gegangen sind, dann müssen sie das Spiel leider neustarten, da ihr Singleplayer-Server erst dann terminiert, wenn das Spiel terminiert wird (Um ohne große Zeitverschwendung schnell ein neues Singleplayer-Spiel starten zu können). Nach dem Neustart können sie, wie im Singleplayer-Modus auch, erst ihr Schiff auswählen. Sobald sie zum Fenster mit den Server Adressierungsarten kommen, müssen sie je nach dem welche Art von Multiplayer sie wollen, eine der folgenden drei Punkte befolgen.
+Das Spiel verfügt natürlich auch über eine Multiplayer Funktion, die bis zu 100 Spieler gleichzeitig zulässt. Wenn sie gerade vom Singleplayer-Modus ins Hauptmenü gegangen sind, dann müssen sie das Spiel leider neustarten, da ihr Singleplayer-Server erst dann terminiert, wenn das Spiel terminiert wird (Um ohne große Zeitverschwendung schnell ein neues Singleplayer-Spiel starten zu können). Nach dem Neustart können sie, wie im Singleplayer-Modus auch, erst ihr Schiff auswählen. Sobald sie zum Fenster mit den Server Adressierungsarten kommen, müssen sie je nach dem welche Art von Multiplayer sie wollen, eine der folgenden drei Punkte befolgen.
 
 \subsubsection{Gleicher PC Multiplayer}
 Um Multiplayer auf dem gleichen PC zu spielen, benutzen Sie als Adresse des Servers eine der folgenden 3 Optionen. Der Port bleibt ihre Entscheidung, allerdings müssen Sie beachten das dieser nicht von Ihrem Betriebssystem benutzt wird. 
@@ -292,6 +314,11 @@ Adressmöglichkeiten:
 \item 127.0.0.1
 \item localhost
 \end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{DasSpiel/Menu/serverjoin.png}
+\end{figure} 
+
 
 Die Adressen sind zwar alle (fast-)identisch, Sie können davon allerdings eine Beliebige auswählen.
 
