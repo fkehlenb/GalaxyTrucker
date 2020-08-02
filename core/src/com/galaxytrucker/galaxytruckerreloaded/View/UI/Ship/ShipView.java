@@ -329,6 +329,9 @@ public class ShipView extends AbstractShip {
             else if(r.isSystem()) { //shields has an extra update method
                 ((ShieldUI) rooms.get(r.getId())).update(r, ship.getShields());
             }
+            else {
+                rooms.get(r.getId()).update(r);
+            }
         }
         //remove the crew uis of dead crew members
         for(Integer i : deadOnes) {
