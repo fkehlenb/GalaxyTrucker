@@ -343,13 +343,14 @@ public class GamePlay implements Screen {
         if(eventGUI != null) { eventGUI.render(); }
         else if(shopUI != null) { shopUI.render(); }
         else if(gameOverUI != null) { gameOverUI.render(); }
-        else if(videoUI != null) { videoUI.render(); }
-        else if(generalUI != null) { generalUI.render(); }
-        else if(optionUI != null) { optionUI.render(); }
-        else if(pauseMenuUI != null) { pauseMenuUI.render(); }
         else if(pvpUI != null) { pvpUI.render(); }
 
         stage.draw();
+
+        if(videoUI != null) { videoUI.render(); }
+        else if(generalUI != null) { generalUI.render(); }
+        else if(optionUI != null) { optionUI.render(); }
+        else if(pauseMenuUI != null) { pauseMenuUI.render(); }
     }
 
     /**
