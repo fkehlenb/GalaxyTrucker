@@ -279,6 +279,7 @@ public class TravelService implements Serializable {
                                     }
                                     shipDAO.update(enemyShip);
                                 }
+                                dest = planetDAO.getById(dest.getId());
                                 // ===== Create new Battle Service =====
                                 BattleService battleService = new BattleService(UUID.randomUUID(), s.getId());
                                 List<Ship> combatants = new ArrayList<>();

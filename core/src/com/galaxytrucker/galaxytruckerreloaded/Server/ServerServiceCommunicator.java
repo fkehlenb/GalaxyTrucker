@@ -264,8 +264,7 @@ public class ServerServiceCommunicator {
                     responseObject.setValidRequest(true);
                     this.pvpClients.remove(u.getUsername());
                 }
-                else if (u.getUserShip().isInCombat()&&!u.getUserShip().getPlanet().getEvent().equals(PlanetEvent.PVP)
-                        &&u.getUserShip().getPlanet().getEvent().equals(PlanetEvent.BOSS)){
+                else if (u.getUserShip().isInCombat()&&!u.getUserShip().getPlanet().getEvent().equals(PlanetEvent.PVP)){
                     for (BattleService b : this.getBattleServices()){
                         battleServiceDAO.update(b);
                     }
