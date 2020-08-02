@@ -17,7 +17,11 @@
 
 \section{Installation}
 
-Um das Programm zu installieren, benötigen sie zunächst sowohl eine valide JDK installation, als auch eine Gradle installation. Wenn sie eine der beiden nicht haben, verfolgen sie bitte folgenden zwei Installationsanleitungen. Sollten sie sowohl eine JDK als auch eine Gradle Installation schon haben, so können sie bei Punkt 0.0.3 weiterlesen.
+Um das Programm zu installieren, benötigen sie zunächst sowohl eine valide JDK 
+installation, als auch eine Gradle installation. Wenn sie eine der beiden nicht haben, 
+verfolgen sie bitte folgenden zwei Installationsanleitungen. Sollten sie sowohl eine JDK 
+als auch eine Gradle Installation schon haben, so können sie bei Punkt 0.0.3 
+weiterlesen.
 
 % ==================== JDK INSTALLATION ====================
 \subsection{JDK Installation}
@@ -144,7 +148,7 @@ Um das Programm nun auszuführen, können sie entweder die JAR durch doppelklick
 \end{figure} 
 
 % ==================== The Application ==================== 
-
+\newpage
 \section{Menüs}
 Das Menü ist der Ausgangspunkt des Programmes. Hier werden Entscheidungen getroffen die verschiedene Auswirkungen auf die Spielerfahrung haben können.
 Das Menü ist in verschiedene Untermenüs aufgeteilt. Durch das Klicken von den entsprechenden Buttons kann man zwischen diesen navigieren.
@@ -159,7 +163,7 @@ Quit schließt die Anwendung.
 Auf diesem Bildschirm wird entschieden, ob ein neues Spiel angefangen oder eine begonnene Partie weitergeführt werden soll. New Game leitet direkt zur Schwierigkeitsauswahl weiter. Continue führt zum Lade-Bildschirm für entweder Single- oder Multiplayer, je nach vorheriger Auswahl.
 Mit Back kann zurück ins Hauptmenü gelangt werden.
 
-\subsubsection(Schwierigkeitsauswahl)
+\subsubsection{Schwierigkeitsauswahl}
 Easy: Die Leichteste Einstellung für Anfänger oder Spielejournalisten. Gegner machen wenig Schaden.
 Medium: Normale Einstellung. 
 Hard: Schwierigste Einstellung. Gegner sind signifikant stärker.
@@ -215,7 +219,7 @@ Um LAN/Online Multiplayer nutzen zu können, müssen sie ein paar Sachen beachte
 \textbf{Um zu testen} ob man ihren Port sehen kann, können sie das mit der Software enthaltene Programm testConnection benutzen (Bitte nur vor dem Spielstart, da sonst der Spielserver herunterfahren wird). Um dieses zu Nutzen brauchen sie eine Python Version von 3.5+ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\newpage
 \section{Das Spiel}
 Das Spiel beginnt sobald der hier zusehende Bildschirm mit dem vorher ausgewählten Schiff angezeigt wird. 
 \begin{figure}[H]
@@ -223,7 +227,7 @@ Das Spiel beginnt sobald der hier zusehende Bildschirm mit dem vorher ausgewähl
 \includegraphics[width=0.8\linewidth]{DasSpiel/Ui/game.png}
 \end{figure} 
 
-Man selbst startet auf der prozentual generierten Karte immer an einem sogenannten Startplaneten, dieser ist leer und nur du, deine Crew und dein Schiff befinden sich dort. Von hier aus kannst du deine Reise durch das Sternensystem beginnen!  
+Man selbst startet auf der prozentual generierten Karte immer an einem sogenannten Startplaneten, dieser ist leer und nur deine Crew und dein Schiff befinden sich dort. Von hier aus kannst du deine Reise durch das Sternensystem beginnen!  
 \\
 Von hier aus werden nun alle UI-Elemente näher erklärt und deren Zusammenhang beschrieben.
 
@@ -232,19 +236,215 @@ Von hier aus werden nun alle UI-Elemente näher erklärt und deren Zusammenhang 
 \subsection{Schiff Interface}
 
 Das Schiffsinterface ist in viele Unterpunkte aufgeteilt, welche nun in Bezug auf Spielmechaniken und Schiffs-Indikatoren näher erklärt werden.
-
+\\
 
 %nähere Erklärungen zu allen Punkten
 
 \subsubsection{Schiffinformationen}
+\subsubsection{HP}
+Oben links befindet sich die Anzeige für dein Leben, hier unter dem Punkt \textbf{Hull}, wird der Zustand der Hülle angezeigt, dieser ist je nach Schiffstyp unterschiedlich, da alle Schiffstypen verschiedene Stats haben und für verschiedene Spielstyle ausgelegt sind. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/Ui/HP.png}
+\end{figure} 
+
+Die Gesundheit wird nach jedem Gewonnenen Kampf leicht erhöht und es gibt aus balancing Gründen keine maximale Gesundheit, diese kann und soll auch im laufe des Spiels drastisch erhöht werden, um am Ende gegen den Enboss gewinnen zu können.
+Falls man im Singeplayer spielt, so kann dein Kontrahent genauso Gesundheit leveln und aufbauen und ist auf höheren Schwierigkeitsmodi ein ebenbürtiger, bis leicht überlegender Gegner. Gegnerische Angriffe reduzieren deine HP.
+
+\subsubsection{Treibstoff und FTL Charge}
+Treibstoff wird benötigt um von einem Stern zum anderen springen zu können. Ein Sprung benötigt eine Treibstoff Einheit. Falls dein Treibstoff durch ein zufälliges Planet-Event reduziert oder durch zu viele Sprünge auf null fällt, so ist das Spiel vorbei und du treibst ohne Treibstoff in der leere des Weltraums herum. Falls du dich dann nicht zufällig an einem Planeten mit einem Trader aufhälst und dir Treibstoff kaufen kannst, so gilt die Partie als vorbei.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{DasSpiel/Ui/fuel.png}
+\end{figure}
+Ein zusätzlicher Indikator ist der Balken unter dem \textit{JUMP} button, dieser gibt an ob dein FTL-Charge geladen ist oder nicht. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{DasSpiel/Ui/ftl_charge.png}
+\end{figure}
+Ist der Balken komplett Rot so ist der Antrieb komplett aufgeladen und das Schiff ist zum Sprung bereit. Um einen Sprung durchzuführen, muss sich außerhalb eines Kampfes ein Crewmitglied im Antrieb und ein weiteres im Cockpit befinden. Die Funktion der Räume werden im weiteren Verlauf erklärt
+%TODO link zu Räumen
+\\
+Falls man auf einen Gegner stößt, so ist der FTL-Charge nicht sofort wieder aufgeladen. Dies bedeutet man kann nicht ohne weiteres aus dem Kampf fliehen.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{DasSpiel/Ui/ftl_charge_combat.png}
+\end{figure}
+Der Antrieb lädt sich über \textbf{5} volle Kampf-Runden auf und ermöglicht dann bei Unterlegenheit die Flucht in ein anderes System.
+%TODO link zu Kampf fliehen
+
+\subsubsection{Munition}
+In unserem Spiel gibt es lediglich eine Waffenart die nach dem abfeuern eine sich nicht von selbst wiederherstellende Munitionsart benutzt. Waffen die als Raktenwerfer deklariert sind, verbrauchen bei jedem abfeuern eine Rakete.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{DasSpiel/Ui/Rocket.png}
+\end{figure}
+
+Falls nun die Raketen aufgebraucht sind, lassen sich die Waffen nicht mehr abfeuern. Raketen können nach einem gewonnen Kampf als zufällige Belohnung deinem Schiff dazu addiert werden. Genauso kann die Anzahl der Raketen durch zufällige Events erhöht, sowie im Shop mit der Währung erworben werden. Andere Waffenklassen benötigen lediglich Energie im Waffensystem.
+
+\subsubsection{Währung}
+Die Währung ist ein essentieller Bestandteil des Spiels, die Währung ermöglicht bei einem Händler neue Gegenstände, Upgrades, Treibstoff, Munition, Waffen, sowie neue Crewmitglieder zu erwerben.  
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{DasSpiel/Ui/Money.png}
+\end{figure}
+
+Jeder Schiffstyp besitzt zu Beginn unterschiedlich viel Startkapital. Dieses kann durch gewonnene Kämpfe, sowie durch zufällige Events erhöht, aber auch verringert werden. Zudem kannst du Geld durch den Verkauf von Waffen erhalten.
+
+\subsubsection{Crewmitglieder}
+Alle Schiffstypen haben zu Beginn unterschiedlich viele Crewmitglieder. Crewmitglieder haben Lebensenergie und können in Kämpfen verletzt und getötet werden. Crewmitglieder haben wie in \nameref{sec:Crew} beschrieben, unterschiedliche Stats, diese wirken sich auf die jeweiligen Systeme und Aktionen aus.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{DasSpiel/Ui/Crew.png}
+\end{figure}
+Crewmitglieder können zudem befehligt werden, sie können Räume und Systeme bemannen und diese reparieren, Schilde aufbauen, sowie im Kampfsystem für erhöhten Schaden sorgen, falls man also mehrere Crewmitglieder besitzt sollte man diese in einem Kampf, essentielle Schiffsysteme besetzen lassen, um deren Effekt zu stärken.
+
+
+\subsubsection{Schilde}
+Die Schilde verhindern, bzw. verringen den Schaden den gegnerische Angriffe auf die Hülle ausüben. Schilde können durch ein Crewmitglied im entsprechenden Raum(Schild) verstärkt und wiederhergestellt werden. Im Unterpunkt \nameref{sec:Energiemanagement} wird die Funktionsweise der Schilder näher erläutert.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{DasSpiel/Ui/shield.png}
+\end{figure}
+Falls dein Schild beschädigt wird, oder der Raum für die Schilde ausfällt, so verringern sich die Schildbalken und das blaue Schild, welches normalerweise das Schiff umgibt verschwindet, bis ein Crewmitglied den Schaden repariert oder der Kampf vorbei ist.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{DasSpiel/Ui/shield_off.png}
+\end{figure}
+
+Das Schild ist ausgefallen, weil das Schildsystem beschädigt worden ist(1). Schilde sind \textbf{nicht} bei jedem Schiffstypen vorinstalliert, manche Schiffe müssen dieses Modul erst bei einem Händler erwerben. Zudem können die Schildbalken und stärke bei einem Händler, im Austausch für Geld, erhöht werden.  
+
+\subsubsection{Räume und Systeme} \label{sec:Systeme}
+Jeder Schiffstyp ist in sogenannte \textit{tiles}, bzw. Räume aufgeteilt. Räume bestehen aus 2x2 Tiles, dh ein Raum kann maximal 4 Crewmitglieder beherbergen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Ui/tiles.png}
+\end{figure}
+
+Die hier zusehenden Nummerierungen, ist in der Reihenfolge gewählt wie auch die Systeme in \nameref{sec:Energiemanagement} aufgelistet sind, falls dir also die Funktion der unterschiedlichen Räume klar ist und du nur wissen willst wie die Energieverteilung funktioniert, so kannst du zu dem angegebenen Kapitel springen.
+
+\textbf{1: Sauerstoff-System}
+\\
+Das System welches für den Sauerstoff zuständig ist, falls also dieses System getroffen wird und ausfällt und ein Gegnerischer Treffer deine Hülle durchbricht und einen \textit{breach} verursacht, verlieren alle Crewmitglieder in dem markierten Bereich langsam leben und können auch sterben, weil kein Sauerstoff mehr zu ihnen kommt.
+
+\textbf{2: Antrieb}
+\\
+Der Antrieb ist ein sehr essentielles System, dieser ermöglicht dir den Sprung zwischen Sternensystemen und muss zum springen von einem Crewmitglied bemannt sein. Falls der Antrieb beschädigt ist oder keine Energie zugeteilt bekommen hat, so ist kein Sprung zu einem anderen Planeten möglich.
+
+\textbf{3: Waffensystem}
+\\
+Das Waffensystem ist essentiell wichtig und für den Schaden den all deine Waffen anrichten zuständig, falls das Waffensystem beschädigt ist, machen Waffen lediglich stark reduzierten Schaden. Falls keine Energie den Waffen zugeteilt ist, so machen alle Waffen keinen Schaden. Wenn du jedoch ein Crewmitglied dem Waffensystem zuweist, übertragen sich die Stats der Crewmitglieder auf das Waffensystem und alle Waffen machen, je nach Stats deutlich erhöhten Schaden.
+
+\textbf{4: Medbay-System} 
+\\
+Das Medbay-System, oder auch Heilungssystem, dient dazu Crewmitglieder wieder auf die volle Lebensenergie zu heilen.
+Falls das System beschädigt ist oder keine Energie zugewiesen bekommt, so funktioniert es nicht. In Kampfrunden benötigt das Heilungssystem eine Runde um ein Crewmitglied zu heilen.
+
+\textbf{5: Schild-System}
+\\
+Das Schildsystem dient dazu die Schilde hochzufahren und bei Beschädigung wiederherzustellen, bei einem beschädigten Schild-System, benötigt es ein Crewmitglied um dieses wieder zu reparieren, das Schild wehrt zudem Angriffe ab und verringert den Schaden an der Hülle um ein vielfaches, falls die Schilde ausgeschaltet wurden, so nimmt die Hülle den vollen Schaden und Hüllenbrüche/breaches können entstehen. Mehr Energie bei dem Schildsystem bedeutet gleichzeitig mehr Schildpunkte und eine bessere Verteidigung.
+
+\textbf{6: Sensoren}
+\\
+Die Sensoren sind ein essentielles System, welches für die Aufklärung des Weltraums notwendig ist. Es bedarf keiner Besatzung und kann nicht zerstört werden. Zudem kann die Energie aus dem System nicht entfernt werden. Es dient dazu zwischen den Systemen zu navigieren und Events, sowie Gegnerschiffe aufzuspüren und anzeigen zu lassen.
+
+\textbf{7: Das Cockpit}
+\\
+Das Cockpit ist ein System wie der Antrieb, essentiell für die Reise zwischen Sternen. Es muss außerhalb eines Kampfes immer bemannt sein, ansonsten ist kein Sprung möglich. Man kann aus dem System keine Energie entziehen, das Cockpit kann beschädigt werden und so eine Weiterreise verhindern, wenn es nicht repariert wird. Nach einem gewonnenen Kampf werden zudem alle System wieder repariert und einsatzbereit gemacht.
+\\
+Das Schiff und die Räume können im Kampf durch einen gegnerischen Angriff einen Hüllenbruch/Breach erleiden, diese werden mit einem roten Fadenkreuz gekennzeichnet(nicht zu verwechseln mit dem Marker für Crew-Bewegungen/Waffen-Anvisieren).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{DasSpiel/Ui/breach.png}
+\end{figure}
+
+Wenn sich ein Crewmitglied in dem betroffenen Raum befindet, wird der Breach innerhalb weniger Runden wieder geschlossen. Wenn der Kampf gewonnen ist, werden zudem alle breaches automatisch repariert.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{DasSpiel/Ui/breach2.png}
+\end{figure}
+
+Zudem werden ausgeschaltete oder beschädigte Systeme \textbf{Rot} markiert:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\linewidth]{DasSpiel/Ui/system_off.png}
+\end{figure}
 
 
 
-\subsubsection{Energiemanagement}
+Das System wird entweder nach gewonnenen Kampf automatisch repariert oder kann während des Kampfes mithilfe eines Crewmitglieds repariert werden. Aktive Systeme werden dann \textbf{Weiß} markiert:
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\linewidth]{DasSpiel/Ui/heal_on2.png}
+\end{figure}
+
+\subsubsection{Energiemanagement} \label{sec:Energiemanagement}
+Unten links in der UI ist ein Energiebalken zu sehen, dieser gibt an wie viel Energie noch an Subsysteme verteilt werden kann.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.05\linewidth]{DasSpiel/Ui/power.png}
+\end{figure}
+Das Energiemanagement ist in dem sich daneben befindlichen UI-Element zu sehen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{DasSpiel/Ui/systems.png}
+\end{figure} 
+
+Energie lässt sich mit der \textbf{linken Maustaste} zuweisen und mit der \textbf{rechten Maustaste} entziehen.
+Zudem sind die Systeme so angeordnet wie in \nameref{sec:Systeme}. Dabei hat die Verteilung der Energie in 1:Sauerstoff-System, 2:Antrieb,6:Sensoren und 7:Cockpit keinen Einfluss auf das Spielgeschehen.
+\\
+Die Verteilung der Energiepunkte in das Waffensystem, erhöht anteilig wie viel Energie zugewiesen ist den Waffenschaden.
+\\
+Falls man mehr Energie in die Schilde steckt, so erhöht sich die maximale Schildstärke.
+\\
+Das Heilungssystem lässt sich mit einem Energiepunkt nutzen und benötigt auch nicht mehr um Crewmitglieder zu heilen. 
 
 \subsubsection{Waffen}
+Die Waffenleiste zeigt alle ausgerüsteten Waffen an.
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{DasSpiel/Ui/weapons.png}
+\end{figure} 
+Die Zahl unter den Waffensystemen gibt innerhalb eines Kampfes an wie hoch der Cooldown aktuell für die Waffe ist, falls die Waffe also abgefeuert wurde und einen \textit{Cooldown} von 2 hat, so ist diese Waffe erst nach 2 Kampfrunden wieder einsatzbereit.
+\\
+
+Im Punkt \nameref{sec:WaffenInventory} sind die Statistiken nochmal genauer erklärt. Grundsätzlich haben Waffen aber immer dieselben Eigenschaftskategorien.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/Ui/Weapon_Stats.png}
+\end{figure} 
+
+\textbf{Burst:} steht für wie viele Projektile abgefeuert werden.
+\\
+
+\textbf{Cooldown:} legt die Ausfallzeit der Waffe nach dem abfeuern fest, du kannst die Waffe dann eine bestimmte Anzahl von Runden nicht mehr abfeuern.
+\\
+
+\textbf{Crew Damage:} Gibt an wie viel Schaden ein direkter Treffer 
+auf ein Crewmitglied des Gegners anrichtet.
+\\
+
+\textbf{Waffen lvl:} Das Waffenlevel ordnet die Waffenstärke ein, umso größer umso stärker. Max level ist lvl 5.
+\\
+
+\textbf{Damage:} Ist der Schaden die eine Waffe anrichtet.
+\\
+
+\textbf{MissileCost:} Gibt an wie viel Munition diese Waffe verbraucht.
+\\
+
+\textbf{Precision:} Gibt die Wahrscheinlichkeit an dass die Waffe das Gegnerschiff auch tatsächlich trifft.
 
 \subsection{Inventar (Ship)}
 
@@ -257,7 +457,7 @@ Das Inventarfenster kann über den Button Ship geöffnet werden. Über den Close
 
 Auf dem Inventar sieht man unten links (1) die Anzahl an Fuel und die Anzahl der Missiles. Unten Rechts (2) ist der Knopf zum schließen des Fensters. Oben links (3) sieht man seine Crewmitglieder aufgelistet (siehe Crew). Oben rechts sind alle Waffen aufgelistet (siehe Waffen). 
 
-\subsubsection{Crew}
+\subsubsection{Crew}\label{sec:Crew}
 
 \begin{figure}[H]
 \centering
@@ -267,14 +467,14 @@ Auf dem Inventar sieht man unten links (1) die Anzahl an Fuel und die Anzahl der
 Für jedes Crew Mitglied gibt es ein Anzeigefeld, indem der Name und die Level der Stats des Crewmitglieds angezeigt werden. Von Schiff zu Schiff und wenn man sich im Shop neue Crewmitglieder kauft, haben die unterschiedliche Stats. Man kann Crew nur verlieren, indem sie stirbt. 
 
 
-\subsubsection{Waffen}
+\subsubsection{Waffen} \label{sec:WaffenInventory}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\linewidth]{DasSpiel/Inventar/waffe.png}
 \end{figure} 
 
-Für jede Waffe gibt es einen Block, in dem die Informationen der Waffe angezeigt werden. Anhand des Bildes kann man die Klasse der Waffe erkennen. In diesem Beispiel ist das eine Laser Waffe. Außerdem gibt es Raketen, Bomben, Radio und Radiobomben. Jede Waffe hat unterschiedliche Eigenschaften und kann von Lvl 1 bis Lvl 6 gelevelt sein. Über den Equip/Unequip Button kann man die Waffe ausrüsten, oder aus der Ausrüstung herausnehmen. Wenn der Button auf Unequip steht, ist die Waffe ausgerüstet. 
+Für jede Waffe gibt es einen Block, in dem die Informationen der Waffe angezeigt werden. Anhand des Bildes kann man die Klasse der Waffe erkennen. In diesem Beispiel ist das eine Laser Waffe. Außerdem gibt es Raketen, Bomben, Radio und Radiobomben. Jede Waffe hat unterschiedliche Eigenschaften und kann von Lvl 1 bis Lvl 5 gelevelt sein. Über den Equip/Unequip Button kann man die Waffe ausrüsten, oder aus der Ausrüstung herausnehmen. Wenn der Button auf Unequip steht, ist die Waffe ausgerüstet. 
 
 
 
@@ -439,6 +639,12 @@ Die Crew wird in dem Raumanzug des eigenen Schiffs angezeigt und um diese zu kau
 
 Bei den meisten Schiffen wird hier nichts zu kaufen sein, da die meisten Schiffe schon alle Systeme besitzen. Wenn man ein Schiff mit fehlendem System ausgewählt hat, kann man es hier mit ein wenig Glück nachkaufen. 
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Shop/sys.png}
+\caption{Hier haben wir zwei nicht ausgerüstete Waffen, die wir verkaufen können}
+\end{figure}
+
 \subsubsection{Upgrades}
 
 Hier sieht man die vorhandenen Systeme und kann diese aufrüsten. Das System steht links und rechts steht der Preis. Um es zu kaufen, muss man das Systemlogo anklicken. 
@@ -455,21 +661,189 @@ Die Systeme können alle bis zu einem für jedes System festgelegten Wert verbes
 
 Das Verkaufen Fenster dient zum Verkaufen der ungenutzten Waffen. Um eine Waffe zu verkaufen, muss man sie im Inventar zunächst unequipen, anschließend taucht die jeweilige Waffe mit ihrem Preis im Verkaufen Fenster auf. Wenn man die Waffe verkaufen will, muss man einfach nur das Bild der jeweiligen Waffe anklicken und erhält das Geld. 
 
-HIER BILD EINFÜGEN AUS NEUEREM BRANCH!!!!!!!!!!
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Shop/sell.png}
+\caption{Hier haben wir zwei nicht ausgerüstete Waffen, die wir verkaufen können}
+\end{figure}
+
+
+
 
 \subsection{Kämpfe}
 
+\subsubsection{Waffenstats}
+
+Eine Waffe in unserem Spiel hat sechs Stats. 
+
+\paragraph{Burst}
+Burst gibt an, wieviele Schüsse pro Runde abgegeben werden. Also wirkt Burst wie ein Multiplikator des Schadens. 
+
+\paragraph{Cooldown} 
+Der Cooldown gibt an, wieviele Runden ein Spieler warten muss, bis er die Waffe wieder Nutzen kann. Pro Spielzug pro Spieler kühlt die Waffe um 1 ab. Wenn man also weiter drückt, kühlt die Waffe 2 mal ab, da einmal der Spieler und dann der Gegner einen Spielzug hat. 
+
+\paragraph{Crew Damage}
+Der Crew Schaden gibt an, wieviel Schaden die Waffe an Crew macht, die in dem getroffenen Raum ist. 
+
+\paragraph{Damage}
+
+Der normale Schaden gibt an, wieviel Schaden die Waffe dem Schiff pro Schuss macht. 
+
+\paragraph{Missile Cost}
+
+Gibt an, wieviele Missiles die Waffe pro Abfeuern kostet. 
+
+\paragraph{Precision} Gibt an, wie genau die Waffe zielen kann.
+
+\subsubsection{Waffentypen}
+
+Alle Waffen haben alle unterschiedliche Stats. Zusätzlich haben die Waffen Fantasienamen. Die Namen können der Waffenklasse entsprechen, oder einfach irgendwie heißen. Die Waffenklasse lässt sich ausschließlich am Bild erkennen. 
+
+\paragraph{Laser}
+
+Der Waffentyp Laser ist eine Waffe mit gutem Schaden, welche keine Missiles und andere Resourcen pro Schuss verbraucht. Ein Laser kann man auf bis zu Lvl 5 kaufen/finden. Laser haben einen vergleichsweise geringen Cooldown. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/laser.png}
+\caption{Laser}
+\end{figure}
+
+
+\paragraph{Raketen}
+
+Die Raketen sind ein Waffentyp, welcher viel Schaden macht, dafür aber Missiles verbraucht. Je nach Level kann er auch mehr als eine Missile verbrauchen. Zu erkennen ist es in der Stat \textit{Missile Cost}. Sie haben einen mittelmäßigen Cooldown.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/rakete.png}
+\caption{Rakete}
+\end{figure}
+
+\paragraph{Bomben}
+
+Bomben haben einen sehr hohen Schaden ans Schiff und einen hohen Crew Schaden. Dafür haben sie auch einen hohen Cooldown. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/bomb.png}
+\caption{Bombe}
+\end{figure}
+
+\paragraph{Radio}
+
+Der Waffentyp Radio macht geringen Schaden am Schiff, jedoch hohen Schaden an Crew. Der Cooldown ist Mittelmäßig, allerdings ist der Burst hoch und die Waffen verbrauchen keine Missiles. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/radio.png}
+\caption{Radio}
+\end{figure}
+
+\paragraph{Radiobomben}
+
+Radiobomben haben einen geringeren Schaden als normale Bomben, jedoch setzen sie Radiostrahlen frei, die einen einmaligen hohen Schaden an der Crew verursachen. Siehe Stat \textit{Crew Damage}. Außerdem ist der Cooldown sehr hoch. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/radiobo.png}
+\caption{Radiobombe}
+\end{figure}
+
 \subsubsection{Erklärung}
+
+Das Prinzip der Kämpfe in unserem Spiel ist rundenbasiert. Sobald man auf ein gegnerisches Schiff trifft, beginnt man mit der ersten Runde. Man wählt unten in dem Waffenfenster (1) eine Waffe aus, dann wird die ausgewählte Waffe angezeigt, dann wählt man im Schiff aus, auf welchen Tile man die Waffe abfeuern möchte. An dieser Stelle wird ein Zielsymbol (2) angezeigt. Das wiederholt man mit allen Waffen, die man abfeuern möchte. Man kann seiner Crew befehlen, sich zu bewegen. Wenn man auf Next Round (3) drückt, dann bewegt sich die Crew und die Waffen werden abgefeuert. Im gleichen Zug macht der gegner auch seinen Zug. Dann ist man wieder dran und wiederholt alles. Dies macht man solange, bis der Gegner oder man selbst tot ist, oder man wartet, bis FtlCharge (4) aufgeladen ist, dann kann man aus dem Kampf entfliehen. Hierzu drückt man auf den Jumpbutton und kann dann zu einem anderen Planeten fliehen. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fight.png}
+\caption{Kampf}
+\end{figure}
 
 \subsubsection{Mögliche Taktiken}
 
+Eine Taktik wäre, immer auf die Räume mit der Crew zu feuern, um diese zu töten, solange, bis der Raum einen Breach bekommt oder die Crew tot ist. 
+
+Eine weitere Taktik wäre, Nach und Nach die Systeme des Schiffs abzuschießen, damit diese ausfallen und so das Schiff zerstören. 
+
 \subsubsection{Normale Gegner}
+
+Der Kampf funktioniert, wie in \textit{Erklärung} erklärt. Die Gegner haben feste Stats, welche bei jedem Gegner dieses Typs gleich sind. Sie haben immer die gleiche Ausrüstung, welche der der Startschiffe des Spielers entsprechen. 
+
+Gegner können intelligent angreifen. Sie greifen zum Beispiel gezielt Systeme mit Crew drin an, um die Crew zu töten. \textit{TODO: Erklärung was die noch können!!!!!}
+
+Wenn man sie tötet, kann es passieren, dass man eine der Waffen und ein paar Resourcen bekommt. Diese werden ins Inventar gepackt. Das Schiff des Gegners verschwindet und der Planetevent wird zu \textit{Kein Event} gesetzt. Nach einem Kampf verhält sich alles also wie normal. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fightwin.png}
+\caption{Kampf gewonnen}
+\end{figure}
+
+Wenn man getötet wird, Also die Crew stirbt oder das Schiff zerstört wird, verliert man das gesamte Spiel und kann nur noch zum Hauptmenü zurückkehren. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fightlose.png}
+\caption{Kampf verloren}
+\end{figure}
 
 \subsubsection{Minibosse}
 
+Der Kampf, Kampfende und die Rewards funktioniert genauso, wie bei normalen Gegnern. Der Unterschied liegt darin, dass quasi ein Multiplayer Gegner simuliert wird. Es wird ein Schiff erstellt, das ungefähr auf dem Niveau des Spielers liegt. Wie die normalen Gegner können Minibosse auch intelligent angreifen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/miniboss.png}
+\caption{Miniboss}
+\end{figure}
+
 \subsubsection{Endboss}
 
+Der Endboss ist immer der Todesstern. Dieser hat nur eine Crew und nur ein angreifbares Feld. Dieses eine Feld stellt den Konstruktionsfehler des Todessterns dar. Zitat \href{https://jedipedia.fandom.com/wiki/Erster_Todesstern}{Jedipedia}: \textit{\glqq Konstruktionspläne offenbarten indes eine entscheidende Schwachstelle, einen etwa zwei Meter breiten Abwärmeschacht, der, dem zentralen Energieträger folgend, bis zum Hauptreaktor führte.\grqq} Durch das Angreifen des Schachtes wird der Hauptreaktor zerstört. Das führt zur Zerstörung des Todessterns und zum Sieg des gesamten Spiels. Von hier aus kann man dann wieder auf das Hauptmenü gehen. Wenn man stirbt, dann verliert man das gesamte Spiel und muss neu starten. Die Waffe des Todessterns hat keinen Cooldown, er besitzt 1000 Raketen und sehr viele Leben. 
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/endboss.png}
+\caption{Endboss}
+\end{figure}
+
+
+\url{https://jedipedia.fandom.com/wiki/Erster_Todesstern} Zugriff am 2.8.2020 um 13:48 Uhr.
+
+\subsubsection{Multiplayerkämpfe}
+
+Um in einen Multiplayer Kampf zu kommen, kann man sich im Multiplayermodus befinden. Dann muss man den Multiplayer Kampf Knopf drücken. Dann wird man auf einen Kampfplaneten geschickt und wartet auf den Gegner. Sobald dieser auftaucht, kann man diesen bekämpfen. Der Gewinner bekommt einen Bonus für das weitere Spiel, also zum Beispiel neue Waffen oder Loot. Der Verlierer ist tot und für ihn ist das Spiel an dieser Stelle vorbei. 
+
+
+
+
+
+\newpage
+\section{Known Bugs - Bitte Umbenennen!}
+
+\subsection{Logoutbug während des Kampfes}
+
+Das verlassen des Spieles während eines Kampfes führt bei Wiederaufnahme des Spiels zu einem Fehler. Kämpfe müssen abgeschlossen - das heißt der Gegner besiegt, geflohen oder vom Gegner besiegt - werden bevor der Spieler sich über den \textit{Main Menu} Button im Pausemenü ausloggen und das Spiel verlassen kann.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/known Bugs/Battle-Option-Logout.png}
+\caption{Das geöffnete Pausemenü während eines Kampfes.}
+\end{figure} 
+
+\subsection{Speicherung nur bei Logout}
+
+Ebenfalls ist das Ausloggen aus dem aktuellen Spiel mit dem \textit{Main Menu} Button zwingend erforderlich um den Spielstand ordnungsgemäß zu speichern. Wird das Spiel unsachgemäß beendet, ist eine Wiederaufnahme des Spielstandes nicht möglich.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{DasSpiel/known Bugs/Pause-Menu.png}
+\caption{Der das Pausemenü}
+\end{figure}
+
+\subsection{Firewall einstellungen für Multiplayer!}
 
 
 
