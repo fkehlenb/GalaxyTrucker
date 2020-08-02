@@ -526,6 +526,10 @@ public class BattleService implements Serializable {
                 if (combatants.size()==0){
                     ServerServiceCommunicator.getInstance().getBattleServices().remove(this);
                 }
+                if (!ship.getAssociatedUser().equals("[ENEMY]")) {
+                    responseObject.setResponseOverworld(UserService.getInstance()
+                            .getUser(ship.getAssociatedUser()).getOverworld());
+                }
                 // Update data
                 battleServiceDAO.update(this);
             }
