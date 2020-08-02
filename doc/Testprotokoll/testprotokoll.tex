@@ -23,6 +23,9 @@ Dieses Dokument dient zur Dokumentation der durchgeführten Tests für das Spiel
 \subsection{Einführung}
 Für die View Klassen unseres Projektes bot es eher an, die Funktionsweisen manuell zu testen. 
 Dafür wurden in die Backend Klassen, sprich Controller und Services, durch System.out.println die ausgeführten Aktionen geloggt, um diese mit den auf dem Bildschirm angewählten Aktionen und angezeigten Ergebnissen zu vergleichen. \\
+
+
+
 %%% GENERELL
 \subsection{Tests zur generellen Funktion}
 \subsubsection{Login Singleplayer}
@@ -43,6 +46,9 @@ Durch Drücken auf Raise Volume (während die Musik läuft) sollte die Musik lau
 Im Video Unterpunkt wird erwartet, dass durch Klicken auf Fullscreen vom Fenster Mode zum Fullscreen Mode gewechselt wird.  Der Test war erfolgreich. \\
 Durch erneutes Drücken sollte diese Änderung rückgängig gemacht werden.  Der Test war erfolgreich. \\
 Diese Tests werden im GamePlay Optionen Menü erfolgreich wiederholt. \\
+
+
+
 %%% KAMPF
 \subsection{Tests zum Kampf}
 Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich der Spieler auf einem Combat/Miniboss Planeten mit einem Gegner befindet. \\
@@ -55,11 +61,17 @@ Es wird auf einen Crew Knopf an der ganz linken Seite gedrückt, und danach auf 
 \subsubsection{Waffe abschießen}
 Es wird auf einen Waffen Knopf in der Box unten gedrückt. Danach wird ein Raum im feindlichen Schiff gedrückt. Es erscheint ein Target auf dem ausgewählten Tile, und nach drücken auf den Next Round Button sollte auf diesen Raum gefeuert werden. Mit den Ausgaben auf der Konsole kann dies bestätigt werden. Die Targets werden entfernt.  Der Test war erfolgreich. \\
 \subsubsection{Fliehen}
-Es wird nach vollständingem Aufladen des FTL Charge die Map geöffnet und ein Planet ausgewählt.  TODO Der Test war erfolgreich. \\
+Es wird nach vollständingem Aufladen des FTL Charge die Map geöffnet und ein Planet ausgewählt. Das Fliehen sollte mit einer gewissen Chance möglich sein. Das wird dadurch überprüft, diese Aktionen wiederholt durchzuführen. Der Test war erfolgreich. \\
 \subsubsection{Gewinnen}
 Es wird der Gegner mit Waffen angegeriffen, bis die Lebensenergie leer ist und der Gegner besiegt wurde. Der Gegner sollte verschwinden, und der normale Spielbetrieb sollte wieder aufgenommen werden.  Der Test war erfolgreich. \\
 \subsubsection{Verlieren}
 Man lässt sich durch wiederholtes Drücken auf Next Round ohne ausführen von Aktionen vom Gegner besiegen. Es sollte ein Game Over Screen erscheinen, und das Zurückkehren zum Hauptmenü möglich sein, ohne dass das Spiel crasht.  Der Test war erfolgreich. \\
+\subsubsection{Normale Funktionen} 
+Es soll weiterhin möglich sein, das Inventar zu öffnen und Waffen zu equippen/unequippen (sie Tests zum Inventar). Die Waffen sollten dann direkt für die Kampfrunde verfügbar sein. Der Test war erfolgreich. \\
+Es soll weiterhin möglich sein, Energie in die Systeme zu machen und Energie zu entfernen (sie Tests zur Energieverwaltung), die dann auch so in der aktuellen Kampfunde zur Verfügung stehen. Der Test war erfolgreich. \\
+
+
+
 %%% SHOP
 \subsection{Tests zum Shop}
 Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich der Spieler auf einem Shop Planeten befindet. \\
@@ -75,6 +87,9 @@ Es wird auf den untersten Knopf auf der linken Seite gedrückt. Dort sollen alle
 \subsubsection{Ressourcen kaufen}
 Es wird auf den Ressourcen Knopf auf der linken Seite gedrückt. Dort sollten Hp, Missiles, und Fuel angezeigt werden. Wenn man genug Geld hat und auf den Missile oder Fuel Knopf drückt, sollte der Preis für einen abgezogen, und eine Ressource zu der passenden Anzeige hinzugefügt werden.  Der Test war erfolgreich. \\
 Wenn man auf den Hp Knopf drückt, wird die komplette Anzahl der Anzeige hinzugefügt, und der Preis von der Geldanzeige abgezogen werden.  Der Test war erfolgreich. \\
+
+
+
 %%% ENERGIEVERWALTUNG
 \subsection{Tests zur Energieverwaltung}
 Für das Energiemanagment werden in der unteren linken Ecke die allgemeine, unverteilte Energie des Schiffes sowie die Systeme mit Button und ihren Energiebalken angezeigt. \\
@@ -88,6 +103,9 @@ Es wird auf den Knopf für die Engine gedrückt, während zwei Balken Energie dr
 Es wird auf den Knopf eines Systems, das keine Energie hat, gedrückt. Dadurch passiert nichts. Der Test war erfolgreich. \\
 Es wird auf den Knopf eines Systems mit einem Balken Energie gedrückt. Dadurch wird der Balken abgezogen, links hinzugefügt, und das System im Schiff rot angezeigt. Der Test war erfolgreich. \\
 Es wird auf den Knopf des Cockpits, und  den der Kamera gedrückt. Es passiert nichts. Der Test war erfolgreich.  \\
+
+
+
 %%% INVENTAR
 \subsection{Tests zum Inventar}
 \subsubsection{Allgemein}
@@ -97,6 +115,9 @@ Durch Drücken auf den Equip Knopf neben einer nicht equippten Waffe wird diese 
 Es wird versucht, mehr als vier Waffen zu equippen. Es passiert nichts. Der Test war erfolgreich. \\
 \subsubsection{Waffen unequip}
 Durch Drücken auf den Unequip Knopf neben einer Waffe wird sie unten von den equippten Waffen entfernt. Der Knopf aktualisiert sich. Der Test war erfolgreich. \\
+
+
+
 %%% REWARDS UND PLANET EVENTS
 \subsection{Tests zu Rewards und Planet Events}
 \subsubsection{Planet Event Anzeige}
@@ -108,9 +129,16 @@ Für das Planet Event Shop wird danach ein Open Shop Button angezeigt. Der Test 
 \subsubsection{Rewards}
 Es werden Planeten angeflogen. Für die Planeten werden teilweise Reward Pages angezeigt. Es werden nur dann Reward Pages angezeigt, wenn auch tatsächlich Rewards vorhanden sind. Der Test war erfolgreich. \\
 Wenn ein Reward angezeigt wird, wird erwartet, dass dieser auch hinzugefügt wird (Crew an der linken Seite, Waffe in das Inventar, Ressourcen zu den passenden Ressourcen Anzeigen). Der Test war erfolgreich. \\
+
+
+
 %%% REISEN
 \subsection{Tests zum Karte}
-\subsubsection{}
+\subsubsection{Anzeigen}
+Es wird auf den Jump Button gedrückt, woraufhin die Karte mit allen Planeten, einer Kennzeichnung für den aktuellen Planeten und den Bossplaneten angezeigt werden sollte.  Der Test war erfolgreich. \\
+\subsubsection{Fliegen}
+Nach Drücken auf einen Planeten, der angereist werden kann (nur einen entfernt), sollte die Karte geschlossen werden und der neue Planet mit den korrekten Änderungen (Hintergrund, Events (siehe oben)) angezeigt werden. Es sollte Treibstoff entfernt werden.  Der Test war erfolgreich. \\
+Nach Drücken auf einen Planeten, der nicht angereist werden kann, sollte nichts passieren.  Der Test war erfolgreich. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%	AUTOMATISIERTE
 \section{Automatisierte Funktionstest}
