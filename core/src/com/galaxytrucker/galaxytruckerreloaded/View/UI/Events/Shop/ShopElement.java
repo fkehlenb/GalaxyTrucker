@@ -4,9 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.Client;
+import com.galaxytrucker.galaxytruckerreloaded.Communication.ClientControllerCommunicator;
 import com.galaxytrucker.galaxytruckerreloaded.Main;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Crew.Crew;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Services.UserService;
@@ -131,12 +134,13 @@ public class ShopElement {
                 price = crew.getPrice();
                 break;
             case SYSTEM:
-                //TODO System.getPrice
-                price = 5;
+                price = 60;
                 break;
             case UPGRADES:
-                //TODO lololol idk
-                price = 3;
+                setSystemPrice();
+                break;
+            case CREWUPGRADES:
+                price = 20;
                 break;
         }
         priceTag.setText(font, Integer.toString(price)+" coins");
@@ -216,10 +220,96 @@ public class ShopElement {
                     break;
                 case SYSTEM:
                     success = shop.buySystem(system.getSystemType());
+                    if(success) {
+                        dispose();
+                    }
                     break;
                 case UPGRADES:
                     success = shop.upgradeSystem(system.getSystemType());
+                    if(success) {
+                        updateSystemPrice();
+                    }
+                    break;
+                case CREWUPGRADES:
+                    success = shop.upgradeCrew(crew);
+                    break;
             }
+    }
 
+    private void updateSystemPrice() {
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+        for(Room r : s.getSystems()) {
+            if(r.getId() == system.getId()) {
+                system = (System) r;
+                setSystemPrice();
+                priceTag.setText(font, Integer.toString(price)+" coins");
+                break;
+            }
+        }
+    }
+
+    /**
+     * set the system price to be displayed
+     */
+    private void setSystemPrice() {
+        switch(system.getSystemType()) {
+            case WEAPON_SYSTEM:
+                switch(system.getMaxEnergy()) {
+                    case 1: price = 50; break;
+                    case 2: price = 25; break;
+                    case 3: price = 40; break;
+                    case 4: price = 60; break;
+                    case 5: price = 80; break;
+                    case 6: price = 90; break;
+                    case 7: price = 100; break;
+                }
+                break;
+            case ENGINE:
+                switch(system.getMaxEnergy()) {
+                    case 1: price = 15; break;
+                    case 2: price = 25; break;
+                    case 3: price = 40; break;
+                    case 4: price = 60; break;
+                    case 5: price = 80; break;
+                    case 6: price = 100; break;
+                    case 7: price = 125; break;
+                }
+                break;
+            case SHIELDS:
+                switch(system.getMaxEnergy()) {
+                    case 1: price = 0; break;
+                    case 2: price = 20; break;
+                    case 3: price = 25; break;
+                    case 4: price = 30; break;
+                    case 5: price = 40; break;
+                    case 6: price = 55; break;
+                    case 7: price = 75; break;
+                }
+                break;
+            case O2:
+                switch(system.getMaxEnergy()) {
+                    case 1: price = 30; break;
+                    case 2: price = 35; break;
+                }
+                break;
+            case MEDBAY:
+                switch(system.getMaxEnergy()) {
+                    case 1: price = 20; break;
+                    case 2: price = 30; break;
+                }
+                break;
+            case CAMERAS:
+                switch(system.getMaxEnergy()) {
+                    case 1: price = 35; break;
+                    case 2: price = 40; break;
+                }
+                break;
+            case COCKPIT:
+                switch(system.getMaxEnergy()) {
+                    case 1: price = 15; break;
+                    case 2: price = 25; break;
+                }
+                break;
+        };
     }
 }

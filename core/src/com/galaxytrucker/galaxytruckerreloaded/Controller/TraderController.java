@@ -11,9 +11,12 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestObject;
 import com.galaxytrucker.galaxytruckerreloaded.Server.RequestType;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Services.UserService;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -219,5 +222,21 @@ public class TraderController extends Controller{
             return true;
         }
         return false;
+    }
+
+    /**
+     * upgrade crew, random stat
+     * @param crew the crew member
+     * @return whether it was successful
+     */
+    public boolean upgradeCrew(Crew crew) {
+        Random random = new Random();
+        List<CrewStat> stats = new ArrayList<>();
+        stats.add(CrewStat.ENGINE);
+        stats.add(CrewStat.COMBAT);
+        stats.add(CrewStat.REAPAIR);
+        stats.add(CrewStat.SHIELD);
+        stats.add(CrewStat.WEAPON);
+        return upgradeCrew(crew, stats.get(random.nextInt(5)));
     }
 }
