@@ -150,23 +150,28 @@ Das Menü ist der Ausgangspunkt des Programmes. Hier werden Entscheidungen getro
 Das Menü ist in verschiedene Untermenüs aufgeteilt. Durch das Klicken von den entsprechenden Buttons kann man zwischen diesen navigieren.
 
 \subsection{Hauptmenü}
-Im Hauptmenü kann man das Spiel starten oder Einstellungen verändern. Die Singleplayer und Multiplayer Buttons führen beide zur Fortsetzen-Auswahl
+Im Hauptmenü kann man das Spiel starten oder Einstellungen verändern. Die Singleplayer und Multiplayer Buttons führen beide zur Spielauswahl
 Sollte bereits ein Spiel im Single- bzw. Multiplayermodus gestartet worden sein, können allerdings nur noch Spiele in demselben Modus gestartet werden, bis das Spiel neu gestartet wird.
 Mit Optionen wird das Einstellungsmenü geöffnet.
 Quit schließt die Anwendung.
 
-\subsubsection{Fortsetzen}
+\subsubsection{Spielauswahl}
 Auf diesem Bildschirm wird entschieden, ob ein neues Spiel angefangen oder eine begonnene Partie weitergeführt werden soll. New Game leitet direkt zur Schwierigkeitsauswahl weiter. Continue führt zum Lade-Bildschirm für entweder Single- oder Multiplayer, je nach vorheriger Auswahl.
 Mit Back kann zurück ins Hauptmenü gelangt werden.
 
-\subsubsection(Schwierigkeitsauswahl)
+\subsubsection{Schwierigkeitsauswahl}
+\begin{itemize}
 \item Easy: Die Leichteste Einstellung für Anfänger oder Spielejournalisten. Gegner machen wenig Schaden.
 \item Medium: Normale Einstellung. 
 \item Hard: Schwierigste Einstellung. Gegner sind signifikant stärker.
+\end {itemize}
 Nach der Schwierigkeitsauswahl wird die Schiffauswahl aufgerufen.
-Mit Back kann zurück in die Fortsetzen-Auswahl gelangt werden. 
+Mit Back kann zurück in die Spielauswahl gelangt werden. 
 
 \subsubsection{Shipselector}
+Hier wird das Schiff für das nächste Spiel ausgewählt.
+Mit den Pfeilen nach rechts und links kann zwischen den Schiffen hin und her gewechselt werden.
+In dem Textfeld wird der Username eingegeben. Der Username fungiert auch als Name des Spiels, unter dem der Spielstand gespeichert wird. Um das Spiel später fortzuführen ist empfehlenswert, sich diesen zu merken. Ein einmal verwendeter Name kann nicht erneut als Spielname verwendet werden, selbst wenn dessen Partie bereits beendet wurde. Der einzige weg um einen Namen wieder freizugeben ist manuell die Datenbank zu löschen, sie wird dann beim nächsten Spielstart neu erstellt.
 
 \begin{itemize}
 \item 
@@ -181,6 +186,7 @@ Von hier kann man auf eine Reihe von Untermenüs zugreifen, in denen das Spieler
 \item Control: Führt zu den Steuerungs-Einstellungen (nicht implementiert)
 \item General: Führt zu den Bildschirm-Einstellungen (nicht implementiert)
 \item Video: Führt zu den Bildschirm-Einstellungen
+\item Back: Führt zurück zum vorherigen Bildschirm
 \end {itemize}
 
 
