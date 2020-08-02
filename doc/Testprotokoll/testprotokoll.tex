@@ -28,6 +28,11 @@ Dafür wurden in die Backend Klassen, sprich Controller und Services, durch Syst
 
 %%% GENERELL
 \subsection{Tests zur generellen Funktion}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/mainmenu.png}
+\end{figure}
+
 \subsubsection{Login Singleplayer}
 Das Spiel wird gestartet. Durch Klicken auf Singleplayer -> New Game soll ein neues Spiel gestartet werden. Danach wird eine Schwierigkeit ausgewählt, danach ein Schiff und Username. Durch Drücken auf den Start Game Button soll das Spiel mit den korrekten Daten geladen werden. Der Test war erfolgreich: Es wird das richtige Schiff angezeigt, und die Logs in der Konsole bestätigen die restlichen Daten. Diese Tests werden erfolgreich für alle Schwierigkeiten und Schifftypen wiederholt. \\
 \subsubsection{Continue Singleplayer}
@@ -38,6 +43,10 @@ Das Spiel wird gestartet. Durch Klicken auf Multiplayer -> New Game soll ein neu
 \subsubsection{Continue Multiplayer}
 
 \subsubsection{Optionen}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/options.png}
+\end{figure}
 Im Hauptmenü am Anfang des Spieles werden die Optionen aufgerufen. \\
 Im Audio Unterpunkt wird erwartet, dass durch Klicken auf Mute die Musik nicht weiter abgespielt wird. Der Test war erfolgreich. \\
 Durch erneutes Drücken auf den selben Knopf soll die Musik wieder abgespielt werden. Der Test war erfolgreich. \\
@@ -52,6 +61,10 @@ Diese Tests werden im GamePlay Optionen Menü erfolgreich wiederholt. \\
 %%% KAMPF
 \subsection{Tests zum Kampf}
 Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich der Spieler auf einem Combat/Miniboss Planeten mit einem Gegner befindet. \\
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/battle.png}
+\end{figure}
 \subsubsection{Next Round} 
 Es wird erwartet, dass nach dem Drücken auf Next Round die eigenen Runde beendet, die eigenen Aktionen und danach die Aktionen des Gegners ausgeführt werden. Die Views updaten sich nur nach dem Drücken auf Next Round.  Der Test war erfolgreich. \\
 \subsubsection{Crew bewegen}
@@ -75,6 +88,10 @@ Es soll weiterhin möglich sein, Energie in die Systeme zu machen und Energie zu
 %%% SHOP
 \subsection{Tests zum Shop}
 Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich der Spieler auf einem Shop Planeten befindet. \\
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/shop.png}
+\end{figure}
 \subsubsection{Waffe kaufen}
 Es wird auf den Waffen Knopf an der linken Seite des Shops (ganz oben) gedrückt. Es sollten Waffen angezeigt werden. Wenn auf eine Waffe gedrückt wird, die man sich leisten kann, sollte die Waffe aus dem Shop entfernt werden, und in das eigene Inventar hinzugefügt werden. Ebenfalls sollte die Geldanzeige aktualisiert werden.  Der Test war erfolgreich. \\
 \subsubsection{System installieren}
@@ -93,6 +110,10 @@ Wenn man auf den Hp Knopf drückt, wird die komplette Anzahl der Anzeige hinzuge
 %%% ENERGIEVERWALTUNG
 \subsection{Tests zur Energieverwaltung}
 Für das Energiemanagment werden in der unteren linken Ecke die allgemeine, unverteilte Energie des Schiffes sowie die Systeme mit Button und ihren Energiebalken angezeigt. \\
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/energy1.png}
+\end{figure}
 \subsubsection{Energie hinzufügen}
 Es wird auf den Knopf des Schild Systems gedrückt. Dadurch werden zwei Balken mehr angezeigt, und auf der linken Seite zwei weniger. Der Test war erfolgreich. \\
 Für andere Systeme, wie die Engine, soll nur ein Balken hinzugefügt (und auf der linken Seite abgezogen) werden. Der Test war erfolgreich. \\
@@ -108,6 +129,10 @@ Es wird auf den Knopf des Cockpits, und  den der Kamera gedrückt. Es passiert n
 
 %%% INVENTAR
 \subsection{Tests zum Inventar}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/inventory1.png}
+\end{figure}
 \subsubsection{Allgemein}
 Durch Drücken auf den SHIP Knopf wird ein Fenster geöffnet, in dem alle Waffen und Crew Mitglieder angezeigt werden. Neben den Waffen sind die korrekten Knöpfe, falls sie equipped oder unequipped sind. Die angezeigten Werte wurden überprüft. Der Test war erfolgreich. \\
 \subsubsection{Waffen equip}
@@ -121,12 +146,20 @@ Durch Drücken auf den Unequip Knopf neben einer Waffe wird sie unten von den eq
 %%% REWARDS UND PLANET EVENTS
 \subsection{Tests zu Rewards und Planet Events}
 \subsubsection{Planet Event Anzeige}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/event.png}
+\end{figure}
 Es werden Planeten angeflogen (Tests zum Fliegen siehe unten). Es wird für jeden Planeten ein Dialogfenster angezeigt. Der Hintergrund wird passend verändert. Der Test war erfolgreich. \\
 Das Dialogfenster stimmt mit dem Event überein, welches von den Logs des Services angegeben wird. Der Test war erfolgreich. \\
 Es wird ein Kampfplanet angeflogen, der Gegner besiegt, von dem Planeten weggeflogen, und wieder zum Planeten zurückgeflogen. Der Test updatet sich, um nicht wieder zu behaupten, dass ein Kampf stattfinden würde. Der Test war erfolgreich. \\
 Für das Planet Event Kampf wird der Gegner angezeigt. Der Test war erfolgreich. \\
 Für das Planet Event Shop wird danach ein Open Shop Button angezeigt. Der Test war erfolgreich. \\
 \subsubsection{Rewards}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/rewards.png}
+\end{figure}
 Es werden Planeten angeflogen. Für die Planeten werden teilweise Reward Pages angezeigt. Es werden nur dann Reward Pages angezeigt, wenn auch tatsächlich Rewards vorhanden sind. Der Test war erfolgreich. \\
 Wenn ein Reward angezeigt wird, wird erwartet, dass dieser auch hinzugefügt wird (Crew an der linken Seite, Waffe in das Inventar, Ressourcen zu den passenden Ressourcen Anzeigen). Der Test war erfolgreich. \\
 
@@ -134,6 +167,10 @@ Wenn ein Reward angezeigt wird, wird erwartet, dass dieser auch hinzugefügt wir
 
 %%% REISEN
 \subsection{Tests zum Karte}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{images/map.png}
+\end{figure}
 \subsubsection{Anzeigen}
 Es wird auf den Jump Button gedrückt, woraufhin die Karte mit allen Planeten, einer Kennzeichnung für den aktuellen Planeten und den Bossplaneten angezeigt werden sollte.  Der Test war erfolgreich. \\
 \subsubsection{Fliegen}
