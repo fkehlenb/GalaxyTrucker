@@ -17,6 +17,7 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.TraderDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.WeaponDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Server;
@@ -33,6 +34,8 @@ public class TraderControllerTest {
     private TraderDAO traderDAO = TraderDAO.getInstance();
 
     private WeaponDAO weaponDAO = WeaponDAO.getInstance();
+
+    private ShipDAO shipDAO = ShipDAO.getInstance();
 
     /**
      * setup
@@ -117,6 +120,36 @@ public class TraderControllerTest {
     }
 
     /**
+     * try purchasing without money
+     */
+    @Test
+    public void purchaseRocketsNoMoney() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setMissileStock(5);
+        try {
+            traderDAO.persist(t);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        s.setCoins(0);
+        try {
+            shipDAO.update(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseRockets(t, 2);
+        Assert.assertFalse(success);
+    }
+
+    /**
      * purchase hp
      */
     @Test
@@ -143,11 +176,71 @@ public class TraderControllerTest {
     }
 
     /**
+     * try purchasing without money
+     */
+    @Test
+    public void purchaseHpNoMoney() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setHpStock(5);
+        try {
+            traderDAO.persist(t);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        s.setCoins(0);
+        try {
+            shipDAO.update(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseHP(t, 2);
+        Assert.assertFalse(success);
+    }
+
+    /**
      * purchase fuel
      */
     @Test
     public void purchaseFuelSuccess() {
 
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setFuelStock(5);
+        try {
+            traderDAO.persist(t);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        s.setCoins(0);
+        try {
+            shipDAO.update(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseFuel(t, 2);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try purchasing without money
+     */
+    @Test
+    public void purchaseFuelNoMoney() {
         TraderController controller = TraderController.getInstance(null);
         Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
 

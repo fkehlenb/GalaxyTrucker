@@ -11,6 +11,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.List;
+
 public class PVPControllerTest {
 
     private ShipDAO shipDAO = ShipDAO.getInstance();
@@ -55,5 +57,16 @@ public class PVPControllerTest {
         }
         boolean success = controller.activatePVP(s);
         Assert.assertFalse(success);
+    }
+
+    /**
+     * try getting the other clients when alone on server
+     */
+    @Test
+    public void clientsEmpty() {
+        PVPController controller = PVPController.getInstance(null);
+        controller.activatePVP(ClientControllerCommunicator.getInstance(null).getClientShip());
+        List<String> success = controller.getPvpOpponents();
+        Assert.assertTrue(success.isEmpty());
     }
 }

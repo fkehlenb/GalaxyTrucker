@@ -33,7 +33,6 @@ public class SystemControllerTest {
      */
     @Test
     public void addEnergySuccess() {
-
         SystemController controller = SystemController.getInstance(null);
         Ship ship = ClientControllerCommunicator.getInstance(null).getClientShip();
         Overworld o = ClientControllerCommunicator.getInstance(null).getMap();
