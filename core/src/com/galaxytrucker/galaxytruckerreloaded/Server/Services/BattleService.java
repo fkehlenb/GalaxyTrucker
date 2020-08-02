@@ -451,7 +451,7 @@ public class BattleService implements Serializable {
                         s.setInCombat(false);
                         s.setInvitedToPVP(false);
                         if (s.getId() == this.winner) {
-                            s.setHp(s.getHp()+random.nextInt(25));
+                            s.setHp(s.getHp()+random.nextInt(40));
                             for (Room r : s.getSystems()) {
                                 if (r.getBreach() > 0) {
                                     r.setBreach(0);

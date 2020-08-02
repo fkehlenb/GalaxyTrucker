@@ -496,6 +496,7 @@ public class SystemService {
                 for (Room r : ship.getSystems()){
                     roomDAO.update(r);
                 }
+                ship.setEnergy(ship.getEnergy()+1);
                 // Update data
                 shipDAO.update(ship);
                 // Verification
@@ -538,6 +539,7 @@ public class SystemService {
                 roomDAO.update(r);
             }
             ship.setSystems(rooms);
+            ship.setEnergy(ship.getEnergy()+1);
             shipDAO.update(ship);
             responseObject.setValidRequest(true);
             responseObject.setResponseShip(ship);
