@@ -384,7 +384,12 @@ public class TraderService {
                 ship.setInventory(inventory);
                 weapon.setWeaponSystem(null);
                 // Add coins to ship
-                ship.setCoins(ship.getCoins() + weapon.getWeaponPrice());
+                int price = weapon.getWeaponPrice();
+                for (int lvl=1;  lvl < weapon.getWeaponLevel(); lvl++)
+                {
+                    price += weapon.getPrice().get(lvl);
+                }
+                ship.setCoins(ship.getCoins() + price);
                 // Add weapon to trader stock
                 stock.add(weapon);
                 trader.setWeaponStock(stock);

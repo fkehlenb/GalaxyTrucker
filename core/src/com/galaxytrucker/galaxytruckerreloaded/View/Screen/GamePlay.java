@@ -468,6 +468,9 @@ public class GamePlay implements Screen {
             createEvent(planet.getEvent(), opponent);
             if(planet.getEvent() == PlanetEvent.SHOP) {
                 background = new Texture("1080p.png");
+                if(openShopButton != null) {
+                    disposeShopButton();
+                }
                 createShopButton();
                 //createShop(planet.getTrader());
 
