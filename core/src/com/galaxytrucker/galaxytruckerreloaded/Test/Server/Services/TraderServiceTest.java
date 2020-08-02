@@ -1244,7 +1244,7 @@ public class TraderServiceTest {
         Ship s1 = entityManager.find(Ship.class, s.getId());
         Trader t1 = entityManager.find(Trader.class, t.getId());
         entityManager.getTransaction().commit();
-        Assert.assertEquals(200, s1.getCoins());
+        Assert.assertEquals(218, s1.getCoins());
         Assert.assertTrue(t1.getWeaponStock().contains(w));
         Assert.assertFalse(s1.getInventory().contains(w));
     }

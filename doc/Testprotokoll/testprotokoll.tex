@@ -41,7 +41,10 @@ Nach einem kompletten Neustart wird durch auswählen von Singleplayer -> Continu
 \subsubsection{Login Multiplayer}
 Das Spiel wird gestartet. Durch Klicken auf Multiplayer -> New Game soll ein neues Spiel gestartet werden. Danach wird eine Schwierigkeit ausgewählt, danach ein Schiff und Username. Darauf folgend wird die gewünschte Adresse und der gewünschte Port für den Server ausgewählt, und ausgewählt, dass der Server gestartet werden soll. Es wird erwartet, dass das Spiel korrekt geladen wird, angezeigt wird, dass man Host ist, und dass ein Button vorhanden ist, um jederzeit PVP aktivieren zu können. Der Test war erfolgreich. \\
 \subsubsection{Continue Multiplayer}
-
+Es wird ein Spiel gestartet, und sich ausgeloggt. Dadurch landet man wieder auf dem MainMenu. Der Test war erfolgreich. \\
+Nach einem kompletten Neustart wird durch auswählen von Multiplayer -> Continue ausgewählt, das Spiel fortzusetzen, und der alte Benutzername, Port und die Adresse eingegeben. Zusätzlich wird durch Drücken auf Join ausgewählt, dass man als Client wieder dem Server joinen möchte. Durch Drücken auf resume wird das Spiel geladen, und alle Dinge korrekt angezeigt (Schiff, aktuelle Attribute, Position...). Der Test war erfolgreich. \\
+\subsubsection{Back}
+Durch Drücken auf den Back Button sollte immer zum letzten Screen, auf dem man war, zurückgekehrt werden.  Der Test war erfolgreich. \\
 \subsubsection{Optionen}
 \begin{figure}[h!]
 \centering
@@ -60,7 +63,7 @@ Diese Tests werden im GamePlay Optionen Menü erfolgreich wiederholt. \\
 
 %%% KAMPF
 \subsection{Tests zum Kampf}
-Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich der Spieler auf einem Combat/Miniboss Planeten mit einem Gegner befindet. \\
+Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich der Spieler auf einem Combat/Miniboss Planeten mit einem Gegner befindet. Selbige Tests wurden ebenfalls für die Planetevents MINIBOSS, PVP und BOSS durchgeführt, deren Mechanik identisch ist. \\
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\linewidth]{images/battle.png}
@@ -83,7 +86,18 @@ Man lässt sich durch wiederholtes Drücken auf Next Round ohne ausführen von A
 Es soll weiterhin möglich sein, das Inventar zu öffnen und Waffen zu equippen/unequippen (sie Tests zum Inventar). Die Waffen sollten dann direkt für die Kampfrunde verfügbar sein. Der Test war erfolgreich. \\
 Es soll weiterhin möglich sein, Energie in die Systeme zu machen und Energie zu entfernen (sie Tests zur Energieverwaltung), die dann auch so in der aktuellen Kampfunde zur Verfügung stehen. Der Test war erfolgreich. \\
 
-
+%%% PVP
+\subsection{PVP}
+In diesem Abschnitt werden alle zusätzlich zu den normalen Kampfaktionen zum PVP gehörende Aktionen getestet. \\
+\subsubsection{Activate}
+Man meldet sich im Multiplayer Mode an. Es sollte ein Button am oberen Spielfeldrand zu sehen sein, auf dem Acitvate PVP steht. Dies sollte unabhängig davon, ob man als Host oder Client angemeldet ist, der Fall sein. Der Test war erfolgreich. \\
+Nach Drücken auf diesen Button sollte sich dieser zu einem Get Opponent Button ändern.  Der Test war erfolgreich. \\
+\subsubsection{Get Opponents}
+Nach Drücken auf den Get Opponent Button sollte sich ein Fenster öffnen, auf dem alle anderen Benutzer, die auf dem Server sind und PVP aktiviert haben, angezeigt werden.  Der Test war erfolgreich. \\
+Es soll möglich sein, einen Namen in ein Textfeld einzugeben.  Der Test war erfolgreich. \\
+Nach Drücken auf Start Game sollte man einen Kampfbildschirm mit dem ausgewählten Spieler als Gegner angezeigt bekommen.  Der Test war erfolgreich. \\
+Wenn kein Name eingegeben wurde, oder kein Spieler mit diesem Namen existiert, soll nichts passieren.  Der Test war erfolgreich. \\
+Nach Drücken auf Close sollte sich das Fenster wieder schließen.  Der Test war erfolgreich. \\
 
 %%% SHOP
 \subsection{Tests zum Shop}
@@ -92,11 +106,20 @@ Ab diesem Punkt wird davon ausgegangen, dass das Spiel gestartet ist und sich de
 \centering
 \includegraphics[width=0.5\linewidth]{images/shop.png}
 \end{figure}
+\subsubsection{Allgemein}
+Wenn man sich auf einem Planeten mit einem Shop befindet, sollte am oberen Rand ein Shop Button angezeigt werden.  Der Test war erfolgreich. \\
+Wenn man auf diesen Knopf drückt, sollte der Shop angezeigt werden.  Der Test war erfolgreich. \\
+Es sollte einen Close Button geben, mit dem man das Shop Fenster wieder schließen kann.  Der Test war erfolgreich. \\
+Wenn man den Shop Planeten verlässt, sollte der Knopf wieder verschwinden.  Der Test war erfolgreich. \\
 \subsubsection{Waffe kaufen}
 Es wird auf den Waffen Knopf an der linken Seite des Shops (ganz oben) gedrückt. Es sollten Waffen angezeigt werden. Wenn auf eine Waffe gedrückt wird, die man sich leisten kann, sollte die Waffe aus dem Shop entfernt werden, und in das eigene Inventar hinzugefügt werden. Ebenfalls sollte die Geldanzeige aktualisiert werden.  Der Test war erfolgreich. \\
+Eine gekaufte Waffe soll nicht nocheinmal erfolgreich gekauft werden können. Der Test war erfolgreich. \\
 \subsubsection{System installieren}
-Es wird auf den System Upgrade Knopf auf der linken Seite des Shops gedrückt. Es sollten die Systeme, die das Schiff haben kann, aber noch nicht unlocked hat, angezeigt werden (wie Schilde in Stealth). Wenn man es sich leisten kann, und auf den Knopf des Systems drückt, sollte es möglich werden, Energie in das System zu machen.  Der Test war erfolgreich. \\ 
+Es wird auf den System Installieren Knopf auf der linken Seite des Shops gedrückt. Es sollten die Systeme, die das Schiff haben kann, aber noch nicht unlocked hat, angezeigt werden (wie Schilde in Stealth). Wenn man es sich leisten kann, und auf den Knopf des Systems drückt, sollte es möglich werden, Energie in das System zu machen.  Der Test war erfolgreich. \\ 
+Ein installiertes System soll nicht noch einmal installiert werden können.  Der Test war erfolgreich. \\
 \subsubsection{System upgraden}
+Es wird auf den System Upgrade Knopf auf der linken Seite des Shops gedrückt. Es sollten alle Systeme, die das Schiff hat, angezeigt werden.  Der Test war erfolgreich. \\
+Wenn auf einen Knopf gedrückt wird, sollte das angezeigte Geld abgezogen werden. Ebenfalls sollten die nötigen Änderungen (maximale Energie) an dem jeweiligen System durchgeführt werden. Der Test war erfolgreich. \\
 \subsubsection{Crew kaufen}
 Es wird auf den Crew Knopf auf der linken Seite gedrückt. Dort sollen alle Crew Mitglieder, die der Trader im Angebot hat, angezeigt werden. Die Crew Mitglieder sollen die gleichen Texturen haben wie die, die schon im Schiff sind. Wenn man sich ein Crew Mitglied leisten kann und auf das Crew Mitglied drückt, sollte es aus dem Shop entfernt, und der eigenen Anzeige hinzugefügt werden. Das Geld sollte angezeigt werden.  Der Test war erfolgreich. \\
 \subsubsection{Waffe verkaufen}
@@ -109,7 +132,7 @@ Wenn man auf den Hp Knopf drückt, wird die komplette Anzahl der Anzeige hinzuge
 
 %%% ENERGIEVERWALTUNG
 \subsection{Tests zur Energieverwaltung}
-Für das Energiemanagment werden in der unteren linken Ecke die allgemeine, unverteilte Energie des Schiffes sowie die Systeme mit Button und ihren Energiebalken angezeigt. \\
+Für das Energiemanagment werden in der unteren linken Ecke die allgemeine, nicht verteilte Energie des Schiffes sowie die Systeme mit Button und ihren Energiebalken angezeigt. \\
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.5\linewidth]{images/energy1.png}
@@ -135,6 +158,7 @@ Es wird auf den Knopf des Cockpits, und  den der Kamera gedrückt. Es passiert n
 \end{figure}
 \subsubsection{Allgemein}
 Durch Drücken auf den SHIP Knopf wird ein Fenster geöffnet, in dem alle Waffen und Crew Mitglieder angezeigt werden. Neben den Waffen sind die korrekten Knöpfe, falls sie equipped oder unequipped sind. Die angezeigten Werte wurden überprüft. Der Test war erfolgreich. \\
+Durch Drücken auf den Close Button sollte das Fenster geschlossen werden.  Der Test war erfolgreich. \\
 \subsubsection{Waffen equip}
 Durch Drücken auf den Equip Knopf neben einer nicht equippten Waffe wird diese unten zu den equippten Waffen hinzugefügt, und der Knopf ändert sich. Der Test war erfolgreich. \\
 Es wird versucht, mehr als vier Waffen zu equippen. Es passiert nichts. Der Test war erfolgreich. \\
@@ -155,6 +179,7 @@ Das Dialogfenster stimmt mit dem Event überein, welches von den Logs des Servic
 Es wird ein Kampfplanet angeflogen, der Gegner besiegt, von dem Planeten weggeflogen, und wieder zum Planeten zurückgeflogen. Der Test updatet sich, um nicht wieder zu behaupten, dass ein Kampf stattfinden würde. Der Test war erfolgreich. \\
 Für das Planet Event Kampf wird der Gegner angezeigt. Der Test war erfolgreich. \\
 Für das Planet Event Shop wird danach ein Open Shop Button angezeigt. Der Test war erfolgreich. \\
+Durch Drücken auf den Close Button sollte das Fenster geschlossen werden.  Der Test war erfolgreich. \\
 \subsubsection{Rewards}
 \begin{figure}[h!]
 \centering
@@ -176,6 +201,7 @@ Es wird auf den Jump Button gedrückt, woraufhin die Karte mit allen Planeten, e
 \subsubsection{Fliegen}
 Nach Drücken auf einen Planeten, der angereist werden kann (nur einen entfernt), sollte die Karte geschlossen werden und der neue Planet mit den korrekten Änderungen (Hintergrund, Events (siehe oben)) angezeigt werden. Es sollte Treibstoff entfernt werden.  Der Test war erfolgreich. \\
 Nach Drücken auf einen Planeten, der nicht angereist werden kann, sollte nichts passieren.  Der Test war erfolgreich. \\
+Nach Drücken auf den Close Button sollte die Karte geschlossen werden.  Der Test war erfolgreich. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%	AUTOMATISIERTE
 \section{Automatisierte Funktionstest}
@@ -185,7 +211,12 @@ Projektklassen wurden unabhängig getestet. Das für die Tests verwendete Framew
 Die Tests sind im Unterordner galaxytrucker/core/src/com/galaxytrucker/galaxytruckerreloaded/Test zu finden. Die Testklassen für ein Modul des Projekts finden sich im passend benannten Unterordner. \\
 %%% VORGEHENSWEISE
 \subsection{Vorgehensweise}
-Es wurden für die Service, sowie die DAO Klassen JUNIT Tests geschrieben. \\
+Es wurden für die Service, Controller und die DAO Klassen JUNIT Tests geschrieben. \\
 Die Tests für die DAOS fallen zum Teil nominell durch, da die erwarteten Exceptions, die auch geworfen werden, nicht als erwartet erkannt werden. Hierbei handelt es sich im Methoden zum löschen und updaten nicht existenter Daten. In diesen Fällen ist aber über das Nicht-Bestehen der Tests hinwegzusehen, da sie nur deshalb als nicht bestanden gelten, weil genau die Exceptions geworfen werden, die auch erwartet werden. \\
+Bei den Controllern wurden die Klassen AudioController und VideoController nicht getestet, da diese jeglicherweise als Speicherobjekte für die Audio und Video Einstellungen benutzt werden. Ob sie funktionieren, zeigt sich also direkt durch die manuellen Tests zu den Optionen (siehe oben). Bei den Controller Testklassen kann es sein, dass ein Test durch die Reihenfolge, in der die Tests ausgeführt werden, fehlschlägt, allerdings erfolgreich durchgeführt werden kann, wenn er alleine ausgeführt wird. Das liegt daran, dass man hier mit einem echtem Schiff, das für alle Tests das gleiche ist, arbeitet, und die Veränderungen von einem Test möglicherweise andere beeinflussen. \\
+Für den Controller PlanetRewardsController wurde für die Methode resetReward kein Test geschrieben, bei dem ein fehlschlagen vorgesehen wird, da es sich bei dieser Methode um einen Setter handelt, dessen fehlschlagen schon in der existierenden Testmethode (resetRewardsSuccess) aufgefallen wäre. Es gibt keinen möglicherweise fehlerhaften Input, und keine Außeneinwirkungen. \\
+Für den PVPController wurden nur begrenzt JUNIT Tests geschrieben, da für weitere Tests zwei (oder mehr) eingeloggte Benutzer benötigt werden würden, was sich schlecht simulieren lässt. Diese Funktionen wurden manuell getestet, wie oben beschrieben. \\
+Für den BattleController wurde die Methode attack nur teilweise getestet, da diese Methode nur Dinge in eine Queue einfügt. Die tatsächliche Überprüfung erfolt erst beim Ausführen der Aktionen, was also mit der Methode playMoves zusammen erst getetstet wird. \\
+Die Methode fetchUpdatedData im BattleController wurde nur teilweise getestet, da diese keine übergebenen Attribute hat, die falsch sein könnten. Gleiches gilt für die Methode playMoves. Da die Service Methoden ebenfalls getestet werden, ist es nicht nötig, die Attribute im ClientControllerCommunicator manuell zu ändern, um einen parameterlosen Methodenaufruf zu manipulieren. \\
 
 \end{document}

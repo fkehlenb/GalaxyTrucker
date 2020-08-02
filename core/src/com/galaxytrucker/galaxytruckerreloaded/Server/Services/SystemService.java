@@ -210,7 +210,7 @@ public class SystemService {
             // Check if the system exists oboard the ship
             boolean systemExists = false;
             for (Room r : ship.getSystems()) {
-                if (r.isSystem() && r.getId() == system.getId()) {
+                if (r.isSystem() && r.getId() == system.getId() && ((System) r).isUnlocked()) {
                     systemExists = true;
                     system = ((System) r);
                 }
