@@ -471,57 +471,59 @@ public class TraderService {
             crew = crewDAO.getById(crew.getId());
             boolean enoughCoins = ship.getCoins() >= 20;
             List<Integer> stats = crew.getStats();
-            switch (stat) {
-                case WEAPON:
-                    if (crew.getStats().get(0) < 10 && enoughCoins) {
-                        stats.set(0, stats.get(0) + 1);
-                        crewDAO.update(crew);
-                        ship = shipDAO.getById(ship.getId());
-                        ship.setCoins(ship.getCoins() - 20);
-                        shipDAO.update(ship);
-                    }
-                    break;
-                case SHIELD:
-                    if (crew.getStats().get(1) < 10 && enoughCoins) {
-                        stats.set(1, stats.get(1) + 1);
-                        crewDAO.update(crew);
-                        ship = shipDAO.getById(ship.getId());
-                        ship.setCoins(ship.getCoins() - 20);
-                        shipDAO.update(ship);
-                    }
-                    break;
-                case ENGINE:
-                    if (crew.getStats().get(2) < 10 && enoughCoins) {
-                        stats.set(2, stats.get(2) + 1);
-                        crewDAO.update(crew);
-                        ship = shipDAO.getById(ship.getId());
-                        ship.setCoins(ship.getCoins() - 20);
-                        shipDAO.update(ship);
-                    }
-                    break;
-                case REAPAIR:
-                    if (crew.getStats().get(3) < 10 && enoughCoins) {
-                        stats.set(3, stats.get(3) + 1);
-                        crewDAO.update(crew);
-                        ship = shipDAO.getById(ship.getId());
-                        ship.setCoins(ship.getCoins() - 20);
-                        shipDAO.update(ship);
-                    }
-                    break;
-                case COMBAT:
-                    if (crew.getStats().get(4) < 10 && enoughCoins) {
-                        stats.set(4, stats.get(4) + 1);
-                        crewDAO.update(crew);
-                        ship = shipDAO.getById(ship.getId());
-                        ship.setCoins(ship.getCoins() - 20);
-                        shipDAO.update(ship);
-                    }
-                    break;
-                default:
-                    return responseObject;
+            if(enoughCoins) {
+                switch (stat) {
+                    case WEAPON:
+                        if (crew.getStats().get(0) < 10 && enoughCoins) {
+                            stats.set(0, stats.get(0) + 1);
+                            crewDAO.update(crew);
+                            ship = shipDAO.getById(ship.getId());
+                            ship.setCoins(ship.getCoins() - 20);
+                            shipDAO.update(ship);
+                        }
+                        break;
+                    case SHIELD:
+                        if (crew.getStats().get(1) < 10 && enoughCoins) {
+                            stats.set(1, stats.get(1) + 1);
+                            crewDAO.update(crew);
+                            ship = shipDAO.getById(ship.getId());
+                            ship.setCoins(ship.getCoins() - 20);
+                            shipDAO.update(ship);
+                        }
+                        break;
+                    case ENGINE:
+                        if (crew.getStats().get(2) < 10 && enoughCoins) {
+                            stats.set(2, stats.get(2) + 1);
+                            crewDAO.update(crew);
+                            ship = shipDAO.getById(ship.getId());
+                            ship.setCoins(ship.getCoins() - 20);
+                            shipDAO.update(ship);
+                        }
+                        break;
+                    case REAPAIR:
+                        if (crew.getStats().get(3) < 10 && enoughCoins) {
+                            stats.set(3, stats.get(3) + 1);
+                            crewDAO.update(crew);
+                            ship = shipDAO.getById(ship.getId());
+                            ship.setCoins(ship.getCoins() - 20);
+                            shipDAO.update(ship);
+                        }
+                        break;
+                    case COMBAT:
+                        if (crew.getStats().get(4) < 10 && enoughCoins) {
+                            stats.set(4, stats.get(4) + 1);
+                            crewDAO.update(crew);
+                            ship = shipDAO.getById(ship.getId());
+                            ship.setCoins(ship.getCoins() - 20);
+                            shipDAO.update(ship);
+                        }
+                        break;
+                    default:
+                        return responseObject;
+                }
+                responseObject.setValidRequest(true);
+                responseObject.setResponseShip(ship);
             }
-            responseObject.setValidRequest(true);
-            responseObject.setResponseShip(ship);
         } catch (Exception e) {
             e.printStackTrace();
         }

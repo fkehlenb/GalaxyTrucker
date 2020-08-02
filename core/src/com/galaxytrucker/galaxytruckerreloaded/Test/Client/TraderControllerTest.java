@@ -12,11 +12,10 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Planet;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.PlanetEvent;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Map.Trader;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.ShipType;
+import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.*;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
-import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
 import com.galaxytrucker.galaxytruckerreloaded.Model.Weapons.Weapon;
+import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.CrewDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.TraderDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.WeaponDAO;
@@ -36,6 +35,8 @@ public class TraderControllerTest {
     private WeaponDAO weaponDAO = WeaponDAO.getInstance();
 
     private ShipDAO shipDAO = ShipDAO.getInstance();
+
+    private CrewDAO crewDAO = CrewDAO.getInstance();
 
     /**
      * setup
@@ -95,6 +96,85 @@ public class TraderControllerTest {
     }
 
     /**
+     * try purchasing without money
+     */
+    @Test
+    public void purchaseWeaponNoMoney() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Weapon w = new Weapon();
+        w.setId(UUID.randomUUID().hashCode());
+        w.setWeaponPrice(10000);
+        w.setWeaponLevel(4);
+        List<Integer> prices = new ArrayList<>();
+        prices.add(2);
+        prices.add(4);
+        prices.add(6);
+        prices.add(8);
+        prices.add(10);
+        prices.add(12);
+        w.setPrice(prices);
+        try {
+            weaponDAO.persist(w);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        List<Weapon> ws = new ArrayList<>();
+        ws.add(w);
+        t.setWeaponStock(ws);
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseWeapon(t, w);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try purchasing non existing weapon
+     */
+    @Test
+    public void purchaseWeaponNotThere() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Weapon w = new Weapon();
+        w.setId(UUID.randomUUID().hashCode());
+        w.setWeaponPrice(1);
+        w.setWeaponLevel(4);
+        List<Integer> prices = new ArrayList<>();
+        prices.add(2);
+        prices.add(4);
+        prices.add(6);
+        prices.add(8);
+        prices.add(10);
+        prices.add(12);
+        w.setPrice(prices);
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        List<Weapon> ws = new ArrayList<>();
+        t.setWeaponStock(ws);
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseWeapon(t, w);
+        Assert.assertFalse(success);
+    }
+
+    /**
      * successfully purchase rockets
      */
     @Test
@@ -146,6 +226,28 @@ public class TraderControllerTest {
         }
 
         boolean success = controller.purchaseRockets(t, 2);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try purchasing too much
+     */
+    @Test
+    public void purchaseRocketsTooMuch() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setMissileStock(5);
+        try {
+            traderDAO.persist(t);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseRockets(t, 10);
         Assert.assertFalse(success);
     }
 
@@ -206,10 +308,32 @@ public class TraderControllerTest {
     }
 
     /**
+     * try purchasing too much
+     */
+    @Test
+    public void purchaseHpTooMuch() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setHpStock(5);
+        try {
+            traderDAO.persist(t);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseHP(t, 10);
+        Assert.assertFalse(success);
+    }
+
+    /**
      * purchase fuel
      */
     @Test
-    public void purchaseFuelSuccess() {
+    public void purchaseFuelNoMoney() {
 
         TraderController controller = TraderController.getInstance(null);
         Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
@@ -240,7 +364,7 @@ public class TraderControllerTest {
      * try purchasing without money
      */
     @Test
-    public void purchaseFuelNoMoney() {
+    public void purchaseFuelSuccess() {
         TraderController controller = TraderController.getInstance(null);
         Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
 
@@ -259,6 +383,28 @@ public class TraderControllerTest {
         Ship s1 = ClientControllerCommunicator.getInstance(null).getClientShip();
         Assert.assertEquals(s.getFuel()+2, s1.getFuel());
         Assert.assertEquals(s.getCoins() - 6, s1.getCoins());
+    }
+
+    /**
+     * try purchasing too much
+     */
+    @Test
+    public void purchaseFuelTooMuch() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        t.setFuelStock(5);
+        try {
+            traderDAO.persist(t);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseFuel(t, 10);
+        Assert.assertFalse(success);
     }
 
     /**
@@ -296,10 +442,155 @@ public class TraderControllerTest {
     }
 
     /**
+     * try upgrading crew without money
+     */
+    @Test
+    public void upgradeCrewNoMoney() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Crew c = new Crew();
+        for(Room r : s.getSystems()) {
+            if(r.getCrew() != null && r.getCrew().size() > 0) {
+                c = r.getCrew().get(0);
+                break;
+            }
+        }
+
+        s.setCoins(0);
+        try {
+            shipDAO.update(s);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.upgradeCrew(c, CrewStat.COMBAT);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try upgrading unknown crew member
+     */
+    @Test
+    public void upgradeStrangeCrew() {
+        TraderController controller = TraderController.getInstance(null);
+
+        Crew c = new Crew();
+        c.setId(UUID.randomUUID().hashCode());
+        c.setPrice(5);
+
+        boolean success = controller.upgradeCrew(c, CrewStat.COMBAT);
+        Assert.assertFalse(success);
+    }
+
+    /**
      * purchase Crew
      */
     @Test
     public void purchaseCrewSuccess() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Crew c = new Crew();
+        c.setId(UUID.randomUUID().hashCode());
+        c.setPrice(5);
+        try {
+            crewDAO.persist(c);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        List<Crew> cs = new ArrayList<>();
+        cs.add(c);
+        t.setCrewStock(cs);
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseCrew(t, c);
+        Assert.assertTrue(success);
+        Ship s1 = ClientControllerCommunicator.getInstance(null).getClientShip();
+        //Assert.assertEquals(s.getCoins()-5, s1.getCoins());
+        for(Room r : s1.getSystems()) {
+            if(r.getCrew()!=null) {
+                for(Crew g : r.getCrew()) {
+                    if(g.getId() == c.getId()) {
+                        Assert.assertTrue(true);
+                        Assert.assertNotNull(g.getCurrentRoom());
+                        Assert.assertNotNull(g.getTile());
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * try purchasing without money
+     */
+    @Test
+    public void purchaseCrewNoMoney() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Crew c = new Crew();
+        c.setId(UUID.randomUUID().hashCode());
+        c.setPrice(5000);
+        try {
+            crewDAO.persist(c);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        List<Crew> cs = new ArrayList<>();
+        cs.add(c);
+        t.setCrewStock(cs);
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseCrew(t, c);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try purchasing unknown crew
+     */
+    @Test
+    public void purchaseNonExistingCrew() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Crew c = new Crew();
+        c.setId(UUID.randomUUID().hashCode());
+        c.setPrice(5);
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        List<Crew> cs = new ArrayList<>();
+        t.setCrewStock(cs);
+        try {
+            traderDAO.persist(t);
+        }
+        catch(Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.purchaseCrew(t, c);
+        Assert.assertFalse(success);
     }
 
     /**
@@ -338,6 +629,66 @@ public class TraderControllerTest {
     }
 
     /**
+     * try selling unknown weapon
+     */
+    @Test
+    public void sellStrangeWeapon() {
+        TraderController controller = TraderController.getInstance(null);
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        try {
+            traderDAO.persist(t);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        Weapon w = new Weapon();
+        w.setId(UUID.randomUUID().hashCode());
+        w.setWeaponPrice(10);
+        w.setWeaponLevel(4);
+        List<Integer> prices = new ArrayList<>();
+        prices.add(2);
+        prices.add(4);
+        prices.add(6);
+        prices.add(8);
+        prices.add(10);
+        prices.add(12);
+        w.setPrice(prices);
+
+        boolean success = controller.sellWeapon(t, w);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try selling to unknown trader
+     */
+    @Test
+    public void sellWeaponUnknownTrader() {
+        TraderController controller = TraderController.getInstance(null);
+        WeaponController controller1 = WeaponController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+
+        for(Room r : s.getSystems()) {
+            if(r.isSystem() && ((System)r).getSystemType() == SystemType.WEAPON_SYSTEM) {
+                controller1.unequipWeapon(((System) r).getShipWeapons().get(0));
+                break;
+            }
+        }
+
+        Ship s1 = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Weapon w = s1.getInventory().get(0);
+
+        boolean success = controller.sellWeapon(t, w);
+        Assert.assertFalse(success);
+    }
+
+    /**
      * sell rocket
      */
     @Test
@@ -358,5 +709,41 @@ public class TraderControllerTest {
         Assert.assertTrue(success);
         Ship s1 = ClientControllerCommunicator.getInstance(null).getClientShip();
         Assert.assertEquals(s.getMissiles()-2, s1.getMissiles());
+    }
+
+    /**
+     * try selling more than you have
+     */
+    @Test
+    public void sellRocketTooMuch() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+        try {
+            traderDAO.persist(t);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
+
+        boolean success = controller.sellRockets(t, 200000);
+        Assert.assertFalse(success);
+    }
+
+    /**
+     * try selling to unknown trader
+     */
+    @Test
+    public void sellRocketsUnknownTrader() {
+        TraderController controller = TraderController.getInstance(null);
+        Ship s = ClientControllerCommunicator.getInstance(null).getClientShip();
+
+        Trader t = new Trader();
+        t.setId(UUID.randomUUID().hashCode());
+
+        boolean success = controller.sellRockets(t, 2);
+        Assert.assertFalse(success);
     }
 }
