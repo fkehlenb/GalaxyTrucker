@@ -241,18 +241,18 @@ public class NormalAI implements Serializable {
                         TargetMode target = targets.get(random.nextInt(targets.size() - 1));
                         if (target.equals(TargetMode.CREW)) {
                             int roomWithHighestCrew = 0;
-                            for (Room r : ship.getSystems()) {
+                            for (Room r : opponent.getSystems()) {
                                 if (r.getCrew().size() > roomWithHighestCrew) {
                                     roomWithHighestCrew = r.getCrew().size();
                                 }
                             }
-                            for (Room r : ship.getSystems()) {
+                            for (Room r : opponent.getSystems()) {
                                 if (r.getCrew().size() == roomWithHighestCrew) {
                                     targetRoom = r;
                                 }
                             }
                         } else if (target.equals(TargetMode.ROOM)) {
-                            List<Room> shipRooms = ship.getSystems();
+                            List<Room> shipRooms = opponent.getSystems();
                             targetRoom = shipRooms.get(random.nextInt(shipRooms.size() - 1));
                         } else {
                             for (Room r : opponent.getSystems()) {

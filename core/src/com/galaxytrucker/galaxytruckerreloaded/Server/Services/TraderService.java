@@ -173,6 +173,7 @@ public class TraderService {
             if (exists && spaceInShip && ship.getCoins() >= crew.getPrice()) {
                 // Subtract money
                 ship.setCoins(ship.getCoins() - crew.getPrice());
+                shipDAO.update(ship);
                 // Remove crew from stock
                 stock.remove(crew);
                 trader.setCrewStock(stock);
