@@ -656,7 +656,6 @@ public class GamePlay implements Screen {
                         // todo
 //                        explodeShipAnimation(enemy.getBaseX(), enemy.getBaseY());
                         java.lang.System.out.println("--- GEWONNEN ---");
-                        
                     }
                     else{
                         // todo
@@ -795,6 +794,16 @@ public class GamePlay implements Screen {
                     return succsess;
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean upgradeCrew(Trader trader, Crew crew) {
+        TraderController controller = TraderController.getInstance(null);
+        boolean success = controller.upgradeCrew(crew);
+        if(success) {
+            player.update(ClientControllerCommunicator.getInstance(null).getClientShip());
+            return success;
         }
         return false;
     }

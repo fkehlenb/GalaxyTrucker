@@ -209,6 +209,8 @@ public class ShopUI {
         return game.upgradeSystem(trader, type);
     }
 
+    boolean upgradeCrew(Crew crew) { return game.upgradeCrew(trader, crew); }
+
     /**TODO put into SubUIs
      * remove a buyable element
      */
