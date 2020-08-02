@@ -64,6 +64,7 @@ public class ShopUpgrade extends CurrentShopUI {
         elements = new LinkedList<>();
         float dist = 40;
         int i = 0;
+        List<Crew> crews = new ArrayList<>();
         for(Room r : ClientControllerCommunicator.getInstance(null).getClientShip().getSystems()){
             Texture t;
             System s;
@@ -109,7 +110,14 @@ public class ShopUpgrade extends CurrentShopUI {
                 elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null,null, s, 0 , ShopElementType.UPGRADES));
                 i++;
             }
-
+            if(r.getCrew() != null) {
+                crews.addAll(r.getCrew());
+            }
+        }
+        for(Crew c : crews) {
+            Texture t = new Texture("crew/"+ ClientControllerCommunicator.getInstance(null).getClientShip().getShipType().toString().toLowerCase()+".png");
+            elements.add(new ShopElement(main, stage, t, baseX, baseY+dist*i, shopUI, null, c, null, 0, ShopElementType.CREWUPGRADES));
+            i++;
         }
 
     }

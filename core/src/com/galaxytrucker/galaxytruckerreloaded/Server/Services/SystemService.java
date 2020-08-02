@@ -538,6 +538,7 @@ public class SystemService {
             for (Room r : ship.getSystems()){
                 roomDAO.update(r);
             }
+            ship.setCoins(ship.getCoins()-60);
             ship.setSystems(rooms);
             ship.setEnergy(ship.getEnergy()+1);
             shipDAO.update(ship);
