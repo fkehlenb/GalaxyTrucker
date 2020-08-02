@@ -422,21 +422,131 @@ Das Verkaufen Fenster dient zum Verkaufen der ungenutzten Waffen. Um eine Waffe 
 \caption{Hier haben wir zwei nicht ausgerüstete Waffen, die wir verkaufen können}
 \end{figure}
 
+
+
+
 \subsection{Kämpfe}
 
+\subsubsection{Waffenstats}
+
+Eine Waffe in unserem Spiel hat sechs Stats. 
+
+\paragraph{Burst}
+Burst gibt an, wieviele Schüsse pro Runde abgegeben werden. Also wirkt Burst wie ein Multiplikator des Schadens. 
+
+\paragraph{Cooldown} 
+Der Cooldown gibt an, wieviele Runden ein Spieler warten muss, bis er die Waffe wieder Nutzen kann. Pro Spielzug pro Spieler kühlt die Waffe um 1 ab. Wenn man also weiter drückt, kühlt die Waffe 2 mal ab, da einmal der Spieler und dann der Gegner einen Spielzug hat. 
+
+\paragraph{Crew Damage}
+Der Crew Schaden gibt an, wieviel Schaden die Waffe an Crew macht, die in dem getroffenen Raum ist. 
+
+\paragraph{Damage}
+
+Der normale Schaden gibt an, wieviel Schaden die Waffe dem Schiff pro Schuss macht. 
+
+\paragraph{Missile Cost}
+
+Gibt an, wieviele Missiles die Waffe pro Abfeuern kostet. 
+
+\paragraph{Precision} Gibt an, wie genau die Waffe zielen kann.
+
+\subsubsection{Waffentypen}
+
+Alle Waffen haben alle unterschiedliche Stats. Zusätzlich haben die Waffen Fantasienamen. Die Namen können der Waffenklasse entsprechen, oder einfach irgendwie heißen. Die Waffenklasse lässt sich ausschließlich am Bild erkennen. 
+
+\paragraph{Laser}
+
+Der Waffentyp Laser ist eine Waffe mit gutem Schaden, welche keine Missiles und andere Resourcen pro Schuss verbraucht. Ein Laser kann man auf bis zu Lvl 5 kaufen/finden. Laser haben einen vergleichsweise geringen Cooldown. 
 
 
-\subsubsection{Waffen}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/laser.png}
+\caption{Laser}
+\end{figure}
+
+
+\paragraph{Raketen}
+
+Die Raketen sind ein Waffentyp, welcher viel Schaden macht, dafür aber Missiles verbraucht. Je nach Level kann er auch mehr als eine Missile verbrauchen. Zu erkennen ist es in der Stat \textit{Missile Cost}. Sie haben einen mittelmäßigen Cooldown.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/rakete.png}
+\caption{Rakete}
+\end{figure}
+
+\paragraph{Bomben}
+
+Bomben haben einen sehr hohen Schaden ans Schiff und einen hohen Crew Schaden. Dafür haben sie auch einen hohen Cooldown. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/bomb.png}
+\caption{Bombe}
+\end{figure}
+
+\paragraph{Radio}
+
+Der Waffentyp Radio macht geringen Schaden am Schiff, jedoch hohen Schaden an Crew. Der Cooldown ist Mittelmäßig, allerdings ist der Burst hoch und die Waffen verbrauchen keine Missiles. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/radio.png}
+\caption{Radio}
+\end{figure}
+
+\paragraph{Radiobomben}
+
+Radiobomben haben einen geringeren Schaden als normale Bomben, jedoch setzen sie Radiostrahlen frei, die einen einmaligen hohen Schaden an der Crew verursachen. Siehe Stat \textit{Crew Damage}. Außerdem ist der Cooldown sehr hoch. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/waffen/radiobo.png}
+\caption{Radiobombe}
+\end{figure}
 
 \subsubsection{Erklärung}
+
+Das Prinzip der Kämpfe in unserem Spiel ist rundenbasiert. Sobald man auf ein gegnerisches Schiff trifft, beginnt man mit der ersten Runde. Man wählt unten in dem Waffenfenster (1) eine Waffe aus, dann wird die ausgewählte Waffe angezeigt, dann wählt man im Schiff aus, auf welchen Tile man die Waffe abfeuern möchte. An dieser Stelle wird ein Zielsymbol (2) angezeigt. Das wiederholt man mit allen Waffen, die man abfeuern möchte. Man kann seiner Crew befehlen, sich zu bewegen. Wenn man auf Next Round (3) drückt, dann bewegt sich die Crew und die Waffen werden abgefeuert. Im gleichen Zug macht der gegner auch seinen Zug. Dann ist man wieder dran und wiederholt alles. Dies macht man solange, bis der Gegner oder man selbst tot ist, oder man wartet, bis FtlCharge (4) aufgeladen ist, dann kann man aus dem Kampf entfliehen. Hierzu drückt man auf den Jumpbutton und kann dann zu einem anderen Planeten fliehen. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fight.png}
+\caption{Kampf}
+\end{figure}
 
 \subsubsection{Mögliche Taktiken}
 
 \subsubsection{Normale Gegner}
 
+Der Kampf funktioniert, wie in \textit{Erklärung} erklärt. Die Gegner haben feste Stats, welche bei jedem Gegner dieses Typs gleich sind. Sie haben immer die gleiche Ausrüstung, welche der der Startschiffe des Spielers entsprechen. 
+
+Wenn man sie tötet, kann es passieren, dass man eine der Waffen und ein paar Resourcen bekommt. Diese werden ins Inventar gepackt. Das Schiff des Gegners verschwindet und der Planetevent wird zu \textit{Kein Event} gesetzt. Nach einem Kampf verhält sich alles also wie normal. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fightwin.png}
+\caption{Kampf gewonnen}
+\end{figure}
+
+Wenn man getötet wird, Also die Crew stirbt oder das Schiff zerstört wird, verliert man das gesamte Spiel und kann nur noch zum Hauptmenü zurückkehren. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{DasSpiel/Kampf/fightlose.png}
+\caption{Kampf verloren}
+\end{figure}
+
 \subsubsection{Minibosse}
 
 \subsubsection{Endboss}
+
+\subsubsection{Multiplayerkämpfe}
+
+
+
+
 
 \newpage
 \section{Known Bugs - Bitte Umbenennen!}
