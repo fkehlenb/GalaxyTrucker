@@ -5,8 +5,6 @@ import com.galaxytrucker.galaxytruckerreloaded.Model.Ship;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.Room;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.System;
 import com.galaxytrucker.galaxytruckerreloaded.Model.ShipLayout.SystemType;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.DuplicateRoomException;
-import com.galaxytrucker.galaxytruckerreloaded.Server.Exception.RoomNotFoundException;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.RoomDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.Persistence.ShipDAO;
 import com.galaxytrucker.galaxytruckerreloaded.Server.ResponseObject;
@@ -60,7 +58,7 @@ public class SystemService {
             java.lang.System.out.println("[PRE]:[System]:" + system.getSystemType() + ":[CurrentEnergy]:" + system.getEnergy()
                     + ":[Add-Energy]:" + amount);
             java.lang.System.out.println("[PRE]:[Ship]:" + ship.getId() + ":[Energy]:" + ship.getEnergy());
-            // Check if system exists in ship
+            // Check if system exists in ship0
             boolean roomExists = false;
             for (Room r : ship.getSystems()) {
                 if (r.getId() == system.getId()) {

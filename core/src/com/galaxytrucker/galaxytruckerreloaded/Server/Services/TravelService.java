@@ -282,7 +282,7 @@ public class TravelService implements Serializable {
                                        amountOfWeaponsMiniboss++;
                                     }
                                     if (enemyShip.getHp()<s.getHp()) {
-                                        enemyShip.setHp(s.getHp() + random.nextInt(50));
+                                        enemyShip.setHp(s.getHp() + random.nextInt(30));
                                     }
                                     if (enemyShip.getShields()<s.getShields()) {
                                         enemyShip.setShields(s.getShields());
