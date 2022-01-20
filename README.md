@@ -39,7 +39,7 @@ This Game was created during a University project. I don't own any of the used t
 Clone the repository with git. 
 
 ```
-git clone https://gitlab.informatik.uni-bremen.de/s_xsipo6/galaxytrucker.git
+git clone https://gitlab.informatik.uni-bremen.de/fkehlenb/galaxytrucker.git
 ```
 
 After doing so, navigate into the root folder of the project and execute the following command:
